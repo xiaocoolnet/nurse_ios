@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>80D03C33-F528-4B9B-8EDC-33D1E204B5D3</string>
+	<key>IDESourceControlProjectName</key>
+	<string>HSHW_2016</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C553938888557CE7BD90CD16C1207672E744299D</key>
+		<string>https://github.com/xiaocoolnet/NURSE_2016_ios.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>HSHW_2016.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C553938888557CE7BD90CD16C1207672E744299D</key>
+		<string>..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/xiaocoolnet/NURSE_2016_ios.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C553938888557CE7BD90CD16C1207672E744299D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C553938888557CE7BD90CD16C1207672E744299D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>NURSE_2016_ios</string>
+		</dict>
+	</array>
+</dict>
+</plist>

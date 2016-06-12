@@ -1,0 +1,87 @@
+PODS:
+  - AFNetworking (2.6.3):
+    - AFNetworking/NSURLConnection (= 2.6.3)
+    - AFNetworking/NSURLSession (= 2.6.3)
+    - AFNetworking/Reachability (= 2.6.3)
+    - AFNetworking/Security (= 2.6.3)
+    - AFNetworking/Serialization (= 2.6.3)
+    - AFNetworking/UIKit (= 2.6.3)
+  - AFNetworking/NSURLConnection (2.6.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/NSURLSession (2.6.3):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (2.6.3)
+  - AFNetworking/Security (2.6.3)
+  - AFNetworking/Serialization (2.6.3)
+  - AFNetworking/UIKit (2.6.3):
+    - AFNetworking/NSURLConnection
+    - AFNetworking/NSURLSession
+  - Alamofire (3.3.1)
+  - BSGridCollectionViewLayout (1.1.1)
+  - BSImagePicker (2.3.0):
+    - BSGridCollectionViewLayout (~> 1.1)
+    - UIImageViewModeScaleAspect (~> 1.3)
+  - FBLikeLayout (1.2)
+  - FlexibleTableView (1.1.2)
+  - ImageSlideshow (0.2.3):
+    - ImageSlideshow/Core (= 0.2.3)
+  - ImageSlideshow/AFURL (0.2.3):
+    - AFNetworking (~> 2.3)
+    - ImageSlideshow/Core
+  - ImageSlideshow/Core (0.2.3)
+  - IQKeyboardManagerSwift (4.0.2)
+  - JGProgressHUD (1.3.1)
+  - MBProgressHUD (0.9.2)
+  - PagingMenuController (0.9.0)
+  - SDWebImage (3.7.5):
+    - SDWebImage/Core (= 3.7.5)
+  - SDWebImage/Core (3.7.5)
+  - UIImageViewModeScaleAspect (1.3)
+  - XWSwiftRefresh (0.1.9)
+  - YYCache (1.0.3)
+  - YYImage (1.0.1):
+    - YYImage/Core (= 1.0.1)
+  - YYImage/Core (1.0.1)
+  - YYWebImage (1.0.3):
+    - YYCache
+    - YYImage
+
+DEPENDENCIES:
+  - Alamofire (~> 3.0)
+  - BSImagePicker
+  - FBLikeLayout
+  - FlexibleTableView
+  - ImageSlideshow (~> 0.2.2)
+  - ImageSlideshow/AFURL
+  - IQKeyboardManagerSwift
+  - JGProgressHUD
+  - MBProgressHUD
+  - PagingMenuController
+  - SDWebImage (~> 3.7.3)
+  - XWSwiftRefresh (~> 0.1.6)
+  - YYWebImage
+
+SPEC CHECKSUMS:
+  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
+  BSGridCollectionViewLayout: d7304dcb35c6b3b4420c527e9f9b77ff322250f3
+  BSImagePicker: 591b28ce4994c44cbc4ac896717c1db9f9fadd18
+  FBLikeLayout: 687de95c7f29623dc4f7591c9746b99756952607
+  FlexibleTableView: b5e1d8ba02079aba946c763831ee2cd0b956018f
+  ImageSlideshow: 2895e62777c2ea36f56d948723b3586a12a89756
+  IQKeyboardManagerSwift: 2f2c19c509f67c4c0df2826db54033d3e090ce65
+  JGProgressHUD: 153053a21d81208cb5f659691996bcefce6a9885
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
+  PagingMenuController: 46ff3b4dab1479a8409a91429acdc0605b931e36
+  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  UIImageViewModeScaleAspect: ec78901acfc20d3782154111a21d34390f8f71ad
+  XWSwiftRefresh: 1981ad8f7579da94c94a8e7720803f2579dcde46
+  YYCache: 282f35b5b0990833d0b7a06d864a87141a021da2
+  YYImage: b41b45bc5f32bfcdf67bdfb9c09da9e9832357c0
+  YYWebImage: 8da75a611fd0d2e0f58a273f9ca0bc731614cb0d
+
+COCOAPODS: 0.39.0
