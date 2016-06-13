@@ -8,18 +8,26 @@
 
 import UIKit
 
+//protocol cellHeightProtocol:NSObjectProtocol {
+//    
+//    func changeCellHeight(height:CGFloat)
+//    
+//}
+protocol ChangeCellHeightDelegate:NSObjectProtocol{
+    //回调方法
+   func changeCellHeight(height:CGFloat)
+}
+
 class contentCell: UITableViewCell,UIWebViewDelegate{
 
     @IBOutlet weak var contentWebView: UIWebView!
     
-    
+    var delegate:ChangeCellHeightDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         //contentView.alwaysBounceVertical = false
         contentView .sizeToFit()
         contentWebView.delegate = self
-       //let webHeightStr = contentView .stringByEvaluatingJavaScriptFromString("document.body.scrollHeight")
-         //CGFloat documentHeight = [[contentView stringByEvaluatingJavaScriptFromString:@"document.getElementById(\"content\").offsetHeight;"] floatValue];
         for subView in contentWebView!.subviews
         {
             let v = subView
@@ -38,17 +46,21 @@ class contentCell: UITableViewCell,UIWebViewDelegate{
         
         // Initialization code
     }
+ 
+
+    
     func webViewDidFinishLoad(webView: UIWebView) {
-       //contentWebView.stringByEvaluatingJavaScriptFromString(<#T##script: String##String#>)
-        //contentWebView.stringByEvaluatingJavaScriptFromString(document.getElementsByTagName("body")[0].style.webkitTextSizeAdjust = "150%")
+
+        
         contentWebView.frame.size.height = contentWebView.scrollView.contentSize.height
         NSUserDefaults.standardUserDefaults().setObject(contentWebView.frame.size.height, forKey: "height")
+
         print(contentWebView.frame.size.height)
             //contentWebView.height = contentWebView.scrollView.contentSize.height;
         
         
     }
-
+//
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

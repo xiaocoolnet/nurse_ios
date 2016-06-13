@@ -8,22 +8,23 @@
 
 import UIKit
 
-class NewsContantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate {
+
+class NewsContantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate{
 
     let myTableView = UITableView()
     let shareArr:[String] = ["ic_pengyouquan.png","ic_wechat.png","ic_weibo.png"]
     var newsInfo :NewsInfo?
-    
+    var heightDic :NSMutableDictionary = [:]
 
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = false
         self.tabBarController?.tabBar.hidden = true
         self.navigationItem.leftBarButtonItem?.title = "返回"
+      
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.title = "新闻内容"
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 3))
         line.backgroundColor = COLOR
@@ -46,7 +47,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         
         // Do any additional setup after loading the view.
     }
-
+    
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
@@ -80,14 +82,28 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
-//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        if indexPath.section == 0 {
-//          return  100
-//        }else{
-//           return 100
-//        }
-//       
-//    }
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            if indexPath.row==0 {
+                return 40
+            }else if indexPath.row==1{
+            
+            return 30
+            }else if indexPath.row==2{
+               
+                let height = Int(NSUserDefaults.standardUserDefaults().stringForKey("height") ?? "0")
+                let cellHeight:CGFloat = CGFloat(height!)
+                return cellHeight
+            }else{
+            
+                return 220
+            }
+         
+        }else{
+           return 100
+        }
+//       return 0
+    }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell1:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cellIntenfer")!
@@ -99,17 +115,14 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             cell1.selectionStyle = .None
             cell1.textLabel?.numberOfLines = 0
             if indexPath.row == 0 {
-                //if cell1== nil {
-                   cell1 = UITableViewCell.init(style: .Default, reuseIdentifier: "cellIntenfer")
-               // }
+               
+                cell1 = UITableViewCell.init(style: .Default, reuseIdentifier: "cellIntenfer")
                 cell1.textLabel?.text = newsInfo?.post_title
-                tableView.rowHeight=40
-                //cell.backgroundColor = UIColor.greenColor()
+                //tableView.rowHeight=40
+              
                 
             }else if indexPath.row == 1 {
-//                if cell==nil {
-//                    <#code#>
-//                }
+
                 let cell = tableView.dequeueReusableCellWithIdentifier("sourceCell", forIndexPath: indexPath)as! NewsSourceCell
                
                 cell.source.text = cell.source.text!+(newsInfo?.post_source)!
@@ -117,8 +130,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                // cell.checkNum.text = newsInfo?.post_like
                 let time:Array = (newsInfo?.post_date?.componentsSeparatedByString(" "))!
                 cell.createTime.text = time[0]
-                //cell.backgroundColor = UIColor.redColor()
-                tableView.rowHeight=30
+                
+                //tableView.rowHeight=30
 
             }else if indexPath.row == 2 {
                 
@@ -131,11 +144,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let requestUrl = NSURL(string:url)
                 let request = NSURLRequest(URL:requestUrl!)
                 cell.contentWebView.loadRequest(request)
-                
-                let height = Int(NSUserDefaults.standardUserDefaults().stringForKey("height")!)
+               
+                let height = Int(NSUserDefaults.standardUserDefaults().stringForKey("height") ?? "0")
                 tableView.rowHeight = CGFloat(height!)
                 print(height)
-               
+                return cell
                
             }else{
                 
@@ -158,7 +171,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     shareBtn.setImage(UIImage(named: shareArr[i]), forState: .Normal)
                     shareBtn.addTarget(self, action: #selector(self.shareTheNews(_:)), forControlEvents: .TouchUpInside)
                     cell3.addSubview(shareBtn)
-                    //tableView.rowHeight=250
+                    
                     
                 }
                 let zan = UIButton(frame: CGRectMake(WIDTH*148/375, WIDTH*80/375, WIDTH*80/375, WIDTH*80/375))
@@ -189,7 +202,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell3.addSubview(zan)
                 cell3.addSubview(line)
                 cell3.addSubview(share)
-                tableView.rowHeight=200
+                //tableView.rowHeight=200
                 return cell3
             }
 
@@ -205,19 +218,81 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             cell.contant.text = "真的很累吗？累就对了，舒服是留给死人的！苦-才是人生 ，累-才是工作， 变-才是命运 ， 忍-才是历练，容-才是智慧 ， 静-才是修养，舍-才是得到 ，做-才是拥有！"
             cell.titImage.image = UIImage(named: "1.png")
             tableView.rowHeight=100
-//            if indexPath.row == 0 {
-//                print(tableView.rowHeight)
-//                
-//                cell.backgroundColor = UIColor.redColor()
-//            }
             return cell
         }
         return cell1
         
     }
-    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        
+        webView.frame.size.height = webView.scrollView.contentSize.height
+        //myTableView.endUpdates()
+    }
    
     func shareTheNews(btn:UIButton) {
+        let shareParames = NSMutableDictionary()
+        // let image : UIImage = UIImage(named: "btn_setting_qq_login")!
+        //判断是否有图片,如果没有设置默认图片
+        shareParames.SSDKSetupShareParamsByText("分享内容",
+                                                images : UIImage(named: "1.png"),
+                                                url : NSURL(string:"http://mob.com"),
+                                                title : "分享标题",
+                                                type : SSDKContentType.Auto)
+
+        if btn.tag==0 {
+            if WXApi.isWXAppInstalled() {
+                
+                //微信朋友圈分享
+                ShareSDK.share(SSDKPlatformType.SubTypeWechatTimeline, parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
+                    
+                    switch state{
+                        
+                    case SSDKResponseState.Success:
+                        print("分享成功")
+                    
+                        let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
+                        alert.show()
+                        
+                    case SSDKResponseState.Fail:    print("分享失败,错误描述:\(error)")
+                    case SSDKResponseState.Cancel:  print("分享取消")
+                        
+                    default:
+                        break
+                    }
+                }
+            }else{
+                let alertView = UIAlertView.init(title:"提示" , message: "没有安装微信", delegate: self, cancelButtonTitle: "确定")
+                alertView.show()
+                
+            }
+        }else if btn.tag == 1{
+            if WXApi.isWXAppInstalled() {
+                //微信好友分享
+                ShareSDK.share(SSDKPlatformType.SubTypeWechatSession , parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
+                    
+                    switch state{
+                        
+                    case SSDKResponseState.Success:
+                        print("分享成功")
+                        let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
+                        alert.show()
+                        
+                    case SSDKResponseState.Fail:    print("分享失败,错误描述:\(error)")
+                    case SSDKResponseState.Cancel:  print("分享取消")
+                        
+                    default:
+                        break
+                    }
+                }
+            }else{
+                let alertView = UIAlertView.init(title:"提示" , message: "没有安装微信", delegate: self, cancelButtonTitle: "确定")
+                alertView.show()
+                
+            }
+        
+        }
+        
+        
         print(btn.tag)
         
         

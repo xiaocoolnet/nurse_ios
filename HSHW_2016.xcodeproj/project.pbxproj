@@ -75,6 +75,11 @@
 		18C240621CEF10150059BF48 /* OnlineExaminationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */; };
 		18D5B61A1CEA17320014F846 /* EveryDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6191CEA17320014F846 /* EveryDayViewController.swift */; };
 		D1FC268C65F633C38728A1DB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */; };
+		F604A4DC1D0E79F7008A4888 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4DB1D0E79F7008A4888 /* libicucore.tbd */; };
+		F604A4DE1D0E7A03008A4888 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4DD1D0E7A03008A4888 /* libz.tbd */; };
+		F604A4E01D0E7A16008A4888 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4DF1D0E7A16008A4888 /* libstdc++.tbd */; };
+		F604A4E21D0E7A1D008A4888 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4E11D0E7A1D008A4888 /* JavaScriptCore.framework */; };
+		F604A4E41D0E7A2E008A4888 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4E31D0E7A2E008A4888 /* libsqlite3.tbd */; };
 		F61228051D0558C4009E3D4D /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61228041D0558C4009E3D4D /* NewsModel.swift */; };
 		F61228091D057B1E009E3D4D /* HuLiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61228081D057B1E009E3D4D /* HuLiViewController.swift */; };
 		F612280B1D0581D7009E3D4D /* JianKangViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612280A1D0581D7009E3D4D /* JianKangViewController.swift */; };
@@ -200,6 +205,11 @@
 		18D5B6191CEA17320014F846 /* EveryDayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayViewController.swift; sourceTree = "<group>"; };
 		ACDDECCAF15EF7167B841BC0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F604A4DB1D0E79F7008A4888 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		F604A4DD1D0E7A03008A4888 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		F604A4DF1D0E7A16008A4888 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		F604A4E11D0E7A1D008A4888 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F604A4E31D0E7A2E008A4888 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		F61228041D0558C4009E3D4D /* NewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		F61228081D057B1E009E3D4D /* HuLiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuLiViewController.swift; sourceTree = "<group>"; };
 		F612280A1D0581D7009E3D4D /* JianKangViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JianKangViewController.swift; sourceTree = "<group>"; };
@@ -219,6 +229,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F604A4E41D0E7A2E008A4888 /* libsqlite3.tbd in Frameworks */,
+				F604A4E21D0E7A1D008A4888 /* JavaScriptCore.framework in Frameworks */,
+				F604A4E01D0E7A16008A4888 /* libstdc++.tbd in Frameworks */,
+				F604A4DE1D0E7A03008A4888 /* libz.tbd in Frameworks */,
+				F604A4DC1D0E79F7008A4888 /* libicucore.tbd in Frameworks */,
 				F6B75F901D090728009DE2E6 /* ImageIO.framework in Frameworks */,
 				D1FC268C65F633C38728A1DB /* Pods.framework in Frameworks */,
 			);
@@ -676,6 +691,11 @@
 		F1AF83881B75F01938A9D1A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F604A4E31D0E7A2E008A4888 /* libsqlite3.tbd */,
+				F604A4E11D0E7A1D008A4888 /* JavaScriptCore.framework */,
+				F604A4DF1D0E7A16008A4888 /* libstdc++.tbd */,
+				F604A4DD1D0E7A03008A4888 /* libz.tbd */,
+				F604A4DB1D0E79F7008A4888 /* libicucore.tbd */,
 				F6B75F8F1D090728009DE2E6 /* ImageIO.framework */,
 				F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */,
 			);
@@ -1086,10 +1106,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -1128,10 +1150,10 @@
 					"\"YYWebImage\"",
 					"-Objc",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "74c6f1e5-9d20-498d-8247-d44d54430e4d";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/公司/NURSE_2016_ios/HSHW_2016/OC_Header.h";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/6.13备份2/nurse_ios/HSHW_2016/OC_Header.h";
 			};
 			name = Debug;
 		};
@@ -1141,10 +1163,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-framework",
@@ -1183,10 +1207,10 @@
 					"\"YYWebImage\"",
 					"-Objc",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "74c6f1e5-9d20-498d-8247-d44d54430e4d";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/公司/NURSE_2016_ios/HSHW_2016/OC_Header.h";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/6.13备份2/nurse_ios/HSHW_2016/OC_Header.h";
 			};
 			name = Release;
 		};

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '5C8AFC9225F45DFBA23B2D03'
+               BlueprintIdentifier = '38E24AAA83EC0344C208B856'
                BlueprintName = 'FBLikeLayout'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'FBLikeLayout.framework'>

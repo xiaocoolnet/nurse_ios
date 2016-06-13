@@ -17,6 +17,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+    
+        
+        ShareSDK.registerApp("13be4c6c247e0", activePlatforms:
+            
+            [SSDKPlatformType.TypeQQ.rawValue,SSDKPlatformType.TypeWechat.rawValue], onImport: { (platform : SSDKPlatformType) -> Void in
+                
+                switch platform{
+//                case SSDKPlatformType.TypeQQ:
+//                    ShareSDKConnector.connectQQ(QQApiInterface.classForCoder(), tencentOAuthClass: TencentOAuth.classForCoder())
+                case SSDKPlatformType.TypeWechat:
+                    ShareSDKConnector.connectWeChat(WXApi.classForCoder())
+                    
+                default:
+                    break
+                    
+                }
+                
+        }) { (platform : SSDKPlatformType,appInfo : NSMutableDictionary!) -> Void in
+            switch platform {
+                
+//            case  SSDKPlatformType.TypeQQ:
+//                appInfo.SSDKSetupQQByAppId("1105281857", appKey: "bysMNvzaiLTMsXjQ", authType: "qq分享")
+//                break
+            case SSDKPlatformType.TypeWechat:
+                //设置微信应用信息
+                appInfo.SSDKSetupWeChatByAppId("wxe61df5d7fee96861", appSecret: "0dbfa83f68bfca4d3b60412e581301e2")
+                break
+            default:
+                break
+            }
+            
+            
+        }
+        
+
+        
+        
+        
         
         NSThread.sleepForTimeInterval(2.0)
         

@@ -12,4 +12,9 @@ pod 'IQKeyboardManagerSwift'
 pod 'ImageSlideshow', '~> 0.2.2'
 pod 'ImageSlideshow/AFURL'
 pod 'FBLikeLayout'
-pod 'SDWebImage', '~> 3.7.3’ 
+pod 'SDWebImage', '~> 3.7.3’
+ pod 'ShareSDK3'
+pod 'MOBFoundation'
+ pod 'ShareSDK3/ShareSDKUI'
+ pod 'ShareSDK3/ShareSDKPlatforms/SinaWeibo'
+ pod 'ShareSDK3/ShareSDKPlatforms/WeChat' 
