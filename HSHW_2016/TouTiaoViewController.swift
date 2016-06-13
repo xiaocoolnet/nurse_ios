@@ -205,6 +205,9 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
         cell.timeLab.text = time[0]
         cell.contant.text = newsInfo.post_excerpt
+        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 14, width: WIDTH-140)
+        print(titleHeight)
+        cell.titLab.frame.size.height = titleHeight
 //        if newsInfo.smeta==nil {
 //            cell.titImage.image = UIImage(named: "1.png")
 //        }

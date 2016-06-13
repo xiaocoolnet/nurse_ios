@@ -195,6 +195,9 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.timeLab.text = time[0]
         cell.contant.text = newsInfo.post_excerpt
         cell.contant.text = newsInfo.post_excerpt
+        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 14, width: WIDTH-140)
+        print(titleHeight)
+        cell.titLab.frame.size.height = titleHeight
         // cell.contant.text = "真的很累吗？累就对了，舒服是留给死人的！苦-才是人生 ，累-才是工作， 变-才是命运 ， 忍-才是历练，容-才是智慧 ， 静-才是修养，舍-才是得到 ，做-才是拥有！"
         cell.titImage.image = UIImage(named: "1.png")
         
