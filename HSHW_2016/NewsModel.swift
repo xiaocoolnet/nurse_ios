@@ -57,12 +57,13 @@ class NewsInfo: JSONJoy{
     var create_time:String?
     var post_excerpt:String?
     var tid:String?
-    var id : String?
+    var object_id : String?
     var post_source :String?
     var post_content:String?
     var post_like:String?
     var post_date:String?
     var recommended:String?
+    var thumb:String?
     
     var smeta :JSONDecoder?
     
@@ -75,12 +76,12 @@ class NewsInfo: JSONJoy{
         post_excerpt = decoder["post_excerpt"].string
         post_date = decoder["post_date"].string
         tid = decoder["tid"].string
-        id = decoder["id"].string
+        object_id = decoder["object_id"].string
         post_source = decoder["post_source"].string
         post_content = decoder["post_content"].string
         post_like = decoder["post_like"].string
         recommended = decoder["recommended"].string
-      
+        thumb = decoder["thumb"].string
         smeta = decoder["smeta"]
         print(post_excerpt)
         

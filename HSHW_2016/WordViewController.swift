@@ -12,7 +12,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
 
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-    //    var timer = NSTimer()
+    var timer = NSTimer()
     let choose:[String] = ["A、消化道症状","B、胃液分析","C、胃镜检查","D、血清学检查","E、胃肠X线检查"]
     let picArr:[String] = ["btn_arrow_left.png","btn_arrow_right.png","ic_fenlei.png","btn_eye.png","btn_collet.png"]
     let picName:[String] = ["答题卡","答案","收藏"]
@@ -21,11 +21,11 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     var TitQues = UILabel()
     var btnOne = UIButton()
     var btnTwo = UIButton()
-   
+    let time = UILabel(frame: CGRectMake(WIDTH-50, 14, 40, 12))
     let grayBack = UIView()
     var hear = Bool()
     
-    let questBack = UIView()
+    let questBack = UIView()//答题卡视图
     var over = Bool()
     
     var collection = Bool()
@@ -35,10 +35,12 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.doTimer()
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
-        
+        time.text = "59"
+        //timer = NSTimer.scheduledTimerWithTimeInterval(1,target:self,selector:#selector(WordViewController.changeTime),userInfo:nil,repeats:true)
         let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: #selector(self.takeUpTheTest))
         navigationItem.rightBarButtonItem = rightBtn
         
@@ -55,6 +57,25 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         
         // Do any additional setup after loading the view.
     }
+//    func changeTime(){
+//    
+//        let timeInt:Int = Int(time.text!)!-1
+//    
+//        time.text = String(timeInt)
+//    
+//    }
+    
+    func doTimer(){
+        let timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(WordViewController.timerFireMethod(_:)), userInfo: nil, repeats:true);
+        timer.fire()
+    }
+    func timerFireMethod(timer: NSTimer) {
+        let formatter = NSDateFormatter();
+        formatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
+        let strNow = formatter.stringFromDate(NSDate())
+        time.text  = "\(strNow)"
+    }
+    
 //    答题卡视图
     func questionCard() {
         questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
@@ -165,35 +186,43 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.delegate = self
+        
+       
         for i in 0...9 {
+            let contentScrollView :UIScrollView = UIScrollView.init()
+            contentScrollView.frame = CGRectMake(CGFloat(i)*WIDTH+10, 54, WIDTH-20, HEIGHT-221)
+            contentScrollView.backgroundColor = UIColor.whiteColor()
+            contentScrollView.layer.cornerRadius = 5
+            
+            
             let backView = UIView()
             let backGound = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH,44))
             
-            backView.frame = CGRectMake(CGFloat(i)*WIDTH, 44, WIDTH, HEIGHT-163)
+            backView.frame = CGRectMake(CGFloat(i)*WIDTH, 44, WIDTH, HEIGHT-163)//背景
             backView.backgroundColor = COLOR
             backView.tag = i+1
-            let back = UIView(frame: CGRectMake(CGFloat(i)*WIDTH+10, 54, WIDTH-20, HEIGHT-221))
+            let back = UIView(frame: CGRectMake(CGFloat(i)*WIDTH+10, 54, WIDTH-20, HEIGHT-221))//白色答题区域
             back.backgroundColor = UIColor.whiteColor()
             back.layer.cornerRadius = 5
-            let dian = UIImageView(frame: CGRectMake(10, 16, 12, 12))
-            dian.image = UIImage(named: "ic_choice.png")
-            backGound.addSubview(dian)
-            let dianxuan = UILabel(frame: CGRectMake(24, 12.5, 40, 17))
-            dianxuan.font = UIFont.systemFontOfSize(18)
-            dianxuan.text = "单选题"
-            dianxuan.sizeToFit()
-            backGound.addSubview(dianxuan)
-            let tit = UILabel(frame: CGRectMake(28+dianxuan.bounds.size.width, 18.5, 40, 12))
+            let dan = UIImageView(frame: CGRectMake(10, 16, 12, 12))
+            dan.image = UIImage(named: "ic_choice.png")
+            backGound.addSubview(dan)
+            let danxuan = UILabel(frame: CGRectMake(24, 12.5, 40, 17))
+            danxuan.font = UIFont.systemFontOfSize(18)
+            danxuan.text = "单选题"
+            danxuan.sizeToFit()
+            backGound.addSubview(danxuan)
+            let tit = UILabel(frame: CGRectMake(28+danxuan.bounds.size.width, 18.5, 40, 12))
             tit.font = UIFont.systemFontOfSize(12)
             tit.textColor = GREY
             tit.text = "（A1，2分）"
             tit.sizeToFit()
             backGound.addSubview(tit)
-            let time = UILabel(frame: CGRectMake(WIDTH-50, 14, 40, 12))
+            //let time = UILabel(frame: CGRectMake(WIDTH-50, 14, 40, 12))
             time.font = UIFont.systemFontOfSize(14)
             time.textAlignment = .Right
             time.textColor = COLOR
-            time.text = "02:59"
+           
             time.sizeToFit()
             backGound.addSubview(time)
             let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.size.width-83, 15, 71, 12))
@@ -207,32 +236,45 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             question.numberOfLines = 0
             question.textAlignment = .Natural
             question.font = UIFont.systemFontOfSize(14)
-            question.text = "1、你看过海鸥捕食吗？ 一群海鸥绕着海岸飞啊飞啊， 看准了水下的鱼，收了翅膀， 一猛子就扎下去， 那样子，根本就像寻死。 自由落体似的掉进水里，不管不顾，就如同爱情。 只不过，有的满载而归， 有的，一无所获……"
+            question.text = "1、你看过海鸥捕食吗？ 一群海鸥绕着海岸飞啊飞啊， 看准了水下的鱼，收了翅膀， 一猛子就扎下去， 那样子，根本就像寻死。 自由落体似的掉进水里，不管不顾，就如同爱情。 只不过，有的满载而归， 有的，一无所获你看过海鸥捕食吗？ 一群海鸥绕着海岸飞啊飞啊， 看准了水下的鱼，收了翅膀， 一猛子就扎下去， 那样子，根本就像寻死。 自由落体似的掉进水里，不管不顾，就如同爱情。 只不过，有的满载而归， 有的，一无所获你看过海鸥捕食吗？ 一群海鸥绕着海岸飞啊飞啊， 看准了水下的鱼，收了翅膀， 一猛子就扎下去， 那样子，根本就像寻死。 自由落体似的掉进水里，不管不顾，就如同爱情。 只不过，有的满载而归， 有的，一无所获"
             question.sizeToFit()
-            back.addSubview(question)
+            contentScrollView.addSubview(question)
+            //back.addSubview(question)
             
             
             for j in 0...4 {
-                let tit = UILabel(frame: CGRectMake(WIDTH*51/375, back.bounds.size.height-WIDTH*316/375+CGFloat(j)*65/375*WIDTH, WIDTH/2, 17))
-                tit.font = UIFont.systemFontOfSize(18)
-                tit.textColor = COLOR
-                tit.text = choose[j]
-                tit.sizeToFit()
-                back.addSubview(tit)
+             
 
-                let btn = UIButton(frame: CGRectMake(WIDTH*21/375, back.bounds.size.height-WIDTH*330/375+CGFloat(j)*66/375*WIDTH, WIDTH*314/375, WIDTH*46/375))
+                //let btn = UIButton(frame: CGRectMake(WIDTH*21/375, back.bounds.size.height-WIDTH*330/375+CGFloat(j)*66/375*WIDTH, WIDTH*314/375, WIDTH*46/375))
+                let btn = UIButton(frame: CGRectMake(WIDTH*21/375, 5+question.frame.size.height+question.frame.origin.y+(5+WIDTH*46/375)*CGFloat(j), WIDTH*314/375, WIDTH*46/375))
+                //btn.setTitle("wefdgh", forState: UIControlState.Normal)
                 btn.tag = j+1
                 btn.layer.cornerRadius = WIDTH*23/375
                 btn.layer.borderColor = COLOR.CGColor
                 btn.layer.borderWidth = 1
                 btn.addTarget(self, action: #selector(self.pleaseChooseOne(_:)), forControlEvents: .TouchUpInside)
-                back.addSubview(btn)
+                //back.addSubview(btn)
+               contentScrollView.addSubview(btn)
+                
+                let tit = UILabel(frame: CGRectMake(WIDTH*51/375, question.frame.size.height+question.frame.origin.y+(btn.frame.size.height-tit.frame.size.height)/2+(5+WIDTH*46/375)*CGFloat(j), WIDTH/2, 17))
+//                let tit = UILabel(frame: CGRectMake(WIDTH*51/375, back.bounds.size.height-WIDTH*255/375+CGFloat(j)*50/375*WIDTH, WIDTH/2, 17))
+                //let tit = UILabel(frame: CGRectMake(WIDTH*51/375, question.frame.size.height+question.frame.origin.y+17*CGFloat(j), WIDTH/2, 17))
+                tit.font = UIFont.systemFontOfSize(18)
+                tit.textColor = COLOR
+                tit.text = choose[j]
+                tit.sizeToFit()
+                contentScrollView.addSubview(tit)
+                let titHeight = calculateHeight(question.text!, size: 14, width: contentScrollView.bounds.size.width-WIDTH*38/375)
+                let btnHeight = WIDTH*46/375*5+20
+                print(titHeight)
+                //back.addSubview(tit)
+                contentScrollView.contentSize = CGSizeMake(WIDTH-20, titHeight+btnHeight+WIDTH*15/375*2)
                 
             }
             
             scrollView.addSubview(backGound)
             scrollView.addSubview(backView)
-            scrollView.addSubview(back)
+            scrollView.addSubview(contentScrollView)
         }
 
         scrollView.contentSize = CGSizeMake(10*WIDTH, 0)

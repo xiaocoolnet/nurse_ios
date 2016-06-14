@@ -175,22 +175,22 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         return self.dataSource.count;
     }
     
-//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        let newsInfo = self.dataSource.objectlist[indexPath.row]
-//        
-//        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
-//        let screenBounds:CGRect = UIScreen.mainScreen().bounds
-//        let boundingRect = String(newsInfo.post_excerpt).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-//      print(boundingRect.height)
-//        if boundingRect.height+60>100 {
-//            return boundingRect.height+60
-//        }else{
-//        
-//            return 100
-//        }
-//       // newsInfo.post_excerpt
-//        //return 40
-//    }
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let newsInfo = self.dataSource.objectlist[indexPath.row]
+        
+        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+        let screenBounds:CGRect = UIScreen.mainScreen().bounds
+        let boundingRect = String(newsInfo.post_title).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
+      print(boundingRect.height)
+        if boundingRect.height+60>100 {
+            return boundingRect.height+60
+        }else{
+        
+            return 100
+        }
+       // newsInfo.post_excerpt
+        //return 40
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -206,14 +206,20 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         cell.timeLab.text = time[0]
         cell.contant.text = newsInfo.post_excerpt
         let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 14, width: WIDTH-140)
+        print(newsInfo.post_title)
         print(titleHeight)
         cell.titLab.frame.size.height = titleHeight
-//        if newsInfo.smeta==nil {
-//            cell.titImage.image = UIImage(named: "1.png")
-//        }
-        //cell.titImage.sd_setImageWithURL(NSURL(String:url), placeholderImage: UIImage(named: "1.png"))
-        //cell.titImage.sd_setImageWithURL(NSURL(string: url ),placeholderImage: UIImage(named: "默认.jpg"))
-        cell.titImage.image = UIImage(named: "1.png")
+        cell.heal.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+        cell.conNum.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+        cell.timeLab.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+        cell.comBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+        cell.timeBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+        cell.contant.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+20
+        print(newsInfo.thumb)
+        let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
+        print(photoUrl)
+        cell.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
+        //cell.titImage.image = UIImage(named: "1.png")
         return cell
    
     }

@@ -39,7 +39,7 @@ class TouTiaoTableViewCell: UITableViewCell {
 //        heal.titleLabel?.font = UIFont.systemFontOfSize(10)
 //        heal.setTitle("健康常识", forState: .Normal)
 //        heal.setTitleColor(COLOR, forState: .Normal)
-        heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+20, 46, 15)
+        heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+10, 46, 15)
         heal.layer.cornerRadius = 3
         heal.layer.borderColor = COLOR.CGColor
         heal.layer.borderWidth = 0.4
@@ -50,23 +50,23 @@ class TouTiaoTableViewCell: UITableViewCell {
 //        conNum.font = UIFont.systemFontOfSize(9)
 //        conNum.textAlignment = .Left
 //        conNum.textColor = GREY
-        conNum.frame = CGRectMake(79, titLab.frame.size.height+titLab.frame.origin.y+20, 30, 15)
+        conNum.frame = CGRectMake(79, titLab.frame.size.height+titLab.frame.origin.y+10, 30, 15)
         conNum.font = UIFont.systemFontOfSize(9)
         conNum.textAlignment = .Left
         conNum.textColor = GREY
 //        timeLab.frame = CGRectMake(120, 34, 80, 15)
 //        timeLab.font = UIFont.systemFontOfSize(9)
 //        timeLab.textColor = GREY
-        timeLab.frame = CGRectMake(120, titLab.frame.size.height+titLab.frame.origin.y+20, 80, 15)
+        timeLab.frame = CGRectMake(120, titLab.frame.size.height+titLab.frame.origin.y+10, 80, 15)
         timeLab.font = UIFont.systemFontOfSize(9)
         timeLab.textColor = GREY
 //        comBtn.frame = CGRectMake(62, 35.5, 18, 12)
 //        comBtn.setImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
-        comBtn.frame = CGRectMake(62, titLab.frame.size.height+titLab.frame.origin.y+20, 18, 12)
+        comBtn.frame = CGRectMake(62, titLab.frame.size.height+titLab.frame.origin.y+10, 18, 12)
         comBtn.setImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
 //        timeBtn.frame = CGRectMake(106, 34.5, 14, 14)
 //        timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
-        timeBtn.frame = CGRectMake(106, titLab.frame.size.height+titLab.frame.origin.y+20, 14, 14)
+        timeBtn.frame = CGRectMake(106, titLab.frame.size.height+titLab.frame.origin.y+10, 14, 14)
         timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
 //        contant.frame = CGRectMake(10, 50, WIDTH-140, 40)
 //        contant.numberOfLines = 0

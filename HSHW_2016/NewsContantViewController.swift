@@ -15,7 +15,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     let shareArr:[String] = ["ic_pengyouquan.png","ic_wechat.png","ic_weibo.png"]
     var newsInfo :NewsInfo?
     var heightDic :NSMutableDictionary = [:]
-
+    let webView :UIWebView = UIWebView.init()
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = false
@@ -30,7 +30,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         self.view.backgroundColor = UIColor.whiteColor()
-        
+        webView.delegate = self
         myTableView.frame = CGRectMake(0, 3, WIDTH, HEIGHT-60)
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.delegate = self
@@ -42,6 +42,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         myTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.registerNib(UINib.init(nibName: "NewsSourceCell", bundle: nil), forCellReuseIdentifier: "sourceCell")
         myTableView.registerNib(UINib.init(nibName: "contentCell", bundle: nil), forCellReuseIdentifier: "webView")
+        myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "textCell")
         self.view.addSubview(myTableView)
         myTableView.separatorColor = UIColor.clearColor()
         
@@ -85,15 +86,21 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
             if indexPath.row==0 {
-                return 40
+                
+                let height = calculateHeight((newsInfo?.post_title)!, size: 14, width: WIDTH-20)
+                print(newsInfo?.post_title)
+                print(height)
+                return height
             }else if indexPath.row==1{
             
             return 30
             }else if indexPath.row==2{
                
                 let height = Int(NSUserDefaults.standardUserDefaults().stringForKey("height") ?? "0")
+                print(height)
                 let cellHeight:CGFloat = CGFloat(height!)
                 return cellHeight
+                return 500
             }else{
             
                 return 220
@@ -118,6 +125,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                
                 cell1 = UITableViewCell.init(style: .Default, reuseIdentifier: "cellIntenfer")
                 cell1.textLabel?.text = newsInfo?.post_title
+                cell1.textLabel?.numberOfLines = 0
                 //tableView.rowHeight=40
               
                 
@@ -134,25 +142,29 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 //tableView.rowHeight=30
 
             }else if indexPath.row == 2 {
-                
+               // let cell2:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("textCell")!
+//                let webView :UIWebView = UIWebView.init()
+                webView.frame = CGRectMake(0, 0, WIDTH, 500)
+                webView.backgroundColor = UIColor.redColor()
+//                webView.delegate = self
+                cell1.addSubview(webView)
                 let cell = tableView.dequeueReusableCellWithIdentifier("webView", forIndexPath: indexPath)as! contentCell
-                //let url = NewsInfo_Header+(newsInfo?.id)!
-               // print(url)
-
-
-                let url = "http://api.interface.canka168.com/m.php/ntes/special/NewsMatter/?ids=1829"
+                let url = NewsInfo_Header+(newsInfo?.object_id)!
+                print(url)
                 let requestUrl = NSURL(string:url)
                 let request = NSURLRequest(URL:requestUrl!)
                 cell.contentWebView.loadRequest(request)
-               
-                let height = Int(NSUserDefaults.standardUserDefaults().stringForKey("height") ?? "0")
-                tableView.rowHeight = CGFloat(height!)
+                 let height = Int(NSUserDefaults.standardUserDefaults().stringForKey("height") ?? "0")
+                //tableView.rowHeight = CGFloat(height!)
+                
                 print(height)
                 return cell
+//                tableView.rowHeight = webView.frame.size.height
+//                webView.loadRequest(request)
                
             }else{
                 
-                 let cell3 = tableView.dequeueReusableCellWithIdentifier("zanCell", forIndexPath: indexPath)
+                let cell3 = tableView.dequeueReusableCellWithIdentifier("zanCell", forIndexPath: indexPath)
                 cell3.selectionStyle = .None
                 let line = UILabel(frame: CGRectMake(WIDTH*63/375, 14.5, WIDTH*250/375, 1))
                 line.backgroundColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1.0)
@@ -202,7 +214,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell3.addSubview(zan)
                 cell3.addSubview(line)
                 cell3.addSubview(share)
-                //tableView.rowHeight=200
                 return cell3
             }
 
@@ -223,11 +234,20 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         return cell1
         
     }
-    func webViewDidFinishLoad(webView: UIWebView) {
-        
-        webView.frame.size.height = webView.scrollView.contentSize.height
-        //myTableView.endUpdates()
-    }
+    
+//    func webViewDidFinishLoad(webView: UIWebView) {
+//        
+//        if webView.loading {
+//            return
+//        }else{
+//            print("aaaa")
+//        webView.frame.size.height = webView.scrollView.contentSize.height
+//        
+//        print(webView.frame.size.height)
+//        myTableView.reloadData()
+//        }
+//      
+//    }
    
     func shareTheNews(btn:UIButton) {
         let shareParames = NSMutableDictionary()

@@ -185,8 +185,17 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.timeLab.text = time[0]
         cell.contant.text = newsInfo.post_excerpt
         cell.contant.text = newsInfo.post_excerpt
+        cell.heal.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+        cell.conNum.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+        cell.timeLab.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+        cell.comBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+        cell.timeBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+        cell.contant.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+20
         // cell.contant.text = "真的很累吗？累就对了，舒服是留给死人的！苦-才是人生 ，累-才是工作， 变-才是命运 ， 忍-才是历练，容-才是智慧 ， 静-才是修养，舍-才是得到 ，做-才是拥有！"
-        cell.titImage.image = UIImage(named: "1.png")
+        let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
+        print(photoUrl)
+        cell.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
+
         
         return cell
         

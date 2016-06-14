@@ -30,33 +30,40 @@ class EveryDayTableViewCell: UITableViewCell {
         titLab.frame = CGRectMake(57, 15, WIDTH/3, 30)
         titLab.font = UIFont.systemFontOfSize(18)
         titLab.backgroundColor = UIColor.redColor()
-        start.frame = CGRectMake(WIDTH-115, 10, 100, 40)
+        start.frame = CGRectMake(WIDTH-10-WIDTH/4, 15, WIDTH/4, 30)
         start.setTitle("开始作答", forState: .Normal)
         start.setTitleColor(COLOR, forState: .Normal)
         start.layer.cornerRadius = 15
         start.layer.borderColor = COLOR.CGColor
         start.layer.borderWidth = 1
         //let one = UILabel(frame: CGRectMake(WIDTH-150, 10, 25, 40))
-        let one = UILabel(frame: CGRectMake(num.frame.origin.x+20, 10, 25, 40))
+        
+        let one = UILabel(frame: CGRectMake(start.frame.origin.x-30, 10, 25, 40))
+        
         one.font = UIFont.systemFontOfSize(12)
+        one.backgroundColor = UIColor.redColor()
         one.textAlignment = .Center
         one.textColor = UIColor.grayColor()
         one.text = "道题"
+        //num.frame = CGRectMake(WIDTH-168, 10, 20, 40)
+        num.frame = CGRectMake(one.frame.origin.x-20, 10, 20, 40)
+        num.font = UIFont.systemFontOfSize(12)
+        num.textAlignment = .Center
+        //num.text =  "100"
         
-        let two = UILabel(frame: CGRectMake(titLab.frame.origin.x+WIDTH/3, 10, 15, 40))
+        let two = UILabel(frame: CGRectMake(num.frame.origin.x-10, 10, 15, 40))
+        //let two = UILabel(frame: CGRectMake(num.frame.origin.x-30, 10, 15, 40))
+        two.backgroundColor = UIColor.greenColor()
         two.font = UIFont.systemFontOfSize(12)
         two.textAlignment = .Center
         two.textColor = UIColor.grayColor()
         two.text = "共"
         two.backgroundColor = UIColor.greenColor()
-        //num.frame = CGRectMake(WIDTH-168, 10, 20, 40)
-        num.frame = CGRectMake(two.frame.origin.x + 15, 10, 20, 40)
-        num.font = UIFont.systemFontOfSize(12)
-        num.textAlignment = .Center
-        
+       
         self.addSubview(one)
-        self.addSubview(two)
         self.addSubview(num)
+        self.addSubview(two)
+       
         self.addSubview(titImage)
         self.addSubview(titLab)
         self.addSubview(start)
