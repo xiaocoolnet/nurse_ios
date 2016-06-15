@@ -21,7 +21,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     var TitQues = UILabel()
     var btnOne = UIButton()
     var btnTwo = UIButton()
-    let time = UILabel(frame: CGRectMake(WIDTH-50, 14, 40, 12))
+    let time = UILabel()
     let grayBack = UIView()
     var hear = Bool()
     
@@ -35,11 +35,13 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.doTimer()
+        
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
-        time.text = "59"
+        
+        //time.text = "59"
+        //self.doTimer()
         //timer = NSTimer.scheduledTimerWithTimeInterval(1,target:self,selector:#selector(WordViewController.changeTime),userInfo:nil,repeats:true)
         let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: #selector(self.takeUpTheTest))
         navigationItem.rightBarButtonItem = rightBtn
@@ -57,24 +59,25 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         
         // Do any additional setup after loading the view.
     }
-//    func changeTime(){
-//    
-//        let timeInt:Int = Int(time.text!)!-1
-//    
-//        time.text = String(timeInt)
-//    
-//    }
+
     
-    func doTimer(){
-        let timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(WordViewController.timerFireMethod(_:)), userInfo: nil, repeats:true);
-        timer.fire()
-    }
-    func timerFireMethod(timer: NSTimer) {
-        let formatter = NSDateFormatter();
-        formatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
-        let strNow = formatter.stringFromDate(NSDate())
-        time.text  = "\(strNow)"
-    }
+//    func doTimer(){
+//        let timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(WordViewController.timerFireMethod(_:)), userInfo: nil, repeats:true);
+//        timer.fire()
+//    }
+//    func timerFireMethod(timer: NSTimer) {
+//        print(time.text)
+//        var scend:Int =  Int(time.text!)!
+//        scend = scend-1
+//        print(String(scend))
+//        time.text = String(scend)
+//        
+//        
+////        let formatter = NSDateFormatter();
+////        formatter.dateFormat = "MM/dd/yyyy HH:mm:ss"
+////        let strNow = formatter.stringFromDate(NSDate())
+//        time.text  = "\(time)"
+//    }
     
 //    答题卡视图
     func questionCard() {
@@ -218,17 +221,20 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             tit.text = "（A1，2分）"
             tit.sizeToFit()
             backGound.addSubview(tit)
-            //let time = UILabel(frame: CGRectMake(WIDTH-50, 14, 40, 12))
+            
+            time.frame = CGRectMake(WIDTH-30, 14, 40, 12)
+            time.backgroundColor = UIColor.redColor()
+            time.text = "120"
             time.font = UIFont.systemFontOfSize(14)
             time.textAlignment = .Right
             time.textColor = COLOR
-           
             time.sizeToFit()
             backGound.addSubview(time)
+            
             let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.size.width-83, 15, 71, 12))
             timelab.font = UIFont.systemFontOfSize(12)
             timelab.textColor = GREY
-            timelab.text = "剩余答题时间"
+            timelab.text = "剩余答题时间:"
             timelab.textAlignment = .Right
             timelab.sizeToFit()
             backGound.addSubview(timelab)
