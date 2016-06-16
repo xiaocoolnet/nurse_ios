@@ -293,11 +293,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
                 //  不管填什么内容都走了这个方法
                 if success {
                     
-                    TimeManager.shareManager.begainTimerWithKey("register", timeInterval: 30, process: self.processHandle!, finish: self.finishHandle!)
-                    self.logVM?.sendMobileCodeWithPhoneNumber(self.phoneNum.text!)
-                    
-                    
-                    print("不管填什么内容都不走这个方法")
+
                     let alert = UIAlertView(title:"提示信息",message: "手机已注册",delegate: self,cancelButtonTitle: "确定")
                     
                     alert.show()
@@ -449,8 +445,14 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     
 //                    alert.show()
                     let ud = NSUserDefaults.standardUserDefaults()
-                    ud.setObject(["username":self.phoneNumber.text!,"password":self.password.text!], forKey: "logInfo")
-                    //登录成功                    
+                    //  把得到的用户信息存入到沙盒
+                    //  得到 useID
+                    //
+                        ud.setObject(["username":self.phoneNumber.text!,"password":self.password.text!], forKey: "logInfo")
+                        ud.setObject(QCLoginUserInfo.currentInfo.userid, forKey: "userid")
+                    //登录成功
+                    
+                    print(LoginUserInfo)
                     self.loginSuccess()
                 }
             })
@@ -460,13 +462,12 @@ class ViewController: UIViewController,UITextFieldDelegate {
     //  登录成功
     func loginSuccess(){
             let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        //  得到分栏控制器
             let vc : UITabBarController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UITabBarController
-//            let MineVC = MineViewController()
-        
         //  选择被选中的界面
             vc.selectedIndex = 4
             print(vc)
-        
+        //  模态出个人界面
             self.presentViewController(vc, animated: true, completion: nil)
 //        let alert = UIAlertView (title: "提示信息",message: "登录成功",delegate: self,cancelButtonTitle: "确定")
 //        alert.show()

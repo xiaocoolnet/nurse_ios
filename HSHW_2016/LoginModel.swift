@@ -30,8 +30,15 @@ class LoginModel: NSObject {
             //  进行数据解析
             if result.status == "success"{
                 //  进行赋值
-                //  
+            
                 QCLoginUserInfo.currentInfo.phoneNumber = (result.data?.user_phone)!
+                QCLoginUserInfo.currentInfo.userid = (result.data?.user_id)!
+                QCLoginUserInfo.currentInfo.devicestate = (result.data?.user_devicestate)!
+                QCLoginUserInfo.currentInfo.usertype = (result.data?.user_usertype)!
+                
+                
+                
+              
             }
             let responseStr = result.status == "success" ? nil : result.errorData
             handle(success: result.status == "success",response: responseStr)
@@ -77,7 +84,7 @@ class LoginModel: NSObject {
     }
     //验证手机是否已经注册
     func comfirmPhoneHasRegister(phoneNum:String,handle:ResponseBlock){
-        let paraDic = ["a":"SendMobileCode","phone":phoneNum]
+        let paraDic = ["a":"checkphone","phone":phoneNum]
         requestManager?.GET(PARK_URL_Header, parameters: paraDic, success: { (task, response) in
             let result = Http(JSONDecoder(response))
             let responseStr = result.status == "success" ? nil : result.errorData

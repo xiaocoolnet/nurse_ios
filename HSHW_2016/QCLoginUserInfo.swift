@@ -9,20 +9,12 @@
 import UIKit
 
 class QCLoginUserInfo {
-    var avatar:String = ""
-    var address:String = ""
+
+    
     var phoneNumber:String = ""
+    var devicestate:String = ""
+    var usertype:String = ""
     var userid:String = ""
-    var userName:String = ""
-    var sex:String = ""
-    var currentCar:String = ""
-    var cardid:String = ""
-    var banktype:String = ""
-    var bankBranch:String = ""
-    var bankNo:String = ""
-    var bankUserName:String = ""
-    var cardNumber:String = ""
-    var currentCarBrand = ""
     
     static let currentInfo = QCLoginUserInfo()
     private init() {
