@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     let myTableView = UITableView()
@@ -103,7 +104,13 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //  进行修改的操作
         print(indexPath.row)
+        //  先进行页面的跳转
+        //
+        let changeNameVC = ChangeName()
+        self.navigationController?.pushViewController(changeNameVC, animated: true)
+        
         
     }
 
