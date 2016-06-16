@@ -21,10 +21,13 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     var TitQues = UILabel()
     var btnOne = UIButton()
     var btnTwo = UIButton()
-    let time = UILabel()
+    var time = UILabel()
     let grayBack = UIView()
     var hear = Bool()
+    var timeNow:NSTimer!
+    var minute : Int = 1
     
+    var count:Int = 13
     let questBack = UIView()//答题卡视图
     var over = Bool()
     
@@ -39,10 +42,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
-        
-        //time.text = "59"
-        //self.doTimer()
-        //timer = NSTimer.scheduledTimerWithTimeInterval(1,target:self,selector:#selector(WordViewController.changeTime),userInfo:nil,repeats:true)
         let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: #selector(self.takeUpTheTest))
         navigationItem.rightBarButtonItem = rightBtn
         
@@ -56,10 +55,121 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         self.AnswerView()
         
         collection = true
-        
+        //time.frame = CGRectMake(WIDTH-30, 14, 40, 12)
+        self.timeDow()
         // Do any additional setup after loading the view.
     }
 
+    func timeDow()
+    {
+        let time1 = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(WordViewController.updateTime), userInfo: nil, repeats: true)
+        timeNow = time1
+    }
+    
+//    func showRepeatButton()
+//    {
+//        timeLable.hidden=true
+//        //        getCodeButton.titleLabel?.text="获取验证码"
+//        getCodeButton.hidden = false
+//        getCodeButton.enabled = true
+//    }
+    
+    func updateTime()
+    {
+        //print(self.scrollView.subviews)
+        let index :Int = self.pageControl.currentPage
+        print( self.pageControl.currentPage)
+        print(self.scrollView.subviews[index])
+        print(self.scrollView.subviews[index].subviews)
+        //let label = self.scrollView.subviews[2].viewWithTag(10) as! UILabel
+        let label = self.view.viewWithTag(10+index) as! UILabel
+        label.backgroundColor = UIColor.redColor()
+        count -= 1
+        if minute>=0 {
+            if (count <= 0)
+            {
+                count = 59
+                minute -= 1
+                //self.showRepeatButton()
+                //timeNow.invalidate()
+               
+            }
+//            if minute<10 {
+//                
+//                if count<10 {
+//                    label.text = "0"+"\(minute)"+":"+"0"+"\(count)"
+//                    
+//                }
+//            }else{
+//               
+//                    label.text = "\(minute)"+":"+"\(count)"
+//            
+//            }
+           
+           // print("\(count)S")
+            print(label.text)
+            if minute == -1 {
+                minute = 2
+                count = 59
+
+                label.text = "0"+"\(minute)"+":"+"\(count)"
+                timeNow.invalidate()
+            }
+            label.text = "0"+"\(minute)"+":"+"\(count)"
+            if minute<10 {
+                
+                if count<10 {
+                    label.text = "0"+"\(minute)"+":"+"0"+"\(count)"
+                    
+                }
+            }else{
+                
+                label.text = "\(minute)"+":"+"\(count)"
+                
+            }
+           
+        }
+//        else{
+//            minute = 2
+//            count = 59
+//            label.text = "0"+"\(minute)"+":"+"\(count)"
+//            timeNow.invalidate()
+//        
+//        }
+//        if (count <= 0)
+//        {
+//            count = 60
+//            //self.showRepeatButton()
+//            timeNow.invalidate()
+//        }
+//        print("\(count)S")
+//        
+//        let label = self.view.viewWithTag(1) as! UILabel
+//
+//        print(label.text)
+//        label.text = "02:"+"\(count)"
+    
+    }
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let index :Int = self.pageControl.currentPage
+        print( self.pageControl.currentPage)
+        print(self.scrollView.subviews[index])
+        print(self.scrollView.subviews[index].subviews)
+        //let label = self.scrollView.subviews[index].viewWithTag(10) as! UILabel
+        
+        print(self.pageControl.currentPage)
+        print(scrollView.contentOffset.x/WIDTH)
+        if self.pageControl.currentPage != Int(scrollView.contentOffset.x/WIDTH)  {
+//            timeNow.setFireDate
+//          [myTimer setFireDate:[NSDate distantFuture]];
+            //let label = self.view.viewWithTag(11) as! UILabel
+            //label.text = "02:59"
+            count = 59
+            minute = 1
+            //timeNow.fire()
+        }
+        
+    }
     
 //    func doTimer(){
 //        let timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(WordViewController.timerFireMethod(_:)), userInfo: nil, repeats:true);
@@ -221,20 +331,21 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             tit.text = "（A1，2分）"
             tit.sizeToFit()
             backGound.addSubview(tit)
-            
-            time.frame = CGRectMake(WIDTH-30, 14, 40, 12)
-            time.backgroundColor = UIColor.redColor()
-            time.text = "120"
+            let time = UILabel(frame: CGRectMake(WIDTH-50, 16, 50, 12))
+            time.tag = 10+i
+            //time.backgroundColor = UIColor.redColor()
             time.font = UIFont.systemFontOfSize(14)
-            time.textAlignment = .Right
+            //time.textAlignment = .Right
             time.textColor = COLOR
-            time.sizeToFit()
+            time.text = "02:59"
+            //time.sizeToFit()
             backGound.addSubview(time)
-            
-            let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.size.width-83, 15, 71, 12))
+            let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.origin.x-125, 15, 71, 12))
+//            let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.size.width-83, 15, 71, 12))
+            timelab.backgroundColor = UIColor.greenColor()
             timelab.font = UIFont.systemFontOfSize(12)
             timelab.textColor = GREY
-            timelab.text = "剩余答题时间:"
+            timelab.text = "剩余答题时间"
             timelab.textAlignment = .Right
             timelab.sizeToFit()
             backGound.addSubview(timelab)
@@ -383,9 +494,12 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         
         
     }
-
+//    func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        <#code#>
+//    }
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(self.view.frame.size.width)
+        //timeNow.invalidate()
     }
 
     override func didReceiveMemoryWarning() {

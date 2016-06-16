@@ -64,6 +64,7 @@ class NewsInfo: JSONJoy{
     var post_date:String?
     var recommended:String?
     var thumb:String?
+    var term_id :String?
     
     var smeta :JSONDecoder?
     
@@ -82,6 +83,7 @@ class NewsInfo: JSONJoy{
         post_like = decoder["post_like"].string
         recommended = decoder["recommended"].string
         thumb = decoder["thumb"].string
+        term_id = decoder["term_id"].string
         smeta = decoder["smeta"]
         print(post_excerpt)
         

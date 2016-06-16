@@ -16,7 +16,7 @@ let GREY = UIColor(red: 158/255.0, green: 158/255.0, blue: 158/255.0, alpha: 1.0
 let RGREY = UIColor(red: 242/255.0, green: 242/255.0, blue: 242/255.0, alpha: 1.0)
 let PARK_URL_Header = "http://nurse.xiaocool.net/index.php?g=apps&m=index&a="
 let NewsInfo_Header = "http://nurse.xiaocool.net/index.php?g=portal&m=article&a=index&id="
-
+let ZAN_URL_Header = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a="
 
 func calculateHeight(string:String,size:CGFloat,width:  CGFloat) -> CGFloat {
     let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin

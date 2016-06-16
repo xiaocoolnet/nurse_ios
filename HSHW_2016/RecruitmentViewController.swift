@@ -128,6 +128,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         employmentMessage.addSubview(tackBtn)
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+       
+        
+        return 200
+        
+    }
+    
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 20
     }
