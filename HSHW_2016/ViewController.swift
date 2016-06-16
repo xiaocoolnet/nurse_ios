@@ -168,8 +168,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
     //  登录界面UI的搭建
     func loginView() {
         
-
-        
         login.frame = CGRectMake(0, WIDTH*363/375, WIDTH, HEIGHT-WIDTH*363/375)
         login.backgroundColor = UIColor.whiteColor()
         scrollView.addSubview(login)
@@ -264,11 +262,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
         submit.setTitleColor(COLOR, forState: .Normal)
         submit.addTarget(self, action: #selector(self.submitTheUser), forControlEvents: .TouchUpInside)
         register.addSubview(submit)
-        
-        
-        
-
-        
 
 
     }
@@ -434,17 +427,17 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     }else{
 //                        SVProgressHUD.showErrorWithStatus("登录失败")
                         let alert = UIAlertView(title:"提示信息",message: "登录失败",delegate: self,cancelButtonTitle: "确定")
-                       
                         alert.show()
                     }
                     return
                 }else{
                     //  改为新的方法
-                     let alert = UIAlertView(title:"提示信息",message: "登录成功",delegate: self,cancelButtonTitle: "确定")
+//                     let alert = UIAlertView(title:"提示信息",message: "登录成功",delegate: self,cancelButtonTitle: "确定")
 //                    SVProgressHUD.showSuccessWithStatus("登录成功")
                     
 //                    alert.show()
                     let ud = NSUserDefaults.standardUserDefaults()
+<<<<<<< Updated upstream
                     //  把得到的用户信息存入到沙盒
                     //  得到 useID
                     //
@@ -453,6 +446,12 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     //登录成功
                     
                     print(LoginUserInfo)
+=======
+                    
+                    ud.setObject(["username":self.phoneNumber.text!,"password":self.password.text!], forKey: "logInfo")
+                    
+                    //登录成功                    
+>>>>>>> Stashed changes
                     self.loginSuccess()
                 }
             })
@@ -461,16 +460,20 @@ class ViewController: UIViewController,UITextFieldDelegate {
     }
     //  登录成功
     func loginSuccess(){
+        
+        
             let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         //  得到分栏控制器
             let vc : UITabBarController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UITabBarController
         //  选择被选中的界面
             vc.selectedIndex = 4
             print(vc)
+<<<<<<< Updated upstream
         //  模态出个人界面
+=======
+>>>>>>> Stashed changes
             self.presentViewController(vc, animated: true, completion: nil)
-//        let alert = UIAlertView (title: "提示信息",message: "登录成功",delegate: self,cancelButtonTitle: "确定")
-//        alert.show()
+
     }
 
     override func didReceiveMemoryWarning() {

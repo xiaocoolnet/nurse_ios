@@ -90,11 +90,15 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!AcademicTableViewCell
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
-        cell.titImage.image = UIImage(named: "2.png")
+        let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
+        print(photoUrl)
+        cell.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
+        //cell.titImage.image = UIImage(named: "2.png")
         cell.titLab.text = newsInfo.post_title
-        cell.conNum.text = "3455"
-        cell.timeLab.text = newsInfo.create_time
-        cell.zanNum.text = "3476"
+        cell.conNum.text = newsInfo.recommended
+        let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
+        cell.timeLab.text = time[0]
+        cell.zanNum.text = newsInfo.post_like
         cell.zan.addTarget(self, action: #selector(AcademicViewController.getUpZanNum), forControlEvents: .TouchUpInside)
         
         return cell
@@ -102,7 +106,9 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
+        let newsInfo = self.dataSource.objectlist[indexPath.row]
         let next = NewsContantViewController()
+        next.newsInfo = newsInfo
         self.navigationController?.pushViewController(next, animated: true)
         
     }
