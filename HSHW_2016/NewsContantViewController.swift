@@ -13,13 +13,16 @@ import MBProgressHUD
 class NewsContantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate{
 
     let myTableView = UITableView()
+    let number = UILabel()
     let shareArr:[String] = ["ic_pengyouquan.png","ic_wechat.png","ic_weibo.png"]
     var newsInfo :NewsInfo?
+    var likeNum :Int?
     var heightDic :NSMutableDictionary = [:]
     let webView :UIWebView = UIWebView.init()
     var isLike:Bool = false
     var dataSource = NewsList()
     let zan = UIButton(frame: CGRectMake(WIDTH*148/375, WIDTH*80/375, WIDTH*80/375, WIDTH*80/375))
+    
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = false
         self.tabBarController?.tabBar.hidden = true
@@ -30,6 +33,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "新闻内容"
+        
+        
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 3))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
@@ -43,7 +48,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cellIntenfer")
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "titleCell")
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "zanCell")
-//        myTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.registerNib(UINib.init(nibName: "NewsSourceCell", bundle: nil), forCellReuseIdentifier: "sourceCell")
         myTableView.registerNib(UINib.init(nibName: "contentCell", bundle: nil), forCellReuseIdentifier: "webView")
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "textCell")
@@ -145,7 +149,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 print(height)
                 let cellHeight:CGFloat = CGFloat(height!)
                 return cellHeight
-                //return 500
+               
             }else{
             
                 return 220
@@ -254,9 +258,18 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
                 
                 zan.addTarget(self, action: #selector(self.zanAddNum), forControlEvents: .TouchUpInside)
-                let number = UILabel()
+//                let number = UILabel()
                 number.frame = CGRectMake(WIDTH/2-25, WIDTH*170/375, 50, 18)
-                number.text = newsInfo?.post_like
+               // number.text =  newsInfo!.likes.count as? String
+                print(self.likeNum)
+               // let count  = String(self.likeNum)
+                let hashValue = newsInfo?.likes.count.hashValue
+                print(hashValue)
+                print(hashValue!)
+                print("\(hashValue!)")
+                number.text =  "\(hashValue!)"
+                self.likeNum = hashValue!
+                //number.text =  newsInfo?.post_like
                 number.sizeToFit()
                 number.font = UIFont.systemFontOfSize(12)
                 number.frame = CGRectMake(WIDTH/2-number.bounds.size.width/2-8, WIDTH*170/375, number.bounds.size.width, 18)
@@ -279,6 +292,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell3.addSubview(zan)
                 cell3.addSubview(line)
                 cell3.addSubview(share)
+                
                 return cell3
             }
 
@@ -390,18 +404,15 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         
         }
-        
-        
+    
         print(btn.tag)
-        
-        
         
     }
     func zanAddNum() {
         print("赞")
         
-        let userid = NSUserDefaults.standardUserDefaults()
-        let uid = userid.stringForKey("userid")
+        let user = NSUserDefaults.standardUserDefaults()
+        let uid = user.stringForKey("userid")
         print(uid)
         if uid==nil {
             zan.setImage(UIImage(named: "img_like.png"), forState: .Normal)
@@ -411,15 +422,21 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             self.navigationController?.pushViewController(vc, animated: true)
             
         }else{
-            if isLike==false {
-                let url = ZAN_URL_Header+"SetLike"
+//            let like = user.stringForKey("isLike")
+//            //let like1 = user.stringForKey((self.newsInfo?.object_id)!)
+//            print(like)
+            let userID = user.stringForKey((self.newsInfo?.object_id)!)
+            print(userID)
+           // if like != "true"||like==nil {
+            if userID == "false" {
+                let url = PARK_URL_Header+"SetLike"
                 let param = [
                     
-                    "id":"12",
+                    "id":newsInfo?.object_id,
                     "type":"1",
-                    "userid":"604",
+                    "userid":uid,
                     ];
-                Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
                     print(request)
                     if(error != nil){
                         
@@ -439,12 +456,14 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             
                             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                             hud.mode = MBProgressHUDMode.Text;
-                            hud.labelText = "已经点赞"
+                            hud.labelText = "点赞成功"
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
                             hud.hide(true, afterDelay: 3)
-                            // self.myTableView .reloadData()
-                            
+                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: "success", waitUntilDone:true)
+
+                            user.setObject("true", forKey: "isLike")
+                            user.setObject("true", forKey: (self.newsInfo?.object_id)!)
                             print(status.data)
                             self.isLike=true
                         }
@@ -454,13 +473,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 
             }else{
                 
-                let url = ZAN_URL_Header+"ResetLike"
+                let url = PARK_URL_Header+"ResetLike"
                 let param = [
-                    "userid":"4",
-                    "id":"2",
-                    "type":"1"
+                    "id":newsInfo?.object_id,
+                    "type":"1",
+                    "userid":uid
                 ];
-                Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
                     print(request)
                     if(error != nil){
                         
@@ -475,18 +494,23 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
                             hud.hide(true, afterDelay: 1)
+                            //user.setObject("false", forKey: (self.newsInfo?.object_id)!)
                         }
                         if(status.status == "success"){
                             
                             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                             hud.mode = MBProgressHUDMode.Text;
-                            hud.labelText = "已经取消点赞"
+                            hud.labelText = "取消点赞成功"
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
                             hud.hide(true, afterDelay: 3)
                             //self.myTableView .reloadData()
                             print(status.data)
                             self.isLike=false
+                            user.setObject("false", forKey: "isLike")
+                            user.setObject("false", forKey: (self.newsInfo?.object_id)!)
+                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: "false", waitUntilDone:true)
+                            //user.removeObjectForKey((self.newsInfo?.object_id)!)
                         }
                     }
                     
@@ -497,6 +521,21 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 
         }
     }
+    
+    
+    func upDateUI(status:String){
+        
+        if status=="success" {
+             self.likeNum = self.likeNum! + 1
+        }else{
+             self.likeNum = self.likeNum! - 1
+        }
+
+        print(self.likeNum!)
+        self.number.text =  "\(self.likeNum!)"
+    
+    }
+    
     func GetDate1(){
         
         //MBProgressHUD  HUD = [[MBProgressHUD showHUDAddedTo:self.view animated:YES], retain];

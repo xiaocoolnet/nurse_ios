@@ -1307,7 +1307,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios 6-15/HSHW_2016/OC_Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/xiaocool/Desktop/nurse_ios/HSHW_2016/OC_Header.h;
 			};
 			name = Debug;
 		};
@@ -1364,7 +1364,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios 6-15/HSHW_2016/OC_Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/xiaocool/Desktop/nurse_ios/HSHW_2016/OC_Header.h;
 			};
 			name = Release;
 		};

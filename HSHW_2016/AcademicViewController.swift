@@ -94,6 +94,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         print(photoUrl)
         cell.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
         //cell.titImage.image = UIImage(named: "2.png")
+        
         cell.titLab.text = newsInfo.post_title
         cell.conNum.text = newsInfo.recommended
         let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!

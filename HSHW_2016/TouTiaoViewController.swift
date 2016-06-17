@@ -21,6 +21,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var times = Int()
    
     var dataSource = NewsList()
+    var likedataSource = LikeList()
     internal var newsId = String()
     internal var post_title=String()
     internal var post_modified=String()
@@ -37,8 +38,6 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.view.backgroundColor = COLOR
         requestManager = AFHTTPSessionManager()
             requestManager?.responseSerializer = AFHTTPResponseSerializer()
-        
-        
         
         // Do any additional setup after loading the view.
     }
@@ -128,6 +127,8 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     self.createTableView()
                     print(status)
                     self.dataSource = NewsList(status.data!)
+                    print(LikeList(status.data!).objectlist)
+                    self.likedataSource = LikeList(status.data!)
                     self.myTableView .reloadData()
                     print(status.data)
                 }
@@ -196,8 +197,17 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
         let newsInfo = self.dataSource.objectlist[indexPath.row]
+        let likeInfo = self.likedataSource.objectlist[0]
         print("shuju=====")
-        print(newsInfo.post_excerpt)
+        
+        
+        print(self.likedataSource)
+        print(self.likedataSource.objectlist)
+        print(self.likedataSource.objectlist[indexPath.row])
+        print(newsInfo.likes.count)
+        print(self.likedataSource.objectlist.count)
+        print(likeInfo)
+        print(likeInfo.userid)
         print("shuju----")
 
         cell.titLab.text = newsInfo.post_title
@@ -229,6 +239,8 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
+        next.likeNum = newsInfo.likes.count
+        print(newsInfo.likes.count)
         self.navigationController?.pushViewController(next, animated: true)
        
     }

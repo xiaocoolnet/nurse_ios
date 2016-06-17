@@ -437,7 +437,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     
 //                    alert.show()
                     let ud = NSUserDefaults.standardUserDefaults()
-<<<<<<< Updated upstream
+
                     //  把得到的用户信息存入到沙盒
                     //  得到 useID
                     //
@@ -446,12 +446,12 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     //登录成功
                     
                     print(LoginUserInfo)
-=======
+
                     
                     ud.setObject(["username":self.phoneNumber.text!,"password":self.password.text!], forKey: "logInfo")
                     
                     //登录成功                    
->>>>>>> Stashed changes
+
                     self.loginSuccess()
                 }
             })
@@ -468,10 +468,9 @@ class ViewController: UIViewController,UITextFieldDelegate {
         //  选择被选中的界面
             vc.selectedIndex = 4
             print(vc)
-<<<<<<< Updated upstream
+
         //  模态出个人界面
-=======
->>>>>>> Stashed changes
+
             self.presentViewController(vc, animated: true, completion: nil)
 
     }

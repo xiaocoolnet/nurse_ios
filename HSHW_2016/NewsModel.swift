@@ -65,11 +65,11 @@ class NewsInfo: JSONJoy{
     var recommended:String?
     var thumb:String?
     var term_id :String?
-    
+    var likes:[LikeInfo]
     var smeta :JSONDecoder?
     
     init(){
-        
+        likes = Array<LikeInfo>()
     }
     
     required init(_ decoder: JSONDecoder){
@@ -84,12 +84,62 @@ class NewsInfo: JSONJoy{
         recommended = decoder["recommended"].string
         thumb = decoder["thumb"].string
         term_id = decoder["term_id"].string
+        likes = Array<LikeInfo>()
         smeta = decoder["smeta"]
         print(post_excerpt)
-        
+        print(decoder["likes"].array)
+        if decoder["likes"].array != nil {
+            for childs: JSONDecoder in decoder["likes"].array!{
+                self.likes.append(LikeInfo(childs))
+            }
+        }
+       
         
     }
+    func addpend(list: [LikeInfo]){
+        self.likes = list + self.likes
+    }
    
+}
+
+class LikeList: JSONJoy {
+    var status:String?
+    var objectlist: [LikeInfo]
+    
+    var count: Int{
+        return self.objectlist.count
+    }
+    init(){
+        objectlist = Array<LikeInfo>()
+    }
+    required init(_ decoder: JSONDecoder) {
+        
+        objectlist = Array<LikeInfo>()
+        for childs: JSONDecoder in decoder.array!{
+            objectlist.append(LikeInfo(childs))
+        }
+    }
+    
+    func append(list: [LikeInfo]){
+        self.objectlist = list + self.objectlist
+    }
+    
+}
+
+
+
+class LikeInfo: JSONJoy {
+    
+    var userid :String?
+    init() {
+        
+    }
+    required init(_ decoder: JSONDecoder){
+       
+        userid = decoder["userid"].string
+        
+    }
+
 }
 
 //
