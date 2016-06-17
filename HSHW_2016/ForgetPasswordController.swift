@@ -177,7 +177,7 @@ class ForgetPasswordController: UIViewController {
         //  四个button
     
         checkNumBtn = UIButton()
-        checkNumBtn.frame = CGRectMake(WIDTH * 0.4 + 120, 15, 100, 30)
+        checkNumBtn.frame = CGRectMake(WIDTH * 0.4 + 120, 15, WIDTH * 0.6 - 150, 30)
         checkNumBtn.layer.cornerRadius = 13
         checkNumBtn.layer.borderColor = COLOR.CGColor
         checkNumBtn.layer.borderWidth = 1.5
