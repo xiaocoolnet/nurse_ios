@@ -18,7 +18,7 @@ class LoginModel: NSObject {
         requestManager = AFHTTPSessionManager()
         requestManager?.responseSerializer = AFHTTPResponseSerializer()
     }
-    // MARK - 登录
+    // MARK: - 登录
     func login(phoneNumber:String,passwordNumber:String,handle:ResponseBlock){
 
         //  GET请求
@@ -89,6 +89,20 @@ class LoginModel: NSObject {
             let result = Http(JSONDecoder(response))
             let responseStr = result.status == "success" ? nil : result.errorData
             handle(success: result.status == "success",response: responseStr)
+        
+            }, failure: { (task, error) in
+                handle(success: false,response: "网络错误")
+        })
+    }
+    //  忘记密码
+    func forgetPassword(phone:String,code:String,password:String,handle:ResponseBlock){
+        let paramDic = ["a":"forgetpwd","phone":phone,"code":code,"password":password]
+        requestManager?.GET(PARK_URL_Header, parameters: paramDic, success: { (task, response) in
+            let result = Http(JSONDecoder(response))
+            let responseStr = result.status == "success" ? "成功" : result.errorData
+            if responseStr != nil {
+                handle(success: result.status == "success",response: responseStr)
+            }
             }, failure: { (task, error) in
                 handle(success: false,response: "网络错误")
         })
