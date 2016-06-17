@@ -91,4 +91,12 @@ class TimeTask :NSObject{
             }
         }
     }
+    
+
+}
+
+//  提示框
+func alert(message:String,delegate:AnyObject){
+    let alert = UIAlertView(title: "提示信息", message: message, delegate: delegate, cancelButtonTitle: "确定")
+    alert.show()
 }

@@ -177,7 +177,7 @@ class ForgetPasswordController: UIViewController {
         //  四个button
     
         checkNumBtn = UIButton()
-        checkNumBtn.frame = CGRectMake(WIDTH * 0.4 + 120, 15, WIDTH * 0.6 - 150, 30)
+        checkNumBtn.frame = CGRectMake(WIDTH - 191, 15, 100, 30)
         checkNumBtn.layer.cornerRadius = 13
         checkNumBtn.layer.borderColor = COLOR.CGColor
         checkNumBtn.layer.borderWidth = 1.5
@@ -185,20 +185,20 @@ class ForgetPasswordController: UIViewController {
         checkNumBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
         checkNumBtn.setTitleColor(COLOR, forState: .Normal)
         checkNumBtn.addTarget(self, action: #selector(self.getCheckNum), forControlEvents: .TouchUpInside)
-        checkView.addSubview(checkNumBtn)
+        phoneNumView.addSubview(checkNumBtn)
         
         showPassWordBtn = UIButton()
-        showPassWordBtn.frame = CGRectMake(WIDTH * 0.4 + 120, 15, WIDTH * 0.6 - 150, 30)
-        showPassWordBtn.setImage(UIImage(named: "1"), forState: .Normal)
+        showPassWordBtn.frame = CGRectMake(WIDTH - 40, 15, 30, 30)
+        showPassWordBtn.setImage(UIImage(named: "btn_eye_sel"), forState: .Normal)
         showPassWordBtn.setTitleColor(COLOR, forState: .Normal)
-        showPassWordBtn.addTarget(self, action: #selector(self.showPassWord), forControlEvents: .TouchUpInside)
+        showPassWordBtn.addTarget(self, action: #selector(self.showPassWord(_:)), forControlEvents: .TouchUpInside)
         passWordView.addSubview(showPassWordBtn)
         
         showPassCheckBtn = UIButton()
-        showPassCheckBtn.frame = CGRectMake(WIDTH * 0.4 + 120, 15, WIDTH * 0.6 - 150, 30)
-        showPassCheckBtn.setImage(UIImage(named: "1"), forState: .Normal)
+        showPassCheckBtn.frame = CGRectMake(WIDTH - 40, 15, 30, 30)
+        showPassCheckBtn.setImage(UIImage(named: "btn_eye_sel"), forState: .Normal)
         showPassCheckBtn.setTitleColor(COLOR, forState: .Normal)
-        showPassCheckBtn.addTarget(self, action: #selector(self.showCheckPassWord), forControlEvents: .TouchUpInside)
+        showPassCheckBtn.addTarget(self, action: #selector(self.showCheckPassWord(_:)), forControlEvents: .TouchUpInside)
         checkPassView.addSubview(showPassCheckBtn)
         
         successBtn = UIButton()
@@ -217,11 +217,9 @@ class ForgetPasswordController: UIViewController {
     
     func getCheckNum() {
         //  获取验证码
-        print("获取验证码")
         //  1.判断手机号是否为空
         if phoneNumFiled.text!.isEmpty {
-            let alert = UIAlertView(title: "提示信息",message: "请输入手机号",delegate: self,cancelButtonTitle: "确定")
-            alert.show()
+            alert("请输入手机号", delegate: self)
             return
         }
         //  2.通过上传url获取验证码（检测手机是否已经注册）
@@ -230,91 +228,75 @@ class ForgetPasswordController: UIViewController {
         //  [unowned self]什么意思   dispatch_async(dispatch_get_main_queue() 这里为什么需要加一个主线程
         changeVM?.comfirmPhoneHasRegister(phoneNumFiled.text!, handle: {[unowned self](success, response) in
             dispatch_async(dispatch_get_main_queue(), {
-                //  不管填什么内容都走了这个方法
                 if success {
-                    
+                    //  2.1成功,验证码传到手机,执行倒计时操作
                     TimeManager.shareManager.begainTimerWithKey("forget", timeInterval: 30, process: self.processHandle!, finish: self.finishHandle!)
                     self.changeVM?.sendMobileCodeWithPhoneNumber(self.phoneNumFiled.text!)
                 }else{
-             let alert = UIAlertView(title:"提示信息",message: "手机没有注册",delegate: self,cancelButtonTitle: "确定")
-                    alert.show()
+                    //  2.2失败,手机号没有注册
+
+                    alert("手机没有注册", delegate: self)
                 }
             })
-            
-            })
-        
-        //  2.1成功,验证码传到手机,执行倒计时操作
-        //  2.2失败,手机号没有注册
+        })
     }
-    func showPassWord() {
+    func showPassWord(btn:UIButton) {
         //  显示输入密码
-        print("显示输入密码")
         if passWordFiled.secureTextEntry == true {
             passWordFiled.secureTextEntry = false
+            btn.setImage(UIImage(named: "btn_eye"), forState: .Normal)
         }else{
             passWordFiled.secureTextEntry = true
+            btn.setImage(UIImage(named: "btn_eye_sel"), forState: .Normal)
         }
     }
-    func showCheckPassWord() {
+    func showCheckPassWord(btn:UIButton) {
         //  显示确认密码
-        print("显示确认密码")
         if passNumCheckFiled.secureTextEntry == true {
             passNumCheckFiled.secureTextEntry = false
+            btn.setImage(UIImage(named: "btn_eye"), forState: .Normal)
         }else{
             passNumCheckFiled.secureTextEntry = true
+            btn.setImage(UIImage(named: "btn_eye_sel"), forState: .Normal)
         }
     }
     func changeSuccsee() {
-        //  修改完成
-        print("修改完成")
-        //  调一个接口传数据
-        
-        
-        
             if phoneNumFiled.text!.isEmpty {
-//                SVProgressHUD.showErrorWithStatus("请输入手机号")
+                alert("请输入手机号", delegate: self)
                 return
             }
             if checkNumFiled.text!.isEmpty {
-//                SVProgressHUD.showErrorWithStatus("请输入验证码")
+                alert("请输入验证码", delegate: self)
                 return
             }
             if passWordFiled.text!.isEmpty {
-//                SVProgressHUD.showErrorWithStatus("请输入密码")
+                alert("请输入密码", delegate: self)
                 return
             }
             if passNumCheckFiled.text!.isEmpty {
-//                SVProgressHUD.showErrorWithStatus("请确认密码")
+                alert("请确认密码", delegate: self)
                 return
             }
             if passWordFiled.text != passNumCheckFiled.text {
-//                SVProgressHUD.showErrorWithStatus("两次输入密码不一致")
+                alert("两次输入密码不一致", delegate: self)
                 return
             }
             changeVM?.forgetPassword(phoneNumFiled.text!, code: checkNumFiled.text!, password: passWordFiled.text!, handle: { [unowned self] (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     
                     if success {
-                        let alert = UIAlertView(title:"提示信息",message: "修改成功",delegate: self,cancelButtonTitle: "确定")
-                        alert.show()
-//                        SVProgressHUD.showSuccessWithStatus("修改成功")
+                        alert("修改成功", delegate: self)
                         self.navigationController?.popViewControllerAnimated(true)
                     }else{
                         let string = response as! String
-                        let alert = UIAlertView(title:"提示信息",message: string,delegate: self,cancelButtonTitle: "确定")
-                        alert.show()
-//                        SVProgressHUD.showErrorWithStatus(response as! String)
+                        alert(string, delegate: self)
                     }
-                    
                 })
                 })
-        
-
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
