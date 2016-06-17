@@ -24,6 +24,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
     let phoneNumber = UITextField()
     let passwordNumber = UITextField()
     let loginBtn = UIButton()
+    //  忘记密码按钮
+    let forgetPwdBtn = UIButton()
     
     let phoneNum = UITextField()
     let yanzheng = UITextField()
@@ -47,7 +49,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        //  添加一个导航控制器
         //  获取验证码倒计时
         processHandle = {[unowned self] (timeInterVal) in
             dispatch_async(dispatch_get_main_queue(), {
@@ -96,13 +98,14 @@ class ViewController: UIViewController,UITextFieldDelegate {
         let btnTit:[String] = ["登录","注册"]
         click = true
         
-        
+        //  登录按钮
         btnOne.frame = CGRectMake(0, WIDTH*363/375-45, WIDTH/2, 45)
         btnOne.titleLabel?.font = UIFont.systemFontOfSize(18)
         btnOne.setTitle(btnTit[0], forState: .Normal)
         btnOne.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         btnOne.addTarget(self, action: #selector(self.loginTheView), forControlEvents: .TouchUpInside)
         backView.addSubview(btnOne)
+        //  注册按钮
         btnTwo.frame = CGRectMake(WIDTH/2, WIDTH*363/375-45, WIDTH/2, 45)
         btnTwo.titleLabel?.font = UIFont.systemFontOfSize(18)
         btnTwo.setTitle(btnTit[1], forState: .Normal)
@@ -193,7 +196,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         
         
-        loginBtn.frame = CGRectMake(25, WIDTH*212/375, WIDTH-50, WIDTH*50/375)
+        loginBtn.frame = CGRectMake(25, WIDTH*180/375, WIDTH-50, WIDTH*50/375)
         loginBtn.layer.cornerRadius = WIDTH*25/375
         loginBtn.layer.borderWidth = 1.5
         loginBtn.layer.borderColor = COLOR.CGColor
@@ -203,7 +206,24 @@ class ViewController: UIViewController,UITextFieldDelegate {
         loginBtn.setTitleColor(COLOR, forState: .Normal)
         loginBtn.addTarget(self, action: #selector(self.goToMain), forControlEvents: .TouchUpInside)
         login.addSubview(loginBtn)
-
+        
+        //  忘记密码的按钮
+        forgetPwdBtn.frame = CGRectMake(25, WIDTH*235/375, WIDTH-50, WIDTH*50/375)
+        forgetPwdBtn.setTitle("忘记密码?", forState: .Normal)
+        forgetPwdBtn.setTitleColor(COLOR, forState: .Normal)
+        //  设置字体大小
+        forgetPwdBtn.titleLabel?.font = UIFont.systemFontOfSize(15)
+        forgetPwdBtn.addTarget(self, action: #selector(self.changePassWord), forControlEvents: .TouchUpInside)
+        login.addSubview(forgetPwdBtn)
+        
+    }
+    //  修改密码
+    func changePassWord(){
+        print("修改密码")
+        //  跳转页面 
+        let forGetVC = ForgetPasswordController()
+        
+        self.navigationController?.pushViewController(forGetVC, animated: true)
     }
     //  注册界面UI的搭建
     func registerView() {
@@ -437,7 +457,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     
 //                    alert.show()
                     let ud = NSUserDefaults.standardUserDefaults()
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
                     //  把得到的用户信息存入到沙盒
                     //  得到 useID
                     //
@@ -446,12 +466,12 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     //登录成功
                     
                     print(LoginUserInfo)
-=======
+//=======
                     
                     ud.setObject(["username":self.phoneNumber.text!,"password":self.password.text!], forKey: "logInfo")
                     
                     //登录成功                    
->>>>>>> Stashed changes
+//>>>>>>> Stashed changes
                     self.loginSuccess()
                 }
             })
@@ -468,10 +488,10 @@ class ViewController: UIViewController,UITextFieldDelegate {
         //  选择被选中的界面
             vc.selectedIndex = 4
             print(vc)
-<<<<<<< Updated upstream
+//<<<<<<< Updated upstream
         //  模态出个人界面
-=======
->>>>>>> Stashed changes
+//=======
+//>>>>>>> Stashed changes
             self.presentViewController(vc, animated: true, completion: nil)
 
     }
