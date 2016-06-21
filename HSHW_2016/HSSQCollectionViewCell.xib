@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="HSSQCollectionViewCell" customModule="HSHW_2016" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="560"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="560"/>
+                <subviews>
+                    <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4A3-5e-cnA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="560"/>
+                        <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
+                    </webView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            </view>
+            <constraints>
+                <constraint firstItem="4A3-5e-cnA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="7sX-Im-8dB"/>
+                <constraint firstItem="4A3-5e-cnA" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ErS-P1-KxR"/>
+                <constraint firstAttribute="trailing" secondItem="4A3-5e-cnA" secondAttribute="trailing" id="Vf6-xY-r7Y"/>
+                <constraint firstAttribute="bottom" secondItem="4A3-5e-cnA" secondAttribute="bottom" id="jhM-vj-3Ho"/>
+            </constraints>
+            <size key="customSize" width="50" height="184"/>
+            <connections>
+                <outlet property="webView" destination="4A3-5e-cnA" id="NMt-n5-JRW"/>
+            </connections>
+            <point key="canvasLocation" x="296" y="222"/>
+        </collectionViewCell>
+    </objects>
+</document>

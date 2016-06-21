@@ -18,7 +18,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var times = Int()
     let employment = UIView()
     let employmentMessage = UIView()
-    
+    var showType = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,7 +92,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         self.view.addSubview(posted)
         posted.becomeFirstResponder()
         
-        self.makeEmploymentMessage()
         self.makeEmployment()
         
         // Do any additional setup after loading the view.
@@ -142,15 +141,22 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!RecruitTableViewCell
         cell.selectionStyle = .None
-        cell.titImg.image = UIImage(named: "3.png")
-        cell.title.text = "儿科主管护士"
+        if showType == 1 {
+            cell.titImg.image = UIImage(named: "3.png")
+            cell.title.text = "儿科主管护士"
+            cell.cont.text = "学历要求：中专\n工作年限\n相关证件：护士证"
+            cell.name.text = "北京儿童医院"
+        }else{
+            cell.titImg.image = UIImage(named: "1.png")
+            cell.title.text = "苏丽珍"
+            cell.cont.text = "学历：中专\n工作年限：2年\n相关证件：护士证"
+            cell.name.text = "苏丽珍"
+        }
         cell.title.sizeToFit()
-        cell.name.text = "北京儿童医院"
         cell.time.text = "2016/05/25"
         cell.location.text = "北京市"
         cell.content.text = "薪资待遇：5000～8000元\n福利待遇：社保、保持住\n招聘职位：护士／护理（20人）"
         cell.content.sizeToFit()
-        cell.cont.text = "学历要求：中专\n工作年限\n相关证件：护士证"
         cell.cont.sizeToFit()
         
         cell.delivery.addTarget(self, action: #selector(self.resumeOnline), forControlEvents: .TouchUpInside)
@@ -229,24 +235,5 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }else{
             pageControl.currentPage = number
         }
-
     }
-
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
