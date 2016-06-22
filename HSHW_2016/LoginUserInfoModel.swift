@@ -53,9 +53,5 @@ class LoginUserInfo: JSONJoy {
         user_id = decoder["userid"].string!
         user_usertype = decoder["usertype"].string!
         user_devicestate = decoder["devicestate"].string!
-        
-
-        
-
     }
 }

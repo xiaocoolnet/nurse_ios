@@ -19,7 +19,7 @@ class HSComOpenHeader: UIView {
     
     @IBAction func selectItemWithBtn(sender: UIButton) {
         if selectedItemHandle != nil {
-            UIView.animateWithDuration(0.5, animations: {
+            UIView.animateWithDuration(0.2, animations: {
                 self.sliderView.frame = CGRectMake(sender.frame.minX, sender.frame.maxY+2, sender.frame.width, 2)
             })
             if oldBtn != nil {
@@ -35,13 +35,15 @@ class HSComOpenHeader: UIView {
         if sender == nil{
             return
         }
-        self.sliderView.frame = CGRectMake(sender!.frame.minX, sender!.frame.maxY+2, sender!.frame.width, 2)
         if oldBtn != nil {
             oldBtn?.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
         }
         sender!.setTitleColor(UIColor(red: 152/255.0, green: 0, blue: 112/255.0, alpha: 1), forState: .Normal)
         oldBtn = sender
-        
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.sliderView.frame = CGRectMake(oldBtn!.frame.minX, oldBtn!.frame.maxY+2, oldBtn!.frame.width, 2)
     }
     
     func sethandle(handle:selectBlock){

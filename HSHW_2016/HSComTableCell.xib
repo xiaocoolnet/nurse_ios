@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="139" id="KGk-i7-Jjw" customClass="HSComTableCell" customModule="HSHW_2016" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="139"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="138"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g6x-01-D6I">
+                        <rect key="frame" x="14" y="8" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="DZW-r2-31g"/>
+                            <constraint firstAttribute="width" constant="40" id="I3d-Tb-tHa"/>
+                        </constraints>
+                        <state key="normal" title="Button" image="1"/>
+                    </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小丫头妈咪宝贝" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A0k-ur-NSr">
+                        <rect key="frame" x="62" y="8" width="98" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="治疗室护士" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mw0-JE-Rl8">
+                        <rect key="frame" x="62" y="33" width="60" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请问各位同行，职场新手如何谈‘薪资’才合适" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WdM-Yh-eZu">
+                        <rect key="frame" x="14" y="51" width="293" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="每个打工者都有一个加薪的梦想，但期待努力工作，等老板良心发现自动为自己涨工资，在大部分时候，是一个更遥远的梦想。除了集体加薪、跳槽获得加薪之外，与老板谈工资是成功加薪的重要方法。怎样合理和老板谈工资？" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="reH-ME-L6V">
+                        <rect key="frame" x="14" y="72" width="298" height="32"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="来自" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hci-xc-uZu">
+                        <rect key="frame" x="14" y="113" width="26" height="16"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="外科" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jIh-sV-UAs">
+                        <rect key="frame" x="46" y="113" width="28" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" red="0.47450980390000003" green="0.0" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FqM-7H-odE">
+                        <rect key="frame" x="242" y="114" width="29" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <state key="normal" title="123" image="ic_like_gray">
+                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xet-99-9Hx">
+                        <rect key="frame" x="276" y="114" width="31" height="15"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <state key="normal" title="123" image="ic_comment">
+                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="reH-ME-L6V" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="1Ja-NJ-058"/>
+                    <constraint firstItem="mw0-JE-Rl8" firstAttribute="bottom" secondItem="g6x-01-D6I" secondAttribute="bottom" id="2CR-6m-lZV"/>
+                    <constraint firstItem="xet-99-9Hx" firstAttribute="centerY" secondItem="hci-xc-uZu" secondAttribute="centerY" id="4Yd-uB-yTh"/>
+                    <constraint firstItem="FqM-7H-odE" firstAttribute="centerY" secondItem="hci-xc-uZu" secondAttribute="centerY" id="5Rq-nw-eBc"/>
+                    <constraint firstItem="g6x-01-D6I" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="5Tp-0w-u93"/>
+                    <constraint firstItem="reH-ME-L6V" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="GXz-5p-5pl"/>
+                    <constraint firstItem="g6x-01-D6I" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="JAj-rl-vLb"/>
+                    <constraint firstItem="WdM-Yh-eZu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="K8t-51-ZcU"/>
+                    <constraint firstItem="hci-xc-uZu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="6" id="LXt-mm-hjL"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="xet-99-9Hx" secondAttribute="trailing" constant="5" id="SNK-M8-tlo"/>
+                    <constraint firstItem="A0k-ur-NSr" firstAttribute="top" secondItem="g6x-01-D6I" secondAttribute="top" id="UTc-0n-6t1"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="WdM-Yh-eZu" secondAttribute="trailing" constant="5" id="Un4-hZ-l6m"/>
+                    <constraint firstItem="jIh-sV-UAs" firstAttribute="centerY" secondItem="hci-xc-uZu" secondAttribute="centerY" id="VkD-Tg-ugK"/>
+                    <constraint firstItem="jIh-sV-UAs" firstAttribute="leading" secondItem="hci-xc-uZu" secondAttribute="trailing" constant="6" id="cdS-0c-uEK"/>
+                    <constraint firstItem="mw0-JE-Rl8" firstAttribute="leading" secondItem="g6x-01-D6I" secondAttribute="trailing" constant="8" id="dep-2c-4jk"/>
+                    <constraint firstItem="WdM-Yh-eZu" firstAttribute="top" secondItem="mw0-JE-Rl8" secondAttribute="bottom" constant="3" id="dk1-no-kil"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="hci-xc-uZu" secondAttribute="bottom" constant="1" id="ijV-nK-fzc"/>
+                    <constraint firstItem="xet-99-9Hx" firstAttribute="leading" secondItem="FqM-7H-odE" secondAttribute="trailing" constant="5" id="n9Y-iT-vjl"/>
+                    <constraint firstItem="reH-ME-L6V" firstAttribute="top" secondItem="WdM-Yh-eZu" secondAttribute="bottom" constant="4" id="v2g-Gf-OY9"/>
+                    <constraint firstItem="A0k-ur-NSr" firstAttribute="leading" secondItem="g6x-01-D6I" secondAttribute="trailing" constant="8" id="vab-gP-pJ7"/>
+                    <constraint firstItem="hci-xc-uZu" firstAttribute="top" secondItem="reH-ME-L6V" secondAttribute="bottom" constant="9" id="yuu-Gw-crL"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="avatarBtn" destination="g6x-01-D6I" id="29n-Vh-cFJ"/>
+                <outlet property="commentNumber" destination="xet-99-9Hx" id="hfa-uI-1eC"/>
+                <outlet property="contentLabel" destination="reH-ME-L6V" id="VvR-Do-CbZ"/>
+                <outlet property="fromLabel" destination="jIh-sV-UAs" id="dNb-US-8u5"/>
+                <outlet property="landLorder" destination="A0k-ur-NSr" id="MnJ-Dj-iON"/>
+                <outlet property="likeNumber" destination="FqM-7H-odE" id="EXt-yb-eUr"/>
+                <outlet property="position" destination="mw0-JE-Rl8" id="obs-Jx-W7O"/>
+                <outlet property="titleLabel" destination="WdM-Yh-eZu" id="EQo-Z3-qOd"/>
+            </connections>
+            <point key="canvasLocation" x="323" y="373.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="1" width="2560" height="1600"/>
+        <image name="ic_comment" width="10" height="8"/>
+        <image name="ic_like_gray" width="8" height="8"/>
+    </resources>
+</document>

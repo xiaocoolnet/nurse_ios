@@ -34,7 +34,6 @@ class NurseStationViewController: UIViewController {
         
         view.addSubview(ComVC.view)
         currentVCIndex = 0
-        
         // Do any additional setup after loading the view.
     }
     

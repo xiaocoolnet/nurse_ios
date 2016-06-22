@@ -8,17 +8,37 @@
 
 import UIKit
 
-class HSSQCollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var webView:UIWebView!
+class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableViewDataSource {
+    
+    @IBOutlet weak var firstNewsView: UIView!
+    @IBOutlet weak var secondNewsView: UIView!
+    @IBOutlet weak var thirdNewsView: UIView!
+    @IBOutlet weak var fourthNewsView: UIView!
+    
+    @IBOutlet weak var firstNewsLabel: UILabel!
+    @IBOutlet weak var secondNewsLabel: UILabel!
+    @IBOutlet weak var thirdNewsLabel: UILabel!
+    @IBOutlet weak var fourthNewsLabel: UILabel!
+    
+    @IBOutlet weak var bottomTableView: UITableView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        let request = NSURLRequest(URL: NSURL(string: "http://nurse.xiaocool.net/index.php?g=portal&m=article&a=index&id=25")!)
-        webView.loadRequest(request)
-        webView.scalesPageToFit = true
-        webView.userInteractionEnabled = true
-        webView.scrollView.bounces = false
+        bottomTableView.registerNib(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
+        bottomTableView.rowHeight = UITableViewAutomaticDimension
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 140
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSComTableCell
+        cell.selectionStyle = .None
+        return cell
     }
 
 }

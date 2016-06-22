@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
@@ -25,7 +24,7 @@
                     </constraints>
                 </view>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="2RJ-th-Yey">
-                    <rect key="frame" x="0.0" y="40" width="320" height="528"/>
+                    <rect key="frame" x="0.0" y="40" width="320" height="478"/>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ZmK-B3-h99">
                         <size key="itemSize" width="50" height="50"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -40,7 +39,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="2RJ-th-Yey" secondAttribute="bottom" id="3R7-Xx-IWI"/>
+                <constraint firstAttribute="bottom" secondItem="2RJ-th-Yey" secondAttribute="bottom" constant="50" id="3R7-Xx-IWI"/>
                 <constraint firstAttribute="trailing" secondItem="138-2j-pmT" secondAttribute="trailing" id="8GW-tA-189"/>
                 <constraint firstItem="2RJ-th-Yey" firstAttribute="top" secondItem="138-2j-pmT" secondAttribute="bottom" id="FSM-hC-VgP"/>
                 <constraint firstItem="2RJ-th-Yey" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Hh3-cm-LdQ"/>

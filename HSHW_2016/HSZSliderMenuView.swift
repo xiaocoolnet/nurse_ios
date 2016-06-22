@@ -212,6 +212,7 @@ class HSZSliderMenuView: UIView {
         self.selectButton = button as! UIButton;
         if directButton.tag == 10010 {
             newView.setSelectedItem(index)
+            layoutIfNeeded()
         }
     }
     

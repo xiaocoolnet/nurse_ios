@@ -45,8 +45,6 @@ class ForgetPasswordController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor.lightGrayColor()
-        
-        
         //  显示导航控制器
         self.navigationController?.navigationBar.hidden = false
         self.title = "修改密码"
@@ -234,7 +232,6 @@ class ForgetPasswordController: UIViewController {
                     self.changeVM?.sendMobileCodeWithPhoneNumber(self.phoneNumFiled.text!)
                 }else{
                     //  2.2失败,手机号没有注册
-
                     alert("手机没有注册", delegate: self)
                 }
             })
@@ -303,15 +300,4 @@ class ForgetPasswordController: UIViewController {
         TimeManager.shareManager.taskDic["forget"]?.FHandle = nil
         TimeManager.shareManager.taskDic["forget"]?.PHandle = nil
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

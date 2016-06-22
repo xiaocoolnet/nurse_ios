@@ -21,6 +21,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         self.navigationController?.navigationBar.hidden = true
         self.tabBarController?.tabBar.hidden = false
@@ -33,6 +34,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.view.backgroundColor = COLOR
         
         myTableView.frame = CGRectMake(0, -20, WIDTH, HEIGHT+20)
+        myTableView.bounces = false
         myTableView.backgroundColor = RGREY
         myTableView.delegate = self
         myTableView.dataSource = self
@@ -101,14 +103,13 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     btn.addTarget(self, action: #selector(self.fineAndContact(_:)), forControlEvents: .TouchUpInside)
                     btn.tag = i+1
                     cell.addSubview(btn)
-                    
                 }
                 titImage.frame = CGRectMake(WIDTH*128/375, WIDTH*74/375, WIDTH*120/375, WIDTH*120/375)
                 titImage.setBackgroundImage(UIImage(named: "6.png"), forState: .Normal)
                 titImage.addTarget(self, action: #selector(MineViewController.changeTitImage), forControlEvents: .TouchUpInside)
                 titImage.layer.cornerRadius = WIDTH*120/375/2
                 titImage.clipsToBounds = true
-                titImage.layer.borderWidth = 1
+                titImage.layer.borderWidth = 3
                 titImage.layer.borderColor = UIColor.whiteColor().CGColor
                 cell.addSubview(titImage)
                 let person = UILabel()
@@ -222,8 +223,6 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func changeTitImage() {
         print("头像")
         
-        
-        
     }
     func fineAndContact(btn:UIButton) {
         print("粉丝与管理")
@@ -237,37 +236,16 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             self.navigationController?.pushViewController(next, animated: true)
             next.title = "粉丝与关注"
         }
-        
     }
     func setUpData() {
         print("设置")
         let next = SetDataViewController()
         self.navigationController?.pushViewController(next, animated: true)
         next.title = "个人资料编辑"
-        
-        
     }
 
     func signInToday() {
         print("签到")
-        
-        
-        
     }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

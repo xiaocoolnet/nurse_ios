@@ -17,12 +17,14 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.edgesForExtendedLayout = UIRectEdge.None
         collectionView.registerNib(UINib(nibName: "HSSQCollectionViewCell",bundle: nil), forCellWithReuseIdentifier: "cell")
         collectionView.pagingEnabled = true
         collectionView.bounces = false
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         if sliderMenu.selectIndex == nil {
             sliderMenu.frame = sliderHead.frame
             sliderMenu.menuNameArray = ["全部","精华","内科","外科" ,"妇产科","儿科","男科","中医科","五官科","神经科"]

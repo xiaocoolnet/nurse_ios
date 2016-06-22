@@ -106,6 +106,8 @@
 		F61228091D057B1E009E3D4D /* HuLiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61228081D057B1E009E3D4D /* HuLiViewController.swift */; };
 		F612280B1D0581D7009E3D4D /* JianKangViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612280A1D0581D7009E3D4D /* JianKangViewController.swift */; };
 		F631470D1D1A2BEE005103C9 /* HSComOpenHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631470C1D1A2BEE005103C9 /* HSComOpenHeader.swift */; };
+		F63147141D1A6D2E005103C9 /* HSComTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63147121D1A6D2E005103C9 /* HSComTableCell.swift */; };
+		F63147151D1A6D2E005103C9 /* HSComTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F63147131D1A6D2E005103C9 /* HSComTableCell.xib */; };
 		F631DFAC1D069C6200E52FDB /* SmetaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631DFAB1D069C6200E52FDB /* SmetaModel.swift */; };
 		F631DFAE1D069EE100E52FDB /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631DFAD1D069EE100E52FDB /* PhotoModel.swift */; };
 		F632EF0E1D18E8890038AF9D /* HSSQCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F632EF0C1D18E8890038AF9D /* HSSQCollectionViewCell.swift */; };
@@ -288,6 +290,8 @@
 		F61228081D057B1E009E3D4D /* HuLiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuLiViewController.swift; sourceTree = "<group>"; };
 		F612280A1D0581D7009E3D4D /* JianKangViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JianKangViewController.swift; sourceTree = "<group>"; };
 		F631470C1D1A2BEE005103C9 /* HSComOpenHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSComOpenHeader.swift; sourceTree = "<group>"; };
+		F63147121D1A6D2E005103C9 /* HSComTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSComTableCell.swift; sourceTree = "<group>"; };
+		F63147131D1A6D2E005103C9 /* HSComTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSComTableCell.xib; sourceTree = "<group>"; };
 		F631DFAB1D069C6200E52FDB /* SmetaModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmetaModel.swift; sourceTree = "<group>"; };
 		F631DFAD1D069EE100E52FDB /* PhotoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
 		F632EF0C1D18E8890038AF9D /* HSSQCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSSQCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -734,6 +738,8 @@
 				F632EF0D1D18E8890038AF9D /* HSSQCollectionViewCell.xib */,
 				F631470C1D1A2BEE005103C9 /* HSComOpenHeader.swift */,
 				F632EF141D1949910038AF9D /* HSComOpenHeader.xib */,
+				F63147121D1A6D2E005103C9 /* HSComTableCell.swift */,
+				F63147131D1A6D2E005103C9 /* HSComTableCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -984,6 +990,7 @@
 				F63E19881D17DB4E001BDE8A /* icon_callback.png in Resources */,
 				183B84FD1CE5BFDC00709235 /* Assets.xcassets in Resources */,
 				F632EF151D1949910038AF9D /* HSComOpenHeader.xib in Resources */,
+				F63147151D1A6D2E005103C9 /* HSComTableCell.xib in Resources */,
 				F6D02CDC1D07A46800353557 /* NewsSourceCell.xib in Resources */,
 				F63E19821D17C38A001BDE8A /* HSWCommunityHome.xib in Resources */,
 				F632EF0F1D18E8890038AF9D /* HSSQCollectionViewCell.xib in Resources */,
@@ -1109,6 +1116,7 @@
 				18D5B61A1CEA17320014F846 /* EveryDayViewController.swift in Sources */,
 				0B1911EB1D1122BD00CDE18D /* AFHTTPSessionManager.m in Sources */,
 				183B865A1CE5CEEB00709235 /* SDWebImageCompat.m in Sources */,
+				F63147141D1A6D2E005103C9 /* HSComTableCell.swift in Sources */,
 				189849B41CE812CB007B37B4 /* TouTiaoTableViewCell.swift in Sources */,
 				F6D02CDB1D07A46800353557 /* NewsSourceCell.swift in Sources */,
 				0B1911EF1D1122BD00CDE18D /* AFURLRequestSerialization.m in Sources */,
@@ -1311,7 +1319,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1368,7 +1376,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
