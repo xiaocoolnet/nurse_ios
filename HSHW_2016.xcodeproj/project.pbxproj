@@ -105,6 +105,7 @@
 		F61228051D0558C4009E3D4D /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61228041D0558C4009E3D4D /* NewsModel.swift */; };
 		F61228091D057B1E009E3D4D /* HuLiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61228081D057B1E009E3D4D /* HuLiViewController.swift */; };
 		F612280B1D0581D7009E3D4D /* JianKangViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612280A1D0581D7009E3D4D /* JianKangViewController.swift */; };
+		F631470D1D1A2BEE005103C9 /* HSComOpenHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631470C1D1A2BEE005103C9 /* HSComOpenHeader.swift */; };
 		F631DFAC1D069C6200E52FDB /* SmetaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631DFAB1D069C6200E52FDB /* SmetaModel.swift */; };
 		F631DFAE1D069EE100E52FDB /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631DFAD1D069EE100E52FDB /* PhotoModel.swift */; };
 		F632EF0E1D18E8890038AF9D /* HSSQCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F632EF0C1D18E8890038AF9D /* HSSQCollectionViewCell.swift */; };
@@ -286,6 +287,7 @@
 		F61228041D0558C4009E3D4D /* NewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		F61228081D057B1E009E3D4D /* HuLiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuLiViewController.swift; sourceTree = "<group>"; };
 		F612280A1D0581D7009E3D4D /* JianKangViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JianKangViewController.swift; sourceTree = "<group>"; };
+		F631470C1D1A2BEE005103C9 /* HSComOpenHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSComOpenHeader.swift; sourceTree = "<group>"; };
 		F631DFAB1D069C6200E52FDB /* SmetaModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmetaModel.swift; sourceTree = "<group>"; };
 		F631DFAD1D069EE100E52FDB /* PhotoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
 		F632EF0C1D18E8890038AF9D /* HSSQCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSSQCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -730,6 +732,7 @@
 				180482EE1CEDF54200BF716C /* RecruitTableViewCell.swift */,
 				F632EF0C1D18E8890038AF9D /* HSSQCollectionViewCell.swift */,
 				F632EF0D1D18E8890038AF9D /* HSSQCollectionViewCell.xib */,
+				F631470C1D1A2BEE005103C9 /* HSComOpenHeader.swift */,
 				F632EF141D1949910038AF9D /* HSComOpenHeader.xib */,
 			);
 			name = View;
@@ -1115,6 +1118,7 @@
 				18A5148C1CED550800A30AA5 /* RecruitmentViewController.swift in Sources */,
 				183B84F61CE5BFDC00709235 /* AppDelegate.swift in Sources */,
 				0B1911F41D1122BD00CDE18D /* UIAlertView+AFNetworking.m in Sources */,
+				F631470D1D1A2BEE005103C9 /* HSComOpenHeader.swift in Sources */,
 				F61228091D057B1E009E3D4D /* HuLiViewController.swift in Sources */,
 				185408811CE7005A00DFBA7C /* TouTiaoViewController.swift in Sources */,
 				18A6BAC51CE5F9A700B6B1FD /* MineViewController.swift in Sources */,

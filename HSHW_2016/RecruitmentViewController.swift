@@ -221,7 +221,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         print("招聘1")
     }
     func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-        if times == 5 {
+        if times >= 5 {
             scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
             times = 1
         }
