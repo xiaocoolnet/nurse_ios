@@ -21,7 +21,6 @@ class LoginUserInfoModel: JSONJoy{
     init(){
     }
     //  初始化方法
-
     required init(_ decoder:JSONDecoder){
         //  得到请求状态
         status = decoder["status"].string
@@ -33,7 +32,6 @@ class LoginUserInfoModel: JSONJoy{
             //  得到错误数据
             errorData = decoder["data"].string
         }
-        
     }
 }
 
@@ -44,14 +42,33 @@ class LoginUserInfo: JSONJoy {
     var user_devicestate:String
     var user_usertype:String
     var user_id:String
+    var user_name:String
+    var user_city:String
+    var user_qq:String
+    var user_weixin:String
+    var user_avatar:String
+    var user_time:String
+    var user_level:String
+    var user_score:String
+    var user_fanscount:String
+    var user_money:String
 
     //  初始化方法
     required init(_ decoder:JSONDecoder){
         //  指针赋值  解析并且向下转型
-
-        user_phone = decoder["phone"].string!
-        user_id = decoder["userid"].string!
-        user_usertype = decoder["usertype"].string!
-        user_devicestate = decoder["devicestate"].string!
+        user_phone = decoder["phone"].string ?? ""
+        user_id = decoder["userid"].string ?? ""
+        user_usertype = decoder["usertype"].string ?? ""
+        user_devicestate = decoder["devicestate"].string ?? ""
+        user_name = decoder["name"].string ?? ""
+        user_city = decoder["city"].string ?? ""
+        user_qq = decoder["qq"].string ?? ""
+        user_weixin = decoder["weixin"].string ?? ""
+        user_avatar = decoder["photo"].string ?? ""
+        user_time = decoder["time"].string ?? ""
+        user_level = String(decoder["level"].integer ?? 1)
+        user_score = String(decoder["score"].integer ?? 0)
+        user_fanscount = String(decoder["fanscount"].integer ?? 0)
+        user_money = String(decoder["money"].integer ?? 0)
     }
 }

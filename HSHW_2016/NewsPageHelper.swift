@@ -10,16 +10,29 @@ import UIKit
 import Alamofire
 
 class NewsPageHelper: NSObject {
-   
-   
-//    
-//    var requestManager:AFHTTPSessionManager?
-//    
-//    override init() {
-//        super.init()
-//        requestManager = AFHTTPSessionManager()
-//        requestManager?.responseSerializer = AFHTTPResponseSerializer()
-//    }
-//    
+    
+    // 获取新闻轮播图片
+    func getSlideImages(typeid:String, handle:ResponseBlock){
+        let url = PARK_URL_Header+"getslidelist"
+        let param = [
+            "typeid":typeid
+        ];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = PhotoList(JSONDecoder(json!))
+                print("状态是")
+                print(result.status)
+                if(result.status == "success"){
+                    handle(success: true, response: result.datas)
+                }else{
+                    handle(success: false, response: result.errorData)
+                }
+            }
+        }
+
+    }
     
 }

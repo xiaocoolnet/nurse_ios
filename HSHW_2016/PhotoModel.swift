@@ -9,24 +9,29 @@
 import Foundation
 
 class PhotoList: JSONJoy {
-//    var status:String?
-    var objectlist: [PhotoInfo]
+    var status:String?
+    var datas: Array<PhotoInfo>?
+    var errorData:String?
     var count: Int{
-        return self.objectlist.count
-    }
-    init(){
-        objectlist = Array<PhotoInfo>()
-    }
-    required init(_ decoder: JSONDecoder) {
-        
-        objectlist = Array<PhotoInfo>()
-        for childs: JSONDecoder in decoder.array!{
-            objectlist.append(PhotoInfo(childs))
-        }
+        return self.datas!.count
     }
     
-    func append(list: [PhotoInfo]){
-        self.objectlist = list + self.objectlist
+    init(){
+    }
+
+    required init(_ decoder: JSONDecoder) {
+        
+        status = decoder["status"].string
+        
+        if status == "success" {
+            datas = []
+            for childs: JSONDecoder in decoder["data"].array!{
+                datas?.append(PhotoInfo(childs))
+            }
+            
+        }else{
+            errorData = decoder["data"].string
+        }
     }
     
 }
@@ -34,16 +39,13 @@ class PhotoList: JSONJoy {
 
 class PhotoInfo: JSONJoy{
     
-    var url:String?
-    
-    init(){
-        
-    }
+    var url:String
+    var picUrl:String
     
     required init(_ decoder: JSONDecoder){
         
-        url = decoder["url"].string
-        
+        url = decoder["slide_url"].string ?? ""
+        picUrl = decoder["slide_pic"].string ?? ""
     }
     
 }

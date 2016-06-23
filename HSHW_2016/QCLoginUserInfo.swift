@@ -10,15 +10,20 @@ import UIKit
 
 class QCLoginUserInfo {
     
-    var phoneNumber:String = ""
-    var devicestate:String = ""
-    var usertype:String = ""
-    var userid:String = ""
-    var userName:String = ""
-    var avatar:String = ""
-    var city:String = ""
-    var qqNumber:String = ""
-    var weixinNumber:String = ""
+    var phoneNumber = ""
+    var devicestate = ""
+    var usertype = ""
+    var userid = ""
+    var userName = ""
+    var avatar = ""
+    var city = ""
+    var qqNumber = ""
+    var weixinNumber = ""
+    var time = ""
+    var level = ""
+    var attentionCount = ""
+    var fansCount = ""
+    var money = ""
     
     static let currentInfo = QCLoginUserInfo()
     private init() {

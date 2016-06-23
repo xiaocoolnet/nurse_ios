@@ -7,17 +7,22 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     var myTableView = UITableView()
-    let numArr:[String] = ["1384","2587","2349"]
+    var mineHelper = HSMineHelper()
     let numNameArr:[String] = ["粉丝","关注","护士币"]
-    
+    let userNameLabel = UILabel()
+    let levelBtn = UIButton()
     let titLabArr:[String] = ["我的帖子","我的消息","我的收藏"]
     let titImgArr:[String] = ["ic_liuyan.png","ic_message.png","ic_fangkuai.png"]
-    
     let titImage = UIButton()
+    
+    var fansCountBtn = UIButton(type: .Custom)
+    var attentionBtn = UIButton(type: .Custom)
+    var nurseCoins = UIButton(type: .Custom)
     
     
     override func viewWillAppear(animated: Bool) {
@@ -30,7 +35,17 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        mineHelper.getPersonalInfo {[unowned self] (success, response) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.titImage.sd_setImageWithURL(NSURL(string: IMAGE_URL_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal)
+                self.userNameLabel.text = "我"
+                self.levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, forState: .Normal)
+                self.fansCountBtn.setTitle(QCLoginUserInfo.currentInfo.fansCount, forState: .Normal)
+                self.attentionBtn.setTitle(QCLoginUserInfo.currentInfo.attentionCount, forState: .Normal)
+                self.nurseCoins.setTitle(QCLoginUserInfo.currentInfo.money, forState: .Normal)
+                self.myTableView.reloadData()
+            })
+        }
         self.view.backgroundColor = COLOR
         
         myTableView.frame = CGRectMake(0, -20, WIDTH, HEIGHT+20)
@@ -85,11 +100,25 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if indexPath.row == 0 {
                 cell.backgroundColor = COLOR
                 for i in 0...2 {
-                    let number = UILabel(frame: CGRectMake(WIDTH/3*CGFloat(i), WIDTH-60, WIDTH/3, 20))
-                    number.textColor = UIColor.whiteColor()
-                    number.textAlignment = .Center
-                    number.text = numArr[i]
-                    cell.addSubview(number)
+//                    let number = UILabel(frame: CGRectMake(WIDTH/3*CGFloat(i), WIDTH-60, WIDTH/3, 20))
+//                    number.textColor = UIColor.whiteColor()
+//                    number.textAlignment = .Center
+//                    number.text = numArr[i]
+//                    cell.addSubview(number)
+                    if i == 0 {
+                        fansCountBtn.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH-60, WIDTH/3, 20)
+                        fansCountBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
+                        cell.addSubview(fansCountBtn)
+                    }else if i == 1 {
+                        attentionBtn.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH-60, WIDTH/3, 20)
+                        attentionBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
+                        cell.addSubview(attentionBtn)
+                    }else {
+                        nurseCoins.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH-60, WIDTH/3, 20)
+                        nurseCoins.titleLabel?.font = UIFont.systemFontOfSize(14)
+                        cell.addSubview(nurseCoins)
+                    }
+                    
                     let numName = UILabel(frame: CGRectMake(WIDTH/3*CGFloat(i), WIDTH-40, WIDTH/3, 20))
                     numName.textColor = UIColor(red: 250/255.0, green: 118/255.0, blue: 210/255.0, alpha: 1.0)
                     numName.textAlignment = .Center
@@ -142,21 +171,20 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 signBtn.layer.borderWidth = 2
                 signBtn.addTarget(self, action: #selector(MineViewController.signInToday), forControlEvents: .TouchUpInside)
                 cell.addSubview(signBtn)
-                let name = UILabel()
-                name.frame = CGRectMake(WIDTH*160/375, WIDTH*205/375, WIDTH*55/375, 30)
-                name.textAlignment = .Center
-                name.font = UIFont.systemFontOfSize(18)
-                name.textColor = UIColor.whiteColor()
-                name.text = "张晓萍"
-                name.sizeToFit()
-                name.frame = CGRectMake(WIDTH/2-name.bounds.size.width/2, WIDTH*205/375, name.bounds.size.width, name.bounds.size.height)
-                cell.addSubview(name)
-                let btn = UIButton(frame: CGRectMake(name.bounds.size.width/2+5+WIDTH/2, WIDTH*205/375, 20, 19))
-                btn.setBackgroundImage(UIImage(named: "ic_shield_yellow.png"), forState: .Normal)
-                btn.setTitleColor(UIColor.yellowColor(), forState: .Normal)
-                btn.setTitle("25", forState: .Normal)
-                btn.titleLabel?.font = UIFont.systemFontOfSize(9)
-                cell.addSubview(btn)
+                userNameLabel.frame = CGRectMake(WIDTH*160/375, WIDTH*205/375, WIDTH*55/375, 30)
+                userNameLabel.textAlignment = .Center
+                userNameLabel.font = UIFont.systemFontOfSize(18)
+                userNameLabel.textColor = UIColor.whiteColor()
+                userNameLabel.sizeToFit()
+                userNameLabel.text = "我"
+                userNameLabel.frame = CGRectMake(WIDTH/2-userNameLabel.bounds.size.width/2, WIDTH*205/375, userNameLabel.bounds.size.width, userNameLabel.bounds.size.height)
+                cell.addSubview(userNameLabel)
+                
+                levelBtn.frame = CGRectMake(userNameLabel.bounds.size.width/2+5+WIDTH/2, WIDTH*205/375, 20, 19)
+                levelBtn.setBackgroundImage(UIImage(named: "ic_shield_yellow.png"), forState: .Normal)
+                levelBtn.setTitleColor(UIColor.yellowColor(), forState: .Normal)
+                levelBtn.titleLabel?.font = UIFont.systemFontOfSize(9)
+                cell.addSubview(levelBtn)
                 
                 
             }

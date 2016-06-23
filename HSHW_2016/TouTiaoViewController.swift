@@ -16,12 +16,12 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var myTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-    var picArr = NSArray()
+    var picArr = Array<String>()
     var timer = NSTimer()
-    var times = Int()
-   
     var dataSource = NewsList()
     var likedataSource = LikeList()
+    var requestHelper = NewsPageHelper()
+    
     internal var newsId = String()
     internal var post_title=String()
     internal var post_modified=String()
@@ -30,16 +30,32 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.GetDate()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+        self.createTableView()
+        self.GetDate()
         self.view.backgroundColor = COLOR
-        requestManager = AFHTTPSessionManager()
-            requestManager?.responseSerializer = AFHTTPResponseSerializer()
-        
+        requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+            if success {
+                let imageArr = response as! Array<PhotoInfo>
+                for imageInfo in imageArr {
+                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.updateSlideImage()
+                        self.myTableView.reloadData()
+                    })
+                }
+            }
+        }
         // Do any additional setup after loading the view.
+    }
+    
+    func updateSlideImage(){
+        for i in 1...4 {
+            let imgView = scrollView.viewWithTag(i) as! UIImageView
+            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+        }
     }
     
     func createTableView() {
@@ -58,13 +74,10 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         scrollView.pagingEnabled = true
         scrollView.delegate = self
         
-        picArr = ["1.png","2.png","3.png","4.png"]
         for i in 0...3 {
             let  imageView = UIImageView()
             imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
-            imageView.image = UIImage(named: picArr[i] as! String)
             imageView.tag = i+1
-            
             let bottom = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, WIDTH*190/375-30, WIDTH, 30))
             bottom.backgroundColor = UIColor.grayColor()
             bottom.alpha = 0.3
@@ -123,8 +136,6 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                
-                    self.createTableView()
                     print(status)
                     self.dataSource = NewsList(status.data!)
                     print(LikeList(status.data!).objectlist)
@@ -186,7 +197,6 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         if boundingRect.height+60>100 {
             return boundingRect.height+60
         }else{
-        
             return 100
         }
        // newsInfo.post_excerpt
@@ -233,6 +243,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         return cell
    
     }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
         
@@ -242,23 +253,6 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         next.likeNum = newsInfo.likes.count
         print(newsInfo.likes.count)
         self.navigationController?.pushViewController(next, animated: true)
-       
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

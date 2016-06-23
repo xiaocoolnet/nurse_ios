@@ -957,7 +957,7 @@
 				TargetAttributes = {
 					183B84F11CE5BFDC00709235 = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = H58LYH4V4T;
+						DevelopmentTeam = G5639ZVPC9;
 					};
 					183B85051CE5BFDC00709235 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -1252,7 +1252,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xu enjiang (5UKAG2PM43)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
@@ -1275,7 +1275,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "74c6f1e5-9d20-498d-8247-d44d54430e4d";
+				PROVISIONING_PROFILE = "319003da-a312-49be-a00c-33ba2fb5743b";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1300,7 +1300,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xu enjiang (5UKAG2PM43)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_BITCODE = NO;
@@ -1316,7 +1316,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "74c6f1e5-9d20-498d-8247-d44d54430e4d";
+				PROVISIONING_PROFILE = "319003da-a312-49be-a00c-33ba2fb5743b";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1327,8 +1327,8 @@
 			baseConfigurationReference = 0B26F5B17459B246981F92CE /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xu enjiang (5UKAG2PM43)";
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1372,10 +1372,10 @@
 					"\"YYWebImage\"",
 					"-Objc",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.chinanurse.nurse;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/zhang/Desktop/nurse_ios/HSHW_2016/OC_Header.h;
+				PROVISIONING_PROFILE = "319003da-a312-49be-a00c-33ba2fb5743b";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/xiaocool/Desktop/nurse/HSHW_2016/OC_Header.h;
 			};
 			name = Debug;
 		};
@@ -1384,8 +1384,8 @@
 			baseConfigurationReference = ACDDECCAF15EF7167B841BC0 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xu enjiang (5UKAG2PM43)";
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1429,10 +1429,10 @@
 					"\"YYWebImage\"",
 					"-Objc",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.chinanurse.nurse;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/zhang/Desktop/nurse_ios/HSHW_2016/OC_Header.h;
+				PROVISIONING_PROFILE = "319003da-a312-49be-a00c-33ba2fb5743b";
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/xiaocool/Desktop/nurse/HSHW_2016/OC_Header.h;
 			};
 			name = Release;
 		};
