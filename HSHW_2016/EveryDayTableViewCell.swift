@@ -29,7 +29,7 @@ class EveryDayTableViewCell: UITableViewCell {
         titImage.frame = CGRectMake(10, 10, 40, 40)
         titLab.frame = CGRectMake(57, 15, WIDTH/3, 30)
         titLab.font = UIFont.systemFontOfSize(18)
-        titLab.backgroundColor = UIColor.redColor()
+//        titLab.backgroundColor = UIColor.redColor()
         start.frame = CGRectMake(WIDTH-10-WIDTH/4, 15, WIDTH/4, 30)
         start.setTitle("开始作答", forState: .Normal)
         start.setTitleColor(COLOR, forState: .Normal)
@@ -41,7 +41,7 @@ class EveryDayTableViewCell: UITableViewCell {
         let one = UILabel(frame: CGRectMake(start.frame.origin.x-30, 10, 25, 40))
         
         one.font = UIFont.systemFontOfSize(12)
-        one.backgroundColor = UIColor.redColor()
+//        one.backgroundColor = UIColor.redColor()
         one.textAlignment = .Center
         one.textColor = UIColor.grayColor()
         one.text = "道题"
@@ -53,12 +53,12 @@ class EveryDayTableViewCell: UITableViewCell {
         
         let two = UILabel(frame: CGRectMake(num.frame.origin.x-10, 10, 15, 40))
         //let two = UILabel(frame: CGRectMake(num.frame.origin.x-30, 10, 15, 40))
-        two.backgroundColor = UIColor.greenColor()
+//        two.backgroundColor = UIColor.greenColor()
         two.font = UIFont.systemFontOfSize(12)
         two.textAlignment = .Center
         two.textColor = UIColor.grayColor()
         two.text = "共"
-        two.backgroundColor = UIColor.greenColor()
+//        two.backgroundColor = UIColor.greenColor()
        
         self.addSubview(one)
         self.addSubview(num)

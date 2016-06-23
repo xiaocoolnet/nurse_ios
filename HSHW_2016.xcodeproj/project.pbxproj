@@ -96,6 +96,8 @@
 		18C240601CEEB6340059BF48 /* TalentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2405F1CEEB6340059BF48 /* TalentViewController.swift */; };
 		18C240621CEF10150059BF48 /* OnlineExaminationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */; };
 		18D5B61A1CEA17320014F846 /* EveryDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6191CEA17320014F846 /* EveryDayViewController.swift */; };
+		1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */; };
+		1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */; };
 		D1FC268C65F633C38728A1DB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */; };
 		F604A4DC1D0E79F7008A4888 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4DB1D0E79F7008A4888 /* libicucore.tbd */; };
 		F604A4DE1D0E7A03008A4888 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4DD1D0E7A03008A4888 /* libz.tbd */; };
@@ -279,6 +281,8 @@
 		18C2405F1CEEB6340059BF48 /* TalentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalentViewController.swift; sourceTree = "<group>"; };
 		18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineExaminationViewController.swift; sourceTree = "<group>"; };
 		18D5B6191CEA17320014F846 /* EveryDayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayViewController.swift; sourceTree = "<group>"; };
+		1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayModel.swift; sourceTree = "<group>"; };
+		1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaliyExamModel.swift; sourceTree = "<group>"; };
 		ACDDECCAF15EF7167B841BC0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F604A4DB1D0E79F7008A4888 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
@@ -686,6 +690,8 @@
 		185408651CE6C7C800DFBA7C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */,
+				1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1103,6 +1109,7 @@
 				0B1911F51D1122BD00CDE18D /* UIButton+AFNetworking.m in Sources */,
 				F63E198D1D17E10E001BDE8A /* HSZRecruitmentHome.swift in Sources */,
 				183B865B1CE5CEEB00709235 /* SDWebImageDecoder.m in Sources */,
+				1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */,
 				18A5148E1CED596F00A30AA5 /* UserViewController.swift in Sources */,
 				185408771CE6C8A600DFBA7C /* GoABroadViewController.swift in Sources */,
 				183B84F81CE5BFDC00709235 /* ViewController.swift in Sources */,
@@ -1142,6 +1149,7 @@
 				0B1911F11D1122BD00CDE18D /* AFURLSessionManager.m in Sources */,
 				18A3F4E61CEAAF1100028FA5 /* WordViewController.swift in Sources */,
 				185408731CE6C87F00DFBA7C /* NewsViewController.swift in Sources */,
+				1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */,
 				181E0D2D1CEBF8A900E34A7F /* MineCollectionViewController.swift in Sources */,
 				181E0D331CEC3EC900E34A7F /* ChildsViewController.swift in Sources */,
 				183B865D1CE5CEEB00709235 /* SDWebImageDownloaderOperation.m in Sources */,
@@ -1319,7 +1327,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1363,7 +1371,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/xiaocool/Desktop/nurse/HSHW_2016/OC_Header.h;
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/zhang/Desktop/nurse_ios/HSHW_2016/OC_Header.h;
 			};
 			name = Debug;
 		};
@@ -1376,7 +1384,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = YES;
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -1420,7 +1428,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/xiaocool/Desktop/nurse/HSHW_2016/OC_Header.h;
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/zhang/Desktop/nurse_ios/HSHW_2016/OC_Header.h;
 			};
 			name = Release;
 		};
