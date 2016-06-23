@@ -121,6 +121,7 @@
 		F63E19881D17DB4E001BDE8A /* icon_callback.png in Resources */ = {isa = PBXBuildFile; fileRef = F63E19871D17DB4E001BDE8A /* icon_callback.png */; };
 		F63E198D1D17E10E001BDE8A /* HSZRecruitmentHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */; };
 		F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */; };
+		F6A598941D1B6F7C000D6E37 /* HSMineHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */; };
 		F6B75F901D090728009DE2E6 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B75F8F1D090728009DE2E6 /* ImageIO.framework */; };
 		F6D02CDB1D07A46800353557 /* NewsSourceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D02CD91D07A46800353557 /* NewsSourceCell.swift */; };
 		F6D02CDC1D07A46800353557 /* NewsSourceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6D02CDA1D07A46800353557 /* NewsSourceCell.xib */; };
@@ -305,6 +306,7 @@
 		F63E19871D17DB4E001BDE8A /* icon_callback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_callback.png; sourceTree = "<group>"; };
 		F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZRecruitmentHome.swift; sourceTree = "<group>"; };
 		F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZSliderMenuView.swift; sourceTree = "<group>"; };
+		F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineHelper.swift; sourceTree = "<group>"; };
 		F6B75F8F1D090728009DE2E6 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		F6B75F911D090B54009DE2E6 /* OC_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OC_Header.h; sourceTree = "<group>"; };
 		F6D02CD91D07A46800353557 /* NewsSourceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsSourceCell.swift; sourceTree = "<group>"; };
@@ -775,6 +777,7 @@
 		1854086E1CE6C82200DFBA7C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1112,6 +1115,7 @@
 				0B1911ED1D1122BD00CDE18D /* AFSecurityPolicy.m in Sources */,
 				F63E19811D17C38A001BDE8A /* HSWCommunityHome.swift in Sources */,
 				18A3F4E41CEAA83D00028FA5 /* EveryDayTableViewCell.swift in Sources */,
+				F6A598941D1B6F7C000D6E37 /* HSMineHelper.swift in Sources */,
 				0B1911EC1D1122BD00CDE18D /* AFNetworkReachabilityManager.m in Sources */,
 				18D5B61A1CEA17320014F846 /* EveryDayViewController.swift in Sources */,
 				0B1911EB1D1122BD00CDE18D /* AFHTTPSessionManager.m in Sources */,
