@@ -61,15 +61,9 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
         
         numb = 1
         self.view.backgroundColor = UIColor.whiteColor()
-        
-        //        self.createScrollerView()
-        //        self.backBottomView()
-        //
-        //        self.questionCard()
-        //        self.AnswerView()
         isSubmit = false
-        collection = true
-        self.timeDow()
+        collection = false
+        
         // Do any additional setup after loading the view.
     }
     
@@ -87,8 +81,13 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
         print(self.scrollView.subviews[index])
         print(self.scrollView.subviews[index].subviews)
         //let label = self.scrollView.subviews[2].viewWithTag(10) as! UILabel
-        let label = self.view.viewWithTag(10+index) as! UILabel
-//        label.backgroundColor = UIColor.redColor()
+        var label = UILabel()
+        if self.scrollView.subviews.count==0 {
+            
+        }else{
+            label = self.view.viewWithTag(10+index) as! UILabel
+        }
+
         count -= 1
         if minute>=0 {
             if (count <= 0)
@@ -191,7 +190,9 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                     print(self.dataSource)
                     print(self.dataSource.count)
                     print("-----")
+                    
                     self.createScrollerView()
+                    self.timeDow()
                     self.AnswerView()
                     self.backBottomView()
                     self.questionCard()
@@ -307,19 +308,6 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                 
             }
         }
-        //        else{
-        //            for i in 0..<self.myChoose.endIndex {
-        //                let myCircleView = cirecleArray[i] as! UIView
-        //                if Int(self.myChoose[i])==Int(self.rightAnswer[i] as! NSNumber) {
-        //                    myCircleView.backgroundColor =  UIColor.greenColor()
-        //                }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber){
-        //                    myCircleView.backgroundColor = UIColor.redColor()
-        //                }else{
-        //                    myCircleView.backgroundColor = UIColor.grayColor()
-        //                }
-        //            }
-        //            
-        //        }
         
     }
     
@@ -570,9 +558,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
             question.textAlignment = .Natural
             question.font = UIFont.systemFontOfSize(14)
             question.text = examInfo.post_title
-//            question.text = "1、你看过海鸥捕食吗？ 一群海鸥绕着海岸飞啊飞啊， 看准了水下的鱼，收了翅膀， 一猛子就扎下去， 那样子，根本就像寻死。 自由落体似的掉进水里，不管不顾，就如同爱情。 只不过，有的满载而归， 有的，一无所获……"
             question.sizeToFit()
-//            back.addSubview(question)
             contentScrollView.addSubview(question)
             
             let heightArray = NSMutableArray()
@@ -625,7 +611,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
             scrollView.addSubview(contentScrollView)
         }
         
-        scrollView.contentSize = CGSizeMake(100*self.view.frame.size.width, 0)
+        scrollView.contentSize = CGSizeMake(CGFloat(self.dataSource.count)*self.view.frame.size.width, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         view.addSubview(scrollView)
         let ques = UILabel(frame: CGRectMake(WIDTH/2-80, HEIGHT-146, 80, 12))
@@ -643,7 +629,8 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
         let num = UILabel(frame: CGRectMake(WIDTH/2+5+number.bounds.size.width, HEIGHT-150, 30, 14))
         num.textColor = UIColor.whiteColor()
         num.font = UIFont.systemFontOfSize(16)
-        num.text = "  / 100"
+//        String(self.dataSource.count)
+        num.text = "  /"+String(self.dataSource.count)
         num.sizeToFit()
         self.view.addSubview(num)
         
@@ -740,17 +727,107 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
 //            }
             
         }else if btn.tag == 5 {
-            if collection == true {
-                btn.setImage(UIImage(named: "btn_collect_sel.png"), forState: .Normal)
-                TitCol.textColor = COLOR
-                collection = false
-            }else{
+            print(collection)
+            print("收藏")
+            let examInfo = self.dataSource[self.pageControl.currentPage] as! ExamInfo
+            let user = NSUserDefaults.standardUserDefaults()
+            let uid = user.stringForKey("userid")
+            print(uid)
+            if uid==nil {
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+                let vc  = mainStoryboard.instantiateViewControllerWithIdentifier("Login")
+                //self.presentViewController(vc, animated: true, completion: nil)
+                self.navigationController?.pushViewController(vc, animated: true)
                 btn.setImage(UIImage(named: picArr[4]), forState: .Normal)
                 TitCol.textColor = GREY
-                collection = true
+                collection = false
+            }else if collection == false {
+                
+                let url = PARK_URL_Header+"addfavorite"
+                let param = [
+                    
+                    "refid":examInfo.id,
+                    "type":"1",
+                    "userid":uid,
+                    "title":examInfo.post_title,
+                    "description":examInfo.post_description
+                ];
+                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+                    print(request)
+                    if(error != nil){
+                        
+                    }else{
+                        let status = Http(JSONDecoder(json!))
+                        print("状态是")
+                        print(status.status)
+                        if(status.status == "error"){
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = status.errorData
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 3)
+                        }
+                        if(status.status == "success"){
+                            
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "收藏成功"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 3)
+                            btn.setImage(UIImage(named: "btn_collect_sel.png"), forState: .Normal)
+                            self.TitCol.textColor = COLOR
+                            self.collection = true
+                            print(status.data)
+                        }
+                    }
+                }
+            }else{
+                let url = PARK_URL_Header+"cancelfavorite"
+                let param = [
+                    
+                    "refid":examInfo.id,
+                    "type":"1",
+                    "userid":uid
+                ];
+                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+                    print(request)
+                    if(error != nil){
+                        
+                    }else{
+                        let status = Http(JSONDecoder(json!))
+                        print("状态是")
+                        print(status.status)
+                        if(status.status == "error"){
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = status.errorData
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 3)
+                        }
+                        if(status.status == "success"){
+                            
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "取消收藏成功"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 3)
+                            btn.setImage(UIImage(named: self.picArr[4]), forState: .Normal)
+                            self.TitCol.textColor = GREY
+                            self.collection = false
+                            print(status.data)
+                            
+                        }
+                    }
+                    
+                }
+                
             }
         }
-        
+
         
     }
     func touchUp() {

@@ -48,14 +48,15 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.isSubmit  = false
+       
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: #selector(self.takeUpTheTest))
         navigationItem.rightBarButtonItem = rightBtn
         self.view.backgroundColor = UIColor.whiteColor()
-        collection = true
+         self.isSubmit  = false
+        collection = false
         //time.frame = CGRectMake(WIDTH-30, 14, 40, 12)
         self.timeDow()
         
@@ -718,8 +719,8 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 self.navigationController?.pushViewController(vc, animated: true)
                 btn.setImage(UIImage(named: picArr[4]), forState: .Normal)
                 TitCol.textColor = GREY
-                collection = true
-            }else if collection == true {
+                collection = false
+            }else if collection == false {
                 
                 let url = PARK_URL_Header+"addfavorite"
                 let param = [
@@ -756,7 +757,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                             hud.hide(true, afterDelay: 3)
                             btn.setImage(UIImage(named: "btn_collect_sel.png"), forState: .Normal)
                             self.TitCol.textColor = COLOR
-                            self.collection = false
+                            self.collection = true
                             print(status.data)
                         }
                     }
@@ -795,7 +796,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                             hud.hide(true, afterDelay: 3)
                             btn.setImage(UIImage(named: self.picArr[4]), forState: .Normal)
                             self.TitCol.textColor = GREY
-                            self.collection = true
+                            self.collection = false
                             print(status.data)
                             
                         }

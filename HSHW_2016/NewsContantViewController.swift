@@ -428,7 +428,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             let userID = user.stringForKey((self.newsInfo?.object_id)!)
             print(userID)
            // if like != "true"||like==nil {
-            if userID == "false" {
+            if userID == "false"||userID==nil{
                 let url = PARK_URL_Header+"SetLike"
                 let param = [
                     
