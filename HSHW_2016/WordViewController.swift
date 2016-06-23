@@ -124,11 +124,17 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     {
         //print(self.scrollView.subviews)
         let index :Int = self.pageControl.currentPage
-        print( self.pageControl.currentPage)
-        print(self.scrollView.subviews[index])
-        print(self.scrollView.subviews[index].subviews)
+//        print( self.pageControl.currentPage)
+//        print(self.scrollView.subviews[index])
+//        print(self.scrollView.subviews[index].subviews)
         //let label = self.scrollView.subviews[2].viewWithTag(10) as! UILabel
-        let label = self.view.viewWithTag(10+index) as! UILabel
+        var label = UILabel()
+        if self.scrollView.subviews.count==0 {
+            
+        }else{
+          label = self.view.viewWithTag(10+index) as! UILabel
+        }
+//        let label = self.view.viewWithTag(10+index) as! UILabel
         //        label.backgroundColor = UIColor.redColor()
         count -= 1
         if minute>=0 {
@@ -243,13 +249,21 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             let loc:Int = j % totalloc;//列号
             
             let appviewx:CGFloat = margin+(margin+smartWidth/CGFloat(self.totalloc))*CGFloat(loc)
-            let appviewy:CGFloat = margin+(margin+100) * CGFloat(row)
+            let appviewy:CGFloat = margin+(margin+90) * CGFloat(row)
             let view = UIView()
-            view.frame = CGRectMake(appviewx, appviewy, smartWidth/CGFloat(self.totalloc), WIDTH*100/375)
+            view.frame = CGRectMake(appviewx, appviewy, smartWidth/CGFloat(self.totalloc), WIDTH*90/375)
             let number = UILabel()
-            number.text = String(j)
-            number.frame = CGRectMake(0, 0, view.frame.size.width, WIDTH*80/375)
+            let tihao = j+1
+            number.text = String(tihao)
+            number.frame = CGRectMake(10, 10, view.frame.size.width-30, view.frame.size.width-30)
             number.textAlignment = NSTextAlignment.Center
+            number.layer.cornerRadius = 0.5 * (view.frame.size.width-30)
+            number.clipsToBounds = true
+            if j==self.pageControl.currentPage {
+                number.backgroundColor = UIColor.purpleColor()
+                number.textColor = UIColor.whiteColor()
+            }
+            
             let circleView = UIView()
             circleView.frame = CGRectMake(0, number.frame.origin.y+number.frame.size.height+10, WIDTH*10/375, WIDTH*10/375)
             circleView.center.x = number.center.x
@@ -264,37 +278,39 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         if self.myChoose.count != 0 && self.pageControl.currentPage<self.myChoose.count {
             print(self.myChoose[self.pageControl.currentPage])
             print(self.rightAnswer[self.pageControl.currentPage])
+            
             if Int(self.myChoose[self.pageControl.currentPage])==Int(self.rightAnswer[self.pageControl.currentPage] as! NSNumber) {
+                
                 myCircleView.backgroundColor =  UIColor.greenColor()
-                //                cirecleArray[self.pageControl.currentPage].backgroundColor = UIColor.greenColor()
+
             }else{
                 
                 for i in 0..<self.myChoose.endIndex {
                     let myCircleView = cirecleArray[i] as! UIView
                     if Int(self.myChoose[i])==Int(self.rightAnswer[i] as! NSNumber) {
                         myCircleView.backgroundColor =  UIColor.greenColor()
-                    }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber){
+                    }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber)&&Int(self.myChoose[i]) != -32 {
                         myCircleView.backgroundColor = UIColor.redColor()
-                    }else{
+                    }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber)&&Int(self.myChoose[i]) == -32{
                         myCircleView.backgroundColor = UIColor.grayColor()
                     }
                 }
-                //myCircleView.backgroundColor = UIColor.redColor()
                 
             }
-        }else{
-            for i in 0..<self.myChoose.endIndex {
-                let myCircleView = cirecleArray[i] as! UIView
-                if Int(self.myChoose[i])==Int(self.rightAnswer[i] as! NSNumber) {
-                    myCircleView.backgroundColor =  UIColor.greenColor()
-                }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber){
-                    myCircleView.backgroundColor = UIColor.redColor()
-                }else{
-                    myCircleView.backgroundColor = UIColor.grayColor()
-                }
-            }
-            
         }
+//        else{
+//            for i in 0..<self.myChoose.endIndex {
+//                let myCircleView = cirecleArray[i] as! UIView
+//                if Int(self.myChoose[i])==Int(self.rightAnswer[i] as! NSNumber) {
+//                    myCircleView.backgroundColor =  UIColor.greenColor()
+//                }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber){
+//                    myCircleView.backgroundColor = UIColor.redColor()
+//                }else{
+//                    myCircleView.backgroundColor = UIColor.grayColor()
+//                }
+//            }
+//            
+//        }
         
     }
     // MARK:   答案视图
