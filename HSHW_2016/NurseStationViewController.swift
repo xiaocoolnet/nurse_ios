@@ -13,7 +13,6 @@ class NurseStationViewController: UIViewController {
     
     @IBOutlet weak var segment: UISegmentedControl!
     var currentVCIndex:Int = 0
-    
     let ComVC = HSWCommunityHome(nibName: "HSWCommunityHome", bundle: nil)
     let RecVC = HSZRecruitmentHome()
     

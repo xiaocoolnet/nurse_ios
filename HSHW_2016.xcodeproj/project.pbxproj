@@ -91,6 +91,8 @@
 		F63E198D1D17E10E001BDE8A /* HSZRecruitmentHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */; };
 		F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */; };
 		F6A598941D1B6F7C000D6E37 /* HSMineHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */; };
+		F6B4083D1D1D212800BDFDBE /* HSNurseStationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4083C1D1D212800BDFDBE /* HSNurseStationHelper.swift */; };
+		F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4083E1D1D31EB00BDFDBE /* HSJobListModel.swift */; };
 		F6B75F901D090728009DE2E6 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B75F8F1D090728009DE2E6 /* ImageIO.framework */; };
 		F6D02CDB1D07A46800353557 /* NewsSourceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D02CD91D07A46800353557 /* NewsSourceCell.swift */; };
 		F6D02CDC1D07A46800353557 /* NewsSourceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6D02CDA1D07A46800353557 /* NewsSourceCell.xib */; };
@@ -209,6 +211,8 @@
 		F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZSliderMenuView.swift; sourceTree = "<group>"; };
 		F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineHelper.swift; sourceTree = "<group>"; };
 		F6B4083B1D1D100900BDFDBE /* HSHW_2016-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HSHW_2016-Bridging-Header.h"; sourceTree = "<group>"; };
+		F6B4083C1D1D212800BDFDBE /* HSNurseStationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSNurseStationHelper.swift; sourceTree = "<group>"; };
+		F6B4083E1D1D31EB00BDFDBE /* HSJobListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSJobListModel.swift; sourceTree = "<group>"; };
 		F6B75F8F1D090728009DE2E6 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		F6B75F911D090B54009DE2E6 /* OC_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OC_Header.h; sourceTree = "<group>"; };
 		F6D02CD91D07A46800353557 /* NewsSourceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsSourceCell.swift; sourceTree = "<group>"; };
@@ -551,6 +555,8 @@
 		1854086B1CE6C7F800DFBA7C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F6B4083C1D1D212800BDFDBE /* HSNurseStationHelper.swift */,
+				F6B4083E1D1D31EB00BDFDBE /* HSJobListModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -891,6 +897,7 @@
 				181E0D271CEBF85100E34A7F /* MineStudyViewController.swift in Sources */,
 				183B866F1CE5CF9500709235 /* Http.swift in Sources */,
 				185408791CE6C8B600DFBA7C /* NurseStationViewController.swift in Sources */,
+				F6B4083D1D1D212800BDFDBE /* HSNurseStationHelper.swift in Sources */,
 				18ADDDEF1CE9995700557FFE /* PostTableViewCell.swift in Sources */,
 				181DE09B1CEAFFC00085ECB1 /* PostViewController.swift in Sources */,
 				181E0D2B1CEBF87D00E34A7F /* MineMessageViewController.swift in Sources */,
@@ -903,6 +910,7 @@
 				183B84F81CE5BFDC00709235 /* ViewController.swift in Sources */,
 				F631DFAC1D069C6200E52FDB /* SmetaModel.swift in Sources */,
 				181E0D291CEBF86900E34A7F /* MinePostViewController.swift in Sources */,
+				F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */,
 				F612280B1D0581D7009E3D4D /* JianKangViewController.swift in Sources */,
 				F63E19811D17C38A001BDE8A /* HSWCommunityHome.swift in Sources */,
 				18A3F4E41CEAA83D00028FA5 /* EveryDayTableViewCell.swift in Sources */,

@@ -158,7 +158,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             if boundingRect.height+60>100 {
                 return boundingRect.height+60
             }else{
-                
                 return 100
             }
         }
