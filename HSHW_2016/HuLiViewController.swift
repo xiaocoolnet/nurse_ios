@@ -196,15 +196,8 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
-        cell.titLab.text = newsInfo.post_title
-        cell.conNum.text = newsInfo.recommended
-        let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
-        cell.timeLab.text = time[0]
-        cell.contant.text = newsInfo.post_excerpt
-        cell.contant.text = newsInfo.post_excerpt
+        cell.setCellWithNewsInfo(newsInfo)
         let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 14, width: WIDTH-140)
-        print(titleHeight)
-       // let contentHeight:CGFloat = calculateHeight(newsInfo.post_content!, size: 12, width: WIDTH-140)
         cell.titLab.frame.size.height = titleHeight
         cell.heal.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
         cell.conNum.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
@@ -213,12 +206,6 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.timeBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
         cell.contant.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+20
         cell.contant.frame.size.height = tableView.rowHeight-cell.titLab.frame.size.height-35
-        // cell.contant.text = "真的很累吗？累就对了，舒服是留给死人的！苦-才是人生 ，累-才是工作， 变-才是命运 ， 忍-才是历练，容-才是智慧 ， 静-才是修养，舍-才是得到 ，做-才是拥有！"
-        let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
-        print(photoUrl)
-        cell.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
-
-        
         return cell
         
     }

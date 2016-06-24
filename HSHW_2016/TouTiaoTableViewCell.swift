@@ -97,5 +97,17 @@ class TouTiaoTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+    
+    func setCellWithNewsInfo(newsInfo:NewsInfo) {
+        self.titLab.text = newsInfo.post_title
+        self.conNum.text = newsInfo.recommended
+        let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
+        self.timeLab.text = time[0]
+        self.contant.text = newsInfo.post_excerpt
+        let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
+        print(photoUrl)
+        self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
+    }
 
 }

@@ -38,6 +38,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.view.backgroundColor = COLOR
         requestHelper.getSlideImages("3") { [unowned self] (success, response) in
             if success {
+                print(response)
                 let imageArr = response as! Array<PhotoInfo>
                 for imageInfo in imageArr {
                     self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
@@ -112,7 +113,26 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func GetDate(){
-    
+//    
+//        requestHelper.getData("4") { (success, response) in
+//            if success {
+//                print(response)
+//               let news = response as! NewsModel
+//                print(news)
+//                let newsArr = response as! NewsList
+//                print(response?.data)
+//                print("-----")
+//                print(newsArr)
+////                for newsInfo in newsArr {
+////                   self.dataSource.append(<#T##list: [NewsInfo]##[NewsInfo]#>)
+////                   
+////                    dispatch_async(dispatch_get_main_queue(), {
+////                     
+////                        self.myTableView.reloadData()
+////                    })
+////                }
+//            }
+//        }
       //MBProgressHUD  HUD = [[MBProgressHUD showHUDAddedTo:self.view animated:YES], retain];
         
         let url = PARK_URL_Header+"getNewslist"
@@ -199,35 +219,15 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }else{
             return 100
         }
-       // newsInfo.post_excerpt
-        //return 40
+
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
         let newsInfo = self.dataSource.objectlist[indexPath.row]
-        let likeInfo = self.likedataSource.objectlist[0]
-        print("shuju=====")
-        
-        
-        print(self.likedataSource)
-        print(self.likedataSource.objectlist)
-        print(self.likedataSource.objectlist[indexPath.row])
-        print(newsInfo.likes.count)
-        print(self.likedataSource.objectlist.count)
-        print(likeInfo)
-        print(likeInfo.userid)
-        print("shuju----")
-
-        cell.titLab.text = newsInfo.post_title
-        cell.conNum.text = newsInfo.recommended
-        let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
-        cell.timeLab.text = time[0]
-        cell.contant.text = newsInfo.post_excerpt
+        cell.setCellWithNewsInfo(newsInfo)
         let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 14, width: WIDTH-140)
-        print(newsInfo.post_title)
-        print(titleHeight)
         cell.titLab.frame.size.height = titleHeight
         cell.heal.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
         cell.conNum.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
@@ -235,11 +235,6 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         cell.comBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
         cell.timeBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
         cell.contant.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+20
-        print(newsInfo.thumb)
-        let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
-        print(photoUrl)
-        cell.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
-        //cell.titImage.image = UIImage(named: "1.png")
         return cell
    
     }
