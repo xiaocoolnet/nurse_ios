@@ -8,31 +8,16 @@
 
 import UIKit
 
-//protocol cellHeightProtocol:NSObjectProtocol {
-//    
-//    func changeCellHeight(height:CGFloat)
-//    
-//}
-protocol ChangeCellHeightDelegate:NSObjectProtocol{
-    //回调方法
-   func changeCellHeight(height:CGFloat)
-}
-
-class contentCell: UITableViewCell,UIWebViewDelegate{
+class contentCell: UITableViewCell{
 
     @IBOutlet weak var contentWebView: UIWebView!
     
-    var delegate:ChangeCellHeightDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
-        //contentView.alwaysBounceVertical = false
         contentView .sizeToFit()
-        self.contentWebView.delegate = self
-       
         for subView in contentWebView!.subviews
         {
             let v = subView
-
             if v.isKindOfClass(UIScrollView.self) == true
             {
                 (v as! UIScrollView).scrollEnabled = false
@@ -40,39 +25,13 @@ class contentCell: UITableViewCell,UIWebViewDelegate{
                 
                 (v as! UIScrollView).showsHorizontalScrollIndicator = false
                 (v as! UIScrollView).showsVerticalScrollIndicator = false
-                
-                
             }
         }
-        
-        // Initialization code
+    }
+    func loadRequestUrl(requestUrl:NSURL){
+        contentWebView.loadRequest(NSURLRequest(URL: requestUrl))
     }
  
-
-//    func webViewDidStartLoad(webView: UIWebView) {
-//        <#code#>
-//    }
-    func webViewDidFinishLoad(webView: UIWebView) {
-        print(webView.loading)
-        if (webView.loading) {
-            
-            print("正在加载")
-            
-        }else{
-            //      let fittingSize:CGSize = self.contentWebView.sizeThatFits(CGSizeZero)
-            //        contentWebView.frame.size.height = fittingSize.height
-            contentWebView.frame.size.height = contentWebView.scrollView.contentSize.height
-            //        NSUserDefaults.standardUserDefaults().setObject(contentWebView.frame.size.height, forKey: "height")
-            //        self.delegate?.changeCellHeight(contentWebView.frame.size.height)
-            print(contentWebView.frame.size.height)
-            //contentWebView.height = contentWebView.scrollView.contentSize.height;
-            NSNotificationCenter.defaultCenter().postNotificationName("WEBVIEW_HEIGHT", object: self,userInfo:    ["height":contentWebView.frame.size.height])
-            //self.delegate?.changeCellHeight(contentWebView.frame.size.height)
-        }
-    
-
-        
-    }
 //
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

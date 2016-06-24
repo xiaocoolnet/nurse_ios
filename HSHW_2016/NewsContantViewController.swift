@@ -17,11 +17,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     let shareArr:[String] = ["ic_pengyouquan.png","ic_wechat.png","ic_weibo.png"]
     var newsInfo :NewsInfo?
     var likeNum :Int?
-    var heightDic :NSMutableDictionary = [:]
-    let webView :UIWebView = UIWebView.init()
+    var webHeight:CGFloat = 100
     var isLike:Bool = false
     var dataSource = NewsList()
     let zan = UIButton(frame: CGRectMake(WIDTH*148/375, WIDTH*80/375, WIDTH*80/375, WIDTH*80/375))
+    var finishLoad = false
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = false
@@ -33,13 +33,10 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "新闻内容"
-        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(NewsContantViewController.noti(_:)), name: "WEBVIEW_HEIGHT", object: nil)
-        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti:) name:@"WEBVIEW_HEIGHT" object:nil];
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 3))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         self.view.backgroundColor = UIColor.whiteColor()
-        webView.delegate = self
         myTableView.frame = CGRectMake(0, 3, WIDTH, HEIGHT-60)
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.delegate = self
@@ -145,11 +142,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 return 30
                 
             }else if indexPath.row==2{
-               
-                let height = Int(NSUserDefaults.standardUserDefaults().stringForKey("height") ?? "0")
-                print(height)
-                let cellHeight:CGFloat = CGFloat(height!)
-                return cellHeight
+               return webHeight
                
             }else{
             
@@ -169,7 +162,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 return 100
             }
         }
-//       return 0
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -202,23 +194,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 //tableView.rowHeight=30
 
             }else if indexPath.row == 2 {
-                let cell1:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cellIntenfer")!
-//                let cell = tableView.dequeueReusableCellWithIdentifier("cellIntenfer", forIndexPath: indexPath)
-//                cell.delegate = self
-                let url = NewsInfo_Header+(newsInfo?.object_id)!
-                print(url)
-                let webView = UIWebView()
-                webView.delegate = self
-                webView.frame = CGRectMake(0, 0, cell1.frame.size.width, cell1.frame.size.height)
-                let requestUrl = NSURL(string:url)
-                let request = NSURLRequest(URL:requestUrl!)
-                webView.loadRequest(request)
-                //cell.contentWebView.loadRequest(request)
-                cell1.tag = indexPath.row
-                 let height = Int(NSUserDefaults.standardUserDefaults().stringForKey("height") ?? "0")
-                print(height)
-                cell1.addSubview(webView)
-                return cell1
+                let webCell = tableView.dequeueReusableCellWithIdentifier("webView") as! contentCell
+                let url = NSURL(string:NewsInfo_Header+(newsInfo?.object_id)!)
+                webCell.loadRequestUrl(url!)
+                webCell.contentWebView.delegate = self
+                return webCell
                
             }else{
                 
@@ -329,41 +309,18 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
 //    func changeCellHeight(height: CGFloat) {
-//        NSUserDefaults.standardUserDefaults().setObject(height, forKey: "height")
 //        self.myTableView.reloadData()
 //    }
     
     func webViewDidFinishLoad(webView: UIWebView) {
-        print(webView.loading)
-        if (webView.loading) {
-            
-            print("正在加载")
-            
-        }else{
-            //      let fittingSize:CGSize = self.contentWebView.sizeThatFits(CGSizeZero)
-            //        contentWebView.frame.size.height = fittingSize.height
-            webView.frame.size.height = webView.scrollView.contentSize.height
-            //        NSUserDefaults.standardUserDefaults().setObject(contentWebView.frame.size.height, forKey: "height")
-            //        self.delegate?.changeCellHeight(contentWebView.frame.size.height)
-            print(webView.frame.size.height)
-            //contentWebView.height = contentWebView.scrollView.contentSize.height;
-            NSNotificationCenter.defaultCenter().postNotificationName("WEBVIEW_HEIGHT", object: self,userInfo:    ["height":webView.frame.size.height])
-            //self.delegate?.changeCellHeight(contentWebView.frame.size.height)
+        if (finishLoad) {
+            return
         }
-    }
-    func noti(sender:NSNotification){
-        let userInfo = sender.userInfo as! [String: AnyObject]
+        webHeight = webView.scrollView.contentSize.height
+        self.myTableView.reloadData()
+        finishLoad = true
 
-        let height = userInfo["height"] as! Int
-        let cell = sender.object as!contentCell
-        print(cell.tag)
-        let indexPath = NSIndexPath.init(forRow:cell.tag, inSection: 0)
-        
-        NSUserDefaults.standardUserDefaults().setObject(height, forKey: "height")
-//        let indexPath = NSIndexPath.init(forRow:  as! Int, inSection: 0)
-        self.myTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation:UITableViewRowAnimation.None)
     }
-    
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 {
@@ -609,21 +566,4 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             
         }
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

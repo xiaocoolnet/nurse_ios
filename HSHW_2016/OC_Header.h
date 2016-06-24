@@ -13,9 +13,3 @@
 #endif /* OC_Header_h */
 
 
-#import "UIImageView+WebCache.h"
-#import <ShareSDK/ShareSDK.h>
-#import <ShareSDKUI/ShareSDK+SSUI.h>
-#import <ShareSDKConnector/ShareSDKConnector.h>
-#import "WXApi.h"
-#import "WeiboSDK.h"

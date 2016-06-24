@@ -3,9 +3,8 @@
 //
 
 #import "MBProgressHUD/MBProgressHUD.h"
-#import "XKeyBoard.h"
-#import "ConnectModel.h"
-#import "BRPlaceholderTextView.h"
-#import "NirKxMenu.h"
-#import "UIImageView+WebCache.h"
-#import <AFNetworking/AFNetworking.h>
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKUI/ShareSDK+SSUI.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>
+#import "WXApi.h"
+#import "WeiboSDK.h"
