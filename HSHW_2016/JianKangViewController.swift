@@ -24,7 +24,6 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
     internal var post_title=String()
     internal var post_modified=String()
     var post_excerpt=String()
-    //internal var roomnum=Int()
     var requestManager:AFHTTPSessionManager?
     let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
     override func viewWillAppear(animated: Bool) {
@@ -170,7 +169,7 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        //print(self.dataSource.count)
+       
         return self.dataSource.count;
     }
     
@@ -179,24 +178,13 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
-        cell.titLab.text = newsInfo.post_title
-        cell.conNum.text = newsInfo.recommended
-        let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
-        cell.timeLab.text = time[0]
-        cell.contant.text = newsInfo.post_excerpt
-        cell.contant.text = newsInfo.post_excerpt
+        cell.setCellWithNewsInfo(newsInfo)
         cell.heal.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
         cell.conNum.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
         cell.timeLab.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
         cell.comBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
         cell.timeBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
         cell.contant.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+20
-        // cell.contant.text = "真的很累吗？累就对了，舒服是留给死人的！苦-才是人生 ，累-才是工作， 变-才是命运 ， 忍-才是历练，容-才是智慧 ， 静-才是修养，舍-才是得到 ，做-才是拥有！"
-        let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
-        print(photoUrl)
-        cell.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
-
-        
         return cell
         
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-
+import MBProgressHUD
 class NewsPageHelper: NSObject {
     
     // 获取新闻轮播图片
@@ -34,5 +34,36 @@ class NewsPageHelper: NSObject {
         }
 
     }
+    
+    
+    func getData(channelid:String,handle:ResponseBlock) {
+        let url = PARK_URL_Header+"getNewslist"
+        let param = [
+            "channelid":channelid
+        ];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                
+            }else{
+                let result = NewsModel(JSONDecoder(json!))
+                print("状态是")
+                print(result.status)
+                if(result.status == "error"){
+                    handle(success: false, response: result.errorData)
+                }
+                if(result.status == "success"){
+                    handle(success: true, response:result.data)
+                }
+            }
+            
+        }
+
+    }
+    
+    
+    
+    
+    
     
 }

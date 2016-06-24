@@ -17,6 +17,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var isLike:Bool = false
     var likeNum :Int!
     var currentIndexRow:Int?
+    let likeNumDict = NSMutableDictionary()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.GetData()
@@ -88,19 +89,15 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
         print(photoUrl)
         cell.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
-        //cell.titImage.image = UIImage(named: "2.png")
-        
         cell.titLab.text = newsInfo.post_title
         cell.conNum.text = newsInfo.recommended
         let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
         cell.timeLab.text = time[0]
-//        cell.zanNum.text = newsInfo.post_like
         let hashValue = newsInfo.likes.count.hashValue
         print(hashValue)
         if hashValue != 0 {
             cell.zan.setImage(UIImage(named:"ic_like_sel"), forState: UIControlState.Normal)
         }
-//        print(hashValue)
         print("\(hashValue)")
         self.likeNum = hashValue
         cell.zanNum.text =  String(self.likeNum)
@@ -128,7 +125,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         user.setObject("true", forKey: String(btn.tag))
         print(uid)
         if uid==nil {
-            //btn.setImage(UIImage(named: "img_like.png"), forState: .Normal)
+            
             let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let vc  = mainStoryboard.instantiateViewControllerWithIdentifier("Login")
             //self.presentViewController(vc, animated: true, completion: nil)
@@ -171,7 +168,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             hud.labelText = "点赞成功"
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 3)
+                            hud.hide(true, afterDelay: 0.5)
                             self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"1"], waitUntilDone:true)
                             
                             user.setObject("true", forKey: "isLike")
@@ -207,7 +204,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
                             hud.hide(true, afterDelay: 1)
-                            //user.setObject("false", forKey: (self.newsInfo?.object_id)!)
+                           
                         }
                         if(status.status == "success"){
                             
@@ -216,14 +213,14 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             hud.labelText = "取消点赞成功"
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 3)
+                            hud.hide(true, afterDelay: 0.5)
                             print(status.data)
                             self.isLike=false
                             user.setObject("false", forKey: "isLike")
                             user.setObject("false", forKey: (newsInfo.object_id)!)
                             user.setObject("false", forKey: String(btn.tag))
                             self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"0"], waitUntilDone:true)
-                            //user.removeObjectForKey((self.newsInfo?.object_id)!)
+                            
                         }
                     }
                     
@@ -231,57 +228,27 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
             }
             
-            
         }
-        
         
     }
     
     func upDateUI(status:NSArray){
         print("更新UI")
-        
-//        let userdefault = NSUserDefaults.standardUserDefaults()
-//        print(status[0])
-//        let indexPath = NSIndexPath.init(forRow: status[0] as! Int, inSection: 0)
-//        print(indexPath.row)
-//
-//        print(self.currentIndexRow)
-//        let isFirst:String = userdefault.objectForKey(String(indexPath.row)) as! String
-//        print(isFirst)
-//        if self.currentIndexRow != indexPath.row && isFirst == "true" {
-//            let newsInfo = self.dataSource.objectlist[indexPath.row]
-//            let hashValue = newsInfo.likes.count.hashValue
-//            print(hashValue)
-//            print(hashValue)
-//            print("\(hashValue)")
-//            self.likeNum = hashValue
-//            currentIndexRow = indexPath.row
-//            userdefault.setObject("false", forKey: String(indexPath.row))
-//        }else{
-//            print(userdefault.objectForKey(String(indexPath.row+10)) as! Int)
-//            self.likeNum = Int(userdefault.objectForKey(String(indexPath.row+1)) as! String)
-//        }
-//        
-//        let cell = self.myTableView.cellForRowAtIndexPath(indexPath)as! AcademicTableViewCell
-////        let cell1 = self.myTableView.dequeueReusableCellWithIdentifier("cell", forIndexPath:indexPath!)as! AcademicTableViewCell
-//        if status[1] as! String=="1" {
-//            self.likeNum  = self.likeNum+1
-//            cell.zan.setImage(UIImage(named: "ic_like_sel"), forState: .Normal)
-//            
-//            userdefault.setObject(self.likeNum, forKey:String(indexPath.row+10))
-//        }else{
-//        
-//            self.likeNum = self.likeNum-1
-//            cell.zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
-//            userdefault.setObject(self.likeNum, forKey:String(indexPath.row+10))
-//        }
-//         cell.zanNum.text = String(self.likeNum)
-    }
-    
-    func getUpZanNum() {
-        print("赞")
-        
-        
+        print(status)
+        self.GetData()
+        self.myTableView.reloadData()
+        let indexPath = NSIndexPath.init(forRow: status[0] as! Int, inSection: 0)
+        let cell = self.myTableView.cellForRowAtIndexPath(indexPath)as! AcademicTableViewCell
+        if status[1] as! String=="1" {
+            
+            cell.zan.setImage(UIImage(named: "ic_like_sel"), forState: .Normal)
+            
+        }else{
+           
+            cell.zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
+           
+        }
+
     }
 
     override func didReceiveMemoryWarning() {

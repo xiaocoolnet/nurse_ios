@@ -190,8 +190,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                // cell.checkNum.text = newsInfo?.post_like
                 let time:Array = (newsInfo?.post_date?.componentsSeparatedByString(" "))!
                 cell.createTime.text = time[0]
-                
-                //tableView.rowHeight=30
 
             }else if indexPath.row == 2 {
                 let webCell = tableView.dequeueReusableCellWithIdentifier("webView") as! contentCell
@@ -234,20 +232,16 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 }else{
                     zan.setImage(UIImage(named: "img_like.png"), forState: .Normal)
                 }
-                
+                zan.tag = indexPath.row
                 zan.addTarget(self, action: #selector(self.zanAddNum), forControlEvents: .TouchUpInside)
-//                let number = UILabel()
                 number.frame = CGRectMake(WIDTH/2-25, WIDTH*170/375, 50, 18)
-               // number.text =  newsInfo!.likes.count as? String
                 print(self.likeNum)
-               // let count  = String(self.likeNum)
                 let hashValue = newsInfo?.likes.count.hashValue
                 print(hashValue)
                 print(hashValue!)
                 print("\(hashValue!)")
                 number.text =  "\(hashValue!)"
                 self.likeNum = hashValue!
-                //number.text =  newsInfo?.post_like
                 number.sizeToFit()
                 number.font = UIFont.systemFontOfSize(12)
                 number.frame = CGRectMake(WIDTH/2-number.bounds.size.width/2-8, WIDTH*170/375, number.bounds.size.width, 18)
@@ -279,15 +273,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             
             let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
             let newsInfo = self.dataSource.objectlist[indexPath.row]
-            print("shuju=====")
-            print(newsInfo.post_excerpt)
-            print("shuju----")
-            
-            cell.titLab.text = newsInfo.post_title
-            cell.conNum.text = newsInfo.recommended
-            let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
-            cell.timeLab.text = time[0]
-            cell.contant.text = newsInfo.post_excerpt
+            cell.setCellWithNewsInfo(newsInfo)
             let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 14, width: WIDTH-140)
             print(newsInfo.post_title)
             print(titleHeight)
@@ -299,18 +285,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             cell.timeBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
             cell.contant.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+20
             print(newsInfo.thumb)
-            let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
-            print(photoUrl)
-            cell.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
             return cell
         }
         return cell1
         
     }
-    
-//    func changeCellHeight(height: CGFloat) {
-//        self.myTableView.reloadData()
-//    }
     
     func webViewDidFinishLoad(webView: UIWebView) {
         if (finishLoad) {
@@ -415,12 +394,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             self.navigationController?.pushViewController(vc, animated: true)
             
         }else{
-//            let like = user.stringForKey("isLike")
-//            //let like1 = user.stringForKey((self.newsInfo?.object_id)!)
-//            print(like)
+
             let userID = user.stringForKey((self.newsInfo?.object_id)!)
             print(userID)
-           // if like != "true"||like==nil {
             if userID == "false"||userID==nil{
                 let url = PARK_URL_Header+"SetLike"
                 let param = [
@@ -443,7 +419,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             hud.labelText = status.errorData
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 3)
+                            hud.hide(true, afterDelay: 1)
                         }
                         if(status.status == "success"){
                             
@@ -452,7 +428,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             hud.labelText = "点赞成功"
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 3)
+                            hud.hide(true, afterDelay: 1)
                             self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: "success", waitUntilDone:true)
 
                             user.setObject("true", forKey: "isLike")
@@ -496,7 +472,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             hud.labelText = "取消点赞成功"
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 3)
+                            hud.hide(true, afterDelay: 1)
                             //self.myTableView .reloadData()
                             print(status.data)
                             self.isLike=false
@@ -517,7 +493,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     
     func upDateUI(status:String){
-        
+//        self.getDate()
+//        let indexPath = NSIndexPath.init(forRow: <#T##Int#>, inSection: 0)
+        //self.myTableView.reloadRowsAtIndexPaths(<#T##indexPaths: [NSIndexPath]##[NSIndexPath]#>, withRowAnimation: <#T##UITableViewRowAnimation#>)
         if status=="success" {
              self.likeNum = self.likeNum! + 1
         }else{
