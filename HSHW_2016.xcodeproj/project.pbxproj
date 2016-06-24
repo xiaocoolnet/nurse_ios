@@ -1375,7 +1375,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "319003da-a312-49be-a00c-33ba2fb5743b";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/xiaocool/Desktop/nurse/HSHW_2016/OC_Header.h;
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/zhang/Desktop/nurse_ios/HSHW_2016/OC_Header.h;
 			};
 			name = Debug;
 		};
@@ -1432,7 +1432,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "319003da-a312-49be-a00c-33ba2fb5743b";
-				SWIFT_OBJC_BRIDGING_HEADER = /Users/xiaocool/Desktop/nurse/HSHW_2016/OC_Header.h;
+				SWIFT_OBJC_BRIDGING_HEADER = /Users/zhang/Desktop/nurse_ios/HSHW_2016/OC_Header.h;
 			};
 			name = Release;
 		};

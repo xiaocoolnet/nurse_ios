@@ -27,7 +27,8 @@ class contentCell: UITableViewCell,UIWebViewDelegate{
         super.awakeFromNib()
         //contentView.alwaysBounceVertical = false
         contentView .sizeToFit()
-        contentWebView.delegate = self
+        self.contentWebView.delegate = self
+       
         for subView in contentWebView!.subviews
         {
             let v = subView
@@ -48,16 +49,28 @@ class contentCell: UITableViewCell,UIWebViewDelegate{
     }
  
 
-    
+//    func webViewDidStartLoad(webView: UIWebView) {
+//        <#code#>
+//    }
     func webViewDidFinishLoad(webView: UIWebView) {
-
-        
-        contentWebView.frame.size.height = contentWebView.scrollView.contentSize.height
-        NSUserDefaults.standardUserDefaults().setObject(contentWebView.frame.size.height, forKey: "height")
-
-        print(contentWebView.frame.size.height)
+        print(webView.loading)
+        if (webView.loading) {
+            
+            print("正在加载")
+            
+        }else{
+            //      let fittingSize:CGSize = self.contentWebView.sizeThatFits(CGSizeZero)
+            //        contentWebView.frame.size.height = fittingSize.height
+            contentWebView.frame.size.height = contentWebView.scrollView.contentSize.height
+            //        NSUserDefaults.standardUserDefaults().setObject(contentWebView.frame.size.height, forKey: "height")
+            //        self.delegate?.changeCellHeight(contentWebView.frame.size.height)
+            print(contentWebView.frame.size.height)
             //contentWebView.height = contentWebView.scrollView.contentSize.height;
-        
+            NSNotificationCenter.defaultCenter().postNotificationName("WEBVIEW_HEIGHT", object: self,userInfo:    ["height":contentWebView.frame.size.height])
+            //self.delegate?.changeCellHeight(contentWebView.frame.size.height)
+        }
+    
+
         
     }
 //

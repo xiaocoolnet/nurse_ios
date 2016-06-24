@@ -20,11 +20,6 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var timer = NSTimer()
     var times = Int()
     var dataSource = NewsList()
-//    internal var newsId = String()
-//    internal var post_title=String()
-//    internal var post_modified=String()
-//    var post_excerpt=String()
-    //internal var roomnum=Int()
     var requestManager:AFHTTPSessionManager?
     let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
     override func viewWillAppear(animated: Bool) {
@@ -126,16 +121,6 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 if(status.status == "success"){
                     
                     self.createTableView()
-                    
-//                    let news = status.data
-//                    news?.post_modified = (status.data?.post_modified)!
-//                    news?.post_title = (status.data?.post_modified)!
-//                    // news.post_excerpt = (status.data?.post_excerpt)!
-//                    //news.post_excerpt = (status.data?.post_excerpt)!
-//                    self.post_title = (status.data?.post_title)!
-//                    self.post_modified = (status.data?.post_modified)!
-//                    self.post_excerpt = (status.data?.post_excerpt)!
-//                    self.dataSource.append(news!)
                     self.dataSource = NewsList(status.data!)
                     self.myTableView .reloadData()
                     print(status.data)

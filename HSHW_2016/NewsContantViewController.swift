@@ -33,8 +33,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "新闻内容"
-        
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector:#selector(NewsContantViewController.noti(_:)), name: "WEBVIEW_HEIGHT", object: nil)
+        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(noti:) name:@"WEBVIEW_HEIGHT" object:nil];
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 3))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
@@ -142,7 +142,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 return height
             }else if indexPath.row==1{
             
-            return 30
+                return 30
+                
             }else if indexPath.row==2{
                
                 let height = Int(NSUserDefaults.standardUserDefaults().stringForKey("height") ?? "0")
@@ -201,25 +202,23 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 //tableView.rowHeight=30
 
             }else if indexPath.row == 2 {
-               // let cell2:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("textCell")!
-//                let webView :UIWebView = UIWebView.init()
-                webView.frame = CGRectMake(0, 0, WIDTH, 500)
-                webView.backgroundColor = UIColor.redColor()
-//                webView.delegate = self
-                cell1.addSubview(webView)
-                let cell = tableView.dequeueReusableCellWithIdentifier("webView", forIndexPath: indexPath)as! contentCell
+                let cell1:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cellIntenfer")!
+//                let cell = tableView.dequeueReusableCellWithIdentifier("cellIntenfer", forIndexPath: indexPath)
+//                cell.delegate = self
                 let url = NewsInfo_Header+(newsInfo?.object_id)!
                 print(url)
+                let webView = UIWebView()
+                webView.delegate = self
+                webView.frame = CGRectMake(0, 0, cell1.frame.size.width, cell1.frame.size.height)
                 let requestUrl = NSURL(string:url)
                 let request = NSURLRequest(URL:requestUrl!)
-                cell.contentWebView.loadRequest(request)
+                webView.loadRequest(request)
+                //cell.contentWebView.loadRequest(request)
+                cell1.tag = indexPath.row
                  let height = Int(NSUserDefaults.standardUserDefaults().stringForKey("height") ?? "0")
-                //tableView.rowHeight = CGFloat(height!)
-                
                 print(height)
-                return cell
-//                tableView.rowHeight = webView.frame.size.height
-//                webView.loadRequest(request)
+                cell1.addSubview(webView)
+                return cell1
                
             }else{
                 
@@ -328,6 +327,44 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         return cell1
         
     }
+    
+//    func changeCellHeight(height: CGFloat) {
+//        NSUserDefaults.standardUserDefaults().setObject(height, forKey: "height")
+//        self.myTableView.reloadData()
+//    }
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        print(webView.loading)
+        if (webView.loading) {
+            
+            print("正在加载")
+            
+        }else{
+            //      let fittingSize:CGSize = self.contentWebView.sizeThatFits(CGSizeZero)
+            //        contentWebView.frame.size.height = fittingSize.height
+            webView.frame.size.height = webView.scrollView.contentSize.height
+            //        NSUserDefaults.standardUserDefaults().setObject(contentWebView.frame.size.height, forKey: "height")
+            //        self.delegate?.changeCellHeight(contentWebView.frame.size.height)
+            print(webView.frame.size.height)
+            //contentWebView.height = contentWebView.scrollView.contentSize.height;
+            NSNotificationCenter.defaultCenter().postNotificationName("WEBVIEW_HEIGHT", object: self,userInfo:    ["height":webView.frame.size.height])
+            //self.delegate?.changeCellHeight(contentWebView.frame.size.height)
+        }
+    }
+    func noti(sender:NSNotification){
+        let userInfo = sender.userInfo as! [String: AnyObject]
+
+        let height = userInfo["height"] as! Int
+        let cell = sender.object as!contentCell
+        print(cell.tag)
+        let indexPath = NSIndexPath.init(forRow:cell.tag, inSection: 0)
+        
+        NSUserDefaults.standardUserDefaults().setObject(height, forKey: "height")
+//        let indexPath = NSIndexPath.init(forRow:  as! Int, inSection: 0)
+        self.myTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation:UITableViewRowAnimation.None)
+    }
+    
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 {
             
@@ -536,18 +573,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func GetDate1(){
-        
-        //MBProgressHUD  HUD = [[MBProgressHUD showHUDAddedTo:self.view animated:YES], retain];
-//        let userid = NSUserDefaults.standardUserDefaults()
-//        let uid = userid.stringForKey("userid")
-//        if uid==nil {
-//            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-//            //let vc  = mainStoryboard.instantiateViewControllerWithIdentifier("Login") as! LoginViewController
-//            //vc.str="1"
-//            
-//            //self.navigationController?.pushViewController(vc, animated: true)
-//            
-//        }
+ 
         let url = PARK_URL_Header+"SetLike"
         let param = [
             "userid":"4",
