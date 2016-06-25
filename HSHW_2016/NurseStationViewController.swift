@@ -42,14 +42,14 @@ class NurseStationViewController: UIViewController {
             if currentVCIndex == 0 {
                 return
             }
-            self.transitionFromViewController(RecVC, toViewController: ComVC, duration: 1.0, options: .LayoutSubviews, animations: nil, completion: { [unowned self](Bool) in
+            self.transitionFromViewController(RecVC, toViewController: ComVC, duration: 0, options: .TransitionNone, animations: nil, completion: { [unowned self](Bool) in
                 self.currentVCIndex = 0
             })
         }else{
             if currentVCIndex == 1{
                 return
             }
-            self.transitionFromViewController(ComVC, toViewController: RecVC, duration: 1.0, options: .LayoutSubviews, animations: nil, completion: { [unowned self] (Bool) in
+            self.transitionFromViewController(ComVC, toViewController: RecVC, duration: 0, options: .TransitionNone, animations: nil, completion: { [unowned self] (Bool) in
                 self.currentVCIndex = 1
             })
         }

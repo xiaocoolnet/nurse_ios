@@ -18,11 +18,64 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var times = Int()
     let employment = UIView()
     let employmentMessage = UIView()
+    let jobHelper = HSNurseStationHelper()
+    var jobDataSource:Array<JobModel>?
+    var CVDataSource:Array<CVModel>?
     var showType = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        configureUI()
+        makeDataSource()
+        picArr = ["1.png","2.png","3.png","4.png"]
+        for i in 0...4 {
+            let imageView = UIImageView()
+            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*140/375)
+            if i == 4 {
+                imageView.image = UIImage(named: "1.png")
+            }else{
+                imageView.image = UIImage(named: "\(i+1).png")
+            }
+            imageView.tag = i+1
+            //为图片视图添加点击事件
+            imageView.userInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(AbroadViewController.tapAction(_:)))
+            // 手指头
+            tap.numberOfTapsRequired = 1
+            // 单击
+            tap.numberOfTouchesRequired = 1
+            imageView.addGestureRecognizer(tap)
+            scrollView.addSubview(imageView)
+        }
+        self.makeEmployment()
+        
+    }
+    
+    func makeDataSource(){
+        if showType == 1 {
+            jobHelper.getJobList({[unowned self] (success, response) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    if !success {
+                        return
+                    }
+                    self.jobDataSource = response as? Array<JobModel> ?? []
+                    self.myTableView.reloadData()
+                })
+            })
+        } else if showType == 2 {
+            jobHelper.getCVList({[unowned self] (success, response) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    if !success {
+                        return
+                    }
+                    self.CVDataSource = response as? Array<CVModel> ?? []
+                    self.myTableView.reloadData()
+                })
+            })
+        }
+    }
+    
+    func configureUI(){
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 0.5))
         line.backgroundColor = GREY
         self.view.addSubview(line)
@@ -48,27 +101,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         scrollView.showsVerticalScrollIndicator = false
         scrollView.delegate = self
         
-        picArr = ["1.png","2.png","3.png","4.png"]
-        for i in 0...4 {
-            let imageView = UIImageView()
-            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*140/375)
-            if i == 4 {
-                imageView.image = UIImage(named: "1.png")
-            }else{
-                imageView.image = UIImage(named: "\(i+1).png")
-            }
-            imageView.tag = i+1
-            //为图片视图添加点击事件
-            imageView.userInteractionEnabled = true
-            
-            let tap = UITapGestureRecognizer(target: self, action: #selector(AbroadViewController.tapAction(_:)))
-            //            手指头
-            tap.numberOfTapsRequired = 1
-            //            单击
-            tap.numberOfTouchesRequired = 1
-            imageView.addGestureRecognizer(tap)
-            scrollView.addSubview(imageView)
-        }
         scrollView.contentSize = CGSizeMake(5*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
@@ -84,17 +116,13 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         myTableView.tableHeaderView = one
         myTableView.rowHeight = 142
-
+        
         let posted = UIButton()
         posted.frame = CGRectMake(WIDTH-70 , HEIGHT-230, 50, 50)
         posted.setImage(UIImage(named: "ic_edit.png"), forState: .Normal)
         posted.addTarget(self, action: #selector(RecruitmentViewController.postedTheView), forControlEvents: .TouchUpInside)
         self.view.addSubview(posted)
         posted.becomeFirstResponder()
-        
-        self.makeEmployment()
-        
-        // Do any additional setup after loading the view.
     }
 //    发布招聘信息
     func makeEmployment() {
@@ -128,7 +156,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-       
         
         return 200
         
@@ -136,33 +163,22 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        if showType == 1 {
+            return jobDataSource?.count ?? 0
+        }else{
+            return CVDataSource?.count ?? 0
+        }
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!RecruitTableViewCell
         cell.selectionStyle = .None
         if showType == 1 {
-            cell.titImg.image = UIImage(named: "3.png")
-            cell.title.text = "儿科主管护士"
-            cell.cont.text = "学历要求：中专\n工作年限\n相关证件：护士证"
-            cell.name.text = "北京儿童医院"
+            cell.showforJobModel(jobDataSource![indexPath.row])
         }else{
-            cell.titImg.image = UIImage(named: "1.png")
-            cell.title.text = "苏丽珍"
-            cell.cont.text = "学历：中专\n工作年限：2年\n相关证件：护士证"
-            cell.name.text = "苏丽珍"
+            cell.showforCVModel(CVDataSource![indexPath.row])
         }
-        cell.title.sizeToFit()
-        cell.time.text = "2016/05/25"
-        cell.location.text = "北京市"
-        cell.content.text = "薪资待遇：5000～8000元\n福利待遇：社保、保持住\n招聘职位：护士／护理（20人）"
-        cell.content.sizeToFit()
-        cell.cont.sizeToFit()
-        
         cell.delivery.addTarget(self, action: #selector(self.resumeOnline), forControlEvents: .TouchUpInside)
-        
         return cell
-   
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
@@ -198,7 +214,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         UIView.animateWithDuration(0.2) {
             self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
         }
-        
     }
     //    图片点击事件
     func tapAction(tap:UIGestureRecognizer) {

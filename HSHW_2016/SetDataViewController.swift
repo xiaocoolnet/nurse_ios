@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     let myTableView = UITableView()
@@ -20,7 +19,6 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     let threeArr:[String] = ["学校","专业","学历"]
     let threedeArr:[String] = ["北京应用技术大学","软件工程","大专"]
- 
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
@@ -100,34 +98,13 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
             cell.detailTextLabel?.text = threedeArr[indexPath.row]
         }
         return cell
-        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         //  进行修改的操作
         print(indexPath.row)
         //  先进行页面的跳转
-        //
         let changeNameVC = ChangeName()
         self.navigationController?.pushViewController(changeNameVC, animated: true)
-        
-        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

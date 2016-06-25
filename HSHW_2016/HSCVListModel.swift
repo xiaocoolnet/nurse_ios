@@ -1,43 +1,42 @@
 //
-//  HSJobListModel.swift
+//  HSCVListModel.swift
 //  HSHW_2016
-//  Created by xiaocool on 16/6/24.
+//
+//  Created by xiaocool on 16/6/25.
 //  Copyright © 2016年 校酷网络科技公司. All rights reserved.
 //
 
 import UIKit
 
-class HSJobListModel: JSONJoy {
+class HSCVListModel: JSONJoy {
     var status:String?
-    var datas = Array<JobModel>()
+    var datas = Array<CVModel>()
     var errorData:String?
     var datastring:String?
     
-    init(){
-    }
     required init(_ decoder:JSONDecoder){
         status = decoder["status"].string
         if status == "success"{
             for childs:JSONDecoder in decoder["data"].array! {
-                datas.append(JobModel(childs))
+                datas.append(CVModel(childs))
             }
         }else{
             errorData = decoder["data"].string
         }
     }
 }
-
-class JobModel: JSONJoy {
+class CVModel: JSONJoy {
     
     var id:String
-    var companyid:String
-    var companyname:String
-    var title:String
+    var userid:String
+    var name:String
+    var sex:String
+    var avatar:String
+    var birthday:String
+    var address:String
     var education:String
     var certificate:String
-    var address:String
-    var salary:String
-    var welfare:String
+    var currentsalary:String
     var count:String
     var description:String
     var linkman:String
@@ -45,17 +44,18 @@ class JobModel: JSONJoy {
     
     required init(_ decoder:JSONDecoder){
         id = decoder["id"].string ?? ""
-        companyid = decoder["companyid"].string ?? ""
-        companyname = decoder["companyname"].string ?? ""
-        title = decoder["title"].string ?? ""
-        education = decoder["education"].string ?? ""
-        certificate = decoder["certificate"].string ?? ""
+        userid = decoder["userid"].string ?? ""
+        name = decoder["name"].string ?? ""
+        sex = decoder["sex"].string ?? ""
+        avatar = decoder["avatar"].string ?? ""
+        birthday = decoder["certificate"].string ?? ""
         address = decoder["address"].string ?? ""
-        salary = decoder["salary"].string ?? ""
-        welfare = decoder["welfare"].string ?? ""
+        currentsalary = decoder["currentsalary"].string ?? ""
+        certificate = decoder["certificate"].string ?? ""
         count = decoder["count"].string ?? ""
         description = decoder["description"].string ?? ""
         linkman = decoder["linkman"].string ?? ""
         phone = decoder["phone"].string ?? ""
+        education = decoder["education"].string ?? ""
     }
 }

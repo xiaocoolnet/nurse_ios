@@ -90,6 +90,7 @@
 		F63E19881D17DB4E001BDE8A /* icon_callback.png in Resources */ = {isa = PBXBuildFile; fileRef = F63E19871D17DB4E001BDE8A /* icon_callback.png */; };
 		F63E198D1D17E10E001BDE8A /* HSZRecruitmentHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */; };
 		F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */; };
+		F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66216861D1E228B0099AD0E /* HSCVListModel.swift */; };
 		F6A598941D1B6F7C000D6E37 /* HSMineHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */; };
 		F6B4083D1D1D212800BDFDBE /* HSNurseStationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4083C1D1D212800BDFDBE /* HSNurseStationHelper.swift */; };
 		F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4083E1D1D31EB00BDFDBE /* HSJobListModel.swift */; };
@@ -209,6 +210,7 @@
 		F63E19871D17DB4E001BDE8A /* icon_callback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_callback.png; sourceTree = "<group>"; };
 		F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZRecruitmentHome.swift; sourceTree = "<group>"; };
 		F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZSliderMenuView.swift; sourceTree = "<group>"; };
+		F66216861D1E228B0099AD0E /* HSCVListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSCVListModel.swift; sourceTree = "<group>"; };
 		F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineHelper.swift; sourceTree = "<group>"; };
 		F6B4083B1D1D100900BDFDBE /* HSHW_2016-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HSHW_2016-Bridging-Header.h"; sourceTree = "<group>"; };
 		F6B4083C1D1D212800BDFDBE /* HSNurseStationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSNurseStationHelper.swift; sourceTree = "<group>"; };
@@ -557,6 +559,7 @@
 			children = (
 				F6B4083C1D1D212800BDFDBE /* HSNurseStationHelper.swift */,
 				F6B4083E1D1D31EB00BDFDBE /* HSJobListModel.swift */,
+				F66216861D1E228B0099AD0E /* HSCVListModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -919,6 +922,7 @@
 				F63147141D1A6D2E005103C9 /* HSComTableCell.swift in Sources */,
 				189849B41CE812CB007B37B4 /* TouTiaoTableViewCell.swift in Sources */,
 				F6D02CDB1D07A46800353557 /* NewsSourceCell.swift in Sources */,
+				F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */,
 				181E0D2F1CEBF8E000E34A7F /* MineRecruitViewController.swift in Sources */,
 				185408831CE7052700DFBA7C /* NewsContantViewController.swift in Sources */,
 				18C0BF971CEB63FB003E2886 /* QuestionBankViewController.swift in Sources */,
@@ -1046,7 +1050,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0c144587-d120-4e4a-862b-903680d012be";
+				PROVISIONING_PROFILE = "ad7f498a-5a15-4f59-a755-1300ccea7d62";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1087,7 +1091,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "0c144587-d120-4e4a-862b-903680d012be";
+				PROVISIONING_PROFILE = "ad7f498a-5a15-4f59-a755-1300ccea7d62";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1145,8 +1149,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c144587-d120-4e4a-862b-903680d012be";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/zhang/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				PROVISIONING_PROFILE = "ad7f498a-5a15-4f59-a755-1300ccea7d62";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1202,8 +1206,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c144587-d120-4e4a-862b-903680d012be";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/zhang/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				PROVISIONING_PROFILE = "ad7f498a-5a15-4f59-a755-1300ccea7d62";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Release;
 		};

@@ -9,20 +9,48 @@
 import UIKit
 
 class RecruitTableViewCell: UITableViewCell {
-
+    //圆形图片
     let titImg = UIImageView()
+    //右侧标题
     let title = UILabel()
+    //图片下方文字
     let name = UILabel()
+    //投简历
     let delivery = UIButton()
+    //时间
     let time = UILabel()
+    //位置信息
     let location = UILabel()
+    //左侧要求
     let content = UILabel()
+    //右侧要求
     let cont = UILabel()
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+    
+    func showforJobModel(model:JobModel){
+        titImg.image = UIImage(named: "2")
+        title.text = model.title
+        name.text = model.companyname
+        location.text = model.address
+        let contentStr = "薪资待遇:"+model.salary+"\n福利待遇:"+model.welfare+"\n招聘职位:"+model.title
+        content.text = contentStr
+        let contStr = "学历要求:"+model.education+"\n工作年限:"+"\n相关证件:"+model.certificate
+        cont.text = contStr
+    }
+    
+    func showforCVModel(model:CVModel){
+        titImg.image = UIImage(named: "1")
+        title.text = model.name
+        name.text = model.name
+        location.text = model.address
+        let contentStr = "性别:"+(model.sex == "0" ? "男" : "女")+"\n当前薪资:"+model.currentsalary+"\n工作状态:"
+        content.text = contentStr
+        let contStr = "学历:"+model.education+"\n生日:"+model.birthday+"\n相关证件:"+model.certificate
+        cont.text = contStr
     }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -105,7 +133,6 @@ class RecruitTableViewCell: UITableViewCell {
         self.addSubview(titImg)
         self.addSubview(title)
         self.addSubview(name)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
