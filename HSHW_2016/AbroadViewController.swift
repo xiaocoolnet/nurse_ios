@@ -257,22 +257,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("Abroad", forIndexPath: indexPath)as!TouTiaoTableViewCell
             let newsInfo = self.dataSource.objectlist[indexPath.row]
+            cell.setCellWithNewsInfo(newsInfo)
             cell.selectionStyle = .None
-            cell.titLab.text = newsInfo.post_title
-            //  动态计算高度
-            let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 14, width: WIDTH-140)
-            print(titleHeight)
-            cell.titLab.frame.size.height = titleHeight
-            cell.conNum.text = newsInfo.recommended
-            cell.timeLab.text = newsInfo.create_time
-            let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
-            cell.timeLab.text = time[0]
-            cell.contant.text = newsInfo.post_excerpt
-            //            cell.titLab.text = "保护好你的眼睛"
-            //            cell.contant.text = "真的很累吗？累就对了，舒服是留给死人的！苦-才是人生 ，累-才是工作， 变-才是命运 ， 忍-才是历练，容-才是智慧 ， 静-才是修养，舍-才是得到 ，做-才是拥有！"
-            cell.titImage.image = UIImage(named: "3.png")
-            //            cell.conNum.text = "4352"
-            //            cell.timeLab.text = "2016/05/24"
             return cell
         }
         

@@ -113,15 +113,16 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func GetDate(){
-//    
+    
 //        requestHelper.getData("4") { (success, response) in
 //            if success {
 //                print(response)
-//               let news = response as! NewsModel
-//                print(news)
+////               let news = response as! NewsModel
+////                print(news)
 //                let newsArr = response as! NewsList
-//                print(response?.data)
-//                print("-----")
+//                
+////                print(response?.data)
+////                print("-----")
 //                print(newsArr)
 ////                for newsInfo in newsArr {
 ////                   self.dataSource.append(<#T##list: [NewsInfo]##[NewsInfo]#>)
@@ -212,7 +213,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
         let screenBounds:CGRect = UIScreen.mainScreen().bounds
-        let boundingRect = String(newsInfo.post_title).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(14)], context: nil)
+        let boundingRect = String(newsInfo.post_title).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(16)], context: nil)
       print(boundingRect.height)
         if boundingRect.height+60>100 {
             return boundingRect.height+60
@@ -225,16 +226,9 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
+        cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         cell.setCellWithNewsInfo(newsInfo)
-        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 14, width: WIDTH-140)
-        cell.titLab.frame.size.height = titleHeight
-        cell.heal.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-        cell.conNum.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-        cell.timeLab.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-        cell.comBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-        cell.timeBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-        cell.contant.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+20
         return cell
    
     }

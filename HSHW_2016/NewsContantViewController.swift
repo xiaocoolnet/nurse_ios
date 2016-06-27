@@ -133,13 +133,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if indexPath.section == 0 {
             if indexPath.row==0 {
                 
-                let height = calculateHeight((newsInfo?.post_title)!, size: 14, width: WIDTH-20)
+                let height = calculateHeight((newsInfo?.post_title)!, size: 16, width: WIDTH-20)
                 print(newsInfo?.post_title)
                 print(height)
-                return height
+                return height+20
             }else if indexPath.row==1{
             
-                return 30
+                return 20
                 
             }else if indexPath.row==2{
                return webHeight
@@ -175,9 +175,14 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             if indexPath.row == 0 {
                
                 cell1 = UITableViewCell.init(style: .Default, reuseIdentifier: "cellIntenfer")
-                cell1.textLabel?.text = newsInfo?.post_title
-                cell1.textLabel?.numberOfLines = 0
-                //tableView.rowHeight=40
+                let title = UILabel()
+                let height = calculateHeight((newsInfo?.post_title)!, size: 16, width: WIDTH-20)
+                title.frame = CGRectMake(10, 5, WIDTH-20, height+10)
+                title.text = newsInfo?.post_title
+                title.font = UIFont.systemFontOfSize(16)
+                title.numberOfLines = 0
+                cell1.addSubview(title)
+                tableView.rowHeight=height+20
               
                 
             }else if indexPath.row == 1 {
@@ -185,8 +190,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let cell = tableView.dequeueReusableCellWithIdentifier("sourceCell", forIndexPath: indexPath)as! NewsSourceCell
                
                 cell.source.text = cell.source.text!+(newsInfo?.post_source)!
-                cell.checkNum.text = "1223"
-               // cell.checkNum.text = newsInfo?.post_like
+                cell.checkNum.text = newsInfo?.recommended
                 let time:Array = (newsInfo?.post_date?.componentsSeparatedByString(" "))!
                 cell.createTime.text = time[0]
 

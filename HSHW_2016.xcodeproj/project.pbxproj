@@ -65,6 +65,8 @@
 		18D5B61A1CEA17320014F846 /* EveryDayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D5B6191CEA17320014F846 /* EveryDayViewController.swift */; };
 		1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */; };
 		1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */; };
+		1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */; };
+		1F7B9FE41D21218F00A3A3CB /* ReleaseTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE21D21218F00A3A3CB /* ReleaseTimeCell.xib */; };
 		D1FC268C65F633C38728A1DB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */; };
 		F604A4DC1D0E79F7008A4888 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4DB1D0E79F7008A4888 /* libicucore.tbd */; };
 		F604A4DE1D0E7A03008A4888 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4DD1D0E7A03008A4888 /* libz.tbd */; };
@@ -184,6 +186,8 @@
 		18D5B6191CEA17320014F846 /* EveryDayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayViewController.swift; sourceTree = "<group>"; };
 		1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayModel.swift; sourceTree = "<group>"; };
 		1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaliyExamModel.swift; sourceTree = "<group>"; };
+		1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTimeCell.swift; sourceTree = "<group>"; };
+		1F7B9FE21D21218F00A3A3CB /* ReleaseTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReleaseTimeCell.xib; sourceTree = "<group>"; };
 		ACDDECCAF15EF7167B841BC0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F604A4DB1D0E79F7008A4888 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
@@ -550,6 +554,8 @@
 				F632EF141D1949910038AF9D /* HSComOpenHeader.xib */,
 				F63147121D1A6D2E005103C9 /* HSComTableCell.swift */,
 				F63147131D1A6D2E005103C9 /* HSComTableCell.xib */,
+				1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */,
+				1F7B9FE21D21218F00A3A3CB /* ReleaseTimeCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -801,6 +807,7 @@
 			files = (
 				183B85001CE5BFDC00709235 /* LaunchScreen.storyboard in Resources */,
 				F632EF131D192F530038AF9D /* HSWorkPlaceController.xib in Resources */,
+				1F7B9FE41D21218F00A3A3CB /* ReleaseTimeCell.xib in Resources */,
 				F63E19881D17DB4E001BDE8A /* icon_callback.png in Resources */,
 				183B84FD1CE5BFDC00709235 /* Assets.xcassets in Resources */,
 				F632EF151D1949910038AF9D /* HSComOpenHeader.xib in Resources */,
@@ -891,6 +898,7 @@
 				183B86741CE5CFA000709235 /* CornerRadiusViewController.swift in Sources */,
 				F6D02CDF1D07BB5300353557 /* contentCell.swift in Sources */,
 				181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */,
+				1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */,
 				18C0BF991CEB655F003E2886 /* QuestionTableViewCell.swift in Sources */,
 				181E0D351CEC3FFA00E34A7F /* MineRecruitTableViewCell.swift in Sources */,
 				185408911CE716E900DFBA7C /* AllViewController.swift in Sources */,
@@ -1150,7 +1158,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0c144587-d120-4e4a-862b-903680d012be";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/zhang/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1207,7 +1215,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "0c144587-d120-4e4a-862b-903680d012be";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/zhang/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Release;
 		};

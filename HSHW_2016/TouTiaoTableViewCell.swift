@@ -29,7 +29,7 @@ class TouTiaoTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         titLab.frame = CGRectMake(10, 10, WIDTH-140, 20)
-        titLab.font = UIFont.systemFontOfSize(14)
+        titLab.font = UIFont.systemFontOfSize(16)
         titLab.numberOfLines = 0
         //titLab.backgroundColor = UIColor.redColor()
 //        heal.frame = CGRectMake(10, 34, 46, 15)
@@ -39,7 +39,7 @@ class TouTiaoTableViewCell: UITableViewCell {
 //        heal.titleLabel?.font = UIFont.systemFontOfSize(10)
 //        heal.setTitle("健康常识", forState: .Normal)
 //        heal.setTitleColor(COLOR, forState: .Normal)
-        heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+10, 46, 15)
+        heal.frame = CGRectMake(10, self.frame.size.height-20, 46, 15)
         heal.layer.cornerRadius = 3
         heal.layer.borderColor = COLOR.CGColor
         heal.layer.borderWidth = 0.4
@@ -84,7 +84,7 @@ class TouTiaoTableViewCell: UITableViewCell {
         self.addSubview(comBtn)
         self.addSubview(timeBtn)
         self.addSubview(titLab)
-        self.addSubview(contant)
+//        self.addSubview(contant)
         self.addSubview(titImage)
         
     }
@@ -108,6 +108,13 @@ class TouTiaoTableViewCell: UITableViewCell {
         let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
         print(photoUrl)
         self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
+        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
+        titLab.frame.size.height = titleHeight
+        heal.frame.origin.y = self.frame.size.height-25
+        conNum.frame.origin.y = self.frame.size.height-25
+        timeLab.frame.origin.y = self.frame.size.height-25
+        comBtn.frame.origin.y = self.frame.size.height-25
+        timeBtn.frame.origin.y = self.frame.size.height-25
     }
 
 }

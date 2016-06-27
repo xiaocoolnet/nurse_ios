@@ -11,6 +11,7 @@ import UIKit
 class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate {
 
     let myTableView = UITableView()
+    let employmentMessageTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
     var picArr = NSArray()
@@ -18,6 +19,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var times = Int()
     let employment = UIView()
     let employmentMessage = UIView()
+    var employmentdataSource=NSMutableArray()
+    let CVMessage = UIView()
     let jobHelper = HSNurseStationHelper()
     var jobDataSource:Array<JobModel>?
     var CVDataSource:Array<CVModel>?
@@ -25,8 +28,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureUI()
         makeDataSource()
+        
         picArr = ["1.png","2.png","3.png","4.png"]
         for i in 0...4 {
             let imageView = UIImageView()
@@ -60,6 +63,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                     self.jobDataSource = response as? Array<JobModel> ?? []
                     self.myTableView.reloadData()
+                     self.configureUI()
                 })
             })
         } else if showType == 2 {
@@ -70,6 +74,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                     self.CVDataSource = response as? Array<CVModel> ?? []
                     self.myTableView.reloadData()
+                     self.configureUI()
                 })
             })
         }
@@ -83,10 +88,15 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         self.view.backgroundColor = UIColor.whiteColor()
         myTableView.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
         myTableView.backgroundColor = UIColor.whiteColor()
+        myTableView.tag = 0
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "identifier")
         myTableView.registerClass(RecruitTableViewCell.self, forCellReuseIdentifier: "cell")
+        employmentMessageTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "employmentMessage")
+        employmentMessageTableView.delegate = self
+        employmentMessageTableView.dataSource = self
+        employmentMessageTableView.tag = 1
         self.view.addSubview(myTableView)
         
         let one = UIView(frame: CGRectMake(0, 0.5, WIDTH, WIDTH*140/375))
@@ -141,11 +151,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
 //    招聘信息详情
     func makeEmploymentMessage() {
-        employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
+        employmentMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
         employmentMessage.backgroundColor = UIColor.whiteColor()
-        self.view.addSubview(employmentMessage)
         
-        let tackBtn = UIButton(frame: CGRectMake(WIDTH*15/375, employmentMessage.bounds.size.height-WIDTH*65/375, WIDTH*345/375, WIDTH*45/375))
+        self.view.addSubview(employmentMessage)
+        self.employmentMessageTableView.frame = CGRectMake(0, 0, employmentMessage.frame.size.width,employmentMessage.frame.size.height - WIDTH*65/375)
+//        employmentMessageTableView.tag = 1
+//        employmentMessageTableView.backgroundColor = UIColor.redColor()
+        let tackBtn = UIButton(frame: CGRectMake(WIDTH*15/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*345/375, WIDTH*45/375))
         tackBtn.layer.cornerRadius = WIDTH*22.5/375
         tackBtn.layer.borderColor = COLOR.CGColor
         tackBtn.layer.borderWidth = 1
@@ -153,38 +166,121 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         tackBtn.setTitleColor(COLOR, forState: .Normal)
         tackBtn.addTarget(self, action: #selector(self.takeTheResume), forControlEvents: .TouchUpInside)
         employmentMessage.addSubview(tackBtn)
+       
+        employmentMessage.addSubview(employmentMessageTableView)
+        
+    }
+    
+    func makeCVMessage(){
+    
+        CVMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+//        CVMessage.backgroundColor = UIColor.redColor()
+        self.view.addSubview(CVMessage)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        return 200
-        
+        print("---")
+        print(jobDataSource)
+        print("---")
+        if tableView.tag == 0 {
+
+            return 200
+            
+        }else {
+            
+            if indexPath.row == 0 {
+                let jobModel = jobDataSource![indexPath.row]
+                let height = calculateHeight(jobModel.title, size: 18, width: WIDTH-20)
+                return 20+height
+            }else{
+            
+                return 100
+            }
+            
+        }
+     
     }
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if showType == 1 {
-            return jobDataSource?.count ?? 0
-        }else{
-            return CVDataSource?.count ?? 0
+        if tableView.tag == 0{
+            if showType == 1 {
+                return jobDataSource?.count ?? 0
+            }else{
+                return CVDataSource?.count ?? 0
+            }
+        }else {
+        
+            return 6
         }
+  
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!RecruitTableViewCell
-        cell.selectionStyle = .None
-        if showType == 1 {
-            cell.showforJobModel(jobDataSource![indexPath.row])
+        
+        //let mycell = tableView.dequeueReusableCellWithIdentifier("identifier", forIndexPath: indexPath)
+        
+        if tableView.tag == 0 {
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!RecruitTableViewCell
+            cell.selectionStyle = .None
+            if showType == 1 {
+              
+                cell.showforJobModel(jobDataSource![indexPath.row])
+                
+            }else{
+                cell.showforCVModel(CVDataSource![indexPath.row])
+            }
+            cell.delivery.addTarget(self, action: #selector(self.resumeOnline), forControlEvents: .TouchUpInside)
+            return cell
         }else{
-            cell.showforCVModel(CVDataSource![indexPath.row])
+            
+            let cell1 = tableView.dequeueReusableCellWithIdentifier("employmentMessage", forIndexPath: indexPath)
+            print(employmentdataSource)
+            let jobModel = employmentdataSource[0]as! JobModel
+            print(jobModel.title)
+            cell1.selectionStyle = .None
+            cell1.textLabel?.numberOfLines = 0
+            
+            if showType == 1 {
+//               cell1.backgroundColor = UIColor.redColor()
+                print(indexPath.row)
+                if indexPath.row==0 {
+                    let title = UILabel()
+//                    title.backgroundColor = UIColor.brownColor()
+                    let height = calculateHeight(jobModel.title, size: 18, width: WIDTH-20)
+                    title.frame = CGRectMake(10, 10, WIDTH-20, height)
+//                    title.textColor = 
+                    title.text = jobModel.title
+                    title.font = UIFont.systemFontOfSize(18)
+                    title.numberOfLines = 0
+                    cell1.addSubview(title)
+//                    cell1.bringSubviewToFront(title)
+                }
+               
+               
+                return cell1
+            }
+            return cell1
+
         }
-        cell.delivery.addTarget(self, action: #selector(self.resumeOnline), forControlEvents: .TouchUpInside)
-        return cell
+       
+//       return mycell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
-        UIView.animateWithDuration(0.3) {
-            self.employmentMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+        if showType == 1 {
+            let model = self.jobDataSource![indexPath.row]
+            self.employmentdataSource.addObject(model)
+            print(jobDataSource)
+            print(self.jobDataSource![indexPath.row])
+            print(self.employmentdataSource)
+            self.makeEmploymentMessage()
+        }else {
+            self.makeCVMessage()
         }
+//        UIView.animateWithDuration(0.3) {
+//            self.employmentMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+//        }
         
     }
     func resumeOnline() {
