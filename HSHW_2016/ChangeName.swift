@@ -8,17 +8,74 @@
 
 import UIKit
 
-class ChangeName: UIViewController {
+enum HSEditUserInfo {
+    case Avatar
+    case UserName
+    case Sex
+    case PhoneNumber
+    case Email
+    case RealName
+    case BirthDay
+    case Address
+    case School
+    case Major
+    case Education
+    case Default
+}
+
+typealias ChangeUserItemHandle = (changeType:HSEditUserInfo,value:String)->()
+
+class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
+    var myTableView = UITableView()
+    var mineHelper = HSMineHelper()
+    var showType:HSEditUserInfo = .Default
+    var text1 = ""
+    let textFeild = UITextField(frame: CGRectMake(20,15,200,30))
+    var handle:ChangeUserItemHandle?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = COLOR
-
-        // Do any additional setup after loading the view.
+        //nav
+        let navBtn = UIButton(type: .Custom)
+        navBtn.frame = CGRectMake(0, 0, 50, 30)
+        navBtn.setTitleColor(COLOR, forState: .Normal)
+        navBtn.setTitle("保存", forState: .Normal)
+        navBtn.addTarget(self, action: #selector(saveInfo), forControlEvents: .TouchUpInside)
+        let navItem = UIBarButtonItem(customView: navBtn)
+        self.navigationItem.rightBarButtonItem = navItem
+        //tableview
+        myTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
+        myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.delegate = self
+        myTableView.dataSource = self
+        myTableView.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
+        myTableView.tableFooterView = UIView()
+        view.addSubview(myTableView)
+    }
+    func saveInfo(){
+        if handle != nil {
+            handle!(changeType: showType,value: textFeild.text!)
+        }
+        navigationController?.popViewControllerAnimated(true)
+    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
+        return 60
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+        switch showType {
+        case .UserName,.PhoneNumber,.Email,.RealName,.BirthDay,.Address,.School,.Major,.Education:
+            textFeild.text = text1
+            cell?.addSubview(textFeild)
+        default:
+            cell?.textLabel?.text = "?"
+        }
+        
+        return cell!
     }
 }

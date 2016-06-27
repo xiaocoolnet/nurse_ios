@@ -24,6 +24,13 @@ class QCLoginUserInfo {
     var attentionCount = ""
     var fansCount = ""
     var money = ""
+    var sex = ""
+    var realName = ""
+    var birthday = ""
+    var email = ""
+    var school = ""
+    var major = ""
+    var education = ""
     
     static let currentInfo = QCLoginUserInfo()
     private init() {

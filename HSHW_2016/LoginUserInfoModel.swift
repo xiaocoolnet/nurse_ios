@@ -52,6 +52,10 @@ class LoginUserInfo: JSONJoy {
     var user_score:String
     var user_fanscount:String
     var user_money:String
+    var user_email:String
+    var user_school:String
+    var user_major:String
+    var user_education:String
 
     //  初始化方法
     required init(_ decoder:JSONDecoder){
@@ -70,5 +74,9 @@ class LoginUserInfo: JSONJoy {
         user_score = String(decoder["score"].integer ?? 0)
         user_fanscount = String(decoder["fanscount"].integer ?? 0)
         user_money = String(decoder["money"].integer ?? 0)
+        user_email = decoder["user_email"].string ?? ""
+        user_school = decoder["user_school"].string ?? ""
+        user_major = decoder["user_major"].string ?? ""
+        user_education = decoder["user_education"].string ?? ""
     }
 }
