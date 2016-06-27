@@ -197,15 +197,6 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         cell.setCellWithNewsInfo(newsInfo)
-        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 14, width: WIDTH-140)
-        cell.titLab.frame.size.height = titleHeight
-        cell.heal.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-        cell.conNum.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-        cell.timeLab.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-        cell.comBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-        cell.timeBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-        cell.contant.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+20
-        cell.contant.frame.size.height = tableView.rowHeight-cell.titLab.frame.size.height-35
         return cell
         
     }

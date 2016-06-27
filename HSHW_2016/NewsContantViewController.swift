@@ -133,13 +133,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if indexPath.section == 0 {
             if indexPath.row==0 {
                 
-                let height = calculateHeight((newsInfo?.post_title)!, size: 14, width: WIDTH-20)
+                let height = calculateHeight((newsInfo?.post_title)!, size: 16, width: WIDTH-20)
                 print(newsInfo?.post_title)
                 print(height)
-                return height
+                return height+20
             }else if indexPath.row==1{
             
-                return 30
+                return 20
                 
             }else if indexPath.row==2{
                return webHeight
@@ -175,9 +175,14 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             if indexPath.row == 0 {
                
                 cell1 = UITableViewCell.init(style: .Default, reuseIdentifier: "cellIntenfer")
-                cell1.textLabel?.text = newsInfo?.post_title
-                cell1.textLabel?.numberOfLines = 0
-                //tableView.rowHeight=40
+                let title = UILabel()
+                let height = calculateHeight((newsInfo?.post_title)!, size: 16, width: WIDTH-20)
+                title.frame = CGRectMake(10, 5, WIDTH-20, height+10)
+                title.text = newsInfo?.post_title
+                title.font = UIFont.systemFontOfSize(16)
+                title.numberOfLines = 0
+                cell1.addSubview(title)
+                tableView.rowHeight=height+20
               
                 
             }else if indexPath.row == 1 {
@@ -185,8 +190,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let cell = tableView.dequeueReusableCellWithIdentifier("sourceCell", forIndexPath: indexPath)as! NewsSourceCell
                
                 cell.source.text = cell.source.text!+(newsInfo?.post_source)!
-                cell.checkNum.text = "1223"
-               // cell.checkNum.text = newsInfo?.post_like
+                cell.checkNum.text = newsInfo?.recommended
                 let time:Array = (newsInfo?.post_date?.componentsSeparatedByString(" "))!
                 cell.createTime.text = time[0]
 
@@ -232,7 +236,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     zan.setImage(UIImage(named: "img_like.png"), forState: .Normal)
                 }
                 zan.tag = indexPath.row
-                zan.addTarget(self, action: #selector(self.zanAddNum), forControlEvents: .TouchUpInside)
+                zan.addTarget(self, action: #selector(NewsContantViewController.zanAddNum(_:)), forControlEvents: .TouchUpInside)
                 number.frame = CGRectMake(WIDTH/2-25, WIDTH*170/375, 50, 18)
                 print(self.likeNum)
                 let hashValue = newsInfo?.likes.count.hashValue
@@ -379,7 +383,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         print(btn.tag)
         
     }
-    func zanAddNum() {
+    func zanAddNum(btn:UIButton) {
         print("赞")
         
         let user = NSUserDefaults.standardUserDefaults()
@@ -428,7 +432,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
                             hud.hide(true, afterDelay: 1)
-                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: "success", waitUntilDone:true)
+//                            let array = [""]
+                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"1"], waitUntilDone:true)
 
                             user.setObject("true", forKey: "isLike")
                             user.setObject("true", forKey: (self.newsInfo?.object_id)!)
@@ -477,7 +482,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             self.isLike=false
                             user.setObject("false", forKey: "isLike")
                             user.setObject("false", forKey: (self.newsInfo?.object_id)!)
-                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: "false", waitUntilDone:true)
+                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"0"], waitUntilDone:true)
                             //user.removeObjectForKey((self.newsInfo?.object_id)!)
                         }
                     }
@@ -491,19 +496,22 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     
-    func upDateUI(status:String){
-//        self.getDate()
-//        let indexPath = NSIndexPath.init(forRow: <#T##Int#>, inSection: 0)
-        //self.myTableView.reloadRowsAtIndexPaths(<#T##indexPaths: [NSIndexPath]##[NSIndexPath]#>, withRowAnimation: <#T##UITableViewRowAnimation#>)
-        if status=="success" {
-             self.likeNum = self.likeNum! + 1
-        }else{
-             self.likeNum = self.likeNum! - 1
-        }
-
-        print(self.likeNum!)
-        self.number.text =  "\(self.likeNum!)"
-    
+    func upDateUI(status:NSArray){
+        self.getDate()
+        
+//       
+//        if status=="1" {
+//             self.likeNum = self.likeNum! + 1
+//        }else{
+//             self.likeNum = self.likeNum! - 1
+//        }
+//
+//        print(self.likeNum!)
+//        self.number.text =  "\(self.likeNum!)"
+        let indexPath = NSIndexPath.init(forRow: status[0] as! Int, inSection: 0)
+//        let cell = self.myTableView.cellForRowAtIndexPath(indexPath)
+        //self.myTableView.reloadData()
+         self.myTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
     func GetDate1(){

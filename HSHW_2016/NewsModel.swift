@@ -142,31 +142,4 @@ class LikeInfo: JSONJoy {
 
 }
 
-//
-//class NewsPhoto: JSONJoy {
-//
-//    var photo :Array<JSONDecoder>?
-//    
-//    init(){
-//        
-//    }
-//    
-//    required init(_ decoder: JSONDecoder){
-//
-//        photo = decoder["photo"].array
-//    }
-//
-//    
-//}
-//
-//class PhotoUrl: JSONJoy {
-//    var url:String?
-//    init(){
-//        
-//    }
-//    required init(_ decoder: JSONDecoder) {
-//        url = decoder["url"].string
-//    }
-//    
-//}
 
