@@ -63,6 +63,24 @@ class HSMineHelper: NSObject {
         }
 
     }
+    //上传图片
+    func uploadImageWithData(imageData:NSData,imageName:String,handle:ResponseBlock){
+        let url = PARK_URL_Header+"uploadavatar"
+        let param = ["POST":imageData]
+        Alamofire.request(.POST, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = Http(JSONDecoder(json!))
+                if(result.status == "success"){
+                    handle(success: true, response: nil)
+                }else{
+                    handle(success: false, response: result.errorData)
+                }
+            }
+        }
+    }
     //修改头像
     func changeUserAvatar(avatar:String,handle:ResponseBlock) {
         let url = PARK_URL_Header+"UpdateUserAvatar"

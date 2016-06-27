@@ -26,7 +26,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
     let loginBtn = UIButton()
     //  忘记密码按钮
     let forgetPwdBtn = UIButton()
-    
     let phoneNum = UITextField()
     let yanzheng = UITextField()
     let password = UITextField()
@@ -35,17 +34,14 @@ class ViewController: UIViewController,UITextFieldDelegate {
     let submit = UIButton()
     
     var logVM = LoginModel?()
-    
     var processHandle:TimerHandle?
     var finishHandle:TimerHandle?
-
-
-    
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         self.navigationController?.navigationBar.hidden = true
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -94,7 +90,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
         LOGO.frame = CGRectMake(WIDTH*109/375, WIDTH*107/375, WIDTH*157/375, WIDTH*155/375)
         LOGO.image = UIImage(named: "LOGO.png")
         scrollView.addSubview(LOGO)
-        
         let btnTit:[String] = ["登录","注册"]
         click = true
         
@@ -127,6 +122,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         autoLogin()
 
     }
+    
     //  登录界面
     func loginTheView() {
         print("登录")
@@ -142,6 +138,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         yanzheng.resignFirstResponder()
         phoneNum.resignFirstResponder()
     }
+    
     //  注册界面
     func registerTheView() {
         print("注册")
@@ -155,6 +152,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         phoneNumber.resignFirstResponder()
         passwordNumber.resignFirstResponder()
     }
+    
     //  KVO（通知中心）监测键盘
     func keyBoardChangFrame(info:NSNotification) {
         let infoDic = info.userInfo
@@ -168,6 +166,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
             
             }, completion: nil)
     }
+    
     //  登录界面UI的搭建
     func loginView() {
         
@@ -217,6 +216,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         login.addSubview(forgetPwdBtn)
         
     }
+    
     //  修改密码
     func changePassWord(){
         print("修改密码")
@@ -225,6 +225,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         self.navigationController?.pushViewController(forGetVC, animated: true)
     }
+    
     //  注册界面UI的搭建
     func registerView() {
         register.frame = CGRectMake(WIDTH, WIDTH*363/375, WIDTH, HEIGHT-WIDTH*363/375)
@@ -285,6 +286,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
 
 
     }
+    
     //  点击短信获取验证码
     func gainTheCard() {
         print("获取验证码")
@@ -323,6 +325,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         
     }
+    
     //  注册提交事件
     func submitTheUser() {
         print("提交")
@@ -374,6 +377,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         
     }
+    
     //  用来收起键盘
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         phoneNum.resignFirstResponder()
@@ -489,14 +493,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
             vc.selectedIndex = 4
             print(vc)
 
-
-        //  模态出个人界面
-
-
-        //  模态出个人界面
-
             self.presentViewController(vc, animated: true, completion: nil)
-
     }
 
     override func didReceiveMemoryWarning() {

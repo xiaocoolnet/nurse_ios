@@ -95,6 +95,7 @@
 		F6B4083D1D1D212800BDFDBE /* HSNurseStationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4083C1D1D212800BDFDBE /* HSNurseStationHelper.swift */; };
 		F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4083E1D1D31EB00BDFDBE /* HSJobListModel.swift */; };
 		F6B75F901D090728009DE2E6 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B75F8F1D090728009DE2E6 /* ImageIO.framework */; };
+		F6C04AF81D20D4D2009E1613 /* ConnectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F6C04AF71D20D4D2009E1613 /* ConnectModel.m */; };
 		F6D02CDB1D07A46800353557 /* NewsSourceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D02CD91D07A46800353557 /* NewsSourceCell.swift */; };
 		F6D02CDC1D07A46800353557 /* NewsSourceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6D02CDA1D07A46800353557 /* NewsSourceCell.xib */; };
 		F6D02CDF1D07BB5300353557 /* contentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D02CDD1D07BB5300353557 /* contentCell.swift */; };
@@ -216,7 +217,8 @@
 		F6B4083C1D1D212800BDFDBE /* HSNurseStationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSNurseStationHelper.swift; sourceTree = "<group>"; };
 		F6B4083E1D1D31EB00BDFDBE /* HSJobListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSJobListModel.swift; sourceTree = "<group>"; };
 		F6B75F8F1D090728009DE2E6 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		F6B75F911D090B54009DE2E6 /* OC_Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OC_Header.h; sourceTree = "<group>"; };
+		F6C04AF61D20D4D2009E1613 /* ConnectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectModel.h; sourceTree = "<group>"; };
+		F6C04AF71D20D4D2009E1613 /* ConnectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectModel.m; sourceTree = "<group>"; };
 		F6D02CD91D07A46800353557 /* NewsSourceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsSourceCell.swift; sourceTree = "<group>"; };
 		F6D02CDA1D07A46800353557 /* NewsSourceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsSourceCell.xib; sourceTree = "<group>"; };
 		F6D02CDD1D07BB5300353557 /* contentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = contentCell.swift; sourceTree = "<group>"; };
@@ -386,11 +388,12 @@
 		183B866B1CE5CF7900709235 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				F6C04AF61D20D4D2009E1613 /* ConnectModel.h */,
+				F6C04AF71D20D4D2009E1613 /* ConnectModel.m */,
 				183B866C1CE5CF9500709235 /* Http.swift */,
 				183B866D1CE5CF9500709235 /* Httpresult.swift */,
 				183B866E1CE5CF9500709235 /* JSONJoy.swift */,
 				183B86721CE5CFA000709235 /* CornerRadiusViewController.swift */,
-				F6B75F911D090B54009DE2E6 /* OC_Header.h */,
 			);
 			name = Tool;
 			sourceTree = "<group>";
@@ -927,6 +930,7 @@
 				185408831CE7052700DFBA7C /* NewsContantViewController.swift in Sources */,
 				18C0BF971CEB63FB003E2886 /* QuestionBankViewController.swift in Sources */,
 				18A5148C1CED550800A30AA5 /* RecruitmentViewController.swift in Sources */,
+				F6C04AF81D20D4D2009E1613 /* ConnectModel.m in Sources */,
 				183B84F61CE5BFDC00709235 /* AppDelegate.swift in Sources */,
 				F631470D1D1A2BEE005103C9 /* HSComOpenHeader.swift in Sources */,
 				F61228091D057B1E009E3D4D /* HuLiViewController.swift in Sources */,
@@ -1050,7 +1054,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "0c144587-d120-4e4a-862b-903680d012be";
+				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1091,7 +1095,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "0c144587-d120-4e4a-862b-903680d012be";
+				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1149,7 +1153,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c144587-d120-4e4a-862b-903680d012be";
+				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Debug;
@@ -1206,7 +1210,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0c144587-d120-4e4a-862b-903680d012be";
+				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Release;

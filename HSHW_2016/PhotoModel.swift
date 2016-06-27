@@ -37,6 +37,7 @@ class PhotoList: JSONJoy {
 }
 
 
+
 class PhotoInfo: JSONJoy{
     
     var url:String

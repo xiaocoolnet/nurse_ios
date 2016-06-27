@@ -7,23 +7,27 @@
 //
 
 import UIKit
-
-class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+import MBProgressHUD
+class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
     
     let myTableView = UITableView()
     var oneArr:[String] = ["头像","用户名","性别","手机","邮箱"]
-    var onedeArr:[String] = [QCLoginUserInfo.currentInfo.avatar,QCLoginUserInfo.currentInfo.userName,QCLoginUserInfo.currentInfo.sex,QCLoginUserInfo.currentInfo.phoneNumber,QCLoginUserInfo.currentInfo.email]
+    var onedeArr:[String] = ["",QCLoginUserInfo.currentInfo.userName,QCLoginUserInfo.currentInfo.sex,QCLoginUserInfo.currentInfo.phoneNumber,QCLoginUserInfo.currentInfo.email]
     
     var twoArr:[String] = ["姓名","出生日期","地址"]
     var twodeArr:[String] = [QCLoginUserInfo.currentInfo.realName ,QCLoginUserInfo.currentInfo.birthday,QCLoginUserInfo.currentInfo.city]
     
     var threeArr:[String] = ["学校","专业","学历"]
     var threedeArr:[String] = [QCLoginUserInfo.currentInfo.school,QCLoginUserInfo.currentInfo.major,QCLoginUserInfo.currentInfo.education]
+    var mainHelper = HSMineHelper()
+    var myActionSheet:UIAlertController?
+    var avatarView = UIButton(type: UIButtonType.Custom)
     
     override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        UIApplication.sharedApplication().statusBarStyle = .Default
         self.navigationController?.navigationBar.hidden = false
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
@@ -36,23 +40,107 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
         myTableView.backgroundColor = RGREY
         myTableView.delegate = self
         myTableView.dataSource = self
+        
+        myActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        myActionSheet?.addAction(UIAlertAction(title: "拍照", style: .Default, handler: {[unowned self] (UIAlertAction) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.takePhoto()
+            })
+            }))
+        
+        myActionSheet?.addAction(UIAlertAction(title: "从相册获取", style: .Default, handler: { [unowned self] (UIAlertAction) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.LocalPhoto()
+            })
+            }))
+        
+        myActionSheet?.addAction(UIAlertAction(title: "取消", style: .Cancel, handler:nil))
+        
         self.view.addSubview(myTableView)
+    }
+    
+    func takePhoto(){
         
+        let sourceType = UIImagePickerControllerSourceType.Camera
+        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.allowsEditing = true
+            picker.sourceType = sourceType
+            self.presentViewController(picker, animated: true, completion: nil)
+        }else{
+            print("无法打开相机")
+        }
+    }
+    
+    func LocalPhoto(){
+        let picker = UIImagePickerController()
+        picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        picker.delegate = self
+        picker.allowsEditing = true
+        presentViewController(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        // Do any additional setup after loading the view.
+        let type = info[UIImagePickerControllerMediaType] as! String
+        if type != "public.image" {
+            return
+        }
+        
+        //裁剪后图片
+        let image = info[UIImagePickerControllerEditedImage] as! UIImage
+        let data = UIImageJPEGRepresentation(image, 0.1)!
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyyMMddHHmmss"
+        let dateStr = dateFormatter.stringFromDate(NSDate())
+        let imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
+        
+        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") { [unowned self] (data) in
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                let result = Http(JSONDecoder(data))
+                if result.status != nil {
+                    dispatch_async(dispatch_get_main_queue(), {
+                    if result.status! == "success"{
+                        self.avatarView.setImage(image, forState: .Normal)
+                        self.mainHelper.changeUserAvatar(result.data!, handle: { (success, response) in
+                            if success {
+                                QCLoginUserInfo.currentInfo.avatar = result.data!
+                            }
+                        })
+                        
+                    }else{
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "图片上传失败"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    })
+                }
+            })
+        }
+
+        myTableView.reloadData()
+        picker.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 3
     }
+    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10
     }
+    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let one = UIView()
         one.backgroundColor = UIColor.clearColor()
         return one
     }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
             if indexPath.row == 0 {
@@ -64,6 +152,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
             return 60
         }
     }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 5
@@ -73,8 +162,8 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
             return 3
         }
     }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = UITableViewCell(style: .Value1, reuseIdentifier: "cell")
         cell.selectionStyle = .None
         cell.accessoryType = .DisclosureIndicator
@@ -84,11 +173,11 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
             cell.textLabel?.text = oneArr[indexPath.row]
             cell.detailTextLabel?.text = onedeArr[indexPath.row]
             if indexPath.row == 0 {
-                let titImage = UIImageView(frame: CGRectMake(WIDTH-86, 11, 50, 50))
-                titImage.layer.cornerRadius = 25
-                titImage.clipsToBounds = true
-                titImage.image = UIImage(named: "6.png")
-                cell.addSubview(titImage)
+                avatarView.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar) , forState: .Normal)
+                avatarView.frame = CGRectMake(WIDTH-86, 11, 50, 50)
+                avatarView.layer.cornerRadius = 25
+                avatarView.clipsToBounds = true
+                cell.addSubview(avatarView)
             }
         }else if indexPath.section == 1 {
             cell.textLabel?.text = twoArr[indexPath.row]
@@ -113,25 +202,10 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 }
             tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
             })
-//            switch type {
-//            case .UserName:
-//            case .Sex:
-//            case .PhoneNumber:
-//            case .Email:
-//            case .RealName:
-//            case .BirthDay:
-//            case .Address:
-//            case .School:
-//            case .Major:
-//            case .Education:
-//            default:
-//                
-//            }
         }
         switch (indexPath.section,indexPath.row) {
         case (0,0):
-            changeNameVC.showType = .Avatar
-            changeNameVC.title = "编辑头像"
+            presentViewController(myActionSheet!, animated: true, completion:nil)
         case (0,1):
             changeNameVC.showType = .UserName
             changeNameVC.title = "编辑用户名"

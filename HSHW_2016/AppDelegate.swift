@@ -31,7 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
                 default:
                     break
-                    
                 }
                 
         }) { (platform : SSDKPlatformType,appInfo : NSMutableDictionary!) -> Void in
@@ -50,11 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             
         }
-        
-
-        
-        
-        
         
         NSThread.sleepForTimeInterval(2.0)
         

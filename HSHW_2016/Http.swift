@@ -10,7 +10,7 @@ import Foundation
 
 class Http: JSONJoy{
     var status:String?
-    var data:JSONDecoder?
+    var data:String?
     var errorData:String?
     var uid:String?
     init(){
@@ -21,7 +21,7 @@ class Http: JSONJoy{
 //        uid = decoder["id"].string
         status = decoder["status"].string
         if status == "success"{
-            data = decoder["data"]
+            data = decoder["data"].string  ?? ""
         }else{
             errorData = decoder["data"].string
         }
