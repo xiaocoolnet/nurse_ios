@@ -1,4 +1,3 @@
-
 //
 //  ViewController.swift
 //  HSHW_2016
@@ -294,21 +293,15 @@ class ViewController: UIViewController,UITextFieldDelegate {
         yanzheng.resignFirstResponder()
         password.resignFirstResponder()
         if phoneNum.text!.isEmpty {
-//            SVProgressHUD.showErrorWithStatus("请输入手机号！")
             let alert = UIAlertView(title:"提示信息",message: "请输入手机号！",delegate: self,cancelButtonTitle: "确定")
             
             alert.show()
             return
         }
-//        logVM?.register(phoneNum.text!, password: password.text!, code: yanzheng.text!, usertype: "1", devicestate: "1", handle: { (success, response) in
-//            
-//        })
         logVM?.comfirmPhoneHasRegister(phoneNum.text!, handle: {[unowned self](success, response) in
             dispatch_async(dispatch_get_main_queue(), {
                 //  不管填什么内容都走了这个方法
                 if success {
-                    
-
                     let alert = UIAlertView(title:"提示信息",message: "手机已注册",delegate: self,cancelButtonTitle: "确定")
                     
                     alert.show()
@@ -321,9 +314,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
             
             })
         print("get identify")
-
-        
-        
     }
     
     //  注册提交事件
@@ -333,21 +323,18 @@ class ViewController: UIViewController,UITextFieldDelegate {
         yanzheng.resignFirstResponder()
         password.resignFirstResponder()
         if phoneNum.text!.isEmpty {
-//            SVProgressHUD.showErrorWithStatus("请输入手机号！")
             let alert = UIAlertView(title: "提示信息",message: "请输入手机号",delegate: self,cancelButtonTitle: "确定")
             alert.show()
             return
         }
         
         if yanzheng.text!.isEmpty {
-//            SVProgressHUD.showErrorWithStatus("请输入验证码!")
             let alert = UIAlertView(title: "提示信息",message: "请输入验证码",delegate: self,cancelButtonTitle: "确定")
             alert.show()
             return
         }
         
         if password.text!.isEmpty {
-//            SVProgressHUD.showErrorWithStatus("请输入密码!")
             let alert = UIAlertView(title: "提示信息",message: "请输入密码",delegate: self,cancelButtonTitle: "确定")
             alert.show()
             return
@@ -364,12 +351,10 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     self.yanzheng.text = nil
                     let alert = UIAlertView(title: "提示信息",message: "注册成功",delegate: self,cancelButtonTitle: "确定")
                     alert.show()
-//                    SVProgressHUD.showSuccessWithStatus("注册成功")
                     self.navigationController?.popViewControllerAnimated(true)
                 }else{
                     let alert = UIAlertView(title: "提示信息",message: response as? String,delegate: self,cancelButtonTitle: "确定")
                     alert.show()
-//                    SVProgressHUD.showErrorWithStatus(response as! String)
                 }
             })
             })
@@ -449,7 +434,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     }
                         print(response as! String)
                     }else{
-//                        SVProgressHUD.showErrorWithStatus("登录失败")
                         let alert = UIAlertView(title:"提示信息",message: "登录失败",delegate: self,cancelButtonTitle: "确定")
                         alert.show()
                     }

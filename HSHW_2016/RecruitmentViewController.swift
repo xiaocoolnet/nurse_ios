@@ -172,7 +172,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func makeCVMessage(){
-    
         CVMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
 //        CVMessage.backgroundColor = UIColor.redColor()
         self.view.addSubview(CVMessage)

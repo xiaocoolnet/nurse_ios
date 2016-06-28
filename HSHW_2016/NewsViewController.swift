@@ -49,10 +49,5 @@ class NewsViewController: UIViewController {
         view.addSubview(pagingMenuController.view)
         pagingMenuController.didMoveToParentViewController(self)
       
-        
-        //print(pagingMenuController.menuItemTitles)
-       // print( pagingMenuController.currentPage)
-       //pagingMenuController.currentViewController
-        // Do any additional setup after loading the view.
     }
 }
