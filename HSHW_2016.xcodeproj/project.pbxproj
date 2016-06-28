@@ -73,6 +73,8 @@
 		F604A4E01D0E7A16008A4888 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4DF1D0E7A16008A4888 /* libstdc++.tbd */; };
 		F604A4E21D0E7A1D008A4888 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4E11D0E7A1D008A4888 /* JavaScriptCore.framework */; };
 		F604A4E41D0E7A2E008A4888 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4E31D0E7A2E008A4888 /* libsqlite3.tbd */; };
+		F605F0BF1D22564300769299 /* HSFindPersonDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F605F0BE1D22564300769299 /* HSFindPersonDetailView.xib */; };
+		F605F0C11D2266B100769299 /* HSFindPersonDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F605F0C01D2266B100769299 /* HSFindPersonDetailView.swift */; };
 		F61228051D0558C4009E3D4D /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61228041D0558C4009E3D4D /* NewsModel.swift */; };
 		F61228091D057B1E009E3D4D /* HuLiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61228081D057B1E009E3D4D /* HuLiViewController.swift */; };
 		F612280B1D0581D7009E3D4D /* JianKangViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F612280A1D0581D7009E3D4D /* JianKangViewController.swift */; };
@@ -196,6 +198,8 @@
 		F604A4DF1D0E7A16008A4888 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
 		F604A4E11D0E7A1D008A4888 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F604A4E31D0E7A2E008A4888 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		F605F0BE1D22564300769299 /* HSFindPersonDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSFindPersonDetailView.xib; sourceTree = "<group>"; };
+		F605F0C01D2266B100769299 /* HSFindPersonDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSFindPersonDetailView.swift; sourceTree = "<group>"; };
 		F61228041D0558C4009E3D4D /* NewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		F61228081D057B1E009E3D4D /* HuLiViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HuLiViewController.swift; sourceTree = "<group>"; };
 		F612280A1D0581D7009E3D4D /* JianKangViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JianKangViewController.swift; sourceTree = "<group>"; };
@@ -461,6 +465,8 @@
 				F6D02CDA1D07A46800353557 /* NewsSourceCell.xib */,
 				F6D02CDD1D07BB5300353557 /* contentCell.swift */,
 				F6D02CDE1D07BB5300353557 /* contentCell.xib */,
+				F605F0BE1D22564300769299 /* HSFindPersonDetailView.xib */,
+				F605F0C01D2266B100769299 /* HSFindPersonDetailView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -814,6 +820,7 @@
 				F63E19881D17DB4E001BDE8A /* icon_callback.png in Resources */,
 				183B84FD1CE5BFDC00709235 /* Assets.xcassets in Resources */,
 				F632EF151D1949910038AF9D /* HSComOpenHeader.xib in Resources */,
+				F605F0BF1D22564300769299 /* HSFindPersonDetailView.xib in Resources */,
 				F63147151D1A6D2E005103C9 /* HSComTableCell.xib in Resources */,
 				F6D02CDC1D07A46800353557 /* NewsSourceCell.xib in Resources */,
 				F63E19821D17C38A001BDE8A /* HSWCommunityHome.xib in Resources */,
@@ -893,6 +900,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F605F0C11D2266B100769299 /* HSFindPersonDetailView.swift in Sources */,
 				F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */,
 				183B86711CE5CF9500709235 /* JSONJoy.swift in Sources */,
 				180482EF1CEDF54200BF716C /* RecruitTableViewCell.swift in Sources */,
@@ -1163,7 +1171,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
-
 			};
 			name = Debug;
 		};

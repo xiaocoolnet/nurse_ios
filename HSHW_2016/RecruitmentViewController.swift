@@ -1,14 +1,13 @@
 //
 //  RecruitmentViewController.swift
 //  HSHW_2016
-//
 //  Created by apple on 16/5/19.
 //  Copyright © 2016年 校酷网络科技公司. All rights reserved.
 //
 
 import UIKit
 
-class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate {
+class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,HSFindPersonDetailViewDelegate {
 
     let myTableView = UITableView()
     let employmentMessageTableView = UITableView()
@@ -19,8 +18,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var times = Int()
     let employment = UIView()
     let employmentMessage = UIView()
+    
+    let resumeDetail = NSBundle.mainBundle().loadNibNamed("HSFindPersonDetailView", owner: nil, options: nil).first as! HSFindPersonDetailView
     var employmentdataSource=NSMutableArray()
-    let CVMessage = UIView()
     let jobHelper = HSNurseStationHelper()
     var jobDataSource:Array<JobModel>?
     var CVDataSource:Array<CVModel>?
@@ -29,7 +29,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         makeDataSource()
-        
+        employmentMessageTableView.separatorStyle = .None
+        resumeDetail.delegate = self
         picArr = ["1.png","2.png","3.png","4.png"]
         for i in 0...4 {
             let imageView = UIImageView()
@@ -149,7 +150,12 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         tackBtn.addTarget(self, action: #selector(self.takeThePost), forControlEvents: .TouchUpInside)
         employment.addSubview(tackBtn)
     }
-//    招聘信息详情
+//  简历详情
+    func lookResumeDetail(){
+        resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+        self.view.addSubview(resumeDetail)
+    }
+//  招聘信息详情
     func makeEmploymentMessage() {
         employmentMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
         employmentMessage.backgroundColor = UIColor.whiteColor()
@@ -168,13 +174,11 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         employmentMessage.addSubview(tackBtn)
        
         employmentMessage.addSubview(employmentMessageTableView)
-        
     }
     
     func makeCVMessage(){
-        CVMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
-//        CVMessage.backgroundColor = UIColor.redColor()
-        self.view.addSubview(CVMessage)
+        resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+        self.view.addSubview(resumeDetail)
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -182,20 +186,30 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         print(jobDataSource)
         print("---")
         if tableView.tag == 0 {
-
             return 200
-            
         }else {
-            
             if indexPath.row == 0 {
                 let jobModel = jobDataSource![indexPath.row]
                 let height = calculateHeight(jobModel.title, size: 18, width: WIDTH-20)
                 return 20+height
-            }else{
-            
+            }else if indexPath.row == 1 {
+                return 20
+            }else if indexPath.row == 2 {
+                return 35
+            }else if indexPath.row == 3 {
+                return 50
+            }else if indexPath.row == 4 {
+                return 35
+            }else if indexPath.row == 5 {
+                return 35
+            }else if indexPath.row == 6 {
+                return 300
+            }else if indexPath.row == 7 {
+                return 35
+            }
+            else{
                 return 100
             }
-            
         }
      
     }
@@ -209,8 +223,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 return CVDataSource?.count ?? 0
             }
         }else {
-        
-            return 6
+            return 8
         }
   
     }
@@ -223,9 +236,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!RecruitTableViewCell
             cell.selectionStyle = .None
             if showType == 1 {
-              
                 cell.showforJobModel(jobDataSource![indexPath.row])
-                
             }else{
                 cell.showforCVModel(CVDataSource![indexPath.row])
             }
@@ -233,7 +244,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             return cell
         }else{
             
-            let cell1 = tableView.dequeueReusableCellWithIdentifier("employmentMessage", forIndexPath: indexPath)
+            let cell1 = UITableViewCell()
             print(employmentdataSource)
             let jobModel = employmentdataSource[0]as! JobModel
             print(jobModel.title)
@@ -241,46 +252,132 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             cell1.textLabel?.numberOfLines = 0
             
             if showType == 1 {
-//               cell1.backgroundColor = UIColor.redColor()
                 print(indexPath.row)
                 if indexPath.row==0 {
                     let title = UILabel()
-//                    title.backgroundColor = UIColor.brownColor()
                     let height = calculateHeight(jobModel.title, size: 18, width: WIDTH-20)
                     title.frame = CGRectMake(10, 10, WIDTH-20, height)
-//                    title.textColor = 
                     title.text = jobModel.title
-                    title.font = UIFont.systemFontOfSize(18)
+                    title.font = UIFont.systemFontOfSize(20)
+                    title.textColor = COLOR
                     title.numberOfLines = 0
                     cell1.addSubview(title)
-//                    cell1.bringSubviewToFront(title)
+                }else if indexPath.row == 1 {
+                    let eyeImage = UIImageView(image: UIImage(named: "ic_eye_purple.png"))
+                    eyeImage.frame = CGRectMake(10,10,8,8)
+                    let lookCount = UILabel(frame: CGRectMake(20,10,30,10))
+                    lookCount.font = UIFont.systemFontOfSize(10)
+                    lookCount.text = "3346"
+                    let timeImage = UIImageView(image: UIImage(named: "ic_time_purple.png"))
+                    timeImage.frame = CGRectMake(55, 10, 8, 8)
+                    let timeLabel = UILabel(frame: CGRectMake(65,10,100,10))
+                    timeLabel.font = UIFont.systemFontOfSize(10)
+                    timeLabel.text = "2016/03/16"
+                    
+                    cell1.addSubview(eyeImage)
+                    cell1.addSubview(lookCount)
+                    cell1.addSubview(timeImage)
+                    cell1.addSubview(timeLabel)
+                    
+                }else if indexPath.row == 2 {
+                    let nameLabel = UILabel(frame: CGRectMake(10,10,100,25))
+                    nameLabel.font = UIFont.boldSystemFontOfSize(15)
+                    nameLabel.text = "企业名称:"
+                    let name = UILabel(frame: CGRectMake(120,10,200,25))
+                    name.font = UIFont.systemFontOfSize(14)
+                    name.text = jobModel.companyname
+                    cell1.addSubview(nameLabel)
+                    cell1.addSubview(name)
+                }else if indexPath.row == 3 {
+                    let descript = UILabel(frame: CGRectMake(10,10,WIDTH-20,50))
+                    descript.font = UIFont.boldSystemFontOfSize(15)
+                    descript.numberOfLines = 0
+                    let descripStr = "企业简介:" + jobModel.title
+                    let attrStr = NSMutableAttributedString(string: descripStr)
+                    attrStr.addAttributes([NSFontAttributeName:UIFont.boldSystemFontOfSize(15)], range: NSMakeRange(0, 5))
+                    attrStr.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(5, attrStr.length-5))
+                    attrStr.addAttributes([NSForegroundColorAttributeName:UIColor.lightGrayColor()], range: NSMakeRange(5, attrStr.length-5))
+                    descript.attributedText = attrStr
+                    cell1.addSubview(descript)
+                }else if indexPath.row == 4 {
+                    let criteria = UILabel(frame: CGRectMake(10,10,70,25))
+                    criteria.font = UIFont.boldSystemFontOfSize(15)
+                    criteria.text = "招聘条件:"
+                    let criteriaLabel = UILabel(frame: CGRectMake(80,10,75,25))
+                    criteriaLabel.font = UIFont.systemFontOfSize(14)
+                    criteriaLabel.text = jobModel.education
+                    let address = UILabel(frame: CGRectMake(170,10,70,25))
+                    address.font = UIFont.boldSystemFontOfSize(15)
+                    address.text = "工作地点:"
+                    let addressLabel = UILabel(frame: CGRectMake(240,10,75,25))
+                    addressLabel.font = UIFont.systemFontOfSize(14)
+                    addressLabel.text = jobModel.address
+                    cell1.addSubview(criteria)
+                    cell1.addSubview(criteriaLabel)
+                    cell1.addSubview(address)
+                    cell1.addSubview(addressLabel)
+                }else if indexPath.row == 5{
+                    let criteria = UILabel(frame: CGRectMake(10,10,70,25))
+                    criteria.font = UIFont.boldSystemFontOfSize(15)
+                    criteria.text = "招聘人数:"
+                    let criteriaLabel = UILabel(frame: CGRectMake(80,10,75,25))
+                    criteriaLabel.font = UIFont.systemFontOfSize(14)
+                    criteriaLabel.text = jobModel.count
+                    let address = UILabel(frame: CGRectMake(170,10,70,25))
+                    address.font = UIFont.boldSystemFontOfSize(15)
+                    address.text = "福利待遇:"
+                    let addressLabel = UILabel(frame: CGRectMake(240,10,75,25))
+                    addressLabel.font = UIFont.systemFontOfSize(14)
+                    addressLabel.text = jobModel.welfare
+                    cell1.addSubview(criteria)
+                    cell1.addSubview(criteriaLabel)
+                    cell1.addSubview(address)
+                    cell1.addSubview(addressLabel)
+                }else if indexPath.row == 6 {
+                    let positionDescript = UILabel(frame: CGRectMake(10,10,100,25))
+                    positionDescript.font = UIFont.boldSystemFontOfSize(15)
+                    positionDescript.text = "职位描述:"
+                    let descripDetail = UILabel(frame: CGRectMake(10,40,WIDTH-20,200))
+                    descripDetail.font = UIFont.systemFontOfSize(14)
+                    descripDetail.textColor = UIColor.lightGrayColor()
+                    descripDetail.numberOfLines = 0
+                    descripDetail.text = jobModel.description
+                    cell1.addSubview(positionDescript)
+                    cell1.addSubview(descripDetail)
+                }else if indexPath.row == 7 {
+                    let nameLabel = UILabel(frame: CGRectMake(10,10,80,25))
+                    nameLabel.font = UIFont.boldSystemFontOfSize(15)
+                    nameLabel.text = "联系方式:"
+                    
+                    let name = UIButton(type: UIButtonType.Custom)
+                    name.frame = CGRectMake(100, 10, 100, 25)
+                    name.setTitleColor(COLOR, forState: .Normal)
+                    name.titleLabel!.font = UIFont.systemFontOfSize(14)
+                    name.setTitle("查看联系方式", forState: .Normal)
+                    
+                    cell1.addSubview(nameLabel)
+                    cell1.addSubview(name)
                 }
-               
-               
                 return cell1
             }
             return cell1
-
         }
-       
-//       return mycell
     }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
-        if showType == 1 {
-            let model = self.jobDataSource![indexPath.row]
-            self.employmentdataSource.addObject(model)
-            print(jobDataSource)
-            print(self.jobDataSource![indexPath.row])
-            print(self.employmentdataSource)
-            self.makeEmploymentMessage()
-        }else {
-            self.makeCVMessage()
+        if tableView.tag == 0 {
+            if showType == 1 {
+                let model = self.jobDataSource![indexPath.row]
+                self.employmentdataSource.addObject(model)
+                print(jobDataSource)
+                print(self.jobDataSource![indexPath.row])
+                print(self.employmentdataSource)
+                self.makeEmploymentMessage()
+            }else {
+                self.makeCVMessage()
+            }
         }
-//        UIView.animateWithDuration(0.3) {
-//            self.employmentMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
-//        }
-        
     }
     func resumeOnline() {
         print("投递简历")
@@ -288,15 +385,15 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
         alertController.addAction(doneAction)
         self.presentViewController(alertController, animated: true, completion: nil)
-    
     }
+    
     func postedTheView() {
         print("招聘")
         UIView.animateWithDuration(0.3) { 
             self.employment.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
         }
-        
     }
+    
     func takeThePost() {
         print("提交招聘信息")
         UIView.animateWithDuration(0.3) {
@@ -309,6 +406,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         UIView.animateWithDuration(0.2) {
             self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
         }
+        self.employmentMessage.removeFromSuperview()
+    }
+    //MARK:delegate-find
+    func sendInvite(){
+        UIView.animateWithDuration(0.2) {
+            self.resumeDetail.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
+        }
+        self.resumeDetail.removeFromSuperview()
     }
     //    图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
