@@ -52,7 +52,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
-        let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: #selector(self.takeUpTheTest))
+        let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: #selector(takeUpTheTest))
         navigationItem.rightBarButtonItem = rightBtn
         self.view.backgroundColor = UIColor.whiteColor()
          self.isSubmit  = false
@@ -62,7 +62,16 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         
         // Do any additional setup after loading the view.
     }
-    
+    override func viewWillDisappear(animated: Bool) {
+        if over == false {
+            UIView.animateWithDuration(0.3, animations: {
+                self.questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
+            })
+            btnOne.setImage(UIImage(named: picArr[2]), forState: .Normal)
+            TitQues.textColor = GREY
+            over = true
+        }
+    }
     func getData(){
         
         let user = NSUserDefaults.standardUserDefaults()
@@ -648,6 +657,26 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         let offSetX:CGFloat = CGFloat(pageControl.currentPage) * WIDTH
         scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
     }
+    func dismissCard(){
+        if over == true {
+            UIView.animateWithDuration(0.3, animations: {
+                self.questBack.frame = CGRectMake(0, 65, WIDTH, HEIGHT-119)
+                self.grayBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-54)
+                self.hear = true
+            })
+            btnOne.setImage(UIImage(named: "ic_fenlei_sel.png"), forState: .Normal)
+            TitQues.textColor = COLOR
+            over = false
+        }else{
+            UIView.animateWithDuration(0.3, animations: {
+                self.questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
+            })
+            btnOne.setImage(UIImage(named: picArr[2]), forState: .Normal)
+            TitQues.textColor = GREY
+            over = true
+        }
+
+    }
     // MARK:   底部按钮
     func bottomBtnClick(btn:UIButton) {
         print(btn.tag)
@@ -662,27 +691,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
             self.AnswerView()
         }else if btn.tag == 3 {
-            if over == true {
-                UIView.animateWithDuration(0.3, animations: {
-                    self.questBack.frame = CGRectMake(0, 65, WIDTH, HEIGHT-119)
-                    self.grayBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-54)
-                    if btn.tag == 4 {
-                        self.btnTwo.setImage(UIImage(named: self.picArr[3]), forState: .Normal)
-                        self.TitAns.textColor = GREY
-                    }
-                    self.hear = true
-                })
-                btn.setImage(UIImage(named: "ic_fenlei_sel.png"), forState: .Normal)
-                TitQues.textColor = COLOR
-                over = false
-            }else{
-                UIView.animateWithDuration(0.3, animations: {
-                    self.questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
-                })
-                btn.setImage(UIImage(named: picArr[2]), forState: .Normal)
-                TitQues.textColor = GREY
-                over = true
-            }
+            dismissCard()
         }else if btn.tag == 4 {
             if hear == true {
                 UIView.animateWithDuration(0.3, animations: {
@@ -715,7 +724,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             if uid==nil {
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                 let vc  = mainStoryboard.instantiateViewControllerWithIdentifier("Login")
-                //self.presentViewController(vc, animated: true, completion: nil)
+    //self.presentViewController(vc, animated: true, completion: nil)
                 self.navigationController?.pushViewController(vc, animated: true)
                 btn.setImage(UIImage(named: picArr[4]), forState: .Normal)
                 TitCol.textColor = GREY
@@ -845,9 +854,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         
         
     }
-    //    func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-    //        <#code#>
-    //    }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(self.view.frame.size.width)
@@ -856,21 +862,5 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         self.questionCard()
         //timeNow.invalidate()
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

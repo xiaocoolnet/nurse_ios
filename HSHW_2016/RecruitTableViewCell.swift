@@ -44,7 +44,7 @@ class RecruitTableViewCell: UITableViewCell {
         content.text = contentStr
         let contStr = "学历要求:"+model.education+"\n工作年限:"+"\n相关证件:"+model.certificate
         cont.text = contStr
-        let titleHeight:CGFloat = calculateHeight(model.title, size: 16, width: WIDTH*120/375)
+        let titleHeight:CGFloat = calculateHeight(model.title, size: 16, width: WIDTH*300/375)
         title.frame.size.height = titleHeight
         content.frame.origin.y = title.frame.size.height + title.frame.origin.y
         cont.frame.origin.y = title.frame.size.height + title.frame.origin.y
@@ -60,7 +60,7 @@ class RecruitTableViewCell: UITableViewCell {
     }
     
     func showforCVModel(model:CVModel){
-        titImg.image = UIImage(named: "1")
+        titImg.sd_setImageWithURL(NSURL(string:SHOW_IMAGE_HEADER + model.avatar),placeholderImage: UIImage(named: "1"))
         title.text = model.name
         name.text = model.name
         location.text = model.address
@@ -68,7 +68,7 @@ class RecruitTableViewCell: UITableViewCell {
         content.text = contentStr
         let contStr = "学历:"+model.education+"\n生日:"+model.birthday+"\n相关证件:"+model.certificate
         cont.text = contStr
-        let titleHeight:CGFloat = calculateHeight(model.name, size: 16, width: WIDTH*120/375)
+        let titleHeight:CGFloat = calculateHeight(model.name, size: 16, width: WIDTH*300/375)
         title.frame.size.height = titleHeight
         content.frame.origin.y = title.frame.size.height + title.frame.origin.y
         cont.frame.origin.y = title.frame.size.height + title.frame.origin.y
@@ -94,7 +94,7 @@ class RecruitTableViewCell: UITableViewCell {
         titImg.layer.borderWidth = 0.5
         titImg.clipsToBounds = true
         
-        title.frame = CGRectMake(WIDTH*95/375, WIDTH*20/375, WIDTH*120/375, 16)
+        title.frame = CGRectMake(WIDTH*95/375, WIDTH*20/375, WIDTH*300/375, 16)
         title.font = UIFont.systemFontOfSize(16)
         title.textColor = COLOR
         title.numberOfLines = 0

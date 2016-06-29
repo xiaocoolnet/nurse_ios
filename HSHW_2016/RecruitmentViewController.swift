@@ -18,7 +18,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var times = Int()
     let employment = UIView()
     let employmentMessage = UIView()
-    
     let resumeDetail = NSBundle.mainBundle().loadNibNamed("HSFindPersonDetailView", owner: nil, options: nil).first as! HSFindPersonDetailView
     var employmentdataSource=NSMutableArray()
     let jobHelper = HSNurseStationHelper()
@@ -52,7 +51,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             scrollView.addSubview(imageView)
         }
         self.makeEmployment()
-        
     }
     
     func makeDataSource(){

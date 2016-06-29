@@ -54,4 +54,26 @@ class HSNurseStationHelper: NSObject {
             }
         }
     }
+    //获取资讯文章列表
+    func getArticleListWithID(articleid:String,handle:ResponseBlock){
+        let url = PARK_URL_Header+"getNewslist"
+        let param = [
+            "channelid":articleid
+        ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let model =  NewsModel(JSONDecoder(json!))
+                let result = NewsList(model.data!)
+                print("状态是")
+                print(result.status)
+                if(model.status == "success"){
+                    handle(success: true, response: result.objectlist)
+                }else{
+                    handle(success: false, response: nil)
+                }
+            }
+        }
+    }
 }
