@@ -32,7 +32,6 @@
 		183B85001CE5BFDC00709235 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 183B84FE1CE5BFDC00709235 /* LaunchScreen.storyboard */; };
 		183B850B1CE5BFDC00709235 /* HSHW_2016Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B850A1CE5BFDC00709235 /* HSHW_2016Tests.swift */; };
 		183B85161CE5BFDC00709235 /* HSHW_2016UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B85151CE5BFDC00709235 /* HSHW_2016UITests.swift */; };
-		183B85241CE5C04900709235 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 183B85231CE5C04900709235 /* Podfile */; };
 		183B866F1CE5CF9500709235 /* Http.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B866C1CE5CF9500709235 /* Http.swift */; };
 		183B86701CE5CF9500709235 /* Httpresult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B866D1CE5CF9500709235 /* Httpresult.swift */; };
 		183B86711CE5CF9500709235 /* JSONJoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B866E1CE5CF9500709235 /* JSONJoy.swift */; };
@@ -156,7 +155,6 @@
 		183B85111CE5BFDC00709235 /* HSHW_2016UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HSHW_2016UITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		183B85151CE5BFDC00709235 /* HSHW_2016UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HSHW_2016UITests.swift; sourceTree = "<group>"; };
 		183B85171CE5BFDC00709235 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		183B85231CE5C04900709235 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
 		183B866C1CE5CF9500709235 /* Http.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Http.swift; sourceTree = "<group>"; };
 		183B866D1CE5CF9500709235 /* Httpresult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Httpresult.swift; sourceTree = "<group>"; };
 		183B866E1CE5CF9500709235 /* JSONJoy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONJoy.swift; sourceTree = "<group>"; };
@@ -333,7 +331,6 @@
 		183B84E91CE5BFDC00709235 = {
 			isa = PBXGroup;
 			children = (
-				183B85231CE5C04900709235 /* Podfile */,
 				183B84F41CE5BFDC00709235 /* HSHW_2016 */,
 				183B85091CE5BFDC00709235 /* HSHW_2016Tests */,
 				183B85141CE5BFDC00709235 /* HSHW_2016UITests */,
@@ -826,7 +823,6 @@
 				F63E19821D17C38A001BDE8A /* HSWCommunityHome.xib in Resources */,
 				F632EF0F1D18E8890038AF9D /* HSSQCollectionViewCell.xib in Resources */,
 				F6D02CE01D07BB5300353557 /* contentCell.xib in Resources */,
-				183B85241CE5C04900709235 /* Podfile in Resources */,
 				183B84FB1CE5BFDC00709235 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1070,7 +1066,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "ad7f498a-5a15-4f59-a755-1300ccea7d62";
+				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1111,7 +1107,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "ad7f498a-5a15-4f59-a755-1300ccea7d62";
+				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1136,40 +1132,17 @@
 					"-framework",
 					"\"Alamofire\"",
 					"-framework",
-					"\"BSGridCollectionViewLayout\"",
-					"-framework",
-					"\"BSImagePicker\"",
-					"-framework",
-					"\"FBLikeLayout\"",
-					"-framework",
-					"\"FlexibleTableView\"",
-					"-framework",
 					"\"IQKeyboardManagerSwift\"",
-					"-framework",
-					"\"ImageSlideshow\"",
-					"-framework",
-					"\"JGProgressHUD\"",
 					"-framework",
 					"\"MBProgressHUD\"",
 					"-framework",
 					"\"PagingMenuController\"",
 					"-framework",
 					"\"SDWebImage\"",
-					"-framework",
-					"\"UIImageViewModeScaleAspect\"",
-					"-framework",
-					"\"XWSwiftRefresh\"",
-					"-framework",
-					"\"YYCache\"",
-					"-framework",
-					"\"YYImage\"",
-					"-framework",
-					"\"YYWebImage\"",
-					"-Objc",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ad7f498a-5a15-4f59-a755-1300ccea7d62";
+				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Debug;
@@ -1193,40 +1166,17 @@
 					"-framework",
 					"\"Alamofire\"",
 					"-framework",
-					"\"BSGridCollectionViewLayout\"",
-					"-framework",
-					"\"BSImagePicker\"",
-					"-framework",
-					"\"FBLikeLayout\"",
-					"-framework",
-					"\"FlexibleTableView\"",
-					"-framework",
 					"\"IQKeyboardManagerSwift\"",
-					"-framework",
-					"\"ImageSlideshow\"",
-					"-framework",
-					"\"JGProgressHUD\"",
 					"-framework",
 					"\"MBProgressHUD\"",
 					"-framework",
 					"\"PagingMenuController\"",
 					"-framework",
 					"\"SDWebImage\"",
-					"-framework",
-					"\"UIImageViewModeScaleAspect\"",
-					"-framework",
-					"\"XWSwiftRefresh\"",
-					"-framework",
-					"\"YYCache\"",
-					"-framework",
-					"\"YYImage\"",
-					"-framework",
-					"\"YYWebImage\"",
-					"-Objc",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "ad7f498a-5a15-4f59-a755-1300ccea7d62";
+				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Release;

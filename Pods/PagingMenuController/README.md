@@ -89,6 +89,10 @@ animationDuration: NSTimeInterval
 ```swift
 deceleratingRate: CGFloat
 ```
+* menu item position
+```swift
+menuSelectedItemCenter: Bool
+```
 * menu display mode and scrolling mode
 ```Swift
 menuDisplayMode: MenuDisplayMode
@@ -96,7 +100,7 @@ menuDisplayMode: MenuDisplayMode
 public enum MenuDisplayMode {
     case Standard(widthMode: MenuItemWidthMode, centerItem: Bool, scrollingMode: MenuScrollingMode)
     case SegmentedControl
-    case Infinite(widthMode: MenuItemWidthMode) // Requires three paging views at least
+    case Infinite(widthMode: MenuItemWidthMode, scrollingMode: MenuScrollingMode) // Requires three paging views at least
 }
 
 public enum MenuItemWidthMode {
@@ -203,8 +207,10 @@ It creates a new paging menu controller. Do not forget to cleanup properties in 
 ## Requirements
 
 iOS8+  
-Swift 1.2+  
-Xcode 6.3+  
+Swift 2.0+  
+Xcode 7.3+  
+
+*Please use 0.8.0 tag for Swift 1.2*
 
 ## Installation
 

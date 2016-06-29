@@ -25,7 +25,7 @@ class LoginModel: NSObject {
         let paramDic = ["a":"applogin","phone":phoneNumber,"password":passwordNumber]
         
         requestManager?.GET(PARK_URL_Header, parameters: paramDic, success: { (NSURLSessionDataTask, AnyObject) in
-            let result = LoginUserInfoModel(JSONDecoder(AnyObject))
+            let result = LoginUserInfoModel(JSONDecoder(AnyObject!))
     
             //  进行数据解析
             if result.status == "success"{
@@ -68,7 +68,7 @@ class LoginModel: NSObject {
                         "code":code,"usertype":usertype,"devicestate":devicestate]
         //  进行GET请求
         requestManager?.GET(PARK_URL_Header, parameters: paramDic, success: { (task, response) in
-            let result = Http(JSONDecoder(response))
+            let result = Http(JSONDecoder(response!))
             let responseStr = result.status == "success" ? nil : result.errorData
             //  闭包传值
             handle(success: result.status == "success",response: responseStr)
@@ -81,7 +81,7 @@ class LoginModel: NSObject {
     func comfirmPhoneHasRegister(phoneNum:String,handle:ResponseBlock){
         let paraDic = ["a":"checkphone","phone":phoneNum]
         requestManager?.GET(PARK_URL_Header, parameters: paraDic, success: { (task, response) in
-            let result = Http(JSONDecoder(response))
+            let result = Http(JSONDecoder(response!))
             let responseStr = result.status == "success" ? nil : result.errorData
             handle(success: result.status == "success",response: responseStr)
         
@@ -93,7 +93,7 @@ class LoginModel: NSObject {
     func forgetPassword(phone:String,code:String,password:String,handle:ResponseBlock){
         let paramDic = ["a":"forgetpwd","phone":phone,"code":code,"password":password]
         requestManager?.GET(PARK_URL_Header, parameters: paramDic, success: { (task, response) in
-            let result = Http(JSONDecoder(response))
+            let result = Http(JSONDecoder(response!))
             let responseStr = result.status == "success" ? "成功" : result.errorData
             if responseStr != nil {
                 handle(success: result.status == "success",response: responseStr)

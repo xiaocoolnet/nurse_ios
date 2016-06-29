@@ -1,6 +1,0 @@
-framework module FlexibleTableView {
-  umbrella header "FlexibleTableView-umbrella.h"
-
-  export *
-  module * { export * }
-}
