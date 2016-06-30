@@ -99,6 +99,11 @@
 		F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4083E1D1D31EB00BDFDBE /* HSJobListModel.swift */; };
 		F6B75F901D090728009DE2E6 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B75F8F1D090728009DE2E6 /* ImageIO.framework */; };
 		F6C04AF81D20D4D2009E1613 /* ConnectModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F6C04AF71D20D4D2009E1613 /* ConnectModel.m */; };
+		F6C265C61D24F08C0033D2A9 /* PostVacancies.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6C265C51D24F08C0033D2A9 /* PostVacancies.xib */; };
+		F6C265C81D24FD770033D2A9 /* PostVacancies.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C265C71D24FD770033D2A9 /* PostVacancies.swift */; };
+		F6C265CA1D25106F0033D2A9 /* HSTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C265C91D25106F0033D2A9 /* HSTabBarController.swift */; };
+		F6C265CD1D2513560033D2A9 /* HSWebViewDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C265CB1D2513560033D2A9 /* HSWebViewDetailController.swift */; };
+		F6C265CE1D2513560033D2A9 /* HSWebViewDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6C265CC1D2513560033D2A9 /* HSWebViewDetailController.xib */; };
 		F6D02CDB1D07A46800353557 /* NewsSourceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D02CD91D07A46800353557 /* NewsSourceCell.swift */; };
 		F6D02CDC1D07A46800353557 /* NewsSourceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6D02CDA1D07A46800353557 /* NewsSourceCell.xib */; };
 		F6D02CDF1D07BB5300353557 /* contentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D02CDD1D07BB5300353557 /* contentCell.swift */; };
@@ -225,6 +230,11 @@
 		F6B75F8F1D090728009DE2E6 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		F6C04AF61D20D4D2009E1613 /* ConnectModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectModel.h; sourceTree = "<group>"; };
 		F6C04AF71D20D4D2009E1613 /* ConnectModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectModel.m; sourceTree = "<group>"; };
+		F6C265C51D24F08C0033D2A9 /* PostVacancies.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PostVacancies.xib; sourceTree = "<group>"; };
+		F6C265C71D24FD770033D2A9 /* PostVacancies.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVacancies.swift; sourceTree = "<group>"; };
+		F6C265C91D25106F0033D2A9 /* HSTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSTabBarController.swift; sourceTree = "<group>"; };
+		F6C265CB1D2513560033D2A9 /* HSWebViewDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSWebViewDetailController.swift; sourceTree = "<group>"; };
+		F6C265CC1D2513560033D2A9 /* HSWebViewDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSWebViewDetailController.xib; sourceTree = "<group>"; };
 		F6D02CD91D07A46800353557 /* NewsSourceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsSourceCell.swift; sourceTree = "<group>"; };
 		F6D02CDA1D07A46800353557 /* NewsSourceCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NewsSourceCell.xib; sourceTree = "<group>"; };
 		F6D02CDD1D07BB5300353557 /* contentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = contentCell.swift; sourceTree = "<group>"; };
@@ -360,6 +370,7 @@
 				18A6BAC21CE5F96D00B6B1FD /* Mine */,
 				1854085C1CE6C68D00DFBA7C /* LoginAndRegister */,
 				183B84F51CE5BFDC00709235 /* AppDelegate.swift */,
+				F6C265C91D25106F0033D2A9 /* HSTabBarController.swift */,
 				183B84F71CE5BFDC00709235 /* ViewController.swift */,
 				F6B4083B1D1D100900BDFDBE /* HSHW_2016-Bridging-Header.h */,
 				1854087E1CE6F15500DFBA7C /* Tool.swift */,
@@ -542,6 +553,8 @@
 				185408761CE6C8A600DFBA7C /* GoABroadViewController.swift */,
 				1854088A1CE7133600DFBA7C /* AbroadViewController.swift */,
 				1854088E1CE713A100DFBA7C /* MagicboxViewController.swift */,
+				F6C265CB1D2513560033D2A9 /* HSWebViewDetailController.swift */,
+				F6C265CC1D2513560033D2A9 /* HSWebViewDetailController.xib */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -562,6 +575,8 @@
 				F63147131D1A6D2E005103C9 /* HSComTableCell.xib */,
 				1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */,
 				1F7B9FE21D21218F00A3A3CB /* ReleaseTimeCell.xib */,
+				F6C265C51D24F08C0033D2A9 /* PostVacancies.xib */,
+				F6C265C71D24FD770033D2A9 /* PostVacancies.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -818,8 +833,10 @@
 				183B84FD1CE5BFDC00709235 /* Assets.xcassets in Resources */,
 				F632EF151D1949910038AF9D /* HSComOpenHeader.xib in Resources */,
 				F605F0BF1D22564300769299 /* HSFindPersonDetailView.xib in Resources */,
+				F6C265CE1D2513560033D2A9 /* HSWebViewDetailController.xib in Resources */,
 				F63147151D1A6D2E005103C9 /* HSComTableCell.xib in Resources */,
 				F6D02CDC1D07A46800353557 /* NewsSourceCell.xib in Resources */,
+				F6C265C61D24F08C0033D2A9 /* PostVacancies.xib in Resources */,
 				F63E19821D17C38A001BDE8A /* HSWCommunityHome.xib in Resources */,
 				F632EF0F1D18E8890038AF9D /* HSSQCollectionViewCell.xib in Resources */,
 				F6D02CE01D07BB5300353557 /* contentCell.xib in Resources */,
@@ -907,8 +924,10 @@
 				181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */,
 				1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */,
 				18C0BF991CEB655F003E2886 /* QuestionTableViewCell.swift in Sources */,
+				F6C265C81D24FD770033D2A9 /* PostVacancies.swift in Sources */,
 				181E0D351CEC3FFA00E34A7F /* MineRecruitTableViewCell.swift in Sources */,
 				185408911CE716E900DFBA7C /* AllViewController.swift in Sources */,
+				F6C265CA1D25106F0033D2A9 /* HSTabBarController.swift in Sources */,
 				185102E21CED612E00F797EE /* UserPostTableViewCell.swift in Sources */,
 				18C240621CEF10150059BF48 /* OnlineExaminationViewController.swift in Sources */,
 				0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */,
@@ -968,6 +987,7 @@
 				185408751CE6C88D00DFBA7C /* StudyViewController.swift in Sources */,
 				1854088F1CE713A100DFBA7C /* MagicboxViewController.swift in Sources */,
 				F631DFAE1D069EE100E52FDB /* PhotoModel.swift in Sources */,
+				F6C265CD1D2513560033D2A9 /* HSWebViewDetailController.swift in Sources */,
 				0BAF21C41D113E100065146B /* QCLoginUserInfo.swift in Sources */,
 				0BEA9CAA1D1390120012FC11 /* ForgetPasswordController.swift in Sources */,
 			);

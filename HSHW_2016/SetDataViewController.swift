@@ -177,6 +177,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 avatarView.frame = CGRectMake(WIDTH-86, 11, 50, 50)
                 avatarView.layer.cornerRadius = 25
                 avatarView.clipsToBounds = true
+                avatarView.userInteractionEnabled = false
                 cell.addSubview(avatarView)
             }
         }else if indexPath.section == 1 {

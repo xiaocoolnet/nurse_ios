@@ -12,15 +12,18 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
     @IBOutlet weak var listTableView:UITableView!
     var helper = HSNurseStationHelper()
     var newsList:Array<NewsInfo>?
+    var articleID:String?
     
     override func viewDidLoad() {
         listTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "cell")
-        helper.getArticleListWithID("26") {[unowned self] (success, response) in
-            if success {
-                self.newsList = response as? Array<NewsInfo> ?? []
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.listTableView.reloadData()
-                })
+        if articleID != nil {
+            helper.getArticleListWithID(articleID!) {[unowned self] (success, response) in
+                if success {
+                    self.newsList = response as? Array<NewsInfo> ?? []
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.listTableView.reloadData()
+                    })
+                }
             }
         }
         listTableView.tableFooterView = UIView()
@@ -59,7 +62,6 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
-        
         let newsInfo = newsList![indexPath.row]
         let next = NewsContantViewController()
         next.newsInfo = newsInfo

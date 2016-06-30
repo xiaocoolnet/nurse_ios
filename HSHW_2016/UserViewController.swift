@@ -130,9 +130,6 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             room.text = "科室：外科"
             room.sizeToFit()
             cell.addSubview(room)
-            
-            
-            
             return cell
 
         }else{
@@ -149,37 +146,19 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             cell.comment.text = "5722"
             return cell
         }
-        
     }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
         
         
     }
+    
     func contactForShe() {
         print("关注")
-        
-        
-    }
-    func goToNext() {
-        print("分享")
-        
-        
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func goToNext() {
+        print("分享")
     }
-    */
-
 }

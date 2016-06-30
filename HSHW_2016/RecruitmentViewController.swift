@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,HSFindPersonDetailViewDelegate {
+class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,HSFindPersonDetailViewDelegate,PostVacanciesDelegate {
 
     let myTableView = UITableView()
     let employmentMessageTableView = UITableView()
@@ -19,6 +19,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     let employment = UIView()
     let employmentMessage = UIView()
     let resumeDetail = NSBundle.mainBundle().loadNibNamed("HSFindPersonDetailView", owner: nil, options: nil).first as! HSFindPersonDetailView
+    let sendPostion = NSBundle.mainBundle().loadNibNamed("PostVacancies", owner: nil, options: nil).first as! PostVacancies
     var employmentdataSource=NSMutableArray()
     let jobHelper = HSNurseStationHelper()
     var jobDataSource:Array<JobModel>?
@@ -28,6 +29,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         makeDataSource()
+        sendPostion.delegate = self
         employmentMessageTableView.separatorStyle = .None
         resumeDetail.delegate = self
         picArr = ["1.png","2.png","3.png","4.png"]
@@ -387,9 +389,30 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func postedTheView() {
         print("招聘")
-        UIView.animateWithDuration(0.3) { 
-            self.employment.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+        if showType == 1 {
+            sendPostion.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+            self.view.addSubview(sendPostion)
+            
+            let rightButton = UIButton(type: .Custom)
+            rightButton.frame = CGRectMake(0, 0, 50, 30)
+            rightButton.setTitle("返回", forState: .Normal)
+            rightButton.addTarget(self, action: #selector(rightBarButtonClicked), forControlEvents: .TouchUpInside)
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: rightButton)
         }
+        
+    }
+    func rightBarButtonClicked() {
+        if showType == 1 {
+            UIView.animateWithDuration(0.2) {
+                self.sendPostion.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
+            }
+            self.sendPostion.removeFromSuperview()
+            self.navigationItem.rightBarButtonItem = nil
+        }
+    }
+    //MARK:-----SendPositionDelegate-----
+    func clickedSendBtn(){
+        rightBarButtonClicked()
     }
     
     func takeThePost() {

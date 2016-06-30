@@ -57,7 +57,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         self.view.backgroundColor = UIColor.whiteColor()
          self.isSubmit  = false
         collection = false
-        //time.frame = CGRectMake(WIDTH-30, 14, 40, 12)
         self.timeDow()
         
         // Do any additional setup after loading the view.

@@ -18,7 +18,7 @@ class MagicboxViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationController?.navigationBar.hidden = true
         self.view.backgroundColor = COLOR
         
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-60)
@@ -65,7 +65,8 @@ class MagicboxViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 cell.addSubview(name)
                 let kindBtn = UIButton(frame: CGRectMake(WIDTH/4*CGFloat(i%4), WIDTH*(15+94*CGFloat(i/4))/375, WIDTH/4, WIDTH/16*3*281/375))
                 kindBtn.setImage(UIImage(named: picArr[i]), forState: .Normal)
-                kindBtn.addTarget(self, action: #selector(MagicboxViewController.selectorCountry(_:)), forControlEvents: .TouchUpInside)
+                
+                kindBtn.addTarget(self, action: #selector(selectorCountry), forControlEvents: .TouchUpInside)
                 kindBtn.tag = i
                 cell.addSubview(kindBtn)
                 
@@ -82,7 +83,9 @@ class MagicboxViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
-        
+        if indexPath.section == 1 {
+            
+        }
         
         
     }
@@ -90,24 +93,37 @@ class MagicboxViewController: UIViewController,UITableViewDelegate,UITableViewDa
     //  功能
     func selectorCountry(btn:UIButton) {
         print(btn.tag)
+        let vc = HSWebViewDetailController(nibName: "HSWebViewDetailController", bundle: nil)
+        vc.navigationController?.navigationBar.hidden = false
+        if btn.tag == 0 {
+            vc.url = NSURL(string: "http://fanyi.youdao.com")
+            vc.title = "翻译"
+        }else if btn.tag == 1{
+            vc.url = NSURL(string: "http://www.boc.cn/sourcedb/whpj")
+            vc.title = "汇率"
+        }else if btn.tag == 2{
+            vc.url = NSURL(string: "http://time.123cha.com")
+            vc.title = "时差"
+        }else if btn.tag == 3{
+            vc.url = NSURL(string: "http://www.chsi.com.cn/xlcx")
+            vc.title = "学历查询"
+        }else if btn.tag == 4{
+            vc.url = NSURL(string: "http://www.weather.com.cn")
+            vc.title = "天气查询"
+        }else if btn.tag == 5{
+            vc.url = NSURL(string: "http://map.baidu.com")
+            vc.title = "地图查询"
+        }else if btn.tag == 6{
+            vc.url = NSURL(string: "http://flight.qunar.com")
+            vc.title = "机票查询"
+        }else if btn.tag == 7{
+            vc.url = NSURL(string: "http://baidu.com")
+            vc.title = "酒店"
+        }else if btn.tag == 8{
+            vc.url = NSURL(string: "http://baidu.com")
+            vc.title = "签证"
+        }
+        navigationController?.pushViewController(vc, animated: true)
         
-        
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

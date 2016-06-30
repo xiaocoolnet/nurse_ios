@@ -65,10 +65,10 @@ class HSNurseStationHelper: NSObject {
                 handle(success: false, response: error?.description)
             }else{
                 let model =  NewsModel(JSONDecoder(json!))
+                if(model.status == "success"){
                 let result = NewsList(model.data!)
                 print("状态是")
                 print(result.status)
-                if(model.status == "success"){
                     handle(success: true, response: result.objectlist)
                 }else{
                     handle(success: false, response: nil)

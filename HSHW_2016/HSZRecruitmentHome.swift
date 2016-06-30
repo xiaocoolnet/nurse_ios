@@ -17,6 +17,7 @@ class HSZRecruitmentHome: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         workPlace = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
+        workPlace?.articleID = "26"
         findJob.title = "找工作"
         findPersonnel.title = "找人才"
         findPersonnel.showType = 2

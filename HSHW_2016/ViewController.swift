@@ -61,16 +61,13 @@ class ViewController: UIViewController,UITextFieldDelegate {
         finishHandle = {[unowned self] (timeInterVal) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.acquire.userInteractionEnabled = true
-                //                self.acquire.backgroundColor = COLOR
+                // self.acquire.backgroundColor = COLOR
                 self.acquire.setTitleColor(COLOR, forState: .Normal)
-                
                 self.acquire.setTitle("获取验证码", forState: .Normal)
                 self.gain.text = nil
-
             })
         }
         
-   
         // Do any additional setup after loading the view, typically from a nib.
         logVM = LoginModel()
         
@@ -117,15 +114,12 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyBoardChangFrame(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
         
-        
         autoLogin()
-
     }
     
     //  登录界面
     func loginTheView() {
         print("登录")
-
         btnOne.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         btnTwo.setTitleColor(GREY, forState: .Normal)
         UIView.animateWithDuration(0.2) {
@@ -282,8 +276,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
         submit.setTitleColor(COLOR, forState: .Normal)
         submit.addTarget(self, action: #selector(self.submitTheUser), forControlEvents: .TouchUpInside)
         register.addSubview(submit)
-
-
     }
     
     //  点击短信获取验证码
@@ -358,9 +350,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
                 }
             })
             })
-
-        
-        
     }
     
     //  用来收起键盘
@@ -413,8 +402,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
         }
         //  self.法方  和 方法的区别
         loginWithNum(phoneNumber.text!, pwd: passwordNumber.text!)
-
-    
     }
      // 通过手机号和密码进行登录操作
     func loginWithNum(num:String,pwd:String){
@@ -469,22 +456,17 @@ class ViewController: UIViewController,UITextFieldDelegate {
     //  登录成功
     func loginSuccess(){
         
-        
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         //  得到分栏控制器
             let vc : UITabBarController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UITabBarController
+        
+        
         //  选择被选中的界面
             vc.selectedIndex = 4
             print(vc)
 
             self.presentViewController(vc, animated: true, completion: nil)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
 
 }
 
