@@ -161,7 +161,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 
             }
             if indexPath.row == 1 {
-                let next = QuestionBankViewController()
+                let next = QuestionViewController()
                 self.navigationController?.pushViewController(next, animated: true)
                 
             }
