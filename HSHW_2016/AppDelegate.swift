@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -22,8 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             [SSDKPlatformType.TypeQQ.rawValue,SSDKPlatformType.TypeWechat.rawValue], onImport: { (platform : SSDKPlatformType) -> Void in
                 
                 switch platform{
-//                case SSDKPlatformType.TypeQQ:
-//                    ShareSDKConnector.connectQQ(QQApiInterface.classForCoder(), tencentOAuthClass: TencentOAuth.classForCoder())
+//  case SSDKPlatformType.TypeQQ:
+//  ShareSDKConnector.connectQQ(QQApiInterface.classForCoder(), tencentOAuthClass: TencentOAuth.classForCoder())
                 case SSDKPlatformType.TypeWechat:
                     ShareSDKConnector.connectWeChat(WXApi.classForCoder())
                     
@@ -33,7 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
         }) { (platform : SSDKPlatformType,appInfo : NSMutableDictionary!) -> Void in
             switch platform {
-                
 //            case  SSDKPlatformType.TypeQQ:
 //                appInfo.SSDKSetupQQByAppId("1105281857", appKey: "bysMNvzaiLTMsXjQ", authType: "qq分享")
 //                break
@@ -44,12 +42,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             default:
                 break
             }
-            
-            
         }
         
         NSThread.sleepForTimeInterval(2.0)
-        
         UITabBar.appearance().tintColor = COLOR
         UITabBar.appearance().backgroundColor = UIColor.whiteColor()
         UINavigationBar.appearance().barTintColor = UIColor.whiteColor()

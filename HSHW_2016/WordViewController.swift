@@ -16,9 +16,11 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
     var timer = NSTimer()
+    
     let choose:[String] = ["A、消化道症状","B、胃液分析","C、胃镜检查","D、血清学检查","E、胃肠X线检查"]
     let picArr:[String] = ["btn_arrow_left.png","btn_arrow_right.png","ic_fenlei.png","btn_eye.png","btn_collet.png"]
     let picName:[String] = ["答题卡","答案","收藏"]
+    
     var TitCol = UILabel()
     var TitAns = UILabel()
     var TitQues = UILabel()
@@ -34,8 +36,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     let questBack = UIView()//答题卡视图
     var over = Bool()
     var isSubmit = Bool()
-    
-    var collection = Bool()
+    var collection = Bool()//是否收藏
     var timeText:String?
     let totalloc:Int = 5
     let rightAnswer = NSMutableArray()//正确答案
@@ -48,7 +49,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
@@ -71,8 +72,8 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             over = true
         }
     }
+    
     func getData(){
-        
         let user = NSUserDefaults.standardUserDefaults()
         let uid = user.stringForKey("userid")
         let url = PARK_URL_Header+"getDaliyExamList"
@@ -81,62 +82,56 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             "type":"1",
             "count":"10"
         ];
-        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
-            print(request)
-            if(error != nil){
-                
-            }else{
-                let status = EveryDayModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    //hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { [unowned self] request, response, json, error in
+            dispatch_async(dispatch_get_main_queue(), { 
+                if(error != nil){
                     
+                }else{
+                    let status = EveryDayModel(JSONDecoder(json!))
+                    print("状态是")
+                    print(status.status)
+                    if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        //hud.labelText = status.errorData
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    if(status.status == "success"){
+                        
+                        print(status)
+                        self.dataSource = DaliyExamList(status.data!).objectlist
+                        print(self.dataSource)
+                        print(self.dataSource.count)
+                        print("-----")
+                        
+                        self.createScrollerView()
+                        self.AnswerView()
+                        self.backBottomView()
+                        self.questionCard()
+                        print(status.data)
+                    }
                 }
-                if(status.status == "success"){
-                    
-                    print(status)
-                    self.dataSource = DaliyExamList(status.data!).objectlist
-                    print(self.dataSource)
-                    print(self.dataSource.count)
-                    print("-----")
-                    
-                    self.createScrollerView()
-                    self.AnswerView()
-                    self.backBottomView()
-                    self.questionCard()
-                    
-                    print(status.data)
-                    
-                }
-            }
-            
+            })
         }
-        
-        
     }
     
     
     
     func timeDow()
     {
-        let time1 = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(WordViewController.updateTime), userInfo: nil, repeats: true)
-        timeNow = time1
+        timeNow = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(WordViewController.updateTime), userInfo: nil, repeats: true)
     }
     
     func updateTime()
     {
-        //print(self.scrollView.subviews)
+//  print(self.scrollView.subviews)
         let index :Int = self.pageControl.currentPage
 //        print( self.pageControl.currentPage)
 //        print(self.scrollView.subviews[index])
 //        print(self.scrollView.subviews[index].subviews)
-        //let label = self.scrollView.subviews[2].viewWithTag(10) as! UILabel
+//  let label = self.scrollView.subviews[2].viewWithTag(10) as! UILabel
         var label = UILabel()
         if self.scrollView.subviews.count==0 {
             
@@ -144,7 +139,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
           label = self.view.viewWithTag(10+index) as! UILabel
         }
 //        let label = self.view.viewWithTag(10+index) as! UILabel
-        //        label.backgroundColor = UIColor.redColor()
+//        label.backgroundColor = UIColor.redColor()
         count -= 1
         if minute>=0 {
             if (count <= 0)
@@ -527,10 +522,8 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             contentScrollView.backgroundColor = UIColor.whiteColor()
             contentScrollView.layer.cornerRadius = 5
             
-            
             let backView = UIView()
             let backGound = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH,44))
-            
             backView.frame = CGRectMake(CGFloat(i)*WIDTH, 44, WIDTH, HEIGHT-163)//背景
             backView.backgroundColor = COLOR
             backView.tag = i+1
@@ -569,6 +562,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             timelab.textAlignment = .Right
             timelab.sizeToFit()
             backGound.addSubview(timelab)
+            //问题
             let question = UILabel(frame: CGRectMake(WIDTH*20/375, WIDTH*15/375, back.bounds.size.width-WIDTH*38/375, 40))
             question.numberOfLines = 0
             question.textAlignment = .Natural
@@ -577,7 +571,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             question.sizeToFit()
             contentScrollView.addSubview(question)
             //back.addSubview(question)
-            
+            //选项列表
             let heightArray = NSMutableArray()
             for j in 0 ..< examInfo.answerlist.count {
                 var string = ""
@@ -602,9 +596,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 //back.addSubview(btn)
                 contentScrollView.addSubview(btn)
                 let tit = UILabel(frame: CGRectMake(15, 5, WIDTH*314/375-10, 17))
-                //                let tit = UILabel(frame: CGRectMake(WIDTH*51/375, question.frame.size.height+question.frame.origin.y+(btn.frame.size.height-tit.frame.size.height)/2+(5+WIDTH*46/375)*CGFloat(j), WIDTH/2, 17))
-                //                let tit = UILabel(frame: CGRectMake(WIDTH*51/375, back.bounds.size.height-WIDTH*255/375+CGFloat(j)*50/375*WIDTH, WIDTH/2, 17))
-                //let tit = UILabel(frame: CGRectMake(WIDTH*51/375, question.frame.size.height+question.frame.origin.y+17*CGFloat(j), WIDTH/2, 17))
+                //这取A的方法。。
                 let ascInt:Int = 65+j
                 let asc:UniChar = UInt16(ascInt)
                 let chara:Character = Character(UnicodeScalar(asc))
@@ -621,6 +613,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 let titHeight = calculateHeight(question.text!, size: 14, width: contentScrollView.bounds.size.width-WIDTH*38/375)
                 //                let btnHeight = WIDTH*46/375*5+20
                 print(titHeight)
+                //在Btn上加了一个Label...
                 btn.addSubview(tit)
                 //back.addSubview(tit)
                 var AllHeight = CGFloat()

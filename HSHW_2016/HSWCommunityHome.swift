@@ -14,6 +14,7 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     var viewControllers:Array<UIViewController> = []
     @IBOutlet weak var sliderHead: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
+    var forumHelper = HSNurseStationHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,17 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         collectionView.registerNib(UINib(nibName: "HSSQCollectionViewCell",bundle: nil), forCellWithReuseIdentifier: "cell")
         collectionView.pagingEnabled = true
         collectionView.bounces = false
+        
+        forumHelper.getForumList("1") { (success, response) in
+            
+        }
+        
+        let posted = UIButton()
+        posted.frame = CGRectMake(WIDTH-70 , HEIGHT-230, 50, 50)
+        posted.setImage(UIImage(named: "ic_edit.png"), forState: .Normal)
+        posted.addTarget(self, action: #selector(RecruitmentViewController.postedTheView), forControlEvents: .TouchUpInside)
+        self.view.addSubview(posted)
+        posted.becomeFirstResponder()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -39,10 +51,19 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         
         collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
     }
-    // MARK: ---CollectionView----
+    
+    func postedTheView() {
+        print("发帖")
+    }
+    func postDetailWithModel(){
+        let vc = HSPostDetailController(nibName: "HSPostDetailController", bundle: nil)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    // MARK: ---CollectionView---
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return sliderMenu.menuNameArray.count
     }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! HSSQCollectionViewCell
         cell.backgroundColor = .whiteColor()
@@ -56,9 +77,11 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets{
         return UIEdgeInsetsMake(0, 0, 0, 0);
     }
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat{
         return 0
     }
+    
     func scrollViewDidEndDecelerating(scrollView: UIScrollView){
         print(scrollView.contentOffset.x/view.frame.width)
         let index = Int(scrollView.contentOffset.x/view.frame.width)

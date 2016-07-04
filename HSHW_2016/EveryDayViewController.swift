@@ -1,7 +1,6 @@
 //
 //  EveryDayViewController.swift
 //  HSHW_2016
-//
 //  Created by apple on 16/5/16.
 //  Copyright © 2016年 校酷网络科技公司. All rights reserved.
 //
@@ -14,7 +13,6 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     let myTableView = UITableView()
     var dataSource = titleList()
-//    let titArr:[String] = ["美国RN","国际护士证ISPN","新加坡护士证","护士资格","初级护师","主管护师"]
     let picArr:[String] = ["ic_rn.png","ic_earth.png","ic_moon.png","ic_maozi_one.png","ic_maozi_two.png","ic_maozi_three.png"]
     
     override func viewWillAppear(animated: Bool) {
@@ -25,10 +23,8 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
         
         let one = UIView(frame: CGRectMake(0, 0, WIDTH, 10))
-        
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
-        
         self.view.backgroundColor = RGREY
         
         self.title = "每日一练"
@@ -43,7 +39,7 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         self.view.addSubview(line)
         myTableView.tableHeaderView = one
         self.getData()
-        //        myTableView.separatorColor = RGREY
+        // myTableView.separatorColor = RGREY
         // Do any additional setup after loading the view.
     }
     
@@ -85,10 +81,7 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     print(status.data)
                 }
             }
-            
         }
-        
-        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -112,7 +105,6 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.num.text = info.count
         
         return cell
-        
     }
     
     func startTheTest() {
@@ -120,7 +112,5 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let next = WordViewController()
         self.navigationController?.pushViewController(next, animated: true)
         next.title = "练习题"
-        
     }
-    
 }

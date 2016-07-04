@@ -13,9 +13,10 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     var myTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-    var picArr = NSArray()
+    var picArr = Array<String>()
     var timer = NSTimer()
     var times = Int()
+    var requestHelper = NewsPageHelper()
     
     let titLabArr:[String] = ["每日一练","5万道题库","在线考试"]
     let titImgArr:[String] = ["ic_bi.png","ic_fuzhi.png","ic_phone.png"]
@@ -27,12 +28,10 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.tabBarController?.tabBar.hidden = false
         myTableView.reloadData()
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.backgroundColor = COLOR
         
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-60)
@@ -52,16 +51,10 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*188/375)
         scrollView.pagingEnabled = true
         scrollView.delegate = self
-        
-        picArr = ["1.png","2.png","3.png","4.png"]
-        for i in 0...4 {
+
+        for i in 0...3 {
             let imageView = UIImageView()
             imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*188/375)
-            if i == 4 {
-                imageView.image = UIImage(named: "1.png")
-            }else{
-                imageView.image = UIImage(named: "\(i+1).png")
-            }
 
             imageView.tag = i+1
             //为图片视图添加点击事件
@@ -75,7 +68,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             imageView.addGestureRecognizer(tap)
             scrollView.addSubview(imageView)
         }
-        scrollView.contentSize = CGSizeMake(5*WIDTH, 0)
+        scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
         
@@ -87,12 +80,32 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         pageControl.addTarget(self, action: #selector(StudyViewController.pageNext), forControlEvents: .ValueChanged)
         one.addSubview(pageControl)
         
-        
+        requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+            if success {
+                print(response)
+                let imageArr = response as! Array<PhotoInfo>
+                for imageInfo in imageArr {
+                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.updateSlideImage()
+                        self.myTableView.reloadData()
+                    })
+                }
+            }
+        }
         myTableView.rowHeight = 60
         myTableView.tableHeaderView = one
         
         // Do any additional setup after loading the view.
     }
+    
+    func updateSlideImage(){
+        for i in 1...4 {
+            let imgView = scrollView.viewWithTag(i) as! UIImageView
+            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+        }
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 4
     }

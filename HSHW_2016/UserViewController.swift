@@ -150,8 +150,6 @@ class UserViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
-        
-        
     }
     
     func contactForShe() {

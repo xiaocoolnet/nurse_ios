@@ -42,7 +42,6 @@
         <!--Tab Bar Controller-->
         <scene sceneID="iLR-bq-NIl">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nHt-r3-OOo" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController storyboardIdentifier="MainView" id="4Aq-fV-Pt5" customClass="HSTabBarController" customModule="HSHW_2016" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Ai8-eR-rul">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -57,6 +56,7 @@
                         <segue destination="lLB-eu-bRv" kind="relationship" relationship="viewControllers" id="44V-em-j7Y"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nHt-r3-OOo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-543" y="872"/>
         </scene>
@@ -216,33 +216,13 @@
                     </view>
                     <navigationItem key="navigationItem" id="rBT-PV-ktG">
                         <nil key="title"/>
-                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="NoL-VP-cBL">
-                            <rect key="frame" x="240" y="8" width="121" height="29"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="社区"/>
-                                <segment title="招聘"/>
-                            </segments>
-                            <color key="tintColor" red="0.59741416930000002" green="0.0" blue="0.44024620460000002" alpha="1" colorSpace="calibratedRGB"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                    <real key="value" value="5"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
-                            <connections>
-                                <action selector="selectorSegment:" destination="Rlg-Ac-h9V" eventType="valueChanged" id="ElC-RF-FAK"/>
-                            </connections>
-                        </segmentedControl>
                     </navigationItem>
-                    <connections>
-                        <outlet property="segment" destination="NoL-VP-cBL" id="K8e-Ud-FfZ"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aoB-ub-IS2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="213" y="2348"/>
         </scene>
-        <!--我-->
+        <!--Mine View Controller-->
         <scene sceneID="jOj-Dq-ytV">
             <objects>
                 <viewController id="NAY-iA-oaE" customClass="MineViewController" customModule="HSHW_2016" customModuleProvider="target" sceneMemberID="viewController">
@@ -254,7 +234,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
-                    <navigationItem key="navigationItem" title="我" id="kMs-xI-pGT"/>
+                    <navigationItem key="navigationItem" id="kMs-xI-pGT"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cai-ai-Fyw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

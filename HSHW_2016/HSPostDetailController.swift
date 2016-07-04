@@ -8,28 +8,39 @@
 
 import UIKit
 
-class HSPostDetailController: UIViewController {
+class HSPostDetailController: UIViewController,UITableViewDataSource,UITableViewDelegate {
 
+    @IBOutlet weak var postTitle: UILabel!
+    @IBOutlet weak var commentView: UITableView!
+    @IBOutlet weak var avatar: UIButton!
+    @IBOutlet weak var avatarName: UILabel!
+    @IBOutlet weak var postion: UILabel!
+    @IBOutlet weak var level: UILabel!
+    @IBOutlet weak var seeCount: UILabel!
+    @IBOutlet weak var sendTime: UILabel!
+    @IBOutlet weak var contentWeb: UIWebView!
+    @IBOutlet weak var collectionBtn: UIButton!
+    @IBOutlet weak var goodBtn: UIButton!
+    @IBOutlet weak var goodLabel: UILabel!
+    @IBOutlet weak var commentBtn: UIButton!
+    @IBOutlet weak var commentLabel: UILabel!
+    @IBOutlet weak var veiwHeightConstraint: NSLayoutConstraint!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        title = "帖子详情"
+        commentView.registerNib(UINib(nibName:"HSStateCommentCell",bundle: nil ), forCellReuseIdentifier: "cell")
+        commentView.estimatedRowHeight = 108
+        commentView.rowHeight = UITableViewAutomaticDimension
         // Do any additional setup after loading the view.
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSStateCommentCell
+        return cell
     }
-    */
-
 }

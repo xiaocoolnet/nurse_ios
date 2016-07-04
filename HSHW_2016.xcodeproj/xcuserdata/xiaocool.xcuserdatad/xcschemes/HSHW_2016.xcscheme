@@ -29,17 +29,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "183B85051CE5BFDC00709235"
-               BuildableName = "HSHW_2016Tests.xctest"
-               BlueprintName = "HSHW_2016Tests"
-               ReferencedContainer = "container:HSHW_2016.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
+            skipped = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "183B85101CE5BFDC00709235"

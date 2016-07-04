@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,HSFindPersonDetailViewDelegate,PostVacanciesDelegate {
+class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,HSFindPersonDetailViewDelegate,PostVacanciesDelegate,HSPostResumeViewDelegate {
 
     let myTableView = UITableView()
     let employmentMessageTableView = UITableView()
@@ -20,16 +20,19 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     let employmentMessage = UIView()
     let resumeDetail = NSBundle.mainBundle().loadNibNamed("HSFindPersonDetailView", owner: nil, options: nil).first as! HSFindPersonDetailView
     let sendPostion = NSBundle.mainBundle().loadNibNamed("PostVacancies", owner: nil, options: nil).first as! PostVacancies
+    let sendResume = NSBundle.mainBundle().loadNibNamed("HSPostResumeView", owner: nil, options: nil).first as! HSPostResumeView
     var employmentdataSource=NSMutableArray()
     let jobHelper = HSNurseStationHelper()
     var jobDataSource:Array<JobModel>?
     var CVDataSource:Array<CVModel>?
     var showType = 1
+    weak var superViewController:NurseStationViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         makeDataSource()
         sendPostion.delegate = self
+        sendResume.delegate = self
         employmentMessageTableView.separatorStyle = .None
         resumeDetail.delegate = self
         picArr = ["1.png","2.png","3.png","4.png"]
@@ -75,7 +78,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                     self.CVDataSource = response as? Array<CVModel> ?? []
                     self.myTableView.reloadData()
-                     self.configureUI()
+                    self.configureUI()
                 })
             })
         }
@@ -123,7 +126,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         pageControl.currentPage = 0
         pageControl.addTarget(self, action: #selector(RecruitmentViewController.pageNext), forControlEvents: .ValueChanged)
         one.addSubview(pageControl)
-        
         
         myTableView.tableHeaderView = one
         myTableView.rowHeight = 142
@@ -243,14 +245,12 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             cell.delivery.addTarget(self, action: #selector(self.resumeOnline), forControlEvents: .TouchUpInside)
             return cell
         }else{
-            
             let cell1 = UITableViewCell()
             print(employmentdataSource)
             let jobModel = employmentdataSource[0]as! JobModel
             print(jobModel.title)
             cell1.selectionStyle = .None
             cell1.textLabel?.numberOfLines = 0
-            
             if showType == 1 {
                 print(indexPath.row)
                 if indexPath.row==0 {
@@ -379,6 +379,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         }
     }
+    
     func resumeOnline() {
         print("投递简历")
         let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
@@ -392,22 +393,29 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         if showType == 1 {
             sendPostion.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
             self.view.addSubview(sendPostion)
+            superViewController?.showRightBtn()
+        } else if showType == 2 {
+            sendResume.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+            self.view.addSubview(sendResume)
             
-            let rightButton = UIButton(type: .Custom)
-            rightButton.frame = CGRectMake(0, 0, 50, 30)
-            rightButton.setTitle("返回", forState: .Normal)
-            rightButton.addTarget(self, action: #selector(rightBarButtonClicked), forControlEvents: .TouchUpInside)
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(customView: rightButton)
+            superViewController?.showRightBtn()
+            
         }
-        
     }
+    
     func rightBarButtonClicked() {
         if showType == 1 {
             UIView.animateWithDuration(0.2) {
                 self.sendPostion.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
             }
             self.sendPostion.removeFromSuperview()
-            self.navigationItem.rightBarButtonItem = nil
+            superViewController?.hiddenBtn()
+        } else if showType == 2 {
+            UIView.animateWithDuration(0.2) {
+                self.sendResume.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
+            }
+            self.sendResume.removeFromSuperview()
+            superViewController?.hiddenBtn()
         }
     }
     //MARK:-----SendPositionDelegate-----
@@ -420,8 +428,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         UIView.animateWithDuration(0.3) {
             self.employment.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-154.5)
         }
-        
     }
+    
     func takeTheResume() {
         print("提交简历")
         UIView.animateWithDuration(0.2) {
@@ -436,12 +444,20 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         self.resumeDetail.removeFromSuperview()
     }
+    //MARK:delegate-find
+    func uploadAvatar() -> UIImage{
+        return UIImage()
+    }
+    func saveResumeBtnClicked(){
+        rightBarButtonClicked()
+    }
     //    图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
     }
+    
     func pageNext() {
         scrollView.contentOffset = CGPointMake(WIDTH*CGFloat(pageControl.currentPage), 0)
     }
@@ -456,6 +472,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         times += 1
         print("招聘1")
     }
+    
     func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
         if times >= 5 {
             scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
@@ -463,6 +480,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         print("招聘2")
     }
+    
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         var number = Int(scrollView.contentOffset.x/WIDTH)
         if number == 4 {

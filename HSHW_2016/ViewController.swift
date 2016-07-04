@@ -7,7 +7,9 @@
 //
 
 import UIKit
-
+protocol ViewControllerDelegate:NSObjectProtocol {
+    func viewcontrollerDesmiss()
+}
 class ViewController: UIViewController,UITextFieldDelegate {
     
     var scrollView = UIScrollView()
@@ -35,15 +37,15 @@ class ViewController: UIViewController,UITextFieldDelegate {
     var logVM = LoginModel?()
     var processHandle:TimerHandle?
     var finishHandle:TimerHandle?
+    weak var delegate:ViewControllerDelegate?
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-        self.navigationController?.navigationBar.hidden = true
+        navigationController?.navigationBar.hidden = false
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         //  添加一个导航控制器
         //  获取验证码倒计时
         processHandle = {[unowned self] (timeInterVal) in
@@ -73,8 +75,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        scrollView.frame = CGRectMake(0, -20, WIDTH, HEIGHT+20)
-        scrollView.contentSize = CGSizeMake(0, WIDTH*655/375)
+        scrollView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
+        scrollView.contentSize = CGSizeMake(0, 740)
         scrollView.showsVerticalScrollIndicator = false
         scrollView.bounces = false
         self.view.addSubview(scrollView)
@@ -114,9 +116,16 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyBoardChangFrame(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
         
-        autoLogin()
     }
-    
+    override func viewDidAppear(animated: Bool) {
+        autoLogin()
+        
+    }
+    override func viewDidDisappear(animated: Bool) {
+        if delegate != nil {
+            delegate?.viewcontrollerDesmiss()
+        }
+    }
     //  登录界面
     func loginTheView() {
         print("登录")
@@ -185,8 +194,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
         passwordNumber.font = UIFont.systemFontOfSize(16)
         login.addSubview(passwordNumber)
         passwordNumber.delegate = self
-        
-        
         
         loginBtn.frame = CGRectMake(25, WIDTH*180/375, WIDTH-50, WIDTH*50/375)
         loginBtn.layer.cornerRadius = WIDTH*25/375
@@ -374,12 +381,14 @@ class ViewController: UIViewController,UITextFieldDelegate {
     }
     //  自动登录
     func autoLogin(){
-        let logInfo = NSUserDefaults.standardUserDefaults().objectForKey("logInfo") as? Dictionary<String,String>
+        
+        let logInfo = NSUserDefaults.standardUserDefaults().objectForKey(LOGINFO_KEY) as? Dictionary<String,String>
+        
         if logInfo != nil {
-            let usernameStr = logInfo!["username"]!
-            let passwordStr = logInfo!["password"]!
+            let usernameStr = logInfo![USER_NAME] ?? ""
+            let passwordStr = logInfo![USER_PWD] ?? ""
             phoneNumber.text = usernameStr
-            password.text = passwordStr
+            passwordNumber.text = passwordStr
             loginWithNum(usernameStr , pwd: passwordStr)
         }
     }
@@ -426,25 +435,17 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     }
                     return
                 }else{
-                    //  改为新的方法
-//                     let alert = UIAlertView(title:"提示信息",message: "登录成功",delegate: self,cancelButtonTitle: "确定")
-//                    SVProgressHUD.showSuccessWithStatus("登录成功")
-                    
-//                    alert.show()
                     let ud = NSUserDefaults.standardUserDefaults()
-
+                    
                     //  把得到的用户信息存入到沙盒
                     //  得到 useID
-                    //
-                        ud.setObject(["username":self.phoneNumber.text!,"password":self.password.text!], forKey: "logInfo")
-                        ud.setObject(QCLoginUserInfo.currentInfo.userid, forKey: "userid")
-                    //登录成功
-                    
-                    print(LoginUserInfo)
+                    ud.setObject([USER_NAME:self.phoneNumber.text!,USER_PWD:self.passwordNumber.text!], forKey: LOGINFO_KEY)
 
-                    
-                    ud.setObject(["username":self.phoneNumber.text!,"password":self.password.text!], forKey: "logInfo")
-                    
+                    ud.setObject(QCLoginUserInfo.currentInfo.userid, forKey: "userid")
+                    //登录成功
+                    LOGIN_STATE = true
+
+                    print(LoginUserInfo)
                     //登录成功                    
 
                     self.loginSuccess()
@@ -459,8 +460,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         //  得到分栏控制器
             let vc : UITabBarController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UITabBarController
-        
-        
         //  选择被选中的界面
             vc.selectedIndex = 4
             print(vc)

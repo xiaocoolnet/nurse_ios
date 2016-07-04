@@ -27,8 +27,13 @@ class HSComTableCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
         // Configure the view for the selected state
+    }
+    
+    func showForForumModel(model:ForumModel){
+        landLorder.text = model.name
+        titleLabel.text = model.title
+        contentLabel.text = model.content
     }
     
 }

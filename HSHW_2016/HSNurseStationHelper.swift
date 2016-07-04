@@ -76,4 +76,21 @@ class HSNurseStationHelper: NSObject {
             }
         }
     }
+    //获取论坛帖子列表
+    func getForumList(type:String,handle:ResponseBlock){
+        let url = PARK_URL_Header+"getbbspostlist"
+        let param = ["type":type]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = ForumlistModel(JSONDecoder(json!))
+                if(result.status == "success"){
+                    handle(success: true, response: result.datas)
+                }else{
+                    handle(success: false, response: nil)
+                }
+            }
+        }
+    }
 }

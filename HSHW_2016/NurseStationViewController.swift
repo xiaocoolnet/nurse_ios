@@ -11,7 +11,7 @@ import PagingMenuController
 
 class NurseStationViewController: UIViewController {
     
-    @IBOutlet weak var segment: UISegmentedControl!
+    var segment:UISegmentedControl?
     var currentVCIndex:Int = 0
     let ComVC = HSWCommunityHome(nibName: "HSWCommunityHome", bundle: nil)
     let RecVC = HSZRecruitmentHome()
@@ -28,12 +28,34 @@ class NurseStationViewController: UIViewController {
         self.view.addSubview(line)
         ComVC.view.frame = self.view.frame
         RecVC.view.frame = self.view.frame
+        RecVC.superViewController = self
         self .addChildViewController(ComVC)
         self.addChildViewController(RecVC)
+        segment = UISegmentedControl(items: ["社区","招聘"])
+        navigationItem.titleView = segment
+        segment?.selectedSegmentIndex = 0
+        segment?.addTarget(self, action: #selector(selectorSegment), forControlEvents: UIControlEvents.ValueChanged)
         
         view.addSubview(ComVC.view)
         currentVCIndex = 0
         // Do any additional setup after loading the view.
+    }
+    
+    func rightBarButtonClicked() {
+        RecVC.rightBarButtonClicked()
+    }
+    
+    func showRightBtn(){
+        let rightButton = UIButton(type: .Custom)
+        rightButton.frame = CGRectMake(0, 0, 50, 30)
+        rightButton.setTitle("返回", forState: .Normal)
+        rightButton.setTitleColor(COLOR, forState: .Normal)
+        rightButton.addTarget(self, action: #selector(rightBarButtonClicked), forControlEvents: .TouchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: rightButton)
+    }
+    
+    func hiddenBtn(){
+        navigationItem.leftBarButtonItem = nil
     }
     
     @IBAction func selectorSegment(sender: UISegmentedControl) {
