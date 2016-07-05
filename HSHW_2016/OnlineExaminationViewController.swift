@@ -56,7 +56,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        self.title = "在线考试"
+        self.title = "考试中"
         
         let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: #selector(self.takeUpTheTest))
         navigationItem.rightBarButtonItem = rightBtn

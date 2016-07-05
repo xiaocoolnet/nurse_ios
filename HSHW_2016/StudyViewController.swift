@@ -179,7 +179,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 
             }
             if indexPath.row == 2 {
-                let next = OnlineExaminationViewController()
+                let next = OnlineTextViewController()
                 self.navigationController?.pushViewController(next, animated: true)
                 
             }
