@@ -11,6 +11,9 @@
 		0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */; };
 		0BAF21BC1D1134790065146B /* LoginUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAF21BB1D1134790065146B /* LoginUserInfoModel.swift */; };
 		0BAF21C41D113E100065146B /* QCLoginUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAF21C31D113E100065146B /* QCLoginUserInfo.swift */; };
+		0BB378551D2B4BE600E4A84D /* OnlineTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB378541D2B4BE600E4A84D /* OnlineTextViewController.swift */; };
+		0BB378571D2B504A00E4A84D /* OnlineTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB378561D2B504A00E4A84D /* OnlineTextTableViewCell.swift */; };
+		0BB378591D2B595100E4A84D /* OnlineTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB378581D2B595100E4A84D /* OnlineTextModel.swift */; };
 		0BDAB62D1D2A43380081E883 /* QuestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB62C1D2A43380081E883 /* QuestionModel.swift */; };
 		0BDAB6331D2A57320081E883 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6321D2A57320081E883 /* QuestionViewController.swift */; };
 		0BDAB6351D2A588D0081E883 /* InternationNurseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */; };
@@ -144,6 +147,9 @@
 		0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeName.swift; sourceTree = "<group>"; };
 		0BAF21BB1D1134790065146B /* LoginUserInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginUserInfoModel.swift; sourceTree = "<group>"; };
 		0BAF21C31D113E100065146B /* QCLoginUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCLoginUserInfo.swift; sourceTree = "<group>"; };
+		0BB378541D2B4BE600E4A84D /* OnlineTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineTextViewController.swift; sourceTree = "<group>"; };
+		0BB378561D2B504A00E4A84D /* OnlineTextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineTextTableViewCell.swift; sourceTree = "<group>"; };
+		0BB378581D2B595100E4A84D /* OnlineTextModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineTextModel.swift; sourceTree = "<group>"; };
 		0BDAB62C1D2A43380081E883 /* QuestionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
 		0BDAB6321D2A57320081E883 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternationNurseViewController.swift; sourceTree = "<group>"; };
@@ -530,6 +536,7 @@
 			children = (
 				18A3F4E31CEAA83D00028FA5 /* EveryDayTableViewCell.swift */,
 				18C0BF981CEB655F003E2886 /* QuestionTableViewCell.swift */,
+				0BB378561D2B504A00E4A84D /* OnlineTextTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -540,6 +547,7 @@
 				1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */,
 				1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */,
 				0BDAB62C1D2A43380081E883 /* QuestionModel.swift */,
+				0BB378581D2B595100E4A84D /* OnlineTextModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -554,6 +562,7 @@
 				0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */,
 				0BDAB6361D2A58E80081E883 /* NurseStatusViewController.swift */,
 				18A3F4E51CEAAF1100028FA5 /* WordViewController.swift */,
+				0BB378541D2B4BE600E4A84D /* OnlineTextViewController.swift */,
 				18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */,
 			);
 			name = Controller;
@@ -967,6 +976,7 @@
 				185408911CE716E900DFBA7C /* AllViewController.swift in Sources */,
 				F6C265CA1D25106F0033D2A9 /* HSTabBarController.swift in Sources */,
 				185102E21CED612E00F797EE /* UserPostTableViewCell.swift in Sources */,
+				0BB378571D2B504A00E4A84D /* OnlineTextTableViewCell.swift in Sources */,
 				18C240621CEF10150059BF48 /* OnlineExaminationViewController.swift in Sources */,
 				0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */,
 				181E0D271CEBF85100E34A7F /* MineStudyViewController.swift in Sources */,
@@ -979,6 +989,7 @@
 				181E0D2B1CEBF87D00E34A7F /* MineMessageViewController.swift in Sources */,
 				F632EF121D192F530038AF9D /* HSWorkPlaceController.swift in Sources */,
 				F61228051D0558C4009E3D4D /* NewsModel.swift in Sources */,
+				0BB378551D2B4BE600E4A84D /* OnlineTextViewController.swift in Sources */,
 				F63E198D1D17E10E001BDE8A /* HSZRecruitmentHome.swift in Sources */,
 				1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */,
 				18A5148E1CED596F00A30AA5 /* UserViewController.swift in Sources */,
@@ -1009,6 +1020,7 @@
 				0BDAB62D1D2A43380081E883 /* QuestionModel.swift in Sources */,
 				0BDAB6351D2A588D0081E883 /* InternationNurseViewController.swift in Sources */,
 				18A6BAC51CE5F9A700B6B1FD /* MineViewController.swift in Sources */,
+				0BB378591D2B595100E4A84D /* OnlineTextModel.swift in Sources */,
 				F63BE1EF1D0546F9008292AC /* NewsPageHelper.swift in Sources */,
 				0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */,
 				F6CC839A1D2797F300B9A358 /* HSPostResumeView.swift in Sources */,
