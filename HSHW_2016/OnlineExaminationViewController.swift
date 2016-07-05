@@ -69,6 +69,17 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        if over == false {
+            UIView.animateWithDuration(0.3, animations: {
+                self.questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
+            })
+            btnOne.setImage(UIImage(named: picArr[2]), forState: .Normal)
+            TitQues.textColor = GREY
+            over = true
+        }
+    }
+    
     func timeDow()
     {
         let time1 = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(WordViewController.updateTime), userInfo: nil, repeats: true)
@@ -293,7 +304,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
         for i in 0 ..< examInfo.answerlist.count {
             let answerInfo = examInfo.answerlist[i]
             if answerInfo.isanswer! == "1" {
-                self.rightAnswer.addObject(i)
+                rightAnswer[pageControl.currentPage] = i+1
                 print(answerInfo.answer_title)
                 print(answerInfo.isanswer)
                 break
@@ -673,33 +684,27 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
 //            }
             
         }else if btn.tag == 4 {
-            
-//            if isSubmit==false {
-//                print("请提交答案")
-//            }else{
-                if hear == true {
-                    UIView.animateWithDuration(0.3, animations: {
-                        self.grayBack.frame = CGRectMake(0, 0, WIDTH, HEIGHT-54)
-                        self.questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
-                        if btn.tag == 4 {
-                            self.btnOne.setImage(UIImage(named: self.picArr[2]), forState: .Normal)
-                            self.TitQues.textColor = GREY
-                        }
-                        self.over = true
-                    })
-                    btn.setImage(UIImage(named: "btn_eye_sel.png"), forState: .Normal)
-                    TitAns.textColor = COLOR
-                    hear = false
-                }else{
-                    UIView.animateWithDuration(0.3, animations: {
-                        self.grayBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-54)
-                    })
-                    btn.setImage(UIImage(named: picArr[3]), forState: .Normal)
-                    TitAns.textColor = GREY
-                    hear = true
-                }
-                
-//            }
+            if hear == true {
+                UIView.animateWithDuration(0.3, animations: {
+                    self.grayBack.frame = CGRectMake(0, 0, WIDTH, HEIGHT-54)
+                    self.questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
+                    if btn.tag == 4 {
+                        self.btnOne.setImage(UIImage(named: self.picArr[2]), forState: .Normal)
+                        self.TitQues.textColor = GREY
+                    }
+                    self.over = true
+                })
+                btn.setImage(UIImage(named: "btn_eye_sel.png"), forState: .Normal)
+                TitAns.textColor = COLOR
+                hear = false
+            }else{
+                UIView.animateWithDuration(0.3, animations: {
+                    self.grayBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-54)
+                })
+                btn.setImage(UIImage(named: picArr[3]), forState: .Normal)
+                TitAns.textColor = GREY
+                hear = true
+            }
             
         }else if btn.tag == 5 {
             print(collection)
@@ -802,8 +807,11 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                 
             }
         }
-
-        
+    }
+    
+    func setNextPage(){
+        scrollView.setContentOffset(CGPointMake(scrollView.contentOffset.x+WIDTH, 0), animated: false)
+        scrollViewDidEndDecelerating(scrollView)
     }
     func touchUp() {
         print("触摸")
@@ -831,16 +839,42 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
             self.myChoose.insert(btn.tag, atIndex: self.pageControl.currentPage)
         }
         
-        print(myChoose)
-        self.AnswerView()
         self.questionCard()
+        pageControl.currentPage += 1
+        setNextPage()
+        self.AnswerView()
         
     }
 
     func takeUpTheTest() {
         print("提交")
+        self.isSubmit = true
+        var idStr = ""
+        var answerStr = ""
+        if myChoose.count > 0 {
+            for i in 0...myChoose.count-1 {
+                let exer = dataSource[i] as! ExamInfo
+                idStr += (i==0 ? exer.id! : ","+exer.id!)
+            }
+            
+            for i in 0...myChoose.count-1 {
+                answerStr += (i==0 ? String(myChoose[i]) : ","+String(myChoose[i]))
+            }
+        }
         
-        
+        helper.sendtestAnswerByType("2", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
+            if(success){
+                dispatch_async(dispatch_get_main_queue(), {
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "提交成功，得分为：" + (response as! String)
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                })
+            }
+        }
+
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
@@ -851,21 +885,5 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
         self.AnswerView()
         self.questionCard()
     }
-    
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

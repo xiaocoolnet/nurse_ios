@@ -48,7 +48,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
@@ -58,9 +57,9 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
          self.isSubmit  = false
         collection = false
         self.timeDow()
-        
         // Do any additional setup after loading the view.
     }
+    
     override func viewWillDisappear(animated: Bool) {
         if over == false {
             UIView.animateWithDuration(0.3, animations: {
@@ -168,33 +167,9 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 self.timeText = label.text
                 
             }
-            
         }
-        
     }
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        let index :Int = self.pageControl.currentPage
-        print( self.pageControl.currentPage)
-        print(self.scrollView.subviews[index])
-        print(self.scrollView.subviews[index].subviews)
-        
-        //let label = self.scrollView.subviews[index].viewWithTag(10) as! UILabel
-        
-        print(self.pageControl.currentPage)
-        print(scrollView.contentOffset.x/WIDTH)
-        if self.pageControl.currentPage != Int(scrollView.contentOffset.x/WIDTH)  {
-        //let label = self.view.viewWithTag(self.pageControl.currentPage) as! UILabel
-        //print(label.text)
-        //            print(self.timeText)
-        //            let timeArray = self.timeText?.componentsSeparatedByString(":")
-        //            print(timeArray![0])
-        //            print(timeArray![1])
-        //            self.count = Int(timeArray![0])!
-        //            self.minute = Int(timeArray![1])!
-        }
-        
-    }
-    
+
     // MARK:   答题卡视图
     func questionCard() {
         print(self.pageControl.currentPage)
@@ -286,11 +261,12 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 
                 for i in 0..<self.myChoose.endIndex {
                     let myCircleView = cirecleArray[i] as! UIView
+                    
                     if Int(self.myChoose[i])==Int(self.rightAnswer[i] as! NSNumber) {
                         myCircleView.backgroundColor =  UIColor.greenColor()
                     }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber)&&Int(self.myChoose[i]) != -32 {
                         myCircleView.backgroundColor = UIColor.redColor()
-                    }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber)&&Int(self.myChoose[i]) == -32{
+                    }else if Int(self.myChoose[i]) == -32 {
                         myCircleView.backgroundColor = UIColor.grayColor()
                     }
                 }
@@ -318,7 +294,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         for i in 0 ..< examInfo.answerlist.count {
             let answerInfo = examInfo.answerlist[i]
             if answerInfo.isanswer! == "1" {
-                self.rightAnswer.addObject(i)
+                rightAnswer[pageControl.currentPage] = i+1
                 print(answerInfo.answer_title)
                 print(answerInfo.isanswer)
                 break
@@ -376,7 +352,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                     answer.text = " "
                 }else{
                     
-                    let isanswer = 65 + (self.myChoose[self.pageControl.currentPage]-1)
+                    let isanswer = 64 + (self.myChoose[self.pageControl.currentPage]-1)
                     let asc:UniChar = UInt16(isanswer)
                     let chara:Character = Character(UnicodeScalar(asc))
                     var string = ""
@@ -389,7 +365,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 print(self.pageControl.currentPage)
                 
                 print(self.rightAnswer[self.pageControl.currentPage])
-                let isanswer = 65 + (self.rightAnswer[self.pageControl.currentPage] as! Int)
+                let isanswer = 64 + (self.rightAnswer[self.pageControl.currentPage] as! Int)
                 let asc:UniChar = UInt16(isanswer)
                 let chara:Character = Character(UnicodeScalar(asc))
                 var string = ""
@@ -587,7 +563,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 //back.addSubview(btn)
                 contentScrollView.addSubview(btn)
                 let tit = UILabel(frame: CGRectMake(15, 5, WIDTH*314/375-10, 17))
-                //这取A的方法。。
+                
                 let ascInt:Int = 65+j
                 let asc:UniChar = UInt16(ascInt)
                 let chara:Character = Character(UnicodeScalar(asc))
@@ -632,6 +608,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         self.view.addSubview(self.pageControl)
         //   self.AnswerView()
     }
+    
     func pageContorllerNumber(pageControl:UIPageControl) {
         let offSetX:CGFloat = CGFloat(pageControl.currentPage) * WIDTH
         scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
@@ -819,10 +796,10 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             self.myChoose.insert(btn.tag, atIndex: self.pageControl.currentPage)
         }
 //        btn.backgroundColor = COLOR
-        self.AnswerView()
         self.questionCard()
         pageControl.currentPage += 1
         pageContorllerNumber(pageControl)
+        self.AnswerView()
     }
     
     func takeUpTheTest() {
@@ -843,7 +820,14 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         
         helper.sendtestAnswerByType("1", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
             if(success){
-                print(response as! String)
+                dispatch_async(dispatch_get_main_queue(), {
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "提交成功，得分为：" + (response as! String)
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                })
             }
         }
     }
