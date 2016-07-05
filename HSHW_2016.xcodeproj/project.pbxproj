@@ -102,6 +102,7 @@
 		F63E198D1D17E10E001BDE8A /* HSZRecruitmentHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */; };
 		F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */; };
 		F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66216861D1E228B0099AD0E /* HSCVListModel.swift */; };
+		F66912391D2B5C0C0021706B /* HSStudyNetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66912381D2B5C0C0021706B /* HSStudyNetHelper.swift */; };
 		F6A598941D1B6F7C000D6E37 /* HSMineHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */; };
 		F6B4083D1D1D212800BDFDBE /* HSNurseStationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4083C1D1D212800BDFDBE /* HSNurseStationHelper.swift */; };
 		F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4083E1D1D31EB00BDFDBE /* HSJobListModel.swift */; };
@@ -242,6 +243,7 @@
 		F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZRecruitmentHome.swift; sourceTree = "<group>"; };
 		F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZSliderMenuView.swift; sourceTree = "<group>"; };
 		F66216861D1E228B0099AD0E /* HSCVListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSCVListModel.swift; sourceTree = "<group>"; };
+		F66912381D2B5C0C0021706B /* HSStudyNetHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStudyNetHelper.swift; sourceTree = "<group>"; };
 		F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineHelper.swift; sourceTree = "<group>"; };
 		F6B4083B1D1D100900BDFDBE /* HSHW_2016-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HSHW_2016-Bridging-Header.h"; sourceTree = "<group>"; };
 		F6B4083C1D1D212800BDFDBE /* HSNurseStationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSNurseStationHelper.swift; sourceTree = "<group>"; };
@@ -537,6 +539,7 @@
 		185408651CE6C7C800DFBA7C /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F66912381D2B5C0C0021706B /* HSStudyNetHelper.swift */,
 				1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */,
 				1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */,
 				0BDAB62C1D2A43380081E883 /* QuestionModel.swift */,
@@ -1031,6 +1034,7 @@
 				185408751CE6C88D00DFBA7C /* StudyViewController.swift in Sources */,
 				1854088F1CE713A100DFBA7C /* MagicboxViewController.swift in Sources */,
 				F631DFAE1D069EE100E52FDB /* PhotoModel.swift in Sources */,
+				F66912391D2B5C0C0021706B /* HSStudyNetHelper.swift in Sources */,
 				F6C265CD1D2513560033D2A9 /* HSWebViewDetailController.swift in Sources */,
 				0BAF21C41D113E100065146B /* QCLoginUserInfo.swift in Sources */,
 				0BEA9CAA1D1390120012FC11 /* ForgetPasswordController.swift in Sources */,
@@ -1207,7 +1211,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1241,7 +1245,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Release;
 		};

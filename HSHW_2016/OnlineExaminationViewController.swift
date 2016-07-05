@@ -43,11 +43,13 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
     var count:Int = 13
     var timeNow:NSTimer!
     var timeText:String?
+    var helper = HSStudyNetHelper()
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
         self.getData()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
@@ -96,18 +98,13 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                 minute -= 1
                 
             }
-            //            if minute<10 {
-            //
-            //                if count<10 {
-            //                    label.text = "0"+"\(minute)"+":"+"0"+"\(count)"
-            //
-            //                }
-            //            }else{
-            //
-            //                    label.text = "\(minute)"+":"+"\(count)"
-            //
-            //            }
-            
+            // if minute<10 {
+            // if count<10 {
+            //       label.text = "0"+"\(minute)"+":"+"0"+"\(count)
+            // }
+            // }else{
+            //       label.text = "\(minute)"+":"+"\(count)"
+            // }
             // print("\(count)S")
             print(label.text)
             if minute == -1 {
@@ -124,35 +121,13 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                 if count<10 {
                     label.text = "0"+"\(minute)"+":"+"0"+"\(count)"
                     self.timeText = label.text
-                    
                 }
             }else{
-                
                 label.text = "\(minute)"+":"+"\(count)"
                 self.timeText = label.text
-                
             }
             
         }
-        //        else{
-        //            minute = 2
-        //            count = 59
-        //            label.text = "0"+"\(minute)"+":"+"\(count)"
-        //            timeNow.invalidate()
-        //
-        //        }
-        //        if (count <= 0)
-        //        {
-        //            count = 60
-        //            //self.showRepeatButton()
-        //            timeNow.invalidate()
-        //        }
-        //        print("\(count)S")
-        //
-        //        let label = self.view.viewWithTag(1) as! UILabel
-        //
-        //        print(label.text)
-        //        label.text = "02:"+"\(count)"
         
     }
     

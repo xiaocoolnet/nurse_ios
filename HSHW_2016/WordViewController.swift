@@ -10,17 +10,14 @@ import UIKit
 import Alamofire
 import MBProgressHUD
 
-
 class WordViewController: UIViewController,UIScrollViewDelegate {
     
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
     var timer = NSTimer()
-    
     let choose:[String] = ["A、消化道症状","B、胃液分析","C、胃镜检查","D、血清学检查","E、胃肠X线检查"]
     let picArr:[String] = ["btn_arrow_left.png","btn_arrow_right.png","ic_fenlei.png","btn_eye.png","btn_collet.png"]
     let picName:[String] = ["答题卡","答案","收藏"]
-    
     var TitCol = UILabel()
     var TitAns = UILabel()
     var TitQues = UILabel()
@@ -41,12 +38,14 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     let totalloc:Int = 5
     let rightAnswer = NSMutableArray()//正确答案
     var myChoose: [Int] = NSArray() as! [Int] //已选答案
+    var helper = HSStudyNetHelper()
     var startPage = 0
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
         self.getData()
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -117,8 +116,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         }
     }
     
-    
-    
     func timeDow()
     {
         timeNow = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(WordViewController.updateTime), userInfo: nil, repeats: true)
@@ -180,20 +177,20 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         print( self.pageControl.currentPage)
         print(self.scrollView.subviews[index])
         print(self.scrollView.subviews[index].subviews)
+        
         //let label = self.scrollView.subviews[index].viewWithTag(10) as! UILabel
         
         print(self.pageControl.currentPage)
         print(scrollView.contentOffset.x/WIDTH)
         if self.pageControl.currentPage != Int(scrollView.contentOffset.x/WIDTH)  {
-            //let label = self.view.viewWithTag(self.pageControl.currentPage) as! UILabel
-            //print(label.text)
-            //            print(self.timeText)
-            //            let timeArray = self.timeText?.componentsSeparatedByString(":")
-            //            print(timeArray![0])
-            //            print(timeArray![1])
-            //            self.count = Int(timeArray![0])!
-            //            self.minute = Int(timeArray![1])!
-            
+        //let label = self.view.viewWithTag(self.pageControl.currentPage) as! UILabel
+        //print(label.text)
+        //            print(self.timeText)
+        //            let timeArray = self.timeText?.componentsSeparatedByString(":")
+        //            print(timeArray![0])
+        //            print(timeArray![1])
+        //            self.count = Int(timeArray![0])!
+        //            self.minute = Int(timeArray![1])!
         }
         
     }
@@ -284,9 +281,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             print(self.rightAnswer[self.pageControl.currentPage])
             
             if Int(self.myChoose[self.pageControl.currentPage])==Int(self.rightAnswer[self.pageControl.currentPage] as! NSNumber) {
-                
                 myCircleView.backgroundColor =  UIColor.greenColor()
-
             }else{
                 
                 for i in 0..<self.myChoose.endIndex {
@@ -313,7 +308,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
 //                    myCircleView.backgroundColor = UIColor.grayColor()
 //                }
 //            }
-//            
 //        }
         
     }
@@ -360,7 +354,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         let labelArray = ["您的答案","正确答案","题目难度"]
         for i in 0..<3 {
             let view = UIView()
-            //            view.backgroundColor = UIColor.redColor()
+            //  view.backgroundColor = UIColor.redColor()
             view.frame = CGRectMake(WIDTH*60/375+(WIDTH*90/375)*CGFloat(i), line.frame.origin.y+12, WIDTH*80/375, WIDTH*70/375)
             backeView.addSubview(view)
             let answer = UILabel()
@@ -388,10 +382,8 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                     var string = ""
                     string.append(chara)
                     answer.text = string
-                    //answer.text =  String(self.myChoose[self.pageControl.currentPage])
                 }
-                //answer.text = self.myChoose[self.pageControl.currentPage] as! String
-                
+    //answer.text = self.myChoose[self.pageControl.currentPage] as! String
             }else if i==1{
                 print(self.rightAnswer)
                 print(self.pageControl.currentPage)
@@ -410,7 +402,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 difficultyValue = Int(examInfo.post_difficulty!)!
                 print(difficultyValue)
                 let imageArray = NSMutableArray()
-                //                let imageView = UIImageView()
+                // let imageView = UIImageView()
                 for i in 0..<3 {
                     let imageView = UIImageView()
                     imageView.frame = CGRectMake(answer.frame.size.width/2-answer.frame.size.height/2+CGFloat(i)*answer.frame.size.height/3, 5, answer.frame.size.height/3, answer.frame.size.height/3)
@@ -429,7 +421,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                     let imageView = imageArray[i] as! UIImageView
                     imageView.image = UIImage(named:"ic_collect_sel")
                 }
-                
             }
             view.addSubview(answer)
             view.addSubview(label)
@@ -554,8 +545,8 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             //time.sizeToFit()
             backGound.addSubview(time)
             let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.origin.x-125, 15, 71, 12))
-            //            let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.size.width-83, 15, 71, 12))
-            //            timelab.backgroundColor = UIColor.greenColor()
+            // let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.size.width-83, 15, 71, 12))
+            // timelab.backgroundColor = UIColor.greenColor()
             timelab.font = UIFont.systemFontOfSize(12)
             timelab.textColor = GREY
             timelab.text = "剩余答题时间"
@@ -605,9 +596,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 tit.numberOfLines = 0
                 tit.textColor = COLOR
                 tit.text = string+"、"+answerInfo.answer_title!
-                
-                //                tit.frame.size.height = height
-                //                btn.frame.size.height = height+10
                 tit.sizeToFit()
                 //contentScrollView.addSubview(tit)
                 let titHeight = calculateHeight(question.text!, size: 14, width: contentScrollView.bounds.size.width-WIDTH*38/375)
@@ -637,15 +625,14 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         
         pageControl.frame = CGRectMake(0, HEIGHT-167, WIDTH, 48)
         pageControl.pageIndicatorTintColor = UIColor.redColor()
-        pageControl.addTarget(self, action: #selector(self.pageContorllerNumber(_:)), forControlEvents: .TouchUpInside)
+//        pageControl.addTarget(self, action: #selector(self.pageContorllerNumber(_:)), forControlEvents: .TouchUpInside)
+        pageControl.addTarget(self, action: #selector(self.pageContorllerNumber(_:)), forControlEvents: .ValueChanged)
         pageControl.numberOfPages = self.dataSource.count
         pageControl.currentPage = 0
         self.view.addSubview(self.pageControl)
-        //        self.AnswerView()
-        
+        //   self.AnswerView()
     }
     func pageContorllerNumber(pageControl:UIPageControl) {
-        
         let offSetX:CGFloat = CGFloat(pageControl.currentPage) * WIDTH
         scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
     }
@@ -813,12 +800,9 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         print("触摸")
         self.bottomBtnClick(btnTwo)
     }
-    //    选项
+    // 选项
     func pleaseChooseOne(btn:UIButton) {
-        //        print(btn.tag)
-        //        print(self.myChoose.count)
-        //        print(self.pageControl.currentPage)
-        //        print(Int(scrollView.contentOffset.x)/Int(self.view.frame.size.width))
+        
         if self.pageControl.currentPage+1 > self.myChoose.count {
             
             if self.pageControl.currentPage>0{
@@ -834,22 +818,38 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             self.myChoose.removeAtIndex(self.pageControl.currentPage)
             self.myChoose.insert(btn.tag, atIndex: self.pageControl.currentPage)
         }
-        
-        print(myChoose)
+//        btn.backgroundColor = COLOR
         self.AnswerView()
         self.questionCard()
-        
+        pageControl.currentPage += 1
+        pageContorllerNumber(pageControl)
     }
+    
     func takeUpTheTest() {
         print("提交")
         self.isSubmit = true
+        var idStr = ""
+        var answerStr = ""
+        if myChoose.count > 0 {
+            for i in 0...myChoose.count-1 {
+                let exer = dataSource[i] as! ExamInfo
+                idStr += (i==0 ? exer.id! : ","+exer.id!)
+            }
+            
+            for i in 0...myChoose.count-1 {
+                answerStr += (i==0 ? String(myChoose[i]) : ","+String(myChoose[i]))
+            }
+        }
         
-        
+        helper.sendtestAnswerByType("1", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
+            if(success){
+                print(response as! String)
+            }
+        }
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(self.view.frame.size.width)
-        
         self.AnswerView()
         self.questionCard()
         //timeNow.invalidate()
