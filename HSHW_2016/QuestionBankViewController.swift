@@ -14,8 +14,8 @@ import MBProgressHUD
 class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     let myTableView = UITableView()
-    var dataSource = QuestionList()
-    
+    var dataSource = NewsList()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +25,6 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         self.view.addSubview(line)
         self.view.backgroundColor = RGREY
         
-        self.title = "5万道题库"
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-115)
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.delegate = self
@@ -49,7 +48,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
             if(error != nil){
                 
             }else{
-                let status = QuestionModel(JSONDecoder(json!))
+                let status = NewsModel(JSONDecoder(json!))
                 print("状态是")
                 print(status.status)
                 if(status.status == "error"){
@@ -62,7 +61,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                 }
                 if(status.status == "success"){
                     print(status)
-                    self.dataSource = QuestionList(status.data!)
+                    self.dataSource = NewsList(status.data!)
                     print(LikeList(status.data!).objectlist)
                     self.myTableView .reloadData()
                     print(status.data)
@@ -81,14 +80,10 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!QuestionTableViewCell
         cell.selectionStyle = .None
         let QuestionInfo = self.dataSource.objectlist[indexPath.row]
-//        cell.titLab.text = "2016护士资格考试儿科护理学"
-//        cell.titLeb.text = "考前必备模拟题（3）"
-//        cell.zanNum.text = "232"
-//        cell.conNum.text = "1323"
         cell.titLab.text = QuestionInfo.post_title
         cell.titLeb.text = QuestionInfo.post_excerpt
         cell.zanNum.text = QuestionInfo.post_like
-        cell.conNum.text = QuestionInfo.post_hits
+//        cell.conNum.text = QuestionInfo.post_hits
         
         return cell
         
@@ -96,6 +91,13 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
+        
+        let newsInfo = self.dataSource.objectlist[indexPath.row]
+        let nextVC = NewsContantViewController()
+        nextVC.newsInfo = newsInfo
+        nextVC.likeNum = newsInfo.likes.count
+        print(newsInfo.likes.count)
+        self.navigationController?.pushViewController(nextVC, animated: true)
         
     }
 }
