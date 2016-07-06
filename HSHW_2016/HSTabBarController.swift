@@ -1,9 +1,8 @@
 //
 //  HSTabBarController.swift
 //  HSHW_2016
-//
 //  Created by xiaocool on 16/6/30.
-//  Copyright © 2016年 校酷网络科技公司. All rights reserved.
+//  Copyright © 2016年 校酷网络科技公司. All rights reserved.y
 //
 
 import UIKit
@@ -35,6 +34,11 @@ class HSTabBarController: UITabBarController,UITabBarControllerDelegate,ViewCont
         if LOGIN_STATE == true {
             return true
         }
+        
+        if viewController.isKindOfClass(StudyViewController.self){
+            return true
+        }
+        
         if !viewController.isKindOfClass(NewsViewController.self){
             if showLogin {
                 return false

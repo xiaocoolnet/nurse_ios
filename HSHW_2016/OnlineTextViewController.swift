@@ -13,9 +13,8 @@ import Alamofire
 class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     let myTableView = UITableView()
-    var dataSource = titList()
+    var dataSource = Array<OnlineTextInfo>()
     let picArr:[String] = ["ic_rn.png","ic_earth.png","ic_moon.png","ic_maozi_one.png","ic_maozi_two.png","ic_maozi_three.png"]
-    
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = false
@@ -24,7 +23,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let one = UIView(frame: CGRectMake(0, 0, WIDTH, 10))
+//      let one = UIView(frame: CGRectMake(0, 0, WIDTH, 10))
         
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
@@ -35,7 +34,6 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         
         self.createTableView()
         self.getData()
-        
     }
     
     func createTableView(){
@@ -59,7 +57,8 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         let uid = user.stringForKey("userid")
         let url = PARK_URL_Header+"getDaliyExamTypeList"
         let param = [
-            "userid":uid
+            "userid":uid,
+            "type":"11"
         ];
         Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
             print(request)
@@ -79,10 +78,8 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    
-                    //                    self.createTableView()
                     print(status)
-                    self.dataSource = titList(status.data!)
+                    self.dataSource = titList(status.data!).objectlist
                     
                     print(self.dataSource)
                     print("-----")
@@ -96,7 +93,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataSource.objectlist.count
+        return self.dataSource.count
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -105,11 +102,12 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("onlineCell", forIndexPath: indexPath)as!OnlineTextTableViewCell
-        let info = self.dataSource.objectlist[indexPath.row]
+        let info = self.dataSource[indexPath.row]
         cell.selectionStyle = .None
         cell.titleLable.text = info.name
         cell.titleImg.setImage(UIImage(named: picArr[indexPath.row]), forState: .Normal)
-        cell.startBtn.addTarget(self, action: #selector(self.startText), forControlEvents: .TouchUpInside)
+        cell.startBtn.addTarget(self, action: #selector(startText), forControlEvents: .TouchUpInside)
+        cell.startBtn.tag = indexPath.row
         let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
         line.backgroundColor = UIColor.grayColor()
         cell.addSubview(line)
@@ -120,26 +118,11 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         return cell
     }
     
-    func startText(){
+    func startText(sender:UIButton){
+        let info = self.dataSource[sender.tag]
         let nextVC = OnlineExaminationViewController()
+        nextVC.questionCount = info.count
         self.navigationController?.pushViewController(nextVC, animated: true)
-       
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

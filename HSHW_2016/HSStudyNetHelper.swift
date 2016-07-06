@@ -20,7 +20,7 @@ class HSStudyNetHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let model =  Http(JSONDecoder(json!))
+                let model =  ScoreModel(JSONDecoder(json!))
                 if(model.status == "success"){
                     let result = model.data
                     handle(success: true, response: result)

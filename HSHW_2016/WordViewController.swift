@@ -37,9 +37,11 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     var timeText:String?
     let totalloc:Int = 5
     let rightAnswer = NSMutableArray()//正确答案
-    var myChoose: [Int] = NSArray() as! [Int] //已选答案
+    var myChoose = Array<Int>() //已选答案
+    var chooseId = Array<String>() //已选择的答案ID
     var helper = HSStudyNetHelper()
     var startPage = 0
+    var questionCount = "10"
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
@@ -78,7 +80,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         let param = [
             "userid":uid,
             "type":"1",
-            "count":"10"
+            "count":questionCount
         ];
         Alamofire.request(.GET, url, parameters: param as? [String:String]).response { [unowned self] request, response, json, error in
             dispatch_async(dispatch_get_main_queue(), { 
@@ -170,7 +172,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         }
     }
 
-    // MARK:   答题卡视图
+    // MARK: 答题卡视图
     func questionCard() {
         print(self.pageControl.currentPage)
         print(self.myChoose)
@@ -250,29 +252,30 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             view.addSubview(circleView)
             smart.addSubview(view)
         }
-        let myCircleView = cirecleArray[self.pageControl.currentPage] as! UIView
-        if self.myChoose.count != 0 && self.pageControl.currentPage<self.myChoose.count {
-            print(self.myChoose[self.pageControl.currentPage])
-            print(self.rightAnswer[self.pageControl.currentPage])
-            
-            if Int(self.myChoose[self.pageControl.currentPage])==Int(self.rightAnswer[self.pageControl.currentPage] as! NSNumber) {
-                myCircleView.backgroundColor =  UIColor.greenColor()
-            }else{
+//        let myCircleView = cirecleArray[self.pageControl.currentPage] as! UIView
+//        if self.myChoose.count != 0 && self.pageControl.currentPage<self.myChoose.count {
+//            print(self.myChoose[self.pageControl.currentPage])
+//            print(self.rightAnswer[self.pageControl.currentPage])
+//            
+//            if Int(self.myChoose[self.pageControl.currentPage])==Int(self.rightAnswer[self.pageControl.currentPage] as! NSNumber) {
+//                myCircleView.backgroundColor =  UIColor.greenColor()
+//            }else{
+        if myChoose.count != 0 {
+            for i in 0..<self.myChoose.endIndex {
+                let myCircleView = cirecleArray[i] as! UIView
                 
-                for i in 0..<self.myChoose.endIndex {
-                    let myCircleView = cirecleArray[i] as! UIView
-                    
-                    if Int(self.myChoose[i])==Int(self.rightAnswer[i] as! NSNumber) {
-                        myCircleView.backgroundColor =  UIColor.greenColor()
-                    }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber)&&Int(self.myChoose[i]) != -32 {
-                        myCircleView.backgroundColor = UIColor.redColor()
-                    }else if Int(self.myChoose[i]) == -32 {
-                        myCircleView.backgroundColor = UIColor.grayColor()
-                    }
+                if Int(self.myChoose[i])==Int(self.rightAnswer[i] as! NSNumber) {
+                    myCircleView.backgroundColor =  UIColor.greenColor()
+                }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber)&&Int(self.myChoose[i]) != 0 {
+                    myCircleView.backgroundColor = UIColor.redColor()
+                }else if Int(self.myChoose[i]) == 0 {
+                    myCircleView.backgroundColor = UIColor.grayColor()
                 }
-                
             }
         }
+//
+//            }
+//        }
 //        else{
 //            for i in 0..<self.myChoose.endIndex {
 //                let myCircleView = cirecleArray[i] as! UIView
@@ -293,7 +296,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         let examInfo = self.dataSource[self.pageControl.currentPage] as! ExamInfo
         for i in 0 ..< examInfo.answerlist.count {
             let answerInfo = examInfo.answerlist[i]
-            if answerInfo.isanswer! == "1" {
+            if answerInfo.isanswer == "1" {
                 rightAnswer[pageControl.currentPage] = i+1
                 print(answerInfo.answer_title)
                 print(answerInfo.isanswer)
@@ -348,11 +351,9 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 print(self.pageControl.currentPage)
                 
                 if self.myChoose.count == 0 || self.pageControl.currentPage+1>self.myChoose.count{
-                    
                     answer.text = " "
                 }else{
-                    
-                    let isanswer = 64 + (self.myChoose[self.pageControl.currentPage]-1)
+                    let isanswer = 64 + myChoose[self.pageControl.currentPage]
                     let asc:UniChar = UInt16(isanswer)
                     let chara:Character = Character(UnicodeScalar(asc))
                     var string = ""
@@ -363,7 +364,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             }else if i==1{
                 print(self.rightAnswer)
                 print(self.pageControl.currentPage)
-                
                 print(self.rightAnswer[self.pageControl.currentPage])
                 let isanswer = 64 + (self.rightAnswer[self.pageControl.currentPage] as! Int)
                 let asc:UniChar = UInt16(isanswer)
@@ -407,14 +407,14 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         analysis.frame = CGRectMake(10, line.frame.origin.y+12+WIDTH*70/375+10, WIDTH*100/375, WIDTH*20/375)
         analysis.text = "答案解析:"
         analysis.textColor = COLOR
-//        analysis.backgroundColor = UIColor.redColor()
+//      analysis.backgroundColor = UIColor.redColor()
         backeView.addSubview(analysis)
         let analysisContent = UILabel()
         analysisContent.textColor = UIColor.grayColor()
         analysisContent.text = examInfo.post_description
         analysisContent.numberOfLines = 0
         analysisContent.font = UIFont.systemFontOfSize(15)
-//        analysisContent.backgroundColor = UIColor.greenColor()
+//      analysisContent.backgroundColor = UIColor.greenColor()
         let height: CGFloat = calculateHeight(examInfo.post_description!, size: 15, width:backeView.frame.size.width-20)
         print(height)
         analysisContent.frame = CGRectMake(10, analysis.frame.size.height+analysis.frame.origin.y, backeView.frame.size.width-20, height)
@@ -470,8 +470,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 TitCol = tit
             }
         }
-        
-        
     }
     // MARK: 答题区
     func createScrollerView() {
@@ -517,7 +515,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             time.font = UIFont.systemFontOfSize(14)
             //time.textAlignment = .Right
             time.textColor = COLOR
-            time.text = "02:59"
+            time.text = "00:00"
             //time.sizeToFit()
             backGound.addSubview(time)
             let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.origin.x-125, 15, 71, 12))
@@ -544,7 +542,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 var string = ""
                 let btn = UIButton()
                 let answerInfo = examInfo.answerlist[j]
-                let height:CGFloat = calculateHeight(string+"、"+answerInfo.answer_title!, size: 18, width: WIDTH*314/375-10)
+                let height:CGFloat = calculateHeight(string+"、"+answerInfo.answer_title, size: 18, width: WIDTH*314/375-10)
                 if j>0 {
                     print(j)
                     print(heightArray)
@@ -556,7 +554,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 }
                 //btn.setTitle("wefdgh", forState: UIControlState.Normal)
                 btn.tag = j+1
-                btn.layer.cornerRadius = WIDTH*23/375
+                btn.layer.cornerRadius = (height+10)/2
                 btn.layer.borderColor = COLOR.CGColor
                 btn.layer.borderWidth = 1
                 btn.addTarget(self, action: #selector(self.pleaseChooseOne(_:)), forControlEvents: .TouchUpInside)
@@ -571,11 +569,11 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 tit.font = UIFont.systemFontOfSize(18)
                 tit.numberOfLines = 0
                 tit.textColor = COLOR
-                tit.text = string+"、"+answerInfo.answer_title!
+                tit.text = string+"、"+answerInfo.answer_title
                 tit.sizeToFit()
                 //contentScrollView.addSubview(tit)
                 let titHeight = calculateHeight(question.text!, size: 14, width: contentScrollView.bounds.size.width-WIDTH*38/375)
-                //                let btnHeight = WIDTH*46/375*5+20
+                //let btnHeight = WIDTH*46/375*5+20
                 print(titHeight)
                 //在Btn上加了一个Label...
                 btn.addSubview(tit)
@@ -588,11 +586,9 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 //contentScrollView.contentSize = CGSizeMake(WIDTH-20, titHeight+btnHeight+WIDTH*15/375*2)
                 contentScrollView.contentSize = CGSizeMake(WIDTH-20, AllHeight+10*CGFloat(examInfo.answerlist.count-1))
             }
-            
             scrollView.addSubview(backGound)
             scrollView.addSubview(backView)
             scrollView.addSubview(contentScrollView)
-            
         }
         
         scrollView.contentSize = CGSizeMake(CGFloat(self.dataSource.count)*WIDTH, 0)
@@ -766,12 +762,9 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                             
                         }
                     }
-                    
                 }
-                
             }
         }
-        
     }
     func touchUp() {
         print("触摸")
@@ -780,22 +773,24 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     // 选项
     func pleaseChooseOne(btn:UIButton) {
         
+        let exam = dataSource[pageControl.currentPage] as!ExamInfo
+        
         if self.pageControl.currentPage+1 > self.myChoose.count {
-            
             if self.pageControl.currentPage>0{
                 for i in self.myChoose.endIndex..<self.pageControl.currentPage {
-                    self.myChoose.insert(-32, atIndex: i)
+                    self.myChoose.insert(0, atIndex: i)
+                    chooseId.insert("0", atIndex: i)
                 }
-                self.myChoose.insert(btn.tag, atIndex: self.pageControl.currentPage)
-            }else{
-                self.myChoose.insert(btn.tag, atIndex: self.pageControl.currentPage)
             }
-            
+            self.chooseId.append(exam.answerlist[btn.tag-1].id)
+            self.myChoose.append(btn.tag)
         }else{
-            self.myChoose.removeAtIndex(self.pageControl.currentPage)
-            self.myChoose.insert(btn.tag, atIndex: self.pageControl.currentPage)
+            self.myChoose.removeAtIndex(pageControl.currentPage)
+            chooseId.removeAtIndex(pageControl.currentPage)
+            self.myChoose.insert(btn.tag, atIndex: pageControl.currentPage)
+            chooseId.insert(exam.answerlist[btn.tag-1].id, atIndex: pageControl.currentPage)
         }
-//        btn.backgroundColor = COLOR
+//      btn.backgroundColor = COLOR
         self.questionCard()
         pageControl.currentPage += 1
         pageContorllerNumber(pageControl)
@@ -808,13 +803,14 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         var idStr = ""
         var answerStr = ""
         if myChoose.count > 0 {
+            
             for i in 0...myChoose.count-1 {
                 let exer = dataSource[i] as! ExamInfo
                 idStr += (i==0 ? exer.id! : ","+exer.id!)
             }
             
             for i in 0...myChoose.count-1 {
-                answerStr += (i==0 ? String(myChoose[i]) : ","+String(myChoose[i]))
+                answerStr += (i==0 ? chooseId[i] : ","+chooseId[i])
             }
         }
         
@@ -832,11 +828,11 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         }
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(self.view.frame.size.width)
-        self.AnswerView()
-        self.questionCard()
-        //timeNow.invalidate()
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if Int(scrollView.contentOffset.x)/Int(WIDTH) != pageControl.currentPage {
+            pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
+            self.AnswerView()
+            self.questionCard()
+        }
     }
-    
 }

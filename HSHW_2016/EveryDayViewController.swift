@@ -94,6 +94,7 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.titLab.text = info.name
         cell.titImage.setImage(UIImage(named: picArr[indexPath.row]), forState: .Normal)
         cell.start.addTarget(self, action: #selector(self.startTheTest), forControlEvents: .TouchUpInside)
+        cell.start.tag = indexPath.row
         let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
         line.backgroundColor = UIColor.grayColor()
         
@@ -107,9 +108,11 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         return cell
     }
     
-    func startTheTest() {
+    func startTheTest(btn:UIButton) {
         print("答题")
+        let info = self.dataSource.objectlist[btn.tag]
         let next = WordViewController()
+        next.questionCount = info.count!
         self.navigationController?.pushViewController(next, animated: true)
         next.title = "练习题"
     }
