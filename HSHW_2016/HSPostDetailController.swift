@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Alamofire
+import MBProgressHUD
 
-class HSPostDetailController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+class HSPostDetailController: UIViewController,UITableViewDataSource, UITableViewDelegate,UIWebViewDelegate {
 
     @IBOutlet weak var postTitle: UILabel!
     @IBOutlet weak var commentView: UITableView!
@@ -26,14 +28,42 @@ class HSPostDetailController: UIViewController,UITableViewDataSource,UITableView
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var veiwHeightConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var fenxiangBtn: UIButton!
+    @IBOutlet weak var likeBtn: UIButton!
+    var newsInfo :NewsInfo?
+    var dataSource = NewsList()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "帖子详情"
         commentView.registerNib(UINib(nibName:"HSStateCommentCell",bundle: nil ), forCellReuseIdentifier: "cell")
         commentView.estimatedRowHeight = 108
         commentView.rowHeight = UITableViewAutomaticDimension
+        
+//        let url = NSURL(string:NewsInfo_Header+(newsInfo?.object_id)!)
+//        contentWeb.delegate = self
+//        loadRequestUrl(url!)
+        
+        for subView in contentWeb!.subviews
+        {
+            let v = subView
+            if v.isKindOfClass(UIScrollView.self) == true
+            {
+                (v as! UIScrollView).scrollEnabled = false
+                (v as! UIScrollView).alwaysBounceVertical = false
+                
+                (v as! UIScrollView).showsHorizontalScrollIndicator = false
+                (v as! UIScrollView).showsVerticalScrollIndicator = false
+            }
+        }
         // Do any additional setup after loading the view.
+        
     }
+    func loadRequestUrl(requestUrl:NSURL){
+        contentWeb.loadRequest(NSURLRequest(URL: requestUrl))
+    }
+    
+   
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
@@ -43,4 +73,14 @@ class HSPostDetailController: UIViewController,UITableViewDataSource,UITableView
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSStateCommentCell
         return cell
     }
+    
+    @IBAction func fenxiangBtnClick(sender: AnyObject) {
+    }
+    
+    @IBAction func likeBtnClick(sender: AnyObject) {
+    }
+    
 }
+
+
+

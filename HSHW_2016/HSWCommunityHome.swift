@@ -55,6 +55,7 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     func postedTheView() {
         print("发帖")
     }
+    
     func postDetailWithModel(){
         let vc = HSPostDetailController(nibName: "HSPostDetailController", bundle: nil)
         navigationController?.pushViewController(vc, animated: true)

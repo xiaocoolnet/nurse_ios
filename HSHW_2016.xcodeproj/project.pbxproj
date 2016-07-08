@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B0B26E21D2F77FC0080F2D4 /* DayPracticeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0B26E11D2F77FC0080F2D4 /* DayPracticeViewController.swift */; };
 		0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1911C01D11222700CDE18D /* LoginModel.swift */; };
 		0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */; };
 		0BAF21BC1D1134790065146B /* LoginUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAF21BB1D1134790065146B /* LoginUserInfoModel.swift */; };
@@ -143,6 +144,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0B0B26E11D2F77FC0080F2D4 /* DayPracticeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayPracticeViewController.swift; sourceTree = "<group>"; };
 		0B1911C01D11222700CDE18D /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		0B26F5B17459B246981F92CE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeName.swift; sourceTree = "<group>"; };
@@ -560,6 +562,7 @@
 			children = (
 				185408741CE6C88D00DFBA7C /* StudyViewController.swift */,
 				18D5B6191CEA17320014F846 /* EveryDayViewController.swift */,
+				0B0B26E11D2F77FC0080F2D4 /* DayPracticeViewController.swift */,
 				0BDAB6321D2A57320081E883 /* QuestionViewController.swift */,
 				18C0BF961CEB63FB003E2886 /* QuestionBankViewController.swift */,
 				0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */,
@@ -1026,6 +1029,7 @@
 				0BB378591D2B595100E4A84D /* OnlineTextModel.swift in Sources */,
 				F63BE1EF1D0546F9008292AC /* NewsPageHelper.swift in Sources */,
 				0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */,
+				0B0B26E21D2F77FC0080F2D4 /* DayPracticeViewController.swift in Sources */,
 				F6CC839A1D2797F300B9A358 /* HSPostResumeView.swift in Sources */,
 				0BAF21BC1D1134790065146B /* LoginUserInfoModel.swift in Sources */,
 				189849B61CE815D3007B37B4 /* AcademicTableViewCell.swift in Sources */,
