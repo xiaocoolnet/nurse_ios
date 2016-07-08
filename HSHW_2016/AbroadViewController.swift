@@ -25,6 +25,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     let countryArr:[String] = ["ic_eng.png","ic_canada.png","ic_germany.png","ic_australia.png","ic_meiguo.png","ic_american.png","ic_guo.png","ic_guotwo.png"]
     let nameArr:[String] = ["美国","加拿大","德国","芬兰","澳洲","新西兰","新加坡","沙特"]
     let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
+    var country = Int()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,7 +74,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
                 }
                 if(status.status == "success"){
                     
-                    //                    self.createTableView1()
+                    //  self.createTableView1()
                     //  请求成功
                     print(status)
                     //  填充数据源
@@ -286,9 +288,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         print(btn.tag)
         //  执行国家图片的点击内容
         channelid = btn.tag
-        self.GetDate( )
-        
-        
+        country = btn.tag
+        self.getData()
     }
     //    图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
@@ -330,6 +331,46 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             pageControl.currentPage = number
         }
         
+    }
+    
+    func getData(){
+        
+        let url = PARK_URL_Header+"getNewslist"
+//        let param = [
+//            "channelid":"17"
+//        ];
+    
+        let param = [
+            "channelid":NSString.localizedStringWithFormat("%ld", country + 17)
+            ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                
+            }else{
+                let status = NewsModel(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    //hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    print(status)
+                    self.dataSource = NewsList(status.data!)
+                    print(LikeList(status.data!).objectlist)
+                    self.dataSource = NewsList(status.data!)
+                    self.myTableView .reloadData()
+                    print(status.data)
+                }
+            }
+            
+        }
+
     }
     
     override func didReceiveMemoryWarning() {

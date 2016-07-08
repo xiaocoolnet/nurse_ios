@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -14,9 +14,11 @@
                 <outlet property="commentLabel" destination="Vpc-0x-cdf" id="31h-FM-VtJ"/>
                 <outlet property="commentView" destination="Q0u-Kd-nFQ" id="7Jh-ZD-zsv"/>
                 <outlet property="contentWeb" destination="I6h-bc-8jp" id="fvI-7a-rJP"/>
+                <outlet property="fenxiangBtn" destination="lmW-uN-cu8" id="yX1-dp-Ah4"/>
                 <outlet property="goodBtn" destination="FHC-Jl-wqe" id="w1K-ED-8US"/>
                 <outlet property="goodLabel" destination="ffG-DP-eaR" id="0Gf-cm-NFV"/>
                 <outlet property="level" destination="Mcx-Ea-W6M" id="eHc-pt-Fp7"/>
+                <outlet property="likeBtn" destination="jHf-2q-e0i" id="uSf-53-mI4"/>
                 <outlet property="postTitle" destination="Bk0-XG-49z" id="wMA-RG-oi0"/>
                 <outlet property="postion" destination="9lj-0q-yeG" id="8C1-qW-VLe"/>
                 <outlet property="seeCount" destination="VHB-4o-BKA" id="ckb-6l-hyn"/>
@@ -52,6 +54,11 @@
                                                 <constraint firstAttribute="height" constant="45" id="Y2n-v7-RWs"/>
                                             </constraints>
                                             <state key="normal" title=" " image="1"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                    <real key="value" value="0.0"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="小丫头妈咪宝贝" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YVw-ot-lHf">
                                             <rect key="frame" x="61" y="34" width="98" height="17"/>
@@ -201,7 +208,7 @@
                                     <rect key="frame" x="0.0" y="500" width="320" height="68"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="回复楼主" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="84s-hi-YBQ">
-                                            <rect key="frame" x="30" y="19" width="265" height="30"/>
+                                            <rect key="frame" x="84" y="19" width="265" height="30"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
@@ -212,6 +219,20 @@
                                                 <constraint firstAttribute="height" constant="1" id="edi-6d-LnT"/>
                                             </constraints>
                                         </view>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lmW-uN-cu8">
+                                            <rect key="frame" x="13" y="23" width="21" height="22"/>
+                                            <state key="normal" title="1" image="ic_fenxiang"/>
+                                            <connections>
+                                                <action selector="fenxiangBtnClick:" destination="-1" eventType="touchUpInside" id="B9L-ym-4sY"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jHf-2q-e0i">
+                                            <rect key="frame" x="42" y="21" width="27" height="26"/>
+                                            <state key="normal" title="Button" image="ic_two_like"/>
+                                            <connections>
+                                                <action selector="likeBtnClick:" destination="-1" eventType="touchUpInside" id="yFZ-FK-1vM"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailing" secondItem="hJP-qN-xtA" secondAttribute="trailing" id="3fk-r0-MWh"/>
@@ -267,6 +288,7 @@
     <resources>
         <image name="1" width="2560" height="1600"/>
         <image name="ic_eye_purple" width="9" height="6"/>
+        <image name="ic_fenxiang" width="21" height="20"/>
         <image name="ic_time_purple" width="7" height="7"/>
         <image name="ic_two_collect" width="30" height="30"/>
         <image name="ic_two_comment" width="30" height="30"/>

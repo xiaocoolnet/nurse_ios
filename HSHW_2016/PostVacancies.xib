@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -117,7 +117,7 @@
                                                             </constraints>
                                                         </view>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入您的企业名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6IW-A6-JTx">
-                                                            <rect key="frame" x="74" y="8" width="218" height="30"/>
+                                                            <rect key="frame" x="74" y="7" width="218" height="30"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits"/>
                                                         </textField>
@@ -301,6 +301,9 @@
                                                             <state key="normal" title="请选择工作地点" image="ic_arrow_down">
                                                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="workplaceBtnClick:" destination="HG0-G5-fJa" eventType="touchUpInside" id="AKx-eW-5nE"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -350,6 +353,9 @@
                                                             <state key="normal" title="请选择工作地点" image="ic_arrow_down">
                                                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="positionBtnClick:" destination="HG0-G5-fJa" eventType="touchUpInside" id="cl1-3j-gad"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -390,8 +396,8 @@
                                                                 <constraint firstAttribute="width" constant="1" id="pCG-Ui-eyS"/>
                                                             </constraints>
                                                         </view>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ytJ-NE-wFM">
-                                                            <rect key="frame" x="74" y="8" width="218" height="30"/>
+                                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ytJ-NE-wFM">
+                                                            <rect key="frame" x="82" y="8" width="218" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="30" id="V8E-Oe-VHz"/>
                                                             </constraints>
@@ -399,6 +405,9 @@
                                                             <state key="normal" title="请选择招聘条件" image="ic_arrow_down">
                                                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="conditionBtnClick:" destination="HG0-G5-fJa" eventType="touchUpInside" id="4ue-pp-Wub"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -448,6 +457,9 @@
                                                             <state key="normal" title="请选择福利待遇" image="ic_arrow_down">
                                                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="treatmentBtnClick:" destination="HG0-G5-fJa" eventType="touchUpInside" id="bi3-Ob-G0h"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -477,6 +489,9 @@
                                                             <state key="normal" title="请选择招聘人数" image="ic_arrow_down">
                                                                 <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="personBtnClick:" destination="HG0-G5-fJa" eventType="touchUpInside" id="y09-t7-WdB"/>
+                                                            </connections>
                                                         </button>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="csL-Y4-jtG">
                                                             <rect key="frame" x="0.0" y="44" width="300" height="1"/>
@@ -512,55 +527,6 @@
                                                         <constraint firstItem="I6c-oT-S7p" firstAttribute="centerY" secondItem="Qr5-eL-aWm" secondAttribute="centerY" id="o74-yo-JVi"/>
                                                         <constraint firstItem="I6c-oT-S7p" firstAttribute="leading" secondItem="Qr5-eL-aWm" secondAttribute="trailing" constant="5" id="snJ-BR-KMe"/>
                                                         <constraint firstAttribute="bottom" secondItem="csL-Y4-jtG" secondAttribute="bottom" id="tQG-VY-7Y0"/>
-                                                    </constraints>
-                                                </view>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qWJ-cz-fAl">
-                                                    <rect key="frame" x="0.0" y="450" width="300" height="45"/>
-                                                    <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jlj-d1-ad8">
-                                                            <rect key="frame" x="74" y="8" width="218" height="30"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="30" id="BDL-Ur-0ey"/>
-                                                            </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                            <state key="normal" title="请选择薪资待遇" image="ic_arrow_down">
-                                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                            </state>
-                                                        </button>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kEh-wl-utR">
-                                                            <rect key="frame" x="0.0" y="44" width="300" height="1"/>
-                                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="height" constant="1" id="cW3-bw-E6g"/>
-                                                            </constraints>
-                                                        </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="薪资待遇" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m8w-ls-TVp">
-                                                            <rect key="frame" x="4" y="14" width="56" height="17"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j3g-YJ-YqF">
-                                                            <rect key="frame" x="65" y="10" width="1" height="25"/>
-                                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <constraints>
-                                                                <constraint firstAttribute="width" constant="1" id="mwN-Pj-yLy"/>
-                                                            </constraints>
-                                                        </view>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="45" id="1UJ-ll-M9D"/>
-                                                        <constraint firstItem="kEh-wl-utR" firstAttribute="leading" secondItem="qWJ-cz-fAl" secondAttribute="leading" id="2MT-AH-O2M"/>
-                                                        <constraint firstItem="j3g-YJ-YqF" firstAttribute="leading" secondItem="m8w-ls-TVp" secondAttribute="trailing" constant="5" id="3e4-dB-tDV"/>
-                                                        <constraint firstItem="m8w-ls-TVp" firstAttribute="leading" secondItem="qWJ-cz-fAl" secondAttribute="leading" constant="4" id="6zN-WB-USL"/>
-                                                        <constraint firstItem="jlj-d1-ad8" firstAttribute="centerY" secondItem="qWJ-cz-fAl" secondAttribute="centerY" id="ANU-I6-HEm"/>
-                                                        <constraint firstItem="jlj-d1-ad8" firstAttribute="leading" secondItem="j3g-YJ-YqF" secondAttribute="trailing" constant="8" id="CAt-Z1-KkO"/>
-                                                        <constraint firstAttribute="bottom" secondItem="kEh-wl-utR" secondAttribute="bottom" id="IBg-0l-FdP"/>
-                                                        <constraint firstAttribute="trailing" secondItem="kEh-wl-utR" secondAttribute="trailing" id="Qn1-eN-hHn"/>
-                                                        <constraint firstAttribute="trailing" secondItem="jlj-d1-ad8" secondAttribute="trailing" constant="8" id="ZNz-Dq-sU7"/>
-                                                        <constraint firstItem="j3g-YJ-YqF" firstAttribute="centerY" secondItem="m8w-ls-TVp" secondAttribute="centerY" id="j0p-rZ-Xfj"/>
-                                                        <constraint firstItem="m8w-ls-TVp" firstAttribute="centerY" secondItem="qWJ-cz-fAl" secondAttribute="centerY" id="mmb-Gb-2g6"/>
-                                                        <constraint firstItem="j3g-YJ-YqF" firstAttribute="top" secondItem="qWJ-cz-fAl" secondAttribute="top" constant="10" id="xbX-eV-2E1"/>
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FZX-zb-6hq">
@@ -609,6 +575,58 @@
                                                         <constraint firstItem="BMi-Vp-ry2" firstAttribute="centerY" secondItem="FZX-zb-6hq" secondAttribute="centerY" id="m6g-g5-VPT"/>
                                                         <constraint firstItem="UzS-d6-6fC" firstAttribute="leading" secondItem="v1g-Zu-axq" secondAttribute="trailing" constant="5" id="uyp-dF-E4G"/>
                                                         <constraint firstAttribute="bottom" secondItem="CFN-9P-aAi" secondAttribute="bottom" id="vGb-Kl-aXe"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qWJ-cz-fAl">
+                                                    <rect key="frame" x="0.0" y="450" width="300" height="45"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jlj-d1-ad8">
+                                                            <rect key="frame" x="74" y="8" width="218" height="30"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="30" id="BDL-Ur-0ey"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <state key="normal" title="请选择薪资待遇" image="ic_arrow_down">
+                                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="moneyBtnClick:" destination="HG0-G5-fJa" eventType="touchUpInside" id="tYK-ER-G9D"/>
+                                                            </connections>
+                                                        </button>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kEh-wl-utR">
+                                                            <rect key="frame" x="0.0" y="44" width="300" height="1"/>
+                                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="1" id="cW3-bw-E6g"/>
+                                                            </constraints>
+                                                        </view>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="薪资待遇" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m8w-ls-TVp">
+                                                            <rect key="frame" x="4" y="14" width="56" height="17"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j3g-YJ-YqF">
+                                                            <rect key="frame" x="65" y="10" width="1" height="25"/>
+                                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="1" id="mwN-Pj-yLy"/>
+                                                            </constraints>
+                                                        </view>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="45" id="1UJ-ll-M9D"/>
+                                                        <constraint firstItem="kEh-wl-utR" firstAttribute="leading" secondItem="qWJ-cz-fAl" secondAttribute="leading" id="2MT-AH-O2M"/>
+                                                        <constraint firstItem="j3g-YJ-YqF" firstAttribute="leading" secondItem="m8w-ls-TVp" secondAttribute="trailing" constant="5" id="3e4-dB-tDV"/>
+                                                        <constraint firstItem="m8w-ls-TVp" firstAttribute="leading" secondItem="qWJ-cz-fAl" secondAttribute="leading" constant="4" id="6zN-WB-USL"/>
+                                                        <constraint firstItem="jlj-d1-ad8" firstAttribute="centerY" secondItem="qWJ-cz-fAl" secondAttribute="centerY" id="ANU-I6-HEm"/>
+                                                        <constraint firstItem="jlj-d1-ad8" firstAttribute="leading" secondItem="j3g-YJ-YqF" secondAttribute="trailing" constant="8" id="CAt-Z1-KkO"/>
+                                                        <constraint firstAttribute="bottom" secondItem="kEh-wl-utR" secondAttribute="bottom" id="IBg-0l-FdP"/>
+                                                        <constraint firstAttribute="trailing" secondItem="kEh-wl-utR" secondAttribute="trailing" id="Qn1-eN-hHn"/>
+                                                        <constraint firstAttribute="trailing" secondItem="jlj-d1-ad8" secondAttribute="trailing" constant="8" id="ZNz-Dq-sU7"/>
+                                                        <constraint firstItem="j3g-YJ-YqF" firstAttribute="centerY" secondItem="m8w-ls-TVp" secondAttribute="centerY" id="j0p-rZ-Xfj"/>
+                                                        <constraint firstItem="m8w-ls-TVp" firstAttribute="centerY" secondItem="qWJ-cz-fAl" secondAttribute="centerY" id="mmb-Gb-2g6"/>
+                                                        <constraint firstItem="j3g-YJ-YqF" firstAttribute="top" secondItem="qWJ-cz-fAl" secondAttribute="top" constant="10" id="xbX-eV-2E1"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -719,7 +737,19 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="bordView" destination="AbV-sH-E0i" id="a31-11-0EK"/>
+                <outlet property="conditionBtn" destination="ytJ-NE-wFM" id="A6i-dK-Lfy"/>
+                <outlet property="firmNameField" destination="6IW-A6-JTx" id="6Gt-K7-Q7f"/>
+                <outlet property="mailboxField" destination="9Hj-wr-YjR" id="KyO-dD-cq2"/>
+                <outlet property="moneyBtn" destination="jlj-d1-ad8" id="9HR-aJ-La2"/>
+                <outlet property="personBtn" destination="FfB-UI-OSS" id="Lrx-00-epA"/>
+                <outlet property="phoneField" destination="rmT-66-nlB" id="6kk-Jh-Uz1"/>
+                <outlet property="positionBtn" destination="wdn-DU-TKZ" id="qYa-jf-e0x"/>
+                <outlet property="postNameField" destination="ig9-nb-Gbf" id="YeF-Dj-1xV"/>
+                <outlet property="requestField" destination="BMi-Vp-ry2" id="9N9-GH-6un"/>
+                <outlet property="resumeFeild" destination="Fov-9Z-N7E" id="UEB-ei-tMw"/>
                 <outlet property="sendBtn" destination="Ewo-BM-bzV" id="bEe-sm-xVQ"/>
+                <outlet property="treatmentBtn" destination="erl-46-YYQ" id="7mV-Kv-CDp"/>
+                <outlet property="workplaceBtn" destination="LTm-aT-RfE" id="pOj-aU-UwW"/>
             </connections>
             <point key="canvasLocation" x="498" y="461"/>
         </view>
