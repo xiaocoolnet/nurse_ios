@@ -37,7 +37,6 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func createTableView(){
-
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT - 60)
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.delegate = self
@@ -48,8 +47,6 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         
         let one = UIView(frame: CGRectMake(0, 0, WIDTH, 10))
         myTableView.tableHeaderView = one
-    
-        
     }
     
     func getData(){

@@ -24,7 +24,6 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         collectionView.bounces = false
         
         forumHelper.getForumList("1") { (success, response) in
-            
         }
         
         let posted = UIButton()

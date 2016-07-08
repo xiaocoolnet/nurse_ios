@@ -46,7 +46,7 @@ class EveryDayTableViewCell: UITableViewCell {
         one.textColor = UIColor.grayColor()
         one.text = "道题"
         //num.frame = CGRectMake(WIDTH-168, 10, 20, 40)
-        num.frame = CGRectMake(one.frame.origin.x-20, 10, 20, 40)
+        num.frame = CGRectMake(one.frame.origin.x-35, 10, 35, 40)
         num.font = UIFont.systemFontOfSize(12)
         num.textAlignment = .Center
         //num.text =  "100"

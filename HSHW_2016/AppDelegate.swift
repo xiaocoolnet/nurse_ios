@@ -21,8 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             [SSDKPlatformType.TypeQQ.rawValue,SSDKPlatformType.TypeWechat.rawValue], onImport: { (platform : SSDKPlatformType) -> Void in
                 
                 switch platform{
-//  case SSDKPlatformType.TypeQQ:
-//  ShareSDKConnector.connectQQ(QQApiInterface.classForCoder(), tencentOAuthClass: TencentOAuth.classForCoder())
                 case SSDKPlatformType.TypeWechat:
                     ShareSDKConnector.connectWeChat(WXApi.classForCoder())
                     
@@ -43,7 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 break
             }
         }
-        
         NSThread.sleepForTimeInterval(2.0)
         UITabBar.appearance().tintColor = COLOR
         UITabBar.appearance().backgroundColor = UIColor.whiteColor()

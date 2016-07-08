@@ -42,7 +42,7 @@ class OnlineTextTableViewCell: UITableViewCell {
         rightOfNum.textColor = UIColor.grayColor()
         rightOfNum.text = "道题"
         
-        numLable.frame = CGRectMake(rightOfNum.frame.origin.x-20, 10, 20, 40)
+        numLable.frame = CGRectMake(rightOfNum.frame.origin.x-35, 10, 35, 40)
         numLable.font = UIFont.systemFontOfSize(12)
         numLable.textAlignment = .Center
         

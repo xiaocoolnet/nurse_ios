@@ -28,7 +28,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
         }
         listTableView.tableFooterView = UIView()
     }
-    
+
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let newsInfo = newsList![indexPath.row]
         
@@ -43,7 +43,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
         }
         
     }
-    
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if newsList != nil {
             return newsList!.count
@@ -59,7 +59,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
         cell.setCellWithNewsInfo(newsInfo)
         return cell
     }
-    
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
         let newsInfo = newsList![indexPath.row]

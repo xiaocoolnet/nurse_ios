@@ -32,7 +32,6 @@ class HSPostDetailController: UIViewController,UITableViewDataSource,UITableView
         commentView.registerNib(UINib(nibName:"HSStateCommentCell",bundle: nil ), forCellReuseIdentifier: "cell")
         commentView.estimatedRowHeight = 108
         commentView.rowHeight = UITableViewAutomaticDimension
-        // Do any additional setup after loading the view.
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

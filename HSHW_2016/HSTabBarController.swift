@@ -35,9 +35,9 @@ class HSTabBarController: UITabBarController,UITabBarControllerDelegate,ViewCont
             return true
         }
         
-        if viewController.isKindOfClass(StudyViewController.self){
-            return true
-        }
+//        if viewController.isKindOfClass(StudyViewController.self){
+//            return true
+//        }
         
         if !viewController.isKindOfClass(NewsViewController.self){
             if showLogin {

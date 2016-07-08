@@ -110,14 +110,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                 minute -= 1
                 
             }
-            // if minute<10 {
-            // if count<10 {
-            //       label.text = "0"+"\(minute)"+":"+"0"+"\(count)
-            // }
-            // }else{
-            //       label.text = "\(minute)"+":"+"\(count)"
-            // }
-            // print("\(count)S")
+
             print(label.text)
             if minute == -1 {
                 minute = 2
@@ -186,10 +179,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                     print(status.data)
                 }
             }
-            
         }
-        
-        
     }
     // MARK:    答题卡视图
     func questionCard() {
@@ -240,23 +230,26 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
             print(self.myChoose)
             print(self.rightAnswer)
             let row:Int = j / totalloc;//行号
-            //1/3=0,2/3=0,3/3=1;
             let loc:Int = j % totalloc;//列号
             let appviewx:CGFloat = margin+(margin+smartWidth/CGFloat(self.totalloc))*CGFloat(loc)
             let appviewy:CGFloat = margin+(margin+90) * CGFloat(row)
             let view = UIView()
             view.frame = CGRectMake(appviewx, appviewy, smartWidth/CGFloat(self.totalloc), WIDTH*90/375)
-            let number = UILabel()
+            let number = UIButton(type: .Custom)
             let tihao = j+1
-            number.text = String(tihao)
+            number.tag = tihao
+            number.addTarget(self, action: #selector(answerBtnClicked), forControlEvents: .TouchUpInside)
+            number.setTitle(String(tihao), forState: .Normal)
             number.frame = CGRectMake(10, 10, view.frame.size.width-30, view.frame.size.width-30)
-            number.textAlignment = NSTextAlignment.Center
+            number.setTitleColor(UIColor.blackColor(), forState: .Normal)
             number.layer.cornerRadius = 0.5 * (view.frame.size.width-30)
             number.clipsToBounds = true
+            
             if j==self.pageControl.currentPage {
                 number.backgroundColor = UIColor.purpleColor()
-                number.textColor = UIColor.whiteColor()
+                number.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             }
+
             let circleView = UIView()
             circleView.frame = CGRectMake(0, number.frame.origin.y+number.frame.size.height+10, WIDTH*10/375, WIDTH*10/375)
             circleView.center.x = number.center.x
@@ -270,17 +263,6 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
             smart.contentSize = CGSizeMake(smart.frame.width,view.frame.maxY)
         }
         
-//        let myCircleView = cirecleArray[self.pageControl.currentPage] as! UIView
-//        
-//        if self.myChoose.count != 0 && self.pageControl.currentPage<self.myChoose.count {
-//            print(self.myChoose[self.pageControl.currentPage])
-//            print(self.rightAnswer[self.pageControl.currentPage])
-//            
-//            if Int(self.myChoose[self.pageControl.currentPage])==Int(self.rightAnswer[self.pageControl.currentPage] as! NSNumber) {
-//                
-//                myCircleView.backgroundColor =  UIColor.greenColor()
-//                
-//        }else{
         if myChoose.count != 0 {
             for i in 0..<self.myChoose.endIndex {
                 let myCircleView = cirecleArray[i] as! UIView
@@ -293,14 +275,17 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                 }
             }
         }
-//            }
-//        }
         
     }
     // MARK:   答案视图
     func AnswerView() {
         //将正确答案放在一个数组中
         let examInfo = self.dataSource[self.pageControl.currentPage] as! ExamInfo
+        if rightAnswer.count <= pageControl.currentPage {
+            for _ in rightAnswer.count-1...pageControl.currentPage {
+                rightAnswer.addObject(9)
+            }
+        }
         for i in 0 ..< examInfo.answerlist.count {
             let answerInfo = examInfo.answerlist[i]
             if answerInfo.isanswer == "1" {
@@ -556,33 +541,26 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                     btn.frame = CGRectMake(WIDTH*21/375, 5+question.frame.size.height+question.frame.origin.y+(15+WIDTH*46/375)*CGFloat(0), WIDTH*314/375, height+10)
                     heightArray.addObject(btn.frame.size.height+btn.frame.origin.y)
                 }
-                //btn.setTitle("wefdgh", forState: UIControlState.Normal)
+                //选项按钮
                 btn.tag = j+1
                 btn.layer.cornerRadius = (height+10)/2
                 btn.layer.borderColor = COLOR.CGColor
                 btn.layer.borderWidth = 1
                 btn.addTarget(self, action: #selector(self.pleaseChooseOne(_:)), forControlEvents: .TouchUpInside)
-                //back.addSubview(btn)
+                btn.setTitleColor(COLOR, forState: .Normal)
+                btn.contentHorizontalAlignment = .Left;
+                btn.titleLabel?.numberOfLines = 0
+                btn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
                 contentScrollView.addSubview(btn)
-                let tit = UILabel(frame: CGRectMake(15, 5, WIDTH*314/375-10, 17))
+                //根据题号赋值
+                contentScrollView.tag = i+110
                 let ascInt:Int = 65+j
                 let asc:UniChar = UInt16(ascInt)
                 let chara:Character = Character(UnicodeScalar(asc))
                 string.append(chara)
-                tit.font = UIFont.systemFontOfSize(18)
-                tit.numberOfLines = 0
-                tit.textColor = COLOR
-                tit.text = string+"、"+answerInfo.answer_title
-                tit.sizeToFit()
-                //contentScrollView.addSubview(tit)
-                let titHeight = calculateHeight(question.text!, size: 14, width: contentScrollView.bounds.size.width-WIDTH*38/375)
-                //                let btnHeight = WIDTH*46/375*5+20
-                print(titHeight)
-                btn.addSubview(tit)
-                //back.addSubview(tit)
+                btn.setTitle(string+"、"+answerInfo.answer_title, forState: .Normal)
                 var AllHeight = CGFloat()
                 AllHeight = CGFloat(heightArray.lastObject as! NSNumber)
-                //contentScrollView.contentSize = CGSizeMake(WIDTH-20, titHeight+btnHeight+WIDTH*15/375*2)
                 contentScrollView.contentSize = CGSizeMake(WIDTH-20, AllHeight+10*CGFloat(examInfo.answerlist.count-1))
             }
             
@@ -803,9 +781,11 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
         }
     }
     
-    func setNextPage(){
-        scrollView.setContentOffset(CGPointMake(scrollView.contentOffset.x+WIDTH, 0), animated: true)
+    func setControlPage(animate:Bool){
+        let offSetX:CGFloat = CGFloat(pageControl.currentPage) * WIDTH
+        scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: animate)
     }
+    
     func touchUp() {
         print("触摸")
         self.bottomBtnClick(btnTwo)
@@ -813,6 +793,12 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
     //    选项
     func pleaseChooseOne(btn:UIButton) {
         
+        let backView = scrollView.viewWithTag(pageControl.currentPage+110)
+        let rightBtn = backView?.viewWithTag(rightAnswer[pageControl.currentPage] as! Int)
+        rightBtn?.backgroundColor = UIColor.greenColor()
+        if btn.tag != rightBtn?.tag {
+            btn.backgroundColor = UIColor.redColor()
+        }
         let exam = dataSource[pageControl.currentPage] as!ExamInfo
         
         if self.pageControl.currentPage+1 > self.myChoose.count {
@@ -836,8 +822,8 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
         }
         
         self.questionCard()
-        pageControl.currentPage += 1
-        setNextPage()
+//        pageControl.currentPage += 1
+//        setControlPage(true)
         self.AnswerView()
         
     }
@@ -870,6 +856,22 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                 })
             }
         }
+    }
+    
+    func answerBtnClicked(btn:UIButton) {
+        btn.backgroundColor = UIColor.purpleColor()
+        btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        pageControl.currentPage = btn.tag - 1
+        setControlPage(false)
+        resetQuestion()
+    }
+    
+    func resetQuestion(){
+        numb = Int(scrollView.contentOffset.x)/Int(self.view.frame.size.width)
+        number.text = "\(numb+1)"
+        number.sizeToFit()
+        self.AnswerView()
+        self.questionCard()
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
