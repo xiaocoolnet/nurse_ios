@@ -43,6 +43,7 @@ class AllViewController: UIViewController,UITableViewDelegate,UITableViewDataSou
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
@@ -50,6 +51,7 @@ class AllViewController: UIViewController,UITableViewDelegate,UITableViewDataSou
             return 12
         }
     }
+    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return WIDTH*167/375
@@ -57,15 +59,18 @@ class AllViewController: UIViewController,UITableViewDelegate,UITableViewDataSou
             return WIDTH*80/375+175
         }
     }
+    
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 10
     }
+    
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let view = UIView()
         view.backgroundColor = UIColor.clearColor()
         return view
         
     }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("cellOne", forIndexPath: indexPath)
@@ -97,6 +102,7 @@ class AllViewController: UIViewController,UITableViewDelegate,UITableViewDataSou
         
         
     }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
         let next = NewsContantViewController()
@@ -105,13 +111,14 @@ class AllViewController: UIViewController,UITableViewDelegate,UITableViewDataSou
         
         
     }
+    
     func userGoToView() {
         print("其他用户")
         let next = UserViewController()
         self.navigationController?.pushViewController(next, animated: true)
         next.title = "苏珍贞"
-        
     }
+    
     func postedTheView() {
         print("发帖")
         let next = PostViewController()

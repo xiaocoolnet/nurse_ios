@@ -29,12 +29,14 @@ class PostVacancies: UIView {
     @IBOutlet weak var personBtn: UIButton!
     @IBOutlet weak var moneyBtn: UIButton!
     @IBOutlet weak var requestField: UITextView!
+    var selfNav:UINavigationController?
    
     @IBAction func sendBtnClicked(sender: AnyObject) {
         if delegate != nil {
             delegate?.clickedSendBtn()
         }
     }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         sendBtn.layer.borderColor = COLOR.CGColor
@@ -43,24 +45,39 @@ class PostVacancies: UIView {
         
         bordView.layer.borderColor = UIColor.lightGrayColor().CGColor
         bordView.layer.borderWidth = 1
+        
+        let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
+        selfNav = tabBar.selectedViewController as? UINavigationController
     }
     
     @IBAction func workplaceBtnClick(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func positionBtnClick(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func conditionBtnClick(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func treatmentBtnClick(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func personBtnClick(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func moneyBtnClick(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
     
 }

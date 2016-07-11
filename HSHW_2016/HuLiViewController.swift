@@ -18,7 +18,6 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     let pageControl = UIPageControl()
     var picArr = NSArray()
     var timer = NSTimer()
-    var times = Int()
     var dataSource = NewsList()
     var requestManager:AFHTTPSessionManager?
     let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
@@ -47,7 +46,7 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*190/375))
         self.view.addSubview(one)
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
         
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*190/375)
         scrollView.pagingEnabled = true

@@ -112,9 +112,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         self.navigationController?.pushViewController(next, animated: true)
-        
     }
-    
     
     func click1(btn:UIButton){
         print(btn.tag)
@@ -125,10 +123,8 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         user.setObject("true", forKey: String(btn.tag))
         print(uid)
         if uid==nil {
-            
             let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
             let vc  = mainStoryboard.instantiateViewControllerWithIdentifier("Login")
-            //self.presentViewController(vc, animated: true, completion: nil)
             self.navigationController?.pushViewController(vc, animated: true)
             
         }else{
@@ -204,7 +200,6 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
                             hud.hide(true, afterDelay: 1)
-                           
                         }
                         if(status.status == "success"){
                             
@@ -223,13 +218,9 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                             
                         }
                     }
-                    
                 }
-                
             }
-            
         }
-        
     }
     
     func upDateUI(status:NSArray){
@@ -240,31 +231,10 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let indexPath = NSIndexPath.init(forRow: status[0] as! Int, inSection: 0)
         let cell = self.myTableView.cellForRowAtIndexPath(indexPath)as! AcademicTableViewCell
         if status[1] as! String=="1" {
-            
             cell.zan.setImage(UIImage(named: "ic_like_sel"), forState: .Normal)
-            
         }else{
-           
             cell.zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
-           
         }
 
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

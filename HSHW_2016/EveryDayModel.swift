@@ -44,17 +44,15 @@ class ScoreModel: JSONJoy {
 }
 class titleList: JSONJoy {
     var status:String?
-    var objectlist: [EveryDayInfo]
-    
+    var objectlist = Array<EveryDayInfo>()
     var count: Int{
         return self.objectlist.count
     }
-    init(){
-        objectlist = Array<EveryDayInfo>()
+    init () {
+        
     }
     required init(_ decoder: JSONDecoder) {
         
-        objectlist = Array<EveryDayInfo>()
         for childs: JSONDecoder in decoder.array!{
             objectlist.append(EveryDayInfo(childs))
         }
@@ -67,18 +65,23 @@ class titleList: JSONJoy {
 }
 
 class EveryDayInfo: JSONJoy {
+
+    var term_id:String
+    var name:String
+    var count:String
+    var haschild:Int
+    var childlist = Array<EveryDayInfo>()
     
-    var term_id:String?
-    var name:String?
-    var count:String?
-    init(){
-        
-    }
     required init(_ decoder: JSONDecoder){
         
-        term_id = decoder["term_id"].string
-        name = decoder["name"].string
-        count = decoder["count"].string
+        term_id = decoder["term_id"].string ?? ""
+        name = decoder["name"].string ?? ""
+        count = decoder["count"].string ?? ""
+        haschild = decoder["haschild"].integer ?? 0
+        if decoder["childlist"].array != nil {
+            for child in decoder["childlist"].array! {
+                childlist.append(EveryDayInfo(child))
+            }
+        }
     }
-    
 }

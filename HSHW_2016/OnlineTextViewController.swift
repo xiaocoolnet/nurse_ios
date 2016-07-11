@@ -13,7 +13,7 @@ import Alamofire
 class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     let myTableView = UITableView()
-    var dataSource = Array<OnlineTextInfo>()
+    var dataSource = titleList()
     let picArr:[String] = ["ic_rn.png","ic_earth.png","ic_moon.png","ic_maozi_one.png","ic_maozi_two.png","ic_maozi_three.png"]
     
     override func viewWillAppear(animated: Bool) {
@@ -23,7 +23,6 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//      let one = UIView(frame: CGRectMake(0, 0, WIDTH, 10))
         
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
@@ -76,7 +75,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
                 }
                 if(status.status == "success"){
                     print(status)
-                    self.dataSource = titList(status.data!).objectlist
+                    self.dataSource = titleList(status.data!)
                     
                     print(self.dataSource)
                     print("-----")
@@ -88,9 +87,36 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
             
         }
     }
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return dataSource.objectlist.count
+    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataSource.count
+        if dataSource.objectlist[section].haschild == 0 {
+            return 1
+        }
+        return dataSource.objectlist[section].childlist.count
+    }
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if dataSource.objectlist[section].haschild == 0 {
+            return 0
+        }
+        return 30
+    }
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if dataSource.objectlist[section].haschild == 0 {
+            return nil
+        }
+        let backview = UIView(frame: CGRectMake(0,0,WIDTH,0))
+        let image = UIImageView(frame: CGRectMake(10, 5, 20, 20))
+        image.image = UIImage(named: picArr[section])
+        
+        let titleLabel = UILabel(frame: CGRectMake(35,5,WIDTH - 45,20))
+        titleLabel.text = dataSource.objectlist[section].name
+        
+        backview.addSubview(image)
+        backview.addSubview(titleLabel)
+        return backview
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -99,12 +125,16 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("onlineCell", forIndexPath: indexPath)as!OnlineTextTableViewCell
-        let info = self.dataSource[indexPath.row]
+        var info:EveryDayInfo
+        if dataSource.objectlist[indexPath.section].haschild == 0 {
+            info = self.dataSource.objectlist[indexPath.section]
+        }else {
+            info = self.dataSource.objectlist[indexPath.section].childlist[indexPath.row]
+        }
         cell.selectionStyle = .None
         cell.titleLable.text = info.name
         cell.titleImg.setImage(UIImage(named: picArr[indexPath.row]), forState: .Normal)
-        cell.startBtn.addTarget(self, action: #selector(startText), forControlEvents: .TouchUpInside)
-        cell.startBtn.tag = indexPath.row
+        cell.startBtn.userInteractionEnabled = false
         let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
         line.backgroundColor = UIColor.grayColor()
         cell.addSubview(line)
@@ -114,12 +144,18 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         cell.numLable.text = info.count
         return cell
     }
-    
-    func startText(sender:UIButton){
-        let info = self.dataSource[sender.tag]
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var info:EveryDayInfo
+        if dataSource.objectlist[indexPath.section].haschild == 0 {
+            info = dataSource.objectlist[indexPath.section]
+        }else {
+            info = dataSource.objectlist[indexPath.section].childlist[indexPath.row]
+        }
+
         let nextVC = OnlineExaminationViewController()
         nextVC.questionCount = info.count
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
+    
 
 }

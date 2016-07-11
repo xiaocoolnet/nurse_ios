@@ -16,7 +16,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     let number = UILabel()
     let shareArr:[String] = ["ic_pengyouquan.png","ic_wechat.png","ic_weibo.png"]
     var newsInfo :NewsInfo?
-    var likeNum :Int?
+    var likeNum  = 0
     var webHeight:CGFloat = 100
     var isLike:Bool = false
     var dataSource = NewsList()
@@ -201,9 +201,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 webCell.contentWebView.delegate = self
                 return webCell
                
-            }else{
+            }else if indexPath.row == 3{
                 
                 let cell3 = tableView.dequeueReusableCellWithIdentifier("zanCell", forIndexPath: indexPath)
+                for view in cell3.subviews {
+                    view.removeFromSuperview()
+                }
                 cell3.selectionStyle = .None
                 let line = UILabel(frame: CGRectMake(WIDTH*63/375, 14.5, WIDTH*250/375, 1))
                 line.backgroundColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1.0)
@@ -238,13 +241,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 zan.tag = indexPath.row
                 zan.addTarget(self, action: #selector(NewsContantViewController.zanAddNum(_:)), forControlEvents: .TouchUpInside)
                 number.frame = CGRectMake(WIDTH/2-25, WIDTH*170/375, 50, 18)
-                print(self.likeNum)
-                let hashValue = newsInfo?.likes.count.hashValue
-                print(hashValue)
-                print(hashValue!)
-                print("\(hashValue!)")
-                number.text =  "\(hashValue!)"
-                self.likeNum = hashValue!
+//                print(self.likeNum)
+//                let hashValue = newsInfo?.likes.count.hashValue
+//                print(hashValue)
+//                print(hashValue!)
+//                print("\(hashValue!)")
+                number.text =  "\(self.likeNum)"
+//                self.likeNum = hashValue!
                 number.sizeToFit()
                 number.font = UIFont.systemFontOfSize(12)
                 number.frame = CGRectMake(WIDTH/2-number.bounds.size.width/2-8, WIDTH*170/375, number.bounds.size.width, 18)
@@ -384,6 +387,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     func zanAddNum(btn:UIButton) {
+        
         print("赞")
         
         let user = NSUserDefaults.standardUserDefaults()
@@ -403,7 +407,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             if userID == "false"||userID==nil{
                 let url = PARK_URL_Header+"SetLike"
                 let param = [
-                    
                     "id":newsInfo?.object_id,
                     "type":"1",
                     "userid":uid,
@@ -418,7 +421,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                         print(status.status)
                         if(status.status == "error"){
                             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                            hud.mode = MBProgressHUDMode.Text;
+                            hud.mode = MBProgressHUDMode.Text
                             hud.labelText = status.errorData
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
@@ -432,7 +435,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
                             hud.hide(true, afterDelay: 1)
-//                            let array = [""]
                             self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"1"], waitUntilDone:true)
 
                             user.setObject("true", forKey: "isLike")
@@ -467,7 +469,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
                             hud.hide(true, afterDelay: 1)
-                            //user.setObject("false", forKey: (self.newsInfo?.object_id)!)
+                            user.setObject("false", forKey: (self.newsInfo?.object_id)!)
                         }
                         if(status.status == "success"){
                             
@@ -481,9 +483,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             print(status.data)
                             self.isLike=false
                             user.setObject("false", forKey: "isLike")
-                            user.setObject("false", forKey: (self.newsInfo?.object_id)!)
                             self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"0"], waitUntilDone:true)
-                            //user.removeObjectForKey((self.newsInfo?.object_id)!)
+                            user.removeObjectForKey((self.newsInfo?.object_id)!)
                         }
                     }
                     
@@ -498,16 +499,14 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func upDateUI(status:NSArray){
         self.getDate()
-        
 //       
-//        if status=="1" {
-//             self.likeNum = self.likeNum! + 1
-//        }else{
-//             self.likeNum = self.likeNum! - 1
-//        }
+        if status[1] as! String=="1" {
+             self.likeNum = self.likeNum + 1
+        }else{
+             self.likeNum = self.likeNum - 1
+        }
 //
 //        print(self.likeNum!)
-//        self.number.text =  "\(self.likeNum!)"
         let indexPath = NSIndexPath.init(forRow: status[0] as! Int, inSection: 0)
 //        let cell = self.myTableView.cellForRowAtIndexPath(indexPath)
         //self.myTableView.reloadData()

@@ -14,8 +14,8 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
     let textContent = UITextView()
     let textLab = UILabel()
     let bottom = UIView()
-    let roomKind = UIButton()
-    let addImg = UIButton()
+    let roomKind = UIButton(type:.Custom)
+    let addImg = UIButton(type: .Custom)
  
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
@@ -78,6 +78,11 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
         
         addImg.frame = CGRectMake(WIDTH-WIDTH*70/375-10, HEIGHT-WIDTH*70/375-124, WIDTH*70/375, WIDTH*70/375)
         addImg.setBackgroundImage(UIImage(named: "img_bg_nor.png"), forState: .Normal)
+        addImg.contentVerticalAlignment = .Bottom
+        addImg.titleEdgeInsets = UIEdgeInsetsMake(0, 0, 8, 0)
+        addImg.setTitle("插入图片", forState: .Normal)
+        addImg.setTitleColor(UIColor.darkGrayColor(), forState: .Normal)
+        addImg.titleLabel?.font = UIFont.systemFontOfSize(14)
         addImg.addTarget(self, action: #selector(self.addTheImage), forControlEvents: .TouchUpInside)
         self.view.addSubview(addImg)
         
@@ -109,7 +114,7 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
         let keyBoardRect = infoDic!["UIKeyboardFrameEndUserInfoKey"]?.CGRectValue()
         let keyBoardTranslate = CGFloat((keyBoardRect?.origin.y)!-114)
         
-        UIView.animateWithDuration((infoDic!["UIKeyboardAnimationCurveUserInfoKey"]?.doubleValue)!, delay: 0, options: .TransitionNone, animations: {
+        UIView.animateWithDuration((infoDic!["UIKeyboardAnimationCurveUserInfoKey"]?.doubleValue)!, delay: 0.2, options: .TransitionNone, animations: {
             self.bottom.frame = CGRectMake(0, keyBoardTranslate, WIDTH, 50)
             self.textContent.frame = CGRectMake(8, 70, WIDTH-16, keyBoardTranslate-WIDTH*70/375-90)
             self.addImg.frame = CGRectMake(WIDTH-WIDTH*70/375-10, keyBoardTranslate-WIDTH*70/375-10, WIDTH*70/375, WIDTH*70/375)
@@ -127,14 +132,11 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
             let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
             alertController.addAction(doneAction)
             self.presentViewController(alertController, animated: true, completion: nil)
-        
-            
         }else{
             self.titLab.text = ""
             self.textContent.text = ""
             self.textLab.hidden = false
         }
-
     }
     func selectorTheRoom() {
         print("选择科室")

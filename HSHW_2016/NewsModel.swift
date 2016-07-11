@@ -20,10 +20,10 @@ class NewsModel: JSONJoy{
        status = decoder["status"].string
         if status == "success" {
             data = decoder["data"]
-        }else{
+        }
+        else{
             errorData = decoder["data"].string
         }
-        
     }
 }
 
@@ -65,12 +65,10 @@ class NewsInfo: JSONJoy{
     var recommended:String?
     var thumb:String?
     var term_id :String?
-    var likes:[LikeInfo]
+    var term_name:String
+    var term_hits:String
+    var likes = Array<LikeInfo>()
     var smeta :JSONDecoder?
-    
-    init(){
-        likes = Array<LikeInfo>()
-    }
     
     required init(_ decoder: JSONDecoder){
         post_title = decoder["post_title"].string
@@ -84,8 +82,9 @@ class NewsInfo: JSONJoy{
         recommended = decoder["recommended"].string
         thumb = decoder["thumb"].string
         term_id = decoder["term_id"].string
-        likes = Array<LikeInfo>()
         smeta = decoder["smeta"]
+        term_name = decoder["term_name"].string ?? ""
+        term_hits = decoder["term_hits"].string ?? ""
         print(post_excerpt)
         print(decoder["likes"].array)
         if decoder["likes"].array != nil {
@@ -93,8 +92,6 @@ class NewsInfo: JSONJoy{
                 self.likes.append(LikeInfo(childs))
             }
         }
-       
-        
     }
     func addpend(list: [LikeInfo]){
         self.likes = list + self.likes
@@ -123,23 +120,15 @@ class LikeList: JSONJoy {
     func append(list: [LikeInfo]){
         self.objectlist = list + self.objectlist
     }
-    
 }
-
-
 
 class LikeInfo: JSONJoy {
     
     var userid :String?
-    init() {
-        
-    }
+    init() {}
     required init(_ decoder: JSONDecoder){
-       
         userid = decoder["userid"].string
-        
     }
-
 }
 
 

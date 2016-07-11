@@ -34,7 +34,6 @@ class TouTiaoTableViewCell: UITableViewCell {
         self.addSubview(comBtn)
         self.addSubview(timeBtn)
         self.addSubview(titLab)
-//        self.addSubview(contant)
         self.addSubview(titImage)
     }
     
@@ -46,7 +45,6 @@ class TouTiaoTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         titLab.frame = CGRectMake(10, 10, WIDTH-140, 40)
@@ -57,7 +55,7 @@ class TouTiaoTableViewCell: UITableViewCell {
         heal.layer.borderColor = COLOR.CGColor
         heal.layer.borderWidth = 0.4
         heal.titleLabel?.font = UIFont.systemFontOfSize(10)
-        heal.setTitle("健康常识", forState: .Normal)
+//        heal.setTitle("健康常识", forState: .Normal)
         heal.setTitleColor(COLOR, forState: .Normal)
         conNum.frame = CGRectMake(79, titLab.frame.size.height+titLab.frame.origin.y+10, 30, 15)
         conNum.font = UIFont.systemFontOfSize(9)
@@ -76,12 +74,14 @@ class TouTiaoTableViewCell: UITableViewCell {
         contant.textColor = UIColor.grayColor()
         titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
     }
+    
     func setCellWithNewsInfo(newsInfo:NewsInfo) {
         self.titLab.text = newsInfo.post_title
         self.conNum.text = newsInfo.recommended
         let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
         self.timeLab.text = time[0]
         self.contant.text = newsInfo.post_excerpt
+        heal.setTitle(newsInfo.term_name, forState: .Normal)
         let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
         print(photoUrl)
         self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))

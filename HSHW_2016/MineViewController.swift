@@ -10,7 +10,6 @@ import UIKit
 import SDWebImage
 
 class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
-    
     var myTableView = UITableView()
     var mineHelper = HSMineHelper()
     let numNameArr:[String] = ["粉丝","关注","护士币"]
@@ -18,12 +17,11 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     let levelBtn = UIButton()
     let titLabArr:[String] = ["我的帖子","我的消息","我的收藏"]
     let titImgArr:[String] = ["ic_liuyan.png","ic_message.png","ic_fangkuai.png"]
-    let titImage = UIButton()
+    let titImage = UIButton(type:.Custom)
     
     var fansCountBtn = UIButton(type: .Custom)
     var attentionBtn = UIButton(type: .Custom)
     var nurseCoins = UIButton(type: .Custom)
-    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -48,7 +46,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         self.view.backgroundColor = COLOR
         
-        myTableView.frame = CGRectMake(0, -20, WIDTH, HEIGHT+20)
+        myTableView.frame = CGRectMake(0, -20, WIDTH, HEIGHT)
         myTableView.bounces = false
         myTableView.backgroundColor = RGREY
         myTableView.delegate = self
@@ -61,7 +59,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         // Do any additional setup after loading the view.
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 5
+        return 6
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
@@ -70,6 +68,15 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             return 60
         }
     }
+    
+    func signout(){
+        print("退出")
+        let myTab  = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
+        myTab.selectedIndex = 0
+        LOGIN_STATE = false
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(LOGINFO_KEY)
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
@@ -79,7 +86,9 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             return 3
         }else if section == 3 {
             return 1
-        }else{
+        }else if section == 4{
+            return 1
+        }else {
             return 1
         }
     }
@@ -100,11 +109,6 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if indexPath.row == 0 {
                 cell.backgroundColor = COLOR
                 for i in 0...2 {
-//                    let number = UILabel(frame: CGRectMake(WIDTH/3*CGFloat(i), WIDTH-60, WIDTH/3, 20))
-//                    number.textColor = UIColor.whiteColor()
-//                    number.textAlignment = .Center
-//                    number.text = numArr[i]
-//                    cell.addSubview(number)
                     if i == 0 {
                         fansCountBtn.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH-60, WIDTH/3, 20)
                         fansCountBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
@@ -185,8 +189,6 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 levelBtn.setTitleColor(UIColor.yellowColor(), forState: .Normal)
                 levelBtn.titleLabel?.font = UIFont.systemFontOfSize(9)
                 cell.addSubview(levelBtn)
-                
-                
             }
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MineTableViewCell
@@ -205,12 +207,24 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 if indexPath.row == 2 {
                     line.removeFromSuperview()
                 }
-             }else if indexPath.section == 3 {
+            }else if indexPath.section == 3 {
                 cell.titImage.setImage(UIImage(named: "ic_xie.png"), forState: .Normal)
                 cell.titLab.text = "我的招聘"
-            }else{
+            }else if indexPath.section == 4{
                 cell.titImage.setImage(UIImage(named: "ic_singal.png"), forState: .Normal)
                 cell.titLab.text = "仅WiFi下载图片"
+            }else {
+                
+                let signOutBtn = UIButton(type:.Custom)
+                signOutBtn.frame = CGRectMake(WIDTH/2-100, 10, 200, 40)
+                signOutBtn.setTitle("退出登录", forState: .Normal)
+                signOutBtn.setTitleColor(COLOR, forState: .Normal)
+                signOutBtn.layer.cornerRadius = 20
+                signOutBtn.layer.borderColor = COLOR.CGColor
+                signOutBtn.layer.borderWidth = 1
+                signOutBtn.addTarget(self, action: #selector(signout), forControlEvents: .TouchUpInside)
+                cell.addSubview(signOutBtn)
+                cell.accessoryType = .None
             }
         }
         

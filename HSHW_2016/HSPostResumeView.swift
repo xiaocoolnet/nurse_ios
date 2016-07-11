@@ -42,15 +42,15 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     @IBOutlet weak var entryTimeBtn: UIButton!
     @IBOutlet weak var expectPayBtn: UIButton!
     @IBOutlet weak var expectPostBtn: UIButton!
+    
     var view = UIView()
     var albumBtn = UIButton()
     var myActionSheet:UIAlertController?
     var avatarView = UIButton(type: UIButtonType.Custom)
     var mainHelper = HSMineHelper()
-
+    var selfNav:UINavigationController?
     
     weak var delegate:HSPostResumeViewDelegate?
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         borderView1.layer.borderWidth = 1
@@ -62,19 +62,21 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         savaResume.layer.borderWidth = 1
         savaResume.layer.borderColor = COLOR.CGColor
         savaResume.cornerRadius = savaResume.frame.height/2
+        let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
+        selfNav = tabBar.selectedViewController as? UINavigationController
     }
     
     @IBAction func avatarButtonClicked(sender: AnyObject) {
         delegate?.uploadAvatar()
         
         print("lalal")
-                      
+        
         myActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         myActionSheet?.addAction(UIAlertAction(title: "拍照", style: .Default, handler: {[unowned self] (UIAlertAction) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.takePhoto()
             })
-            }))
+        }))
         
         myActionSheet?.addAction(UIAlertAction(title: "从相册获取", style: .Default, handler: { [unowned self] (UIAlertAction) in
             dispatch_async(dispatch_get_main_queue(), {
@@ -88,41 +90,52 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         vc!.presentViewController(myActionSheet!, animated: true, completion: nil)
     }
     
-    
-    
-    
     @IBAction func saveResumeCilcked(sender: AnyObject) {
         delegate?.saveResumeBtnClicked()
-        
-}
+    }
     
     @IBAction func birthbuttonClick(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func educationbtnClick(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func placeBtnClick(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func moneyBtnClick(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func entryTimeBtnClick(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func targetCityBtnClick(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
 
     
     @IBAction func expectPayBtn(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func expectPostBtnClick(sender: AnyObject) {
+        let vc = HSStateEditResumeController()
+        selfNav?.pushViewController(vc, animated: true)
     }
     
     func click(){
-        print(11111)
         view.removeFromSuperview()
         albumBtn.removeFromSuperview()
         let imagePicker = UIImagePickerController();
@@ -142,7 +155,6 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         }
         return temp as? UIViewController
     }
-
     
     func takePhoto(){
         
@@ -185,7 +197,6 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         
         ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") { [unowned self] (data) in
             dispatch_async(dispatch_get_main_queue(), {
-                
                 let result = Http(JSONDecoder(data))
                 if result.status != nil {
                     dispatch_async(dispatch_get_main_queue(), {
@@ -196,7 +207,6 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
                                     QCLoginUserInfo.currentInfo.avatar = result.data!
                                 }
                             })
-                            
                         }else{
                             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                             hud.mode = MBProgressHUDMode.Text;
@@ -216,6 +226,4 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
 
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
-
-
 }

@@ -28,9 +28,11 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var post_excerpt=String()
     var requestManager:AFHTTPSessionManager?
     let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.createTableView()
@@ -114,35 +116,9 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func GetDate(){
-    
-//        requestHelper.getData("4") { (success, response) in
-//            if success {
-//                print(response)
-////               let news = response as! NewsModel
-////                print(news)
-//                let newsArr = response as! NewsList
-//                
-////                print(response?.data)
-////                print("-----")
-//                print(newsArr)
-////                for newsInfo in newsArr {
-////                   self.dataSource.append(<#T##list: [NewsInfo]##[NewsInfo]#>)
-////                   
-////                    dispatch_async(dispatch_get_main_queue(), {
-////                     
-////                        self.myTableView.reloadData()
-////                    })
-////                }
-//            }
-//        }
-      //MBProgressHUD  HUD = [[MBProgressHUD showHUDAddedTo:self.view animated:YES], retain];
-        
         let url = PARK_URL_Header+"getNewslist"
-        let param = [
-            "channelid":"4"
-        ];
+        let param = ["channelid":"4"]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
             if(error != nil){
                 
             }else{
@@ -169,13 +145,13 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
        }
     }
-    
     //    图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
     }
+    
     func scroll(){
         if self.pageControl.currentPage == self.pageControl.numberOfPages-1 {
             self.pageControl.currentPage = 0
@@ -185,27 +161,28 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let offSetX:CGFloat = CGFloat(self.pageControl.currentPage) * CGFloat(self.scrollView.frame.size.width)
         scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
     }
+    
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
     }
+    
     func scrollViewDidScroll(scrollView: UIScrollView) {
         var offsetX:CGFloat = self.scrollView.contentOffset.x
         offsetX = offsetX + (self.scrollView.frame.size.width * 0.5)
-        //pageControll改变
         let page:Int = Int(offsetX)/Int(self.scrollView.frame.size.width)
         pageControl.currentPage = page
     }
     //开始拖拽时
-        func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
             timer.fireDate = NSDate.distantFuture()
-        }
+    }
     //结束拖拽时
-        func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
             timer.fireDate = NSDate.distantPast()
-        }
+    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(self.dataSource.count)
+
         return self.dataSource.count;
     }
     
@@ -221,22 +198,17 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }else{
             return 100
         }
-
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         cell.setCellWithNewsInfo(newsInfo)
         return cell
-   
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
-        
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
@@ -244,5 +216,4 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         print(newsInfo.likes.count)
         self.navigationController?.pushViewController(next, animated: true)
     }
-
 }

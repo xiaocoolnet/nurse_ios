@@ -12,7 +12,7 @@ import MBProgressHUD
 class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     let myTableView = UITableView()
-    var dataSource = titleList()
+    var netData = titleList()
     let picArr:[String] = ["ic_rn.png","ic_earth.png","ic_moon.png","ic_maozi_one.png","ic_maozi_two.png","ic_maozi_three.png"]
     
     override func viewWillAppear(animated: Bool) {
@@ -39,8 +39,7 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         self.view.addSubview(line)
         myTableView.tableHeaderView = one
         self.getData()
-        // myTableView.separatorColor = RGREY
-        // Do any additional setup after loading the view.
+
     }
     
     func getData(){
@@ -49,7 +48,8 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let uid = user.stringForKey("userid")
         let url = PARK_URL_Header+"getDaliyExamTypeList"
         let param = [
-            "userid":uid
+            "userid":uid,
+            "type":"1"
         ];
         Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
             print(request)
@@ -57,44 +57,64 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 
             }else{
                 let status = EveryDayModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                //print(status.array)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
-                    //hud.labelText = status.errorData
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    
-                    //                    self.createTableView()
-                    print(status)
-                    self.dataSource = titleList(status.data!)
-                    
-                    print(self.dataSource)
-                    print("-----")
-                    print(titleList(status.data!).objectlist)
+                    self.netData = titleList(status.data!)
                     self.myTableView .reloadData()
-                    print(status.data)
                 }
             }
         }
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return netData.objectlist.count
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.dataSource.objectlist.count
+        if netData.objectlist[section].haschild == 0 {
+            return 1
+        }
+        return netData.objectlist[section].childlist.count
+    }
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if netData.objectlist[section].haschild == 0 {
+            return 0
+        }
+        return 30
+    }
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if netData.objectlist[section].haschild == 0 {
+            return nil
+        }
+        let backview = UIView(frame: CGRectMake(0,0,WIDTH,0))
+        let image = UIImageView(frame: CGRectMake(10, 5, 20, 20))
+        image.image = UIImage(named: picArr[section])
+        
+        let titleLabel = UILabel(frame: CGRectMake(35,5,WIDTH - 45,20))
+        titleLabel.text = netData.objectlist[section].name
+        
+        backview.addSubview(image)
+        backview.addSubview(titleLabel)
+        return backview
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!EveryDayTableViewCell
-        let info = self.dataSource.objectlist[indexPath.row]
+        var info:EveryDayInfo
+        if netData.objectlist[indexPath.section].haschild == 0 {
+            info = self.netData.objectlist[indexPath.section]
+        }else {
+            info = self.netData.objectlist[indexPath.section].childlist[indexPath.row]
+        }
         cell.selectionStyle = .None
         cell.titLab.text = info.name
         cell.titImage.setImage(UIImage(named: picArr[indexPath.row]), forState: .Normal)
-        cell.start.addTarget(self, action: #selector(self.startTheTest), forControlEvents: .TouchUpInside)
-        cell.start.tag = indexPath.row
+        cell.start.userInteractionEnabled = false
         let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
         line.backgroundColor = UIColor.grayColor()
         
@@ -102,17 +122,20 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         if indexPath.row == 5 {
             line.removeFromSuperview()
         }
-        
         cell.num.text = info.count
         
         return cell
     }
-    
-    func startTheTest(btn:UIButton) {
-        print("答题")
-        let info = self.dataSource.objectlist[btn.tag]
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var info:EveryDayInfo
+        if netData.objectlist[indexPath.section].haschild == 0 {
+            info = self.netData.objectlist[indexPath.section]
+        }else {
+            info = self.netData.objectlist[indexPath.section].childlist[indexPath.row]
+        }
+        
         let next = WordViewController()
-        next.questionCount = info.count!
+        next.questionCount = info.count
         self.navigationController?.pushViewController(next, animated: true)
         next.title = "练习题"
     }

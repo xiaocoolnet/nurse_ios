@@ -22,7 +22,6 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         collectionView.registerNib(UINib(nibName: "HSSQCollectionViewCell",bundle: nil), forCellWithReuseIdentifier: "cell")
         collectionView.pagingEnabled = true
         collectionView.bounces = false
-        
         forumHelper.getForumList("1") { (success, response) in
         }
         
@@ -52,6 +51,8 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     func postedTheView() {
+        let next = PostViewController()
+        self.navigationController?.pushViewController(next, animated: true)
         print("发帖")
     }
     

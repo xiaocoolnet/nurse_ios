@@ -169,9 +169,9 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         print(indexPath.row)
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-//                let next = EveryDayViewController()
-                let nextVC = DayPracticeViewController()
-                self.navigationController?.pushViewController(nextVC, animated: true)
+                let next = EveryDayViewController()
+//                let nextVC = DayPracticeViewController()
+                self.navigationController?.pushViewController(next, animated: true)
                 
             }
             if indexPath.row == 1 {
