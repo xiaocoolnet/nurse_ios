@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1911C01D11222700CDE18D /* LoginModel.swift */; };
+		0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FED4D1D3373FC00A4488E /* DataPickerView.swift */; };
+		0B6FED501D3382B800A4488E /* EducationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FED4F1D3382B800A4488E /* EducationModel.swift */; };
+		0B6FED521D33999700A4488E /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B6FED511D33999700A4488E /* area.plist */; };
 		0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */; };
 		0BAF21BC1D1134790065146B /* LoginUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAF21BB1D1134790065146B /* LoginUserInfoModel.swift */; };
 		0BAF21C41D113E100065146B /* QCLoginUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAF21C31D113E100065146B /* QCLoginUserInfo.swift */; };
 		0BB378551D2B4BE600E4A84D /* OnlineTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB378541D2B4BE600E4A84D /* OnlineTextViewController.swift */; };
 		0BB378571D2B504A00E4A84D /* OnlineTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB378561D2B504A00E4A84D /* OnlineTextTableViewCell.swift */; };
 		0BB378591D2B595100E4A84D /* OnlineTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB378581D2B595100E4A84D /* OnlineTextModel.swift */; };
+		0BC3878E1D339C2C001460B8 /* AdressPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC3878D1D339C2C001460B8 /* AdressPickerView.swift */; };
 		0BDAB62D1D2A43380081E883 /* QuestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB62C1D2A43380081E883 /* QuestionModel.swift */; };
 		0BDAB6331D2A57320081E883 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6321D2A57320081E883 /* QuestionViewController.swift */; };
 		0BDAB6351D2A588D0081E883 /* InternationNurseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */; };
@@ -146,12 +150,16 @@
 /* Begin PBXFileReference section */
 		0B1911C01D11222700CDE18D /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		0B26F5B17459B246981F92CE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		0B6FED4D1D3373FC00A4488E /* DataPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPickerView.swift; sourceTree = "<group>"; };
+		0B6FED4F1D3382B800A4488E /* EducationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EducationModel.swift; sourceTree = "<group>"; };
+		0B6FED511D33999700A4488E /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeName.swift; sourceTree = "<group>"; };
 		0BAF21BB1D1134790065146B /* LoginUserInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginUserInfoModel.swift; sourceTree = "<group>"; };
 		0BAF21C31D113E100065146B /* QCLoginUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCLoginUserInfo.swift; sourceTree = "<group>"; };
 		0BB378541D2B4BE600E4A84D /* OnlineTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineTextViewController.swift; sourceTree = "<group>"; };
 		0BB378561D2B504A00E4A84D /* OnlineTextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineTextTableViewCell.swift; sourceTree = "<group>"; };
 		0BB378581D2B595100E4A84D /* OnlineTextModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineTextModel.swift; sourceTree = "<group>"; };
+		0BC3878D1D339C2C001460B8 /* AdressPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdressPickerView.swift; sourceTree = "<group>"; };
 		0BDAB62C1D2A43380081E883 /* QuestionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
 		0BDAB6321D2A57320081E883 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternationNurseViewController.swift; sourceTree = "<group>"; };
@@ -406,6 +414,7 @@
 				183B84F71CE5BFDC00709235 /* ViewController.swift */,
 				F6B4083B1D1D100900BDFDBE /* HSHW_2016-Bridging-Header.h */,
 				1854087E1CE6F15500DFBA7C /* Tool.swift */,
+				0B6FED511D33999700A4488E /* area.plist */,
 				183B84F91CE5BFDC00709235 /* Main.storyboard */,
 				183B84FC1CE5BFDC00709235 /* Assets.xcassets */,
 				183B84FE1CE5BFDC00709235 /* LaunchScreen.storyboard */,
@@ -619,6 +628,8 @@
 				F6C265C71D24FD770033D2A9 /* PostVacancies.swift */,
 				F6E00DE71D263CC100D023B8 /* HSPostResumeView.xib */,
 				F6CC83991D2797F300B9A358 /* HSPostResumeView.swift */,
+				0B6FED4D1D3373FC00A4488E /* DataPickerView.swift */,
+				0BC3878D1D339C2C001460B8 /* AdressPickerView.swift */,
 				F6338B931D29105B00EE5CA2 /* HSStateCommentCell.swift */,
 				F6338B941D29105B00EE5CA2 /* HSStateCommentCell.xib */,
 			);
@@ -632,6 +643,7 @@
 				F6B4083E1D1D31EB00BDFDBE /* HSJobListModel.swift */,
 				F66216861D1E228B0099AD0E /* HSCVListModel.swift */,
 				F6CFC7411D2A164700AC591C /* ForumlistModel.swift */,
+				0B6FED4F1D3382B800A4488E /* EducationModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -878,6 +890,7 @@
 				183B85001CE5BFDC00709235 /* LaunchScreen.storyboard in Resources */,
 				F6338B961D29105B00EE5CA2 /* HSStateCommentCell.xib in Resources */,
 				F632EF131D192F530038AF9D /* HSWorkPlaceController.xib in Resources */,
+				0B6FED521D33999700A4488E /* area.plist in Resources */,
 				F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */,
 				1F7B9FE41D21218F00A3A3CB /* ReleaseTimeCell.xib in Resources */,
 				F63E19881D17DB4E001BDE8A /* icon_callback.png in Resources */,
@@ -971,9 +984,11 @@
 				181E0D251CEBF83200E34A7F /* FinesViewController.swift in Sources */,
 				F6CFC7421D2A164700AC591C /* ForumlistModel.swift in Sources */,
 				F632EF0E1D18E8890038AF9D /* HSSQCollectionViewCell.swift in Sources */,
+				0BC3878E1D339C2C001460B8 /* AdressPickerView.swift in Sources */,
 				183B86741CE5CFA000709235 /* CornerRadiusViewController.swift in Sources */,
 				F6D02CDF1D07BB5300353557 /* contentCell.swift in Sources */,
 				0BDAB6371D2A58E80081E883 /* NurseStatusViewController.swift in Sources */,
+				0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */,
 				181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */,
 				1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */,
 				18C0BF991CEB655F003E2886 /* QuestionTableViewCell.swift in Sources */,
@@ -1035,6 +1050,7 @@
 				189849B61CE815D3007B37B4 /* AcademicTableViewCell.swift in Sources */,
 				185408891CE70D8A00DFBA7C /* AcademicViewController.swift in Sources */,
 				181E0D231CEBF80B00E34A7F /* SetDataViewController.swift in Sources */,
+				0B6FED501D3382B800A4488E /* EducationModel.swift in Sources */,
 				18A3F4E61CEAAF1100028FA5 /* WordViewController.swift in Sources */,
 				0BDAB6331D2A57320081E883 /* QuestionViewController.swift in Sources */,
 				185408731CE6C87F00DFBA7C /* NewsViewController.swift in Sources */,
@@ -1227,7 +1243,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1261,7 +1277,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Release;
 		};

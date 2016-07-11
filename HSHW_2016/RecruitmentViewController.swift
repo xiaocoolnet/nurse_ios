@@ -26,6 +26,10 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var jobDataSource:Array<JobModel>?
     var CVDataSource:Array<CVModel>?
     var showType = 1
+    
+    var num = 1
+    
+    
     weak var superViewController:NurseStationViewController?
     
     override func viewDidLoad() {
@@ -353,8 +357,13 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     name.frame = CGRectMake(100, 10, 100, 25)
                     name.setTitleColor(COLOR, forState: .Normal)
                     name.titleLabel!.font = UIFont.systemFontOfSize(14)
-                    name.setTitle("查看联系方式", forState: .Normal)
-                    
+                    if num == 1 {
+                        name.setTitle("查看联系方式", forState: .Normal)
+                        name.addTarget(self, action: #selector(contactClick), forControlEvents: .TouchUpInside)
+                    }else if num == 2{
+                        name.setTitle(jobModel.phone, forState: .Normal)
+
+                    }
                     cell1.addSubview(nameLabel)
                     cell1.addSubview(name)
                 }
@@ -362,6 +371,12 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             }
             return cell1
         }
+    }
+    
+    func contactClick() {
+        num = 2
+        self.employmentMessageTableView.reloadData()
+        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
