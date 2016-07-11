@@ -50,6 +50,11 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     var mainHelper = HSMineHelper()
     var selfNav:UINavigationController?
     
+    var picker:DatePickerView?
+    var pick:AdressPickerView?
+    var array = NSArray()
+    
+    
     weak var delegate:HSPostResumeViewDelegate?
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -64,6 +69,9 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         savaResume.cornerRadius = savaResume.frame.height/2
         let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
         selfNav = tabBar.selectedViewController as? UINavigationController
+        
+        array = ["北京市","北京市","朝阳区"]
+        
     }
     
     @IBAction func avatarButtonClicked(sender: AnyObject) {
@@ -95,8 +103,21 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     }
     
     @IBAction func birthbuttonClick(sender: AnyObject) {
-        let vc = HSStateEditResumeController()
-        selfNav?.pushViewController(vc, animated: true)
+
+        picker = DatePickerView.getShareInstance()
+        picker!.textColor = UIColor.redColor()
+        picker!.showWithDate(NSDate())
+        picker?.block = {
+            (date:NSDate)->() in
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd zzz"
+            let string = formatter.stringFromDate(date)
+            let range:Range = string.rangeOfString(" ")!
+            let time = string.substringToIndex(range.endIndex)
+            self.birthBtn.setTitle(time, forState: .Normal)
+            
+        }
+ 
     }
     
     @IBAction func educationbtnClick(sender: AnyObject) {
@@ -105,8 +126,30 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     }
     
     @IBAction func placeBtnClick(sender: AnyObject) {
-        let vc = HSStateEditResumeController()
-        selfNav?.pushViewController(vc, animated: true)
+
+        print(22)
+        // 初始化
+        
+        let pick = AdressPickerView.shareInstance
+        
+        // 设置是否显示区县等，默认为false不显示
+        pick.showTown=true
+        pick.pickArray=array // 设置第一次加载时需要跳转到相对应的地址
+        self.view.addSubview(pick)
+        // 选择完成之后回调
+        pick.selectAdress { (dressArray) in
+            
+            self.array=dressArray
+            print("选择的地区是: \(dressArray)")
+            
+//            self.placeBtn.text="\(dressArray[0])  \(dressArray[1])  \(dressArray[2])"
+            self.placeBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
+            print(1111)
+        }
+        // 加载
+        pick.show(self.view)
+        
+        
     }
     
     @IBAction func moneyBtnClick(sender: AnyObject) {
