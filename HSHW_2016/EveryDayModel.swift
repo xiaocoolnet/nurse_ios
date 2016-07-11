@@ -72,6 +72,7 @@ class EveryDayInfo: JSONJoy {
     var haschild:Int
     var childlist = Array<EveryDayInfo>()
     
+<<<<<<< Updated upstream
     required init(_ decoder: JSONDecoder){
         
         term_id = decoder["term_id"].string ?? ""
@@ -83,5 +84,76 @@ class EveryDayInfo: JSONJoy {
                 childlist.append(EveryDayInfo(child))
             }
         }
+=======
+    var term_id:String?
+    var name:String?
+    var count:String?
+    var haschild:Int?
+    var childlist = Array<ChildInfo>()
+
+    required init(_ decoder: JSONDecoder){
+        
+        term_id = decoder["term_id"].string
+        name = decoder["name"].string
+        count = decoder["count"].string
+        haschild = decoder["haschild"].integer
+        childlist = Array<ChildInfo>()
+        if decoder["childlist"].array != nil {
+            for childs: JSONDecoder in decoder["childlist"].array!{
+                self.childlist.append(ChildInfo(childs))
+            }
+        }
+
+
+    }
+    
+    func addpend(list: [ChildInfo]){
+        self.childlist = list + self.childlist
+    }
+    
+}
+
+class ChildList: JSONJoy {
+    var status:String?
+    var objectlist: [ChildInfo]
+    
+    var count: Int{
+        return self.objectlist.count
+    }
+    init(){
+        objectlist = Array<ChildInfo>()
+    }
+    required init(_ decoder: JSONDecoder) {
+        
+        objectlist = Array<ChildInfo>()
+        for childs: JSONDecoder in decoder.array!{
+            objectlist.append(ChildInfo(childs))
+        }
+    }
+    
+    func append(list: [ChildInfo]){
+        self.objectlist = list + self.objectlist
+    }
+    
+}
+
+
+
+class ChildInfo: JSONJoy {
+    
+    var term_id :String?
+    var name :String?
+    init() {
+        
+    }
+    required init(_ decoder: JSONDecoder){
+        
+        term_id = decoder["term_id"].string
+        name = decoder["name"].string
+>>>>>>> Stashed changes
     }
 }
+
+
+
+

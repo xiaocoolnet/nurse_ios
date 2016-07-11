@@ -14,6 +14,7 @@ class DayPracticeViewController: UIViewController, UITableViewDelegate, UITableV
     
     let myTableView = UITableView()
     var dataSource = titleList()
+    var childDataSource = ChildList()
     let picArr:[String] = ["ic_rn.png","ic_earth.png","ic_moon.png","ic_maozi_one.png","ic_maozi_two.png","ic_maozi_three.png"]
     
     override func viewWillAppear(animated: Bool) {
@@ -81,6 +82,7 @@ class DayPracticeViewController: UIViewController, UITableViewDelegate, UITableV
                     print(self.dataSource)
                     print("-----")
                     print(titleList(status.data!).objectlist)
+                    self.childDataSource = ChildList(status.data!)
                     self.myTableView .reloadData()
                     print(status.data)
                 }
@@ -94,20 +96,23 @@ class DayPracticeViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+                   return self.dataSource.objectlist.count
+    
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
-    }
+
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let nameLable = UILabel()
-        nameLable.backgroundColor = UIColor.grayColor()
-        nameLable.text = "练习"
-        return nameLable
-        
-    }
+//    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 30
+//    }
+    
+//    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let nameLable = UILabel()
+//        nameLable.backgroundColor = UIColor.grayColor()
+//        nameLable.text = "练习"
+//        return nameLable
+//        
+//    }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 10
@@ -121,6 +126,18 @@ class DayPracticeViewController: UIViewController, UITableViewDelegate, UITableV
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!EveryDayTableViewCell
+        let info = self.dataSource.objectlist[indexPath.section]
+        if info.haschild == 1 {
+            let child = self.childDataSource.objectlist[indexPath.row]
+            cell.titLab.text = child.name
+            cell.titImage.setImage(UIImage(named: picArr[indexPath.row]), forState: .Normal)
+        }else{
+        cell.selectionStyle = .None
+        cell.titLab.text = info.name
+        cell.titImage.setImage(UIImage(named: picArr[indexPath.row]), forState: .Normal)
+//        cell.start.addTarget(self, action: #selector(self.startTheTest), forControlEvents: .TouchUpInside)
+//        cell.start.tag = indexPath.row
+        }
         
         let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
         line.backgroundColor = UIColor.grayColor()

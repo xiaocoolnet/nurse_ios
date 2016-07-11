@@ -12,7 +12,12 @@ import MBProgressHUD
 class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     let myTableView = UITableView()
+<<<<<<< Updated upstream
     var netData = titleList()
+=======
+    var dataSource = titleList()
+    
+>>>>>>> Stashed changes
     let picArr:[String] = ["ic_rn.png","ic_earth.png","ic_moon.png","ic_maozi_one.png","ic_maozi_two.png","ic_maozi_three.png"]
     
     override func viewWillAppear(animated: Bool) {
@@ -65,7 +70,20 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
+<<<<<<< Updated upstream
                     self.netData = titleList(status.data!)
+=======
+                    
+                    //                    self.createTableView()
+                    print(status)
+                    self.dataSource = titleList(status.data!)
+                    
+                    print(self.dataSource)
+                    print("-----")
+                    print(titleList(status.data!).objectlist)
+                    
+                    
+>>>>>>> Stashed changes
                     self.myTableView .reloadData()
                 }
             }
@@ -77,6 +95,7 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+<<<<<<< Updated upstream
         if netData.objectlist[section].haschild == 0 {
             return 1
         }
@@ -102,7 +121,14 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         backview.addSubview(image)
         backview.addSubview(titleLabel)
         return backview
+=======
+        
+        return self.dataSource.objectlist.count
+>>>>>>> Stashed changes
     }
+    
+    
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!EveryDayTableViewCell
         var info:EveryDayInfo
@@ -114,13 +140,20 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.selectionStyle = .None
         cell.titLab.text = info.name
         cell.titImage.setImage(UIImage(named: picArr[indexPath.row]), forState: .Normal)
+<<<<<<< Updated upstream
         cell.start.userInteractionEnabled = false
+=======
+        cell.start.addTarget(self, action: #selector(self.startTheTest), forControlEvents: .TouchUpInside)
+        cell.start.tag = indexPath.row
+        
+>>>>>>> Stashed changes
         let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
         line.backgroundColor = UIColor.grayColor()
         
         cell.addSubview(line)
         if indexPath.row == 5 {
             line.removeFromSuperview()
+
         }
         cell.num.text = info.count
         
