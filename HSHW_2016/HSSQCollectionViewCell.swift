@@ -54,9 +54,7 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
         var a:UIResponder = self
-        
         while !a.isKindOfClass(HSWCommunityHome.self){
             a = a.nextResponder()!
         }

@@ -166,7 +166,6 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
         if indexPath.section == 0 {
             if indexPath.row == 0 {
                 let next = EveryDayViewController()
@@ -222,6 +221,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
     }
+    
     func pageNext() {
         scrollView.contentOffset = CGPointMake(WIDTH*CGFloat(pageControl.currentPage), 0)
     }

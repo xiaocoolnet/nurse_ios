@@ -7,16 +7,21 @@
 //
 
 import UIKit
+import MBProgressHUD
 
-class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegate {
-
+class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+    
     let titLab = UITextField()
     let textContent = UITextView()
     let textLab = UILabel()
     let bottom = UIView()
     let roomKind = UIButton(type:.Custom)
     let addImg = UIButton(type: .Custom)
- 
+    var collectImageView:UICollectionView?
+    var selectImages = Array<UIImage>()
+    let helper = HSNurseStationHelper()
+    let typeid = "1"
+    let picurl = ""
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
     }
@@ -45,10 +50,21 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
         titLab.delegate = self
         self.view.addSubview(titLab)
         
-        textContent.frame = CGRectMake(8, 70, WIDTH-16, HEIGHT-204-WIDTH*70/375)
+        textContent.frame = CGRectMake(8, 70, WIDTH-16, 80)
         textContent.delegate = self
         textContent.font = UIFont.systemFontOfSize(14)
         self.view.addSubview(textContent)
+        
+        let contLine = UIView(frame: CGRectMake(0,165,WIDTH,1))
+        contLine.backgroundColor = UIColor.blackColor()
+        view.addSubview(contLine)
+        
+        collectImageView = UICollectionView(frame: CGRectMake(0, 170, WIDTH, 60), collectionViewLayout: UICollectionViewFlowLayout())
+        collectImageView!.registerNib(UINib(nibName:"HSImageCollectionCell",bundle: nil), forCellWithReuseIdentifier: "cell")
+        collectImageView?.dataSource = self
+        collectImageView?.delegate = self
+        collectImageView?.backgroundColor = UIColor.whiteColor()
+        view.addSubview(collectImageView!)
         
         textLab.frame = CGRectMake(12, 78, 50, 20)
         textLab.textColor = UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1.0)
@@ -90,10 +106,51 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
 
         // Do any additional setup after loading the view.
     }
+    
     func addTheImage() {
         print("添加图片")
-        
+        let picker = UIImagePickerController()
+        picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        picker.delegate = self
+        picker.allowsEditing = true
+        presentViewController(picker, animated: true, completion: nil)
     }
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        let type = info[UIImagePickerControllerMediaType] as! String
+        if type != "public.image" {
+            return
+        }
+        
+        //裁剪后图片
+        let image = info[UIImagePickerControllerEditedImage] as! UIImage
+        let data = UIImageJPEGRepresentation(image, 0.1)!
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyyMMddHHmmss"
+        let dateStr = dateFormatter.stringFromDate(NSDate())
+        let imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
+        
+        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") {  (data) in
+            dispatch_async(dispatch_get_main_queue(), { [unowned self] in
+                let result = Http(JSONDecoder(data))
+                if result.status != nil {
+                        if result.status! == "success"{
+                            self.selectImages.append(image)
+                            self.collectImageView?.reloadData()
+                        }else{
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "图片上传失败"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                        }
+                }
+            })
+        }
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+
     func textViewDidChange(textView: UITextView) {
         if textView.text.isEmpty {
             textLab.hidden = false
@@ -101,14 +158,44 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
             textLab.hidden = true
         }
     }
+    //MARK:---collectionAbout----
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    //设置每个分区元素个数
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return  selectImages.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! HSImageCollectionCell
+        cell.imageView.image = selectImages[indexPath.row]
+        return cell
+    }
+    //每个cell大小
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
+        return CGSizeMake(50, 50)
+    }
+    //边距
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets{
+        return UIEdgeInsetsMake(0, 0, 0, 0);
+    }
+    //行距
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat{
+        return 0
+    }
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         titLab.resignFirstResponder()
         textContent.resignFirstResponder()
     }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
+    
     func keyBoardChangFrame(info:NSNotification) {
         let infoDic = info.userInfo
         let keyBoardRect = infoDic!["UIKeyboardFrameEndUserInfoKey"]?.CGRectValue()
@@ -119,28 +206,37 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
             self.textContent.frame = CGRectMake(8, 70, WIDTH-16, keyBoardTranslate-WIDTH*70/375-90)
             self.addImg.frame = CGRectMake(WIDTH-WIDTH*70/375-10, keyBoardTranslate-WIDTH*70/375-10, WIDTH*70/375, WIDTH*70/375)
             }, completion: nil)
-        
     }
+    
     func takeUpTheTest() {
         print("提交")
         titLab.resignFirstResponder()
         textContent.resignFirstResponder()
-       
-        if (textContent.text!.isEmpty||textContent.text?.characters.count <= 10)
+        
+        if (textContent.text!.isEmpty||textContent.text?.characters.count <= 2)
         {
             let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("字数太少，请继续编辑？", comment: "empty message"), preferredStyle: .Alert)
             let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
             alertController.addAction(doneAction)
             self.presentViewController(alertController, animated: true, completion: nil)
         }else{
-            self.titLab.text = ""
-            self.textContent.text = ""
-            self.textLab.hidden = false
+            helper.postForumCard(typeid, title: titLab.text!, content: textContent.text, picurl: picurl, handle: { (success, response) in
+                if success {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "发布成功"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                        
+                    })
+                }
+            })
         }
     }
+    
     func selectorTheRoom() {
         print("选择科室")
-        
-        
     }
 }

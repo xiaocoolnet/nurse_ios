@@ -93,4 +93,21 @@ class HSNurseStationHelper: NSObject {
             }
         }
     }
+    //发布帖子
+    func postForumCard(typid:String,title:String,content:String,picurl:String, handle:ResponseBlock){
+        let url = PARK_URL_Header+"addbbsposts"
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid,"typeid":typid,"title":title,"content":content,"picurl":picurl]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = Http(JSONDecoder(json!))
+                if(result.status == "success"){
+                    handle(success: true, response: nil)
+                }else{
+                    handle(success: false, response: nil)
+                }
+            }
+        }
+    }
 }

@@ -105,6 +105,8 @@
 		F63E19881D17DB4E001BDE8A /* icon_callback.png in Resources */ = {isa = PBXBuildFile; fileRef = F63E19871D17DB4E001BDE8A /* icon_callback.png */; };
 		F63E198D1D17E10E001BDE8A /* HSZRecruitmentHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */; };
 		F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */; };
+		F661F25C1D33754E00E04CE8 /* HSImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */; };
+		F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */; };
 		F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66216861D1E228B0099AD0E /* HSCVListModel.swift */; };
 		F66912391D2B5C0C0021706B /* HSStudyNetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66912381D2B5C0C0021706B /* HSStudyNetHelper.swift */; };
 		F6A598941D1B6F7C000D6E37 /* HSMineHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */; };
@@ -250,6 +252,8 @@
 		F63E19871D17DB4E001BDE8A /* icon_callback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_callback.png; sourceTree = "<group>"; };
 		F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZRecruitmentHome.swift; sourceTree = "<group>"; };
 		F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZSliderMenuView.swift; sourceTree = "<group>"; };
+		F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSImageCollectionCell.swift; sourceTree = "<group>"; };
+		F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSImageCollectionCell.xib; sourceTree = "<group>"; };
 		F66216861D1E228B0099AD0E /* HSCVListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSCVListModel.swift; sourceTree = "<group>"; };
 		F66912381D2B5C0C0021706B /* HSStudyNetHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStudyNetHelper.swift; sourceTree = "<group>"; };
 		F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineHelper.swift; sourceTree = "<group>"; };
@@ -621,6 +625,8 @@
 				F6CC83991D2797F300B9A358 /* HSPostResumeView.swift */,
 				F6338B931D29105B00EE5CA2 /* HSStateCommentCell.swift */,
 				F6338B941D29105B00EE5CA2 /* HSStateCommentCell.xib */,
+				F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */,
+				F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -880,6 +886,7 @@
 				F632EF131D192F530038AF9D /* HSWorkPlaceController.xib in Resources */,
 				F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */,
 				1F7B9FE41D21218F00A3A3CB /* ReleaseTimeCell.xib in Resources */,
+				F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */,
 				F63E19881D17DB4E001BDE8A /* icon_callback.png in Resources */,
 				183B84FD1CE5BFDC00709235 /* Assets.xcassets in Resources */,
 				F632EF151D1949910038AF9D /* HSComOpenHeader.xib in Resources */,
@@ -1022,6 +1029,7 @@
 				F6C04AF81D20D4D2009E1613 /* ConnectModel.m in Sources */,
 				183B84F61CE5BFDC00709235 /* AppDelegate.swift in Sources */,
 				F631470D1D1A2BEE005103C9 /* HSComOpenHeader.swift in Sources */,
+				F661F25C1D33754E00E04CE8 /* HSImageCollectionCell.swift in Sources */,
 				F61228091D057B1E009E3D4D /* HuLiViewController.swift in Sources */,
 				185408811CE7005A00DFBA7C /* TouTiaoViewController.swift in Sources */,
 				0BDAB62D1D2A43380081E883 /* QuestionModel.swift in Sources */,

@@ -109,7 +109,6 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                 QCLoginUserInfo.currentInfo.avatar = result.data!
                             }
                         })
-                        
                     }else{
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;

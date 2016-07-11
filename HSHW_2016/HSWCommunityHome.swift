@@ -70,15 +70,15 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         cell.backgroundColor = .whiteColor()
         return cell
     }
-    //
+    //每个cell大小
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
         return collectionView.frame.size
     }
-    
+    //边距
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets{
         return UIEdgeInsetsMake(0, 0, 0, 0);
     }
-    
+    //行距
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat{
         return 0
     }
