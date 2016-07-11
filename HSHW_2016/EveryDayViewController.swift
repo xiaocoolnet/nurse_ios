@@ -82,12 +82,14 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
         return netData.objectlist[section].childlist.count
     }
+    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if netData.objectlist[section].haschild == 0 {
             return 0
         }
         return 30
     }
+    
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if netData.objectlist[section].haschild == 0 {
             return nil
@@ -103,6 +105,7 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         backview.addSubview(titleLabel)
         return backview
     }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!EveryDayTableViewCell
         var info:EveryDayInfo
@@ -121,6 +124,7 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.addSubview(line)
         if indexPath.row == 5 {
             line.removeFromSuperview()
+
         }
         cell.num.text = info.count
         

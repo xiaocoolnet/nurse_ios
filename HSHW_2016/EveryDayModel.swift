@@ -71,9 +71,8 @@ class EveryDayInfo: JSONJoy {
     var count:String
     var haschild:Int
     var childlist = Array<EveryDayInfo>()
-    
+
     required init(_ decoder: JSONDecoder){
-        
         term_id = decoder["term_id"].string ?? ""
         name = decoder["name"].string ?? ""
         count = decoder["count"].string ?? ""
@@ -83,5 +82,43 @@ class EveryDayInfo: JSONJoy {
                 childlist.append(EveryDayInfo(child))
             }
         }
+}
+
+class ChildList: JSONJoy {
+    var status:String?
+    var objectlist: [ChildInfo]
+    var count: Int{
+        return self.objectlist.count
+    }
+    
+    required init(_ decoder: JSONDecoder) {
+        objectlist = Array<ChildInfo>()
+        for childs: JSONDecoder in decoder.array!{
+            objectlist.append(ChildInfo(childs))
+        }
+    }
+    
+    func append(list: [ChildInfo]){
+        self.objectlist = list + self.objectlist
     }
 }
+
+
+class ChildInfo: JSONJoy {
+    
+    var term_id :String?
+    var name :String?
+    init() {
+    }
+    
+    required init(_ decoder: JSONDecoder){
+        
+        term_id = decoder["term_id"].string
+        name = decoder["name"].string
+    }
+    }
+}
+
+
+
+
