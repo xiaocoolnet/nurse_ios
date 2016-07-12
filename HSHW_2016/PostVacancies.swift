@@ -30,6 +30,8 @@ class PostVacancies: UIView {
     @IBOutlet weak var moneyBtn: UIButton!
     @IBOutlet weak var requestField: UITextView!
     var selfNav:UINavigationController?
+    
+    var array = NSArray()
    
     @IBAction func sendBtnClicked(sender: AnyObject) {
         if delegate != nil {
@@ -48,11 +50,31 @@ class PostVacancies: UIView {
         
         let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
         selfNav = tabBar.selectedViewController as? UINavigationController
+        
+        array = ["北京市","北京市","朝阳区"]
+
+        
     }
     
     @IBAction func workplaceBtnClick(sender: AnyObject) {
-        let vc = HSStateEditResumeController()
-        selfNav?.pushViewController(vc, animated: true)
+
+        // 初始化
+        
+        let pick = AdressPickerView.shareInstance
+        
+        // 设置是否显示区县等，默认为false不显示
+        pick.showTown=true
+        pick.pickArray=array // 设置第一次加载时需要跳转到相对应的地址
+//        self.view.addSubview(pick)
+        self.addSubview(pick)
+        // 选择完成之后回调
+        pick.selectAdress { (dressArray) in
+            
+            self.array=dressArray
+            print("选择的地区是: \(dressArray)")
+            self.workplaceBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
+        }
+        
     }
     
     @IBAction func positionBtnClick(sender: AnyObject) {
