@@ -14,7 +14,7 @@ protocol HSPostResumeViewDelegate:NSObjectProtocol{
     func saveResumeBtnClicked()
 }
 
-class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate {
+class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate, ChangeDelegate {
     
     @IBOutlet weak var borderView1: UIView!
     @IBOutlet weak var borderView2: UIView!
@@ -53,6 +53,18 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     var picker:DatePickerView?
     var pick:AdressPickerView?
     var array = NSArray()
+    
+    var vc = HSEditResumeViewController()
+    var next = HSEditResumeViewController()
+    var nextVC = HSEditResumeViewController()
+    var VC = HSEditResumeViewController()
+    
+    let help = HSNurseStationHelper()
+    let id = "1"
+    let picurl = ""
+    
+    var imageName = String()
+    
     
     
     weak var delegate:HSPostResumeViewDelegate?
@@ -99,7 +111,39 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     }
     
     @IBAction func saveResumeCilcked(sender: AnyObject) {
-        delegate?.saveResumeBtnClicked()
+//        delegate?.saveResumeBtnClicked()
+        print(id)
+        print(imageName)
+        print(nameTextFeild.text)
+        print(workTextField.text)
+        print(sexLable.text)
+        print(birthBtn.titleLabel?.text)
+        print(educationBtn.titleLabel?.text)
+        print(placeBtn.titleLabel?.text)
+        print(stateField.text)
+        print(moneyBtn.titleLabel?.text)
+        print(phoneField.text)
+        print(mailboxField.text)
+        print(entryTimeBtn.titleLabel?.text)
+        print(targetCityBtn.titleLabel?.text)
+        print(expectPayBtn.titleLabel?.text)
+        print(expectPostBtn.titleLabel?.text)
+        print(selfEvaluate.text)
+        
+        help.postForum(id, avatar:imageName, name: nameTextFeild.text!, experience: workTextField.text!, sex: sexTextField.text!, birthday:(birthBtn.titleLabel?.text!)!, marital:(educationBtn.titleLabel?.text!)! , address:(placeBtn.titleLabel?.text!)!, jobstate:stateField.text!, currentsalary:(moneyBtn.titleLabel?.text!)!, phone:phoneField.text!, email:mailboxField.text!, hiredate:(entryTimeBtn.titleLabel?.text)!, wantcity:(targetCityBtn.titleLabel?.text!)!, wantsalary:(expectPayBtn.titleLabel?.text!)!, wantposition:(expectPostBtn.titleLabel?.text!)!, description:selfEvaluate.text, handle: { (success, response) in
+            if success {
+                dispatch_async(dispatch_get_main_queue(), {
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "发布成功"
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                    
+                })
+            }
+        })
+
     }
     
     @IBAction func birthbuttonClick(sender: AnyObject) {
@@ -121,9 +165,27 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     }
     
     @IBAction func educationbtnClick(sender: AnyObject) {
-        let vc = HSStateEditResumeController()
+//        let vc = HSEditResumeViewController()
+        vc.delegate = self
+        vc.num = "1"
         selfNav?.pushViewController(vc, animated: true)
     }
+    
+    func change(controller:HSEditResumeViewController,string:String,idStr:String){
+
+        if idStr == "1" {
+            educationBtn.setTitle(string, forState: .Normal)
+        }else if idStr == "14"{
+            moneyBtn.setTitle(string, forState: .Normal)
+        }else if idStr == "12"{
+            expectPayBtn.setTitle(string, forState: .Normal)
+        }else if idStr == "13"{
+            expectPostBtn.setTitle(string, forState: .Normal)
+        }
+        
+    }
+    
+    
     
     @IBAction func placeBtnClick(sender: AnyObject) {
 
@@ -135,7 +197,8 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         // 设置是否显示区县等，默认为false不显示
         pick.showTown=true
         pick.pickArray=array // 设置第一次加载时需要跳转到相对应的地址
-        self.view.addSubview(pick)
+//        self.addSubview(pick)
+         pick.show((UIApplication.sharedApplication().keyWindow)!)
         // 选择完成之后回调
         pick.selectAdress { (dressArray) in
             
@@ -150,29 +213,63 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     }
     
     @IBAction func moneyBtnClick(sender: AnyObject) {
-        let vc = HSStateEditResumeController()
-        selfNav?.pushViewController(vc, animated: true)
+        
+        next.num = "14"
+        next.delegate = self
+        selfNav?.pushViewController(next, animated: true)
+
     }
     
     @IBAction func entryTimeBtnClick(sender: AnyObject) {
-        let vc = HSStateEditResumeController()
-        selfNav?.pushViewController(vc, animated: true)
+        
+        picker = DatePickerView.getShareInstance()
+        picker!.textColor = UIColor.redColor()
+        picker!.showWithDate(NSDate())
+        picker?.block = {
+            (date:NSDate)->() in
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd zzz"
+            let string = formatter.stringFromDate(date)
+            let range:Range = string.rangeOfString(" ")!
+            let time = string.substringToIndex(range.endIndex)
+            self.entryTimeBtn.setTitle(time, forState: .Normal)
+            
+        }
+
     }
     
     @IBAction func targetCityBtnClick(sender: AnyObject) {
-        let vc = HSStateEditResumeController()
-        selfNav?.pushViewController(vc, animated: true)
+        let pick = AdressPickerView.shareInstance
+        
+        // 设置是否显示区县等，默认为false不显示
+        pick.showTown=true
+        pick.pickArray=array // 设置第一次加载时需要跳转到相对应的地址
+        //        self.addSubview(pick)
+        pick.show((UIApplication.sharedApplication().keyWindow)!)
+        // 选择完成之后回调
+        pick.selectAdress { (dressArray) in
+            
+            self.array=dressArray
+            print("选择的地区是: \(dressArray)")
+            
+            //            self.placeBtn.text="\(dressArray[0])  \(dressArray[1])  \(dressArray[2])"
+            self.targetCityBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
+            print(1111)
+        }
+
     }
 
     
     @IBAction func expectPayBtn(sender: AnyObject) {
-        let vc = HSStateEditResumeController()
-        selfNav?.pushViewController(vc, animated: true)
+        nextVC.delegate = self
+        nextVC.num = "12"
+        selfNav?.pushViewController(nextVC, animated: true)
     }
     
     @IBAction func expectPostBtnClick(sender: AnyObject) {
-        let vc = HSStateEditResumeController()
-        selfNav?.pushViewController(vc, animated: true)
+        VC.delegate = self
+        VC.num = "13"
+        selfNav?.pushViewController(VC, animated: true)
     }
     
     func click(){
@@ -233,7 +330,7 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyyMMddHHmmss"
         let dateStr = dateFormatter.stringFromDate(NSDate())
-        let imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
+        imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
         
         ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") { [unowned self] (data) in
             dispatch_async(dispatch_get_main_queue(), {
@@ -267,3 +364,6 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
 }
+
+
+

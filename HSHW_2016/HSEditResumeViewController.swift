@@ -1,8 +1,8 @@
 //
-//  HSStateEditResumeController.swift
+//  HSEditResumeViewController.swift
 //  HSHW_2016
 //
-//  Created by xiaocool on 16/7/8.
+//  Created by JQ on 16/7/12.
 //  Copyright © 2016年 校酷网络科技公司. All rights reserved.
 //
 
@@ -10,26 +10,28 @@ import UIKit
 import MBProgressHUD
 import Alamofire
 
-//typealias dateBlock = (str:String)->()
+//定义协议改变Btn的标题
+protocol ChangeDelegate:NSObjectProtocol{
+    //回调方法
+    func change(controller:HSEditResumeViewController,string:String, idStr:String)
+}
 
-class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    private static let _shareInstance = HSStateEditResumeController()
-    class func getShareInstance()-> HSStateEditResumeController{
-        return _shareInstance;
-    }
-    var block:dateBlock?
+class HSEditResumeViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var myTableView = UITableView()
     var dateSource = EduList()
     
+    var num = String()
+    var id = String()
     
+    
+    
+    var delegate:ChangeDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = COLOR
+
         // Do any additional setup after loading the view.
-        
         myTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-108)
         myTableView.backgroundColor = UIColor.whiteColor()
         myTableView.delegate = self
@@ -46,6 +48,10 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
         return dateSource.objectlist.count
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 60
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell  {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         cell.selectionStyle = .None
@@ -58,15 +64,22 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(1111)
-        let eduInfo = self.dateSource.objectlist[indexPath.row]
-        QCLoginUserInfo.currentInfo.education = eduInfo.name
+        let eduInfo = self.dateSource.objectlist[indexPath.row].name
+        id = num
+        print(eduInfo)
+//        if((delegate) != nil){
+            delegate?.change(self, string: eduInfo, idStr: id)
+
+//        }
         self.navigationController?.popViewControllerAnimated(true)
     }
+    
     
     func dataGet(){
         
         let url = PARK_URL_Header+"getDictionaryList"
-        let param = ["type":"1"]
+        let param = ["type":num]
+        print(param)
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 
@@ -84,14 +97,30 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
                 if(status.status == "success"){
                     print(status)
                     self.dateSource = EduList(status.data!)
-                
+                    
                     self.myTableView .reloadData()
                 }
             }
             
         }
-
+        
     }
 
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
 
 }

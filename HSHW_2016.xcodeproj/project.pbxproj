@@ -12,6 +12,7 @@
 		0B6FED501D3382B800A4488E /* EducationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FED4F1D3382B800A4488E /* EducationModel.swift */; };
 		0B6FED521D33999700A4488E /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B6FED511D33999700A4488E /* area.plist */; };
 		0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */; };
+		0BAB74BF1D34B95200D2E365 /* HSEditResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */; };
 		0BAF21BC1D1134790065146B /* LoginUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAF21BB1D1134790065146B /* LoginUserInfoModel.swift */; };
 		0BAF21C41D113E100065146B /* QCLoginUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAF21C31D113E100065146B /* QCLoginUserInfo.swift */; };
 		0BB378551D2B4BE600E4A84D /* OnlineTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB378541D2B4BE600E4A84D /* OnlineTextViewController.swift */; };
@@ -156,6 +157,7 @@
 		0B6FED4F1D3382B800A4488E /* EducationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EducationModel.swift; sourceTree = "<group>"; };
 		0B6FED511D33999700A4488E /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeName.swift; sourceTree = "<group>"; };
+		0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSEditResumeViewController.swift; sourceTree = "<group>"; };
 		0BAF21BB1D1134790065146B /* LoginUserInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginUserInfoModel.swift; sourceTree = "<group>"; };
 		0BAF21C31D113E100065146B /* QCLoginUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCLoginUserInfo.swift; sourceTree = "<group>"; };
 		0BB378541D2B4BE600E4A84D /* OnlineTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineTextViewController.swift; sourceTree = "<group>"; };
@@ -731,6 +733,7 @@
 				F632EF101D192F530038AF9D /* HSWorkPlaceController.swift */,
 				F632EF111D192F530038AF9D /* HSWorkPlaceController.xib */,
 				F63B3A6E1D2F953600C5B2CF /* HSStateEditResumeController.swift */,
+				0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */,
 			);
 			name = Recruitment;
 			sourceTree = "<group>";
@@ -1009,6 +1012,7 @@
 				0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */,
 				181E0D271CEBF85100E34A7F /* MineStudyViewController.swift in Sources */,
 				F6338B911D28F80C00EE5CA2 /* HSPostDetailController.swift in Sources */,
+				0BAB74BF1D34B95200D2E365 /* HSEditResumeViewController.swift in Sources */,
 				183B866F1CE5CF9500709235 /* Http.swift in Sources */,
 				185408791CE6C8B600DFBA7C /* NurseStationViewController.swift in Sources */,
 				F6B4083D1D1D212800BDFDBE /* HSNurseStationHelper.swift in Sources */,

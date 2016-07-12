@@ -91,9 +91,9 @@ class AdressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     private func  initUserInterface()->Void{
         self.frame=CGRectMake(0, 0, width, height)
         self.backgroundColor=UIColor.clearColor()
-        bgView.frame=CGRectMake(0, height - 340, width, 200)
-        bgView.backgroundColor = UIColor.redColor()
-//        bgView.backgroundColor=UIColor ( red: 0.902, green: 0.902, blue: 0.902, alpha: 1.0 )
+        bgView.frame=CGRectMake(0, height - 200, width, 200)
+//        bgView.backgroundColor = UIColor.lightGrayColor()
+        bgView.backgroundColor=UIColor ( red: 242/255.0, green: 242/255.0, blue: 242/255.0, alpha: 1.0 )
         self.addSubview(bgView)
         
         
