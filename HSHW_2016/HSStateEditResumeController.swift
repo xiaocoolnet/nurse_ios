@@ -10,7 +10,11 @@ import UIKit
 import MBProgressHUD
 import Alamofire
 
-//typealias dateBlock = (str:String)->()
+//定义协议改变Label内容
+protocol ChangeWordDelegate:NSObjectProtocol{
+    //回调方法
+    func changeWord(controller:HSStateEditResumeController,string:String)
+}
 
 class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     

@@ -146,10 +146,7 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
             self.placeBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
             print(1111)
         }
-        // 加载
-        pick.show(self.view)
-        
-        
+               
     }
     
     @IBAction func moneyBtnClick(sender: AnyObject) {
