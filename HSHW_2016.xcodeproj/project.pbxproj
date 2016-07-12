@@ -111,6 +111,7 @@
 		F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */; };
 		F661F25C1D33754E00E04CE8 /* HSImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */; };
 		F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */; };
+		F661F25F1D33BB7B00E04CE8 /* HSSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661F25E1D33BB7B00E04CE8 /* HSSelectController.swift */; };
 		F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66216861D1E228B0099AD0E /* HSCVListModel.swift */; };
 		F66912391D2B5C0C0021706B /* HSStudyNetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66912381D2B5C0C0021706B /* HSStudyNetHelper.swift */; };
 		F6A598941D1B6F7C000D6E37 /* HSMineHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */; };
@@ -130,6 +131,8 @@
 		F6D02CDF1D07BB5300353557 /* contentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6D02CDD1D07BB5300353557 /* contentCell.swift */; };
 		F6D02CE01D07BB5300353557 /* contentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6D02CDE1D07BB5300353557 /* contentCell.xib */; };
 		F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6E00DE71D263CC100D023B8 /* HSPostResumeView.xib */; };
+		F6E86AF61D34DF7E001536B6 /* HSForumDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E86AF41D34DF7E001536B6 /* HSForumDetailCell.swift */; };
+		F6E86AF71D34DF7E001536B6 /* HSForumDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6E86AF51D34DF7E001536B6 /* HSForumDetailCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -249,7 +252,7 @@
 		F632EF101D192F530038AF9D /* HSWorkPlaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSWorkPlaceController.swift; sourceTree = "<group>"; };
 		F632EF111D192F530038AF9D /* HSWorkPlaceController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSWorkPlaceController.xib; sourceTree = "<group>"; };
 		F632EF141D1949910038AF9D /* HSComOpenHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSComOpenHeader.xib; sourceTree = "<group>"; };
-		F6338B8F1D28F80C00EE5CA2 /* HSPostDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSPostDetailController.swift; sourceTree = "<group>"; };
+		F6338B8F1D28F80C00EE5CA2 /* HSPostDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSPostDetailController.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		F6338B901D28F80C00EE5CA2 /* HSPostDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSPostDetailController.xib; sourceTree = "<group>"; };
 		F6338B931D29105B00EE5CA2 /* HSStateCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStateCommentCell.swift; sourceTree = "<group>"; };
 		F6338B941D29105B00EE5CA2 /* HSStateCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSStateCommentCell.xib; sourceTree = "<group>"; };
@@ -262,6 +265,7 @@
 		F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZSliderMenuView.swift; sourceTree = "<group>"; };
 		F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSImageCollectionCell.swift; sourceTree = "<group>"; };
 		F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSImageCollectionCell.xib; sourceTree = "<group>"; };
+		F661F25E1D33BB7B00E04CE8 /* HSSelectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSSelectController.swift; sourceTree = "<group>"; };
 		F66216861D1E228B0099AD0E /* HSCVListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSCVListModel.swift; sourceTree = "<group>"; };
 		F66912381D2B5C0C0021706B /* HSStudyNetHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStudyNetHelper.swift; sourceTree = "<group>"; };
 		F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineHelper.swift; sourceTree = "<group>"; };
@@ -283,6 +287,8 @@
 		F6D02CDD1D07BB5300353557 /* contentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = contentCell.swift; sourceTree = "<group>"; };
 		F6D02CDE1D07BB5300353557 /* contentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = contentCell.xib; sourceTree = "<group>"; };
 		F6E00DE71D263CC100D023B8 /* HSPostResumeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSPostResumeView.xib; sourceTree = "<group>"; };
+		F6E86AF41D34DF7E001536B6 /* HSForumDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSForumDetailCell.swift; sourceTree = "<group>"; };
+		F6E86AF51D34DF7E001536B6 /* HSForumDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSForumDetailCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -638,6 +644,8 @@
 				F6338B941D29105B00EE5CA2 /* HSStateCommentCell.xib */,
 				F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */,
 				F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */,
+				F6E86AF41D34DF7E001536B6 /* HSForumDetailCell.swift */,
+				F6E86AF51D34DF7E001536B6 /* HSForumDetailCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -718,6 +726,7 @@
 				F63E19801D17C38A001BDE8A /* HSWCommunityHome.xib */,
 				F6338B8F1D28F80C00EE5CA2 /* HSPostDetailController.swift */,
 				F6338B901D28F80C00EE5CA2 /* HSPostDetailController.xib */,
+				F661F25E1D33BB7B00E04CE8 /* HSSelectController.swift */,
 			);
 			name = Community;
 			sourceTree = "<group>";
@@ -911,6 +920,7 @@
 				F63E19821D17C38A001BDE8A /* HSWCommunityHome.xib in Resources */,
 				F632EF0F1D18E8890038AF9D /* HSSQCollectionViewCell.xib in Resources */,
 				F6D02CE01D07BB5300353557 /* contentCell.xib in Resources */,
+				F6E86AF71D34DF7E001536B6 /* HSForumDetailCell.xib in Resources */,
 				183B84FB1CE5BFDC00709235 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -993,6 +1003,7 @@
 				F632EF0E1D18E8890038AF9D /* HSSQCollectionViewCell.swift in Sources */,
 				0BC3878E1D339C2C001460B8 /* AdressPickerView.swift in Sources */,
 				183B86741CE5CFA000709235 /* CornerRadiusViewController.swift in Sources */,
+				F6E86AF61D34DF7E001536B6 /* HSForumDetailCell.swift in Sources */,
 				F6D02CDF1D07BB5300353557 /* contentCell.swift in Sources */,
 				0BDAB6371D2A58E80081E883 /* NurseStatusViewController.swift in Sources */,
 				0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */,
@@ -1037,6 +1048,7 @@
 				189849B41CE812CB007B37B4 /* TouTiaoTableViewCell.swift in Sources */,
 				F6D02CDB1D07A46800353557 /* NewsSourceCell.swift in Sources */,
 				F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */,
+				F661F25F1D33BB7B00E04CE8 /* HSSelectController.swift in Sources */,
 				181E0D2F1CEBF8E000E34A7F /* MineRecruitViewController.swift in Sources */,
 				185408831CE7052700DFBA7C /* NewsContantViewController.swift in Sources */,
 				18C0BF971CEB63FB003E2886 /* QuestionBankViewController.swift in Sources */,
@@ -1251,7 +1263,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1285,7 +1297,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Release;
 		};

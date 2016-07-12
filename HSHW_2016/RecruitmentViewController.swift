@@ -26,9 +26,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var jobDataSource:Array<JobModel>?
     var CVDataSource:Array<CVModel>?
     var showType = 1
-    
     var num = 1
-    
     
     weak var superViewController:NurseStationViewController?
     

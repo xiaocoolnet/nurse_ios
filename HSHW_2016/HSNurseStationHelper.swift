@@ -110,4 +110,21 @@ class HSNurseStationHelper: NSObject {
             }
         }
     }
+    //获取论坛分类
+    func getBBSTypeData(handle:ResponseBlock){
+        let url = PARK_URL_Header+"getbbstype"
+        
+        Alamofire.request(.GET, url, parameters: nil).response { request, response, json, error in
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = ForumTypes(JSONDecoder(json!))
+                if(result.status == "success"){
+                    handle(success: true, response: result.datas)
+                }else{
+                    handle(success: false, response: nil)
+                }
+            }
+        }
+    }
 }

@@ -20,18 +20,16 @@ class HSPostDetailController: UIViewController,UITableViewDataSource, UITableVie
     @IBOutlet weak var level: UILabel!
     @IBOutlet weak var seeCount: UILabel!
     @IBOutlet weak var sendTime: UILabel!
-    @IBOutlet weak var contentWeb: UIWebView!
     @IBOutlet weak var collectionBtn: UIButton!
     @IBOutlet weak var goodBtn: UIButton!
     @IBOutlet weak var goodLabel: UILabel!
     @IBOutlet weak var commentBtn: UIButton!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var veiwHeightConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var fenxiangBtn: UIButton!
     @IBOutlet weak var likeBtn: UIButton!
-    var newsInfo :NewsInfo?
-    var dataSource = NewsList()
+    @IBOutlet weak var contentTableView:UITableView!
+    var forumInfo:ForumModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,43 +38,35 @@ class HSPostDetailController: UIViewController,UITableViewDataSource, UITableVie
         commentView.estimatedRowHeight = 108
         commentView.rowHeight = UITableViewAutomaticDimension
         
-        for subView in contentWeb!.subviews
-        {
-            let v = subView
-            if v.isKindOfClass(UIScrollView.self) == true
-            {
-                (v as! UIScrollView).scrollEnabled = false
-                (v as! UIScrollView).alwaysBounceVertical = false
-                
-                (v as! UIScrollView).showsHorizontalScrollIndicator = false
-                (v as! UIScrollView).showsVerticalScrollIndicator = false
-            }
-        }
-        // Do any additional setup after loading the view.
-        
+        contentTableView.estimatedRowHeight = 100
+        contentTableView.rowHeight = UITableViewAutomaticDimension
+        contentTableView.registerNib(UINib(nibName: "HSForumDetailCell",bundle: nil), forCellReuseIdentifier: "detailcell")
+        let text = "记录第一次发帖"
+        let height = calculateHeight(text, size: 15, width: WIDTH - 40)
+        let label = UILabel(frame: CGRectMake(20,0,WIDTH-40,height+20))
+        label.numberOfLines = 0
+        label.text = text
+        contentTableView.tableHeaderView = label
     }
-    func loadRequestUrl(requestUrl:NSURL){
-        contentWeb.loadRequest(NSURLRequest(URL: requestUrl))
-    }
-    
-   
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if tableView.tag == 233  {
+            let detailCell = tableView.dequeueReusableCellWithIdentifier("detailcell") as! HSForumDetailCell
+            return detailCell
+        }
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSStateCommentCell
         return cell
     }
     
     @IBAction func fenxiangBtnClick(sender: AnyObject) {
+        
     }
     
     @IBAction func likeBtnClick(sender: AnyObject) {
+        
     }
-    
 }
-
-
-

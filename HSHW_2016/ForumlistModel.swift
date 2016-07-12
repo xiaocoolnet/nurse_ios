@@ -25,6 +25,34 @@ class ForumlistModel: JSONJoy {
     }
 }
 
+class ForumTypes: JSONJoy {
+    var status:String?
+    var datas = Array<ForumTypeModel>()
+    var errorData:String?
+    
+    required init(_ decoder:JSONDecoder){
+        status = decoder["status"].string
+        if status == "success"{
+            for childs:JSONDecoder in decoder["data"].array! {
+                datas.append(ForumTypeModel(childs))
+            }
+        }else{
+            errorData = decoder["data"].string
+        }
+    }
+}
+
+class ForumTypeModel: JSONJoy {
+    
+    var term_id:String
+    var name:String
+    
+    required init(_ decoder:JSONDecoder){
+        term_id = decoder["term_id"].string ?? ""
+        name = decoder["name"].string ?? ""
+    }
+}
+
 class ForumModel: JSONJoy {
     
     var mid:String
