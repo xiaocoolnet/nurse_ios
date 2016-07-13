@@ -213,6 +213,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
         case (0,2):
             changeNameVC.showType = HSEditUserInfo.Sex
             changeNameVC.title = "编辑性别"
+            changeNameVC.id = "17"
         case (0,3):
             changeNameVC.showType = HSEditUserInfo.PhoneNumber
             changeNameVC.title = "编辑手机号"
@@ -245,6 +246,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
             changeNameVC.showType = HSEditUserInfo.Education
             changeNameVC.title = "编辑学历"
             changeNameVC.text1 = threedeArr[indexPath.row]
+            changeNameVC.id = "1"
         default:
             changeNameVC.showType = HSEditUserInfo.Default
             changeNameVC.title = "默认"

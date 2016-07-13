@@ -16,6 +16,7 @@ class DatePickerView: UIView,UIPickerViewDataSource,UIPickerViewDelegate {
         return _shareInstance;
     }
     var block:dateBlock?
+    
     var textColor:UIColor = UIColor.blackColor(); //字体颜色 默认为黑色
     var buColor:UIColor = UIColor.whiteColor(); //按钮栏背景颜色 默认为白色
     var pickerColor:UIColor = UIColor.whiteColor(); //选择器背景色 默认为白色
