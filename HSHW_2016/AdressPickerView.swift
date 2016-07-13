@@ -83,18 +83,25 @@ class AdressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
                 picker.selectRow(secon, inComponent: 1, animated: true)
             }
         }
+        // 改动
+//        UIView.animateWithDuration(0.3) {
+//            self.bgView.frame=CGRectMake(self.bgView.frame.origin.x, view.bounds.height-300, self.bgView.bounds.size.width, self.bgView.bounds.size.height)
+//        }
         UIView.animateWithDuration(0.3) {
-            self.bgView.frame=CGRectMake(self.bgView.frame.origin.x, view.bounds.height-300, self.bgView.bounds.size.width, self.bgView.bounds.size.height)
+            self.bgView.frame=CGRectMake(self.bgView.frame.origin.x, view.bounds.height-self.bgView.bounds.size.height, self.bgView.bounds.size.width, self.bgView.bounds.size.height)
         }
     }
     
     private func  initUserInterface()->Void{
         self.frame=CGRectMake(0, 0, width, height)
         self.backgroundColor=UIColor.clearColor()
-        bgView.frame=CGRectMake(0, height - 340, width, 200)
-        bgView.backgroundColor = UIColor.redColor()
-//        bgView.backgroundColor=UIColor ( red: 0.902, green: 0.902, blue: 0.902, alpha: 1.0 )
+        bgView.frame=CGRectMake(0, height - 220, width, 220)
+        bgView.backgroundColor=UIColor ( red: 0.902, green: 0.902, blue: 0.902, alpha: 1.0 )
         self.addSubview(bgView)
+        
+//        // 加一手势，适用于点击空白处返回
+//        let tapGes:UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(AdressPickerView.cancle))
+//        self.addGestureRecognizer(tapGes)
         
         
         // 添加两个按钮
@@ -179,34 +186,61 @@ class AdressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
         }
     }
     //MARK: UIPickerViewDelegate
-    internal func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//    internal func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+//        if showTown {
+//            if component==0 {
+//                return provinceArray[row] as? String
+//            }else if component==1{
+//                let index=pickerView.selectedRowInComponent(0)
+//                cityArray=countyArray[provinceArray[index] as! String]!.allKeys
+//                return cityArray[row] as? String
+//            }else{
+//                let index=pickerView.selectedRowInComponent(0)
+//                let index1=pickerView.selectedRowInComponent(1)
+//                areaArray=(countyArray[provinceArray[index] as! String] as! Dictionary)[cityArray[index1] as! String]!
+//                return areaArray[row] as? String
+//            }
+//        }else{
+//            if component==0 {
+//                return provinceArray[row] as? String
+//            }else{
+//                let index=pickerView.selectedRowInComponent(0)
+//                cityArray=countyArray[provinceArray[index] as! String]!.allKeys
+//                return cityArray[row] as? String
+//            }
+//        }
+//    }
+    // 上方方法改动为下方可以自动调节字体大小的方法
+    internal func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
+        let lable=UILabel()
+        
+        lable.sizeToFit()
+        lable.adjustsFontSizeToFitWidth = true
+        lable.textAlignment = NSTextAlignment.Center
+        
         if showTown {
             if component==0 {
-                return provinceArray[row] as? String
+                lable.text = provinceArray[row] as? String
             }else if component==1{
                 let index=pickerView.selectedRowInComponent(0)
                 cityArray=countyArray[provinceArray[index] as! String]!.allKeys
-                return cityArray[row] as? String
+                lable.text = cityArray[row] as? String
             }else{
                 let index=pickerView.selectedRowInComponent(0)
                 let index1=pickerView.selectedRowInComponent(1)
                 areaArray=(countyArray[provinceArray[index] as! String] as! Dictionary)[cityArray[index1] as! String]!
-                return areaArray[row] as? String
+                lable.text = areaArray[row] as? String
             }
         }else{
             if component==0 {
-                return provinceArray[row] as? String
+                lable.text = provinceArray[row] as? String
             }else{
                 let index=pickerView.selectedRowInComponent(0)
                 cityArray=countyArray[provinceArray[index] as! String]!.allKeys
-                return cityArray[row] as? String
+                lable.text = cityArray[row] as? String
             }
         }
-    }
-    internal func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 20
-    }
-    internal func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
         addressArray=NSMutableArray()
         if showTown {
             if component==0 {
@@ -246,6 +280,54 @@ class AdressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
                 addressArray!.addObject(cityArray[row])
             }
         }
+
+        return    lable
+        
+        
     }
+    internal func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 20
+    }
+//    internal func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+//        addressArray=NSMutableArray()
+//        if showTown {
+//            if component==0 {
+//                pickerView.reloadComponent(1)
+//                pickerView.reloadComponent(2)
+//                pickerView.selectRow(0, inComponent: 1, animated: true)
+//                pickerView.selectRow(0, inComponent: 2, animated: true)
+//                // 添加数据
+//                addressArray!.addObject(provinceArray[row])
+//                addressArray!.addObject(cityArray[0])
+//                addressArray!.addObject(areaArray[0])
+//            }else if component==1{
+//                pickerView.reloadComponent(2)
+//                pickerView.selectRow(0, inComponent: 2, animated: true)
+//                
+//                let index1=pickerView.selectedRowInComponent(0)
+//                addressArray!.addObject(provinceArray[index1])
+//                addressArray!.addObject(cityArray[row])
+//                addressArray!.addObject(areaArray[0])
+//            }else{
+//                let index1=pickerView.selectedRowInComponent(0)
+//                let index2=pickerView.selectedRowInComponent(1)
+//                addressArray!.addObject(provinceArray[index1])
+//                addressArray!.addObject(cityArray[index2])
+//                addressArray!.addObject(areaArray[row])
+//            }
+//        }else{
+//            if component==0 {
+//                pickerView.reloadComponent(1)
+//                pickerView.selectRow(0, inComponent: 1, animated: true)
+//                
+//                addressArray!.addObject(provinceArray[row])
+//                addressArray!.addObject(cityArray[0])
+//            }else{
+//                let index1=pickerView.selectedRowInComponent(0)
+//                addressArray!.addObject(provinceArray[index1])
+//                addressArray!.addObject(cityArray[row])
+//            }
+//        }
+//    }
     
 }

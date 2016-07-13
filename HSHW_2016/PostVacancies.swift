@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol PostVacanciesDelegate:NSObjectProtocol {
+protocol PostVacanciesDelegate:NSObjectProtocol{
     func clickedSendBtn()
 }
 
-class PostVacancies: UIView {
+class PostVacancies: UIView , ChangeWordDelegate{
     
     weak var delegate:PostVacanciesDelegate?
     @IBOutlet weak var bordView:UIView!
@@ -66,7 +66,8 @@ class PostVacancies: UIView {
         pick.showTown=true
         pick.pickArray=array // 设置第一次加载时需要跳转到相对应的地址
 //        self.view.addSubview(pick)
-        self.addSubview(pick)
+//        self.addSubview(pick)
+        pick.show((UIApplication.sharedApplication().keyWindow)!)
         // 选择完成之后回调
         pick.selectAdress { (dressArray) in
             
@@ -77,28 +78,56 @@ class PostVacancies: UIView {
         
     }
     
+    func  changeWord(controller:HSStateEditResumeController,string:String){
+        switch controller.portType {
+            case PortType.position:
+                positionBtn.setTitle(string, forState: UIControlState.Normal)
+            case PortType.condition:
+                conditionBtn.setTitle(string, forState: UIControlState.Normal)
+            case PortType.welfare:
+                treatmentBtn.setTitle(string, forState: UIControlState.Normal)
+            case PortType.number:
+                personBtn.setTitle(string, forState: UIControlState.Normal)
+            case PortType.money:
+                moneyBtn.setTitle(string, forState: UIControlState.Normal)
+            default:
+                print("defaut")
+        }
+    }
+
+    
     @IBAction func positionBtnClick(sender: AnyObject) {
         let vc = HSStateEditResumeController()
+        vc.portType = PortType.position
+        vc.delegate = self
         selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func conditionBtnClick(sender: AnyObject) {
         let vc = HSStateEditResumeController()
+        vc.portType = PortType.condition
+        vc.delegate = self
         selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func treatmentBtnClick(sender: AnyObject) {
         let vc = HSStateEditResumeController()
+        vc.portType = PortType.welfare
+        vc.delegate = self
         selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func personBtnClick(sender: AnyObject) {
         let vc = HSStateEditResumeController()
+        vc.portType = PortType.number
+        vc.delegate = self
         selfNav?.pushViewController(vc, animated: true)
     }
     
     @IBAction func moneyBtnClick(sender: AnyObject) {
         let vc = HSStateEditResumeController()
+        vc.portType = PortType.money
+        vc.delegate = self
         selfNav?.pushViewController(vc, animated: true)
     }
     

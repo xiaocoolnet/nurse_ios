@@ -10,6 +10,11 @@ import UIKit
 import MBProgressHUD
 import Alamofire
 
+//接口类型
+enum PortType{
+    case position,condition,welfare,number,money,defaut
+}
+
 //定义协议改变Label内容
 protocol ChangeWordDelegate:NSObjectProtocol{
     //回调方法
@@ -17,7 +22,7 @@ protocol ChangeWordDelegate:NSObjectProtocol{
 }
 
 class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+
     private static let _shareInstance = HSStateEditResumeController()
     class func getShareInstance()-> HSStateEditResumeController{
         return _shareInstance;
@@ -26,9 +31,14 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
     
     var myTableView = UITableView()
     var dateSource = EduList()
+    var delegate: ChangeWordDelegate?
     
+    var portType: PortType = .defaut{
+        didSet{
+            dataGet(portType)
+        }
+    }
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = COLOR
@@ -41,8 +51,6 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.bounces = false
         self.view.addSubview(myTableView)
-        
-        self.dataGet()
         
     }
     
@@ -64,13 +72,37 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
         print(1111)
         let eduInfo = self.dateSource.objectlist[indexPath.row]
         QCLoginUserInfo.currentInfo.education = eduInfo.name
+        delegate?.changeWord(self, string: eduInfo.name)
         self.navigationController?.popViewControllerAnimated(true)
+        print(eduInfo.name)
     }
     
-    func dataGet(){
+    func dataGet(portType:PortType){
         
         let url = PARK_URL_Header+"getDictionaryList"
-        let param = ["type":"1"]
+        var param = ["type":"1"]
+        
+        switch portType {
+            case .position:
+                param = ["type":"7"]
+                self.title = "招聘职位"
+            case .condition:
+                param = ["type":"8"]
+                self.title = "招聘条件"
+            case .welfare:
+                param = ["type":"9"]
+                self.title = "福利待遇"
+            case .number:
+                param = ["type":"10"]
+                self.title = "招聘人数"
+            case .money:
+                param = ["type":"11"]
+                self.title = "薪资待遇"
+            default:
+                print("defaut")
+        }
+        print(param)
+        
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 
