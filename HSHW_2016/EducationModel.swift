@@ -51,7 +51,6 @@ class EduList: JSONJoy {
     
 }
 
-
 class EduInfo: JSONJoy{
     var id:String
     var name:String

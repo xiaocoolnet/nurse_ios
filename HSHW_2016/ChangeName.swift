@@ -75,7 +75,6 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                         self.navigationController?.popViewControllerAnimated(true)
                     }
                 })
-                
             })
         }else if showType == .BirthDay {
             mineHelper.changeBirthday(textFeild.text!, handle: {[unowned self] (success, response) in

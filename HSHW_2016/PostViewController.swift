@@ -19,9 +19,11 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
     let addImg = UIButton(type: .Custom)
     var collectImageView:UICollectionView?
     var selectImages = Array<UIImage>()
+    var imageNames = Array<String>()
     let helper = HSNurseStationHelper()
-    let typeid = "1"
-    let picurl = ""
+    var picurl = ""
+    var columnDatas:Array<ForumTypeModel>?
+    var selectTypeModel:ForumTypeModel?
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
     }
@@ -86,7 +88,7 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
         jiantou.image = UIImage(named: "ic_arrow_purple.png")
         bottom.addSubview(jiantou)
         roomKind.frame = CGRectMake(WIDTH-68, 10, 51, 30)
-        roomKind.setTitle("儿科", forState: .Normal)
+        roomKind.setTitle("请选择", forState: .Normal)
         roomKind.titleLabel?.font = UIFont.systemFontOfSize(16)
         roomKind.setTitleColor(COLOR, forState: .Normal)
         roomKind.addTarget(self, action: #selector(self.selectorTheRoom), forControlEvents: .TouchUpInside)
@@ -136,6 +138,7 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
                 if result.status != nil {
                         if result.status! == "success"{
                             self.selectImages.append(image)
+                            self.imageNames.append(imageName)
                             self.collectImageView?.reloadData()
                         }else{
                             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -159,7 +162,6 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
         }
     }
     //MARK:---collectionAbout----
-    
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -173,17 +175,23 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
         cell.imageView.image = selectImages[indexPath.row]
         return cell
     }
-    //每个cell大小
+
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
         return CGSizeMake(50, 50)
     }
-    //边距
+
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets{
-        return UIEdgeInsetsMake(0, 0, 0, 0);
+        return UIEdgeInsetsMake(4, 4, 4, 4);
     }
-    //行距
+
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat{
-        return 0
+        return 2
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        imageNames.removeAtIndex(indexPath.row)
+        selectImages.removeAtIndex(indexPath.row)
+        collectionView.reloadData()
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -219,24 +227,52 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
             let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
             alertController.addAction(doneAction)
             self.presentViewController(alertController, animated: true, completion: nil)
-        }else{
-            helper.postForumCard(typeid, title: titLab.text!, content: textContent.text, picurl: picurl, handle: { (success, response) in
-                if success {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "发布成功"
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
-                        
-                    })
-                }
-            })
+            return
         }
+        if titLab.text!.isEmpty {
+            return
+        }
+        if selectTypeModel == nil {
+            return
+        }
+        picurl = NSArray(array: imageNames).componentsJoinedByString(",")
+        helper.postForumCard(selectTypeModel!.term_id, title: titLab.text!, content: textContent.text, picurl: picurl, handle: { (success, response) in
+            if success {
+                dispatch_async(dispatch_get_main_queue(), {
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = "发布成功"
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                })
+            }
+        })
+        
     }
     
     func selectorTheRoom() {
-        print("选择科室")
+        helper.getBBSTypeData { (success, response) in
+            if success {
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.columnDatas = response as? Array<ForumTypeModel>
+                    var names = Array<String>()
+                    for model in self.columnDatas! {
+                        names.append(model.name)
+                    }
+                    if !names.isEmpty {
+                        let vc = HSSelectController()
+                        vc.setSelectHandleWith({ [unowned self] (index) in
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.roomKind.setTitle(self.columnDatas![index].name, forState: .Normal)
+                                self.selectTypeModel = self.columnDatas![index]
+                            })
+                        })
+                        vc.setDataSource(names)
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                })
+            }
+        }
     }
 }

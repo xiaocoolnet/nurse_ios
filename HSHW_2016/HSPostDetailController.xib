@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -13,7 +13,7 @@
                 <outlet property="commentBtn" destination="B3c-gC-bXO" id="Y1f-y5-e8D"/>
                 <outlet property="commentLabel" destination="Vpc-0x-cdf" id="31h-FM-VtJ"/>
                 <outlet property="commentView" destination="Q0u-Kd-nFQ" id="7Jh-ZD-zsv"/>
-                <outlet property="contentWeb" destination="I6h-bc-8jp" id="fvI-7a-rJP"/>
+                <outlet property="contentTableView" destination="f6V-Ul-pEb" id="kZb-zh-Rq1"/>
                 <outlet property="fenxiangBtn" destination="lmW-uN-cu8" id="yX1-dp-Ah4"/>
                 <outlet property="goodBtn" destination="FHC-Jl-wqe" id="w1K-ED-8US"/>
                 <outlet property="goodLabel" destination="ffG-DP-eaR" id="0Gf-cm-NFV"/>
@@ -36,7 +36,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4MQ-vv-XPu">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="800"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bbF-qo-lga">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
@@ -137,16 +137,26 @@
                                     </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gD7-tf-BBa">
-                                    <rect key="frame" x="0.0" y="90" width="320" height="100"/>
+                                    <rect key="frame" x="0.0" y="90" width="320" height="332"/>
                                     <subviews>
-                                        <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I6h-bc-8jp">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
-                                            <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="deviceRGB"/>
-                                        </webView>
+                                        <tableView clipsSubviews="YES" tag="233" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="f6V-Ul-pEb">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="332"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <outlet property="dataSource" destination="-1" id="9Io-FH-Sba"/>
+                                                <outlet property="delegate" destination="-1" id="evG-gK-AYl"/>
+                                            </connections>
+                                        </tableView>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="f6V-Ul-pEb" firstAttribute="leading" secondItem="gD7-tf-BBa" secondAttribute="leading" id="2cT-86-2BQ"/>
+                                        <constraint firstAttribute="trailing" secondItem="f6V-Ul-pEb" secondAttribute="trailing" id="VW2-Ag-r9X"/>
+                                        <constraint firstItem="f6V-Ul-pEb" firstAttribute="top" secondItem="gD7-tf-BBa" secondAttribute="top" id="X8I-MB-DFe"/>
+                                        <constraint firstAttribute="bottom" secondItem="f6V-Ul-pEb" secondAttribute="bottom" id="smm-Zl-Y6u"/>
+                                    </constraints>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gJ5-09-j1P">
-                                    <rect key="frame" x="0.0" y="190" width="320" height="50"/>
+                                    <rect key="frame" x="0.0" y="422" width="320" height="50"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bA3-Na-g8I">
                                             <rect key="frame" x="26" y="10" width="30" height="30"/>
@@ -194,7 +204,7 @@
                                     </constraints>
                                 </view>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Q0u-Kd-nFQ">
-                                    <rect key="frame" x="0.0" y="240" width="320" height="260"/>
+                                    <rect key="frame" x="0.0" y="472" width="320" height="260"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="260" id="NL0-50-0MG"/>
@@ -205,7 +215,7 @@
                                     </connections>
                                 </tableView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fpx-Bv-WcO">
-                                    <rect key="frame" x="0.0" y="500" width="320" height="68"/>
+                                    <rect key="frame" x="0.0" y="732" width="320" height="68"/>
                                     <subviews>
                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="回复楼主" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="84s-hi-YBQ">
                                             <rect key="frame" x="84" y="19" width="265" height="30"/>
@@ -249,7 +259,7 @@
                                 <constraint firstItem="fpx-Bv-WcO" firstAttribute="leading" secondItem="4MQ-vv-XPu" secondAttribute="leading" id="9UJ-3b-rUg"/>
                                 <constraint firstAttribute="trailing" secondItem="gD7-tf-BBa" secondAttribute="trailing" id="9ef-1W-5aU"/>
                                 <constraint firstAttribute="trailing" secondItem="gJ5-09-j1P" secondAttribute="trailing" id="Eoq-DT-Sw2"/>
-                                <constraint firstAttribute="height" constant="568" id="Gek-bJ-DaC"/>
+                                <constraint firstAttribute="height" constant="800" id="Gek-bJ-DaC"/>
                                 <constraint firstItem="bbF-qo-lga" firstAttribute="leading" secondItem="4MQ-vv-XPu" secondAttribute="leading" id="HCY-eW-9WZ"/>
                                 <constraint firstAttribute="trailing" secondItem="fpx-Bv-WcO" secondAttribute="trailing" id="NcL-6b-tW6"/>
                                 <constraint firstItem="gJ5-09-j1P" firstAttribute="leading" secondItem="4MQ-vv-XPu" secondAttribute="leading" id="Ray-Ix-de1"/>

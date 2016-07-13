@@ -14,7 +14,6 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
     @IBOutlet weak var secondNewsView: UIView!
     @IBOutlet weak var thirdNewsView: UIView!
     @IBOutlet weak var fourthNewsView: UIView!
-    
     @IBOutlet weak var firstNewsLabel: UILabel!
     @IBOutlet weak var secondNewsLabel: UILabel!
     @IBOutlet weak var thirdNewsLabel: UILabel!
@@ -59,6 +58,6 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
             a = a.nextResponder()!
         }
         let vc = a as! HSWCommunityHome
-        vc.postDetailWithModel()
+        vc.postDetailWithModel(dataSource[indexPath.row])
     }
 }

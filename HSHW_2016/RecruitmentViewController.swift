@@ -26,14 +26,13 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var jobDataSource:Array<JobModel>?
     var CVDataSource:Array<CVModel>?
     var showType = 1
-    
     var num = 1
-    
     
     weak var superViewController:NurseStationViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureUI()
         makeDataSource()
         sendPostion.delegate = self
         sendResume.delegate = self
@@ -71,7 +70,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                     self.jobDataSource = response as? Array<JobModel> ?? []
                     self.myTableView.reloadData()
-                     self.configureUI()
+//                     self.configureUI()
                 })
             })
         } else if showType == 2 {
@@ -82,7 +81,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                     self.CVDataSource = response as? Array<CVModel> ?? []
                     self.myTableView.reloadData()
-                    self.configureUI()
+//                    self.configureUI()
                 })
             })
         }
@@ -238,7 +237,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         //let mycell = tableView.dequeueReusableCellWithIdentifier("identifier", forIndexPath: indexPath)
         
         if tableView.tag == 0 {
-            
+        
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!RecruitTableViewCell
             cell.selectionStyle = .None
             if showType == 1 {
