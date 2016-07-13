@@ -32,6 +32,23 @@ class HSNurseStationHelper: NSObject {
             }
         }
     }
+    //发布招聘信息
+    func publishJob(companyname:String,companyinfo:String,phone:String,email:String,title:String,jobtype:String,education:String,welfare:String,address:String,count:String,salary:String,description:String, handle:ResponseBlock){
+        let url = PARK_URL_Header+"publishjob"
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid,"companyname":companyname,"companyinfo":companyinfo,"phone":phone,"email":email,"title":title,"jobtype":jobtype,"education":education,"welfare":welfare,"address":address,"count":count,"salary":salary,"description":description]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = Http(JSONDecoder(json!))
+                if(result.status == "success"){
+                    handle(success: true, response: nil)
+                }else{
+                    handle(success: false, response: nil)
+                }
+            }
+        }
+    }
     //获取简历列表
     func getCVList(handle:ResponseBlock){
         let url = PARK_URL_Header+"getResumeList"
