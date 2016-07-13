@@ -419,6 +419,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func rightBarButtonClicked() {
         if showType == 1 {
+            
             UIView.animateWithDuration(0.2) {
                 self.sendPostion.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
             }
@@ -484,7 +485,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         scrollView.setContentOffset(CGPointMake(WIDTH*CGFloat(times), 0), animated: true)
         times += 1
-        print("招聘1")
+        //MARK:注释掉两条输出信息
+//        print("招聘1")
     }
     
     func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
@@ -492,7 +494,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
             times = 1
         }
-        print("招聘2")
+//        print("招聘2")
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
