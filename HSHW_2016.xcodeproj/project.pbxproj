@@ -134,6 +134,8 @@
 		F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6E00DE71D263CC100D023B8 /* HSPostResumeView.xib */; };
 		F6E86AF61D34DF7E001536B6 /* HSForumDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E86AF41D34DF7E001536B6 /* HSForumDetailCell.swift */; };
 		F6E86AF71D34DF7E001536B6 /* HSForumDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6E86AF51D34DF7E001536B6 /* HSForumDetailCell.xib */; };
+		F6E9E9531D362AF000E99FDD /* HSHotPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E9E9511D362AF000E99FDD /* HSHotPostCell.swift */; };
+		F6E9E9541D362AF000E99FDD /* HSHotPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6E9E9521D362AF000E99FDD /* HSHotPostCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -291,6 +293,8 @@
 		F6E00DE71D263CC100D023B8 /* HSPostResumeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSPostResumeView.xib; sourceTree = "<group>"; };
 		F6E86AF41D34DF7E001536B6 /* HSForumDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSForumDetailCell.swift; sourceTree = "<group>"; };
 		F6E86AF51D34DF7E001536B6 /* HSForumDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSForumDetailCell.xib; sourceTree = "<group>"; };
+		F6E9E9511D362AF000E99FDD /* HSHotPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSHotPostCell.swift; sourceTree = "<group>"; };
+		F6E9E9521D362AF000E99FDD /* HSHotPostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSHotPostCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -648,6 +652,8 @@
 				F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */,
 				F6E86AF41D34DF7E001536B6 /* HSForumDetailCell.swift */,
 				F6E86AF51D34DF7E001536B6 /* HSForumDetailCell.xib */,
+				F6E9E9511D362AF000E99FDD /* HSHotPostCell.swift */,
+				F6E9E9521D362AF000E99FDD /* HSHotPostCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -912,6 +918,7 @@
 				F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */,
 				1F7B9FE41D21218F00A3A3CB /* ReleaseTimeCell.xib in Resources */,
 				F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */,
+				F6E9E9541D362AF000E99FDD /* HSHotPostCell.xib in Resources */,
 				F63E19881D17DB4E001BDE8A /* icon_callback.png in Resources */,
 				183B84FD1CE5BFDC00709235 /* Assets.xcassets in Resources */,
 				F632EF151D1949910038AF9D /* HSComOpenHeader.xib in Resources */,
@@ -1021,6 +1028,7 @@
 				0BB378571D2B504A00E4A84D /* OnlineTextTableViewCell.swift in Sources */,
 				18C240621CEF10150059BF48 /* OnlineExaminationViewController.swift in Sources */,
 				0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */,
+				F6E9E9531D362AF000E99FDD /* HSHotPostCell.swift in Sources */,
 				181E0D271CEBF85100E34A7F /* MineStudyViewController.swift in Sources */,
 				F6338B911D28F80C00EE5CA2 /* HSPostDetailController.swift in Sources */,
 				0BAB74BF1D34B95200D2E365 /* HSEditResumeViewController.swift in Sources */,
