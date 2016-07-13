@@ -77,9 +77,12 @@ class HSNurseStationHelper: NSObject {
         }
     }
     //获取论坛帖子列表
-    func getForumList(type:String,handle:ResponseBlock){
+    func getForumList(type:String,isHot:Bool,handle:ResponseBlock){
         let url = PARK_URL_Header+"getbbspostlist"
-        let param = ["type":type]
+        var param = ["type":type]
+        if isHot {
+            param["ishot"] = "1"
+        }
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 handle(success: false, response: error?.description)

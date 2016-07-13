@@ -22,7 +22,7 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         collectionView.registerNib(UINib(nibName: "HSSQCollectionViewCell",bundle: nil), forCellWithReuseIdentifier: "cell")
         collectionView.pagingEnabled = true
         collectionView.bounces = false
-        forumHelper.getForumList("1") { (success, response) in
+        forumHelper.getForumList("1",isHot: false) { (success, response) in
         }
         
         let posted = UIButton()

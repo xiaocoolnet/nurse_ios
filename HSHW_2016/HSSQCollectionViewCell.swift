@@ -29,7 +29,7 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
         super.awakeFromNib()
         bottomTableView.registerNib(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
         bottomTableView.rowHeight = UITableViewAutomaticDimension
-        helper.getForumList(typeid) {[unowned self] (success, response) in
+        helper.getForumList(typeid,isHot:  false) {[unowned self] (success, response) in
             self.dataSource = response as? Array<ForumModel> ?? []
             dispatch_async(dispatch_get_main_queue(), { 
                 self.bottomTableView.reloadData()
