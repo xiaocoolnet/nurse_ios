@@ -82,6 +82,20 @@ class AdressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
                 let secon=cityArray.indexOfObject(pickArray![1])
                 picker.selectRow(secon, inComponent: 1, animated: true)
             }
+            
+            addressArray=NSMutableArray()
+            if showTown {
+                // 添加数据
+                addressArray!.addObject(provinceArray[picker.selectedRowInComponent(0)])
+                addressArray!.addObject(cityArray[picker.selectedRowInComponent(1)])
+                addressArray!.addObject(areaArray[picker.selectedRowInComponent(2)])
+            }else{
+                // 添加数据
+                addressArray!.addObject(provinceArray[picker.selectedRowInComponent(0)])
+                addressArray!.addObject(cityArray[picker.selectedRowInComponent(1)])
+            }
+            
+           
         }
         // 改动
 //        UIView.animateWithDuration(0.3) {
@@ -241,6 +255,14 @@ class AdressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
             }
         }
         
+        return    lable
+    }
+    
+    internal func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 20
+    }
+    
+    internal func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         addressArray=NSMutableArray()
         if showTown {
             if component==0 {
@@ -280,54 +302,6 @@ class AdressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
                 addressArray!.addObject(cityArray[row])
             }
         }
-
-        return    lable
-        
-        
     }
-    internal func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 20
-    }
-//    internal func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        addressArray=NSMutableArray()
-//        if showTown {
-//            if component==0 {
-//                pickerView.reloadComponent(1)
-//                pickerView.reloadComponent(2)
-//                pickerView.selectRow(0, inComponent: 1, animated: true)
-//                pickerView.selectRow(0, inComponent: 2, animated: true)
-//                // 添加数据
-//                addressArray!.addObject(provinceArray[row])
-//                addressArray!.addObject(cityArray[0])
-//                addressArray!.addObject(areaArray[0])
-//            }else if component==1{
-//                pickerView.reloadComponent(2)
-//                pickerView.selectRow(0, inComponent: 2, animated: true)
-//                
-//                let index1=pickerView.selectedRowInComponent(0)
-//                addressArray!.addObject(provinceArray[index1])
-//                addressArray!.addObject(cityArray[row])
-//                addressArray!.addObject(areaArray[0])
-//            }else{
-//                let index1=pickerView.selectedRowInComponent(0)
-//                let index2=pickerView.selectedRowInComponent(1)
-//                addressArray!.addObject(provinceArray[index1])
-//                addressArray!.addObject(cityArray[index2])
-//                addressArray!.addObject(areaArray[row])
-//            }
-//        }else{
-//            if component==0 {
-//                pickerView.reloadComponent(1)
-//                pickerView.selectRow(0, inComponent: 1, animated: true)
-//                
-//                addressArray!.addObject(provinceArray[row])
-//                addressArray!.addObject(cityArray[0])
-//            }else{
-//                let index1=pickerView.selectedRowInComponent(0)
-//                addressArray!.addObject(provinceArray[index1])
-//                addressArray!.addObject(cityArray[row])
-//            }
-//        }
-//    }
     
 }

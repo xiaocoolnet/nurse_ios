@@ -12,7 +12,7 @@ protocol PostVacanciesDelegate:NSObjectProtocol{
     func clickedSendBtn()
 }
 
-class PostVacancies: UIView , ChangeWordDelegate{
+class PostVacancies: UIView , ChangeWordDelegate,UITextViewDelegate{
     
     weak var delegate:PostVacanciesDelegate?
     @IBOutlet weak var bordView:UIView!
@@ -29,6 +29,7 @@ class PostVacancies: UIView , ChangeWordDelegate{
     @IBOutlet weak var personBtn: UIButton!
     @IBOutlet weak var moneyBtn: UIButton!
     @IBOutlet weak var requestField: UITextView!
+    @IBOutlet weak var requestLabel: UILabel!
     var selfNav:UINavigationController?
     
     var array = NSArray()
@@ -53,7 +54,7 @@ class PostVacancies: UIView , ChangeWordDelegate{
         
         array = ["北京市","北京市","朝阳区"]
 
-        
+        requestField.delegate = self
     }
     
     @IBAction func workplaceBtnClick(sender: AnyObject) {
@@ -129,6 +130,15 @@ class PostVacancies: UIView , ChangeWordDelegate{
         vc.portType = PortType.money
         vc.delegate = self
         selfNav?.pushViewController(vc, animated: true)
+    }
+    
+    //MARK:UITextViewDelegate
+    func textViewDidChange(textView: UITextView) {
+        if (textView.text == "") {
+            requestLabel.text = "职位要求";
+        }else{
+            requestLabel.text = "";
+        }
     }
     
 }
