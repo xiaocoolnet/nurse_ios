@@ -175,13 +175,13 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
         cell.imageView.image = selectImages[indexPath.row]
         return cell
     }
-
+    //每个cell大小
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
         return CGSizeMake(50, 50)
     }
-
+    //边距
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets{
-        return UIEdgeInsetsMake(4, 4, 4, 4);
+        return UIEdgeInsetsMake(0, 0, 0, 0);
     }
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat{
