@@ -60,7 +60,7 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     var VC = HSEditResumeViewController()
     
     let help = HSNurseStationHelper()
-    let id = "1"
+    let userid = "1"
     let picurl = ""
     
     var imageName = String()
@@ -112,11 +112,11 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     
     @IBAction func saveResumeCilcked(sender: AnyObject) {
 //        delegate?.saveResumeBtnClicked()
-        print(id)
+        print(userid)
         print(imageName)
         print(nameTextFeild.text)
         print(workTextField.text)
-        print(sexLable.text)
+        print(sexTextField.text)
         print(birthBtn.titleLabel?.text)
         print(educationBtn.titleLabel?.text)
         print(placeBtn.titleLabel?.text)
@@ -130,7 +130,7 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         print(expectPostBtn.titleLabel?.text)
         print(selfEvaluate.text)
         
-        help.postForum(id, avatar:imageName, name: nameTextFeild.text!, experience: workTextField.text!, sex: sexTextField.text!, birthday:(birthBtn.titleLabel?.text!)!, marital:(educationBtn.titleLabel?.text!)! , address:(placeBtn.titleLabel?.text!)!, jobstate:stateField.text!, currentsalary:(moneyBtn.titleLabel?.text!)!, phone:phoneField.text!, email:mailboxField.text!, hiredate:(entryTimeBtn.titleLabel?.text)!, wantcity:(targetCityBtn.titleLabel?.text!)!, wantsalary:(expectPayBtn.titleLabel?.text!)!, wantposition:(expectPostBtn.titleLabel?.text!)!, description:selfEvaluate.text, handle: { (success, response) in
+        help.postForum(userid, avatar:imageName, name: nameTextFeild.text!, experience: workTextField.text!, sex: sexTextField.text!, birthday:(birthBtn.titleLabel?.text!)!, marital:(educationBtn.titleLabel?.text!)! , address:(placeBtn.titleLabel?.text!)!, jobstate:stateField.text!, currentsalary:(moneyBtn.titleLabel?.text!)!, phone:phoneField.text!, email:mailboxField.text!, hiredate:(entryTimeBtn.titleLabel?.text)!, wantcity:(targetCityBtn.titleLabel?.text!)!, wantsalary:(expectPayBtn.titleLabel?.text!)!, wantposition:(expectPostBtn.titleLabel?.text!)!, description:selfEvaluate.text, handle: { (success, response) in
             if success {
                 dispatch_async(dispatch_get_main_queue(), {
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)

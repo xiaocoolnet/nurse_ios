@@ -126,9 +126,9 @@ class HSNurseStationHelper: NSObject {
         }
     }
     // 发布简历
-    func postForum(id:String,avatar:String,name:String,experience:String,sex:String,birthday:String,marital:String,address:String,jobstate:String,currentsalary:String,phone:String,email:String,hiredate:String,wantcity:String,wantsalary:String,wantposition:String,description:String, handle:ResponseBlock){
-        let url = PARK_URL_Header+"UpdataMyResume"
-        let param = ["userid":QCLoginUserInfo.currentInfo.userid,"id":id,"avatar":avatar,"name":name,"experience":experience,"sex":sex,"birthday":birthday,"marital":marital,"address":address,"jobstate":jobstate,"currentsalary":currentsalary,"phone":phone,"email":email,"hiredate":hiredate,"wantcity":wantcity,"wantposition":wantposition,"description":description,]
+    func postForum(userid:String,avatar:String,name:String,experience:String,sex:String,birthday:String,marital:String,address:String,jobstate:String,currentsalary:String,phone:String,email:String,hiredate:String,wantcity:String,wantsalary:String,wantposition:String,description:String, handle:ResponseBlock){
+        let url = PARK_URL_Header+"PublishResume"
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid,"id":userid,"avatar":avatar,"name":name,"experience":experience,"sex":sex,"birthday":birthday,"marital":marital,"address":address,"jobstate":jobstate,"currentsalary":currentsalary,"phone":phone,"email":email,"hiredate":hiredate,"wantcity":wantcity,"wantposition":wantposition,"description":description,]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 handle(success: false, response: error?.description)

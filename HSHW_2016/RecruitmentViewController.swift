@@ -404,11 +404,11 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func postedTheView() {
         print("招聘")
-        if showType == 1 {
+        if showType == 2 {
             sendPostion.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
             self.view.addSubview(sendPostion)
             superViewController?.showRightBtn()
-        } else if showType == 2 {
+        } else if showType == 1 {
             sendResume.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
             self.view.addSubview(sendResume)
             
@@ -418,13 +418,13 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func rightBarButtonClicked() {
-        if showType == 1 {
+        if showType == 2 {
             UIView.animateWithDuration(0.2) {
                 self.sendPostion.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
             }
             self.sendPostion.removeFromSuperview()
             superViewController?.hiddenBtn()
-        } else if showType == 2 {
+        } else if showType == 1 {
             UIView.animateWithDuration(0.2) {
                 self.sendResume.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
             }
