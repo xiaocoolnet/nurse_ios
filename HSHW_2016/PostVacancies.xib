@@ -561,8 +561,8 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="  职位要求" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sj4-j7-RZE">
-                                                            <rect key="frame" x="65" y="10" width="235" height="82"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="职位要求" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sj4-j7-RZE">
+                                                            <rect key="frame" x="79" y="10" width="221" height="30"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -758,6 +758,7 @@
                 <outlet property="positionBtn" destination="wdn-DU-TKZ" id="qYa-jf-e0x"/>
                 <outlet property="postNameField" destination="ig9-nb-Gbf" id="YeF-Dj-1xV"/>
                 <outlet property="requestField" destination="BMi-Vp-ry2" id="9N9-GH-6un"/>
+                <outlet property="requestLabel" destination="Sj4-j7-RZE" id="PDg-AY-di3"/>
                 <outlet property="resumeFeild" destination="Fov-9Z-N7E" id="UEB-ei-tMw"/>
                 <outlet property="sendBtn" destination="Ewo-BM-bzV" id="bEe-sm-xVQ"/>
                 <outlet property="treatmentBtn" destination="erl-46-YYQ" id="7mV-Kv-CDp"/>

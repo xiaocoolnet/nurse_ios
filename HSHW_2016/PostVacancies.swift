@@ -12,7 +12,7 @@ protocol PostVacanciesDelegate:NSObjectProtocol{
     func clickedSendBtn()
 }
 
-class PostVacancies: UIView , ChangeWordDelegate{
+class PostVacancies: UIView , ChangeWordDelegate,UITextViewDelegate{
     
     weak var delegate:PostVacanciesDelegate?
     @IBOutlet weak var bordView:UIView!
@@ -29,6 +29,8 @@ class PostVacancies: UIView , ChangeWordDelegate{
     @IBOutlet weak var personBtn: UIButton!
     @IBOutlet weak var moneyBtn: UIButton!
     @IBOutlet weak var requestField: UITextView!
+    @IBOutlet weak var requestLabel: UILabel!
+    let helper = HSNurseStationHelper()
     var selfNav:UINavigationController?
     
     var array = NSArray()
@@ -37,6 +39,26 @@ class PostVacancies: UIView , ChangeWordDelegate{
         if delegate != nil {
             delegate?.clickedSendBtn()
         }
+        
+        print(firmNameField.text!,resumeFeild.text!,phoneField.text!,mailboxField.text!,postNameField.text!,"1",conditionBtn.currentTitle!,treatmentBtn.currentTitle!,workplaceBtn.currentTitle!,personBtn.currentTitle!,moneyBtn.currentTitle!,requestField.text)
+        
+        helper.publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionBtn.currentTitle!, education: conditionBtn.currentTitle!, welfare: treatmentBtn.currentTitle!, address: workplaceBtn.currentTitle!, count: personBtn.currentTitle!, salary: moneyBtn.currentTitle!, description: requestField.text) { (success, response) in
+            print(success)
+        }
+        
+        firmNameField.text = nil
+        resumeFeild.text = nil
+        phoneField.text = nil
+        mailboxField.text = nil
+        postNameField.text = nil
+        positionBtn.setTitle("请选择工作地点", forState: .Normal)
+        conditionBtn.setTitle("请选择招聘职位", forState: .Normal)
+        treatmentBtn.setTitle("请选择招聘条件", forState: .Normal)
+        workplaceBtn.setTitle("请选择福利待遇", forState: .Normal)
+        personBtn.setTitle("请选择招聘人数", forState: .Normal)
+        moneyBtn.setTitle("请选择薪资待遇", forState: .Normal)
+        requestField.text = nil
+        requestLabel.text = "职位要求"
     }
     
     override func layoutSubviews() {
@@ -53,7 +75,7 @@ class PostVacancies: UIView , ChangeWordDelegate{
         
         array = ["北京市","北京市","朝阳区"]
 
-        
+        requestField.delegate = self
     }
     
     @IBAction func workplaceBtnClick(sender: AnyObject) {
@@ -78,6 +100,7 @@ class PostVacancies: UIView , ChangeWordDelegate{
         
     }
     
+    // 招聘职位等选择完成后的回调
     func  changeWord(controller:HSStateEditResumeController,string:String){
         switch controller.portType {
             case PortType.position:
@@ -129,6 +152,15 @@ class PostVacancies: UIView , ChangeWordDelegate{
         vc.portType = PortType.money
         vc.delegate = self
         selfNav?.pushViewController(vc, animated: true)
+    }
+    
+    //MARK:UITextViewDelegate
+    func textViewDidChange(textView: UITextView) {
+        if (textView.text == "") {
+            requestLabel.text = "职位要求"
+        }else{
+            requestLabel.text = ""
+        }
     }
     
 }

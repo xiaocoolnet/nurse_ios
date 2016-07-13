@@ -484,7 +484,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         scrollView.setContentOffset(CGPointMake(WIDTH*CGFloat(times), 0), animated: true)
         times += 1
-        print("招聘1")
+        //MARK:注释掉两条输出信息
+//        print("招聘1")
     }
     
     func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
@@ -492,7 +493,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
             times = 1
         }
-        print("招聘2")
+//        print("招聘2")
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
