@@ -9,43 +9,62 @@
 import UIKit
 
 class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableViewDataSource {
-    
-    @IBOutlet weak var firstNewsView: UIView!
-    @IBOutlet weak var secondNewsView: UIView!
-    @IBOutlet weak var thirdNewsView: UIView!
-    @IBOutlet weak var fourthNewsView: UIView!
-    @IBOutlet weak var firstNewsLabel: UILabel!
-    @IBOutlet weak var secondNewsLabel: UILabel!
-    @IBOutlet weak var thirdNewsLabel: UILabel!
-    @IBOutlet weak var fourthNewsLabel: UILabel!
+
     @IBOutlet weak var bottomTableView: UITableView!
-    
+    @IBOutlet weak var hotTableView:UITableView!
     var helper = HSNurseStationHelper()
     var typeid = "1"
-    var dataSource = Array<ForumModel>()
+    var dataSource = Array<PostModel>()
+    var hotData = Array<PostModel>()
     var cellType:Int?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         bottomTableView.registerNib(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
+        bottomTableView.tag = 22
         bottomTableView.rowHeight = UITableViewAutomaticDimension
+        hotTableView.registerNib(UINib(nibName:"HSHotPostCell",bundle: nil), forCellReuseIdentifier: "hotcell")
+        hotTableView.tag = 11
+        hotTableView.scrollEnabled = false
+        hotTableView.tableFooterView = UIView()
         helper.getForumList(typeid,isHot:  false) {[unowned self] (success, response) in
-            self.dataSource = response as? Array<ForumModel> ?? []
+            self.dataSource = response as? Array<PostModel> ?? []
             dispatch_async(dispatch_get_main_queue(), { 
                 self.bottomTableView.reloadData()
+            })
+        }
+        helper.getForumList(typeid, isHot: true) { (success, response) in
+            self.hotData = response as? Array<PostModel> ?? []
+            print(response?.firstObject)
+            print(self.hotData.count)
+            print(self.hotData.first?.title)
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.hotTableView.reloadData()
             })
         }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView.tag == 11 {
+            return hotData.count
+        }
         return dataSource.count
     }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if tableView.tag == 11 {
+            return 60
+        }
         return 140
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        if tableView.tag == 11 {
+            let hotcell = tableView.dequeueReusableCellWithIdentifier("hotcell") as! HSHotPostCell
+            hotcell.showforForumModel(hotData[indexPath.row])
+            hotcell.selectionStyle = .None
+            return hotcell
+        }
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSComTableCell
         cell.showForForumModel(dataSource[indexPath.row])
         cell.selectionStyle = .None
@@ -53,11 +72,28 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
         var a:UIResponder = self
         while !a.isKindOfClass(HSWCommunityHome.self){
             a = a.nextResponder()!
         }
         let vc = a as! HSWCommunityHome
-        vc.postDetailWithModel(dataSource[indexPath.row])
+        
+     
+        //TODO:之前是下边有问题，还需要优化
+        if tableView.tag == 11 {
+            vc.postDetailWithModel_1(hotData[indexPath.row])
+        }else {
+            //
+            let model:PostModel = dataSource[indexPath.row]
+            print(model.mid)
+            helper.showPostInfo("1") { (success, response) in
+                let postM:PostModel = (response as? PostModel ?? nil)!
+                vc.postDetailWithModel_1(postM)
+                
+                print(response)
+            }
+        }
+        
     }
 }

@@ -9,15 +9,16 @@ import Foundation
 
 class ForumlistModel: JSONJoy {
     var status:String?
-    var datas = Array<ForumModel>()
+    var datas = Array<PostModel>()
     var errorData:String?
     var datastring:String?
     
     required init(_ decoder:JSONDecoder){
         status = decoder["status"].string
         if status == "success"{
+  
             for childs:JSONDecoder in decoder["data"].array! {
-                datas.append(ForumModel(childs))
+                datas.append(PostModel(childs))
             }
         }else{
             errorData = decoder["data"].string
@@ -68,8 +69,64 @@ class ForumModel: JSONJoy {
     var comment = Array<CommentModel>()
     
     required init(_ decoder:JSONDecoder){
+        
         mid = decoder["mid"].string ?? ""
         type = decoder["type"].string ?? ""
+        userid = decoder["userid"].string ?? ""
+        name = decoder["name"].string ?? ""
+        title = decoder["title"].string ?? ""
+        content = decoder["content"].string ?? ""
+        write_time = decoder["write_time"].string ?? ""
+        photo = decoder["photo"].string ?? ""
+        for child:JSONDecoder in decoder["pic"].array ?? [] {
+            pic.append(PicModel(child))
+        }
+        like = decoder["like"].string ?? ""
+        for child:JSONDecoder in decoder["comment"].array ?? [] {
+            comment.append(CommentModel(child))
+        }
+    }
+}
+
+class PostlistModel: JSONJoy {
+    var status:String?
+    var datas:PostModel?
+    var errorData:String?
+    var datastring:String?
+    
+    required init(_ decoder:JSONDecoder){
+        status = decoder["status"].string
+        if status == "success"{
+            
+            datas = PostModel(decoder["data"])
+        }else{
+            errorData = decoder["data"].string
+        }
+    }
+}
+
+class PostModel: JSONJoy {
+    
+    var mid:String
+    var best:String
+    var type:String
+    var typename:String
+    var userid:String
+    var name:String
+    var title:String
+    var content:String
+    var write_time:String
+    var photo:String
+    var pic = Array<PicModel>()
+    var like:String
+    var comment = Array<CommentModel>()
+    
+    required init(_ decoder:JSONDecoder){
+        
+        mid = decoder["mid"].string ?? ""
+        best = decoder["best"].string ?? ""
+        type = decoder["type"].string ?? ""
+        typename = decoder["typename"].string ?? ""
         userid = decoder["userid"].string ?? ""
         name = decoder["name"].string ?? ""
         title = decoder["title"].string ?? ""

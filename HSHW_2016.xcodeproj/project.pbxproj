@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1911C01D11222700CDE18D /* LoginModel.swift */; };
+		0B64EBE01D37A60F001548EE /* HSForumDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B64EBDF1D37A60F001548EE /* HSForumDetailCell.xib */; };
+		0B64EBE21D37A626001548EE /* ReleaseTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B64EBE11D37A626001548EE /* ReleaseTimeCell.xib */; };
 		0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FED4D1D3373FC00A4488E /* DataPickerView.swift */; };
 		0B6FED501D3382B800A4488E /* EducationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FED4F1D3382B800A4488E /* EducationModel.swift */; };
 		0B6FED521D33999700A4488E /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B6FED511D33999700A4488E /* area.plist */; };
@@ -24,6 +26,8 @@
 		0BDAB6351D2A588D0081E883 /* InternationNurseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */; };
 		0BDAB6371D2A58E80081E883 /* NurseStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6361D2A58E80081E883 /* NurseStatusViewController.swift */; };
 		0BEA9CAA1D1390120012FC11 /* ForgetPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEA9CA91D1390120012FC11 /* ForgetPasswordController.swift */; };
+		0D3780141D372390000D31E2 /* HSPostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */; };
+		0D3780151D372390000D31E2 /* HSPostDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */; };
 		180482EF1CEDF54200BF716C /* RecruitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180482EE1CEDF54200BF716C /* RecruitTableViewCell.swift */; };
 		18191D1E1CEC570100CD54FF /* FineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18191D1D1CEC570100CD54FF /* FineTableViewCell.swift */; };
 		181DE09B1CEAFFC00085ECB1 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DE09A1CEAFFC00085ECB1 /* PostViewController.swift */; };
@@ -77,7 +81,6 @@
 		1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */; };
 		1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */; };
 		1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */; };
-		1F7B9FE41D21218F00A3A3CB /* ReleaseTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE21D21218F00A3A3CB /* ReleaseTimeCell.xib */; };
 		D1FC268C65F633C38728A1DB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */; };
 		F604A4DC1D0E79F7008A4888 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4DB1D0E79F7008A4888 /* libicucore.tbd */; };
 		F604A4DE1D0E7A03008A4888 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4DD1D0E7A03008A4888 /* libz.tbd */; };
@@ -103,6 +106,10 @@
 		F6338B921D28F80C00EE5CA2 /* HSPostDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6338B901D28F80C00EE5CA2 /* HSPostDetailController.xib */; };
 		F6338B951D29105B00EE5CA2 /* HSStateCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6338B931D29105B00EE5CA2 /* HSStateCommentCell.swift */; };
 		F6338B961D29105B00EE5CA2 /* HSStateCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6338B941D29105B00EE5CA2 /* HSStateCommentCell.xib */; };
+		F63981081D373945002EE95B /* CFLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = F63981061D373945002EE95B /* CFLineChartView.m */; };
+		F63981091D373945002EE95B /* CFLineChartView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F63981071D373945002EE95B /* CFLineChartView.xib */; };
+		F639810C1D373C71002EE95B /* HSChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F639810A1D373C71002EE95B /* HSChartCell.swift */; };
+		F639810D1D373C71002EE95B /* HSChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F639810B1D373C71002EE95B /* HSChartCell.xib */; };
 		F63B3A6F1D2F953600C5B2CF /* HSStateEditResumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63B3A6E1D2F953600C5B2CF /* HSStateEditResumeController.swift */; };
 		F63BE1EF1D0546F9008292AC /* NewsPageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63BE1EE1D0546F9008292AC /* NewsPageHelper.swift */; };
 		F63E19811D17C38A001BDE8A /* HSWCommunityHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E197F1D17C38A001BDE8A /* HSWCommunityHome.swift */; };
@@ -133,7 +140,8 @@
 		F6D02CE01D07BB5300353557 /* contentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6D02CDE1D07BB5300353557 /* contentCell.xib */; };
 		F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6E00DE71D263CC100D023B8 /* HSPostResumeView.xib */; };
 		F6E86AF61D34DF7E001536B6 /* HSForumDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E86AF41D34DF7E001536B6 /* HSForumDetailCell.swift */; };
-		F6E86AF71D34DF7E001536B6 /* HSForumDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6E86AF51D34DF7E001536B6 /* HSForumDetailCell.xib */; };
+		F6E9E9531D362AF000E99FDD /* HSHotPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E9E9511D362AF000E99FDD /* HSHotPostCell.swift */; };
+		F6E9E9541D362AF000E99FDD /* HSHotPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6E9E9521D362AF000E99FDD /* HSHotPostCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +164,8 @@
 /* Begin PBXFileReference section */
 		0B1911C01D11222700CDE18D /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		0B26F5B17459B246981F92CE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		0B64EBDF1D37A60F001548EE /* HSForumDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSForumDetailCell.xib; sourceTree = "<group>"; };
+		0B64EBE11D37A626001548EE /* ReleaseTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReleaseTimeCell.xib; sourceTree = "<group>"; };
 		0B6FED4D1D3373FC00A4488E /* DataPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPickerView.swift; sourceTree = "<group>"; };
 		0B6FED4F1D3382B800A4488E /* EducationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EducationModel.swift; sourceTree = "<group>"; };
 		0B6FED511D33999700A4488E /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
@@ -172,6 +182,8 @@
 		0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternationNurseViewController.swift; sourceTree = "<group>"; };
 		0BDAB6361D2A58E80081E883 /* NurseStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NurseStatusViewController.swift; sourceTree = "<group>"; };
 		0BEA9CA91D1390120012FC11 /* ForgetPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPasswordController.swift; sourceTree = "<group>"; };
+		0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSPostDetailViewController.swift; sourceTree = "<group>"; };
+		0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSPostDetailViewController.xib; sourceTree = "<group>"; };
 		180482EE1CEDF54200BF716C /* RecruitTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecruitTableViewCell.swift; sourceTree = "<group>"; };
 		18191D1D1CEC570100CD54FF /* FineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FineTableViewCell.swift; sourceTree = "<group>"; };
 		181DE09A1CEAFFC00085ECB1 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -231,7 +243,6 @@
 		1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayModel.swift; sourceTree = "<group>"; };
 		1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaliyExamModel.swift; sourceTree = "<group>"; };
 		1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTimeCell.swift; sourceTree = "<group>"; };
-		1F7B9FE21D21218F00A3A3CB /* ReleaseTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReleaseTimeCell.xib; sourceTree = "<group>"; };
 		ACDDECCAF15EF7167B841BC0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F604A4DB1D0E79F7008A4888 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
@@ -258,6 +269,11 @@
 		F6338B901D28F80C00EE5CA2 /* HSPostDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSPostDetailController.xib; sourceTree = "<group>"; };
 		F6338B931D29105B00EE5CA2 /* HSStateCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStateCommentCell.swift; sourceTree = "<group>"; };
 		F6338B941D29105B00EE5CA2 /* HSStateCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSStateCommentCell.xib; sourceTree = "<group>"; };
+		F63981051D373945002EE95B /* CFLineChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFLineChartView.h; sourceTree = "<group>"; };
+		F63981061D373945002EE95B /* CFLineChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFLineChartView.m; sourceTree = "<group>"; };
+		F63981071D373945002EE95B /* CFLineChartView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CFLineChartView.xib; sourceTree = "<group>"; };
+		F639810A1D373C71002EE95B /* HSChartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSChartCell.swift; sourceTree = "<group>"; };
+		F639810B1D373C71002EE95B /* HSChartCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSChartCell.xib; sourceTree = "<group>"; };
 		F63B3A6E1D2F953600C5B2CF /* HSStateEditResumeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStateEditResumeController.swift; sourceTree = "<group>"; };
 		F63BE1EE1D0546F9008292AC /* NewsPageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsPageHelper.swift; sourceTree = "<group>"; };
 		F63E197F1D17C38A001BDE8A /* HSWCommunityHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSWCommunityHome.swift; sourceTree = "<group>"; };
@@ -290,7 +306,8 @@
 		F6D02CDE1D07BB5300353557 /* contentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = contentCell.xib; sourceTree = "<group>"; };
 		F6E00DE71D263CC100D023B8 /* HSPostResumeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSPostResumeView.xib; sourceTree = "<group>"; };
 		F6E86AF41D34DF7E001536B6 /* HSForumDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSForumDetailCell.swift; sourceTree = "<group>"; };
-		F6E86AF51D34DF7E001536B6 /* HSForumDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSForumDetailCell.xib; sourceTree = "<group>"; };
+		F6E9E9511D362AF000E99FDD /* HSHotPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSHotPostCell.swift; sourceTree = "<group>"; };
+		F6E9E9521D362AF000E99FDD /* HSHotPostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSHotPostCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -457,6 +474,7 @@
 		183B866B1CE5CF7900709235 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				F63981041D373945002EE95B /* CFLineChart */,
 				F6C04AF61D20D4D2009E1613 /* ConnectModel.h */,
 				F6C04AF71D20D4D2009E1613 /* ConnectModel.m */,
 				183B866C1CE5CF9500709235 /* Http.swift */,
@@ -635,7 +653,7 @@
 				F63147121D1A6D2E005103C9 /* HSComTableCell.swift */,
 				F63147131D1A6D2E005103C9 /* HSComTableCell.xib */,
 				1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */,
-				1F7B9FE21D21218F00A3A3CB /* ReleaseTimeCell.xib */,
+				0B64EBE11D37A626001548EE /* ReleaseTimeCell.xib */,
 				F6C265C51D24F08C0033D2A9 /* PostVacancies.xib */,
 				F6C265C71D24FD770033D2A9 /* PostVacancies.swift */,
 				F6E00DE71D263CC100D023B8 /* HSPostResumeView.xib */,
@@ -647,7 +665,9 @@
 				F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */,
 				F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */,
 				F6E86AF41D34DF7E001536B6 /* HSForumDetailCell.swift */,
-				F6E86AF51D34DF7E001536B6 /* HSForumDetailCell.xib */,
+				0B64EBDF1D37A60F001548EE /* HSForumDetailCell.xib */,
+				F6E9E9511D362AF000E99FDD /* HSHotPostCell.swift */,
+				F6E9E9521D362AF000E99FDD /* HSHotPostCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -681,6 +701,8 @@
 				181E0D301CEBFF8800E34A7F /* MinePostTableViewCell.swift */,
 				181E0D341CEC3FFA00E34A7F /* MineRecruitTableViewCell.swift */,
 				18191D1D1CEC570100CD54FF /* FineTableViewCell.swift */,
+				F639810A1D373C71002EE95B /* HSChartCell.swift */,
+				F639810B1D373C71002EE95B /* HSChartCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -729,6 +751,8 @@
 				F6338B8F1D28F80C00EE5CA2 /* HSPostDetailController.swift */,
 				F6338B901D28F80C00EE5CA2 /* HSPostDetailController.xib */,
 				F661F25E1D33BB7B00E04CE8 /* HSSelectController.swift */,
+				0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */,
+				0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */,
 			);
 			name = Community;
 			sourceTree = "<group>";
@@ -794,6 +818,16 @@
 				F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F63981041D373945002EE95B /* CFLineChart */ = {
+			isa = PBXGroup;
+			children = (
+				F63981051D373945002EE95B /* CFLineChartView.h */,
+				F63981061D373945002EE95B /* CFLineChartView.m */,
+				F63981071D373945002EE95B /* CFLineChartView.xib */,
+			);
+			path = CFLineChart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -910,20 +944,24 @@
 				F632EF131D192F530038AF9D /* HSWorkPlaceController.xib in Resources */,
 				0B6FED521D33999700A4488E /* area.plist in Resources */,
 				F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */,
-				1F7B9FE41D21218F00A3A3CB /* ReleaseTimeCell.xib in Resources */,
+				0D3780151D372390000D31E2 /* HSPostDetailViewController.xib in Resources */,
 				F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */,
+				F6E9E9541D362AF000E99FDD /* HSHotPostCell.xib in Resources */,
 				F63E19881D17DB4E001BDE8A /* icon_callback.png in Resources */,
 				183B84FD1CE5BFDC00709235 /* Assets.xcassets in Resources */,
 				F632EF151D1949910038AF9D /* HSComOpenHeader.xib in Resources */,
 				F605F0BF1D22564300769299 /* HSFindPersonDetailView.xib in Resources */,
+				0B64EBE01D37A60F001548EE /* HSForumDetailCell.xib in Resources */,
 				F6C265CE1D2513560033D2A9 /* HSWebViewDetailController.xib in Resources */,
+				0B64EBE21D37A626001548EE /* ReleaseTimeCell.xib in Resources */,
 				F63147151D1A6D2E005103C9 /* HSComTableCell.xib in Resources */,
 				F6D02CDC1D07A46800353557 /* NewsSourceCell.xib in Resources */,
 				F6C265C61D24F08C0033D2A9 /* PostVacancies.xib in Resources */,
 				F63E19821D17C38A001BDE8A /* HSWCommunityHome.xib in Resources */,
 				F632EF0F1D18E8890038AF9D /* HSSQCollectionViewCell.xib in Resources */,
 				F6D02CE01D07BB5300353557 /* contentCell.xib in Resources */,
-				F6E86AF71D34DF7E001536B6 /* HSForumDetailCell.xib in Resources */,
+				F63981091D373945002EE95B /* CFLineChartView.xib in Resources */,
+				F639810D1D373C71002EE95B /* HSChartCell.xib in Resources */,
 				183B84FB1CE5BFDC00709235 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -999,6 +1037,7 @@
 			files = (
 				F605F0C11D2266B100769299 /* HSFindPersonDetailView.swift in Sources */,
 				F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */,
+				0D3780141D372390000D31E2 /* HSPostDetailViewController.swift in Sources */,
 				183B86711CE5CF9500709235 /* JSONJoy.swift in Sources */,
 				180482EF1CEDF54200BF716C /* RecruitTableViewCell.swift in Sources */,
 				181E0D251CEBF83200E34A7F /* FinesViewController.swift in Sources */,
@@ -1019,8 +1058,10 @@
 				F6C265CA1D25106F0033D2A9 /* HSTabBarController.swift in Sources */,
 				185102E21CED612E00F797EE /* UserPostTableViewCell.swift in Sources */,
 				0BB378571D2B504A00E4A84D /* OnlineTextTableViewCell.swift in Sources */,
+				F63981081D373945002EE95B /* CFLineChartView.m in Sources */,
 				18C240621CEF10150059BF48 /* OnlineExaminationViewController.swift in Sources */,
 				0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */,
+				F6E9E9531D362AF000E99FDD /* HSHotPostCell.swift in Sources */,
 				181E0D271CEBF85100E34A7F /* MineStudyViewController.swift in Sources */,
 				F6338B911D28F80C00EE5CA2 /* HSPostDetailController.swift in Sources */,
 				0BAB74BF1D34B95200D2E365 /* HSEditResumeViewController.swift in Sources */,
@@ -1054,6 +1095,7 @@
 				F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */,
 				F661F25F1D33BB7B00E04CE8 /* HSSelectController.swift in Sources */,
 				181E0D2F1CEBF8E000E34A7F /* MineRecruitViewController.swift in Sources */,
+				F639810C1D373C71002EE95B /* HSChartCell.swift in Sources */,
 				185408831CE7052700DFBA7C /* NewsContantViewController.swift in Sources */,
 				18C0BF971CEB63FB003E2886 /* QuestionBankViewController.swift in Sources */,
 				18A5148C1CED550800A30AA5 /* RecruitmentViewController.swift in Sources */,

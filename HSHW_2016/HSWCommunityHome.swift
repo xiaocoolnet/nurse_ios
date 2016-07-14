@@ -56,9 +56,14 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         print("发帖")
     }
     
+    func postDetailWithModel_1(model:PostModel){
+        let vc = HSPostDetailViewController()
+        vc.postInfo = model
+        navigationController?.pushViewController(vc, animated: true)
+    }
     func postDetailWithModel(model:ForumModel){
-        let vc = HSPostDetailController(nibName: "HSPostDetailController", bundle: nil)
-        vc.forumInfo = model
+        let vc = HSPostDetailController()
+        vc.postInfo = model
         navigationController?.pushViewController(vc, animated: true)
     }
     // MARK: ---CollectionView---

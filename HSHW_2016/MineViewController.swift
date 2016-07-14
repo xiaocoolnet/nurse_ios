@@ -28,15 +28,17 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         self.navigationController?.navigationBar.hidden = true
         self.tabBarController?.tabBar.hidden = false
+        
         myTableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = COLOR
         mineHelper.getPersonalInfo {[unowned self] (success, response) in
             dispatch_async(dispatch_get_main_queue(), {
-                self.titImage.sd_setImageWithURL(NSURL(string: IMAGE_URL_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal)
-                self.userNameLabel.text = "我"
+                self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
+                self.userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
                 self.levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, forState: .Normal)
                 self.fansCountBtn.setTitle(QCLoginUserInfo.currentInfo.fansCount, forState: .Normal)
                 self.attentionBtn.setTitle(QCLoginUserInfo.currentInfo.attentionCount, forState: .Normal)
@@ -44,8 +46,6 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.myTableView.reloadData()
             })
         }
-        self.view.backgroundColor = COLOR
-        
         myTableView.frame = CGRectMake(0, -20, WIDTH, HEIGHT)
         myTableView.bounces = false
         myTableView.backgroundColor = RGREY
@@ -138,7 +138,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     cell.addSubview(btn)
                 }
                 titImage.frame = CGRectMake(WIDTH*128/375, WIDTH*74/375, WIDTH*120/375, WIDTH*120/375)
-                titImage.setBackgroundImage(UIImage(named: "6.png"), forState: .Normal)
+                self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
                 titImage.addTarget(self, action: #selector(MineViewController.changeTitImage), forControlEvents: .TouchUpInside)
                 titImage.layer.cornerRadius = WIDTH*120/375/2
                 titImage.clipsToBounds = true
@@ -180,7 +180,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 userNameLabel.font = UIFont.systemFontOfSize(18)
                 userNameLabel.textColor = UIColor.whiteColor()
                 userNameLabel.sizeToFit()
-                userNameLabel.text = "我"
+                userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
                 userNameLabel.frame = CGRectMake(WIDTH/2-userNameLabel.bounds.size.width/2, WIDTH*205/375, userNameLabel.bounds.size.width, userNameLabel.bounds.size.height)
                 cell.addSubview(userNameLabel)
                 
@@ -229,8 +229,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         
         return cell
-        
     }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
         if indexPath.section == 1 {
@@ -238,6 +238,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             self.navigationController?.pushViewController(next, animated: true)
             next.title = "我的学习"
         }
+        
         if indexPath.section == 2 {
             if indexPath.row == 0 {
                 let next = MinePostViewController()
@@ -255,6 +256,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 next.title = "我的收藏"
             }
         }
+        
         if indexPath.section == 3 {
             let next = MineRecruitViewController()
             self.navigationController?.pushViewController(next, animated: true)
@@ -264,7 +266,6 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     func changeTitImage() {
         print("头像")
-        
     }
     func fineAndContact(btn:UIButton) {
         print("粉丝与管理")
@@ -289,5 +290,4 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func signInToday() {
         print("签到")
     }
-
 }

@@ -32,6 +32,7 @@ class HSNurseStationHelper: NSObject {
             }
         }
     }
+    
     //发布招聘信息
     func publishJob(companyname:String,companyinfo:String,phone:String,email:String,title:String,jobtype:String,education:String,welfare:String,address:String,count:String,salary:String,description:String, handle:ResponseBlock){
         let url = PARK_URL_Header+"publishjob"
@@ -51,6 +52,7 @@ class HSNurseStationHelper: NSObject {
             }
         }
     }
+    
     //获取简历列表
     func getCVList(handle:ResponseBlock){
         let url = PARK_URL_Header+"getResumeList"
@@ -73,6 +75,7 @@ class HSNurseStationHelper: NSObject {
             }
         }
     }
+    
     //获取资讯文章列表
     func getArticleListWithID(articleid:String,handle:ResponseBlock){
         let url = PARK_URL_Header+"getNewslist"
@@ -95,6 +98,7 @@ class HSNurseStationHelper: NSObject {
             }
         }
     }
+    
     //获取论坛帖子列表
     func getForumList(type:String,isHot:Bool,handle:ResponseBlock){
         let url = PARK_URL_Header+"getbbspostlist"
@@ -107,6 +111,24 @@ class HSNurseStationHelper: NSObject {
                 handle(success: false, response: error?.description)
             }else{
                 let result = ForumlistModel(JSONDecoder(json!))
+                if(result.status == "success"){
+                    handle(success: true, response: result.datas)
+                }else{
+                    handle(success: false, response: nil)
+                }
+            }
+        }
+    }
+    //获取论坛帖子详情
+    func showPostInfo(id:String,handle:ResponseBlock){
+        let url = PARK_URL_Header+"showpostinfo"
+        let param = ["id":id]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = PostlistModel(JSONDecoder(json!))
+                print(result.datas)
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
@@ -132,6 +154,25 @@ class HSNurseStationHelper: NSObject {
             }
         }
     }
+    
+    //添加评论
+    func setComment(id:String,content:String,type:String,photo:String, handle:ResponseBlock){
+        let url = PARK_URL_Header+"addbbsposts"
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid,"typeid":id,"content":content,"type":type,"photo":photo]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = Http(JSONDecoder(json!))
+                if(result.status == "success"){
+                    handle(success: true, response: nil)
+                }else{
+                    handle(success: false, response: nil)
+                }
+            }
+        }
+    }
+    
     //获取论坛分类
     func getBBSTypeData(handle:ResponseBlock){
         let url = PARK_URL_Header+"getbbstype"
@@ -147,6 +188,7 @@ class HSNurseStationHelper: NSObject {
             }
         }
     }
+    
     // 发布简历
     func postForum(userid:String,avatar:String,name:String,experience:String,sex:String,birthday:String,marital:String,address:String,jobstate:String,currentsalary:String,phone:String,email:String,hiredate:String,wantcity:String,wantsalary:String,wantposition:String,description:String, handle:ResponseBlock){
         let url = PARK_URL_Header+"PublishResume"

@@ -29,7 +29,7 @@ class HSPostDetailController: UIViewController,UITableViewDataSource, UITableVie
     @IBOutlet weak var fenxiangBtn: UIButton!
     @IBOutlet weak var likeBtn: UIButton!
     @IBOutlet weak var contentTableView:UITableView!
-    var forumInfo:ForumModel?
+    var postInfo:ForumModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,25 +41,62 @@ class HSPostDetailController: UIViewController,UITableViewDataSource, UITableVie
         contentTableView.estimatedRowHeight = 100
         contentTableView.rowHeight = UITableViewAutomaticDimension
         contentTableView.registerNib(UINib(nibName: "HSForumDetailCell",bundle: nil), forCellReuseIdentifier: "detailcell")
-        let text = "记录第一次发帖"
+        let text = postInfo!.content
         let height = calculateHeight(text, size: 15, width: WIDTH - 40)
         let label = UILabel(frame: CGRectMake(20,0,WIDTH-40,height+20))
+        print("height=",height)
         label.numberOfLines = 0
         label.text = text
         contentTableView.tableHeaderView = label
+        
+        postTitle.text = postInfo?.title
+        avatarName.text = postInfo?.name
+        sendTime.text = postInfo?.write_time
+        seeCount.text = "3346"
+        level.text = "Lv.05"
+        
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if tableView.tag == 233 {
+            print("pic.count=",postInfo?.pic.count,"pic   ",postInfo)
+            return (postInfo?.pic.count)!
+        }else{
+            print(postInfo?.comment.count)
+            if postInfo?.comment.count == 0 {
+                return 1
+            }else{
+                return (postInfo?.comment.count)!
+            }
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if tableView.tag == 233  {
             let detailCell = tableView.dequeueReusableCellWithIdentifier("detailcell") as! HSForumDetailCell
+            let picArray = postInfo?.pic
+            let postImage:UIImage = UIImage.sd_imageWithData(NSData.init(contentsOfURL: NSURL.init(string: SHOW_IMAGE_HEADER+picArray![indexPath.row].pictureurl)!))
+            detailCell.imageView?.image = postImage
             return detailCell
         }
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSStateCommentCell
+        if postInfo?.comment.count == 0 {
+            let defaultLabel:UILabel = UILabel.init(frame: CGRectMake(0, 0, WIDTH, 107))
+            defaultLabel.backgroundColor = UIColor.cyanColor()
+            defaultLabel.text = "暂无回复"
+            cell.addSubview(defaultLabel)
+            
+        }
         return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if tableView.tag != 233 {
+            if postInfo?.comment.count == 0 {
+                return 107
+            }
+        }
+        return WIDTH*0.9
     }
     
     @IBAction func fenxiangBtnClick(sender: AnyObject) {

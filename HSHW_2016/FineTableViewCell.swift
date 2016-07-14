@@ -14,7 +14,6 @@ class FineTableViewCell: UITableViewCell {
    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
