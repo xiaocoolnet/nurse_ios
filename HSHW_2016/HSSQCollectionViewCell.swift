@@ -53,11 +53,22 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
         var a:UIResponder = self
         while !a.isKindOfClass(HSWCommunityHome.self){
             a = a.nextResponder()!
         }
         let vc = a as! HSWCommunityHome
-        vc.postDetailWithModel(dataSource[indexPath.row])
+        
+        //
+        let model:ForumModel = dataSource[indexPath.row]
+        print(model.mid)
+        helper.showPostInfo("1") { (success, response) in
+            let postM:PostModel = (response as? PostModel ?? nil)!
+            vc.postDetailWithModel(postM)
+
+            print(response)
+        }
+        
     }
 }

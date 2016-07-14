@@ -110,6 +110,24 @@ class HSNurseStationHelper: NSObject {
             }
         }
     }
+    //获取论坛帖子详情
+    func showPostInfo(id:String,handle:ResponseBlock){
+        let url = PARK_URL_Header+"showpostinfo"
+        let param = ["id":id]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = PostlistModel(JSONDecoder(json!))
+                print(result.datas)
+                if(result.status == "success"){
+                    handle(success: true, response: result.datas)
+                }else{
+                    handle(success: false, response: nil)
+                }
+            }
+        }
+    }
     //发布帖子
     func postForumCard(typid:String,title:String,content:String,picurl:String, handle:ResponseBlock){
         let url = PARK_URL_Header+"addbbsposts"

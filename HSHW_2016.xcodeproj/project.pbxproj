@@ -24,6 +24,8 @@
 		0BDAB6351D2A588D0081E883 /* InternationNurseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */; };
 		0BDAB6371D2A58E80081E883 /* NurseStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6361D2A58E80081E883 /* NurseStatusViewController.swift */; };
 		0BEA9CAA1D1390120012FC11 /* ForgetPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEA9CA91D1390120012FC11 /* ForgetPasswordController.swift */; };
+		0D3780141D372390000D31E2 /* HSPostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */; };
+		0D3780151D372390000D31E2 /* HSPostDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */; };
 		180482EF1CEDF54200BF716C /* RecruitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180482EE1CEDF54200BF716C /* RecruitTableViewCell.swift */; };
 		18191D1E1CEC570100CD54FF /* FineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18191D1D1CEC570100CD54FF /* FineTableViewCell.swift */; };
 		181DE09B1CEAFFC00085ECB1 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DE09A1CEAFFC00085ECB1 /* PostViewController.swift */; };
@@ -172,6 +174,8 @@
 		0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternationNurseViewController.swift; sourceTree = "<group>"; };
 		0BDAB6361D2A58E80081E883 /* NurseStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NurseStatusViewController.swift; sourceTree = "<group>"; };
 		0BEA9CA91D1390120012FC11 /* ForgetPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPasswordController.swift; sourceTree = "<group>"; };
+		0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSPostDetailViewController.swift; sourceTree = "<group>"; };
+		0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSPostDetailViewController.xib; sourceTree = "<group>"; };
 		180482EE1CEDF54200BF716C /* RecruitTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecruitTableViewCell.swift; sourceTree = "<group>"; };
 		18191D1D1CEC570100CD54FF /* FineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FineTableViewCell.swift; sourceTree = "<group>"; };
 		181DE09A1CEAFFC00085ECB1 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
@@ -729,6 +733,8 @@
 				F6338B8F1D28F80C00EE5CA2 /* HSPostDetailController.swift */,
 				F6338B901D28F80C00EE5CA2 /* HSPostDetailController.xib */,
 				F661F25E1D33BB7B00E04CE8 /* HSSelectController.swift */,
+				0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */,
+				0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */,
 			);
 			name = Community;
 			sourceTree = "<group>";
@@ -910,6 +916,7 @@
 				F632EF131D192F530038AF9D /* HSWorkPlaceController.xib in Resources */,
 				0B6FED521D33999700A4488E /* area.plist in Resources */,
 				F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */,
+				0D3780151D372390000D31E2 /* HSPostDetailViewController.xib in Resources */,
 				1F7B9FE41D21218F00A3A3CB /* ReleaseTimeCell.xib in Resources */,
 				F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */,
 				F63E19881D17DB4E001BDE8A /* icon_callback.png in Resources */,
@@ -999,6 +1006,7 @@
 			files = (
 				F605F0C11D2266B100769299 /* HSFindPersonDetailView.swift in Sources */,
 				F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */,
+				0D3780141D372390000D31E2 /* HSPostDetailViewController.swift in Sources */,
 				183B86711CE5CF9500709235 /* JSONJoy.swift in Sources */,
 				180482EF1CEDF54200BF716C /* RecruitTableViewCell.swift in Sources */,
 				181E0D251CEBF83200E34A7F /* FinesViewController.swift in Sources */,
