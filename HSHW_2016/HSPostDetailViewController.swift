@@ -207,6 +207,10 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             lineView.backgroundColor = UIColor.lightGrayColor()
             replyView.addSubview(lineView)
             
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+            
             return replyView
         }
     }
@@ -231,16 +235,42 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         
     }
     
+    func keyboardWillAppear(notification: NSNotification) {
+        
+        // 获取键盘信息
+        let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
+        
+        let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
+        
+        UIView.animateWithDuration(0.3) {
+            self.contentTableView.contentOffset = CGPoint.init(x: 0, y: self.contentTableView.contentSize.height-keyboardheight)
+        }
+        
+        print("键盘弹起")
+        
+        print(keyboardheight)
+        
+    }
+    
+    func keyboardWillDisappear(notification:NSNotification){
+        UIView.animateWithDuration(0.3) {
+            self.contentTableView.contentOffset = CGPoint.init(x: 0, y: self.contentTableView.contentSize.height-self.contentTableView.frame.size.height)
+        }
+        print("键盘落下")
+    }
+    
     // UITextField Delegate
+
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if textField.text == nil {
-            return true
-        }else{
+        print("textfield.text = ",textField.text)
+        if textField.text != "" {
            
             helper.setComment((postInfo?.mid)!, content: (postInfo?.content)!, type: "2", photo: (postInfo?.photo)!, handle: { (success, response) in
                 print("添加评论",success)
             })
         }
+        textField.resignFirstResponder()
         return true
     }
 }
