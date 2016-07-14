@@ -14,8 +14,8 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
     @IBOutlet weak var hotTableView:UITableView!
     var helper = HSNurseStationHelper()
     var typeid = "1"
-    var dataSource = Array<ForumModel>()
-    var hotData = Array<ForumModel>()
+    var dataSource = Array<PostModel>()
+    var hotData = Array<PostModel>()
     var cellType:Int?
     
     override func awakeFromNib() {
@@ -28,13 +28,16 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
         hotTableView.scrollEnabled = false
         hotTableView.tableFooterView = UIView()
         helper.getForumList(typeid,isHot:  false) {[unowned self] (success, response) in
-            self.dataSource = response as? Array<ForumModel> ?? []
+            self.dataSource = response as? Array<PostModel> ?? []
             dispatch_async(dispatch_get_main_queue(), { 
                 self.bottomTableView.reloadData()
             })
         }
         helper.getForumList(typeid, isHot: true) { (success, response) in
-            self.hotData = response as? Array<ForumModel> ?? []
+            self.hotData = response as? Array<PostModel> ?? []
+            print(response?.firstObject)
+            print(self.hotData.count)
+            print(self.hotData.first?.title)
             dispatch_async(dispatch_get_main_queue(), { 
                 self.hotTableView.reloadData()
             })
@@ -79,10 +82,10 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
      
         //TODO:之前是下边有问题，还需要优化
         if tableView.tag == 11 {
-            vc.postDetailWithModel(hotData[indexPath.row])
+            vc.postDetailWithModel_1(hotData[indexPath.row])
         }else {
             //
-            let model:ForumModel = dataSource[indexPath.row]
+            let model:PostModel = dataSource[indexPath.row]
             print(model.mid)
             helper.showPostInfo("1") { (success, response) in
                 let postM:PostModel = (response as? PostModel ?? nil)!

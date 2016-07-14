@@ -30,7 +30,7 @@ class HSComTableCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func showForForumModel(model:ForumModel){
+    func showForForumModel(model:PostModel){
         landLorder.text = model.name
         titleLabel.text = model.title
         contentLabel.text = model.content

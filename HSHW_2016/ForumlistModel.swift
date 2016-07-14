@@ -9,7 +9,7 @@ import Foundation
 
 class ForumlistModel: JSONJoy {
     var status:String?
-    var datas = Array<ForumModel>()
+    var datas = Array<PostModel>()
     var errorData:String?
     var datastring:String?
     
@@ -18,7 +18,7 @@ class ForumlistModel: JSONJoy {
         if status == "success"{
   
             for childs:JSONDecoder in decoder["data"].array! {
-                datas.append(ForumModel(childs))
+                datas.append(PostModel(childs))
             }
         }else{
             errorData = decoder["data"].string

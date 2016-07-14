@@ -12,39 +12,15 @@ import MBProgressHUD
 
 class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate,UIWebViewDelegate {
     
-    //    @IBOutlet weak var postTitle: UILabel!
-    //    @IBOutlet weak var commentView: UITableView!
-    //    @IBOutlet weak var avatar: UIButton!
-    //    @IBOutlet weak var avatarName: UILabel!
-    //    @IBOutlet weak var postion: UILabel!
-    //    @IBOutlet weak var level: UILabel!
-    //    @IBOutlet weak var seeCount: UILabel!
-    //    @IBOutlet weak var sendTime: UILabel!
-    //    @IBOutlet weak var collectionBtn: UIButton!
-    //    @IBOutlet weak var goodBtn: UIButton!
-    //    @IBOutlet weak var goodLabel: UILabel!
-    //    @IBOutlet weak var commentBtn: UIButton!
-    //    @IBOutlet weak var commentLabel: UILabel!
-    //    @IBOutlet weak var veiwHeightConstraint: NSLayoutConstraint!
-    //    @IBOutlet weak var fenxiangBtn: UIButton!
-    //    @IBOutlet weak var likeBtn: UIButton!
-    //    @IBOutlet weak var contentTableView:UITableView!
     @IBOutlet weak var postTitle: UILabel!
-//    @IBOutlet weak var commentView: UITableView!
     @IBOutlet weak var avatar: UIButton!
     @IBOutlet weak var avatarName: UILabel!
     @IBOutlet weak var postion: UILabel!
     @IBOutlet weak var level: UILabel!
     @IBOutlet weak var seeCount: UILabel!
     @IBOutlet weak var sendTime: UILabel!
-//    @IBOutlet weak var collectionBtn: UIButton!
-//    @IBOutlet weak var goodBtn: UIButton!
-//    @IBOutlet weak var goodLabel: UILabel!
-//    @IBOutlet weak var commentBtn: UIButton!
-//    @IBOutlet weak var commentLabel: UILabel!
-//    @IBOutlet weak var veiwHeightConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var fenxiangBtn: UIButton!
-//    @IBOutlet weak var likeBtn: UIButton!
+
+    let helper = HSNurseStationHelper()
     var contentTableView:UITableView!
     var postInfo:PostModel?
     
@@ -57,20 +33,30 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         
         contentTableView.tag = 311
         contentTableView.rowHeight = 100
+        contentTableView.separatorStyle = UITableViewCellSeparatorStyle.None
         
         contentTableView.delegate = self
         contentTableView.dataSource = self
         
         self.view.addSubview(contentTableView)
         
+        //注册cell
+        contentTableView.registerNib(UINib.init(nibName: "HSForumDetailCell", bundle: nil), forCellReuseIdentifier: "detailCell")
+        contentTableView.registerNib(UINib.init(nibName: "HSStateCommentCell", bundle: nil), forCellReuseIdentifier: "cell")
+
+        
         //文字内容
         let text = postInfo!.content
         let height = calculateHeight(text, size: 15, width: WIDTH - 40)
+        
+        let bgView:UIView = UIView.init(frame: CGRectMake(0, 0, WIDTH, height+20))
+        bgView.backgroundColor = UIColor.whiteColor()
+        
         let label = UILabel(frame: CGRectMake(20,0,WIDTH-40,height+20))
-        print("height=",height)
         label.numberOfLines = 0
         label.text = text
-        contentTableView.tableHeaderView = label
+        bgView.addSubview(label)
+        contentTableView.tableHeaderView = bgView
         
         // 标题等头部内容
         postTitle.text = postInfo?.title
@@ -88,7 +74,8 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             return (postInfo?.pic.count)!
 //            return 2
         }else{
-            return (postInfo?.comment.count)!
+//            return (postInfo?.comment.count)!
+            return 3
         }
     }
     
@@ -99,31 +86,34 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             
-//            let detailCell = tableView.dequeueReusableCellWithIdentifier("detailcell") as! HSForumDetailCell
-            
-            var detailCell = tableView.dequeueReusableCellWithIdentifier("detailCell")
-            if detailCell == nil {
-                detailCell = HSForumDetailCell.init(style: UITableViewCellStyle.Default, reuseIdentifier: "detailCell")
-            }
+            let detailCell = tableView.dequeueReusableCellWithIdentifier("detailCell") as! HSForumDetailCell
+            detailCell.selectionStyle = UITableViewCellSelectionStyle.None
             
             let picArray = postInfo?.pic
             let postImage:UIImage = UIImage.sd_imageWithData(NSData.init(contentsOfURL: NSURL.init(string: SHOW_IMAGE_HEADER+picArray![indexPath.row].pictureurl)!))
-            detailCell!.imageView?.image = postImage
+            detailCell.postImageView?.image = postImage
             
-            return detailCell!
+            return detailCell
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSStateCommentCell
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
+
             return cell
         }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return WIDTH*0.9
+            return (WIDTH-16)*2/3.0+20
         }else{
-            let text = postInfo!.comment[indexPath.row].content
-            let height = calculateHeight(text, size: 15, width: WIDTH - 40)
-            return height
+            if postInfo?.comment.count > 0 {
+                let text = postInfo!.comment[indexPath.row].content
+                let height = calculateHeight(text, size: 15, width: WIDTH - 40)
+                return height
+            }else{
+                // TODO:仅作测试用，后期改为0
+                return 107
+            }
         }
     }
     
@@ -132,10 +122,10 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         
         if tableView.tag == 311 {
             if section == 1 {
-                if postInfo?.comment.count == 0 {
+                // TODO:有评论内容后postInfo?.comment.count > 0 统统改为postInfo?.comment.count == 0
+                if postInfo?.comment.count > 0 {
                     
                     let noReply:UILabel = UILabel.init(frame: CGRectMake(0, 0, WIDTH, 200))
-                    noReply.backgroundColor = UIColor.greenColor()
                     noReply.textAlignment = NSTextAlignment.Center
                     noReply.text = "暂无回复"
                     return noReply
@@ -150,10 +140,10 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 1 && postInfo?.comment.count == 0 {
+        if section == 1 && postInfo?.comment.count > 0 {
             return 200
         }else{
-            return 0
+            return 0.0000000000001
         }
     }
     
@@ -186,6 +176,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             }
             
             let lineView:UIView = UIView.init(frame: CGRectMake(0, 49, WIDTH, 1))
+            lineView.backgroundColor = UIColor.lightGrayColor()
             commentView.addSubview(lineView)
             
             
@@ -194,24 +185,27 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         }else{
             // 回复 视图
             let replyView:UIView = UIView.init(frame: CGRectMake(0, CGRectGetMaxY(contentTableView.frame), WIDTH, 65))
-//            replyView.backgroundColor = UIColor.grayColor()
             
             let space:CGFloat = 15
             
-            let shareBtn:UIButton = UIButton.init(frame: CGRectMake(space, 15, 30, 30))
+            let shareBtn:UIButton = UIButton.init(frame: CGRectMake(space, 10, 30, 30))
             shareBtn.setImage(UIImage.init(named: "ic_fenxiang"), forState: UIControlState.Normal)
             replyView.addSubview(shareBtn)
             
-            let likeBtn:UIButton = UIButton.init(frame: CGRectMake(space+30+space, 15, 30, 30))
+            let likeBtn:UIButton = UIButton.init(frame: CGRectMake(space+30+space, 10, 30, 30))
             likeBtn.setImage(UIImage.init(named: "ic_two_like"), forState: UIControlState.Normal)
             replyView.addSubview(likeBtn)
             
-            let replyTextField:UITextField = UITextField.init(frame: CGRectMake(space*3+60, 15, WIDTH-60-space*4, 30))
+            let replyTextField:UITextField = UITextField.init(frame: CGRectMake(space*3+60, 10, WIDTH-60-space*4, 30))
             replyTextField.borderStyle = UITextBorderStyle.RoundedRect
             replyTextField.placeholder = "回复楼主"
             replyTextField.returnKeyType = UIReturnKeyType.Send
             replyTextField.delegate = self
             replyView.addSubview(replyTextField)
+            
+            let lineView:UIView = UIView.init(frame: CGRectMake(0, 0, WIDTH, 1))
+            lineView.backgroundColor = UIColor.lightGrayColor()
+            replyView.addSubview(lineView)
             
             return replyView
         }
@@ -221,7 +215,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         if section == 0 {
             return 50
         }else{
-            return 65
+            return 55
         }
     }
     
@@ -239,6 +233,14 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     
     // UITextField Delegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField.text == nil {
+            return true
+        }else{
+           
+            helper.setComment((postInfo?.mid)!, content: (postInfo?.content)!, type: "2", photo: (postInfo?.photo)!, handle: { (success, response) in
+                print("添加评论",success)
+            })
+        }
         return true
     }
 }

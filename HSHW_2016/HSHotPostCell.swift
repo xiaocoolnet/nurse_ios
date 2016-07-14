@@ -16,7 +16,8 @@ class HSHotPostCell: UITableViewCell {
         // Initialization code
     }
     
-    func showforForumModel(model:ForumModel){
+    func showforForumModel(model:PostModel){
+        print(model.title)
         titleLabel.text = model.title
     }
     
