@@ -7,6 +7,8 @@
 //
 
 import UIKit
+//import MBProgressHUD
+import Alamofire
 
 enum HSEditUserInfo {
     case Avatar
@@ -33,6 +35,16 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
     let textFeild = UITextField(frame: CGRectMake(20,15,200,30))
     var handle:ChangeUserItemHandle?
     
+    let dataBtn = UIButton(frame: CGRectMake(20,15,200,30))
+    let addressBtn = UIButton(frame: CGRectMake(20,15,200,30))
+    var picker:DatePickerView?
+    var pick:AdressPickerView?
+    var array = NSArray()
+    var id = String()
+    var dateSource = EduList()
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //nav
@@ -51,11 +63,21 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
         myTableView.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
         myTableView.tableFooterView = UIView()
         view.addSubview(myTableView)
+        
+        self.dataGet()
+        array = ["北京市","北京市","朝阳区"]
+
     }
     
     func saveInfo(){
         if handle != nil {
-            handle!(changeType: showType,value: textFeild.text!)
+            if showType == .BirthDay {
+                handle!(changeType: showType,value: (dataBtn.titleLabel?.text!)!)
+            }else if showType == .Address{
+                handle!(changeType: showType,value: (addressBtn.titleLabel?.text!)!)
+            }else{
+                handle!(changeType: showType,value: textFeild.text!)
+            }
         }
         if showType == .UserName||showType == .RealName {
             mineHelper.changeUserName(textFeild.text!, handle: {[unowned self] (success, response) in
@@ -77,19 +99,19 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 })
             })
         }else if showType == .BirthDay {
-            mineHelper.changeBirthday(textFeild.text!, handle: {[unowned self] (success, response) in
+            mineHelper.changeBirthday((dataBtn.titleLabel?.text!)!, handle: {[unowned self] (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
-                        QCLoginUserInfo.currentInfo.birthday = self.textFeild.text!
+                        QCLoginUserInfo.currentInfo.birthday = (self.dataBtn.titleLabel?.text!)!
                         self.navigationController?.popViewControllerAnimated(true)
                     }
                 })
             })
         }else if showType == .Address {
-            mineHelper.changeAddress(textFeild.text!, handle: {[unowned self] (success, response) in
+            mineHelper.changeAddress((addressBtn.titleLabel?.text!)!, handle: {[unowned self] (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
-                        QCLoginUserInfo.currentInfo.city = self.textFeild.text!
+                        QCLoginUserInfo.currentInfo.city = (self.addressBtn.titleLabel?.text!)!
                         self.navigationController?.popViewControllerAnimated(true)
                     }
                 })
@@ -107,16 +129,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
             mineHelper.changeEducation(textFeild.text!, handle: {[unowned self] (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
-                        QCLoginUserInfo.currentInfo.education = self.textFeild.text!
-                        self.navigationController?.popViewControllerAnimated(true)
-                    }
-                })
-            })
-        }else if showType == .Sex {
-            mineHelper.changeUserSex(textFeild.text!, handle: {[unowned self] (success, response) in
-                dispatch_async(dispatch_get_main_queue(), {
-                    if success {
-                        QCLoginUserInfo.currentInfo.sex = self.textFeild.text!
+                        QCLoginUserInfo.currentInfo.major = self.textFeild.text!
                         self.navigationController?.popViewControllerAnimated(true)
                     }
                 })
@@ -126,7 +139,12 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if showType == .Education || showType == .Sex {
+            return self.dateSource.objectlist.count
+        }else{
+            
+            return 1
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
@@ -136,12 +154,113 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
         switch showType {
-        case .UserName,.PhoneNumber,.Sex,.Email,.RealName,.BirthDay,.Address,.School,.Major,.Education:
+        case .UserName,.PhoneNumber,.Email,.RealName,.School,.Major:
             textFeild.text = text1
             cell?.addSubview(textFeild)
         default:
-            cell?.textLabel?.text = "?"
+            break
+        }
+        if showType == .BirthDay {
+            dataBtn.titleLabel?.text = text1
+            dataBtn.addTarget(self, action: #selector(self.dataClick), forControlEvents: .TouchUpInside)
+            cell?.addSubview(dataBtn)
+        }else if showType == .Address{
+            addressBtn.titleLabel?.text = text1
+            addressBtn.addTarget(self, action: #selector(self.addressClick), forControlEvents: .TouchUpInside)
+            cell?.addSubview(addressBtn)
+        }else if showType == .Education || showType == .Sex{
+            let eduInfo  = self.dateSource.objectlist[indexPath.row]
+            if eduInfo.name == "1" {
+                cell?.textLabel?.text = "男"
+            }else if eduInfo.name == "0"{
+                cell?.textLabel?.text = "女"
+            }else{
+                cell?.textLabel?.text = eduInfo.name
+            }
         }
         return cell!
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if showType == .Education {
+        handle!(changeType: showType,value: self.dateSource.objectlist[indexPath.row].name)
+            mineHelper.changeEducation(self.dateSource.objectlist[indexPath.row].name, handle: {[unowned self] (success, response) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    if success {
+                        QCLoginUserInfo.currentInfo.education = self.dateSource.objectlist[indexPath.row].name
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                })
+            })
+        }else if showType == .Sex{
+            if self.dateSource.objectlist[indexPath.row].name == "1" {
+                handle!(changeType: showType,value: "男")
+            }else{
+                handle!(changeType: showType,value: "女")
+            }
+            mineHelper.changeUserSex(self.dateSource.objectlist[indexPath.row].name, handle: {[unowned self] (success, response) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    if success {
+                        QCLoginUserInfo.currentInfo.sex = self.dateSource.objectlist[indexPath.row].name
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                })
+            })
+        }
+    }
+    
+    func dataClick(){
+        picker = DatePickerView.getShareInstance()
+        picker!.textColor = UIColor.redColor()
+        picker!.showWithDate(NSDate())
+        picker?.block = {
+            (date:NSDate)->() in
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd zzz"
+            let string = formatter.stringFromDate(date)
+            let range:Range = string.rangeOfString(" ")!
+            let time = string.substringToIndex(range.endIndex)
+            self.dataBtn.setTitle(time, forState: .Normal)
+            self.dataBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            
+        }
+    }
+    
+    func addressClick(){
+        let pick = AdressPickerView.shareInstance
+        pick.showTown=true
+        pick.pickArray=array
+        pick.show((UIApplication.sharedApplication().keyWindow)!)
+        pick.selectAdress { (dressArray) in
+        self.array=dressArray
+        self.addressBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
+        self.addressBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        }
+    }
+    
+    func dataGet(){
+        let url = PARK_URL_Header+"getDictionaryList"
+        let param = ["type":id]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+                
+            }else{
+                let status = EduModel(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                }
+                if(status.status == "success"){
+                    print(status)
+                    self.dateSource = EduList(status.data!)
+                    
+                    self.myTableView .reloadData()
+                }
+            }
+            
+        }
+        
+    }
+
+    
 }
