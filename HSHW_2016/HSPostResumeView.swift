@@ -112,6 +112,9 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     
     @IBAction func saveResumeCilcked(sender: AnyObject) {
 //        delegate?.saveResumeBtnClicked()
+        if delegate != nil {
+            delegate?.saveResumeBtnClicked()
+        }
         print(userid)
         print(imageName)
         print(nameTextFeild.text)
@@ -139,7 +142,7 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
-                    
+                    print(success)
                 })
             }
         })

@@ -43,7 +43,7 @@ class OnlineTextTableViewCell: UITableViewCell {
         rightOfNum.text = "道题"
         
         numLable.frame = CGRectMake(rightOfNum.frame.origin.x-35, 10, 35, 40)
-        numLable.font = UIFont.systemFontOfSize(12)
+        numLable.font = UIFont.systemFontOfSize(15)
         numLable.textAlignment = .Center
         
         let leftOfNum = UILabel(frame: CGRectMake(numLable.frame.origin.x-10, 10, 15, 40))

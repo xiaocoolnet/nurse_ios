@@ -116,15 +116,27 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
         cell.selectionStyle = .None
         cell.titLab.text = info.name
-        cell.titImage.setImage(UIImage(named: picArr[indexPath.row]), forState: .Normal)
+        cell.titImage.setImage(UIImage(named: picArr[indexPath.section]), forState: .Normal)
         cell.start.userInteractionEnabled = false
         let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
-        line.backgroundColor = UIColor.grayColor()
+//        line.backgroundColor = UIColor.grayColor()
+        line.backgroundColor = UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1.0)
         
         cell.addSubview(line)
-        if indexPath.row == 5 {
-            line.removeFromSuperview()
-
+        if netData.objectlist[indexPath.section].haschild == 0 {
+            if indexPath.section == self.netData.objectlist.count - 1 {
+                line.removeFromSuperview()
+                let lastLine = UILabel(frame: CGRectMake(0, 59.5, WIDTH, 0.5))
+                lastLine.backgroundColor = UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1.0)
+                cell.addSubview(lastLine)
+            }
+        }else{
+            if indexPath.row == self.netData.objectlist[indexPath.section].childlist.count - 1 {
+                line.removeFromSuperview()
+                let lastLine = UILabel(frame: CGRectMake(0, 59.5, WIDTH, 0.5))
+                lastLine.backgroundColor = UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1.0)
+                cell.addSubview(lastLine)
+            }
         }
         cell.num.text = info.count
         

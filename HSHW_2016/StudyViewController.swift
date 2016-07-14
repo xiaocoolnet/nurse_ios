@@ -139,7 +139,8 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             cell.titImage.setImage(UIImage(named: titImgArr[indexPath.row]), forState: .Normal)
             cell.titLab.text = titLabArr[indexPath.row]
             let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
-            line.backgroundColor = UIColor.grayColor()
+//            line.backgroundColor = UIColor.grayColor()
+            line.backgroundColor = UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1.0)
             
             cell.addSubview(line)
             if indexPath.row == 2 {
@@ -152,7 +153,8 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             cell.titImage.setImage(UIImage(named: titImgArrTwo[indexPath.row]), forState: .Normal)
             cell.titLab.text = titLabArrTwo[indexPath.row]
             let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
-            line.backgroundColor = UIColor.grayColor()
+//            line.backgroundColor = UIColor.grayColor()
+            line.backgroundColor = UIColor(red: 199/255.0, green: 199/255.0, blue: 204/255.0, alpha: 1.0)
             
             cell.addSubview(line)
             if indexPath.row == 2 {

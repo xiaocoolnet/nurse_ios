@@ -133,13 +133,29 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         }
         cell.selectionStyle = .None
         cell.titleLable.text = info.name
-        cell.titleImg.setImage(UIImage(named: picArr[indexPath.row]), forState: .Normal)
+        cell.titleImg.setImage(UIImage(named: picArr[indexPath.section]), forState: .Normal)
         cell.startBtn.userInteractionEnabled = false
         let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
-        line.backgroundColor = UIColor.grayColor()
+//        line.backgroundColor = UIColor.grayColor()
+        line.backgroundColor = UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1.0)
         cell.addSubview(line)
-        if 5 == indexPath.row{
-            line.removeFromSuperview()
+//        if 5 == indexPath.row{
+//            line.removeFromSuperview()
+//        }
+        if dataSource.objectlist[indexPath.section].haschild == 0 {
+            if indexPath.section == self.dataSource.objectlist.count - 1 {
+                line.removeFromSuperview()
+                let lastLine = UILabel(frame: CGRectMake(0, 59.5, WIDTH, 0.5))
+                lastLine.backgroundColor = UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1.0)
+                cell.addSubview(lastLine)
+            }
+        }else{
+            if indexPath.row == self.dataSource.objectlist[indexPath.section].childlist.count - 1 {
+                line.removeFromSuperview()
+                 let lastLine = UILabel(frame: CGRectMake(0, 59.5, WIDTH, 0.5))
+                 lastLine.backgroundColor = UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1.0)
+                cell.addSubview(lastLine)
+            }
         }
         cell.numLable.text = info.count
         return cell

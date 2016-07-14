@@ -53,8 +53,12 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
         navBtn.setTitleColor(COLOR, forState: .Normal)
         navBtn.setTitle("保存", forState: .Normal)
         navBtn.addTarget(self, action: #selector(saveInfo), forControlEvents: .TouchUpInside)
-        let navItem = UIBarButtonItem(customView: navBtn)
-        self.navigationItem.rightBarButtonItem = navItem
+        if showType == .Education || showType == .Sex {
+            
+        }else{
+            let navItem = UIBarButtonItem(customView: navBtn)
+            self.navigationItem.rightBarButtonItem = navItem
+        }
         //tableview
         myTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
