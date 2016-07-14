@@ -37,8 +37,20 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         super.viewDidAppear(animated)
         if sliderMenu.selectIndex == nil {
             sliderMenu.frame = sliderHead.frame
-            sliderMenu.menuNameArray = ["全部","精华","内科","外科" ,"妇产科","儿科","男科","中医科","五官科","神经科"]
-            sliderMenu.setSelectTilteIndex(0)
+            
+//            forumHelper.getBBSTypeData({ (success, response) in
+//                let array:Array<ForumTypeModel> = response as! Array<ForumTypeModel>
+
+//                if !array.isEmpty{
+//                    
+//                    for obj in array as [ForumModel] {
+//                        
+//                        self.sliderMenu.menuNameArray = response as! Array<ForumTypeModel>
+//                    }
+//                    self.sliderMenu.setSelectTilteIndex(0)
+//                }
+//            })
+            sliderMenu.menuNameArray = ["全部","精华","内科"]
             sliderMenu.delegate = self
             view.addSubview(sliderMenu)
         }

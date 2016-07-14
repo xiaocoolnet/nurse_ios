@@ -12,7 +12,7 @@ protocol SliderMenuViewDelegate :NSObjectProtocol{
 
 class HSZSliderMenuView: UIView {
     var scrollView:UIScrollView
-    var directButton:UIButton
+//    var directButton:UIButton
     var menuButtonArray:NSMutableArray
     var delegate: SliderMenuViewDelegate?
     var hasBtn:Bool = true
@@ -81,7 +81,7 @@ class HSZSliderMenuView: UIView {
     
     
     override init(frame: CGRect) {
-    directButton = UIButton.init(type: UIButtonType.Custom)
+//    directButton = UIButton.init(type: UIButtonType.Custom)
     scrollView = UIScrollView.init()
     menuButtonArray = NSMutableArray()
     menuNameArray = NSMutableArray()
@@ -103,25 +103,25 @@ class HSZSliderMenuView: UIView {
     
     
  private func setViews() {
-    if directButton.tag != 10010 {
-        directButton.tag = 10086;
-        directButton.setImage(UIImage(named: "ic_arrow_down"), forState: UIControlState.Normal);
-    }
-    directButton.frame = CGRect(x: 11, y: frame.height/2-9, width: 18, height: 18 )
-    directButton.addTarget(self, action: #selector(HSZSliderMenuView.directBtnClick(_:)), forControlEvents: UIControlEvents.TouchUpInside);
-    directView.frame = CGRectMake(frame.width - 40,0,40,frame.height)
-    directView.backgroundColor = UIColor.whiteColor()
+//    if directButton.tag != 10010 {
+//        directButton.tag = 10086;
+//        directButton.setImage(UIImage(named: "ic_arrow_down"), forState: UIControlState.Normal);
+//    }
+//    directButton.frame = CGRect(x: 11, y: frame.height/2-9, width: 18, height: 18 )
+//    directButton.addTarget(self, action: #selector(HSZSliderMenuView.directBtnClick(_:)), forControlEvents: UIControlEvents.TouchUpInside);
+//    directView.frame = CGRectMake(frame.width - 40,0,40,frame.height)
+//    directView.backgroundColor = UIColor.whiteColor()
+//    
+//    directView.layer.borderColor = UIColor.grayColor().CGColor
+//    directView.layer.borderWidth = 1
     
-    directView.layer.borderColor = UIColor.grayColor().CGColor
-    directView.layer.borderWidth = 1
-    
-    scrollView.frame = CGRect(x: 0, y: 0, width:frame.width - 40, height: frame.height)
+    scrollView.frame = CGRect(x: 0, y: 0, width:frame.width, height: frame.height)
     scrollView.backgroundColor = UIColor.clearColor();
     scrollView.showsHorizontalScrollIndicator = false;
     scrollView.showsVerticalScrollIndicator = false;
     
     self.addSubview(scrollView)
-    directView.addSubview(directButton)
+//    directView.addSubview(directButton)
     scrollView.addSubview(lineView)
     self.addSubview(directView);
     }
@@ -174,33 +174,33 @@ class HSZSliderMenuView: UIView {
         self.delegate?.sliderMenuClickIndex(button.tag)
         
     }
-   func directBtnClick(button:UIButton) {
-    if button.tag == 10086 {
-        button.tag = 10010
-        button.setImage(UIImage(named: "icon_callback"), forState: UIControlState.Normal);
-        self.frame = CGRectMake(self.frame.minX, self.frame.minY, self.frame.width, self.frame.height*2)
-        newView.frame = CGRectMake(frame.minX, frame.minY, frame.width - 40, 40)
-        //选中菜单按钮回调
-        newView.selectedItemHandle = {[unowned self] index in
-            print(index)
-            self.delegate?.sliderMenuClickIndex(index)
-        }
-        newView.setSelectedItem(selectIndex!)
-        
-        scrollView.setContentOffset(CGPointMake(0, 0), animated: true)
-        scrollView.scrollEnabled = false
-        scrollView.addSubview(newView)
-        self.bringSubviewToFront(newView)
-    
-    }else if button.tag == 10010 {
-        button.tag = 10086
-        button.setImage(UIImage(named: "ic_arrow_down"), forState: UIControlState.Normal);
-        scrollView.scrollEnabled = true
-        setSelectTilteIndex((newView.oldBtn?.tag)! - 101)
-        newView.removeFromSuperview()
-        self.frame = CGRectMake(self.frame.minX, self.frame.minY, self.frame.width, self.frame.height/2)
-    }
-    }
+//   func directBtnClick(button:UIButton) {
+//    if button.tag == 10086 {
+//        button.tag = 10010
+//        button.setImage(UIImage(named: "icon_callback"), forState: UIControlState.Normal);
+//        self.frame = CGRectMake(self.frame.minX, self.frame.minY, self.frame.width, self.frame.height*2)
+//        newView.frame = CGRectMake(frame.minX, frame.minY, frame.width - 40, 40)
+//        //选中菜单按钮回调
+//        newView.selectedItemHandle = {[unowned self] index in
+//            print(index)
+//            self.delegate?.sliderMenuClickIndex(index)
+//        }
+//        newView.setSelectedItem(selectIndex!)
+//        
+//        scrollView.setContentOffset(CGPointMake(0, 0), animated: true)
+//        scrollView.scrollEnabled = false
+//        scrollView.addSubview(newView)
+//        self.bringSubviewToFront(newView)
+//    
+//    }else if button.tag == 10010 {
+//        button.tag = 10086
+//        button.setImage(UIImage(named: "ic_arrow_down"), forState: UIControlState.Normal);
+//        scrollView.scrollEnabled = true
+//        setSelectTilteIndex((newView.oldBtn?.tag)! - 101)
+//        newView.removeFromSuperview()
+//        self.frame = CGRectMake(self.frame.minX, self.frame.minY, self.frame.width, self.frame.height/2)
+//    }
+//    }
     
     func makeHeaderOpenView() {
         
@@ -210,10 +210,10 @@ class HSZSliderMenuView: UIView {
         let button = self.menuButtonArray[index]
         selectIndex = index
         self.selectButton = button as! UIButton;
-        if directButton.tag == 10010 {
-            newView.setSelectedItem(index)
-            layoutIfNeeded()
-        }
+//        if directButton.tag == 10010 {
+//            newView.setSelectedItem(index)
+//            layoutIfNeeded()
+//        }
     }
     
    required init?(coder aDecoder: NSCoder) {
