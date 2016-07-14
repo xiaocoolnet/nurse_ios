@@ -539,11 +539,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
                 if(status.status == "success"){
                     
-//                    self.createTableView()
-//                    print(status)
-//                    self.dataSource = NewsList(status.data!)
-//                    self.myTableView .reloadData()
-                    
                     print(status.data)
                 }
             }

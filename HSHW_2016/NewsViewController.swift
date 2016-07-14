@@ -10,7 +10,7 @@ import UIKit
 import PagingMenuController
 
 class NewsViewController: UIViewController {
-
+    
     let oneView = TouTiaoViewController()
     let twoView = HuLiViewController()
     let threeView = TouTiaoViewController()
@@ -24,7 +24,7 @@ class NewsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.view.backgroundColor = UIColor.whiteColor()
         oneView.title = "头条"
         twoView.title = "护理界"
@@ -48,6 +48,5 @@ class NewsViewController: UIViewController {
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
         pagingMenuController.didMoveToParentViewController(self)
-      
     }
 }

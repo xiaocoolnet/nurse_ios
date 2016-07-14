@@ -229,8 +229,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         
         return cell
-        
     }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
         if indexPath.section == 1 {
@@ -238,6 +238,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             self.navigationController?.pushViewController(next, animated: true)
             next.title = "我的学习"
         }
+        
         if indexPath.section == 2 {
             if indexPath.row == 0 {
                 let next = MinePostViewController()
@@ -255,6 +256,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 next.title = "我的收藏"
             }
         }
+        
         if indexPath.section == 3 {
             let next = MineRecruitViewController()
             self.navigationController?.pushViewController(next, animated: true)
@@ -264,7 +266,6 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     func changeTitImage() {
         print("头像")
-        
     }
     func fineAndContact(btn:UIButton) {
         print("粉丝与管理")
@@ -289,5 +290,4 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func signInToday() {
         print("签到")
     }
-
 }

@@ -104,6 +104,10 @@
 		F6338B921D28F80C00EE5CA2 /* HSPostDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6338B901D28F80C00EE5CA2 /* HSPostDetailController.xib */; };
 		F6338B951D29105B00EE5CA2 /* HSStateCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6338B931D29105B00EE5CA2 /* HSStateCommentCell.swift */; };
 		F6338B961D29105B00EE5CA2 /* HSStateCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6338B941D29105B00EE5CA2 /* HSStateCommentCell.xib */; };
+		F63981081D373945002EE95B /* CFLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = F63981061D373945002EE95B /* CFLineChartView.m */; };
+		F63981091D373945002EE95B /* CFLineChartView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F63981071D373945002EE95B /* CFLineChartView.xib */; };
+		F639810C1D373C71002EE95B /* HSChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F639810A1D373C71002EE95B /* HSChartCell.swift */; };
+		F639810D1D373C71002EE95B /* HSChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F639810B1D373C71002EE95B /* HSChartCell.xib */; };
 		F63B3A6F1D2F953600C5B2CF /* HSStateEditResumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63B3A6E1D2F953600C5B2CF /* HSStateEditResumeController.swift */; };
 		F63BE1EF1D0546F9008292AC /* NewsPageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63BE1EE1D0546F9008292AC /* NewsPageHelper.swift */; };
 		F63E19811D17C38A001BDE8A /* HSWCommunityHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E197F1D17C38A001BDE8A /* HSWCommunityHome.swift */; };
@@ -262,6 +266,11 @@
 		F6338B901D28F80C00EE5CA2 /* HSPostDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSPostDetailController.xib; sourceTree = "<group>"; };
 		F6338B931D29105B00EE5CA2 /* HSStateCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStateCommentCell.swift; sourceTree = "<group>"; };
 		F6338B941D29105B00EE5CA2 /* HSStateCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSStateCommentCell.xib; sourceTree = "<group>"; };
+		F63981051D373945002EE95B /* CFLineChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFLineChartView.h; sourceTree = "<group>"; };
+		F63981061D373945002EE95B /* CFLineChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFLineChartView.m; sourceTree = "<group>"; };
+		F63981071D373945002EE95B /* CFLineChartView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CFLineChartView.xib; sourceTree = "<group>"; };
+		F639810A1D373C71002EE95B /* HSChartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSChartCell.swift; sourceTree = "<group>"; };
+		F639810B1D373C71002EE95B /* HSChartCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSChartCell.xib; sourceTree = "<group>"; };
 		F63B3A6E1D2F953600C5B2CF /* HSStateEditResumeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStateEditResumeController.swift; sourceTree = "<group>"; };
 		F63BE1EE1D0546F9008292AC /* NewsPageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsPageHelper.swift; sourceTree = "<group>"; };
 		F63E197F1D17C38A001BDE8A /* HSWCommunityHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSWCommunityHome.swift; sourceTree = "<group>"; };
@@ -464,6 +473,7 @@
 		183B866B1CE5CF7900709235 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				F63981041D373945002EE95B /* CFLineChart */,
 				F6C04AF61D20D4D2009E1613 /* ConnectModel.h */,
 				F6C04AF71D20D4D2009E1613 /* ConnectModel.m */,
 				183B866C1CE5CF9500709235 /* Http.swift */,
@@ -690,6 +700,8 @@
 				181E0D301CEBFF8800E34A7F /* MinePostTableViewCell.swift */,
 				181E0D341CEC3FFA00E34A7F /* MineRecruitTableViewCell.swift */,
 				18191D1D1CEC570100CD54FF /* FineTableViewCell.swift */,
+				F639810A1D373C71002EE95B /* HSChartCell.swift */,
+				F639810B1D373C71002EE95B /* HSChartCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -803,6 +815,16 @@
 				F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F63981041D373945002EE95B /* CFLineChart */ = {
+			isa = PBXGroup;
+			children = (
+				F63981051D373945002EE95B /* CFLineChartView.h */,
+				F63981061D373945002EE95B /* CFLineChartView.m */,
+				F63981071D373945002EE95B /* CFLineChartView.xib */,
+			);
+			path = CFLineChart;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -933,6 +955,8 @@
 				F63E19821D17C38A001BDE8A /* HSWCommunityHome.xib in Resources */,
 				F632EF0F1D18E8890038AF9D /* HSSQCollectionViewCell.xib in Resources */,
 				F6D02CE01D07BB5300353557 /* contentCell.xib in Resources */,
+				F63981091D373945002EE95B /* CFLineChartView.xib in Resources */,
+				F639810D1D373C71002EE95B /* HSChartCell.xib in Resources */,
 				F6E86AF71D34DF7E001536B6 /* HSForumDetailCell.xib in Resources */,
 				183B84FB1CE5BFDC00709235 /* Main.storyboard in Resources */,
 			);
@@ -1029,6 +1053,7 @@
 				F6C265CA1D25106F0033D2A9 /* HSTabBarController.swift in Sources */,
 				185102E21CED612E00F797EE /* UserPostTableViewCell.swift in Sources */,
 				0BB378571D2B504A00E4A84D /* OnlineTextTableViewCell.swift in Sources */,
+				F63981081D373945002EE95B /* CFLineChartView.m in Sources */,
 				18C240621CEF10150059BF48 /* OnlineExaminationViewController.swift in Sources */,
 				0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */,
 				F6E9E9531D362AF000E99FDD /* HSHotPostCell.swift in Sources */,
@@ -1065,6 +1090,7 @@
 				F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */,
 				F661F25F1D33BB7B00E04CE8 /* HSSelectController.swift in Sources */,
 				181E0D2F1CEBF8E000E34A7F /* MineRecruitViewController.swift in Sources */,
+				F639810C1D373C71002EE95B /* HSChartCell.swift in Sources */,
 				185408831CE7052700DFBA7C /* NewsContantViewController.swift in Sources */,
 				18C0BF971CEB63FB003E2886 /* QuestionBankViewController.swift in Sources */,
 				18A5148C1CED550800A30AA5 /* RecruitmentViewController.swift in Sources */,
@@ -1279,7 +1305,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1313,7 +1339,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Release;
 		};
