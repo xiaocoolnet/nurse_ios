@@ -76,14 +76,20 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
         }
         let vc = a as! HSWCommunityHome
         
-        //
-        let model:ForumModel = dataSource[indexPath.row]
-        print(model.mid)
-        helper.showPostInfo("1") { (success, response) in
-            let postM:PostModel = (response as? PostModel ?? nil)!
-            vc.postDetailWithModel(postM)
-
-            print(response)
+     
+        //TODO:之前是下边有问题，还需要优化
+        if tableView.tag == 11 {
+            vc.postDetailWithModel(hotData[indexPath.row])
+        }else {
+            //
+            let model:ForumModel = dataSource[indexPath.row]
+            print(model.mid)
+            helper.showPostInfo("1") { (success, response) in
+                let postM:PostModel = (response as? PostModel ?? nil)!
+                vc.postDetailWithModel_1(postM)
+                
+                print(response)
+            }
         }
         
     }
