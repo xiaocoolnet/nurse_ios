@@ -53,6 +53,7 @@ class RecruitTableViewCell: UITableViewCell {
         location.center.y = time.center.y
         loca.frame.origin.y = content.frame.size.height+content.frame.origin.y
         timeImg.frame.origin.y = content.frame.size.height+content.frame.origin.y
+        titImg.frame.origin.y = title.frame.size.height + 5
         delivery.frame.origin.y = content.frame.size.height+content.frame.origin.y
         delivery.center.y = location.center.y
         btnTit.center.y = location.center.y

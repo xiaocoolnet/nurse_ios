@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1911C01D11222700CDE18D /* LoginModel.swift */; };
-		0B5BF4181D3611990072C453 /* DataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5BF4171D3611990072C453 /* DataViewController.swift */; };
 		0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FED4D1D3373FC00A4488E /* DataPickerView.swift */; };
 		0B6FED501D3382B800A4488E /* EducationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FED4F1D3382B800A4488E /* EducationModel.swift */; };
 		0B6FED521D33999700A4488E /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B6FED511D33999700A4488E /* area.plist */; };
@@ -157,7 +156,6 @@
 /* Begin PBXFileReference section */
 		0B1911C01D11222700CDE18D /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		0B26F5B17459B246981F92CE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		0B5BF4171D3611990072C453 /* DataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataViewController.swift; sourceTree = "<group>"; };
 		0B6FED4D1D3373FC00A4488E /* DataPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPickerView.swift; sourceTree = "<group>"; };
 		0B6FED4F1D3382B800A4488E /* EducationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EducationModel.swift; sourceTree = "<group>"; };
 		0B6FED511D33999700A4488E /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
@@ -331,7 +329,6 @@
 			isa = PBXGroup;
 			children = (
 				0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */,
-				0B5BF4171D3611990072C453 /* DataViewController.swift */,
 			);
 			name = Change;
 			sourceTree = "<group>";
@@ -1092,7 +1089,6 @@
 				18191D1E1CEC570100CD54FF /* FineTableViewCell.swift in Sources */,
 				185408751CE6C88D00DFBA7C /* StudyViewController.swift in Sources */,
 				1854088F1CE713A100DFBA7C /* MagicboxViewController.swift in Sources */,
-				0B5BF4181D3611990072C453 /* DataViewController.swift in Sources */,
 				F631DFAE1D069EE100E52FDB /* PhotoModel.swift in Sources */,
 				F66912391D2B5C0C0021706B /* HSStudyNetHelper.swift in Sources */,
 				F6C265CD1D2513560033D2A9 /* HSWebViewDetailController.swift in Sources */,

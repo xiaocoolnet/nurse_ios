@@ -172,6 +172,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             
             cell1.selectionStyle = .None
             cell1.textLabel?.numberOfLines = 0
+           
             if indexPath.row == 0 {
                
                 cell1 = UITableViewCell.init(style: .Default, reuseIdentifier: "cellIntenfer")
@@ -179,8 +180,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let height = calculateHeight((newsInfo?.post_title)!, size: 16, width: WIDTH-20)
                 title.frame = CGRectMake(10, 5, WIDTH-20, height+10)
                 title.text = newsInfo?.post_title
-                title.font = UIFont.systemFontOfSize(16)
                 title.numberOfLines = 0
+                title.font = UIFont.systemFontOfSize(18)
                 cell1.addSubview(title)
                 tableView.rowHeight=height+20
               
@@ -190,7 +191,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let cell = tableView.dequeueReusableCellWithIdentifier("sourceCell", forIndexPath: indexPath)as! NewsSourceCell
                
                 cell.source.text = cell.source.text!+(newsInfo?.post_source)!
-                cell.checkNum.text = newsInfo?.recommended
+//                cell.checkNum.text = newsInfo?.recommended
                 let time:Array = (newsInfo?.post_date?.componentsSeparatedByString(" "))!
                 cell.createTime.text = time[0]
 
@@ -209,18 +210,19 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
                 cell3.selectionStyle = .None
                 let line = UILabel(frame: CGRectMake(WIDTH*63/375, 14.5, WIDTH*250/375, 1))
-                line.backgroundColor = UIColor(red: 230/255.0, green: 230/255.0, blue: 230/255.0, alpha: 1.0)
+                line.backgroundColor = UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1.0)
                 let share = UILabel(frame: CGRectMake(WIDTH/2-30, 5, 60, 20))
                 share.font = UIFont.systemFontOfSize(12)
                 share.textAlignment = .Center
-                share.textColor = UIColor(red: 225/255.0, green: 225/255.0, blue: 225/255.0, alpha: 1.0)
+                share.textColor = UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1.0)
                 share.text = "分享到"
                 share.backgroundColor = UIColor.whiteColor()
                 for i in 0...2 {
                     let shareBtn = UIButton(frame: CGRectMake(WIDTH*(15+119*CGFloat(i))/375, WIDTH*30/375, WIDTH*108/375, WIDTH*30/375))
                     shareBtn.tag = i
                     shareBtn.layer.cornerRadius = 4
-                    shareBtn.layer.borderColor = UIColor.grayColor().CGColor
+                    shareBtn.layer.borderColor = UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1.0).CGColor
+                    
                     shareBtn.layer.borderWidth = 0.5
                     shareBtn.setImage(UIImage(named: shareArr[i]), forState: .Normal)
                     shareBtn.addTarget(self, action: #selector(self.shareTheNews(_:)), forControlEvents: .TouchUpInside)

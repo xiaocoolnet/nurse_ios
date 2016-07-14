@@ -30,7 +30,7 @@ class EveryDayTableViewCell: UITableViewCell {
         titLab.frame = CGRectMake(57, 15, WIDTH/3, 30)
         titLab.font = UIFont.systemFontOfSize(18)
 //        titLab.backgroundColor = UIColor.redColor()
-        start.frame = CGRectMake(WIDTH-10-WIDTH/4, 15, WIDTH/4, 30)
+        start.frame = CGRectMake(WIDTH-8-WIDTH/4, 15, WIDTH/4, 30)
         start.setTitle("开始作答", forState: .Normal)
         start.setTitleColor(COLOR, forState: .Normal)
         start.layer.cornerRadius = 15
@@ -38,7 +38,7 @@ class EveryDayTableViewCell: UITableViewCell {
         start.layer.borderWidth = 1
         //let one = UILabel(frame: CGRectMake(WIDTH-150, 10, 25, 40))
         
-        let one = UILabel(frame: CGRectMake(start.frame.origin.x-30, 10, 25, 40))
+        let one = UILabel(frame: CGRectMake(start.frame.origin.x-33, 10, 25, 40))
         
         one.font = UIFont.systemFontOfSize(12)
 //        one.backgroundColor = UIColor.redColor()
@@ -47,7 +47,7 @@ class EveryDayTableViewCell: UITableViewCell {
         one.text = "道题"
         //num.frame = CGRectMake(WIDTH-168, 10, 20, 40)
         num.frame = CGRectMake(one.frame.origin.x-35, 10, 35, 40)
-        num.font = UIFont.systemFontOfSize(12)
+        num.font = UIFont.systemFontOfSize(15)
         num.textAlignment = .Center
         //num.text =  "100"
         

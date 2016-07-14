@@ -19,6 +19,7 @@ class NurseStationViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.tabBarController?.tabBar.hidden = false
+
     }
     
     override func viewDidLoad() {
@@ -33,12 +34,15 @@ class NurseStationViewController: UIViewController {
         self.addChildViewController(RecVC)
         segment = UISegmentedControl(items: ["社区","招聘"])
         navigationItem.titleView = segment
+        navigationItem.titleView?.frame = CGRectMake(WIDTH / 2 - 75, 15, 150, 30)
         segment?.selectedSegmentIndex = 0
         segment?.addTarget(self, action: #selector(selectorSegment), forControlEvents: UIControlEvents.ValueChanged)
         
         view.addSubview(ComVC.view)
         currentVCIndex = 0
         // Do any additional setup after loading the view.
+        
+//        self.showRightBtn()
     }
     
     func rightBarButtonClicked() {
