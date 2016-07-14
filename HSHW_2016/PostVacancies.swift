@@ -46,6 +46,7 @@ class PostVacancies: UIView , ChangeWordDelegate,UITextViewDelegate{
             print(success)
         }
         
+        //提交后还原表格样式
         firmNameField.text = nil
         resumeFeild.text = nil
         phoneField.text = nil
