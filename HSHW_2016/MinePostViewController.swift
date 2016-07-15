@@ -75,7 +75,7 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.conLab.text = "3421"
         
         return cell
-        
+//        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
