@@ -14,7 +14,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     let employmentMessageTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-    var picArr = NSArray()
+    var picArr = Array<String>()
     var timer = NSTimer()
     var times = Int()
     let employment = UIView()
@@ -27,12 +27,15 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var jobDataSource:Array<JobModel>?
     var CVDataSource:Array<CVModel>?
     
+    var requestHelper = NewsPageHelper()
     
-    var strId = String()
+    var strId = "1"
     
     var showType = 1
     var num = 1
     var selfNav:UINavigationController?
+    var btnTag = 1
+    
     
     weak var superViewController:NurseStationViewController?
     
@@ -44,27 +47,30 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         sendResume.delegate = self
         employmentMessageTableView.separatorStyle = .None
         resumeDetail.delegate = self
-        picArr = ["1.png","2.png","3.png","4.png"]
-        for i in 0...4 {
-            let imageView = UIImageView()
-            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*140/375)
-            if i == 4 {
-                imageView.image = UIImage(named: "1.png")
-            }else{
-                imageView.image = UIImage(named: "\(i+1).png")
+        
+        requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+            if success {
+                print(response)
+                let imageArr = response as! Array<PhotoInfo>
+                for imageInfo in imageArr {
+                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.updateSlideImage()
+                        self.myTableView.reloadData()
+                    })
+                }
             }
-            imageView.tag = i+1
-            //为图片视图添加点击事件
-            imageView.userInteractionEnabled = true
-            let tap = UITapGestureRecognizer(target: self, action: #selector(AbroadViewController.tapAction(_:)))
-            // 手指头
-            tap.numberOfTapsRequired = 1
-            // 单击
-            tap.numberOfTouchesRequired = 1
-            imageView.addGestureRecognizer(tap)
-            scrollView.addSubview(imageView)
         }
+
         self.makeEmployment()
+    }
+    
+    
+    func updateSlideImage(){
+        for i in 1...4 {
+            let imgView = scrollView.viewWithTag(i) as! UIImageView
+            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+        }
     }
     
     func makeDataSource(){
@@ -117,14 +123,28 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(RecruitmentViewController.scroll), userInfo: nil, repeats: true)
         timer.fire()
-        
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*140/375)
         scrollView.pagingEnabled = true
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
         scrollView.delegate = self
         
-        scrollView.contentSize = CGSizeMake(5*WIDTH, 0)
+        for i in 0...3 {
+            let  imageView = UIImageView()
+            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*140/375)
+            imageView.tag = i+1
+            let bottom = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, WIDTH*140/375-30, WIDTH, 30))
+            bottom.backgroundColor = UIColor.grayColor()
+            bottom.alpha = 0.3
+            //为图片视图添加点击事件
+            imageView.userInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
+            //            手指头
+            tap.numberOfTapsRequired = 1
+            //            单击
+            tap.numberOfTouchesRequired = 1
+            imageView.addGestureRecognizer(tap)
+            self.scrollView.addSubview(imageView)
+        }
+        scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
         
@@ -133,7 +153,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         pageControl.currentPageIndicatorTintColor = COLOR
         pageControl.numberOfPages = 4
         pageControl.currentPage = 0
-        pageControl.addTarget(self, action: #selector(RecruitmentViewController.pageNext), forControlEvents: .ValueChanged)
         one.addSubview(pageControl)
         
         myTableView.tableHeaderView = one
@@ -175,7 +194,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         self.employmentMessageTableView.frame = CGRectMake(0, 0, employmentMessage.frame.size.width,employmentMessage.frame.size.height - WIDTH*65/375)
 //        employmentMessageTableView.tag = 1
 //        employmentMessageTableView.backgroundColor = UIColor.redColor()
-        let tackBtn = UIButton(frame: CGRectMake(WIDTH*(WIDTH - 15 - 150 - 5)/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*150/375, WIDTH*45/375))
+        let tackBtn = UIButton(frame: CGRectMake(WIDTH*(WIDTH - 145 )/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*130/375, WIDTH*45/375))
         tackBtn.layer.cornerRadius = WIDTH*22.5/375
         tackBtn.layer.borderColor = COLOR.CGColor
         tackBtn.layer.borderWidth = 1
@@ -184,7 +203,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         tackBtn.addTarget(self, action: #selector(self.takeResume), forControlEvents: .TouchUpInside)
         employmentMessage.addSubview(tackBtn)
         
-        let tack = UIButton(frame: CGRectMake(WIDTH*15/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*150/375, WIDTH*45/375))
+        let tack = UIButton(frame: CGRectMake(WIDTH*15/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*130/375, WIDTH*45/375))
         tack.layer.cornerRadius = WIDTH*22.5/375
         tack.layer.borderColor = COLOR.CGColor
         tack.layer.borderWidth = 1
@@ -262,6 +281,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             }else{
                 cell.showforCVModel(CVDataSource![indexPath.row])
             }
+            cell.delivery.tag = indexPath.row
+            btnTag = cell.delivery.tag
             cell.delivery.addTarget(self, action: #selector(self.resumeOnline), forControlEvents: .TouchUpInside)
             return cell
         }else{
@@ -421,24 +442,28 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
         let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
         alertController.addAction(doneAction)
+        var model = String()
+        
+        if showType == 1 {
+            model = self.jobDataSource![btnTag].companyid
+        }
         let url = PARK_URL_Header+"ApplyJob"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,
-            //                "userid":"1",
-            //                "jobid":"1"
-            "jobid":strId
+            "jobid":strId,
+            "companyid":model
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             print(request)
             if(error != nil){
-                //                    handle(success: false, response: error?.description)
+               
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
-                    //                        handle(success: true, response: nil)
+                    
                     print(111111)
                 }else{
-                    //                        handle(success: false, response: nil)
+                    
                     print(2222222)
                 }
             }
@@ -497,12 +522,16 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
         }
         
+        let model = self.jobDataSource![btnTag].companyid
+        
+        
             let url = PARK_URL_Header+"ApplyJob"
             let param = [
                 "userid":QCLoginUserInfo.currentInfo.userid,
 //                "userid":"1",
 //                "jobid":"1"
-                "jobid":strId
+                "jobid":strId,
+                "companyid" :model
             ]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
