@@ -16,7 +16,7 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var myTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-    var picArr = NSArray()
+    var picArr = Array<String>()
     var timer = NSTimer()
     var dataSource = NewsList()
     var requestManager:AFHTTPSessionManager?
@@ -25,6 +25,9 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         super.viewWillAppear(animated)
         self.GetDate()
     }
+    
+    var requestHelper = NewsPageHelper()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //self.GetDate()
@@ -32,8 +35,28 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         requestManager = AFHTTPSessionManager()
         requestManager?.responseSerializer = AFHTTPResponseSerializer()
         
+        requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+            if success {
+                print(response)
+                let imageArr = response as! Array<PhotoInfo>
+                for imageInfo in imageArr {
+                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.updateSlideImage()
+                        self.myTableView.reloadData()
+                    })
+                }
+            }
+        }
     
         // Do any additional setup after loading the view.
+    }
+    
+    func updateSlideImage(){
+        for i in 1...4 {
+            let imgView = scrollView.viewWithTag(i) as! UIImageView
+            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+        }
     }
     
     func createTableView() {
@@ -52,15 +75,10 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         scrollView.pagingEnabled = true
         scrollView.delegate = self
         
-        
-        
-        picArr = ["1.png","2.png","3.png","4.png"]
         for i in 0...3 {
             let  imageView = UIImageView()
             imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
-            imageView.image = UIImage(named: picArr[i] as! String)
             imageView.tag = i+1
-            
             let bottom = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, WIDTH*190/375-30, WIDTH, 30))
             bottom.backgroundColor = UIColor.grayColor()
             bottom.alpha = 0.3

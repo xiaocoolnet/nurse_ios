@@ -20,6 +20,8 @@
 		0BB378551D2B4BE600E4A84D /* OnlineTextViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB378541D2B4BE600E4A84D /* OnlineTextViewController.swift */; };
 		0BB378571D2B504A00E4A84D /* OnlineTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB378561D2B504A00E4A84D /* OnlineTextTableViewCell.swift */; };
 		0BB378591D2B595100E4A84D /* OnlineTextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB378581D2B595100E4A84D /* OnlineTextModel.swift */; };
+		0BC1B4281D38EE03008A6F3D /* MineMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC1B4271D38EE03008A6F3D /* MineMessageTableViewCell.swift */; };
+		0BC1B42A1D390BAA008A6F3D /* MineMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC1B4291D390BAA008A6F3D /* MineMessageView.swift */; };
 		0BC3878E1D339C2C001460B8 /* AdressPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC3878D1D339C2C001460B8 /* AdressPickerView.swift */; };
 		0BDAB62D1D2A43380081E883 /* QuestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB62C1D2A43380081E883 /* QuestionModel.swift */; };
 		0BDAB6331D2A57320081E883 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6321D2A57320081E883 /* QuestionViewController.swift */; };
@@ -176,6 +178,8 @@
 		0BB378541D2B4BE600E4A84D /* OnlineTextViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineTextViewController.swift; sourceTree = "<group>"; };
 		0BB378561D2B504A00E4A84D /* OnlineTextTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineTextTableViewCell.swift; sourceTree = "<group>"; };
 		0BB378581D2B595100E4A84D /* OnlineTextModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineTextModel.swift; sourceTree = "<group>"; };
+		0BC1B4271D38EE03008A6F3D /* MineMessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineMessageTableViewCell.swift; sourceTree = "<group>"; };
+		0BC1B4291D390BAA008A6F3D /* MineMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineMessageView.swift; sourceTree = "<group>"; };
 		0BC3878D1D339C2C001460B8 /* AdressPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdressPickerView.swift; sourceTree = "<group>"; };
 		0BDAB62C1D2A43380081E883 /* QuestionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
 		0BDAB6321D2A57320081E883 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
@@ -1056,6 +1060,7 @@
 				185408911CE716E900DFBA7C /* AllViewController.swift in Sources */,
 				F6C265CA1D25106F0033D2A9 /* HSTabBarController.swift in Sources */,
 				185102E21CED612E00F797EE /* UserPostTableViewCell.swift in Sources */,
+				0BC1B4281D38EE03008A6F3D /* MineMessageTableViewCell.swift in Sources */,
 				0BB378571D2B504A00E4A84D /* OnlineTextTableViewCell.swift in Sources */,
 				F63981081D373945002EE95B /* CFLineChartView.m in Sources */,
 				18C240621CEF10150059BF48 /* OnlineExaminationViewController.swift in Sources */,
@@ -1077,6 +1082,7 @@
 				1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */,
 				18A5148E1CED596F00A30AA5 /* UserViewController.swift in Sources */,
 				185408771CE6C8A600DFBA7C /* GoABroadViewController.swift in Sources */,
+				0BC1B42A1D390BAA008A6F3D /* MineMessageView.swift in Sources */,
 				183B84F81CE5BFDC00709235 /* ViewController.swift in Sources */,
 				F631DFAC1D069C6200E52FDB /* SmetaModel.swift in Sources */,
 				F6338B951D29105B00EE5CA2 /* HSStateCommentCell.swift in Sources */,
@@ -1309,7 +1315,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/DreamCool/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1343,7 +1349,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/DreamCool/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Release;
 		};

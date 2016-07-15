@@ -33,7 +33,7 @@ class MinePostTableViewCell: UITableViewCell {
         title.font = UIFont.systemFontOfSize(14)
         one.frame = CGRectMake(WIDTH-35, 26, 20, 20)
         one.setImage(UIImage(named: "ic_you.png"), forState: .Normal)
-        timeLab.frame = CGRectMake(25, 40, 80, 20)
+        timeLab.frame = CGRectMake(15, 40, 80, 20)
         timeLab.font = UIFont.systemFontOfSize(10)
         timeLab.textColor = GREY
         conLab.frame = CGRectMake(117, 40, 50, 20)
