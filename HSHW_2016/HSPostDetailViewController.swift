@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import MBProgressHUD
 
-class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate,UIWebViewDelegate {
+class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate,UIWebViewDelegate,UIScrollViewDelegate {
     
     @IBOutlet weak var postTitle: UILabel!
     @IBOutlet weak var avatar: UIButton!
@@ -21,8 +21,10 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     @IBOutlet weak var sendTime: UILabel!
 
     let helper = HSNurseStationHelper()
+    let replyTextField = UITextField()
     var contentTableView:UITableView!
     var postInfo:PostModel?
+    var keyboardShowState = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +46,6 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         contentTableView.registerNib(UINib.init(nibName: "HSForumDetailCell", bundle: nil), forCellReuseIdentifier: "detailCell")
         contentTableView.registerNib(UINib.init(nibName: "HSStateCommentCell", bundle: nil), forCellReuseIdentifier: "cell")
 
-        
         //文字内容
         let text = postInfo!.content
         let height = calculateHeight(text, size: 15, width: WIDTH - 40)
@@ -65,16 +66,12 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         sendTime.text = postInfo?.write_time
         seeCount.text = "3346"
         level.text = "Lv.05"
-        
     }
-    
     //MARK:- TableView 代理方法
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return (postInfo?.pic.count)!
-//            return 2
         }else{
-//            return (postInfo?.comment.count)!
             return 3
         }
     }
@@ -96,7 +93,6 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSStateCommentCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
-
             return cell
         }
     }
@@ -121,7 +117,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         
         if tableView.tag == 311 {
             if section == 1 {
-                // TODO:有评论内容后postInfo?.comment.count > 0 统统改为postInfo?.comment.count == 0
+        // TODO:有评论内容后postInfo?.comment.count > 0 统统改为postInfo?.comment.count == 0
                 if postInfo?.comment.count > 0 {
                     
                     let noReply:UILabel = UILabel.init(frame: CGRectMake(0, 0, WIDTH, 200))
@@ -177,9 +173,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             let lineView:UIView = UIView.init(frame: CGRectMake(0, 49, WIDTH, 1))
             lineView.backgroundColor = UIColor.lightGrayColor()
             commentView.addSubview(lineView)
-            
-            
-            //                contentTableView.tableFooterView = commentView
+            // contentTableView.tableFooterView = commentView
             return commentView
         }else{
             // 回复 视图
@@ -192,10 +186,11 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             replyView.addSubview(shareBtn)
             
             let likeBtn:UIButton = UIButton.init(frame: CGRectMake(space+30+space, 10, 30, 30))
+            
             likeBtn.setImage(UIImage.init(named: "ic_two_like"), forState: UIControlState.Normal)
             replyView.addSubview(likeBtn)
             
-            let replyTextField:UITextField = UITextField.init(frame: CGRectMake(space*3+60, 10, WIDTH-60-space*4, 30))
+            replyTextField.frame = CGRectMake(space*3+60, 10, WIDTH-60-space*4, 30)
             replyTextField.borderStyle = UITextBorderStyle.RoundedRect
             replyTextField.placeholder = "回复楼主"
             replyTextField.returnKeyType = UIReturnKeyType.Send
@@ -207,6 +202,8 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             replyView.addSubview(lineView)
             
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidAppear), name: UIKeyboardDidShowNotification, object: nil)
             
             NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
             
@@ -242,13 +239,16 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
         
         UIView.animateWithDuration(0.3) {
-            self.contentTableView.contentOffset = CGPoint.init(x: 0, y: self.contentTableView.contentSize.height-keyboardheight)
+            self.contentTableView.contentOffset = CGPoint.init(x: 0, y: self.contentTableView.contentSize.height-keyboardheight+80)
         }
         
         print("键盘弹起")
-        
         print(keyboardheight)
         
+    }
+    
+    func keyboardDidAppear(notification:NSNotification) {
+        keyboardShowState = true
     }
     
     func keyboardWillDisappear(notification:NSNotification){
@@ -258,18 +258,21 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         print("键盘落下")
     }
     
-    // UITextField Delegate
-
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         print("textfield.text = ",textField.text)
         if textField.text != "" {
-           
             helper.setComment((postInfo?.mid)!, content: (postInfo?.content)!, type: "2", photo: (postInfo?.photo)!, handle: { (success, response) in
                 print("添加评论",success)
             })
         }
         textField.resignFirstResponder()
         return true
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        if keyboardShowState == true {
+            self.view.endEditing(true)
+            keyboardShowState = false
+        }
     }
 }

@@ -14,6 +14,7 @@ class HSZRecruitmentHome: UIViewController {
     let findPersonnel = RecruitmentViewController()
     var workPlace:HSWorkPlaceController?
     weak var superViewController:NurseStationViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         workPlace = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
@@ -41,10 +42,12 @@ class HSZRecruitmentHome: UIViewController {
         view.addSubview(pagingMenuController.view)
         pagingMenuController.didMoveToParentViewController(self)
     }
+    
     override func viewDidAppear(animated: Bool) {
         findJob.superViewController = superViewController ?? nil
         findPersonnel.superViewController = superViewController ?? nil
     }
+    
     func rightBarButtonClicked(){
         findJob.rightBarButtonClicked()
         findPersonnel.rightBarButtonClicked()

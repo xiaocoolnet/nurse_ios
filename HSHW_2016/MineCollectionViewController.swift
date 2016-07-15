@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import PagingMenuController
 
 class MineCollectionViewController: UIViewController {
+    
+    var articleViewController = HSCollectionListController()
+    var testViewController = HSCollectionListController()
+    var ForumViewController = HSCollectionListController()
 
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
@@ -20,28 +25,27 @@ class MineCollectionViewController: UIViewController {
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        articleViewController.title = "文章信息"
+        testViewController.title = "收藏试题"
+        ForumViewController.title = "收藏帖子"
         
-     
-        
-        
-        // Do any additional setup after loading the view.
+        let viewControllers = [articleViewController,testViewController,ForumViewController]
+        let options = PagingMenuOptions()
+        options.menuItemMargin = 5
+        options.menuHeight = 40
+        options.menuDisplayMode = .SegmentedControl
+        options.backgroundColor = UIColor.clearColor()
+        options.selectedBackgroundColor = UIColor.whiteColor()
+        options.font = UIFont.systemFontOfSize(16)
+        options.selectedFont = UIFont.systemFontOfSize(16)
+        options.selectedTextColor = COLOR
+        options.menuItemMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+        let pagingMenuController = PagingMenuController(viewControllers: viewControllers, options: options)
+        pagingMenuController.view.frame = CGRectMake(0, 1, WIDTH, HEIGHT-45)
+        pagingMenuController.view.frame.origin.y += 0
+        pagingMenuController.view.frame.size.height -= 0
+        addChildViewController(pagingMenuController)
+        view.addSubview(pagingMenuController.view)
+        pagingMenuController.didMoveToParentViewController(self)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

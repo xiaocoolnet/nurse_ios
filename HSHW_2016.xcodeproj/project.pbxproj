@@ -104,6 +104,9 @@
 		F632EF151D1949910038AF9D /* HSComOpenHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F632EF141D1949910038AF9D /* HSComOpenHeader.xib */; };
 		F6338B951D29105B00EE5CA2 /* HSStateCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6338B931D29105B00EE5CA2 /* HSStateCommentCell.swift */; };
 		F6338B961D29105B00EE5CA2 /* HSStateCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6338B941D29105B00EE5CA2 /* HSStateCommentCell.xib */; };
+		F6342C641D38DB4000800D8E /* HSCollectionListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6342C631D38DB4000800D8E /* HSCollectionListController.swift */; };
+		F6342C681D38DD2800800D8E /* HSArticleCollectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6342C661D38DD2800800D8E /* HSArticleCollectCell.swift */; };
+		F6342C691D38DD2800800D8E /* HSArticleCollectCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6342C671D38DD2800800D8E /* HSArticleCollectCell.xib */; };
 		F63981081D373945002EE95B /* CFLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = F63981061D373945002EE95B /* CFLineChartView.m */; };
 		F63981091D373945002EE95B /* CFLineChartView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F63981071D373945002EE95B /* CFLineChartView.xib */; };
 		F639810C1D373C71002EE95B /* HSChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F639810A1D373C71002EE95B /* HSChartCell.swift */; };
@@ -265,6 +268,9 @@
 		F632EF141D1949910038AF9D /* HSComOpenHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSComOpenHeader.xib; sourceTree = "<group>"; };
 		F6338B931D29105B00EE5CA2 /* HSStateCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStateCommentCell.swift; sourceTree = "<group>"; };
 		F6338B941D29105B00EE5CA2 /* HSStateCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSStateCommentCell.xib; sourceTree = "<group>"; };
+		F6342C631D38DB4000800D8E /* HSCollectionListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSCollectionListController.swift; sourceTree = "<group>"; };
+		F6342C661D38DD2800800D8E /* HSArticleCollectCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSArticleCollectCell.swift; sourceTree = "<group>"; };
+		F6342C671D38DD2800800D8E /* HSArticleCollectCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSArticleCollectCell.xib; sourceTree = "<group>"; };
 		F63981051D373945002EE95B /* CFLineChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFLineChartView.h; sourceTree = "<group>"; };
 		F63981061D373945002EE95B /* CFLineChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CFLineChartView.m; sourceTree = "<group>"; };
 		F63981071D373945002EE95B /* CFLineChartView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CFLineChartView.xib; sourceTree = "<group>"; };
@@ -389,7 +395,9 @@
 		181E0D3B1CEC429C00E34A7F /* Collection */ = {
 			isa = PBXGroup;
 			children = (
+				F6342C651D38DC3A00800D8E /* Cell */,
 				181E0D2C1CEBF8A900E34A7F /* MineCollectionViewController.swift */,
+				F6342C631D38DB4000800D8E /* HSCollectionListController.swift */,
 			);
 			name = Collection;
 			sourceTree = "<group>";
@@ -814,6 +822,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		F6342C651D38DC3A00800D8E /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F6342C661D38DD2800800D8E /* HSArticleCollectCell.swift */,
+				F6342C671D38DD2800800D8E /* HSArticleCollectCell.xib */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
 		F63981041D373945002EE95B /* CFLineChart */ = {
 			isa = PBXGroup;
 			children = (
@@ -938,6 +955,7 @@
 				0B6FED521D33999700A4488E /* area.plist in Resources */,
 				F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */,
 				0D3780151D372390000D31E2 /* HSPostDetailViewController.xib in Resources */,
+				F6342C691D38DD2800800D8E /* HSArticleCollectCell.xib in Resources */,
 				F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */,
 				F6E9E9541D362AF000E99FDD /* HSHotPostCell.xib in Resources */,
 				F63E19881D17DB4E001BDE8A /* icon_callback.png in Resources */,
@@ -1098,6 +1116,7 @@
 				F61228091D057B1E009E3D4D /* HuLiViewController.swift in Sources */,
 				185408811CE7005A00DFBA7C /* TouTiaoViewController.swift in Sources */,
 				0BDAB62D1D2A43380081E883 /* QuestionModel.swift in Sources */,
+				F6342C681D38DD2800800D8E /* HSArticleCollectCell.swift in Sources */,
 				0BDAB6351D2A588D0081E883 /* InternationNurseViewController.swift in Sources */,
 				18A6BAC51CE5F9A700B6B1FD /* MineViewController.swift in Sources */,
 				0BB378591D2B595100E4A84D /* OnlineTextModel.swift in Sources */,
@@ -1121,6 +1140,7 @@
 				1854087F1CE6F15500DFBA7C /* Tool.swift in Sources */,
 				18C240601CEEB6340059BF48 /* TalentViewController.swift in Sources */,
 				18191D1E1CEC570100CD54FF /* FineTableViewCell.swift in Sources */,
+				F6342C641D38DB4000800D8E /* HSCollectionListController.swift in Sources */,
 				185408751CE6C88D00DFBA7C /* StudyViewController.swift in Sources */,
 				1854088F1CE713A100DFBA7C /* MagicboxViewController.swift in Sources */,
 				F631DFAE1D069EE100E52FDB /* PhotoModel.swift in Sources */,
