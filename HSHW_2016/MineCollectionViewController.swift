@@ -25,9 +25,12 @@ class MineCollectionViewController: UIViewController {
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        articleViewController.title = "文章信息"
-        testViewController.title = "收藏试题"
-        ForumViewController.title = "收藏帖子"
+        articleViewController.title = "文章"
+        articleViewController.collectionType = 1
+        testViewController.title = "试题"
+        testViewController.collectionType = 2
+        ForumViewController.title = "帖子"
+        ForumViewController.collectionType = 3
         
         let viewControllers = [articleViewController,testViewController,ForumViewController]
         let options = PagingMenuOptions()
@@ -47,5 +50,7 @@ class MineCollectionViewController: UIViewController {
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
         pagingMenuController.didMoveToParentViewController(self)
+        
+        self.view.backgroundColor = UIColor.whiteColor()
     }
 }

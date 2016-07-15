@@ -13,7 +13,6 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
     let myTableView = UITableView()
     let nameArr:[String] = ["“张鑫仁”","“柳行”","“折木秀一郎”","“swift”"]
     
-    
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.hidden = false
@@ -83,22 +82,4 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
         print(indexPath.row)
         
     }
-    
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

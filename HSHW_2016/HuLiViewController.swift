@@ -23,31 +23,18 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.GetDate()
     }
     
     var requestHelper = NewsPageHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.GetDate()
+        self.GetDate()
         self.view.backgroundColor = COLOR
         requestManager = AFHTTPSessionManager()
         requestManager?.responseSerializer = AFHTTPResponseSerializer()
         
-        requestHelper.getSlideImages("3") { [unowned self] (success, response) in
-            if success {
-                print(response)
-                let imageArr = response as! Array<PhotoInfo>
-                for imageInfo in imageArr {
-                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.updateSlideImage()
-                        self.myTableView.reloadData()
-                    })
-                }
-            }
-        }
+        
     
         // Do any additional setup after loading the view.
     }
@@ -138,6 +125,19 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 if(status.status == "success"){
                     
                     self.createTableView()
+                    self.requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+                        if success {
+                            print(response)
+                            let imageArr = response as! Array<PhotoInfo>
+                            for imageInfo in imageArr {
+                                self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    self.updateSlideImage()
+                                    self.myTableView.reloadData()
+                                })
+                            }
+                        }
+                    }
                     self.dataSource = NewsList(status.data!)
                     self.myTableView .reloadData()
                     print(status.data)

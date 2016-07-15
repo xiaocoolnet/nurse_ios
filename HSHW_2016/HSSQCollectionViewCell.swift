@@ -88,7 +88,6 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
             helper.showPostInfo("1") { (success, response) in
                 let postM:PostModel = (response as? PostModel ?? nil)!
                 vc.postDetailWithModel_1(postM)
-                
                 print(response)
             }
         }

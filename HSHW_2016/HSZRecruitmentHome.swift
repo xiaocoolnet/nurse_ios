@@ -41,6 +41,7 @@ class HSZRecruitmentHome: UIViewController {
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
         pagingMenuController.didMoveToParentViewController(self)
+        
     }
     
     override func viewDidAppear(animated: Bool) {
