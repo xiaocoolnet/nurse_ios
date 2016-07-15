@@ -207,10 +207,10 @@ class HSNurseStationHelper: NSObject {
         }
     }
     
-    //获取论坛帖子列表
+    //获取我的帖子列表
     func getList(userid:String,type:String,isHot:Bool,handle:ResponseBlock){
         let url = PARK_URL_Header+"getbbspostlist"
-        var param = ["type":type,"userid":QCLoginUserInfo.currentInfo.userid]
+        var param = ["type":type,"userid":userid]
         if isHot {
             param["ishot"] = "1"
         }

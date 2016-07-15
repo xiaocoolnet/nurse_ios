@@ -64,6 +64,7 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     func postDetailWithModel(model:ForumModel){
         let vc = HSPostDetailController()
         vc.postInfo = model
+        
         navigationController?.pushViewController(vc, animated: true)
     }
     // MARK: ---CollectionView---

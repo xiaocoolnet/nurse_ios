@@ -14,8 +14,10 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     var helper = HSNurseStationHelper()
     var typeid = "1"
+    var userid = "599"
     var dataSource = Array<PostModel>()
     var hotData = Array<PostModel>()
+    var postM:Array<ForumModel>?
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
@@ -38,13 +40,13 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
         self.view.addSubview(myTableView)
         myTableView.rowHeight = 72
         
-        helper.getForumList(typeid,isHot:  false) {[unowned self] (success, response) in
+        helper.getList(userid,type: typeid,isHot:  false) {[unowned self] (success, response) in
             self.dataSource = response as? Array<PostModel> ?? []
             dispatch_async(dispatch_get_main_queue(), {
                 self.myTableView.reloadData()
             })
         }
-//        helper.getForumList(typeid, isHot: true) { (success, response) in
+//        helper.getForumList(typeid, isHot: false) { (success, response) in
 //            self.hotData = response as? Array<PostModel> ?? []
 //            print(response?.firstObject)
 //            print(self.hotData.count)
@@ -59,7 +61,8 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return self.dataSource.count
+//        return self.hotData.count
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MinePostTableViewCell
@@ -77,7 +80,16 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
-        
+
+        helper.showPostInfo("1") { (success, response) in
+            let data = (response as? PostModel ?? nil)!
+            let vc = HSPostDetailViewController()
+            vc.postInfo = data
+            self.navigationController?.pushViewController(vc, animated: true)
+            
+            print(response)
+        }
+
     }
 
     override func didReceiveMemoryWarning() {

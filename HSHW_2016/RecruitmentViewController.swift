@@ -29,11 +29,13 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     var requestHelper = NewsPageHelper()
     
-    var strId = String()
+    var strId = "1"
     
     var showType = 1
     var num = 1
     var selfNav:UINavigationController?
+    var btnTag = 1
+    
     
     weak var superViewController:NurseStationViewController?
     
@@ -192,7 +194,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         self.employmentMessageTableView.frame = CGRectMake(0, 0, employmentMessage.frame.size.width,employmentMessage.frame.size.height - WIDTH*65/375)
 //        employmentMessageTableView.tag = 1
 //        employmentMessageTableView.backgroundColor = UIColor.redColor()
-        let tackBtn = UIButton(frame: CGRectMake(WIDTH*(WIDTH - 15 - 150 - 5)/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*150/375, WIDTH*45/375))
+        let tackBtn = UIButton(frame: CGRectMake(WIDTH*(WIDTH - 145 )/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*130/375, WIDTH*45/375))
         tackBtn.layer.cornerRadius = WIDTH*22.5/375
         tackBtn.layer.borderColor = COLOR.CGColor
         tackBtn.layer.borderWidth = 1
@@ -201,7 +203,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         tackBtn.addTarget(self, action: #selector(self.takeResume), forControlEvents: .TouchUpInside)
         employmentMessage.addSubview(tackBtn)
         
-        let tack = UIButton(frame: CGRectMake(WIDTH*15/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*150/375, WIDTH*45/375))
+        let tack = UIButton(frame: CGRectMake(WIDTH*15/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*130/375, WIDTH*45/375))
         tack.layer.cornerRadius = WIDTH*22.5/375
         tack.layer.borderColor = COLOR.CGColor
         tack.layer.borderWidth = 1
@@ -279,6 +281,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             }else{
                 cell.showforCVModel(CVDataSource![indexPath.row])
             }
+            cell.delivery.tag = indexPath.row
+            btnTag = cell.delivery.tag
             cell.delivery.addTarget(self, action: #selector(self.resumeOnline), forControlEvents: .TouchUpInside)
             return cell
         }else{
@@ -438,10 +442,16 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
         let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
         alertController.addAction(doneAction)
+        var model = String()
+        
+        if showType == 1 {
+            model = self.jobDataSource![btnTag].companyid
+        }
         let url = PARK_URL_Header+"ApplyJob"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,
-            "jobid":strId
+            "jobid":strId,
+            "companyid":model
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             print(request)
@@ -512,12 +522,16 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
         }
         
+        let model = self.jobDataSource![btnTag].companyid
+        
+        
             let url = PARK_URL_Header+"ApplyJob"
             let param = [
                 "userid":QCLoginUserInfo.currentInfo.userid,
 //                "userid":"1",
 //                "jobid":"1"
-                "jobid":strId
+                "jobid":strId,
+                "companyid" :model
             ]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)

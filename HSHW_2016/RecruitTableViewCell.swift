@@ -57,6 +57,7 @@ class RecruitTableViewCell: UITableViewCell {
         delivery.frame.origin.y = content.frame.size.height+content.frame.origin.y
         delivery.center.y = location.center.y
         btnTit.center.y = location.center.y
+        btnTit.text = "投递简历"
         img.center.y = location.center.y
     }
     
@@ -81,6 +82,7 @@ class RecruitTableViewCell: UITableViewCell {
         delivery.frame.origin.y = content.frame.size.height+content.frame.origin.y
         delivery.center.y = location.center.y
         btnTit.center.y = location.center.y
+        btnTit.text = "邀请面试"
         img.center.y = location.center.y
         titImg.frame.origin.y = title.frame.size.height + 5
     }
@@ -125,7 +127,7 @@ class RecruitTableViewCell: UITableViewCell {
         
         //let btnTit = UILabel(frame: CGRectMake(WIDTH-WIDTH*15/375-56, 142-WIDTH*20/375-18, 48, 12))
         btnTit.frame = CGRectMake(WIDTH-WIDTH*15/375-56, content.frame.size.height+content.frame.origin.y, 48, 12)
-        btnTit.text = "投递简历"
+//        btnTit.text = "投递简历"
         btnTit.textColor = COLOR
         btnTit.font = UIFont.systemFontOfSize(12)
         
