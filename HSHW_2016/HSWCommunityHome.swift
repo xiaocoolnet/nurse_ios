@@ -38,19 +38,22 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         if sliderMenu.selectIndex == nil {
             sliderMenu.frame = sliderHead.frame
             
-//            forumHelper.getBBSTypeData({ (success, response) in
-//                let array:Array<ForumTypeModel> = response as! Array<ForumTypeModel>
+            forumHelper.getBBSTypeData({ (success, response) in
+                let array:Array<ForumTypeModel> = response as! Array<ForumTypeModel>
 
-//                if !array.isEmpty{
-//                    
-//                    for obj in array as [ForumModel] {
-//                        
-//                        self.sliderMenu.menuNameArray = response as! Array<ForumTypeModel>
-//                    }
-//                    self.sliderMenu.setSelectTilteIndex(0)
-//                }
-//            })
-            sliderMenu.menuNameArray = ["全部","精华","内科"]
+                let tempArray:NSMutableArray = []
+                
+                if !array.isEmpty {
+                    for obj in array {
+                        tempArray.addObject(obj.name)
+                    }
+                    self.sliderMenu.menuNameArray = tempArray
+                    self.sliderMenu.setSelectTilteIndex(0)
+                    self.collectionView.reloadData()
+                }
+
+            })
+
             sliderMenu.delegate = self
             view.addSubview(sliderMenu)
         }
@@ -73,11 +76,11 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         vc.postInfo = model
         navigationController?.pushViewController(vc, animated: true)
     }
-    func postDetailWithModel(model:ForumModel){
-        let vc = HSPostDetailController()
-        vc.postInfo = model
-        navigationController?.pushViewController(vc, animated: true)
-    }
+//    func postDetailWithModel(model:ForumModel){
+//        let vc = HSPostDetailController()
+//        vc.postInfo = model
+//        navigationController?.pushViewController(vc, animated: true)
+//    }
     // MARK: ---CollectionView---
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return sliderMenu.menuNameArray.count
