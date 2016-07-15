@@ -35,9 +35,7 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
         }
         helper.getForumList(typeid, isHot: true) { (success, response) in
             self.hotData = response as? Array<PostModel> ?? []
-            print(response?.firstObject)
-            print(self.hotData.count)
-            print(self.hotData.first?.title)
+         
             dispatch_async(dispatch_get_main_queue(), { 
                 self.hotTableView.reloadData()
             })

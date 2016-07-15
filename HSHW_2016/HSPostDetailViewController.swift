@@ -90,8 +90,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             detailCell.selectionStyle = UITableViewCellSelectionStyle.None
             
             let picArray = postInfo?.pic
-            let postImage:UIImage = UIImage.sd_imageWithData(NSData.init(contentsOfURL: NSURL.init(string: SHOW_IMAGE_HEADER+picArray![indexPath.row].pictureurl)!))
-            detailCell.postImageView?.image = postImage
+            detailCell.postImageView.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+picArray![indexPath.row].pictureurl))
             
             return detailCell
         }else{

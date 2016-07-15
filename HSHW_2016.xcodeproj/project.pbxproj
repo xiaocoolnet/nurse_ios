@@ -102,8 +102,6 @@
 		F632EF121D192F530038AF9D /* HSWorkPlaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F632EF101D192F530038AF9D /* HSWorkPlaceController.swift */; };
 		F632EF131D192F530038AF9D /* HSWorkPlaceController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F632EF111D192F530038AF9D /* HSWorkPlaceController.xib */; };
 		F632EF151D1949910038AF9D /* HSComOpenHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F632EF141D1949910038AF9D /* HSComOpenHeader.xib */; };
-		F6338B911D28F80C00EE5CA2 /* HSPostDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6338B8F1D28F80C00EE5CA2 /* HSPostDetailController.swift */; };
-		F6338B921D28F80C00EE5CA2 /* HSPostDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6338B901D28F80C00EE5CA2 /* HSPostDetailController.xib */; };
 		F6338B951D29105B00EE5CA2 /* HSStateCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6338B931D29105B00EE5CA2 /* HSStateCommentCell.swift */; };
 		F6338B961D29105B00EE5CA2 /* HSStateCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6338B941D29105B00EE5CA2 /* HSStateCommentCell.xib */; };
 		F63981081D373945002EE95B /* CFLineChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = F63981061D373945002EE95B /* CFLineChartView.m */; };
@@ -265,8 +263,6 @@
 		F632EF101D192F530038AF9D /* HSWorkPlaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSWorkPlaceController.swift; sourceTree = "<group>"; };
 		F632EF111D192F530038AF9D /* HSWorkPlaceController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSWorkPlaceController.xib; sourceTree = "<group>"; };
 		F632EF141D1949910038AF9D /* HSComOpenHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSComOpenHeader.xib; sourceTree = "<group>"; };
-		F6338B8F1D28F80C00EE5CA2 /* HSPostDetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSPostDetailController.swift; sourceTree = "<group>"; wrapsLines = 0; };
-		F6338B901D28F80C00EE5CA2 /* HSPostDetailController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSPostDetailController.xib; sourceTree = "<group>"; };
 		F6338B931D29105B00EE5CA2 /* HSStateCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStateCommentCell.swift; sourceTree = "<group>"; };
 		F6338B941D29105B00EE5CA2 /* HSStateCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSStateCommentCell.xib; sourceTree = "<group>"; };
 		F63981051D373945002EE95B /* CFLineChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CFLineChartView.h; sourceTree = "<group>"; };
@@ -748,8 +744,6 @@
 				181DE09A1CEAFFC00085ECB1 /* PostViewController.swift */,
 				F63E197F1D17C38A001BDE8A /* HSWCommunityHome.swift */,
 				F63E19801D17C38A001BDE8A /* HSWCommunityHome.xib */,
-				F6338B8F1D28F80C00EE5CA2 /* HSPostDetailController.swift */,
-				F6338B901D28F80C00EE5CA2 /* HSPostDetailController.xib */,
 				F661F25E1D33BB7B00E04CE8 /* HSSelectController.swift */,
 				0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */,
 				0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */,
@@ -938,7 +932,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6338B921D28F80C00EE5CA2 /* HSPostDetailController.xib in Resources */,
 				183B85001CE5BFDC00709235 /* LaunchScreen.storyboard in Resources */,
 				F6338B961D29105B00EE5CA2 /* HSStateCommentCell.xib in Resources */,
 				F632EF131D192F530038AF9D /* HSWorkPlaceController.xib in Resources */,
@@ -1063,7 +1056,6 @@
 				0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */,
 				F6E9E9531D362AF000E99FDD /* HSHotPostCell.swift in Sources */,
 				181E0D271CEBF85100E34A7F /* MineStudyViewController.swift in Sources */,
-				F6338B911D28F80C00EE5CA2 /* HSPostDetailController.swift in Sources */,
 				0BAB74BF1D34B95200D2E365 /* HSEditResumeViewController.swift in Sources */,
 				183B866F1CE5CF9500709235 /* Http.swift in Sources */,
 				185408791CE6C8B600DFBA7C /* NurseStationViewController.swift in Sources */,
@@ -1309,7 +1301,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1343,7 +1335,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "1584c2a5-f4d7-4789-b74a-f68be6b9a7db";
-				SWIFT_OBJC_BRIDGING_HEADER = "/Users/jq/Desktop/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/xiaocool/Desktop/nurse/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Release;
 		};

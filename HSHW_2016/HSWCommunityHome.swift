@@ -37,8 +37,23 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         super.viewDidAppear(animated)
         if sliderMenu.selectIndex == nil {
             sliderMenu.frame = sliderHead.frame
-            sliderMenu.menuNameArray = ["全部","精华","内科","外科" ,"妇产科","儿科","男科","中医科","五官科","神经科"]
-            sliderMenu.setSelectTilteIndex(0)
+            
+            forumHelper.getBBSTypeData({ (success, response) in
+                let array:Array<ForumTypeModel> = response as! Array<ForumTypeModel>
+
+                let tempArray:NSMutableArray = []
+                
+                if !array.isEmpty {
+                    for obj in array {
+                        tempArray.addObject(obj.name)
+                    }
+                    self.sliderMenu.menuNameArray = tempArray
+                    self.sliderMenu.setSelectTilteIndex(0)
+                    self.collectionView.reloadData()
+                }
+
+            })
+
             sliderMenu.delegate = self
             view.addSubview(sliderMenu)
         }
@@ -57,16 +72,16 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     func postDetailWithModel_1(model:PostModel){
-        let vc = HSPostDetailViewController()
-        vc.postInfo = model
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    func postDetailWithModel(model:ForumModel){
-        let vc = HSPostDetailController()
+        let vc = HSPostDetailViewController(nibName: "HSPostDetailViewController",bundle: nil)
         vc.postInfo = model
         
         navigationController?.pushViewController(vc, animated: true)
     }
+//    func postDetailWithModel(model:ForumModel){
+//        let vc = HSPostDetailController()
+//        vc.postInfo = model
+//        navigationController?.pushViewController(vc, animated: true)
+//    }
     // MARK: ---CollectionView---
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
         return sliderMenu.menuNameArray.count
