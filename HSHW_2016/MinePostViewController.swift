@@ -12,6 +12,11 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
     let myTableView = UITableView()
     
+    var helper = HSNurseStationHelper()
+    var typeid = "1"
+    var dataSource = Array<PostModel>()
+    var hotData = Array<PostModel>()
+    
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.hidden = false
@@ -33,6 +38,22 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
         self.view.addSubview(myTableView)
         myTableView.rowHeight = 72
         
+        helper.getForumList(typeid,isHot:  false) {[unowned self] (success, response) in
+            self.dataSource = response as? Array<PostModel> ?? []
+            dispatch_async(dispatch_get_main_queue(), {
+                self.myTableView.reloadData()
+            })
+        }
+//        helper.getForumList(typeid, isHot: true) { (success, response) in
+//            self.hotData = response as? Array<PostModel> ?? []
+//            print(response?.firstObject)
+//            print(self.hotData.count)
+//            print(self.hotData.first?.title)
+//            dispatch_async(dispatch_get_main_queue(), {
+//                self.myTableView.reloadData()
+//            })
+//        }
+
         
         // Do any additional setup after loading the view.
     }
@@ -43,7 +64,9 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MinePostTableViewCell
         cell.selectionStyle = .None
-        cell.title.text = "真是醉了，上班时间谈人生"
+        let model = self.dataSource[indexPath.row]
+        cell.title.text = model.title
+//        cell.title.text = "真是醉了，上班时间谈人生"
         cell.timeLab.text = "2016/05/23"
         cell.zanNum.text = "232"
         cell.conLab.text = "3421"

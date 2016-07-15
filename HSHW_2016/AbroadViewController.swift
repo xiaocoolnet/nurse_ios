@@ -15,7 +15,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     var myTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-    var picArr = NSArray()
+//    var picArr = NSArray()
+    var picArr = Array<String>()
     var timer = NSTimer()
     var times = Int()
     //  请求认证id
@@ -26,6 +27,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     let nameArr:[String] = ["美国","加拿大","德国","芬兰","澳洲","新西兰","新加坡","沙特"]
     let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
     var country = Int()
+    
+    var requestHelper = NewsPageHelper()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +44,29 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.view.addSubview(myTableView)
         channelid = 4
         self.GetDate()
+        
+        requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+            if success {
+                print(response)
+                let imageArr = response as! Array<PhotoInfo>
+                for imageInfo in imageArr {
+                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.updateSlideImage()
+                        self.myTableView.reloadData()
+                    })
+                }
+            }
+        }
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func updateSlideImage(){
+        for i in 1...4 {
+            let imgView = scrollView.viewWithTag(i) as! UIImageView
+            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+        }
     }
     
     //  数据请求
@@ -98,23 +123,20 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*190/375))
         self.view.addSubview(one)
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
         
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*190/375)
         scrollView.pagingEnabled = true
         scrollView.delegate = self
         
-        picArr = ["1.png","2.png","3.png","4.png"]
         for i in 0...3 {
             let  imageView = UIImageView()
-            imageView.frame = CGRectMake(CGFloat(i) * WIDTH, 0, WIDTH, WIDTH*190/375)
-            imageView.image = UIImage(named: picArr[i] as! String)
-            imageView.tag = i + 1
-            
-            let bottom = UIView(frame: CGRectMake(CGFloat(i) * WIDTH, WIDTH * 190 / 375 - 30, WIDTH, 30))
+            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
+            imageView.tag = i+1
+            let bottom = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, WIDTH*190/375-30, WIDTH, 30))
             bottom.backgroundColor = UIColor.grayColor()
             bottom.alpha = 0.3
-            let titLab = UILabel(frame: CGRectMake(CGFloat(i) * WIDTH + 10, WIDTH * 190 / 375 - 30, WIDTH - 100, 30))
+            let titLab = UILabel(frame: CGRectMake(CGFloat(i)*WIDTH+10, WIDTH*190/375-30, WIDTH-100, 30))
             titLab.font = UIFont.systemFontOfSize(14)
             titLab.textColor = UIColor.whiteColor()
             titLab.text = titArr[i]
@@ -122,8 +144,6 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             //为图片视图添加点击事件
             imageView.userInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
-            
-            
             //            手指头
             tap.numberOfTapsRequired = 1
             //            单击
@@ -131,11 +151,11 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             imageView.addGestureRecognizer(tap)
             self.scrollView.addSubview(imageView)
         }
-        scrollView.contentSize = CGSizeMake(4 * WIDTH, 0)
+        scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
         
-        pageControl.frame = CGRectMake(WIDTH - 80, WIDTH * 190 / 375 - 30, 80, 30)
+        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*190/375-30, 80, 30)
         pageControl.pageIndicatorTintColor = UIColor.whiteColor()
         pageControl.currentPageIndicatorTintColor = COLOR
         pageControl.numberOfPages = 4
@@ -182,48 +202,48 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         //  创建视图
         let one = UIView(frame: CGRectMake(0, 0, WIDTH, WIDTH*140/375))
         //  添加定时器
-        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(AbroadViewController.scroll), userInfo: nil, repeats: true)
-        timer.fire()
-        //  添加轮播效果
+        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
+        
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*140/375)
         scrollView.pagingEnabled = true
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
         scrollView.delegate = self
         
-        picArr = ["1.png","2.png","3.png","4.png"]
-        for i in 0...4 {
-            let imageView = UIImageView()
-            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH * 140 / 375)
-            if i == 4 {
-                imageView.image = UIImage(named: "1.png")
-            }else{
-                imageView.image = UIImage(named: "\(i+1).png")
-            }
-            imageView.tag = i + 1
-            //  为图片视图添加点击事件
-            imageView.userInteractionEnabled = true
+        for i in 0...3 {
+            let  imageView = UIImageView()
+            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*140/375)
+            imageView.tag = i+1
+            let bottom = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, WIDTH*140/375-30, WIDTH, 30))
+            bottom.backgroundColor = UIColor.grayColor()
+            bottom.alpha = 0.3
+            let titLab = UILabel(frame: CGRectMake(CGFloat(i)*WIDTH+10, WIDTH*140/375-30, WIDTH-100, 30))
+            titLab.font = UIFont.systemFontOfSize(14)
+            titLab.textColor = UIColor.whiteColor()
+            titLab.text = titArr[i]
             
-            let tap = UITapGestureRecognizer(target: self, action: #selector(AbroadViewController.tapAction(_:)))
+            //为图片视图添加点击事件
+            imageView.userInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
             //            手指头
             tap.numberOfTapsRequired = 1
             //            单击
             tap.numberOfTouchesRequired = 1
             imageView.addGestureRecognizer(tap)
-            scrollView.addSubview(imageView)
+            self.scrollView.addSubview(imageView)
         }
-        scrollView.contentSize = CGSizeMake(5 * WIDTH, 0)
+        scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
         
-        pageControl.frame = CGRectMake(WIDTH - 80, WIDTH * 140 / 375 - 30, 80, 30)
+        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*140/375-30, 80, 30)
         pageControl.pageIndicatorTintColor = UIColor.whiteColor()
         pageControl.currentPageIndicatorTintColor = COLOR
         pageControl.numberOfPages = 4
         pageControl.currentPage = 0
-        pageControl.addTarget(self, action: #selector(AbroadViewController.pageNext), forControlEvents: .ValueChanged)
         one.addSubview(pageControl)
         
+//        myTableView.rowHeight = 100
+//        myTableView.tableHeaderView = one
+       
         
         
         return one
@@ -291,47 +311,84 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         country = btn.tag
         self.getData()
     }
+//    //    图片点击事件
+//    func tapAction(tap:UIGestureRecognizer) {
+//        var imageView = UIImageView()
+//        imageView = tap.view as! UIImageView
+//        print("这是第\(Int(imageView.tag))张图片")
+//        //  执行点击操作
+//        //  进行数据请求，加载对应的页面
+//    }
+//    func pageNext() {
+//        scrollView.contentOffset = CGPointMake(WIDTH*CGFloat(pageControl.currentPage), 0)
+//    }
+//    
+//    func scroll(){
+//        if times == 4 {
+//            self.pageControl.currentPage = 0
+//        }else{
+//            self.pageControl.currentPage = times
+//        }
+//        scrollView.setContentOffset(CGPointMake(WIDTH*CGFloat(times), 0), animated: true)
+//        times += 1
+//        // print("出国1")
+//    }
+//    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+//        if times == 5 {
+//            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
+//            times = 1
+//        }
+//        //print("出国2")
+//    }
+//    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+//        //  偏移量
+//        var number = Int(scrollView.contentOffset.x/WIDTH)
+//        if number == 4 {
+//            number = 0
+//            //  设置当前页面
+//            pageControl.currentPage = number
+//        }else{
+//            pageControl.currentPage = number
+//        }
+//        
+//    }
+    
     //    图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
-        //  执行点击操作
-        //  进行数据请求，加载对应的页面
-    }
-    func pageNext() {
-        scrollView.contentOffset = CGPointMake(WIDTH*CGFloat(pageControl.currentPage), 0)
     }
     
     func scroll(){
-        if times == 4 {
+        if self.pageControl.currentPage == self.pageControl.numberOfPages-1 {
             self.pageControl.currentPage = 0
         }else{
-            self.pageControl.currentPage = times
+            self.pageControl.currentPage += 1
         }
-        scrollView.setContentOffset(CGPointMake(WIDTH*CGFloat(times), 0), animated: true)
-        times += 1
-        // print("出国1")
+        let offSetX:CGFloat = CGFloat(self.pageControl.currentPage) * CGFloat(self.scrollView.frame.size.width)
+        scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
     }
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-        if times == 5 {
-            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
-            times = 1
-        }
-        //print("出国2")
-    }
+    
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        //  偏移量
-        var number = Int(scrollView.contentOffset.x/WIDTH)
-        if number == 4 {
-            number = 0
-            //  设置当前页面
-            pageControl.currentPage = number
-        }else{
-            pageControl.currentPage = number
-        }
-        
+        pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
     }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        var offsetX:CGFloat = self.scrollView.contentOffset.x
+        offsetX = offsetX + (self.scrollView.frame.size.width * 0.5)
+        let page:Int = Int(offsetX)/Int(self.scrollView.frame.size.width)
+        pageControl.currentPage = page
+    }
+    //开始拖拽时
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        timer.fireDate = NSDate.distantFuture()
+    }
+    //结束拖拽时
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        timer.fireDate = NSDate.distantPast()
+    }
+
     
     func getData(){
         

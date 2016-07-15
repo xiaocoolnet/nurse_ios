@@ -14,7 +14,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     let employmentMessageTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-    var picArr = NSArray()
+    var picArr = Array<String>()
     var timer = NSTimer()
     var times = Int()
     let employment = UIView()
@@ -27,6 +27,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var jobDataSource:Array<JobModel>?
     var CVDataSource:Array<CVModel>?
     
+    var requestHelper = NewsPageHelper()
     
     var strId = String()
     
@@ -44,27 +45,30 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         sendResume.delegate = self
         employmentMessageTableView.separatorStyle = .None
         resumeDetail.delegate = self
-        picArr = ["1.png","2.png","3.png","4.png"]
-        for i in 0...4 {
-            let imageView = UIImageView()
-            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*140/375)
-            if i == 4 {
-                imageView.image = UIImage(named: "1.png")
-            }else{
-                imageView.image = UIImage(named: "\(i+1).png")
+        
+        requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+            if success {
+                print(response)
+                let imageArr = response as! Array<PhotoInfo>
+                for imageInfo in imageArr {
+                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.updateSlideImage()
+                        self.myTableView.reloadData()
+                    })
+                }
             }
-            imageView.tag = i+1
-            //为图片视图添加点击事件
-            imageView.userInteractionEnabled = true
-            let tap = UITapGestureRecognizer(target: self, action: #selector(AbroadViewController.tapAction(_:)))
-            // 手指头
-            tap.numberOfTapsRequired = 1
-            // 单击
-            tap.numberOfTouchesRequired = 1
-            imageView.addGestureRecognizer(tap)
-            scrollView.addSubview(imageView)
         }
+
         self.makeEmployment()
+    }
+    
+    
+    func updateSlideImage(){
+        for i in 1...4 {
+            let imgView = scrollView.viewWithTag(i) as! UIImageView
+            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+        }
     }
     
     func makeDataSource(){
@@ -117,14 +121,28 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(RecruitmentViewController.scroll), userInfo: nil, repeats: true)
         timer.fire()
-        
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*140/375)
         scrollView.pagingEnabled = true
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.showsVerticalScrollIndicator = false
         scrollView.delegate = self
         
-        scrollView.contentSize = CGSizeMake(5*WIDTH, 0)
+        for i in 0...3 {
+            let  imageView = UIImageView()
+            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*140/375)
+            imageView.tag = i+1
+            let bottom = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, WIDTH*140/375-30, WIDTH, 30))
+            bottom.backgroundColor = UIColor.grayColor()
+            bottom.alpha = 0.3
+            //为图片视图添加点击事件
+            imageView.userInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
+            //            手指头
+            tap.numberOfTapsRequired = 1
+            //            单击
+            tap.numberOfTouchesRequired = 1
+            imageView.addGestureRecognizer(tap)
+            self.scrollView.addSubview(imageView)
+        }
+        scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
         
@@ -133,7 +151,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         pageControl.currentPageIndicatorTintColor = COLOR
         pageControl.numberOfPages = 4
         pageControl.currentPage = 0
-        pageControl.addTarget(self, action: #selector(RecruitmentViewController.pageNext), forControlEvents: .ValueChanged)
         one.addSubview(pageControl)
         
         myTableView.tableHeaderView = one
@@ -424,21 +441,19 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         let url = PARK_URL_Header+"ApplyJob"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,
-            //                "userid":"1",
-            //                "jobid":"1"
             "jobid":strId
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             print(request)
             if(error != nil){
-                //                    handle(success: false, response: error?.description)
+               
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
-                    //                        handle(success: true, response: nil)
+                    
                     print(111111)
                 }else{
-                    //                        handle(success: false, response: nil)
+                    
                     print(2222222)
                 }
             }

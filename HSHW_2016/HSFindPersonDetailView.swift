@@ -32,11 +32,16 @@ class HSFindPersonDetailView: UIView {
     @IBOutlet weak var inviteInterView: UIButton!
     weak var delegate:HSFindPersonDetailViewDelegate?
     
+    @IBOutlet weak var backBtn: UIButton!
     override func layoutSubviews() {
         super.layoutSubviews()
         inviteInterView.layer.borderColor = COLOR.CGColor
         inviteInterView.layer.borderWidth = 1
         inviteInterView.cornerRadius = 22
+        
+        backBtn.layer.borderColor = COLOR.CGColor
+        backBtn.layer.borderWidth = 1
+        backBtn.cornerRadius = 22
     }
     @IBAction func sendInvite(sender: AnyObject) {
         if delegate != nil {
@@ -44,4 +49,9 @@ class HSFindPersonDetailView: UIView {
         }
     }
     
+    @IBAction func backBtnClick(sender: AnyObject) {
+        if delegate != nil {
+            delegate!.sendInvite()
+        }
+    }
 }

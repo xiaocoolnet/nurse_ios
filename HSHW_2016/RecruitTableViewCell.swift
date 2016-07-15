@@ -82,6 +82,7 @@ class RecruitTableViewCell: UITableViewCell {
         delivery.center.y = location.center.y
         btnTit.center.y = location.center.y
         img.center.y = location.center.y
+        titImg.frame.origin.y = title.frame.size.height + 5
     }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {

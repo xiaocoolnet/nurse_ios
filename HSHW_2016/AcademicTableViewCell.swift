@@ -39,23 +39,25 @@ class AcademicTableViewCell: UITableViewCell {
         conNum.textColor = UIColor.grayColor()
         
         comBtn.frame = CGRectMake(10, (WIDTH-20)*120/355+40, 18, 12)
-        comBtn.setImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
+//        comBtn.setImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
 //        comBtn.backgroundColor = UIColor.redColor()
         
-        timeLab.frame = CGRectMake(100, (WIDTH-20)*120/355+36, 100, 20)
-        timeLab.font = UIFont.systemFontOfSize(10)
+        timeLab.frame = CGRectMake(30, (WIDTH-20)*120/355+40, 100, 20)
+        timeLab.font = UIFont.systemFontOfSize(14)
         timeLab.textColor = UIColor.grayColor()
         
-        timeBtn.frame = CGRectMake(86, (WIDTH-20)*120/355+40, 14, 14)
-        timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
+        timeBtn.frame = CGRectMake(10, (WIDTH-20)*120/355+42, 12, 12)
+//        timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
+        timeBtn.setBackgroundImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
         
-        zanNum.frame = CGRectMake(WIDTH-40, (WIDTH-20)*120/355+35, 30, 20)
-        zanNum.font = UIFont.systemFontOfSize(10)
+        zanNum.frame = CGRectMake(WIDTH-40, (WIDTH-20)*120/355+38, 30, 20)
+        zanNum.font = UIFont.systemFontOfSize(14)
         zanNum.textColor = UIColor.grayColor()
         zanNum.textAlignment = .Left
-        zan.frame = CGRectMake(WIDTH-56, (WIDTH-20)*120/355+37, 16, 16)
-        zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
-        //zan.setImage(UIImage(named: "ic_like_big.png"), forState: .Highlighted)
+        zan.frame = CGRectMake(WIDTH-60, (WIDTH-20)*120/355+42, 14, 14)
+//        zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
+        
+        zan.setBackgroundImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
         
         self.addSubview(titImage)
         self.addSubview(titLab)
