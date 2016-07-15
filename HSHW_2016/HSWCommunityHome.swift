@@ -57,12 +57,12 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     func postDetailWithModel_1(model:PostModel){
-        let vc = HSPostDetailViewController()
+        let vc = HSPostDetailViewController(nibName: "HSPostDetailViewController",bundle: nil)
         vc.postInfo = model
         navigationController?.pushViewController(vc, animated: true)
     }
     func postDetailWithModel(model:ForumModel){
-        let vc = HSPostDetailController()
+        let vc = HSPostDetailController(nibName: "HSPostDetailController",bundle: nil)
         vc.postInfo = model
         navigationController?.pushViewController(vc, animated: true)
     }
