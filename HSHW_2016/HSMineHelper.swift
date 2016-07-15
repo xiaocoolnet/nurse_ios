@@ -261,4 +261,63 @@ class HSMineHelper: NSObject {
             }
         }
     }
+    
+    // TODO:目前是假的！！！
+    // 获取粉丝列表 type 1 粉丝  !=1  关注
+    func getFansOrFollowList(type:Int,handle:ResponseBlock){
+//       getMyFansList
+        
+        let url:String
+        
+        if type == 1 {
+            url = PARK_URL_Header+"getMyFansList"
+        }else{
+            url = PARK_URL_Header+"getMyFollowList"
+        }
+        
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = HSMineList(JSONDecoder(json!))
+                if(result.status == "success"){
+                    handle(success: true, response: result.datas)
+                }else{
+                    handle(success: false, response: result.errorData)
+                }
+            }
+        }
+    }
+    
+    func getPersonalInfo_2(userid:String,handle:ResponseBlock){
+        let url = PARK_URL_Header+"getuserinfo"
+        let param = [
+            "userid":userid
+        ];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = HSMineList(JSONDecoder(json!))
+                print("状态是")
+                print(result.status)
+                if(result.status == "success"){
+                    handle(success: true, response: result.datas)
+                }else{
+                    handle(success: false, response: result.errorData)
+                }
+            }
+        }
+    }
+
+
+//        let json = "{\"datas\":[{\"userId\":\"38\",\"name\":\"张三\",\"leavel\":\"12\",\"headerImage\":\"啦啦啦\"},{\"userId\":\"38\",\"name\":\"李四\",\"leavel\":\"609\",\"headerImage\":\"啦啦啦\"},{\"userId\":\"38\",\"name\":\"王五\",\"leavel\":\"96\",\"headerImage\":\"啦啦啦\"},{\"userId\":\"38\",\"name\":\"马六\",\"leavel\":\"4\",\"headerImage\":\"啦啦啦\"},{\"userId\":\"38\",\"name\":\"赵七\",\"leavel\":\"45\",\"headerImage\":\"啦啦啦\"},{\"userId\":\"38\",\"name\":\"刘八\",\"leavel\":\"7\",\"headerImage\":\"发给他认为\"},{\"userId\":\"38\",\"name\":\"高九\",\"leavel\":\"609\",\"headerImage\":\"地方\"},{\"userId\":\"38\",\"name\":\"JQKA\",\"leavel\":\"609\",\"headerImage\":\"啦啦啦\"}]}"
+//        let result = HSMineList(JSONDecoder(json))
+//        
+//        handle(success: true, response: result.datas)
+       
+    
 }
