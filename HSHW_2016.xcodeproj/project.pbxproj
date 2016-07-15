@@ -706,7 +706,7 @@
 				181E0D301CEBFF8800E34A7F /* MinePostTableViewCell.swift */,
 				181E0D341CEC3FFA00E34A7F /* MineRecruitTableViewCell.swift */,
 				18191D1D1CEC570100CD54FF /* FansTableViewCell.swift */,
-				F639810A1D373C71002EE95B /* HSChartCell.swift */,
+				0BC1B4271D38EE03008A6F3D /* MineMessageTableViewCell.swift */,
 				F639810B1D373C71002EE95B /* HSChartCell.xib */,
 			);
 			name = View;
@@ -717,6 +717,7 @@
 			children = (
 				F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */,
 				0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */,
+				0BC1B4291D390BAA008A6F3D /* MineMessageView.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
