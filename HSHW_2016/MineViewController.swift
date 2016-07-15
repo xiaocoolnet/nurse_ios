@@ -270,14 +270,14 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func fineAndContact(btn:UIButton) {
         print("粉丝与管理")
         if btn.tag == 1 {
-            let next = FinesViewController()
+            let next = FansViewController()
             self.navigationController?.pushViewController(next, animated: true)
-            next.title = "粉丝与关注"
+            next.title = "粉丝"
         }
         if btn.tag == 2 {
-            let next = FinesViewController()
+            let next = FansViewController()
             self.navigationController?.pushViewController(next, animated: true)
-            next.title = "粉丝与关注"
+            next.title = "关注"
         }
     }
     func setUpData() {
