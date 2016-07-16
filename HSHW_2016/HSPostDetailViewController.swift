@@ -177,7 +177,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             return commentView
         }else{
             // 回复 视图
-            let replyView:UIView = UIView.init(frame: CGRectMake(0, CGRectGetMaxY(contentTableView.frame), WIDTH, 65))
+            let replyView:UIView = UIView.init(frame: CGRectMake(0, CGRectGetMaxY(contentTableView.frame), WIDTH, 55))
             
             let space:CGFloat = 15
             
@@ -239,7 +239,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
         
         UIView.animateWithDuration(0.3) {
-            self.contentTableView.contentOffset = CGPoint.init(x: 0, y: self.contentTableView.contentSize.height-keyboardheight+80)
+            self.contentTableView.contentOffset = CGPoint.init(x: 0, y: self.contentTableView.contentSize.height-keyboardheight-49)
         }
         
         print("键盘弹起")

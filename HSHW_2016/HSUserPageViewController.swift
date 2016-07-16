@@ -56,13 +56,40 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableView
         
     }
     
+    // 设置子视图
     func setSubviews() {
+        
+        // 导航栏
+        let rightBtn = UIButton.init(frame: CGRectMake(0, 0, 80, 44))
+        rightBtn.addTarget(self, action: #selector(rightBarButtonClick), forControlEvents: .TouchUpInside)
+        
+        let rightImg = UIImageView.init(frame: CGRectMake(0, 12, 12, 20))
+        rightImg.image = UIImage(named: "ic_back")
+        rightImg.userInteractionEnabled = true
+        rightBtn.addSubview(rightImg)
+        
+        let rightLab = UILabel.init(frame: CGRectMake(20, 7, 60, 30))
+        rightLab.textColor = COLOR
+        rightLab.text = "返回"
+        rightBtn.addSubview(rightLab)
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: rightBtn)
+        
+        let shareBtn:UIButton = UIButton.init(frame: CGRectMake(0, 7, 30, 30))
+        shareBtn.setImage(UIImage.init(named: "ic_fenxiang"), forState: UIControlState.Normal)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: shareBtn)
+        
+        // 主 tableView
         userTableView = UITableView.init(frame: CGRectMake(0, 0, WIDTH, HEIGHT-64), style: .Grouped)
         userTableView.registerNib(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
         userTableView.rowHeight = UITableViewAutomaticDimension
         userTableView.delegate = self
         userTableView.dataSource = self
         self.view.addSubview(userTableView)
+    }
+    
+    func rightBarButtonClick() {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func setTableHeaderView() {
@@ -114,7 +141,7 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableView
                     sex = "男"
                 }
                 
-                noteLab.text = "性别：\(sex)    学历：\(userInfo?.major)\n医院：北京大学第二附属医院"
+                noteLab.text = "性别：\(sex)    学历：\((userInfo?.major)!)\n医院：北京大学第二附属医院"
                 bgImageView.addSubview(noteLab)
                 
                 // 关注按钮
