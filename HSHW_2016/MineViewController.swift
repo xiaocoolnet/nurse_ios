@@ -213,6 +213,11 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }else if indexPath.section == 4{
                 cell.titImage.setImage(UIImage(named: "ic_singal.png"), forState: .Normal)
                 cell.titLab.text = "仅WiFi下载图片"
+                
+                let swi = UISwitch.init(frame: CGRectMake(WIDTH-51-10, 29/2.0, 51, 31))
+                swi.addTarget(self, action: #selector(switchValueChanged(_:)), forControlEvents: .ValueChanged)
+                cell.contentView.addSubview(swi)
+                cell.accessoryType = .None
             }else {
                 
                 let signOutBtn = UIButton(type:.Custom)
@@ -229,6 +234,11 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         
         return cell
+    }
+    
+    // switch valueChanged
+    func switchValueChanged(swi:UISwitch) {
+        print("switch value changed , and swi.on = \(swi.on)")
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
