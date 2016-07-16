@@ -271,13 +271,13 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         print("粉丝与管理")
         if btn.tag == 1 {
             let next = FansViewController()
+            next.userType = 0
             self.navigationController?.pushViewController(next, animated: true)
-            next.title = "粉丝"
         }
         if btn.tag == 2 {
             let next = FansViewController()
+            next.userType = 1
             self.navigationController?.pushViewController(next, animated: true)
-            next.title = "关注"
         }
     }
     func setUpData() {
