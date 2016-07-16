@@ -83,7 +83,7 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
         helper.showPostInfo("1") { (success, response) in
             let data = (response as? PostModel ?? nil)!
-            let vc = HSPostDetailViewController()
+            let vc = HSPostDetailViewController(nibName: "HSPostDetailViewController",bundle: nil)
             vc.postInfo = data
             self.navigationController?.pushViewController(vc, animated: true)
             
@@ -91,21 +91,5 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
 
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -46,13 +46,13 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
             dispatch_async(dispatch_get_main_queue(), {
                 self.takePhoto()
             })
-            }))
+        }))
         
         myActionSheet?.addAction(UIAlertAction(title: "从相册获取", style: .Default, handler: { [unowned self] (UIAlertAction) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.LocalPhoto()
             })
-            }))
+        }))
         
         myActionSheet?.addAction(UIAlertAction(title: "取消", style: .Cancel, handler:nil))
         

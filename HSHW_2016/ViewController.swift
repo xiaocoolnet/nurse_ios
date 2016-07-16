@@ -1,7 +1,6 @@
 //
 //  ViewController.swift
 //  HSHW_2016
-//
 //  Created by apple on 16/5/13.
 //  Copyright © 2016年 校酷网络科技公司. All rights reserved.
 //
@@ -50,7 +49,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         //  获取验证码倒计时
         processHandle = {[unowned self] (timeInterVal) in
             dispatch_async(dispatch_get_main_queue(), {
-                //                self.acquire.backgroundColor = COLOR
+                //    self.acquire.backgroundColor = COLOR
                 self.acquire.userInteractionEnabled = false
                 let btnTitle = String(timeInterVal) + "秒后重新获取"
                 self.acquire.titleLabel?.font = UIFont.systemFontOfSize(12)
@@ -72,7 +71,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
         
         // Do any additional setup after loading the view, typically from a nib.
         logVM = LoginModel()
-        
         self.view.backgroundColor = UIColor.whiteColor()
         
         scrollView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
@@ -90,7 +88,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
         scrollView.addSubview(LOGO)
         let btnTit:[String] = ["登录","注册"]
         click = true
-        
         //  登录按钮
         btnOne.frame = CGRectMake(0, WIDTH*363/375-45, WIDTH/2, 45)
         btnOne.titleLabel?.font = UIFont.systemFontOfSize(18)
@@ -117,10 +114,12 @@ class ViewController: UIViewController,UITextFieldDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyBoardChangFrame(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
         
     }
+    
     override func viewDidAppear(animated: Bool) {
         autoLogin()
         
     }
+    
     override func viewDidDisappear(animated: Bool) {
         if delegate != nil {
             delegate?.viewcontrollerDesmiss()
@@ -264,7 +263,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
         gain.textAlignment = .Center
         register.addSubview(gain)
 
-
         //  获取验证码的button
         acquire.frame = CGRectMake(WIDTH-130, WIDTH*75/375+(WIDTH*50/375-30)/2, 95, 30)
         acquire.layer.cornerRadius = 13
@@ -367,7 +365,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
         passwordNumber.resignFirstResponder()
         phoneNumber.resignFirstResponder()
         print("触摸")
-        
     }
     //  键盘完成编辑
     func textFieldDidBeginEditing(textField: UITextField) {
@@ -402,6 +399,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
             
             return
         }
+        
         if passwordNumber.text!.isEmpty{
             //  弹出请输入密码
             let  alert = UIAlertView(title: "提示信息", message: "请输入密码！",delegate: self, cancelButtonTitle: "确定")
@@ -414,18 +412,15 @@ class ViewController: UIViewController,UITextFieldDelegate {
     }
      // 通过手机号和密码进行登录操作
     func loginWithNum(num:String,pwd:String){
-        
-//        SVProgressHUD.show()
-        
+//   SVProgressHUD.show()
         logVM?.login(num, passwordNumber: pwd, handle: { [unowned self] (success, response) in
             dispatch_async(dispatch_get_main_queue(), {
                 if success == false {
                     if response != nil {
-//                        SVProgressHUD.showErrorWithStatus(response as! String)
+                        
                         let string = response as! String
                         if string == "密码错误！" || string == "用户不存在"{
                         let alert = UIAlertView(title:"提示信息",message: string,delegate: self,cancelButtonTitle: "确定")
-                        
                         alert.show()
                     }
                         print(response as! String)
@@ -436,7 +431,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     return
                 }else{
                     let ud = NSUserDefaults.standardUserDefaults()
-                    
                     //  把得到的用户信息存入到沙盒
                     //  得到 useID
                     ud.setObject([USER_NAME:self.phoneNumber.text!,USER_PWD:self.passwordNumber.text!], forKey: LOGINFO_KEY)
@@ -444,28 +438,23 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     ud.setObject(QCLoginUserInfo.currentInfo.userid, forKey: "userid")
                     //登录成功
                     LOGIN_STATE = true
-
                     print(LoginUserInfo)
-                    //登录成功                    
-
+                    //登录成功
                     self.loginSuccess()
                 }
             })
-            })
-        
+        })
     }
     //  登录成功
     func loginSuccess(){
-        
         let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         //  得到分栏控制器
             let vc : UITabBarController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UITabBarController
         //  选择被选中的界面
             vc.selectedIndex = 4
             print(vc)
-
             self.presentViewController(vc, animated: true, completion: nil)
     }
-
+    
 }
 

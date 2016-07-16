@@ -54,7 +54,7 @@ class HSCollectionListController: UITableViewController {
         }else if collectionType == 2{
             return 50
         }else if collectionType == 3 {
-            return 100
+            return 140
         }
         
         return 0
