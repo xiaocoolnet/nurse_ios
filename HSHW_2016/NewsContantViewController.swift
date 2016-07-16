@@ -20,6 +20,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     var webHeight:CGFloat = 100
     var isLike:Bool = false
     var dataSource = NewsList()
+    var helper = NewsPageHelper()
     let zan = UIButton(frame: CGRectMake(WIDTH*148/375, WIDTH*80/375, WIDTH*80/375, WIDTH*80/375))
     var finishLoad = false
     
@@ -59,7 +60,18 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func collectionNews(){
-        
+        helper.collectionNews(newsInfo!.object_id!, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt!) { (success, response) in
+            if success {
+                dispatch_async(dispatch_get_main_queue(), { 
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "收藏成功"
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                })
+            }
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -112,8 +124,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }
             
         }
-
-        
     }
     
     

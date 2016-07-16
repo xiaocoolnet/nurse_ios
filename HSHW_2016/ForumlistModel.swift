@@ -17,7 +17,7 @@ class ForumlistModel: JSONJoy {
         status = decoder["status"].string
         if status == "success"{
   
-            for childs:JSONDecoder in decoder["data"].array! {
+            for childs:JSONDecoder in decoder["data"].array ?? [] {
                 datas.append(PostModel(childs))
             }
         }else{

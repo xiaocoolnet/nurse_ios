@@ -10,13 +10,41 @@ import UIKit
 
 class HSCollectionListController: UITableViewController {
     var collectionType = 0
+    var helper = HSMineHelper()
+    var dataSource = NSMutableArray()
     override func viewDidLoad() {
         super.viewDidLoad()
         if collectionType == 1 {
+            //返回json
+            helper.getCollectionInfoWithType("1", handle: { (success, response) in
+                if success {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        let list =  newsInfoModel(response as! JSONDecoder).data
+                        self.dataSource.addObjectsFromArray(list)
+                        self.tableView.reloadData()
+                    })
+                }
+            })
             tableView.registerNib(UINib(nibName:"HSArticleCollectCell",bundle: nil), forCellReuseIdentifier: "cell")
         } else if collectionType == 2 {
+            
+            helper.getCollectionInfoWithType("2", handle: { (success, response) in
+                if success {
+                    
+                }
+            })
             tableView.registerClass(EveryDayTableViewCell.self, forCellReuseIdentifier: "cell")
         } else if collectionType == 3 {
+            
+            helper.getCollectionInfoWithType("4", handle: { (success, response) in
+                if success {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        let list = ForumlistModel(response as! JSONDecoder)
+                        self.dataSource.addObjectsFromArray(list.datas)
+                        self.tableView.reloadData()
+                    })
+                }
+            })
             tableView.registerNib(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
         } else {
             tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -32,19 +60,20 @@ class HSCollectionListController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if collectionType == 1 {
-            return 10
-        }else if collectionType == 2{
-            return 1
-        }else if collectionType == 3 {
-            return 10
-        }
-        
-        return 0
+        return dataSource.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+        if collectionType == 1 {
+            (cell as! HSArticleCollectCell).showforModel(dataSource[indexPath.row] as! NewsInfo)
+        }
+        else if collectionType == 2 {
+            
+        }
+        else if collectionType == 3 {
+            
+        }
         return cell!
     }
     

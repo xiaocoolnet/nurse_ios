@@ -312,12 +312,28 @@ class HSMineHelper: NSObject {
             }
         }
     }
+    //获取收藏列表 type: 1 新闻 , 2 考试, 4 帖子
+    func getCollectionInfoWithType(type:String, handle:ResponseBlock){
+        let url = PARK_URL_Header+"getfavoritelist"
+        let param = [
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "type":type
+        ];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = Http(JSONDecoder(json!))
+                if(result.status == "success"){
+                    handle(success: true, response: JSONDecoder(json!))
+                }else{
+                    handle(success: false, response: "error")
+                }
+            }
+        }
 
-
-//        let json = "{\"datas\":[{\"userId\":\"38\",\"name\":\"张三\",\"leavel\":\"12\",\"headerImage\":\"啦啦啦\"},{\"userId\":\"38\",\"name\":\"李四\",\"leavel\":\"609\",\"headerImage\":\"啦啦啦\"},{\"userId\":\"38\",\"name\":\"王五\",\"leavel\":\"96\",\"headerImage\":\"啦啦啦\"},{\"userId\":\"38\",\"name\":\"马六\",\"leavel\":\"4\",\"headerImage\":\"啦啦啦\"},{\"userId\":\"38\",\"name\":\"赵七\",\"leavel\":\"45\",\"headerImage\":\"啦啦啦\"},{\"userId\":\"38\",\"name\":\"刘八\",\"leavel\":\"7\",\"headerImage\":\"发给他认为\"},{\"userId\":\"38\",\"name\":\"高九\",\"leavel\":\"609\",\"headerImage\":\"地方\"},{\"userId\":\"38\",\"name\":\"JQKA\",\"leavel\":\"609\",\"headerImage\":\"啦啦啦\"}]}"
-//        let result = HSMineList(JSONDecoder(json))
-//        
-//        handle(success: true, response: result.datas)
+    }
        
     
 }
