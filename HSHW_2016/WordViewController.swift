@@ -184,7 +184,21 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         window.addSubview(questBack)
         
         let big = UIView(frame: CGRectMake(0, 44, WIDTH, HEIGHT-163))
-        big.backgroundColor = COLOR
+//        big.backgroundColor = COLOR
+        
+        // 创建渐变色图层
+        let gradientLayer = CAGradientLayer.init()
+        gradientLayer.frame = CGRectMake(0, 0, WIDTH, HEIGHT-163)
+        gradientLayer.colors = [UIColor.init(red: 186/255.0, green: 125/255.0, blue: 126/255.0, alpha: 1).CGColor,UIColor.init(red: 140/255.0, green: 20/255.0, blue: 139/255.0, alpha: 1).CGColor]
+        // 设置渐变方向（0-1）
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+        gradientLayer.endPoint = CGPoint(x: 0, y: 1)
+        // 设置渐变色的起始位置和终止位置（颜色分割点）
+        gradientLayer.locations = [ (0.15), (0.98)]
+        gradientLayer.borderWidth = 0.0
+        // 添加图层
+        big.layer.addSublayer(gradientLayer)
+        
         questBack.addSubview(big)
         let smart = UIView(frame: CGRectMake(10, 10, WIDTH-20, HEIGHT-183))
         smart.backgroundColor = UIColor.whiteColor()
@@ -470,7 +484,21 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             let backView = UIView()
             let backGound = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH,44))
             backView.frame = CGRectMake(CGFloat(i)*WIDTH, 44, WIDTH, HEIGHT-163)//背景
-            backView.backgroundColor = COLOR
+//            backView.backgroundColor = COLOR
+            
+            // 创建渐变色图层
+            let gradientLayer = CAGradientLayer.init()
+            gradientLayer.frame = CGRectMake(0, 0, WIDTH, HEIGHT-163)
+            gradientLayer.colors = [UIColor.init(red: 186/255.0, green: 125/255.0, blue: 126/255.0, alpha: 1).CGColor,UIColor.init(red: 140/255.0, green: 20/255.0, blue: 139/255.0, alpha: 1).CGColor]
+            // 设置渐变方向（0-1）
+            gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+            gradientLayer.endPoint = CGPoint(x: 0, y: 1)
+            // 设置渐变色的起始位置和终止位置（颜色分割点）
+            gradientLayer.locations = [ (0.15), (0.98)]
+            gradientLayer.borderWidth = 0.0
+            // 添加图层
+            backView.layer.addSublayer(gradientLayer)
+            
             backView.tag = i+1
             let back = UIView(frame: CGRectMake(CGFloat(i)*WIDTH+10, 54, WIDTH-20, HEIGHT-221))//白色答题区域
             back.backgroundColor = UIColor.whiteColor()

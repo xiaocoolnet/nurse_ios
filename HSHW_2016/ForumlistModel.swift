@@ -118,7 +118,7 @@ class PostModel: JSONJoy {
     var write_time:String
     var photo:String
     var pic = Array<PicModel>()
-    var like:String
+    var like:Array<String> = []
     var comment = Array<CommentModel>()
     
     required init(_ decoder:JSONDecoder){
@@ -136,7 +136,9 @@ class PostModel: JSONJoy {
         for child:JSONDecoder in decoder["pic"].array ?? [] {
             pic.append(PicModel(child))
         }
-        like = decoder["like"].string ?? ""
+        for child:JSONDecoder in decoder["like"].array ?? [] {
+            like.append(String(child))
+        }
         for child:JSONDecoder in decoder["comment"].array ?? [] {
             comment.append(CommentModel(child))
         }

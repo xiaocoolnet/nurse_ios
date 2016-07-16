@@ -31,9 +31,15 @@ class HSComTableCell: UITableViewCell {
     }
     
     func showForForumModel(model:PostModel){
+        avatarBtn.layer.cornerRadius = avatarBtn.frame.size.width/2.0
+        avatarBtn.layer.masksToBounds = true
+        avatarBtn.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+model.photo), forState: .Normal)
         landLorder.text = model.name
         titleLabel.text = model.title
         contentLabel.text = model.content
+        fromLabel.text = model.typename
+        likeNumber.setTitle(String(model.like.count), forState: .Normal)
+        commentNumber.setTitle(String(model.comment.count), forState: .Normal)
     }
     
 }

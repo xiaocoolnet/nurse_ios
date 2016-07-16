@@ -27,6 +27,23 @@ class HSMineList: JSONJoy {
 
 }
 
+class HSUserInfoModel: JSONJoy {
+    
+    var status:String?
+    var datas:HSFansAndFollowModel?
+    var errorData:String?
+    
+    required init(_ decoder:JSONDecoder){
+        status = decoder["status"].string
+        if status == "success"{
+            datas = (HSFansAndFollowModel(decoder["data"]))
+        }else{
+            errorData = decoder["data"].string
+        }
+    }
+    
+}
+
 class HSFansAndFollowModel: JSONJoy {
     
     var id:String
@@ -65,7 +82,7 @@ class HSFansAndFollowModel: JSONJoy {
         type = decoder["type"].string ?? ""
         object_id = decoder["object_id"].string ?? ""
         createtime = decoder["createtime"].string ?? ""
-        name = decoder["name"].string ?? ""
+        name = decoder["name"].string ?? "暂无用户名"
         realname = decoder["realname"].string ?? ""
         userType = decoder["userType"].string ?? ""
         phone = decoder["phone"].string ?? ""
