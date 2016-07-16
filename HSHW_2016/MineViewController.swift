@@ -107,7 +107,19 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.selectionStyle = .None
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                cell.backgroundColor = COLOR
+//                cell.backgroundColor = COLOR
+                // 创建渐变色图层
+                let gradientLayer = CAGradientLayer.init()
+                gradientLayer.frame = CGRectMake(0, 0, WIDTH, WIDTH)
+                gradientLayer.colors = [UIColor.init(red: 186/255.0, green: 125/255.0, blue: 126/255.0, alpha: 1).CGColor,UIColor.init(red: 140/255.0, green: 20/255.0, blue: 139/255.0, alpha: 1).CGColor]
+                // 设置渐变方向（0-1）
+                gradientLayer.startPoint = CGPoint(x: 0, y: 0)
+                gradientLayer.endPoint = CGPoint(x: 0, y: 1)
+                // 设置渐变色的起始位置和终止位置（颜色分割点）
+                gradientLayer.locations = [ (0.15), (0.98)]
+                gradientLayer.borderWidth = 0.0
+                // 添加图层
+                cell.layer.addSublayer(gradientLayer)
                 for i in 0...2 {
                     if i == 0 {
                         fansCountBtn.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH-60, WIDTH/3, 20)
