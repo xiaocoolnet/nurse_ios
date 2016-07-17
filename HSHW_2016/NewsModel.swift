@@ -51,12 +51,30 @@ class NewsList: JSONJoy {
     
 }
 
+class newsInfoModel: JSONJoy {
+    var status:String?
+    var data = Array<NewsInfo>()
+    var errorData:String?
+    
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string
+        if status == "success" {
+            for child in decoder["data"].array ?? []{
+                data.append(NewsInfo(child))
+            }
+        }
+        else{
+            errorData = decoder["data"].string
+        }
+    }
+}
 
 class NewsInfo: JSONJoy{
     var post_title:String?
     var create_time:String?
     var post_excerpt:String?
     var tid:String?
+    var title:String?
     var object_id : String?
     var post_source :String?
     var post_content:String?
@@ -72,6 +90,7 @@ class NewsInfo: JSONJoy{
     
     required init(_ decoder: JSONDecoder){
         post_title = decoder["post_title"].string
+        title = decoder["title"].string
         post_excerpt = decoder["post_excerpt"].string
         post_date = decoder["post_date"].string
         tid = decoder["tid"].string

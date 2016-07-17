@@ -107,7 +107,6 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         cell.selectionStyle = .None
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-//                cell.backgroundColor = COLOR
                 // 创建渐变色图层
                 let gradientLayer = CAGradientLayer.init()
                 gradientLayer.frame = CGRectMake(0, 0, WIDTH, WIDTH)
@@ -149,6 +148,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     btn.tag = i+1
                     cell.addSubview(btn)
                 }
+                
                 titImage.frame = CGRectMake(WIDTH*128/375, WIDTH*74/375, WIDTH*120/375, WIDTH*120/375)
                 self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
                 titImage.addTarget(self, action: #selector(MineViewController.changeTitImage), forControlEvents: .TouchUpInside)

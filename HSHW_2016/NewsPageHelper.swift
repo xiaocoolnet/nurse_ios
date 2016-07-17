@@ -61,6 +61,35 @@ class NewsPageHelper: NSObject {
 
     }
     
+    func collectionNews(refid:String,title:String,description:String,handle:ResponseBlock){
+        
+        let url = PARK_URL_Header+"addfavorite"
+        let param = [
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "type":"1",
+            "refid":refid,
+            "title":title,
+            "description":description
+        ];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                
+            }else{
+                let result = Http(JSONDecoder(json!))
+                print("状态是")
+                print(result.status)
+                if(result.status == "error"){
+                    handle(success: false, response: result.errorData)
+                }
+                if(result.status == "success"){
+                    handle(success: true, response:result.data)
+                }
+            }
+            
+        }
+
+    }
     
     
     

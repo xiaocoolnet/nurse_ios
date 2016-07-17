@@ -699,7 +699,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                 let param = [
                     
                     "refid":examInfo.id,
-                    "type":"1",
+                    "type":"2",
                     "userid":uid,
                     "title":examInfo.post_title,
                     "description":examInfo.post_description
@@ -740,7 +740,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                 let param = [
                     
                     "refid":examInfo.id,
-                    "type":"1",
+                    "type":"2",
                     "userid":uid
                 ];
                 Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in

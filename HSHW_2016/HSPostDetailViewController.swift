@@ -221,6 +221,18 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     
     func collectionBtnClicked(btn:UIButton) {
         print("click the ",btn.tag," button")
+        helper.collectionForum(postInfo!.mid, title: postInfo!.title, description: postInfo!.content) { (success, response) in
+            if success {
+                dispatch_async(dispatch_get_main_queue(), { 
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "收藏成功"
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                })
+            }
+        }
     }
     
     func shareBtnClick(shareBtn: UIButton) {

@@ -20,6 +20,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     var webHeight:CGFloat = 100
     var isLike:Bool = false
     var dataSource = NewsList()
+    var helper = NewsPageHelper()
     let zan = UIButton(frame: CGRectMake(WIDTH*148/375, WIDTH*80/375, WIDTH*80/375, WIDTH*80/375))
     var finishLoad = false
     
@@ -28,11 +29,15 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         self.tabBarController?.tabBar.hidden = true
         self.navigationItem.leftBarButtonItem?.title = "返回"
         self.getDate()
-      
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "新闻内容"
+        
+        let rightBtn = UIBarButtonItem(title: "收藏", style: .Done, target: self, action: #selector(collectionNews))
+        navigationItem.rightBarButtonItem = rightBtn
+        
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 3))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
@@ -52,9 +57,22 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         self.view.addSubview(myTableView)
         myTableView.separatorColor = UIColor.clearColor()
         
-        // Do any additional setup after loading the view.
     }
     
+    func collectionNews(){
+        helper.collectionNews(newsInfo!.object_id!, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt!) { (success, response) in
+            if success {
+                dispatch_async(dispatch_get_main_queue(), { 
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "收藏成功"
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                })
+            }
+        }
+    }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
@@ -77,7 +95,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func getDate() {
         
-        
         let url = PARK_URL_Header+"getRelatedNewslist"
         let param = [
            "refid": newsInfo!.term_id
@@ -85,7 +102,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         Alamofire.request(.GET, url, parameters: param as?[String:String]).response { request, response, json, error in
             print(request)
             if(error != nil){
-                
             }else{
                 let status = NewsModel(JSONDecoder(json!))
                 print("状态是")
@@ -99,7 +115,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    
                     //self.createTableView()
                     print(status)
                     self.dataSource = NewsList(status.data!)
@@ -109,8 +124,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }
             
         }
-
-        
     }
     
     
@@ -138,12 +151,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 print(height)
                 return height+20
             }else if indexPath.row==1{
-            
                 return 20
-                
             }else if indexPath.row==2{
                return webHeight
-               
             }else{
             
                 return 220
@@ -191,7 +201,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let cell = tableView.dequeueReusableCellWithIdentifier("sourceCell", forIndexPath: indexPath)as! NewsSourceCell
                
                 cell.source.text = cell.source.text!+(newsInfo?.post_source)!
-//                cell.checkNum.text = newsInfo?.recommended
+//         cell.checkNum.text = newsInfo?.recommended
                 let time:Array = (newsInfo?.post_date?.componentsSeparatedByString(" "))!
                 cell.createTime.text = time[0]
 
@@ -227,8 +237,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     shareBtn.setImage(UIImage(named: shareArr[i]), forState: .Normal)
                     shareBtn.addTarget(self, action: #selector(self.shareTheNews(_:)), forControlEvents: .TouchUpInside)
                     cell3.addSubview(shareBtn)
-                    
-                    
                 }
                 //let zan = UIButton(frame: CGRectMake(WIDTH*148/375, WIDTH*80/375, WIDTH*80/375, WIDTH*80/375))
                 let userid = NSUserDefaults.standardUserDefaults()
@@ -243,13 +251,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 zan.tag = indexPath.row
                 zan.addTarget(self, action: #selector(NewsContantViewController.zanAddNum(_:)), forControlEvents: .TouchUpInside)
                 number.frame = CGRectMake(WIDTH/2-25, WIDTH*170/375, 50, 18)
-//                print(self.likeNum)
-//                let hashValue = newsInfo?.likes.count.hashValue
-//                print(hashValue)
-//                print(hashValue!)
-//                print("\(hashValue!)")
                 number.text =  "\(self.likeNum)"
-//                self.likeNum = hashValue!
+//        self.likeNum = hashValue!
                 number.sizeToFit()
                 number.font = UIFont.systemFontOfSize(12)
                 number.frame = CGRectMake(WIDTH/2-number.bounds.size.width/2-8, WIDTH*170/375, number.bounds.size.width, 18)
@@ -322,8 +325,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
    
     func shareTheNews(btn:UIButton) {
         let shareParames = NSMutableDictionary()
-        // let image : UIImage = UIImage(named: "btn_setting_qq_login")!
-        //判断是否有图片,如果没有设置默认图片
+    // let image : UIImage = UIImage(named: "btn_setting_qq_login")!
+    // 判断是否有图片,如果没有设置默认图片
         let url = NewsInfo_Header+(newsInfo?.object_id)!
         shareParames.SSDKSetupShareParamsByText("分享内容",
                                                 images : UIImage(named: "1.png"),
@@ -362,7 +365,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             if WXApi.isWXAppInstalled() {
                 //微信好友分享
                 ShareSDK.share(SSDKPlatformType.SubTypeWechatSession , parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
-                    
                     switch state{
                         
                     case SSDKResponseState.Success:
@@ -370,7 +372,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                         let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
                         alert.show()
                         
-                    case SSDKResponseState.Fail:    print("分享失败,错误描述:\(error)")
+                    case SSDKResponseState.Fail:  print("分享失败,错误描述:\(error)")
                     case SSDKResponseState.Cancel:  print("分享取消")
                         
                     default:
@@ -445,9 +447,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             self.isLike=true
                         }
                     }
-                    
                 }
-                
             }else{
                 
                 let url = PARK_URL_Header+"ResetLike"
@@ -526,7 +526,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             print(request)
             if(error != nil){
-                
             }else{
                 let status = Http(JSONDecoder(json!))
                 print("状态是")
@@ -540,11 +539,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    
                     print(status.data)
                 }
             }
-            
         }
     }
 }

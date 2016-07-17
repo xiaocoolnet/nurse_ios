@@ -354,24 +354,23 @@ class HSMineHelper: NSObject {
         }
     }
     
-    // 获取用户信息
-    func getUserInfo(userid:String,handle:ResponseBlock){
-        let url = PARK_URL_Header+"getuserinfo"
+    //获取收藏列表 type: 1 新闻 , 2 考试, 4 帖子
+    func getCollectionInfoWithType(type:String, handle:ResponseBlock){
+        let url = PARK_URL_Header+"getfavoritelist"
         let param = [
-            "userid":userid
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "type":type
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let result = HSUserInfoModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
-                    handle(success: true, response: result.datas)
+                    handle(success: true, response: JSONDecoder(json!))
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(success: false, response: "error")
                 }
             }
         }
