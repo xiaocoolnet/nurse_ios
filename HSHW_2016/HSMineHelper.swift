@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 
-class HSMineHelper: NSObject {
+class f: NSObject {
     //获取个人资料
     func getPersonalInfo(handle:ResponseBlock){
         let url = PARK_URL_Header+"getuserinfo"
