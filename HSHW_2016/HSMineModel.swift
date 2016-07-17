@@ -103,3 +103,81 @@ class HSFansAndFollowModel: JSONJoy {
         level = decoder["level"].string ?? ""
     }
 }
+
+class HSGTestModel:JSONJoy {
+    var status:String
+    var datas = Array<GTestExamList>()
+    var errorData:String
+        
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string ?? ""
+        errorData = decoder["errorData"].string ?? ""
+        for childs:JSONDecoder in decoder["data"].array ?? [] {
+            datas.append(GTestExamList(childs))
+        }
+    }
+}
+class GTestExamList:JSONJoy {
+    var id:String
+    var userid:String
+    var create_time:String
+    var post_title:String
+    var type:String
+    var count:String
+    var rightcount:String
+    var question = Array<GExamInfo>()
+    
+    required init(_ decoder: JSONDecoder) {
+        id = decoder["id"].string ?? ""
+        userid = decoder["userid"].string ?? ""
+        create_time = decoder["create_time"].string ?? ""
+        post_title = decoder["post_title"].string ?? "Post_title"
+        type = decoder["type"].string ?? ""
+        count = decoder["count"].string ?? ""
+        rightcount = decoder["rightcount"].string ?? ""
+        for childs:JSONDecoder in decoder["question"].array ?? [] {
+            question.append(GExamInfo(childs))
+        }
+    }
+}
+
+class GExamInfo: JSONJoy{
+    var questionid:String?
+    var post_title:String?
+    var post_description:String?
+    var post_difficulty:String?
+    var answer:String?
+    var answers = Array<GAnswersInfo>()
+    
+    required init(_ decoder: JSONDecoder){
+        questionid = decoder["questionid"].string
+        post_title = decoder["post_title"].string
+        post_difficulty = decoder["post_difficulty"].string
+        post_description = decoder["post_description"].string
+        answer = decoder["answer"].string
+        for childs: JSONDecoder in decoder["answers"].array!{
+            answers.append(GAnswersInfo(childs))
+        }
+    }
+    func append(list: [GAnswersInfo]){
+        self.answers = list + self.answers
+    }
+}
+
+class GAnswersInfo: JSONJoy {
+    
+    var title:String
+    var isanswer :String
+    var id :String
+    var questionid:String
+    var listorder:String
+    
+    required init(_ decoder: JSONDecoder){
+        title = decoder["title"].string ?? ""
+        isanswer = decoder["isanswer"].string ?? ""
+        id = decoder["id"].string ?? ""
+        questionid = decoder["questionid"].string ?? ""
+        listorder = decoder["listorder"].string ?? ""
+    }
+}
+

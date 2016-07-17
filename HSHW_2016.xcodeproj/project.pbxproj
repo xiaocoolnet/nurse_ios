@@ -33,6 +33,10 @@
 		0DB7E1901D38B7EC001D7B66 /* HSMineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */; };
 		0DB7E1931D38E468001D7B66 /* HSUserPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB7E1911D38E468001D7B66 /* HSUserPageViewController.swift */; };
 		0DB7E1941D38E468001D7B66 /* HSUserPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DB7E1921D38E468001D7B66 /* HSUserPageViewController.xib */; };
+		0DE829D71D3B21950047FB23 /* GOnlineExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE829D61D3B21950047FB23 /* GOnlineExamViewController.swift */; };
+		0DE829D91D3B25250047FB23 /* GMyExaminationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE829D81D3B25250047FB23 /* GMyExaminationViewController.swift */; };
+		0DE829DB1D3B52050047FB23 /* GMyExamListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE829DA1D3B52050047FB23 /* GMyExamListViewController.swift */; };
+		0DE829DD1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE829DC1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift */; };
 		180482EF1CEDF54200BF716C /* RecruitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180482EE1CEDF54200BF716C /* RecruitTableViewCell.swift */; };
 		181DE09B1CEAFFC00085ECB1 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DE09A1CEAFFC00085ECB1 /* PostViewController.swift */; };
 		181E0D231CEBF80B00E34A7F /* SetDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E0D221CEBF80B00E34A7F /* SetDataViewController.swift */; };
@@ -194,6 +198,10 @@
 		0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineModel.swift; sourceTree = "<group>"; };
 		0DB7E1911D38E468001D7B66 /* HSUserPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSUserPageViewController.swift; sourceTree = "<group>"; };
 		0DB7E1921D38E468001D7B66 /* HSUserPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSUserPageViewController.xib; sourceTree = "<group>"; };
+		0DE829D61D3B21950047FB23 /* GOnlineExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOnlineExamViewController.swift; sourceTree = "<group>"; };
+		0DE829D81D3B25250047FB23 /* GMyExaminationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyExaminationViewController.swift; sourceTree = "<group>"; };
+		0DE829DA1D3B52050047FB23 /* GMyExamListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyExamListViewController.swift; sourceTree = "<group>"; };
+		0DE829DC1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyExamListTableViewCell.swift; sourceTree = "<group>"; };
 		180482EE1CEDF54200BF716C /* RecruitTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecruitTableViewCell.swift; sourceTree = "<group>"; };
 		181DE09A1CEAFFC00085ECB1 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		181E0D221CEBF80B00E34A7F /* SetDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetDataViewController.swift; sourceTree = "<group>"; };
@@ -372,6 +380,8 @@
 			isa = PBXGroup;
 			children = (
 				181E0D261CEBF85100E34A7F /* MineStudyViewController.swift */,
+				0DE829D81D3B25250047FB23 /* GMyExaminationViewController.swift */,
+				0DE829DA1D3B52050047FB23 /* GMyExamListViewController.swift */,
 			);
 			name = Study;
 			sourceTree = "<group>";
@@ -622,6 +632,7 @@
 				18A3F4E51CEAAF1100028FA5 /* WordViewController.swift */,
 				0BB378541D2B4BE600E4A84D /* OnlineTextViewController.swift */,
 				18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */,
+				0DE829D61D3B21950047FB23 /* GOnlineExamViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -717,6 +728,7 @@
 				0BC1B4271D38EE03008A6F3D /* MineMessageTableViewCell.swift */,
 				F6342C6E1D391CF100800D8E /* HSChartCell.swift */,
 				F639810B1D373C71002EE95B /* HSChartCell.xib */,
+				0DE829DC1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1074,11 +1086,13 @@
 				0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */,
 				181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */,
 				1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */,
+				0DE829DB1D3B52050047FB23 /* GMyExamListViewController.swift in Sources */,
 				18C0BF991CEB655F003E2886 /* QuestionTableViewCell.swift in Sources */,
 				F6C265C81D24FD770033D2A9 /* PostVacancies.swift in Sources */,
 				181E0D351CEC3FFA00E34A7F /* MineRecruitTableViewCell.swift in Sources */,
 				185408911CE716E900DFBA7C /* AllViewController.swift in Sources */,
 				F6C265CA1D25106F0033D2A9 /* HSTabBarController.swift in Sources */,
+				0DE829D71D3B21950047FB23 /* GOnlineExamViewController.swift in Sources */,
 				185102E21CED612E00F797EE /* UserPostTableViewCell.swift in Sources */,
 				0BC1B4281D38EE03008A6F3D /* MineMessageTableViewCell.swift in Sources */,
 				0BB378571D2B504A00E4A84D /* OnlineTextTableViewCell.swift in Sources */,
@@ -1106,6 +1120,7 @@
 				183B84F81CE5BFDC00709235 /* ViewController.swift in Sources */,
 				F631DFAC1D069C6200E52FDB /* SmetaModel.swift in Sources */,
 				F6338B951D29105B00EE5CA2 /* HSStateCommentCell.swift in Sources */,
+				0DE829DD1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift in Sources */,
 				181E0D291CEBF86900E34A7F /* MinePostViewController.swift in Sources */,
 				F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */,
 				F63B3A6F1D2F953600C5B2CF /* HSStateEditResumeController.swift in Sources */,
@@ -1123,6 +1138,7 @@
 				181E0D2F1CEBF8E000E34A7F /* MineRecruitViewController.swift in Sources */,
 				185408831CE7052700DFBA7C /* NewsContantViewController.swift in Sources */,
 				18C0BF971CEB63FB003E2886 /* QuestionBankViewController.swift in Sources */,
+				0DE829D91D3B25250047FB23 /* GMyExaminationViewController.swift in Sources */,
 				18A5148C1CED550800A30AA5 /* RecruitmentViewController.swift in Sources */,
 				F6C04AF81D20D4D2009E1613 /* ConnectModel.m in Sources */,
 				183B84F61CE5BFDC00709235 /* AppDelegate.swift in Sources */,

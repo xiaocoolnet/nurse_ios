@@ -376,6 +376,58 @@ class HSMineHelper: NSObject {
             }
         }
     }
+    
+    // 获取考试题 type 1 每日一练 2 在线考试
+    func GetExampaper(userid:String, type:String, handle:ResponseBlock){
+//        let user = NSUserDefaults.standardUserDefaults()
+//        let uid = user.stringForKey("userid")
+        let url = PARK_URL_Header+"GetExampaper"
+        
+        let param = ["userid":userid,"type":type];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                
+                let result = HSGTestModel(JSONDecoder(json!))
+                print("状态是")
+                print(result.status)
+                if(result.status == "success"){
+                    handle(success: true, response: result.datas)
+                }else{
+                    handle(success: false, response: result.errorData)
+                }
+//                
+//                let status = EveryDayModel(JSONDecoder(json!))
+//                print("状态是")
+//                print(status.status)
+//                if(status.status == "error"){
+//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                    hud.mode = MBProgressHUDMode.Text;
+//                    hud.labelText = "请检查网络"
+//                    hud.margin = 10.0
+//                    hud.removeFromSuperViewOnHide = true
+//                    hud.hide(true, afterDelay: 1)
+//                }
+//                if(status.status == "success"){
+//                    
+//                    print(status)
+//                    // MARK
+//                    self.dataSource = GTestExamList(status.data!).objectlist
+//                    print(self.dataSource)
+//                    print(self.dataSource.count)
+//                    print("-----")
+//                    
+//                    self.createScrollerView()
+//                    self.AnswerView()
+//                    self.backBottomView()
+//                    self.questionCard()
+//                    print(status.data)
+//                }
+            }
+        }
+    }
 
        
     
