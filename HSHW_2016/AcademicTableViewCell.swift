@@ -55,9 +55,8 @@ class AcademicTableViewCell: UITableViewCell {
         zanNum.textColor = UIColor.grayColor()
         zanNum.textAlignment = .Left
         zan.frame = CGRectMake(WIDTH-60, (WIDTH-20)*120/355+42, 14, 14)
-//        zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
-        
-        zan.setBackgroundImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
+//      zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
+//      zan.setBackgroundImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
         
         self.addSubview(titImage)
         self.addSubview(titLab)

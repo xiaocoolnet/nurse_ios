@@ -241,7 +241,8 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
         case (2,1):
             changeNameVC.showType = HSEditUserInfo.Major
             changeNameVC.title = "编辑专业"
-            changeNameVC.text1 = threedeArr[indexPath.row]
+//            changeNameVC.text1 = threedeArr[indexPath.row]
+            changeNameVC.id = "18"
         case (2,2):
             changeNameVC.showType = HSEditUserInfo.Education
             changeNameVC.title = "编辑学历"

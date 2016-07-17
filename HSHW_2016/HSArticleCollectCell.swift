@@ -21,12 +21,7 @@ class HSArticleCollectCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        if selfModel != nil {
-            let next = NewsContantViewController()
-            next.newsInfo = selfModel
-            let tabBar = window!.rootViewController as! UITabBarController
-            (tabBar.selectedViewController as? UINavigationController)?.pushViewController(next, animated: true)
-        }
+      
         // Configure the view for the selected state
     }
     

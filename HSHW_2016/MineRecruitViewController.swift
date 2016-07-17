@@ -12,7 +12,7 @@ import PagingMenuController
 class MineRecruitViewController: UIViewController {
     
     let oneView = ChildsViewController()
-    let twoView = ChildsViewController()
+    let twoView = MineRecViewController()
     let threeView = ChildsViewController()
 
     override func viewWillAppear(animated: Bool) {

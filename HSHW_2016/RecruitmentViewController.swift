@@ -428,6 +428,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 print(self.jobDataSource![indexPath.row])
                 print(self.employmentdataSource)
                 self.makeEmploymentMessage()
+                
+                
 //                let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
 //                selfNav = tabBar.selectedViewController as? UINavigationController
 
@@ -549,7 +551,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
             }
         
-        
+        self.employmentdataSource.removeAllObjects()
+        self.employmentMessageTableView.reloadData()
         self.employmentMessage.removeFromSuperview()
         
     }
@@ -558,6 +561,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         UIView.animateWithDuration(0.2) {
             self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
         }
+        self.employmentdataSource.removeAllObjects()
+        self.employmentMessageTableView.reloadData()
         self.employmentMessage.removeFromSuperview()
     }
     

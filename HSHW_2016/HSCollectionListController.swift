@@ -76,7 +76,15 @@ class HSCollectionListController: UITableViewController {
         }
         return cell!
     }
-    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if collectionType == 1{
+            if dataSource.count > indexPath.row {
+                let next = NewsContantViewController()
+                next.newsInfo = dataSource[indexPath.row] as? NewsInfo
+                navigationController!.pushViewController(next, animated: true)
+            }
+        }
+    }
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if collectionType == 1 {
             return 60

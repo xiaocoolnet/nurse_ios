@@ -53,7 +53,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
         navBtn.setTitleColor(COLOR, forState: .Normal)
         navBtn.setTitle("保存", forState: .Normal)
         navBtn.addTarget(self, action: #selector(saveInfo), forControlEvents: .TouchUpInside)
-        if showType == .Education || showType == .Sex {
+        if showType == .Education || showType == .Sex || showType == .Major {
             
         }else{
             let navItem = UIBarButtonItem(customView: navBtn)
@@ -129,21 +129,12 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                     }
                 })
             })
-        }else if showType == .Major {
-            mineHelper.changeEducation(textFeild.text!, handle: {[unowned self] (success, response) in
-                dispatch_async(dispatch_get_main_queue(), {
-                    if success {
-                        QCLoginUserInfo.currentInfo.major = self.textFeild.text!
-                        self.navigationController?.popViewControllerAnimated(true)
-                    }
-                })
-            })
         }
         self.navigationController?.popViewControllerAnimated(true)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if showType == .Education || showType == .Sex {
+        if showType == .Education || showType == .Sex || showType == .Major {
             return self.dateSource.objectlist.count
         }else{
             
@@ -158,7 +149,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
         switch showType {
-        case .UserName,.PhoneNumber,.Email,.RealName,.School,.Major:
+        case .UserName,.PhoneNumber,.Email,.RealName,.School:
             textFeild.text = text1
             cell?.addSubview(textFeild)
         default:
@@ -172,7 +163,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
             addressBtn.titleLabel?.text = text1
             addressBtn.addTarget(self, action: #selector(self.addressClick), forControlEvents: .TouchUpInside)
             cell?.addSubview(addressBtn)
-        }else if showType == .Education || showType == .Sex{
+        }else if showType == .Education || showType == .Sex || showType == .Major{
             let eduInfo  = self.dateSource.objectlist[indexPath.row]
             if eduInfo.name == "1" {
                 cell?.textLabel?.text = "男"
@@ -210,7 +201,18 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                     }
                 })
             })
+        }else if showType == .Major {
+            handle!(changeType: showType,value: self.dateSource.objectlist[indexPath.row].name)
+            mineHelper.changeMajor(self.dateSource.objectlist[indexPath.row].name, handle: {[unowned self] (success, response) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    if success {
+                        QCLoginUserInfo.currentInfo.major = self.dateSource.objectlist[indexPath.row].name
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                })
+            })
         }
+        
     }
     
     func dataClick(){

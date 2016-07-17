@@ -11,14 +11,24 @@ import UIKit
 class MineRecruitTableViewCell: UITableViewCell {
 
     let timeLab = UILabel()
-    let one = UIButton()
+    let ones = UIButton()
     let time = UIImageView()
+    let nameTit = UILabel()
+    let one = UILabel()
+    let job = UILabel()
+    let two = UILabel()
+    
+    
+    
+    
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -26,8 +36,8 @@ class MineRecruitTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        one.frame = CGRectMake(WIDTH-35, 26, 20, 20)
-        one.setImage(UIImage(named: "ic_you.png"), forState: .Normal)
+        ones.frame = CGRectMake(WIDTH-35, 26, 20, 20)
+        ones.setImage(UIImage(named: "ic_you.png"), forState: .Normal)
         timeLab.frame = CGRectMake(25, 40, 80, 20)
         timeLab.font = UIFont.systemFontOfSize(10)
         timeLab.textColor = GREY
@@ -36,10 +46,45 @@ class MineRecruitTableViewCell: UITableViewCell {
         let line = UILabel(frame: CGRectMake(0, 71.5, WIDTH, 0.5))
         line.backgroundColor = GREY
         
+        
         self.addSubview(line)
-        self.addSubview(one)
+        self.addSubview(ones)
         self.addSubview(timeLab)
         self.addSubview(time)
+        self.addSubview(nameTit)
+        self.addSubview(one)
+        self.addSubview(job)
+        self.addSubview(two)
+        
+    }
+    
+    func showforCVModel(model:ChildInfo) {
+        timeLab.text = "15分钟前"
+        timeLab.sizeToFit()
+        nameTit.frame = CGRectMake(15, 15, 50, 20)
+        nameTit.font = UIFont.systemFontOfSize(14)
+        nameTit.textColor = COLOR
+
+        nameTit.text = model.userid
+        nameTit.sizeToFit()
+        one.frame =  CGRectMake(15+nameTit.bounds.size.width, 15, 59, 20)
+//        one.text = "申请面试"
+        one.font = UIFont.systemFontOfSize(14)
+        one.textColor = UIColor.grayColor()
+        one.text = "申请面试"
+        one.sizeToFit()
+        job.frame = CGRectMake(15+nameTit.bounds.size.width+one.bounds.size.width, 15, 50, 20)
+        job.textColor = COLOR
+        job.font = UIFont.systemFontOfSize(14)
+    
+        job.text = model.birthday
+        job.sizeToFit()
+        two.frame = CGRectMake(15+nameTit.bounds.size.width+one.bounds.size.width+job.bounds.size.width, 15, 50, 20)
+        two.textColor = UIColor.grayColor()
+        two.text = "的职位"
+        two.font = UIFont.systemFontOfSize(14)
+        two.sizeToFit()
+
     }
     
     required init?(coder aDecoder: NSCoder) {

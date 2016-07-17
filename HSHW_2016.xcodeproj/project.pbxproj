@@ -47,8 +47,6 @@
 		181E0D2D1CEBF8A900E34A7F /* MineCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E0D2C1CEBF8A900E34A7F /* MineCollectionViewController.swift */; };
 		181E0D2F1CEBF8E000E34A7F /* MineRecruitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E0D2E1CEBF8E000E34A7F /* MineRecruitViewController.swift */; };
 		181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E0D301CEBFF8800E34A7F /* MinePostTableViewCell.swift */; };
-		181E0D331CEC3EC900E34A7F /* ChildsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E0D321CEC3EC900E34A7F /* ChildsViewController.swift */; };
-		181E0D351CEC3FFA00E34A7F /* MineRecruitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E0D341CEC3FFA00E34A7F /* MineRecruitTableViewCell.swift */; };
 		183B84F61CE5BFDC00709235 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B84F51CE5BFDC00709235 /* AppDelegate.swift */; };
 		183B84F81CE5BFDC00709235 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183B84F71CE5BFDC00709235 /* ViewController.swift */; };
 		183B84FB1CE5BFDC00709235 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 183B84F91CE5BFDC00709235 /* Main.storyboard */; };
@@ -127,6 +125,14 @@
 		F63E198D1D17E10E001BDE8A /* HSZRecruitmentHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */; };
 		F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */; };
 		F64C9ABE1D3B85620041E360 /* HSMineHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9ABD1D3B85620041E360 /* HSMineHelper.swift */; };
+		F64C9AC01D3B9BFC0041E360 /* ChildsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9ABF1D3B9BFC0041E360 /* ChildsViewController.swift */; };
+		F64C9AC21D3B9C0B0041E360 /* MineRecViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9AC11D3B9C0B0041E360 /* MineRecViewController.swift */; };
+		F64C9AC41D3B9C150041E360 /* MineRecDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9AC31D3B9C150041E360 /* MineRecDetailsViewController.swift */; };
+		F64C9AC61D3B9C2C0041E360 /* MineJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9AC51D3B9C2C0041E360 /* MineJobView.swift */; };
+		F64C9AC81D3B9C3F0041E360 /* MineChildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9AC71D3B9C3F0041E360 /* MineChildView.swift */; };
+		F64C9ACA1D3B9C7E0041E360 /* MineJobTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9AC91D3B9C7E0041E360 /* MineJobTableViewCell.swift */; };
+		F64C9ACC1D3B9C870041E360 /* MineJobDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9ACB1D3B9C870041E360 /* MineJobDetailsTableViewCell.swift */; };
+		F64C9ACE1D3B9E980041E360 /* MineRecruitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9ACD1D3B9E980041E360 /* MineRecruitTableViewCell.swift */; };
 		F661F25C1D33754E00E04CE8 /* HSImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */; };
 		F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */; };
 		F661F25F1D33BB7B00E04CE8 /* HSSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661F25E1D33BB7B00E04CE8 /* HSSelectController.swift */; };
@@ -212,8 +218,6 @@
 		181E0D2C1CEBF8A900E34A7F /* MineCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineCollectionViewController.swift; sourceTree = "<group>"; };
 		181E0D2E1CEBF8E000E34A7F /* MineRecruitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineRecruitViewController.swift; sourceTree = "<group>"; };
 		181E0D301CEBFF8800E34A7F /* MinePostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinePostTableViewCell.swift; sourceTree = "<group>"; };
-		181E0D321CEC3EC900E34A7F /* ChildsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildsViewController.swift; sourceTree = "<group>"; };
-		181E0D341CEC3FFA00E34A7F /* MineRecruitTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineRecruitTableViewCell.swift; sourceTree = "<group>"; };
 		183B84F21CE5BFDC00709235 /* HSHW_2016.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HSHW_2016.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		183B84F51CE5BFDC00709235 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		183B84F71CE5BFDC00709235 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -300,6 +304,14 @@
 		F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZRecruitmentHome.swift; sourceTree = "<group>"; };
 		F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZSliderMenuView.swift; sourceTree = "<group>"; };
 		F64C9ABD1D3B85620041E360 /* HSMineHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineHelper.swift; sourceTree = "<group>"; };
+		F64C9ABF1D3B9BFC0041E360 /* ChildsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildsViewController.swift; sourceTree = "<group>"; };
+		F64C9AC11D3B9C0B0041E360 /* MineRecViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineRecViewController.swift; sourceTree = "<group>"; };
+		F64C9AC31D3B9C150041E360 /* MineRecDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineRecDetailsViewController.swift; sourceTree = "<group>"; };
+		F64C9AC51D3B9C2C0041E360 /* MineJobView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineJobView.swift; sourceTree = "<group>"; };
+		F64C9AC71D3B9C3F0041E360 /* MineChildView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineChildView.swift; sourceTree = "<group>"; };
+		F64C9AC91D3B9C7E0041E360 /* MineJobTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineJobTableViewCell.swift; sourceTree = "<group>"; };
+		F64C9ACB1D3B9C870041E360 /* MineJobDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineJobDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		F64C9ACD1D3B9E980041E360 /* MineRecruitTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineRecruitTableViewCell.swift; sourceTree = "<group>"; };
 		F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSImageCollectionCell.swift; sourceTree = "<group>"; };
 		F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSImageCollectionCell.xib; sourceTree = "<group>"; };
 		F661F25E1D33BB7B00E04CE8 /* HSSelectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSSelectController.swift; sourceTree = "<group>"; };
@@ -426,7 +438,9 @@
 			isa = PBXGroup;
 			children = (
 				181E0D2E1CEBF8E000E34A7F /* MineRecruitViewController.swift */,
-				181E0D321CEC3EC900E34A7F /* ChildsViewController.swift */,
+				F64C9AC31D3B9C150041E360 /* MineRecDetailsViewController.swift */,
+				F64C9AC11D3B9C0B0041E360 /* MineRecViewController.swift */,
+				F64C9ABF1D3B9BFC0041E360 /* ChildsViewController.swift */,
 			);
 			name = Recruit;
 			sourceTree = "<group>";
@@ -724,11 +738,13 @@
 				18ADDDEC1CE9609000557FFE /* MineTableViewCell.swift */,
 				F6342C6A1D391CBE00800D8E /* FansTableViewCell.swift */,
 				181E0D301CEBFF8800E34A7F /* MinePostTableViewCell.swift */,
-				181E0D341CEC3FFA00E34A7F /* MineRecruitTableViewCell.swift */,
 				0BC1B4271D38EE03008A6F3D /* MineMessageTableViewCell.swift */,
+				F64C9ACD1D3B9E980041E360 /* MineRecruitTableViewCell.swift */,
 				F6342C6E1D391CF100800D8E /* HSChartCell.swift */,
 				F639810B1D373C71002EE95B /* HSChartCell.xib */,
 				0DE829DC1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift */,
+				F64C9AC91D3B9C7E0041E360 /* MineJobTableViewCell.swift */,
+				F64C9ACB1D3B9C870041E360 /* MineJobDetailsTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -739,6 +755,8 @@
 				0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */,
 				F64C9ABD1D3B85620041E360 /* HSMineHelper.swift */,
 				0BC1B4291D390BAA008A6F3D /* MineMessageView.swift */,
+				F64C9AC51D3B9C2C0041E360 /* MineJobView.swift */,
+				F64C9AC71D3B9C3F0041E360 /* MineChildView.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1079,9 +1097,11 @@
 				F6CFC7421D2A164700AC591C /* ForumlistModel.swift in Sources */,
 				F632EF0E1D18E8890038AF9D /* HSSQCollectionViewCell.swift in Sources */,
 				0BC3878E1D339C2C001460B8 /* AdressPickerView.swift in Sources */,
+				F64C9AC41D3B9C150041E360 /* MineRecDetailsViewController.swift in Sources */,
 				183B86741CE5CFA000709235 /* CornerRadiusViewController.swift in Sources */,
 				F6E86AF61D34DF7E001536B6 /* HSForumDetailCell.swift in Sources */,
 				F6D02CDF1D07BB5300353557 /* contentCell.swift in Sources */,
+				F64C9AC21D3B9C0B0041E360 /* MineRecViewController.swift in Sources */,
 				0BDAB6371D2A58E80081E883 /* NurseStatusViewController.swift in Sources */,
 				0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */,
 				181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */,
@@ -1089,7 +1109,6 @@
 				0DE829DB1D3B52050047FB23 /* GMyExamListViewController.swift in Sources */,
 				18C0BF991CEB655F003E2886 /* QuestionTableViewCell.swift in Sources */,
 				F6C265C81D24FD770033D2A9 /* PostVacancies.swift in Sources */,
-				181E0D351CEC3FFA00E34A7F /* MineRecruitTableViewCell.swift in Sources */,
 				185408911CE716E900DFBA7C /* AllViewController.swift in Sources */,
 				F64C9ABE1D3B85620041E360 /* HSMineHelper.swift in Sources */,
 				F6C265CA1D25106F0033D2A9 /* HSTabBarController.swift in Sources */,
@@ -1099,6 +1118,7 @@
 				0BB378571D2B504A00E4A84D /* OnlineTextTableViewCell.swift in Sources */,
 				F63981081D373945002EE95B /* CFLineChartView.m in Sources */,
 				18C240621CEF10150059BF48 /* OnlineExaminationViewController.swift in Sources */,
+				F64C9ACC1D3B9C870041E360 /* MineJobDetailsTableViewCell.swift in Sources */,
 				0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */,
 				F6E9E9531D362AF000E99FDD /* HSHotPostCell.swift in Sources */,
 				181E0D271CEBF85100E34A7F /* MineStudyViewController.swift in Sources */,
@@ -1130,13 +1150,16 @@
 				18A3F4E41CEAA83D00028FA5 /* EveryDayTableViewCell.swift in Sources */,
 				F6342C6B1D391CBE00800D8E /* FansTableViewCell.swift in Sources */,
 				18D5B61A1CEA17320014F846 /* EveryDayViewController.swift in Sources */,
+				F64C9AC81D3B9C3F0041E360 /* MineChildView.swift in Sources */,
 				F63147141D1A6D2E005103C9 /* HSComTableCell.swift in Sources */,
 				189849B41CE812CB007B37B4 /* TouTiaoTableViewCell.swift in Sources */,
 				F6D02CDB1D07A46800353557 /* NewsSourceCell.swift in Sources */,
 				F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */,
 				F661F25F1D33BB7B00E04CE8 /* HSSelectController.swift in Sources */,
+				F64C9AC01D3B9BFC0041E360 /* ChildsViewController.swift in Sources */,
 				181E0D2F1CEBF8E000E34A7F /* MineRecruitViewController.swift in Sources */,
 				185408831CE7052700DFBA7C /* NewsContantViewController.swift in Sources */,
+				F64C9ACA1D3B9C7E0041E360 /* MineJobTableViewCell.swift in Sources */,
 				18C0BF971CEB63FB003E2886 /* QuestionBankViewController.swift in Sources */,
 				0DE829D91D3B25250047FB23 /* GMyExaminationViewController.swift in Sources */,
 				18A5148C1CED550800A30AA5 /* RecruitmentViewController.swift in Sources */,
@@ -1166,7 +1189,6 @@
 				181E0D2D1CEBF8A900E34A7F /* MineCollectionViewController.swift in Sources */,
 				0DB7E1931D38E468001D7B66 /* HSUserPageViewController.swift in Sources */,
 				F6342C6F1D391CF100800D8E /* HSChartCell.swift in Sources */,
-				181E0D331CEC3EC900E34A7F /* ChildsViewController.swift in Sources */,
 				1854088B1CE7133600DFBA7C /* AbroadViewController.swift in Sources */,
 				18ADDDED1CE9609000557FFE /* MineTableViewCell.swift in Sources */,
 				183B86701CE5CF9500709235 /* Httpresult.swift in Sources */,
@@ -1177,7 +1199,9 @@
 				1854088F1CE713A100DFBA7C /* MagicboxViewController.swift in Sources */,
 				F631DFAE1D069EE100E52FDB /* PhotoModel.swift in Sources */,
 				F66912391D2B5C0C0021706B /* HSStudyNetHelper.swift in Sources */,
+				F64C9ACE1D3B9E980041E360 /* MineRecruitTableViewCell.swift in Sources */,
 				F6C265CD1D2513560033D2A9 /* HSWebViewDetailController.swift in Sources */,
+				F64C9AC61D3B9C2C0041E360 /* MineJobView.swift in Sources */,
 				0BAF21C41D113E100065146B /* QCLoginUserInfo.swift in Sources */,
 				0BEA9CAA1D1390120012FC11 /* ForgetPasswordController.swift in Sources */,
 			);
