@@ -128,8 +128,21 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
 
     func studyTheKind(btn:UIButton) {
         print(btn.tag)
-        let examVC = GMyExamListViewController()
-//        examVC.type = btn.tag
-        self.navigationController?.pushViewController(examVC, animated: true)
+        switch btn.tag {
+        case 1:
+            let examVC = GMyExamListViewController()
+            //        examVC.type = btn.tag
+            self.navigationController?.pushViewController(examVC, animated: true)
+        case 2:
+            let examVC = GMyExaminationViewController()
+            //        examVC.type = btn.tag
+            examVC.type = 2
+//            examVC.dataSource = 
+            self.navigationController?.pushViewController(examVC, animated: true)
+
+        default:
+            print("MineStudyViewController.swift  studyTheKind")
+        }
+        
     }
 }
