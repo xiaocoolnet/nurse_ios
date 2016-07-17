@@ -45,6 +45,8 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
     var minute : Int = 1
     var count:Int = 13
     var helper = HSStudyNetHelper()
+    var mineHelper = HSMineHelper()
+    
     var questionCount = "10"
     
     override func viewWillAppear(animated: Bool) {
@@ -72,7 +74,6 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
             }
         case 2:
             title = "错题集"
-            loadData_errorExampaper()
         case 3:
             title = "收藏记录"
         case 4:
@@ -90,17 +91,21 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         isSubmit = false
         collection = false
         
+        // 根据不同类型设置不同的头
+        if type == 1 {
+            setSpecificView_ExamPaper_OnView(self.view)
+        }else{
+            setSpecificView_ErrorExamPaper_OnView(self.view)
+        }
+        
         self.createScrollerView()
-        self.AnswerView()
+        if self.dataSource.count > 0 {
+            self.AnswerView()
+        }
         self.backBottomView()
         self.questionCard()
 
         // Do any additional setup after loading the view.
-    }
-    
-    // 如果是错题集，加载数据
-    func loadData_errorExampaper() {
-        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -413,7 +418,7 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
     }
     // MARK:   答题区
     func createScrollerView() {
-        scrollView.frame = CGRectMake(0, 1,WIDTH, HEIGHT-119)
+        scrollView.frame = CGRectMake(0, 1+44,WIDTH, HEIGHT-119)
         scrollView.pagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
@@ -421,13 +426,13 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         for  i in 0 ..< self.dataSource.count {
             let examInfo = self.dataSource[i]
             let contentScrollView :UIScrollView = UIScrollView.init()
-            contentScrollView.frame = CGRectMake(CGFloat(i)*WIDTH+10, 54, WIDTH-20, HEIGHT-221)
+            contentScrollView.frame = CGRectMake(CGFloat(i)*WIDTH+10, 10, WIDTH-20, HEIGHT-221)
             contentScrollView.backgroundColor = UIColor.whiteColor()
             contentScrollView.layer.cornerRadius = 5
             let backView = UIView()
             let backGound = UIView(frame: CGRectMake(CGFloat(i)*self.view.frame.size.width, 0, self.view.frame.size.width,44))
             
-            backView.frame = CGRectMake(CGFloat(i)*self.view.frame.size.width, 44, self.view.frame.size.width, HEIGHT-163)
+            backView.frame = CGRectMake(CGFloat(i)*self.view.frame.size.width, 0, self.view.frame.size.width, HEIGHT-163)
             
             // 创建渐变色图层
             let gradientLayer = CAGradientLayer.init()
@@ -443,16 +448,11 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
             backView.layer.addSublayer(gradientLayer)
             
             backView.tag = i+1
-            let back = UIView(frame: CGRectMake(CGFloat(i)*self.view.frame.size.width+10, 54, self.view.frame.size.width-20, HEIGHT-221))
+            let back = UIView(frame: CGRectMake(CGFloat(i)*self.view.frame.size.width+10, 10, self.view.frame.size.width-20, HEIGHT-221))
             back.backgroundColor = UIColor.whiteColor()
             back.layer.cornerRadius = 5
             
-            // 根据不同类型设置不同的头
-            if type == 1 {
-                setSpecificView_ExamPaper_OnView(backGound, andIndex: i)
-            }else{
-                setSpecificView_ErrorExamPaper_OnView(backGound)
-            }
+
             
             let question = UILabel(frame: CGRectMake(WIDTH*20/375, WIDTH*15/375, back.bounds.size.width-WIDTH*38/375, 40))
             question.numberOfLines = 0
@@ -537,7 +537,7 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
     }
     
     // 设置不同的头——做题记录
-    func setSpecificView_ExamPaper_OnView(backGound:UIView,andIndex i:Int) {
+    func setSpecificView_ExamPaper_OnView(backGound:UIView) {
         
         
         let dian = UIImageView(frame: CGRectMake(10, 16, 12, 12))
@@ -557,7 +557,7 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         backGound.addSubview(tit)
         // let time = UILabel(frame: CGRectMake(WIDTH-50, 14, 40, 12))
         let time = UILabel(frame: CGRectMake(WIDTH-50, 16, 50, 12))
-        time.tag = 10+i
+//        time.tag = 10+i
         time.font = UIFont.systemFontOfSize(14)
         time.textAlignment = .Right
         time.textColor = COLOR
@@ -576,8 +576,35 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
 
     }
     
-    // 设置不同的头——做题记录
+    // 设置不同的头——错题集
     func setSpecificView_ErrorExamPaper_OnView(view:UIView) {
+        
+        // 每日一练
+        let dailyBtn = UIButton(frame: CGRectMake(20, 0, (WIDTH-60)/2.0, 44))
+        view.addSubview(dailyBtn)
+        
+        let dailyChoice = UIImageView(frame: CGRectMake(0, 16, 12, 12))
+        dailyChoice.image = UIImage(named: "ic_choice.png")
+        dailyBtn.addSubview(dailyChoice)
+        let dailyLab = UILabel(frame: CGRectMake(24, 12.5, 40, 17))
+        dailyLab.font = UIFont.systemFontOfSize(18)
+        dailyLab.text = "每日一练"
+        dailyLab.sizeToFit()
+        dailyBtn.addSubview(dailyLab)
+        
+        // 在线考试(选择的功能还没实现)
+        // MARK:- 这里还缺少点击按钮选择的功能，以及无数据时的显示问题
+        let examBtn = UIButton(frame: CGRectMake(CGRectGetMaxX(dailyBtn.frame)+20, 0, (WIDTH-60)/2.0, 44))
+        view.addSubview(examBtn)
+        
+        let examChoice = UIImageView(frame: CGRectMake(0, 16, 12, 12))
+        examChoice.image = UIImage(named: "ic_kuang.png")
+        examBtn.addSubview(examChoice)
+        let examLab = UILabel(frame: CGRectMake(24, 12.5, 40, 17))
+        examLab.font = UIFont.systemFontOfSize(18)
+        examLab.text = "在线考试(选择的功能还没实现)"
+        examLab.sizeToFit()
+        examBtn.addSubview(examLab)
         
     }
     

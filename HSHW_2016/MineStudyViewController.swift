@@ -134,11 +134,13 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
             //        examVC.type = btn.tag
             self.navigationController?.pushViewController(examVC, animated: true)
         case 2:
-            let examVC = GMyExaminationViewController()
             //        examVC.type = btn.tag
-            examVC.type = 2
-//            examVC.dataSource = 
-            self.navigationController?.pushViewController(examVC, animated: true)
+            HSMineHelper().GetErrorExampaper("1", type: "1") { (success, response) in
+                let examVC = GMyExaminationViewController()
+                examVC.type = 2
+                examVC.dataSource = response as! Array<GExamInfo>
+                self.navigationController?.pushViewController(examVC, animated: true)
+            }
 
         default:
             print("MineStudyViewController.swift  studyTheKind")
