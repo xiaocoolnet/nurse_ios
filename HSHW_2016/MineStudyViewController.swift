@@ -135,7 +135,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
             self.navigationController?.pushViewController(examVC, animated: true)
         case 2:
             //        examVC.type = btn.tag
-            HSMineHelper().GetErrorExampaper(QCLoginUserInfo.currentInfo.userid, type: "1") { (success, response) in
+            HSMineHelper().GetErrorExampaper("1", type: "1") { (success, response) in
                 let examVC = GMyExaminationViewController()
                 examVC.type = 2
                 examVC.dataSource = response as! Array<GExamInfo>
