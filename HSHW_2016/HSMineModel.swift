@@ -104,6 +104,7 @@ class HSFansAndFollowModel: JSONJoy {
     }
 }
 
+// Model 做题记录
 class HSGTestModel:JSONJoy {
     var status:String
     var datas = Array<GTestExamList>()
@@ -117,6 +118,23 @@ class HSGTestModel:JSONJoy {
         }
     }
 }
+
+// Model 错题集
+class GHSErrorExamModel:JSONJoy {
+    var status:String
+    var datas = Array<GExamInfo>()
+    var errorData:String
+    
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string ?? ""
+        errorData = decoder["errorData"].string ?? ""
+        for childs:JSONDecoder in decoder["data"].array ?? [] {
+            datas.append(GExamInfo(childs))
+        }
+    }
+}
+
+// Model 做题记录（data）
 class GTestExamList:JSONJoy {
     var id:String
     var userid:String
@@ -141,6 +159,8 @@ class GTestExamList:JSONJoy {
     }
 }
 
+// Model 做题记录（data（question））
+// Model 错题集（data）
 class GExamInfo: JSONJoy{
     var questionid:String?
     var post_title:String?
@@ -164,6 +184,8 @@ class GExamInfo: JSONJoy{
     }
 }
 
+// Model 做题记录（data（question（answers）））
+// Model 错题集（data（answers））
 class GAnswersInfo: JSONJoy {
     
     var title:String

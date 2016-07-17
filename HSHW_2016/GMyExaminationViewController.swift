@@ -62,8 +62,17 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         switch type {
         case 1:
             title = "做题记录"
+            switch subType {
+            case 1:
+                title += "·每日一练"
+            case 2:
+                title += "·在线考试"
+            default:
+                title += "·系统出错"
+            }
         case 2:
             title = "错题集"
+            loadData_errorExampaper()
         case 3:
             title = "收藏记录"
         case 4:
@@ -72,14 +81,7 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
             self.title = "出错了"
         }
         
-        switch subType {
-        case 1:
-            title += "·每日一练"
-        case 2:
-            title += "·在线考试"
-        default:
-            title += "·系统出错"
-        }
+        
         
         self.title = title
         
@@ -94,6 +96,11 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         self.questionCard()
 
         // Do any additional setup after loading the view.
+    }
+    
+    // 如果是错题集，加载数据
+    func loadData_errorExampaper() {
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -439,38 +446,13 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
             let back = UIView(frame: CGRectMake(CGFloat(i)*self.view.frame.size.width+10, 54, self.view.frame.size.width-20, HEIGHT-221))
             back.backgroundColor = UIColor.whiteColor()
             back.layer.cornerRadius = 5
-            let dian = UIImageView(frame: CGRectMake(10, 16, 12, 12))
-            dian.image = UIImage(named: "ic_choice.png")
-            backGound.addSubview(dian)
-            let dianxuan = UILabel(frame: CGRectMake(24, 12.5, 40, 17))
-            dianxuan.font = UIFont.systemFontOfSize(18)
-            dianxuan.text = "单选题"
-            dianxuan.sizeToFit()
-            backGound.addSubview(dianxuan)
-            let tit = UILabel(frame: CGRectMake(28+dianxuan.bounds.size.width, 18.5, 40, 12))
-            tit.font = UIFont.systemFontOfSize(12)
-            tit.textColor = GREY
-            tit.text = "（A1，2分）"
-            tit.sizeToFit()
-            backGound.addSubview(tit)
-            // let time = UILabel(frame: CGRectMake(WIDTH-50, 14, 40, 12))
-            let time = UILabel(frame: CGRectMake(WIDTH-50, 16, 50, 12))
-            time.tag = 10+i
-            time.font = UIFont.systemFontOfSize(14)
-            time.textAlignment = .Right
-            time.textColor = COLOR
-            time.text = "00:00"
-            time.sizeToFit()
-//            backGound.addSubview(time)
             
-            // let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.size.width-83, 15, 71, 12))
-            let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.origin.x-125, 15, 71, 12))
-            timelab.font = UIFont.systemFontOfSize(12)
-            timelab.textColor = GREY
-            timelab.text = "剩余答题时间"
-            timelab.textAlignment = .Right
-            timelab.sizeToFit()
-//            backGound.addSubview(timelab)
+            // 根据不同类型设置不同的头
+            if type == 1 {
+                setSpecificView_ExamPaper_OnView(backGound, andIndex: i)
+            }else{
+                setSpecificView_ErrorExamPaper_OnView(backGound)
+            }
             
             let question = UILabel(frame: CGRectMake(WIDTH*20/375, WIDTH*15/375, back.bounds.size.width-WIDTH*38/375, 40))
             question.numberOfLines = 0
@@ -553,6 +535,52 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         pageControl.currentPage = 0
         //self.view.addSubview(self.pageControl)
     }
+    
+    // 设置不同的头——做题记录
+    func setSpecificView_ExamPaper_OnView(backGound:UIView,andIndex i:Int) {
+        
+        
+        let dian = UIImageView(frame: CGRectMake(10, 16, 12, 12))
+        dian.image = UIImage(named: "ic_choice.png")
+        backGound.addSubview(dian)
+        let dianxuan = UILabel(frame: CGRectMake(24, 12.5, 40, 17))
+        dianxuan.font = UIFont.systemFontOfSize(18)
+        dianxuan.text = "单选题"
+        dianxuan.sizeToFit()
+        backGound.addSubview(dianxuan)
+        
+        let tit = UILabel(frame: CGRectMake(28+dianxuan.bounds.size.width, 18.5, 40, 12))
+        tit.font = UIFont.systemFontOfSize(12)
+        tit.textColor = GREY
+        tit.text = "（A1，2分）"
+        tit.sizeToFit()
+        backGound.addSubview(tit)
+        // let time = UILabel(frame: CGRectMake(WIDTH-50, 14, 40, 12))
+        let time = UILabel(frame: CGRectMake(WIDTH-50, 16, 50, 12))
+        time.tag = 10+i
+        time.font = UIFont.systemFontOfSize(14)
+        time.textAlignment = .Right
+        time.textColor = COLOR
+        time.text = "00:00"
+        time.sizeToFit()
+        //            backGound.addSubview(time)
+        
+        // let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.size.width-83, 15, 71, 12))
+        let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.origin.x-125, 15, 71, 12))
+        timelab.font = UIFont.systemFontOfSize(12)
+        timelab.textColor = GREY
+        timelab.text = "剩余答题时间"
+        timelab.textAlignment = .Right
+        timelab.sizeToFit()
+        //            backGound.addSubview(timelab)
+
+    }
+    
+    // 设置不同的头——做题记录
+    func setSpecificView_ErrorExamPaper_OnView(view:UIView) {
+        
+    }
+    
     // MARK:   底部按钮
     func bottomBtnClick(btn:UIButton) {
         print(btn.tag)

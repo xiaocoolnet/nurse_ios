@@ -11,9 +11,7 @@ import UIKit
 class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate {
     
     var helper = HSMineHelper()
-    
-    var examType = 0// 0 每日一练  1 在线考试
-    
+        
     var dailyBtn = UIButton()
     var examBtn = UIButton()
     
@@ -31,7 +29,7 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadData()
+        loadData_Exampaper()
         
         setTitleView()
         
@@ -142,8 +140,8 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
     private var fansListArray:Array<GTestExamList> = []
     private var focusListArray:Array<GTestExamList> = []
     
-    // 加载数据
-    func loadData() {
+    // 加载数据_做题记录
+    func loadData_Exampaper() {
         
         helper.GetExampaper(QCLoginUserInfo.currentInfo.userid, type: "1") { (success, response) in
             self.fansListArray = response as! Array<GTestExamList>
