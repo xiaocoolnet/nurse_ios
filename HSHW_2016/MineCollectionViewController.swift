@@ -10,7 +10,6 @@ import UIKit
 import PagingMenuController
 
 class MineCollectionViewController: UIViewController {
-    
     var articleViewController = HSCollectionListController()
     var testViewController = HSCollectionListController()
     var ForumViewController = HSCollectionListController()

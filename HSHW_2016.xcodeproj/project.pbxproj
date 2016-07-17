@@ -126,12 +126,12 @@
 		F63E19821D17C38A001BDE8A /* HSWCommunityHome.xib in Resources */ = {isa = PBXBuildFile; fileRef = F63E19801D17C38A001BDE8A /* HSWCommunityHome.xib */; };
 		F63E198D1D17E10E001BDE8A /* HSZRecruitmentHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */; };
 		F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */; };
+		F64C9ABE1D3B85620041E360 /* HSMineHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9ABD1D3B85620041E360 /* HSMineHelper.swift */; };
 		F661F25C1D33754E00E04CE8 /* HSImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */; };
 		F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */; };
 		F661F25F1D33BB7B00E04CE8 /* HSSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661F25E1D33BB7B00E04CE8 /* HSSelectController.swift */; };
 		F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66216861D1E228B0099AD0E /* HSCVListModel.swift */; };
 		F66912391D2B5C0C0021706B /* HSStudyNetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66912381D2B5C0C0021706B /* HSStudyNetHelper.swift */; };
-		F6A598941D1B6F7C000D6E37 /* HSMineHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */; };
 		F6B4083D1D1D212800BDFDBE /* HSNurseStationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4083C1D1D212800BDFDBE /* HSNurseStationHelper.swift */; };
 		F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4083E1D1D31EB00BDFDBE /* HSJobListModel.swift */; };
 		F6B75F901D090728009DE2E6 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6B75F8F1D090728009DE2E6 /* ImageIO.framework */; };
@@ -299,12 +299,12 @@
 		F63E19801D17C38A001BDE8A /* HSWCommunityHome.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSWCommunityHome.xib; sourceTree = "<group>"; };
 		F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZRecruitmentHome.swift; sourceTree = "<group>"; };
 		F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZSliderMenuView.swift; sourceTree = "<group>"; };
+		F64C9ABD1D3B85620041E360 /* HSMineHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineHelper.swift; sourceTree = "<group>"; };
 		F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSImageCollectionCell.swift; sourceTree = "<group>"; };
 		F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSImageCollectionCell.xib; sourceTree = "<group>"; };
 		F661F25E1D33BB7B00E04CE8 /* HSSelectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSSelectController.swift; sourceTree = "<group>"; };
 		F66216861D1E228B0099AD0E /* HSCVListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSCVListModel.swift; sourceTree = "<group>"; };
 		F66912381D2B5C0C0021706B /* HSStudyNetHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStudyNetHelper.swift; sourceTree = "<group>"; };
-		F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineHelper.swift; sourceTree = "<group>"; };
 		F6B4083B1D1D100900BDFDBE /* HSHW_2016-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HSHW_2016-Bridging-Header.h"; sourceTree = "<group>"; };
 		F6B4083C1D1D212800BDFDBE /* HSNurseStationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSNurseStationHelper.swift; sourceTree = "<group>"; };
 		F6B4083E1D1D31EB00BDFDBE /* HSJobListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSJobListModel.swift; sourceTree = "<group>"; };
@@ -736,8 +736,8 @@
 		1854086E1CE6C82200DFBA7C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F6A598931D1B6F7C000D6E37 /* HSMineHelper.swift */,
 				0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */,
+				F64C9ABD1D3B85620041E360 /* HSMineHelper.swift */,
 				0BC1B4291D390BAA008A6F3D /* MineMessageView.swift */,
 			);
 			name = Model;
@@ -1091,6 +1091,7 @@
 				F6C265C81D24FD770033D2A9 /* PostVacancies.swift in Sources */,
 				181E0D351CEC3FFA00E34A7F /* MineRecruitTableViewCell.swift in Sources */,
 				185408911CE716E900DFBA7C /* AllViewController.swift in Sources */,
+				F64C9ABE1D3B85620041E360 /* HSMineHelper.swift in Sources */,
 				F6C265CA1D25106F0033D2A9 /* HSTabBarController.swift in Sources */,
 				0DE829D71D3B21950047FB23 /* GOnlineExamViewController.swift in Sources */,
 				185102E21CED612E00F797EE /* UserPostTableViewCell.swift in Sources */,
@@ -1127,7 +1128,6 @@
 				F612280B1D0581D7009E3D4D /* JianKangViewController.swift in Sources */,
 				F63E19811D17C38A001BDE8A /* HSWCommunityHome.swift in Sources */,
 				18A3F4E41CEAA83D00028FA5 /* EveryDayTableViewCell.swift in Sources */,
-				F6A598941D1B6F7C000D6E37 /* HSMineHelper.swift in Sources */,
 				F6342C6B1D391CBE00800D8E /* FansTableViewCell.swift in Sources */,
 				18D5B61A1CEA17320014F846 /* EveryDayViewController.swift in Sources */,
 				F63147141D1A6D2E005103C9 /* HSComTableCell.swift in Sources */,
