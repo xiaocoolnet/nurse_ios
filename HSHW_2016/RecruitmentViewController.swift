@@ -36,6 +36,28 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var selfNav:UINavigationController?
     var btnTag = 1
     
+    var name = NSString()
+    var sex = NSString()
+    var avatar = NSString()
+    var birthday = NSString()
+    var address = NSString()
+    var education = NSString()
+    var certificate = NSString()
+    var currentsalary = NSString()
+    var count = NSString()
+    var descrip = NSString()
+    var linkman = NSString()
+    var phone = NSString()
+    var experience = NSString()
+    var wantposition = NSString()
+    var tit = NSString()
+    var jobstate = NSString()
+    var wantsalary = NSString()
+    var ema = NSString()
+    var pho = NSString()
+    var hiredate = NSString()
+    var wantcity = NSString()
+    
     
     weak var superViewController:NurseStationViewController?
     
@@ -219,6 +241,22 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func makeCVMessage(){
         resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+        resumeDetail.showFor(birthday)
+        resumeDetail.showSex(sex)
+        resumeDetail.showName(name)
+        resumeDetail.education(education)
+        resumeDetail.address(address)
+        resumeDetail.experience(experience)
+        resumeDetail.jobName(tit)
+        resumeDetail.comeTime(hiredate)
+        resumeDetail.expectSalary(wantsalary)
+        resumeDetail.targetLocation(wantcity)
+        resumeDetail.targetPosition(wantposition)
+        resumeDetail.selfEvaluation(descrip)
+        resumeDetail.phoneNumber(phone)
+        resumeDetail.email(ema)
+        resumeDetail.currentSalary(currentsalary)
+        resumeDetail.jobState(jobstate)
         self.view.addSubview(resumeDetail)
     }
     
@@ -428,12 +466,28 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 print(self.jobDataSource![indexPath.row])
                 print(self.employmentdataSource)
                 self.makeEmploymentMessage()
-                
-                
-//                let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
-//                selfNav = tabBar.selectedViewController as? UINavigationController
-
             }else {
+                let model = self.CVDataSource![indexPath.row]
+                self.name = model.name
+                self.sex = model.sex
+                self.avatar = model.avatar
+                self.birthday = model.birthday
+                self.address = model.address
+                self.education = model.education
+                self.certificate = model.certificate
+                self.currentsalary = model.currentsalary
+                self.count = model.count
+                self.descrip = model.description
+                self.linkman = model.linkman
+                self.phone = model.phone
+                self.experience = model.experience
+                self.wantposition = model.wantposition
+                self.tit = model.title
+                self.jobstate = model.jobstate
+                self.ema = model.email
+                self.hiredate = model.hiredate
+                self.wantcity = model.wantcity
+                self.wantsalary = model.wantsalary
                 self.makeCVMessage()
             }
         }

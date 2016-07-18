@@ -33,14 +33,22 @@ class CVModel: JSONJoy {
     var sex:String
     var avatar:String
     var birthday:String
+    var experience:String
     var address:String
     var education:String
+    var wantposition:String
     var certificate:String
     var currentsalary:String
     var count:String
     var description:String
     var linkman:String
     var phone:String
+    var title:String
+    var jobstate:String
+    var email:String
+    var hiredate:String
+    var wantcity:String
+    var wantsalary:String
     
     required init(_ decoder:JSONDecoder){
         id = decoder["id"].string ?? ""
@@ -48,7 +56,7 @@ class CVModel: JSONJoy {
         name = decoder["name"].string ?? ""
         sex = decoder["sex"].string ?? ""
         avatar = decoder["avatar"].string ?? ""
-        birthday = decoder["certificate"].string ?? ""
+        birthday = decoder["birthday"].string ?? ""
         address = decoder["address"].string ?? ""
         currentsalary = decoder["currentsalary"].string ?? ""
         certificate = decoder["certificate"].string ?? ""
@@ -57,5 +65,15 @@ class CVModel: JSONJoy {
         linkman = decoder["linkman"].string ?? ""
         phone = decoder["phone"].string ?? ""
         education = decoder["education"].string ?? ""
+        experience = decoder["experience"].string ?? ""
+        title = decoder["title"].string ?? ""
+        jobstate = decoder["jobstate"].string ?? ""
+        wantposition = decoder["wantposition"].string ?? ""
+        description = decoder["description"].string ?? ""
+        email = decoder["email"].string ?? ""
+        phone = decoder["phone"].string ?? ""
+        hiredate = decoder["hiredate"].string ?? ""
+        wantcity = decoder["wantcity"].string ?? ""
+        wantsalary = decoder["wantsalary"].string ?? ""
     }
 }

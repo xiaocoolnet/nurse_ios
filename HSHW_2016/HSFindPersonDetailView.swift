@@ -11,6 +11,7 @@ protocol HSFindPersonDetailViewDelegate:NSObjectProtocol {
     func sendInvite()
 }
 
+
 class HSFindPersonDetailView: UIView {
     
     @IBOutlet weak var userName: UILabel!
@@ -53,5 +54,54 @@ class HSFindPersonDetailView: UIView {
         if delegate != nil {
             delegate!.sendInvite()
         }
+    }
+    
+    func showFor(birthday:NSString){
+        self.birthday.text = birthday as String
+    }
+    func showName(userName:NSString){
+        self.userName.text = userName as String
+    }
+    func showSex(userSex:NSString){
+        self.userSex.text = userSex as String
+    }
+    func education(education:NSString){
+        self.education.text = education as String
+    }
+    func address(address:NSString){
+        self.address.text = address as String
+    }
+    func experience(experience:NSString){
+        self.experience.text = experience as String
+    }
+    func jobName(jobName:NSString){
+        self.jobName.text = jobName as String
+    }
+    func currentSalary(currentSalary:NSString){
+        self.currentSalary.text = currentSalary as String
+    }
+    func jobState(jobState:NSString){
+        self.jobState.text = jobState as String
+    }
+    func comeTime(comeTime:NSString){
+        self.comeTime.text = comeTime as String
+    }
+    func expectSalary(expectSalary:NSString){
+        self.expectSalary.text = expectSalary as String
+    }
+    func targetLocation(targetLocation:NSString){
+        self.targetLocation.text = targetLocation as String
+    }
+    func targetPosition(targetPosition:NSString){
+        self.targetPosition.text = targetPosition as String
+    }
+    func selfEvaluation(selfEvaluation:NSString){
+        self.selfEvaluation.text = selfEvaluation as String
+    }
+    func phoneNumber(phoneNumber:NSString){
+        self.phoneNumber.text = phoneNumber as String
+    }
+    func email(email:NSString){
+        self.email.text = email as String
     }
 }

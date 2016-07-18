@@ -20,6 +20,29 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
     let jobHelper = HSNurseStationHelper()
     var dataSource = ChildList()
     
+    var str = NSString()
+    
+    var name = NSString()
+    var sex = NSString()
+    var avatar = NSString()
+    var birthday = NSString()
+    var address = NSString()
+    var education = NSString()
+    var certificate = NSString()
+    var currentsalary = NSString()
+    var count = NSString()
+    var descrip = NSString()
+    var linkman = NSString()
+    var phone = NSString()
+    var experience = NSString()
+    var wantposition = NSString()
+    var tit = NSString()
+    var jobstate = NSString()
+    var wantsalary = NSString()
+    var ema = NSString()
+    var hiredate = NSString()
+    var wantcity = NSString()
+    
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
@@ -27,6 +50,9 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        resumeDetail.delegate = self
+        
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
@@ -42,19 +68,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.view.addSubview(myTableView)
         myTableView.rowHeight = 72
         
-//        jobHelper.getList({[unowned self] (success, response) in
-//           
-//                if !success {
-//                    return
-//                }
-//                self.CVDataSource = response as! Array<CVModel>
-//             dispatch_async(dispatch_get_main_queue(), {
-//                self.myTableView.reloadData()
-//                //                    self.configureUI()
-//            })
-//        })
-
-    self.GetDate()
+        self.GetDate()
     
         // Do any additional setup after loading the view.
     }
@@ -120,11 +134,49 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
 
     func makeCVMessage(){
         resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+//        resumeDetail.birthday = self.str
+//        resumeDetail.showFor(birthday)
+//        resumeDetail.showSex(sex)
+//        resumeDetail.showName(name)
+//        resumeDetail.education(education)
+//        resumeDetail.address(address)
+//        resumeDetail.experience(experience)
+//        resumeDetail.jobName(tit)
+//        resumeDetail.comeTime(hiredate)
+//        resumeDetail.expectSalary(wantsalary)
+//        resumeDetail.targetLocation(wantcity)
+//        resumeDetail.targetPosition(wantposition)
+//        resumeDetail.selfEvaluation(descrip)
+//        resumeDetail.phoneNumber(phone)
+//        resumeDetail.email(ema)
+//        resumeDetail.currentSalary(currentsalary)
+//        resumeDetail.jobState(jobstate)
         self.view.addSubview(resumeDetail)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
+        let model = self.dataSource.objectlist[indexPath.row]
+        self.name = model.name
+        self.sex = model.sex
+        self.avatar = model.avatar
+        self.birthday = model.birthday
+        self.address = model.address
+        self.education = model.education
+        self.certificate = model.certificate
+        self.currentsalary = model.currentsalary
+        self.count = model.count
+        self.descrip = model.description
+        self.linkman = model.linkman
+        self.phone = model.phone
+        self.experience = model.experience
+        self.wantposition = model.wantposition
+        self.tit = model.title
+        self.jobstate = model.jobstate
+        self.ema = model.email
+        self.hiredate = model.hiredate
+        self.wantcity = model.wantcity
+        self.wantsalary = model.wantsalary
         self.makeCVMessage()
     }
     
