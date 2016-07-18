@@ -25,12 +25,16 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     internal var newsId = String()
     internal var post_title=String()
     internal var post_modified=String()
-    var post_excerpt=String()
+    var post_excerpt = String()
     var requestManager:AFHTTPSessionManager?
+    var newsType:Int?
     let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if newsType != nil {
+            self.navigationController?.navigationBar.hidden = false
+        }
     }
     
     override func viewDidLoad() {
@@ -117,7 +121,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func GetDate(){
         let url = PARK_URL_Header+"getNewslist"
-        let param = ["channelid":"4"]
+        let param = ["channelid":newsType == nil ? "4" : String(newsType!+17)]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 
