@@ -26,7 +26,7 @@ class HSArticleCollectCell: UITableViewCell {
     }
     
     func showforModel(model:NewsInfo){
-        newsTitle.text = model.post_title
+        newsTitle.text = model.title
         selfModel = model
     }
     
