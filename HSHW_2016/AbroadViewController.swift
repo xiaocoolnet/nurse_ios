@@ -15,7 +15,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     var myTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-//    var picArr = NSArray()
+//  var picArr = NSArray()
     var picArr = Array<String>()
     var timer = NSTimer()
     var times = Int()
@@ -27,7 +27,6 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     let nameArr:[String] = ["美国","加拿大","德国","芬兰","澳洲","新西兰","新加坡","沙特"]
     let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
     var country = Int()
-    
     var requestHelper = NewsPageHelper()
     
     override func viewDidLoad() {
@@ -72,7 +71,6 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     //  数据请求
     func GetDate( ){
         
-        //MBProgressHUD  HUD = [[MBProgressHUD showHUDAddedTo:self.view animated:YES], retain];
         let url = PARK_URL_Header+"getNewslist"
         
         //  请求体
@@ -92,14 +90,12 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
                     //  菊花加载
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
-                    //hud.labelText = status.errorData
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
                     
-                    //  self.createTableView1()
                     //  请求成功
                     print(status)
                     //  填充数据源
@@ -140,13 +136,12 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             titLab.font = UIFont.systemFontOfSize(14)
             titLab.textColor = UIColor.whiteColor()
             titLab.text = titArr[i]
-            
             //为图片视图添加点击事件
             imageView.userInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
-            //            手指头
+            //        手指头
             tap.numberOfTapsRequired = 1
-            //            单击
+            //        单击
             tap.numberOfTouchesRequired = 1
             imageView.addGestureRecognizer(tap)
             self.scrollView.addSubview(imageView)
@@ -260,7 +255,9 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
             cell.selectionStyle = .None
-            
+            for view in cell.contentView.subviews {
+                view.removeFromSuperview()
+            }
             for i in 0...7 {
                 let country = UIButton(frame: CGRectMake(WIDTH * (30 + 95 * CGFloat( i % 4 )) / 375, WIDTH * ( 20 + 70 * CGFloat(i / 4)) / 375, WIDTH * 34 / 375, WIDTH * 34 / 375))
                 country.tag = i
@@ -271,7 +268,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
                 countryName.font = UIFont.systemFontOfSize(12)
                 countryName.textAlignment = .Center
                 countryName.text = nameArr[i]
-                cell.addSubview(countryName)
+                cell.contentView.addSubview(countryName)
                 
             }
             return cell
@@ -290,7 +287,6 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
         if indexPath.section == 0 {
-            
         }else{
             //  进入详情界面
             let next = NewsContantViewController()
@@ -299,7 +295,6 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             //  传值操作
             next.newsInfo = newsInfo
             //  push一个界面
-            
             self.navigationController?.pushViewController(next, animated: true)
         }
     }
@@ -309,49 +304,11 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         //  执行国家图片的点击内容
         channelid = btn.tag
         country = btn.tag
-        self.getData()
+        let vc = TouTiaoViewController()
+        vc.newsType = btn.tag
+        vc.title = nameArr[btn.tag]
+        navigationController?.pushViewController(vc, animated: true)
     }
-//    //    图片点击事件
-//    func tapAction(tap:UIGestureRecognizer) {
-//        var imageView = UIImageView()
-//        imageView = tap.view as! UIImageView
-//        print("这是第\(Int(imageView.tag))张图片")
-//        //  执行点击操作
-//        //  进行数据请求，加载对应的页面
-//    }
-//    func pageNext() {
-//        scrollView.contentOffset = CGPointMake(WIDTH*CGFloat(pageControl.currentPage), 0)
-//    }
-//    
-//    func scroll(){
-//        if times == 4 {
-//            self.pageControl.currentPage = 0
-//        }else{
-//            self.pageControl.currentPage = times
-//        }
-//        scrollView.setContentOffset(CGPointMake(WIDTH*CGFloat(times), 0), animated: true)
-//        times += 1
-//        // print("出国1")
-//    }
-//    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-//        if times == 5 {
-//            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
-//            times = 1
-//        }
-//        //print("出国2")
-//    }
-//    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-//        //  偏移量
-//        var number = Int(scrollView.contentOffset.x/WIDTH)
-//        if number == 4 {
-//            number = 0
-//            //  设置当前页面
-//            pageControl.currentPage = number
-//        }else{
-//            pageControl.currentPage = number
-//        }
-//        
-//    }
     
     //    图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
@@ -425,25 +382,6 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
                     print(status.data)
                 }
             }
-            
         }
-
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

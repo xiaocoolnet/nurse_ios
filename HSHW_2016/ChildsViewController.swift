@@ -13,8 +13,6 @@ import MBProgressHUD
 class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, HSFindPersonDetailViewDelegate {
     
     let myTableView = UITableView()
-    let nameArr:[String] = ["“张鑫仁”","“柳行”","“折木秀一郎”","“swift”"]
-    
     let resumeDetail = NSBundle.mainBundle().loadNibNamed("HSFindPersonDetailView", owner: nil, options: nil).first as! HSFindPersonDetailView
     var CVDataSource:Array<CVModel>?
     let jobHelper = HSNurseStationHelper()
@@ -56,7 +54,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
-        
+        resumeDetail.delegate = self
         self.view.backgroundColor = UIColor.whiteColor()
         
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-115)

@@ -171,7 +171,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if indexPath.section == 0 {
             if indexPath.row==0 {
                 
-                let height = calculateHeight((newsInfo?.post_title)!, size: 19, width: WIDTH-20)
+                let height = calculateHeight(newsInfo?.post_title ?? "", size: 19, width: WIDTH-20)
                 print(newsInfo?.post_title)
                 print(height)
                 return height+20
