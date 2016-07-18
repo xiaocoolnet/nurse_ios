@@ -29,7 +29,7 @@ class MineJobDetailsTableViewCell: UITableViewCell {
     let positionDescript = UILabel()
     let descripDetail = UILabel()
     let namLabel = UILabel()
-    let nam = UIButton()
+    var nam = UIButton()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -103,7 +103,7 @@ class MineJobDetailsTableViewCell: UITableViewCell {
         namLabel.font = UIFont.boldSystemFontOfSize(15)
 //        namLabel.text = "联系方式:"
         
-        let nam = UIButton(type: UIButtonType.Custom)
+        nam = UIButton(type: UIButtonType.Custom)
         nam.frame = CGRectMake(100, 10, 100, 25)
         nam.setTitleColor(COLOR, forState: .Normal)
         nam.titleLabel!.font = UIFont.systemFontOfSize(14)

@@ -48,5 +48,7 @@ class NewsViewController: UIViewController {
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
         pagingMenuController.didMoveToParentViewController(self)
+        
+    
     }
 }

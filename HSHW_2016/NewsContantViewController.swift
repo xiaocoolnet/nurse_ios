@@ -35,8 +35,28 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         super.viewDidLoad()
         self.title = "新闻内容"
         
-        let rightBtn = UIBarButtonItem(title: "收藏", style: .Done, target: self, action: #selector(collectionNews))
-        navigationItem.rightBarButtonItem = rightBtn
+//        let collectBtn = UIBarButtonItem(image: UIImage(named: "ic_shoucang"), style: .Plain, target: self, action: #selector(collectionNews))
+//
+//        self.navigationItem.rightBarButtonItems = [shareBtn,collectBtn]
+        
+        //收藏按钮
+        let collectBtn = UIButton(frame:CGRectMake(0, 0, 18, 18))
+        collectBtn.setImage(UIImage(named: "ic_shoucang"), forState: .Normal)
+        collectBtn.addTarget(self, action: #selector(collection), forControlEvents: .TouchUpInside)
+        let barButton1 = UIBarButtonItem(customView: collectBtn)
+        
+        //分享按钮
+        let shareBtn = UIButton(frame:CGRectMake(0, 0, 18, 18))
+        shareBtn.setImage(UIImage(named: "ic_fenxiang"), forState: .Normal)
+        shareBtn.addTarget(self, action: #selector(collectionNews), forControlEvents: .TouchUpInside)
+        let barButton2 = UIBarButtonItem(customView: shareBtn)
+        
+        //按钮间的空隙
+        let gap = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil,action: nil)
+        gap.width = 15;
+        //设置按钮（注意顺序）
+        self.navigationItem.rightBarButtonItems = [barButton2,gap,barButton1]
+    
         
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 3))
         line.backgroundColor = COLOR
@@ -59,7 +79,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-    func collectionNews(){
+    func collection(){
         helper.collectionNews(newsInfo!.object_id!, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt!) { (success, response) in
             if success {
                 dispatch_async(dispatch_get_main_queue(), { 
@@ -72,6 +92,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 })
             }
         }
+    }
+    
+    func collectionNews(){
+        let height = calculateHeight((newsInfo?.post_title)!, size: 19, width: WIDTH-20)
+        self.myTableView.contentOffset = CGPointMake(0, height + webHeight - 20)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -146,7 +171,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if indexPath.section == 0 {
             if indexPath.row==0 {
                 
-                let height = calculateHeight((newsInfo?.post_title)!, size: 16, width: WIDTH-20)
+                let height = calculateHeight((newsInfo?.post_title)!, size: 19, width: WIDTH-20)
                 print(newsInfo?.post_title)
                 print(height)
                 return height+20
@@ -187,14 +212,14 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                
                 cell1 = UITableViewCell.init(style: .Default, reuseIdentifier: "cellIntenfer")
                 let title = UILabel()
-                let height = calculateHeight((newsInfo?.post_title)!, size: 16, width: WIDTH-20)
+                let height = calculateHeight((newsInfo?.post_title)!, size: 19, width: WIDTH-20)
                 title.frame = CGRectMake(10, 5, WIDTH-20, height+10)
                 title.text = newsInfo?.post_title
                 title.numberOfLines = 0
-                title.font = UIFont.systemFontOfSize(18)
+                title.font = UIFont.systemFontOfSize(19)
                 cell1.addSubview(title)
                 tableView.rowHeight=height+20
-              
+              print(tableView.rowHeight)
                 
             }else if indexPath.row == 1 {
 

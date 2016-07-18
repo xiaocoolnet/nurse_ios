@@ -23,6 +23,11 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
     var descripDetail = NSString()
     var addresLabel = NSString()
     var strId = NSString()
+    var phone = NSString()
+    var num = 1
+    
+    
+    
     
     
     
@@ -111,61 +116,65 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
         return 8
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-             let cell1 = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MineJobDetailsTableViewCell
+        let cell1 = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MineJobDetailsTableViewCell
         
-            cell1.selectionStyle = .None
-            cell1.textLabel?.numberOfLines = 0
-                print(indexPath.row)
-                if indexPath.row==0 {
-//                    let height = calculateHeight(self.tit as String, size: 18, width: WIDTH-20)
-//                    cell1.title.frame = CGRectMake(10, 10, WIDTH-20, height)
-                    cell1.title.text = self.tit as String
-                }else if indexPath.row == 1 {
-                    cell1.eyeImage.image = UIImage(named: "ic_eye_purple.png")
-                    cell1.lookCount.text = "3346"
-                    cell1.timeImage.image = UIImage(named: "ic_time_purple.png")
-                    cell1.timeLabel.text = "2016/03/16"
-        
-                }else if indexPath.row == 2 {
-                    cell1.nameLabel.text = "企业名称:"
-                    cell1.name.text = self.name as String
-                
-                }else if indexPath.row == 3 {
-                    let descripStr = "企业简介:" + (self.tit as String)
-                    let attrStr = NSMutableAttributedString(string: descripStr)
+        cell1.selectionStyle = .None
+        cell1.textLabel?.numberOfLines = 0
+        print(indexPath.row)
+        if indexPath.row==0 {
+            cell1.title.text = self.tit as String
+        }else if indexPath.row == 1 {
+            cell1.eyeImage.image = UIImage(named: "ic_eye_purple.png")
+            cell1.lookCount.text = "3346"
+            cell1.timeImage.image = UIImage(named: "ic_time_purple.png")
+            cell1.timeLabel.text = "2016/03/16"
+            return cell1
+        }else if indexPath.row == 2 {
+            cell1.nameLabel.text = "企业名称:"
+            cell1.name.text = self.name as String
+             return cell1
+        }else if indexPath.row == 3 {
+            let descripStr = "企业简介:" + (self.tit as String)
+            let attrStr = NSMutableAttributedString(string: descripStr)
                     attrStr.addAttributes([NSFontAttributeName:UIFont.boldSystemFontOfSize(15)], range: NSMakeRange(0, 5))
-                    attrStr.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(5, attrStr.length-5))
-                    attrStr.addAttributes([NSForegroundColorAttributeName:UIColor.lightGrayColor()], range: NSMakeRange(5, attrStr.length-5))
-                    cell1.descript.attributedText = attrStr
-                }else if indexPath.row == 4 {
+             attrStr.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(5, attrStr.length-5))
+            attrStr.addAttributes([NSForegroundColorAttributeName:UIColor.lightGrayColor()], range: NSMakeRange(5, attrStr.length-5))
+            cell1.descript.attributedText = attrStr
+            return cell1
+        }else if indexPath.row == 4 {
         
-                    cell1.criteria.text = "招聘条件:"
-                    cell1.criteriaLabel.text = self.criteriaLabel as String
-                    cell1.address.text = "工作地点:"
+            cell1.criteria.text = "招聘条件:"
+            cell1.criteriaLabel.text = self.criteriaLabel as String
+            cell1.address.text = "工作地点:"
                     
-                    cell1.addressLabel.text = self.addressLabel as String
-
-                }else if indexPath.row == 5{
-                    cell1.criteri.text = "招聘人数:"
-                    cell1.criteriLabel.text = self.criteriLabel as String
-                    cell1.addres.text = "福利待遇:"
-                    cell1.addresLabel.text = self.addresLabel as String
-                }else if indexPath.row == 6 {
-                    cell1.positionDescript.text = "职位描述:"
-                    cell1.descripDetail.text = self.descripDetail as String
-
-                }else if indexPath.row == 7 {
-                    cell1.namLabel.text = "联系方式:"
-//                    if num == 1 {
-//                        name.setTitle("查看联系方式", forState: .Normal)
-//                        name.addTarget(self, action: #selector(contactClick), forControlEvents: .TouchUpInside)
-//                    }else if num == 2{
-//                        name.setTitle(jobModel.phone, forState: .Normal)
-//                        
-//                    }
-                 return cell1
+            cell1.addressLabel.text = self.addressLabel as String
+            return cell1
+        }else if indexPath.row == 5{
+            cell1.criteri.text = "招聘人数:"
+            cell1.criteriLabel.text = self.criteriLabel as String
+            cell1.addres.text = "福利待遇:"
+            cell1.addresLabel.text = self.addresLabel as String
+            return cell1
+        }else if indexPath.row == 6 {
+            cell1.positionDescript.text = "职位描述:"
+            cell1.descripDetail.text = self.descripDetail as String
+            return cell1
+        }else if indexPath.row == 7 {
+            cell1.namLabel.text = "联系方式:"
+            if num == 1 {
+                cell1.nam.setTitle("查看联系方式", forState: .Normal)
+                cell1.nam.addTarget(self, action: #selector(contactClick), forControlEvents: .TouchUpInside)
+            }else if num == 2{
+                cell1.nam.setTitle(self.phone as String, forState: .Normal)
             }
             return cell1
+        }
+        return cell1
+    }
+    
+    func contactClick(){
+        num = 2
+        self.employmentMessageTableView.reloadData()
     }
     
     func takeResume(){
