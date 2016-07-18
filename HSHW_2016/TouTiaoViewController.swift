@@ -35,6 +35,12 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let back = UIBarButtonItem()
+        back.title = "返回";
+        self.navigationItem.backBarButtonItem = back;
+        
         self.createTableView()
         self.GetDate()
         myTableView.tableFooterView = UIView()

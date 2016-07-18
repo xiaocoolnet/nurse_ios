@@ -69,6 +69,7 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
         vc.addresLabel = model.welfare
         vc.descripDetail = model.description
         vc.strId = model.id
+        vc.phone = model.phone
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
