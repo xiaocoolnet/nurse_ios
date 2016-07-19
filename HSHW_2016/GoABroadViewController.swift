@@ -12,7 +12,7 @@ import PagingMenuController
 class GoABroadViewController: UIViewController {
 
     let oneView = AbroadViewController()
-    let twoView = AbroadViewController()
+    let twoView = SuccessViewController()
     let threeView = MagicboxViewController()
     
     override func viewWillAppear(animated: Bool) {

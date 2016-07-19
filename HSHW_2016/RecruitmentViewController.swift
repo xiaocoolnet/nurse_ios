@@ -465,6 +465,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 print(jobDataSource)
                 print(self.jobDataSource![indexPath.row])
                 print(self.employmentdataSource)
+                superViewController?.showRightBtn()
                 self.makeEmploymentMessage()
             }else {
                 let model = self.CVDataSource![indexPath.row]
@@ -488,6 +489,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.hiredate = model.hiredate
                 self.wantcity = model.wantcity
                 self.wantsalary = model.wantsalary
+                superViewController?.showRightBtn()
                 self.makeCVMessage()
             }
         }

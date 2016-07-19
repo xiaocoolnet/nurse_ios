@@ -37,13 +37,26 @@ class PostVacancies: UIView , ChangeWordDelegate,UITextViewDelegate{
    
     @IBAction func sendBtnClicked(sender: AnyObject) {
         if delegate != nil {
-            delegate?.clickedSendBtn()
+            if firmNameField.text != "" && resumeFeild.text != "" && phoneField.text != "" && postNameField.text != "" && conditionBtn.currentTitle != "" && treatmentBtn.currentTitle != "" && workplaceBtn.currentTitle != "" && personBtn.currentTitle != "" && moneyBtn.currentTitle != "" {
+                
+                delegate?.clickedSendBtn()
+            }else{
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善招聘信息", comment: "empty message"), preferredStyle: .Alert)
+                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                alertController.addAction(doneAction)
+                
+                let vc = responderVC()
+                vc!.presentViewController(alertController, animated: true, completion: nil)
+            }
         }
         
         print(firmNameField.text!,resumeFeild.text!,phoneField.text!,mailboxField.text!,postNameField.text!,"1",conditionBtn.currentTitle!,treatmentBtn.currentTitle!,workplaceBtn.currentTitle!,personBtn.currentTitle!,moneyBtn.currentTitle!,requestField.text)
         
-        helper.publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionBtn.currentTitle!, education: conditionBtn.currentTitle!, welfare: treatmentBtn.currentTitle!, address: workplaceBtn.currentTitle!, count: personBtn.currentTitle!, salary: moneyBtn.currentTitle!, description: requestField.text) { (success, response) in
-            print(success)
+        if firmNameField.text != "" && resumeFeild.text != "" && phoneField.text != "" && postNameField.text != "" && conditionBtn.currentTitle != "" && treatmentBtn.currentTitle != "" && workplaceBtn.currentTitle != "" && personBtn.currentTitle != "" && moneyBtn.currentTitle != "" {
+
+            helper.publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionBtn.currentTitle!, education: conditionBtn.currentTitle!, welfare: treatmentBtn.currentTitle!, address: workplaceBtn.currentTitle!, count: personBtn.currentTitle!, salary: moneyBtn.currentTitle!, description: requestField.text) { (success, response) in
+                print(success)
+           }
         }
         
         //提交后还原表格样式
@@ -60,6 +73,15 @@ class PostVacancies: UIView , ChangeWordDelegate,UITextViewDelegate{
         moneyBtn.setTitle("请选择薪资待遇", forState: .Normal)
         requestField.text = nil
         requestLabel.text = "职位要求"
+    }
+    
+    func responderVC() -> (UIViewController?) {
+        var temp:AnyObject
+        temp = nextResponder()!
+        while ((temp.isKindOfClass(UIViewController)) != true) {
+            temp = temp.nextResponder()!
+        }
+        return temp as? UIViewController
     }
     
     override func layoutSubviews() {

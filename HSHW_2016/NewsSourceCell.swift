@@ -13,6 +13,7 @@ class NewsSourceCell: UITableViewCell{
     @IBOutlet weak var source: UILabel!
     
     
+    @IBOutlet weak var post_like: UILabel!
     @IBOutlet weak var checkNum: UILabel!
     
     @IBOutlet weak var createTime: UILabel!

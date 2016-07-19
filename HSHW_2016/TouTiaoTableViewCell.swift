@@ -58,15 +58,16 @@ class TouTiaoTableViewCell: UITableViewCell {
 //        heal.setTitle("健康常识", forState: .Normal)
         heal.setTitleColor(COLOR, forState: .Normal)
         conNum.frame = CGRectMake(79, titLab.frame.size.height+titLab.frame.origin.y+22, 30, 15)
-        conNum.font = UIFont.systemFontOfSize(14)
+        conNum.font = UIFont.systemFontOfSize(13)
         conNum.textAlignment = .Left
         conNum.textColor = GREY
-        timeLab.frame = CGRectMake(126, titLab.frame.size.height+titLab.frame.origin.y+22, 80, 15)
-        timeLab.font = UIFont.systemFontOfSize(14)
+        timeLab.frame = CGRectMake(136, titLab.frame.size.height+titLab.frame.origin.y+22, 80, 15)
+        timeLab.font = UIFont.systemFontOfSize(13)
         timeLab.textColor = GREY
-        comBtn.frame = CGRectMake(62, titLab.frame.size.height+titLab.frame.origin.y+22, 18, 12)
+        comBtn.frame = CGRectMake(62, titLab.frame.size.height+titLab.frame.origin.y+23, 13, 10)
 //        comBtn.setImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
-        timeBtn.frame = CGRectMake(107, titLab.frame.size.height+titLab.frame.origin.y+23, 11, 11)
+        comBtn.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
+        timeBtn.frame = CGRectMake(117, titLab.frame.size.height+titLab.frame.origin.y+23, 11, 11)
 //        timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
         timeBtn.setBackgroundImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
         contant.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+38, WIDTH-140, 40)
@@ -78,7 +79,7 @@ class TouTiaoTableViewCell: UITableViewCell {
     
     func setCellWithNewsInfo(newsInfo:NewsInfo) {
         self.titLab.text = newsInfo.post_title
-//        self.conNum.text = newsInfo.recommended
+        self.conNum.text = newsInfo.post_hits
         let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
         self.timeLab.text = time[0]
         self.contant.text = newsInfo.post_excerpt

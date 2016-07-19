@@ -23,6 +23,10 @@
 		0BC1B4281D38EE03008A6F3D /* MineMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC1B4271D38EE03008A6F3D /* MineMessageTableViewCell.swift */; };
 		0BC1B42A1D390BAA008A6F3D /* MineMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC1B4291D390BAA008A6F3D /* MineMessageView.swift */; };
 		0BC3878E1D339C2C001460B8 /* AdressPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BC3878D1D339C2C001460B8 /* AdressPickerView.swift */; };
+		0BD429451D3DCDF70064B64C /* MineExaminationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD429441D3DCDF70064B64C /* MineExaminationViewController.swift */; };
+		0BD429471D3DD3500064B64C /* MineExamCollectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD429461D3DD3500064B64C /* MineExamCollectTableViewCell.swift */; };
+		0BD429491D3DFAA20064B64C /* CollectDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD429481D3DFAA20064B64C /* CollectDetailViewController.swift */; };
+		0BD4294B1D3E12D70064B64C /* SuccessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BD4294A1D3E12D70064B64C /* SuccessViewController.swift */; };
 		0BDAB62D1D2A43380081E883 /* QuestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB62C1D2A43380081E883 /* QuestionModel.swift */; };
 		0BDAB6331D2A57320081E883 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6321D2A57320081E883 /* QuestionViewController.swift */; };
 		0BDAB6351D2A588D0081E883 /* InternationNurseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */; };
@@ -194,6 +198,10 @@
 		0BC1B4271D38EE03008A6F3D /* MineMessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineMessageTableViewCell.swift; sourceTree = "<group>"; };
 		0BC1B4291D390BAA008A6F3D /* MineMessageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineMessageView.swift; sourceTree = "<group>"; };
 		0BC3878D1D339C2C001460B8 /* AdressPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdressPickerView.swift; sourceTree = "<group>"; };
+		0BD429441D3DCDF70064B64C /* MineExaminationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineExaminationViewController.swift; sourceTree = "<group>"; };
+		0BD429461D3DD3500064B64C /* MineExamCollectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineExamCollectTableViewCell.swift; sourceTree = "<group>"; };
+		0BD429481D3DFAA20064B64C /* CollectDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectDetailViewController.swift; sourceTree = "<group>"; };
+		0BD4294A1D3E12D70064B64C /* SuccessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessViewController.swift; sourceTree = "<group>"; };
 		0BDAB62C1D2A43380081E883 /* QuestionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
 		0BDAB6321D2A57320081E883 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternationNurseViewController.swift; sourceTree = "<group>"; };
@@ -394,6 +402,8 @@
 				181E0D261CEBF85100E34A7F /* MineStudyViewController.swift */,
 				0DE829D81D3B25250047FB23 /* GMyExaminationViewController.swift */,
 				0DE829DA1D3B52050047FB23 /* GMyExamListViewController.swift */,
+				0BD429441D3DCDF70064B64C /* MineExaminationViewController.swift */,
+				0BD429481D3DFAA20064B64C /* CollectDetailViewController.swift */,
 			);
 			name = Study;
 			sourceTree = "<group>";
@@ -670,6 +680,7 @@
 			children = (
 				185408761CE6C8A600DFBA7C /* GoABroadViewController.swift */,
 				1854088A1CE7133600DFBA7C /* AbroadViewController.swift */,
+				0BD4294A1D3E12D70064B64C /* SuccessViewController.swift */,
 				1854088E1CE713A100DFBA7C /* MagicboxViewController.swift */,
 				F6C265CB1D2513560033D2A9 /* HSWebViewDetailController.swift */,
 				F6C265CC1D2513560033D2A9 /* HSWebViewDetailController.xib */,
@@ -745,6 +756,7 @@
 				0DE829DC1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift */,
 				F64C9AC91D3B9C7E0041E360 /* MineJobTableViewCell.swift */,
 				F64C9ACB1D3B9C870041E360 /* MineJobDetailsTableViewCell.swift */,
+				0BD429461D3DD3500064B64C /* MineExamCollectTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1106,6 +1118,7 @@
 				0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */,
 				181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */,
 				1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */,
+				0BD429471D3DD3500064B64C /* MineExamCollectTableViewCell.swift in Sources */,
 				0DE829DB1D3B52050047FB23 /* GMyExamListViewController.swift in Sources */,
 				18C0BF991CEB655F003E2886 /* QuestionTableViewCell.swift in Sources */,
 				F6C265C81D24FD770033D2A9 /* PostVacancies.swift in Sources */,
@@ -1181,6 +1194,7 @@
 				189849B61CE815D3007B37B4 /* AcademicTableViewCell.swift in Sources */,
 				185408891CE70D8A00DFBA7C /* AcademicViewController.swift in Sources */,
 				181E0D231CEBF80B00E34A7F /* SetDataViewController.swift in Sources */,
+				0BD429451D3DCDF70064B64C /* MineExaminationViewController.swift in Sources */,
 				0B6FED501D3382B800A4488E /* EducationModel.swift in Sources */,
 				18A3F4E61CEAAF1100028FA5 /* WordViewController.swift in Sources */,
 				0BDAB6331D2A57320081E883 /* QuestionViewController.swift in Sources */,
@@ -1204,6 +1218,8 @@
 				F64C9AC61D3B9C2C0041E360 /* MineJobView.swift in Sources */,
 				0BAF21C41D113E100065146B /* QCLoginUserInfo.swift in Sources */,
 				0BEA9CAA1D1390120012FC11 /* ForgetPasswordController.swift in Sources */,
+				0BD4294B1D3E12D70064B64C /* SuccessViewController.swift in Sources */,
+				0BD429491D3DFAA20064B64C /* CollectDetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

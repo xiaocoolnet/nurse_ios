@@ -141,7 +141,9 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
                 examVC.dataSource = response as! Array<GExamInfo>
                 self.navigationController?.pushViewController(examVC, animated: true)
             }
-
+        case 3:
+            let collect = MineExaminationViewController()
+            self.navigationController?.pushViewController(collect, animated: true)
         default:
             print("MineStudyViewController.swift  studyTheKind")
         }
