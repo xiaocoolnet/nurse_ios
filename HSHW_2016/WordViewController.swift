@@ -43,6 +43,8 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     var helper = HSStudyNetHelper()
     var startPage = 0
     var questionCount = "10"
+    var hasChooseIndex = NSMutableArray()
+    let touch = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT-54))
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
@@ -303,7 +305,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         window = ((UIApplication.sharedApplication().delegate?.window)!)!
         window.addSubview(grayBack)
         
-        let touch = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT-54))
         touch.backgroundColor = UIColor.grayColor()
         touch.alpha = 0.4
         touch.addTarget(self, action: #selector(self.touchUp), forControlEvents: .TouchUpInside)
@@ -689,7 +690,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
                     print(request)
                     if(error != nil){
-                        
                     }else{
                         let status = Http(JSONDecoder(json!))
                         print("状态是")
@@ -704,7 +704,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                                 hud.hide(true, afterDelay: 0.5)
                             }
                             if(status.status == "success"){
-                                
                                 let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                                 hud.mode = MBProgressHUDMode.Text;
                                 hud.labelText = "收藏成功"
@@ -744,7 +743,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                             hud.hide(true, afterDelay: 0.5)
                             }
                             if(status.status == "success"){
-                                
                                 let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                                 hud.mode = MBProgressHUDMode.Text;
                                 hud.labelText = "取消收藏成功"
@@ -769,7 +767,11 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     }
     // 选项
     func pleaseChooseOne(btn:UIButton) {
-        
+        if hasChooseIndex.containsObject(pageControl.currentPage) {
+           return
+        }else{
+            hasChooseIndex.addObject(pageControl.currentPage)
+        }
         let backView = scrollView.viewWithTag(pageControl.currentPage+110)
         let rightBtn = backView?.viewWithTag(rightAnswer[pageControl.currentPage] as! Int)
         rightBtn?.backgroundColor = UIColor.greenColor()

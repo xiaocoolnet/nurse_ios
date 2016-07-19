@@ -46,6 +46,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
     var timeText:String?
     var helper = HSStudyNetHelper()
     var questionCount = "10"
+    var hasChooseIndex = NSMutableArray()
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
@@ -792,7 +793,11 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
     }
     //    选项
     func pleaseChooseOne(btn:UIButton) {
-        
+        if hasChooseIndex.containsObject(pageControl.currentPage) {
+            return
+        }else{
+            hasChooseIndex.addObject(pageControl.currentPage)
+        }
         let backView = scrollView.viewWithTag(pageControl.currentPage+110)
         let rightBtn = backView?.viewWithTag(rightAnswer[pageControl.currentPage] as! Int)
         rightBtn?.backgroundColor = UIColor.greenColor()

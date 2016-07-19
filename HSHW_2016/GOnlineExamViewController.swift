@@ -48,6 +48,7 @@ class GOnlineExamViewController: UIViewController,UIScrollViewDelegate {
     var timeText:String?
     var helper = HSStudyNetHelper()
     var questionCount = "10"
+    let touch = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT-54))
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
@@ -304,7 +305,6 @@ class GOnlineExamViewController: UIViewController,UIScrollViewDelegate {
         window = ((UIApplication.sharedApplication().delegate?.window)!)!
         window.addSubview(grayBack)
         
-        let touch = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT-54))
         touch.backgroundColor = UIColor.grayColor()
         touch.alpha = 0.4
         touch.addTarget(self, action: #selector(self.touchUp), forControlEvents: .TouchUpInside)
