@@ -16,7 +16,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     var timer = NSTimer()
     
     let choose:[String] = ["A、消化道症状","B、胃液分析","C、胃镜检查","D、血清学检查","E、胃肠X线检查"]
-    
     let picArr:[String] = ["btn_arrow_left.png","btn_arrow_right.png","ic_fenlei.png","btn_eye.png","btn_collet.png"]
     
     let picName:[String] = ["答题卡","答案","收藏"]

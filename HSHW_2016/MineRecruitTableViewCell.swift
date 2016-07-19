@@ -65,7 +65,7 @@ class MineRecruitTableViewCell: UITableViewCell {
         nameTit.font = UIFont.systemFontOfSize(14)
         nameTit.textColor = COLOR
 
-        nameTit.text = model.userid
+        nameTit.text = "李率丁"
         nameTit.sizeToFit()
         one.frame =  CGRectMake(15+nameTit.bounds.size.width, 15, 59, 20)
 //        one.text = "申请面试"
@@ -77,7 +77,7 @@ class MineRecruitTableViewCell: UITableViewCell {
         job.textColor = COLOR
         job.font = UIFont.systemFontOfSize(14)
     
-        job.text = model.birthday
+        job.text = "儿科护士主管"
         job.sizeToFit()
         two.frame = CGRectMake(15+nameTit.bounds.size.width+one.bounds.size.width+job.bounds.size.width, 15, 50, 20)
         two.textColor = UIColor.grayColor()
