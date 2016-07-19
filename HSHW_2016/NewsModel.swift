@@ -78,7 +78,7 @@ class NewsInfo: JSONJoy{
     var object_id : String?
     var post_source :String?
     var post_content:String?
-    var post_like:String?
+    var post_hits:String?
     var post_date:String?
     var recommended:String?
     var thumb:String?
@@ -97,7 +97,7 @@ class NewsInfo: JSONJoy{
         object_id = decoder["object_id"].string
         post_source = decoder["post_source"].string
         post_content = decoder["post_content"].string
-        post_like = decoder["post_like"].string
+        post_hits = decoder["post_hits"].string
         recommended = decoder["recommended"].string
         thumb = decoder["thumb"].string
         term_id = decoder["term_id"].string

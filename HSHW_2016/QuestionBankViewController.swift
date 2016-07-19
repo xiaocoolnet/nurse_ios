@@ -82,7 +82,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         let QuestionInfo = self.dataSource.objectlist[indexPath.row]
         cell.titLab.text = QuestionInfo.post_title
         cell.titLeb.text = QuestionInfo.post_excerpt
-        cell.zanNum.text = QuestionInfo.post_like
+        cell.zanNum.text = QuestionInfo.post_hits
 //        cell.conNum.text = QuestionInfo.post_hits
         
         return cell

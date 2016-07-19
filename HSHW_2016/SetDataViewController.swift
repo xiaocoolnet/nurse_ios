@@ -23,6 +23,11 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var myActionSheet:UIAlertController?
     var avatarView = UIButton(type: UIButtonType.Custom)
     
+    var picker:DatePickerView?
+    var pick:AdressPickerView?
+    var array = NSArray()
+    
+    
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = .Default
         self.navigationController?.navigationBar.hidden = false
@@ -30,6 +35,8 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        array = ["北京市","北京市","朝阳区"]
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
@@ -182,6 +189,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }else if indexPath.section == 1 {
             cell.textLabel?.text = twoArr[indexPath.row]
             cell.detailTextLabel?.text = twodeArr[indexPath.row]
+            cell.detailTextLabel?.textColor = UIColor.blackColor()
         }else{
             cell.textLabel?.text = threeArr[indexPath.row]
             cell.detailTextLabel?.text = threedeArr[indexPath.row]
@@ -210,48 +218,97 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
             changeNameVC.showType = .UserName
             changeNameVC.title = "编辑用户名"
             changeNameVC.text1 = onedeArr[indexPath.row]
+            self.navigationController?.pushViewController(changeNameVC, animated: true)
+
         case (0,2):
             changeNameVC.showType = HSEditUserInfo.Sex
             changeNameVC.title = "编辑性别"
             changeNameVC.id = "17"
+            self.navigationController?.pushViewController(changeNameVC, animated: true)
+
         case (0,3):
             changeNameVC.showType = HSEditUserInfo.PhoneNumber
             changeNameVC.title = "编辑手机号"
             changeNameVC.text1 = onedeArr[indexPath.row]
+            self.navigationController?.pushViewController(changeNameVC, animated: true)
+
         case (0,4):
             changeNameVC.showType = HSEditUserInfo.Email
             changeNameVC.title = "编辑邮箱"
             changeNameVC.text1 = onedeArr[indexPath.row]
+            self.navigationController?.pushViewController(changeNameVC, animated: true)
+
         case (1,0):
             changeNameVC.showType = HSEditUserInfo.RealName
             changeNameVC.title = "编辑真实姓名"
             changeNameVC.text1 = twodeArr[indexPath.row]
+            self.navigationController?.pushViewController(changeNameVC, animated: true)
+
         case (1,1):
             changeNameVC.showType = HSEditUserInfo.BirthDay
             changeNameVC.title = "编辑出生日期"
-            changeNameVC.text1 = twodeArr[indexPath.row]
+//            changeNameVC.text1 = twodeArr[indexPath.row]
+            picker = DatePickerView.getShareInstance()
+            picker!.textColor = UIColor.redColor()
+            picker!.num = 2
+            picker!.showWithDate(NSDate())
+            picker?.block = {
+                (date:NSDate)->() in
+                let formatter = NSDateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd zzz"
+                let string = formatter.stringFromDate(date)
+                let range:Range = string.rangeOfString(" ")!
+                let time = string.substringToIndex(range.endIndex)
+//                self.birthBtn.setTitle(time, forState: .Normal)
+                
+                self.twodeArr[indexPath.row] = time
+                self.myTableView.reloadData()
+//            self.navigationController?.pushViewController(changeNameVC, animated: true)
+            }
         case (1,2):
             changeNameVC.showType = HSEditUserInfo.Address
             changeNameVC.title = "编辑地址"
             changeNameVC.text1 = twodeArr[indexPath.row]
+            self.navigationController?.pushViewController(changeNameVC, animated: true)
+//            let pick = AdressPickerView.shareInstance
+//            
+//            // 设置是否显示区县等，默认为false不显示
+//            pick.showTown=true
+//            pick.pickArray=array // 设置第一次加载时需要跳转到相对应的地址
+//            //        self.addSubview(pick)
+//            pick.show((UIApplication.sharedApplication().keyWindow)!)
+//            // 选择完成之后回调
+//            pick.selectAdress { (dressArray) in
+//                
+//                self.array=dressArray
+//                print("选择的地区是: \(dressArray)")
+            
+//                self.twodeArr[indexPath.row]("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
+//            }
         case (2,0):
             changeNameVC.showType = HSEditUserInfo.School
             changeNameVC.title = "编辑学校"
             changeNameVC.text1 = threedeArr[indexPath.row]
+            self.navigationController?.pushViewController(changeNameVC, animated: true)
+
         case (2,1):
             changeNameVC.showType = HSEditUserInfo.Major
             changeNameVC.title = "编辑专业"
 //            changeNameVC.text1 = threedeArr[indexPath.row]
             changeNameVC.id = "18"
+            self.navigationController?.pushViewController(changeNameVC, animated: true)
+
         case (2,2):
             changeNameVC.showType = HSEditUserInfo.Education
             changeNameVC.title = "编辑学历"
             changeNameVC.text1 = threedeArr[indexPath.row]
             changeNameVC.id = "1"
+            self.navigationController?.pushViewController(changeNameVC, animated: true)
+
         default:
             changeNameVC.showType = HSEditUserInfo.Default
             changeNameVC.title = "默认"
+            self.navigationController?.pushViewController(changeNameVC, animated: true)
         }
-        self.navigationController?.pushViewController(changeNameVC, animated: true)
     }
 }

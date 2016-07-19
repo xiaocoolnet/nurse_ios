@@ -113,7 +113,18 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     @IBAction func saveResumeCilcked(sender: AnyObject) {
 //        delegate?.saveResumeBtnClicked()
         if delegate != nil {
-            delegate?.saveResumeBtnClicked()
+            if sexTextField.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != "" {
+                
+                delegate?.saveResumeBtnClicked()
+            }else{
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善简历信息", comment: "empty message"), preferredStyle: .Alert)
+                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                alertController.addAction(doneAction)
+
+                let vc = responderVC()
+                vc!.presentViewController(alertController, animated: true, completion: nil)
+
+            }
         }
         print(userid)
         print(imageName)
@@ -133,6 +144,8 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         print(expectPostBtn.titleLabel?.text)
         print(selfEvaluate.text)
         
+        if sexTextField.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != ""{
+            
         help.postForum(userid, avatar:imageName, name: nameTextFeild.text!, experience: workTextField.text!, sex: sexTextField.text!, birthday:(birthBtn.titleLabel?.text!)!, marital:(educationBtn.titleLabel?.text!)! , address:(placeBtn.titleLabel?.text!)!, jobstate:stateField.text!, currentsalary:(moneyBtn.titleLabel?.text!)!, phone:phoneField.text!, email:mailboxField.text!, hiredate:(entryTimeBtn.titleLabel?.text)!, wantcity:(targetCityBtn.titleLabel?.text!)!, wantsalary:(expectPayBtn.titleLabel?.text!)!, wantposition:(expectPostBtn.titleLabel?.text!)!, description:selfEvaluate.text, handle: { (success, response) in
             if success {
                 dispatch_async(dispatch_get_main_queue(), {
@@ -146,6 +159,7 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
                 })
             }
         })
+        }
 
     }
     

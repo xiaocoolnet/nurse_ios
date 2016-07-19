@@ -30,26 +30,43 @@
                             </mask>
                         </variation>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" image="ic_shicha" translatesAutoresizingMaskIntoConstraints="NO" id="6jn-kw-xF3">
-                        <rect key="frame" x="176" y="17" width="10" height="10"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" misplaced="YES" image="ic_shicha" translatesAutoresizingMaskIntoConstraints="NO" id="6jn-kw-xF3">
+                        <rect key="frame" x="230" y="17" width="10" height="10"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="K9R-Do-Zu0" userLabel="height = 10"/>
                             <constraint firstAttribute="width" constant="10" id="eLs-aG-Gbp"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pQG-kJ-FuR">
-                        <rect key="frame" x="196" y="5" width="29" height="34"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pQG-kJ-FuR">
+                        <rect key="frame" x="253" y="5" width="29" height="34"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" misplaced="YES" image="ic_eye_purple" translatesAutoresizingMaskIntoConstraints="NO" id="P8b-KG-8zc">
+                        <rect key="frame" x="124" y="17" width="13" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="10" id="KOk-VP-SVx" userLabel="height = 10"/>
+                            <constraint firstAttribute="width" constant="10" id="fWh-os-YGp"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="plf-K4-42F">
+                        <rect key="frame" x="138" y="5" width="29" height="34"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="plf-K4-42F" firstAttribute="leading" secondItem="P8b-KG-8zc" secondAttribute="trailing" constant="14" id="7g7-7E-v1N"/>
+                    <constraint firstItem="P8b-KG-8zc" firstAttribute="top" secondItem="6jn-kw-xF3" secondAttribute="top" id="BKY-EJ-oNc"/>
                     <constraint firstItem="6jn-kw-xF3" firstAttribute="top" secondItem="PTk-sK-6D6" secondAttribute="top" id="I9r-Vd-kT4"/>
-                    <constraint firstItem="6jn-kw-xF3" firstAttribute="leading" secondItem="PTk-sK-6D6" secondAttribute="trailing" constant="66" id="QWq-XO-yEf"/>
+                    <constraint firstItem="6jn-kw-xF3" firstAttribute="leading" secondItem="PTk-sK-6D6" secondAttribute="trailing" constant="86" id="QWq-XO-yEf"/>
                     <constraint firstAttribute="bottom" secondItem="PTk-sK-6D6" secondAttribute="bottom" constant="5" id="Shb-ds-wJV"/>
+                    <constraint firstItem="P8b-KG-8zc" firstAttribute="centerY" secondItem="plf-K4-42F" secondAttribute="centerY" id="Sxz-cN-2rw"/>
                     <constraint firstItem="pQG-kJ-FuR" firstAttribute="leading" secondItem="6jn-kw-xF3" secondAttribute="trailing" constant="5" id="WGF-ye-59q"/>
                     <constraint firstItem="pQG-kJ-FuR" firstAttribute="top" secondItem="PTk-sK-6D6" secondAttribute="top" id="XuM-eV-kDm"/>
+                    <constraint firstItem="P8b-KG-8zc" firstAttribute="leading" secondItem="PTk-sK-6D6" secondAttribute="trailing" constant="14" id="cyu-fz-Ge4"/>
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="pQG-kJ-FuR" secondAttribute="trailing" constant="20" id="k6q-32-SC7"/>
                     <constraint firstItem="pQG-kJ-FuR" firstAttribute="height" secondItem="PTk-sK-6D6" secondAttribute="height" id="lbe-G0-qkz"/>
                     <constraint firstItem="pQG-kJ-FuR" firstAttribute="centerY" secondItem="6jn-kw-xF3" secondAttribute="centerY" id="lvH-b2-p7S"/>
@@ -70,12 +87,14 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="createTime" destination="pQG-kJ-FuR" id="ylN-K7-SRW"/>
+                <outlet property="post_like" destination="plf-K4-42F" id="ENo-WG-tQJ"/>
                 <outlet property="source" destination="PTk-sK-6D6" id="LvE-Mh-PZe"/>
             </connections>
             <point key="canvasLocation" x="785" y="519.5"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="ic_eye_purple" width="9" height="6"/>
         <image name="ic_shicha" width="27" height="27"/>
     </resources>
 </document>

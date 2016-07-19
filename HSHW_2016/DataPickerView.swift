@@ -17,6 +17,9 @@ class DatePickerView: UIView,UIPickerViewDataSource,UIPickerViewDelegate {
     }
     var block:dateBlock?
     
+    var num = 1
+    var showType:HSEditUserInfo = .Default
+    
     var textColor:UIColor = UIColor.blackColor(); //字体颜色 默认为黑色
     var buColor:UIColor = UIColor.whiteColor(); //按钮栏背景颜色 默认为白色
     var pickerColor:UIColor = UIColor.whiteColor(); //选择器背景色 默认为白色
@@ -131,6 +134,9 @@ class DatePickerView: UIView,UIPickerViewDataSource,UIPickerViewDelegate {
     func doneClick(sender:UIButton) //完成事件
     {
         block!(date:endDate)
+//        if num == 2 {
+//            <#code#>
+//        }
         self.removeFromSuperview()
     }
     

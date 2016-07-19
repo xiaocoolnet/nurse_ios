@@ -80,7 +80,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func collection(){
-        helper.collectionNews(newsInfo!.object_id!, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt!) { (success, response) in
+        let user = NSUserDefaults.standardUserDefaults()
+        let uid = user.stringForKey("userid")
+        let userID = user.stringForKey((self.newsInfo?.object_id)!)
+        print(userID)
+        if userID == "false"||userID==nil{
+           helper.collectionNews(newsInfo!.object_id!, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt!) { (success, response) in
             if success {
                 dispatch_async(dispatch_get_main_queue(), { 
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -89,9 +94,57 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
+                    user.setObject("true", forKey: "isLike")
+                    user.setObject("true", forKey: (self.newsInfo?.object_id)!)
+                    self.isLike=true
                 })
             }
+          }
+        }else{
+            
+            let url = PARK_URL_Header+"cancelfavorite"
+            let param = [
+                "refid":newsInfo?.object_id,
+                "type":"1",
+                "userid":uid
+            ];
+            Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+                print(request)
+                if(error != nil){
+                    
+                }else{
+                    let status = Http(JSONDecoder(json!))
+                    print("状态是")
+                    print(status.status)
+                    if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = status.errorData
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                        user.setObject("false", forKey: (self.newsInfo?.object_id)!)
+                    }
+                    if(status.status == "success"){
+                        
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "取消收藏成功"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                        //self.myTableView .reloadData()
+                        print(status.data)
+                        self.isLike=false
+                        user.setObject("false", forKey: "isLike")
+                    user.removeObjectForKey((self.newsInfo?.object_id)!)
+                    }
+                }
+                
+            }
+            
         }
+
     }
     
     func collectionNews(){
@@ -226,7 +279,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let cell = tableView.dequeueReusableCellWithIdentifier("sourceCell", forIndexPath: indexPath)as! NewsSourceCell
                
                 cell.source.text = cell.source.text!+(newsInfo?.post_source)!
-//         cell.checkNum.text = newsInfo?.recommended
+                cell.post_like.text = newsInfo?.post_hits
                 let time:Array = (newsInfo?.post_date?.componentsSeparatedByString(" "))!
                 cell.createTime.text = time[0]
 

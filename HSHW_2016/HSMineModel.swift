@@ -203,3 +203,59 @@ class GAnswersInfo: JSONJoy {
     }
 }
 
+
+// Model 收藏记录
+class CollectModel:JSONJoy {
+    var status:String
+    var datas = Array<CollectList>()
+    var errorData:String
+    
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string ?? ""
+        errorData = decoder["errorData"].string ?? ""
+        for childs:JSONDecoder in decoder["data"].array ?? [] {
+            datas.append(CollectList(childs))
+        }
+    }
+}
+
+// Model 收藏记录（data）
+class CollectList:JSONJoy {
+    var id:String
+    var userid:String
+    var title:String
+    var description:String
+    var type:String
+    var object_id:String
+    var createtime:String
+    var questionid:String
+    var post_title:String
+    var post_description:String
+    var post_difficulty:String
+    var answer:String
+    
+    required init(_ decoder: JSONDecoder) {
+        id = decoder["id"].string ?? ""
+        userid = decoder["userid"].string ?? ""
+        title = decoder["title"].string ?? ""
+        description = decoder["description"].string ?? ""
+        type = decoder["type"].string ?? ""
+        object_id = decoder["object_id"].string ?? ""
+        createtime = decoder["createtime"].string ?? ""
+        questionid = decoder["questionid"].string ?? ""
+        post_title = decoder["post_title"].string ?? ""
+        post_description = decoder["post_description"].string ?? ""
+        post_difficulty = decoder["post_difficulty"].string ?? ""
+        answer = decoder["answer"].string ?? ""
+    }
+}
+
+
+
+
+
+
+
+
+
+

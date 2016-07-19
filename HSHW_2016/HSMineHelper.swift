@@ -425,6 +425,31 @@ class HSMineHelper: NSObject {
             }
         }
     }
+    
+    // 获取收藏记录
+    func GetCollectList(userid:String, type:String, handle:ResponseBlock){
+    
+        let url = PARK_URL_Header+"getfavoritelist"
+        
+        let param = ["userid":userid,"type":type];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                
+                let result = CollectModel(JSONDecoder(json!))
+                print("状态是")
+                print(result.status)
+                if(result.status == "success"){
+                    handle(success: true, response: result.datas)
+                }else{
+                    handle(success: false, response: result.errorData)
+                }
+            }
+        }
+    }
+
 
     // 获取用户信息
     func getUserInfo(userid:String,handle:ResponseBlock){
