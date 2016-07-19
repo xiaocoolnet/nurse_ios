@@ -53,13 +53,13 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
         
         if indexPath.row == 0 {
             let chartCell = tableView.dequeueReusableCellWithIdentifier("chartcell")
             chartCell!.selectionStyle = .None
             return chartCell!
         }
+            
         else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
             cell.selectionStyle = .None
@@ -104,7 +104,6 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
                 btn.tag = i+1
                 btn.addTarget(self, action: #selector(self.studyTheKind(_:)), forControlEvents: .TouchUpInside)
                 btn.setImage(UIImage(named: picArr[i]), forState: .Normal)
-                
                 cell.addSubview(btn)
                 let name = UILabel(frame: CGRectMake(WIDTH/2*CGFloat(i%2), WIDTH*90/375+WIDTH*135/375*CGFloat(i/2), WIDTH/2, 16))
                 name.font = UIFont.systemFontOfSize(12)

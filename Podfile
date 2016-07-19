@@ -11,4 +11,12 @@ pod 'PagingMenuController','~> 0.9.1'
 pod 'ShareSDK3'
 pod 'ShareSDK3/ShareSDKUI'
 pod 'ShareSDK3/ShareSDKPlatforms/SinaWeibo'
-pod 'ShareSDK3/ShareSDKPlatforms/WeChat' 
+pod 'ShareSDK3/ShareSDKPlatforms/WeChat'
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
+    end
+  end
+end
+

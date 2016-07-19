@@ -11,14 +11,12 @@ import UIKit
 class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate {
     
     var helper = HSMineHelper()
-        
     var dailyBtn = UIButton()
     var examBtn = UIButton()
     
     let myScrollView = UIScrollView()
     let fansTableView = UITableView()
     let focusTableView = UITableView()
-    
     var navigationBarLineView = UIView()
     
     override func viewWillAppear(animated: Bool) {
@@ -46,6 +44,7 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
         myScrollView.pagingEnabled = true
         myScrollView.showsHorizontalScrollIndicator = false
         myScrollView.delegate = self
+        myScrollView.tag = 688
         self.view.addSubview(myScrollView)
         
         // 每日一练列表
@@ -169,9 +168,13 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
         cell.inde = indexPath.row
         
         if tableView.tag == 410 {
-            cell.fansModel = fansListArray[indexPath.row] 
+            let model = fansListArray[indexPath.row]
+            model.post_title = "每日一练"
+            cell.fansModel = model
         }else if tableView.tag == 411{
-            cell.fansModel = focusListArray[indexPath.row]
+            let model = focusListArray[indexPath.row]
+            model.post_title = "在线考试"
+            cell.fansModel = model
         }
         
         return cell
@@ -181,7 +184,6 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
         print(indexPath.row)
         
         let userPageVC = GMyExaminationViewController()
-
         userPageVC.type = 1
         if tableView.tag == 410 {
             userPageVC.subType = 1
@@ -191,34 +193,18 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
             userPageVC.dataSource = focusListArray[indexPath.row].question
         }
         
-        
         self.navigationController?.pushViewController(userPageVC, animated: true)
     }
     
     // MARK: UIScrollView 代理方法
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        if scrollView.contentOffset.x == 0 {
-            fansBtnClick(dailyBtn)
-        }else if scrollView.contentOffset.x == WIDTH {
-            focusBtnClick(examBtn)
+        if scrollView.tag == 688 {
+            if scrollView.contentOffset.x == 0 {
+                fansBtnClick(dailyBtn)
+            }else if scrollView.contentOffset.x == WIDTH {
+                focusBtnClick(examBtn)
+            }
         }
     }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }
 

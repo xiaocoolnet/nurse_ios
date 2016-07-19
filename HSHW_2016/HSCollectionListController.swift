@@ -72,7 +72,7 @@ class HSCollectionListController: UITableViewController {
             
         }
         else if collectionType == 3 {
-            
+            (cell as! HSComTableCell).showForForumModel(dataSource[indexPath.row] as! PostModel)
         }
         return cell!
     }
@@ -83,6 +83,11 @@ class HSCollectionListController: UITableViewController {
                 next.newsInfo = dataSource[indexPath.row] as? NewsInfo
                 navigationController!.pushViewController(next, animated: true)
             }
+        }else if collectionType == 3 {
+            let vc = HSPostDetailViewController(nibName: "HSPostDetailViewController",bundle: nil)
+            vc.postInfo = dataSource[indexPath.row] as? PostModel
+            
+            navigationController?.pushViewController(vc, animated: true)
         }
     }
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

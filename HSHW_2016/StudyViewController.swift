@@ -29,7 +29,6 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         self.tabBarController?.tabBar.hidden = false
         myTableView.reloadData()
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = COLOR
