@@ -182,7 +182,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             if indexPath.row == 2 {
                 let next = OnlineTextViewController()
                 self.navigationController?.pushViewController(next, animated: true)
-                
+//                
             }
         } else if indexPath.section == 1 {
             let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
