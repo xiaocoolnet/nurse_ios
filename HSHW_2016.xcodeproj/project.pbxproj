@@ -33,6 +33,7 @@
 		0BDAB6371D2A58E80081E883 /* NurseStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6361D2A58E80081E883 /* NurseStatusViewController.swift */; };
 		0BEA9CAA1D1390120012FC11 /* ForgetPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEA9CA91D1390120012FC11 /* ForgetPasswordController.swift */; };
 		0BF2482D1D3F1D98002F2E4D /* FiftyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2482C1D3F1D98002F2E4D /* FiftyViewController.swift */; };
+		0BF2482F1D3F83F0002F2E4D /* FiftyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2482E1D3F83F0002F2E4D /* FiftyView.swift */; };
 		0D3780141D372390000D31E2 /* HSPostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */; };
 		0D3780151D372390000D31E2 /* HSPostDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */; };
 		0DB7E1901D38B7EC001D7B66 /* HSMineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */; };
@@ -209,6 +210,7 @@
 		0BDAB6361D2A58E80081E883 /* NurseStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NurseStatusViewController.swift; sourceTree = "<group>"; };
 		0BEA9CA91D1390120012FC11 /* ForgetPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPasswordController.swift; sourceTree = "<group>"; };
 		0BF2482C1D3F1D98002F2E4D /* FiftyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiftyViewController.swift; sourceTree = "<group>"; };
+		0BF2482E1D3F83F0002F2E4D /* FiftyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiftyView.swift; sourceTree = "<group>"; };
 		0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSPostDetailViewController.swift; sourceTree = "<group>"; };
 		0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSPostDetailViewController.xib; sourceTree = "<group>"; };
 		0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineModel.swift; sourceTree = "<group>"; };
@@ -772,6 +774,7 @@
 				0BC1B4291D390BAA008A6F3D /* MineMessageView.swift */,
 				F64C9AC51D3B9C2C0041E360 /* MineJobView.swift */,
 				F64C9AC71D3B9C3F0041E360 /* MineChildView.swift */,
+				0BF2482E1D3F83F0002F2E4D /* FiftyView.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1122,6 +1125,7 @@
 				181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */,
 				1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */,
 				0BD429471D3DD3500064B64C /* MineExamCollectTableViewCell.swift in Sources */,
+				0BF2482F1D3F83F0002F2E4D /* FiftyView.swift in Sources */,
 				0DE829DB1D3B52050047FB23 /* GMyExamListViewController.swift in Sources */,
 				18C0BF991CEB655F003E2886 /* QuestionTableViewCell.swift in Sources */,
 				F6C265C81D24FD770033D2A9 /* PostVacancies.swift in Sources */,

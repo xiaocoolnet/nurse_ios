@@ -808,8 +808,6 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         //        if btn.tag != rightBtn?.tag {
         // MARK: 这里更改了选中答案的颜色
         btn.backgroundColor = UIColor.greenColor()
-        //        }
-        
         let exam = dataSource[pageControl.currentPage]
         
         if self.pageControl.currentPage+1 > self.myChoose.count {
@@ -818,8 +816,10 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
                     self.myChoose.insert(0, atIndex: i)
                     chooseId.insert("0", atIndex: i)
                 }
+        
                 self.myChoose.insert(btn.tag-1, atIndex: self.pageControl.currentPage)
                 chooseId.append(exam.answers[btn.tag-1].id)
+                
             }else{
                 self.myChoose.insert(btn.tag-1, atIndex: self.pageControl.currentPage)
                 chooseId.append(exam.answers[btn.tag-1].id)
@@ -830,6 +830,8 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
             chooseId.removeAtIndex(pageControl.currentPage)
             self.myChoose.insert(btn.tag, atIndex: pageControl.currentPage)
             chooseId.insert(exam.answers[btn.tag-1].id, atIndex: pageControl.currentPage)
+            
+
         }
         
         self.questionCard()

@@ -8,6 +8,8 @@
 
 import UIKit
 import SDWebImage
+import Alamofire
+import MBProgressHUD
 
 class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     var myTableView = UITableView()
@@ -22,6 +24,15 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var fansCountBtn = UIButton(type: .Custom)
     var attentionBtn = UIButton(type: .Custom)
     var nurseCoins = UIButton(type: .Custom)
+    
+    var timeStamp = 1
+    var isLike:Bool = false
+    var str = NSString()
+    
+//    var dateSource = data()
+    
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -55,7 +66,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.view.addSubview(myTableView)
         myTableView.separatorStyle = .None
         
-
+        self.zanAddNum()
+        
         // Do any additional setup after loading the view.
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -185,7 +197,9 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 signBtn.layer.cornerRadius = WIDTH*42/375/2
                 signBtn.layer.borderColor = UIColor.yellowColor().CGColor
                 signBtn.layer.borderWidth = 2
-                signBtn.addTarget(self, action: #selector(MineViewController.signInToday), forControlEvents: .TouchUpInside)
+                if self.isLike == false {
+                    signBtn.addTarget(self, action: #selector(MineViewController.signInToday), forControlEvents: .TouchUpInside)
+                }
                 cell.addSubview(signBtn)
                 userNameLabel.frame = CGRectMake(WIDTH*160/375, WIDTH*205/375, WIDTH*55/375, 30)
                 userNameLabel.textAlignment = .Center
@@ -311,5 +325,111 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 
     func signInToday() {
         print("签到")
+        self.timeNow()
+        if isLike == false {
+        
+            self.zan()
+        }
+    }
+    
+    func zanAddNum() {
+                
+        
+                let url = PARK_URL_Header+"GetMySignLog"
+                let param = [
+//                    "userid":"1",
+                    "userid":QCLoginUserInfo.currentInfo.userid,
+                    "day":self.timeStamp
+
+                    ];
+                Alamofire.request(.GET, url, parameters: param as? [String : AnyObject] ).response { request, response, json, error in
+                    print(request)
+                    if(error != nil){
+                        
+                    }else{
+                        let status = FifModel(JSONDecoder(json!))
+                        
+                        print("状态是")
+                        print(status.status)
+                        if(status.status == "error"){
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text
+                            hud.labelText = status.errorData
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                            self.isLike = false
+                        }
+                        if(status.status == "success"){
+                            
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "签到成功"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                            self.isLike = true
+                        }
+                    }
+                }
+            }
+    
+    func zan() {
+        
+        let url = PARK_URL_Header+"SignDay"
+        let param = [
+            "userid":QCLoginUserInfo.currentInfo.userid,
+//                                "userid":"1",
+            "day":self.timeStamp
+        ];
+        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject] ).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                
+            }else{
+                let status = Http(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+
+                }
+                if(status.status == "success"){
+                    
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "签到成功"
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                    self.isLike = true
+                    
+                }
+            }
+        }
+    }
+
+    
+    func timeNow(){
+        //获取当前时间
+        let now = NSDate()
+        
+        // 创建一个日期格式器
+        let dformatter = NSDateFormatter()
+        dformatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
+        print("当前日期时间：\(dformatter.stringFromDate(now))")
+        
+        //当前时间的时间戳
+        let timeInterval:NSTimeInterval = now.timeIntervalSince1970
+//        let double = (timeInterval as NSString).doubleValue
+
+        self.timeStamp = Int(timeInterval/100)
+        print("当前时间的时间戳：\(timeStamp)")
+
     }
 }
