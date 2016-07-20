@@ -159,13 +159,10 @@ class ViewController: UIViewController,UITextFieldDelegate {
         let infoDic = info.userInfo
         let keyBoardRect = infoDic!["UIKeyboardFrameEndUserInfoKey"]?.CGRectValue()
         let keyBoardTranslate = CGFloat((keyBoardRect?.origin.y)!-HEIGHT)
-        
-        UIView.animateWithDuration((infoDic!["UIKeyboardAnimationCurveUserInfoKey"]?.doubleValue)!, delay: 0, options: .TransitionNone, animations: {
-            var rect:CGRect = self.view.frame
-            rect.origin.y = keyBoardTranslate
-            self.view.frame = rect
-            
-            }, completion: nil)
+
+        var rect:CGRect = self.view.frame
+        rect.origin.y = keyBoardTranslate
+        self.view.frame = rect
     }
     
     //  登录界面UI的搭建
@@ -434,7 +431,6 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     //  把得到的用户信息存入到沙盒
                     //  得到 useID
                     ud.setObject([USER_NAME:self.phoneNumber.text!,USER_PWD:self.passwordNumber.text!], forKey: LOGINFO_KEY)
-
                     ud.setObject(QCLoginUserInfo.currentInfo.userid, forKey: "userid")
                     //登录成功
                     LOGIN_STATE = true
