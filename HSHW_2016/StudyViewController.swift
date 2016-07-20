@@ -197,8 +197,9 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 goAboard.title = "临床护理"
                 self.navigationController?.pushViewController(goAboard, animated: true)
             }else if indexPath.row == 1{
-                let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
+                let goAboard = AcademicViewController()
                 goAboard.articleID = "14"
+                goAboard.num = 2
                 goAboard.title = "50项护理操作"
                 self.navigationController?.pushViewController(goAboard, animated: true)
             }else if indexPath.row == 2 {

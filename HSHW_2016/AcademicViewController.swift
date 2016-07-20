@@ -18,9 +18,24 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var likeNum :Int!
     var currentIndexRow:Int?
     let likeNumDict = NSMutableDictionary()
+    
+    var num = 1
+    var articleID = NSString()
+    
+    override func viewWillAppear(animated: Bool) {
+        self.tabBarController?.tabBar.hidden = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.GetData()
+         self.createTableView()
+        if num == 2 {
+            self.GetData1()
+        }else{
+            
+            self.GetData()
+        }
+        
         self.view.backgroundColor = COLOR
         
         // Do any additional setup after loading the view.
@@ -28,8 +43,8 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func GetData(){
     
-        
         let url = PARK_URL_Header+"getNewslist"
+        
         let param = [
             "channelid":"7"
         ];
@@ -51,7 +66,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 }
                 if(status.status == "success"){
                     
-                    self.createTableView()
+//                    self.createTableView()
                     print(status)
                     self.dataSource = NewsList(status.data!)
                     self.myTableView .reloadData()
@@ -63,11 +78,49 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
     
     }
+    func GetData1(){
+        
+        let url = PARK_URL_Header+"getNewslist"
+        
+        let param = [
+            "channelid":"14"
+        ];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                
+            }else{
+                let status = NewsModel(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    //hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    
+//                    self.createTableView()
+                    print(status)
+                    self.dataSource = NewsList(status.data!)
+                    self.myTableView .reloadData()
+                    print(status.data)
+                }
+            }
+            
+        }
+        
+        
+    }
+
     
     func createTableView() {
         
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-108)
-        myTableView.backgroundColor = UIColor.whiteColor()
+//        myTableView.backgroundColor = UIColor.whiteColor()
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.registerClass(AcademicTableViewCell.self, forCellReuseIdentifier: "cell")
@@ -226,7 +279,11 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func upDateUI(status:NSArray){
         print("更新UI")
         print(status)
-        self.GetData()
+        if num == 2 {
+            self.GetData1()
+        }else{
+            self.GetData()
+        }
         self.myTableView.reloadData()
         let indexPath = NSIndexPath.init(forRow: status[0] as! Int, inSection: 0)
         let cell = self.myTableView.cellForRowAtIndexPath(indexPath)as! AcademicTableViewCell

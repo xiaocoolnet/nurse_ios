@@ -135,22 +135,22 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
     func makeCVMessage(){
         resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
 
-        resumeDetail.showFor(birthday)
-        resumeDetail.showSex(sex)
-        resumeDetail.showName(name)
-        resumeDetail.education(education)
-        resumeDetail.address(address)
-        resumeDetail.experience(experience)
-        resumeDetail.jobName(tit)
-        resumeDetail.comeTime(hiredate)
-        resumeDetail.expectSalary(wantsalary)
-        resumeDetail.targetLocation(wantcity)
-        resumeDetail.targetPosition(wantposition)
-        resumeDetail.selfEvaluation(descrip)
-        resumeDetail.phoneNumber(phone)
-        resumeDetail.email(ema)
-        resumeDetail.currentSalary(currentsalary)
-        resumeDetail.jobState(jobstate)
+//        resumeDetail.showFor(birthday)
+//        resumeDetail.showSex(sex)
+//        resumeDetail.showName(name)
+//        resumeDetail.education(education)
+//        resumeDetail.address(address)
+//        resumeDetail.experience(experience)
+//        resumeDetail.jobName(tit)
+//        resumeDetail.comeTime(hiredate)
+//        resumeDetail.expectSalary(wantsalary)
+//        resumeDetail.targetLocation(wantcity)
+//        resumeDetail.targetPosition(wantposition)
+//        resumeDetail.selfEvaluation(descrip)
+//        resumeDetail.phoneNumber(phone)
+//        resumeDetail.email(ema)
+//        resumeDetail.currentSalary(currentsalary)
+//        resumeDetail.jobState(jobstate)
         self.view.addSubview(resumeDetail)
     }
     
@@ -177,9 +177,14 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.hiredate = model.hiredate
         self.wantcity = model.wantcity
         self.wantsalary = model.wantsalary
-//        superViewController
+        superViewController?.showRightBtn()
         
         self.makeCVMessage()
+    }
+    
+    func rightBarButtonClicked(){
+    
+//        findPersonnel.rightBarButtonClicked()
     }
     
 

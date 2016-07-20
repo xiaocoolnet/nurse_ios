@@ -13,7 +13,10 @@ class NewsSourceCell: UITableViewCell{
     @IBOutlet weak var source: UILabel!
     
     
+    @IBOutlet weak var lick: UIImageView!
+   
     @IBOutlet weak var post_like: UILabel!
+
     @IBOutlet weak var checkNum: UILabel!
     
     @IBOutlet weak var createTime: UILabel!
@@ -21,8 +24,9 @@ class NewsSourceCell: UITableViewCell{
         super.awakeFromNib()
         
         // Initialization code
+      
     }
-
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

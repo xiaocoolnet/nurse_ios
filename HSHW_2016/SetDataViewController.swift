@@ -259,32 +259,39 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 let string = formatter.stringFromDate(date)
                 let range:Range = string.rangeOfString(" ")!
                 let time = string.substringToIndex(range.endIndex)
-//                self.birthBtn.setTitle(time, forState: .Normal)
-                
                 self.twodeArr[indexPath.row] = time
+                let mineHelper = HSMineHelper()
+                mineHelper.changeBirthday(time, handle: { [unowned self] (success, response) in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if success {
+                            QCLoginUserInfo.currentInfo.email = time
+//                            self.navigationController?.popViewControllerAnimated(true)
+                        }
+                    })
+                })
+
                 self.myTableView.reloadData()
-//            self.navigationController?.pushViewController(changeNameVC, animated: true)
             }
         case (1,2):
             changeNameVC.showType = HSEditUserInfo.Address
             changeNameVC.title = "编辑地址"
-            changeNameVC.text1 = twodeArr[indexPath.row]
-            self.navigationController?.pushViewController(changeNameVC, animated: true)
-//            let pick = AdressPickerView.shareInstance
-//            
-//            // 设置是否显示区县等，默认为false不显示
-//            pick.showTown=true
-//            pick.pickArray=array // 设置第一次加载时需要跳转到相对应的地址
-//            //        self.addSubview(pick)
-//            pick.show((UIApplication.sharedApplication().keyWindow)!)
-//            // 选择完成之后回调
-//            pick.selectAdress { (dressArray) in
-//                
-//                self.array=dressArray
-//                print("选择的地区是: \(dressArray)")
-            
-//                self.twodeArr[indexPath.row]("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
-//            }
+            let pick = AdressPickerView.shareInstance
+            pick.showTown=true
+            pick.pickArray=array
+            pick.show((UIApplication.sharedApplication().keyWindow)!)
+            pick.selectAdress { (dressArray) in
+                self.array=dressArray
+                self.twodeArr[indexPath.row] = ("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])")
+                let mineHelper = HSMineHelper()
+                mineHelper.changeAddress(self.twodeArr[indexPath.row], handle: { [unowned self] (success, response) in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if success {
+                            QCLoginUserInfo.currentInfo.email = self.twodeArr[indexPath.row]
+                        }
+                    })
+                })
+                self.myTableView.reloadData()
+            }
         case (2,0):
             changeNameVC.showType = HSEditUserInfo.School
             changeNameVC.title = "编辑学校"
