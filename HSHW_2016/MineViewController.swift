@@ -337,7 +337,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
                 let url = PARK_URL_Header+"GetMySignLog"
                 let param = [
-//                    "userid":"1",
+
                     "userid":QCLoginUserInfo.currentInfo.userid,
                     "day":self.timeStamp
 
