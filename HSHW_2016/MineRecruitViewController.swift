@@ -50,4 +50,18 @@ class MineRecruitViewController: UIViewController {
         pagingMenuController.didMoveToParentViewController(self)
         
     }
+    
+    func rightBarButtonClicked() {
+        oneView.rightBarButtonClicked()
+    }
+    
+    func showRightBtn(){
+        let rightButton = UIButton(type: .Custom)
+        rightButton.frame = CGRectMake(0, 0, 50, 30)
+        rightButton.setTitle("返回", forState: .Normal)
+        rightButton.setTitleColor(COLOR, forState: .Normal)
+        rightButton.addTarget(self, action: #selector(rightBarButtonClicked), forControlEvents: .TouchUpInside)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: rightButton)
+    }
+
 }
