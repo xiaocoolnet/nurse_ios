@@ -91,6 +91,38 @@ class NewsPageHelper: NSObject {
 
     }
     
+    // 获取分类列表 type 1 channelid  2 termid
+    func GGetCateList(type:Int,id:String,handle:ResponseBlock) {
+        let url = PARK_URL_Header+"getChannellist"
+        var param = [String:String]()
+        if type == 1 {
+            param = [
+                "channelid":id
+            ];
+        }else{
+            param = ["termid":id]
+        }
+        
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                
+            }else{
+                let result = GNewsCateModel(JSONDecoder(json!))
+                print("状态是")
+                print(result.status)
+                if(result.status == "error"){
+                    handle(success: false, response: result.errorData)
+                }
+                if(result.status == "success"){
+                    handle(success: true, response:result.data)
+                }
+            }
+            
+        }
+        
+    }
+    
     
     
     

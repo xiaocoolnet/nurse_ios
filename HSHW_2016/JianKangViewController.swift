@@ -11,7 +11,7 @@ import AFNetworking
 import Alamofire
 import MBProgressHUD
 
-class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate {
+class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,cateBtnClickedDelegate {
     
     var myTableView = UITableView()
     let scrollView = UIScrollView()
@@ -176,6 +176,8 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
+        cell.type = 1
+        cell.delegate = self
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         cell.setCellWithNewsInfo(newsInfo)
@@ -190,6 +192,15 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
         next.newsInfo = newsInfo
         self.navigationController?.pushViewController(next, animated: true)
         
+    }
+    
+    func cateBtnClicked(categoryBtn: UIButton) {
+        let cateVC = GNewsCateViewController()
+        cateVC.type = 1
+        cateVC.id = String(categoryBtn.tag)
+        cateVC.name = categoryBtn.currentTitle!
+        
+        self.navigationController!.pushViewController(cateVC, animated: true)
     }
     
     override func didReceiveMemoryWarning() {
