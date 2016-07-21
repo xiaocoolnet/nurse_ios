@@ -55,7 +55,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
+        myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
         self.view.addSubview(myTableView)
         
         myTableView.rowHeight = 100
@@ -112,7 +112,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!GToutiaoTableViewCell
         cell.type = 2
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]

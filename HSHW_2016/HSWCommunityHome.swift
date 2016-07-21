@@ -14,6 +14,10 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     var viewControllers:Array<UIViewController> = []
     @IBOutlet weak var sliderHead: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    var cellType:String = ""
+    
+    var array:Array<ForumTypeModel> = Array<ForumTypeModel>()
     var forumHelper = HSNurseStationHelper()
     
     override func viewDidLoad() {
@@ -22,8 +26,8 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         collectionView.registerNib(UINib(nibName: "HSSQCollectionViewCell",bundle: nil), forCellWithReuseIdentifier: "cell")
         collectionView.pagingEnabled = true
         collectionView.bounces = false
-        forumHelper.getForumList("1",isHot: false) { (success, response) in
-        }
+//        forumHelper.getForumList("1",isHot: false) { (success, response) in
+//        }
         
         let posted = UIButton()
         posted.frame = CGRectMake(WIDTH-70 , HEIGHT-230, 50, 50)
@@ -39,12 +43,12 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
             sliderMenu.frame = sliderHead.frame
             
             forumHelper.getBBSTypeData({ (success, response) in
-                let array:Array<ForumTypeModel> = response as! Array<ForumTypeModel>
+                self.array = response as! Array<ForumTypeModel>
 
                 let tempArray:NSMutableArray = []
                 
-                if !array.isEmpty {
-                    for obj in array {
+                if !self.array.isEmpty {
+                    for obj in self.array {
                         tempArray.addObject(obj.name)
                     }
                     self.sliderMenu.menuNameArray = tempArray
@@ -61,8 +65,12 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     // MARK: ---sliderMenuDelegate----
     func sliderMenuClickIndex(index: NSInteger) {
+//        cellType = array[index].term_id
+//        collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
         
-        collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
+        let homeVC = HSWCommunityHome()
+        self.navigationController?.pushViewController(homeVC, animated: true)
+        
     }
     
     func postedTheView() {
@@ -89,6 +97,7 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! HSSQCollectionViewCell
+        cell.typeid = cellType
         cell.backgroundColor = .whiteColor()
         return cell
     }

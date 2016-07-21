@@ -64,6 +64,9 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         
         // 标题等头部内容
         postTitle.text = postInfo?.title
+        avatar.layer.cornerRadius = avatar.frame.size.width/2.0
+        avatar.layer.masksToBounds = true
+        avatar.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(postInfo?.photo)!), forState: .Normal)
         avatarName.text = postInfo?.name
         postion.text = postInfo?.typename
         sendTime.text = postInfo?.write_time
@@ -75,7 +78,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         if section == 0 {
             return (postInfo?.pic.count)!
         }else{
-            return 3
+            return (postInfo?.comment.count)!
         }
     }
     
@@ -110,7 +113,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
                 return height
             }else{
                 // TODO:仅作测试用，后期改为0
-                return 107
+                return 0
             }
         }
     }
@@ -121,7 +124,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         if tableView.tag == 311 {
             if section == 1 {
         // TODO:有评论内容后postInfo?.comment.count > 0 统统改为postInfo?.comment.count == 0
-                if postInfo?.comment.count > 0 {
+                if postInfo?.comment.count == 0 {
                     
                     let noReply:UILabel = UILabel.init(frame: CGRectMake(0, 0, WIDTH, 200))
                     noReply.textAlignment = NSTextAlignment.Center
@@ -138,7 +141,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 1 && postInfo?.comment.count > 0 {
+        if section == 1 && postInfo?.comment.count == 0 {
             return 200
         }else{
             return 0.0000000000001
@@ -338,6 +341,9 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         if textField.text != "" {
             helper.setComment((postInfo?.mid)!, content: (postInfo?.content)!, type: "2", photo: (postInfo?.photo)!, handle: { (success, response) in
                 print("添加评论",success)
+                if success {
+                    textField.text = nil
+                }
             })
         }
         textField.resignFirstResponder()

@@ -45,7 +45,7 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
+        myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
         self.view.addSubview(myTableView)
         
         let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*190/375))
@@ -175,7 +175,7 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!GToutiaoTableViewCell
         cell.type = 1
         cell.delegate = self
         cell.selectionStyle = .None
