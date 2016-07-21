@@ -13,7 +13,7 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
     @IBOutlet weak var bottomTableView: UITableView!
     @IBOutlet weak var hotTableView:UITableView!
     var helper = HSNurseStationHelper()
-    var typeid = "1"
+//    var typeid = "1"
     var dataSource = Array<PostModel>()
     var hotData = Array<PostModel>()
     var cellType:Int?
@@ -27,18 +27,29 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
         hotTableView.tag = 11
         hotTableView.scrollEnabled = false
         hotTableView.tableFooterView = UIView()
-        helper.getForumList(typeid,isHot:  false) {[unowned self] (success, response) in
-            self.dataSource = response as? Array<PostModel> ?? []
-            dispatch_async(dispatch_get_main_queue(), { 
-                self.bottomTableView.reloadData()
-            })
-        }
-        helper.getForumList(typeid, isHot: true) { (success, response) in
-            self.hotData = response as? Array<PostModel> ?? []
-         
-            dispatch_async(dispatch_get_main_queue(), { 
-                self.hotTableView.reloadData()
-            })
+        
+        print(hotTableView.frame)
+        hotTableView.translatesAutoresizingMaskIntoConstraints = true
+        print(hotTableView.frame)
+        
+
+    }
+    
+    var typeid:String = ""{
+        didSet {
+            helper.getForumList(typeid,isHot:  false) {[unowned self] (success, response) in
+                self.dataSource = response as? Array<PostModel> ?? []
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.bottomTableView.reloadData()
+                })
+            }
+            helper.getForumList(typeid, isHot: true) { (success, response) in
+                self.hotData = response as? Array<PostModel> ?? []
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.hotTableView.reloadData()
+                })
+            }
         }
     }
     
@@ -51,6 +62,7 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if tableView.tag == 11 {
+            
             return 60
         }
         return 140
@@ -61,6 +73,9 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
             let hotcell = tableView.dequeueReusableCellWithIdentifier("hotcell") as! HSHotPostCell
             hotcell.showforForumModel(hotData[indexPath.row])
             hotcell.selectionStyle = .None
+            
+            hotTableView.frame = CGRectMake(hotTableView.frame.origin.x, hotTableView.frame.origin.y, hotTableView.frame.size.width, hotcell.frame.size.height*CGFloat(indexPath.row+1))
+            
             return hotcell
         }
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSComTableCell
@@ -84,8 +99,7 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
         }else {
             //
             let model:PostModel = dataSource[indexPath.row]
-            print(model.mid)
-            helper.showPostInfo("1") { (success, response) in
+            helper.showPostInfo(model.mid) { (success, response) in
                 let postM:PostModel = (response as? PostModel ?? nil)!
                 vc.postDetailWithModel_1(postM)
                 print(response)

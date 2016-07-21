@@ -41,6 +41,7 @@
 		0DBF54721D40646500B4B5FB /* GNewsCateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54711D40646500B4B5FB /* GNewsCateViewController.swift */; };
 		0DBF54741D406D1900B4B5FB /* GNewsCateDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54731D406D1900B4B5FB /* GNewsCateDetailViewController.swift */; };
 		0DBF54761D406EF500B4B5FB /* GCateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54751D406EF500B4B5FB /* GCateTableViewCell.swift */; };
+		0DBF54781D40B5CC00B4B5FB /* GToutiaoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54771D40B5CC00B4B5FB /* GToutiaoTableViewCell.swift */; };
 		0DE829D71D3B21950047FB23 /* GOnlineExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE829D61D3B21950047FB23 /* GOnlineExamViewController.swift */; };
 		0DE829D91D3B25250047FB23 /* GMyExaminationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE829D81D3B25250047FB23 /* GMyExaminationViewController.swift */; };
 		0DE829DB1D3B52050047FB23 /* GMyExamListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE829DA1D3B52050047FB23 /* GMyExamListViewController.swift */; };
@@ -220,6 +221,7 @@
 		0DBF54711D40646500B4B5FB /* GNewsCateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GNewsCateViewController.swift; sourceTree = "<group>"; };
 		0DBF54731D406D1900B4B5FB /* GNewsCateDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GNewsCateDetailViewController.swift; sourceTree = "<group>"; };
 		0DBF54751D406EF500B4B5FB /* GCateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCateTableViewCell.swift; sourceTree = "<group>"; };
+		0DBF54771D40B5CC00B4B5FB /* GToutiaoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GToutiaoTableViewCell.swift; sourceTree = "<group>"; };
 		0DE829D61D3B21950047FB23 /* GOnlineExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOnlineExamViewController.swift; sourceTree = "<group>"; };
 		0DE829D81D3B25250047FB23 /* GMyExaminationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyExaminationViewController.swift; sourceTree = "<group>"; };
 		0DE829DA1D3B52050047FB23 /* GMyExamListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyExamListViewController.swift; sourceTree = "<group>"; };
@@ -447,7 +449,6 @@
 			children = (
 				F6342C651D38DC3A00800D8E /* Cell */,
 				181E0D2C1CEBF8A900E34A7F /* MineCollectionViewController.swift */,
-				F6342C631D38DB4000800D8E /* HSCollectionListController.swift */,
 			);
 			name = Collection;
 			sourceTree = "<group>";
@@ -595,6 +596,7 @@
 			isa = PBXGroup;
 			children = (
 				189849B31CE812CB007B37B4 /* TouTiaoTableViewCell.swift */,
+				0DBF54771D40B5CC00B4B5FB /* GToutiaoTableViewCell.swift */,
 				189849B51CE815D3007B37B4 /* AcademicTableViewCell.swift */,
 				F6D02CD91D07A46800353557 /* NewsSourceCell.swift */,
 				F6D02CDA1D07A46800353557 /* NewsSourceCell.xib */,
@@ -835,6 +837,7 @@
 				F632EF111D192F530038AF9D /* HSWorkPlaceController.xib */,
 				F63B3A6E1D2F953600C5B2CF /* HSStateEditResumeController.swift */,
 				0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */,
+				F6342C631D38DB4000800D8E /* HSCollectionListController.swift */,
 			);
 			name = Recruitment;
 			sourceTree = "<group>";
@@ -1219,6 +1222,7 @@
 				181E0D2D1CEBF8A900E34A7F /* MineCollectionViewController.swift in Sources */,
 				0DB7E1931D38E468001D7B66 /* HSUserPageViewController.swift in Sources */,
 				F6342C6F1D391CF100800D8E /* HSChartCell.swift in Sources */,
+				0DBF54781D40B5CC00B4B5FB /* GToutiaoTableViewCell.swift in Sources */,
 				1854088B1CE7133600DFBA7C /* AbroadViewController.swift in Sources */,
 				18ADDDED1CE9609000557FFE /* MineTableViewCell.swift in Sources */,
 				183B86701CE5CF9500709235 /* Httpresult.swift in Sources */,

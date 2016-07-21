@@ -15,6 +15,9 @@ protocol PostVacanciesDelegate:NSObjectProtocol{
 class PostVacancies: UIView , ChangeWordDelegate,UITextViewDelegate{
     
     weak var delegate:PostVacanciesDelegate?
+    
+    
+    @IBOutlet weak var myScrollview: UIScrollView!
     @IBOutlet weak var bordView:UIView!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var postNameField: UITextField!
@@ -33,6 +36,24 @@ class PostVacancies: UIView , ChangeWordDelegate,UITextViewDelegate{
     let helper = HSNurseStationHelper()
     var selfNav:UINavigationController?
     
+    @IBOutlet weak var placeLab_1: UILabel!
+    
+    @IBOutlet weak var placeLab_2: UILabel!
+    
+    @IBOutlet weak var placeLab_3: UILabel!
+    
+    @IBOutlet weak var positionLab: UILabel!
+    
+    @IBOutlet weak var conditionLab: UILabel!
+    
+    @IBOutlet weak var treatmentLab: UILabel!
+    
+    @IBOutlet weak var personLab: UILabel!
+    
+    @IBOutlet weak var moneyLab: UILabel!
+    
+    @IBOutlet weak var moneyImg: UIImageView!
+    
     var array = NSArray()
    
     @IBAction func sendBtnClicked(sender: AnyObject) {
@@ -50,7 +71,7 @@ class PostVacancies: UIView , ChangeWordDelegate,UITextViewDelegate{
             }
         }
         
-        print(firmNameField.text!,resumeFeild.text!,phoneField.text!,mailboxField.text!,postNameField.text!,"1",conditionBtn.currentTitle!,treatmentBtn.currentTitle!,workplaceBtn.currentTitle!,personBtn.currentTitle!,moneyBtn.currentTitle!,requestField.text)
+//        print(firmNameField.text!,resumeFeild.text!,phoneField.text!,mailboxField.text!,postNameField.text!,"1",conditionBtn.currentTitle!,treatmentBtn.currentTitle!,workplaceBtn.currentTitle!,personBtn.currentTitle!,moneyBtn.currentTitle!,requestField.text)
         
         if firmNameField.text != "" && resumeFeild.text != "" && phoneField.text != "" && postNameField.text != "" && conditionBtn.currentTitle != "" && treatmentBtn.currentTitle != "" && workplaceBtn.currentTitle != "" && personBtn.currentTitle != "" && moneyBtn.currentTitle != "" {
 
@@ -99,6 +120,13 @@ class PostVacancies: UIView , ChangeWordDelegate,UITextViewDelegate{
         array = ["北京市","北京市","朝阳区"]
 
         requestField.delegate = self
+        
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        
+
     }
     
     @IBAction func workplaceBtnClick(sender: AnyObject) {
@@ -118,7 +146,16 @@ class PostVacancies: UIView , ChangeWordDelegate,UITextViewDelegate{
             
             self.array=dressArray
             print("选择的地区是: \(dressArray)")
-            self.workplaceBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
+//            self.workplaceBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
+
+            self.placeLab_1.text =  (dressArray[0] as! String)
+            self.placeLab_2.text =  (dressArray[1] as! String)
+            self.placeLab_3.text =  (dressArray[2] as! String)
+            
+            self.placeLab_1.enabled = true
+            self.placeLab_2.enabled = true
+            self.placeLab_3.enabled = true
+            
         }
         
     }
@@ -127,15 +164,22 @@ class PostVacancies: UIView , ChangeWordDelegate,UITextViewDelegate{
     func  changeWord(controller:HSStateEditResumeController,string:String){
         switch controller.portType {
             case PortType.position:
-                positionBtn.setTitle(string, forState: UIControlState.Normal)
+                positionLab.text = string
+            positionLab.enabled = true
             case PortType.condition:
-                conditionBtn.setTitle(string, forState: UIControlState.Normal)
+                conditionLab.text = string
+            conditionLab.enabled = true
             case PortType.welfare:
-                treatmentBtn.setTitle(string, forState: UIControlState.Normal)
+                treatmentLab.text = string
+            treatmentLab.enabled = true
             case PortType.number:
-                personBtn.setTitle(string, forState: UIControlState.Normal)
+                personLab.text = string
+            personLab.enabled = true
             case PortType.money:
-                moneyBtn.setTitle(string, forState: UIControlState.Normal)
+                moneyLab.text = string
+                moneyLab.enabled = true
+            moneyLab.sizeToFit()
+            moneyImg.frame = CGRectMake(CGRectGetMaxX(moneyLab.frame), moneyImg.frame.origin.y, 12, 12)
             default:
                 print("defaut")
         }
@@ -175,6 +219,30 @@ class PostVacancies: UIView , ChangeWordDelegate,UITextViewDelegate{
         vc.portType = PortType.money
         vc.delegate = self
         selfNav?.pushViewController(vc, animated: true)
+    }
+    
+    
+    func keyboardWillAppear(notification: NSNotification) {
+        
+        // 获取键盘信息
+        let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
+        
+        let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
+        
+        UIView.animateWithDuration(0.3) {
+            self.myScrollview.contentOffset = CGPoint.init(x: 0, y: self.myScrollview.contentSize.height-self.myScrollview.frame.size.height+keyboardheight)
+        }
+        
+        print("键盘弹起")
+        print(keyboardheight)
+        
+    }
+    
+    func keyboardWillDisappear(notification:NSNotification){
+        UIView.animateWithDuration(0.3) {
+             self.myScrollview.contentOffset = CGPoint.init(x: 0, y: self.myScrollview.contentSize.height-self.myScrollview.frame.size.height)
+        }
+        print("键盘落下")
     }
     
     //MARK:UITextViewDelegate

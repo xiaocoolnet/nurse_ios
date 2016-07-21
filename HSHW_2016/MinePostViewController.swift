@@ -81,7 +81,7 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
 
-        helper.showPostInfo("1") { (success, response) in
+        helper.showPostInfo(self.dataSource[indexPath.row].mid) { (success, response) in
             let data = (response as? PostModel ?? nil)!
             let vc = HSPostDetailViewController(nibName: "HSPostDetailViewController",bundle: nil)
             vc.postInfo = data
