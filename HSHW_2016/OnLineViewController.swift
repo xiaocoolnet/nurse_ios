@@ -653,7 +653,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             over = true
         }
     }
-//     MARK:   底部按钮  、、
+//     MARK:   底部按钮  
     func bottomBtnClick(btn:UIButton) {
         print(btn.tag)
         if btn.tag == 1 {
