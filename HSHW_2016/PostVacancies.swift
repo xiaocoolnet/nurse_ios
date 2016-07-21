@@ -86,12 +86,21 @@ class PostVacancies: UIView , ChangeWordDelegate,UITextViewDelegate{
         phoneField.text = nil
         mailboxField.text = nil
         postNameField.text = nil
-        positionBtn.setTitle("请选择工作地点", forState: .Normal)
-        conditionBtn.setTitle("请选择招聘职位", forState: .Normal)
-        treatmentBtn.setTitle("请选择招聘条件", forState: .Normal)
-        workplaceBtn.setTitle("请选择福利待遇", forState: .Normal)
-        personBtn.setTitle("请选择招聘人数", forState: .Normal)
-        moneyBtn.setTitle("请选择薪资待遇", forState: .Normal)
+//        positionBtn.setTitle("请选择工作地点", forState: .Normal)
+//        conditionBtn.setTitle("请选择招聘职位", forState: .Normal)
+//        treatmentBtn.setTitle("请选择招聘条件", forState: .Normal)
+//        workplaceBtn.setTitle("请选择福利待遇", forState: .Normal)
+//        personBtn.setTitle("请选择招聘人数", forState: .Normal)
+//        moneyBtn.setTitle("请选择薪资待遇", forState: .Normal)
+        
+        positionLab.text = "主管护士"
+        conditionLab.text = "研究生"
+        treatmentLab.text = "五险一金"
+        placeLab_1.text = "北京市"
+        placeLab_2.text = "北京市"
+        placeLab_3.text = "朝阳区"
+        personLab.text = "10人以上"
+        moneyLab.text = "面议"
         requestField.text = nil
         requestLabel.text = "职位要求"
     }
