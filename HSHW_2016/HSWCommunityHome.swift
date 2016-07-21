@@ -65,12 +65,8 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     // MARK: ---sliderMenuDelegate----
     func sliderMenuClickIndex(index: NSInteger) {
-//        cellType = array[index].term_id
-//        collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
-        
-        let homeVC = HSWCommunityHome()
-        self.navigationController?.pushViewController(homeVC, animated: true)
-        
+        cellType = array[index].term_id
+        collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
     }
     
     func postedTheView() {
