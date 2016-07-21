@@ -65,7 +65,6 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     // MARK: ---sliderMenuDelegate----
     func sliderMenuClickIndex(index: NSInteger) {
-        cellType = array[index].term_id
         collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
     }
     
@@ -93,7 +92,8 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! HSSQCollectionViewCell
-        cell.typeid = cellType
+        cell.typeid = array[indexPath.row].term_id
+        print(cell.typeid)
         cell.backgroundColor = .whiteColor()
         return cell
     }

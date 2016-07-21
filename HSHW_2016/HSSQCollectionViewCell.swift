@@ -13,7 +13,7 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
     @IBOutlet weak var bottomTableView: UITableView!
     @IBOutlet weak var hotTableView:UITableView!
     var helper = HSNurseStationHelper()
-    var typeid = "1"
+//    var typeid = "1"
     var dataSource = Array<PostModel>()
     var hotData = Array<PostModel>()
     var cellType:Int?
@@ -32,18 +32,24 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
         hotTableView.translatesAutoresizingMaskIntoConstraints = true
         print(hotTableView.frame)
         
-        helper.getForumList(typeid,isHot:  false) {[unowned self] (success, response) in
-            self.dataSource = response as? Array<PostModel> ?? []
-            dispatch_async(dispatch_get_main_queue(), { 
-                self.bottomTableView.reloadData()
-            })
-        }
-        helper.getForumList(typeid, isHot: true) { (success, response) in
-            self.hotData = response as? Array<PostModel> ?? []
-         
-            dispatch_async(dispatch_get_main_queue(), { 
-                self.hotTableView.reloadData()
-            })
+
+    }
+    
+    var typeid:String = ""{
+        didSet {
+            helper.getForumList(typeid,isHot:  false) {[unowned self] (success, response) in
+                self.dataSource = response as? Array<PostModel> ?? []
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.bottomTableView.reloadData()
+                })
+            }
+            helper.getForumList(typeid, isHot: true) { (success, response) in
+                self.hotData = response as? Array<PostModel> ?? []
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.hotTableView.reloadData()
+                })
+            }
         }
     }
     
