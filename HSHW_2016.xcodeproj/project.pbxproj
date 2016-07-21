@@ -13,6 +13,7 @@
 		0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FED4D1D3373FC00A4488E /* DataPickerView.swift */; };
 		0B6FED501D3382B800A4488E /* EducationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FED4F1D3382B800A4488E /* EducationModel.swift */; };
 		0B6FED521D33999700A4488E /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B6FED511D33999700A4488E /* area.plist */; };
+		0B7392871D40C5AC00F785AF /* OnLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7392861D40C5AC00F785AF /* OnLineViewController.swift */; };
 		0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */; };
 		0BAB74BF1D34B95200D2E365 /* HSEditResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */; };
 		0BAF21BC1D1134790065146B /* LoginUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAF21BB1D1134790065146B /* LoginUserInfoModel.swift */; };
@@ -32,7 +33,6 @@
 		0BDAB6351D2A588D0081E883 /* InternationNurseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */; };
 		0BDAB6371D2A58E80081E883 /* NurseStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6361D2A58E80081E883 /* NurseStatusViewController.swift */; };
 		0BEA9CAA1D1390120012FC11 /* ForgetPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEA9CA91D1390120012FC11 /* ForgetPasswordController.swift */; };
-		0BF2482D1D3F1D98002F2E4D /* FiftyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BF2482C1D3F1D98002F2E4D /* FiftyViewController.swift */; };
 		0D3780141D372390000D31E2 /* HSPostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */; };
 		0D3780151D372390000D31E2 /* HSPostDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */; };
 		0DB7E1901D38B7EC001D7B66 /* HSMineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */; };
@@ -192,6 +192,7 @@
 		0B6FED4D1D3373FC00A4488E /* DataPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPickerView.swift; sourceTree = "<group>"; };
 		0B6FED4F1D3382B800A4488E /* EducationModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EducationModel.swift; sourceTree = "<group>"; };
 		0B6FED511D33999700A4488E /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
+		0B7392861D40C5AC00F785AF /* OnLineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnLineViewController.swift; sourceTree = "<group>"; };
 		0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeName.swift; sourceTree = "<group>"; };
 		0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSEditResumeViewController.swift; sourceTree = "<group>"; };
 		0BAF21BB1D1134790065146B /* LoginUserInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginUserInfoModel.swift; sourceTree = "<group>"; };
@@ -211,7 +212,6 @@
 		0BDAB6341D2A588D0081E883 /* InternationNurseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternationNurseViewController.swift; sourceTree = "<group>"; };
 		0BDAB6361D2A58E80081E883 /* NurseStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NurseStatusViewController.swift; sourceTree = "<group>"; };
 		0BEA9CA91D1390120012FC11 /* ForgetPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPasswordController.swift; sourceTree = "<group>"; };
-		0BF2482C1D3F1D98002F2E4D /* FiftyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiftyViewController.swift; sourceTree = "<group>"; };
 		0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSPostDetailViewController.swift; sourceTree = "<group>"; };
 		0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSPostDetailViewController.xib; sourceTree = "<group>"; };
 		0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineModel.swift; sourceTree = "<group>"; };
@@ -668,7 +668,7 @@
 				0BB378541D2B4BE600E4A84D /* OnlineTextViewController.swift */,
 				18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */,
 				0DE829D61D3B21950047FB23 /* GOnlineExamViewController.swift */,
-				0BF2482C1D3F1D98002F2E4D /* FiftyViewController.swift */,
+				0B7392861D40C5AC00F785AF /* OnLineViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1168,7 +1168,6 @@
 				183B84F81CE5BFDC00709235 /* ViewController.swift in Sources */,
 				F631DFAC1D069C6200E52FDB /* SmetaModel.swift in Sources */,
 				F6338B951D29105B00EE5CA2 /* HSStateCommentCell.swift in Sources */,
-				0BF2482D1D3F1D98002F2E4D /* FiftyViewController.swift in Sources */,
 				0DE829DD1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift in Sources */,
 				181E0D291CEBF86900E34A7F /* MinePostViewController.swift in Sources */,
 				F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */,
@@ -1202,6 +1201,7 @@
 				F6342C681D38DD2800800D8E /* HSArticleCollectCell.swift in Sources */,
 				0BDAB6351D2A588D0081E883 /* InternationNurseViewController.swift in Sources */,
 				18A6BAC51CE5F9A700B6B1FD /* MineViewController.swift in Sources */,
+				0B7392871D40C5AC00F785AF /* OnLineViewController.swift in Sources */,
 				0BB378591D2B595100E4A84D /* OnlineTextModel.swift in Sources */,
 				F63BE1EF1D0546F9008292AC /* NewsPageHelper.swift in Sources */,
 				0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */,

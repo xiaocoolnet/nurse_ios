@@ -168,7 +168,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
             info = dataSource.objectlist[indexPath.section].childlist[indexPath.row]
         }
 
-        let nextVC = GOnlineExamViewController()
+        let nextVC = OnLineViewController()
         nextVC.questionCount = info.count
         self.navigationController?.pushViewController(nextVC, animated: true)
     }
