@@ -12,6 +12,9 @@ class HSCollectionListController: UITableViewController {
     var collectionType = 0
     var helper = HSMineHelper()
     var dataSource = NSMutableArray()
+    
+    private var collectListArray:Array<CollectList> = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if collectionType == 1 {
@@ -28,12 +31,11 @@ class HSCollectionListController: UITableViewController {
             tableView.registerNib(UINib(nibName:"HSArticleCollectCell",bundle: nil), forCellReuseIdentifier: "cell")
         } else if collectionType == 2 {
             
-            helper.getCollectionInfoWithType("2", handle: { (success, response) in
-                if success {
-                    
-                }
-            })
-            tableView.registerClass(EveryDayTableViewCell.self, forCellReuseIdentifier: "cell")
+            helper.GetCollectList(QCLoginUserInfo.currentInfo.userid, type: "2") { (success, response) in
+                self.collectListArray = response as! Array<CollectList>
+                self.tableView.reloadData()
+            }
+            tableView.registerClass(MineExamCollectTableViewCell.self, forCellReuseIdentifier: "cell")
         } else if collectionType == 3 {
             
             helper.getCollectionInfoWithType("4", handle: { (success, response) in
@@ -60,19 +62,32 @@ class HSCollectionListController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource.count
+        if collectionType == 2 {
+            return collectListArray.count
+        }else{
+            
+            return dataSource.count
+        }
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell")
         if collectionType == 1 {
             (cell as! HSArticleCollectCell).showforModel(dataSource[indexPath.row] as! NewsInfo)
+            return cell!
+
         }
         else if collectionType == 2 {
-            
+            let cell1 = tableView.dequeueReusableCellWithIdentifier("cell") as! MineExamCollectTableViewCell
+            cell1.selectionStyle = .None
+            cell1.fansModel = collectListArray[indexPath.row]
+            return cell1
+
         }
         else if collectionType == 3 {
+
             (cell as! HSComTableCell).showForForumModel(dataSource[indexPath.row] as! PostModel)
+            return cell!
         }
         return cell!
     }
@@ -94,7 +109,7 @@ class HSCollectionListController: UITableViewController {
         if collectionType == 1 {
             return 60
         }else if collectionType == 2{
-            return 50
+            return 70
         }else if collectionType == 3 {
             return 140
         }

@@ -347,7 +347,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     if(error != nil){
                         
                     }else{
-                        let status = FifModel(JSONDecoder(json!))
+                        let status = Http(JSONDecoder(json!))
                         
                         print("状态是")
                         print(status.status)

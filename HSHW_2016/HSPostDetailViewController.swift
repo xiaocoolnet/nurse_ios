@@ -26,6 +26,9 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     var postInfo:PostModel?
     var keyboardShowState = false
     
+    var isCollect:Bool = false
+    var isLike:Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "帖子详情"
@@ -156,7 +159,13 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             for i in 0...2 {
                 let btn:UIButton = UIButton.init(frame: CGRectMake(margin*CGFloat(i)+space, 10, 75, 30))
                 btn.tag = 3110+i
-                btn.addTarget(self, action: #selector(collectionBtnClicked(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                if btn.tag == 3110 {
+                    btn.addTarget(self, action: #selector(collectionBtnClicked(_:)), forControlEvents: .TouchUpInside)
+                }else if btn.tag == 3111 {
+                    btn.addTarget(self, action: #selector(shareBtnClick(_:)), forControlEvents: .TouchUpInside)
+                }else{
+                    btn.addTarget(self, action: #selector(likeBtnClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+                }
                 
                 let imageView:UIImageView = UIImageView.init(frame: CGRectMake(0, 0, 30, 30))
                 imageView.image = UIImage.init(named: imagesArray[i])
@@ -219,28 +228,82 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         }
     }
     
-    func collectionBtnClicked(btn:UIButton) {
-        print("click the ",btn.tag," button")
-        helper.collectionForum(postInfo!.mid, title: postInfo!.title, description: postInfo!.content) { (success, response) in
+    func collectionBtnClicked(btn:UIButton){
+        let user = NSUserDefaults.standardUserDefaults()
+        let uid = user.stringForKey("userid")
+        let userID = user.stringForKey(postInfo!.mid)
+        if userID == "false"||userID==nil{
+            helper.collectionForum(postInfo!.mid, title: postInfo!.title, description: postInfo!.content) { (success, response) in
             if success {
-                dispatch_async(dispatch_get_main_queue(), { 
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "收藏成功"
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                })
+                dispatch_async(dispatch_get_main_queue(), {
+                   let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                   hud.mode = MBProgressHUDMode.Text;
+                   hud.labelText = "收藏成功"
+                   hud.margin = 10.0
+                   hud.removeFromSuperViewOnHide = true
+                   hud.hide(true, afterDelay: 1)
+                   user.setObject("true", forKey: "isCollect")
+                   user.setObject("true", forKey: (self.postInfo!.mid))
+                   self.isCollect=true
+                    })
+                }
             }
+
+        }else{
+            
+            let url = PARK_URL_Header+"cancelfavorite"
+            let param = [
+                "refid":uid,
+                "type":"4",
+                "userid":self.postInfo!.mid
+            ];
+            Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+                print(request)
+                if(error != nil){
+                    
+                }else{
+                    let status = Http(JSONDecoder(json!))
+                    print("状态是")
+                    print(status.status)
+                    if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = status.errorData
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+//                        user.setObject("false", forKey: (self.postInfo!.mid))
+                    }
+                    if(status.status == "success"){
+                        
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "取消收藏成功"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                        //self.myTableView .reloadData()
+                        print(status.data)
+                        self.isCollect=false
+                        user.setObject("false", forKey: "isCollect")
+                        user.removeObjectForKey((self.postInfo!.mid))
+                    }
+                }
+                
+            }
+            
         }
+
     }
     
     func shareBtnClick(shareBtn: UIButton) {
+        print("点赞")
+        self.zanAddNum()
         
     }
     
     func likeBtnClick(likeBtn: UIButton) {
-        
+        print("评论")
     }
     
     func keyboardWillAppear(notification: NSNotification) {
@@ -287,4 +350,96 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             keyboardShowState = false
         }
     }
-}
+    func zanAddNum() {
+        let user = NSUserDefaults.standardUserDefaults()
+        let uid = user.stringForKey("userid")
+        let userID = user.stringForKey(self.postInfo!.mid)
+            print(userID)
+            if userID == "false"||userID==nil{
+                let url = PARK_URL_Header+"SetLike"
+                let param = [
+                    "id":uid,
+                    "type":"2",
+                    "userid":self.postInfo!.mid,
+                    ];
+                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+                    print(request)
+                    if(error != nil){
+                        
+                    }else{
+                        let status = Http(JSONDecoder(json!))
+                        print("状态是")
+                        print(status.status)
+                        if(status.status == "error"){
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text
+                            hud.labelText = status.errorData
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                        }
+                        if(status.status == "success"){
+                            
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "点赞成功"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                            user.setObject("true", forKey: "isLike")
+                            user.setObject("true", forKey: self.postInfo!.mid)
+                            print(status.data)
+                            self.isLike=true
+                        }
+                    }
+                }
+            }else{
+                
+                let url = PARK_URL_Header+"ResetLike"
+                let param = [
+                    "id":uid,
+                    "type":"2",
+                    "userid":self.postInfo!.mid
+                ];
+                Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+                    print(request)
+                    if(error != nil){
+                        
+                    }else{
+                        let status = Http(JSONDecoder(json!))
+                        print("状态是")
+                        print(status.status)
+                        if(status.status == "error"){
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = status.errorData
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+//                            user.setObject("false", forKey: self.postInfo!.mid)
+                        }
+                        if(status.status == "success"){
+                            
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "取消点赞成功"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                            //self.myTableView .reloadData()
+                            print(status.data)
+                            self.isLike=false
+                            user.setObject("false", forKey: "isLike")
+//                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"0"], waitUntilDone:true)
+                            user.removeObjectForKey(self.postInfo!.mid)
+                        }
+                    }
+                    
+                }
+                
+            }
+        
+        }
+    }
+    
+

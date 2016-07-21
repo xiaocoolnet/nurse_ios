@@ -19,6 +19,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     var likeNum  = 0
     var webHeight:CGFloat = 100
     var isLike:Bool = false
+    var isCollect:Bool = false
     var dataSource = NewsList()
     var helper = NewsPageHelper()
     let zan = UIButton(frame: CGRectMake(WIDTH*148/375, WIDTH*80/375, WIDTH*80/375, WIDTH*80/375))
@@ -94,9 +95,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
-                    user.setObject("true", forKey: "isLike")
+                    user.setObject("true", forKey: "isCollect")
                     user.setObject("true", forKey: (self.newsInfo?.object_id)!)
-                    self.isLike=true
+                    self.isCollect=true
                 })
             }
           }
@@ -135,8 +136,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                         hud.hide(true, afterDelay: 1)
                         //self.myTableView .reloadData()
                         print(status.data)
-                        self.isLike=false
-                        user.setObject("false", forKey: "isLike")
+                        self.isCollect=false
+                        user.setObject("false", forKey: "isCollect")
                     user.removeObjectForKey((self.newsInfo?.object_id)!)
                     }
                 }
