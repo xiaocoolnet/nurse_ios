@@ -39,6 +39,9 @@
 		0DB7E1901D38B7EC001D7B66 /* HSMineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */; };
 		0DB7E1931D38E468001D7B66 /* HSUserPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB7E1911D38E468001D7B66 /* HSUserPageViewController.swift */; };
 		0DB7E1941D38E468001D7B66 /* HSUserPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DB7E1921D38E468001D7B66 /* HSUserPageViewController.xib */; };
+		0DBF54721D40646500B4B5FB /* GNewsCateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54711D40646500B4B5FB /* GNewsCateViewController.swift */; };
+		0DBF54741D406D1900B4B5FB /* GNewsCateDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54731D406D1900B4B5FB /* GNewsCateDetailViewController.swift */; };
+		0DBF54761D406EF500B4B5FB /* GCateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54751D406EF500B4B5FB /* GCateTableViewCell.swift */; };
 		0DE829D71D3B21950047FB23 /* GOnlineExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE829D61D3B21950047FB23 /* GOnlineExamViewController.swift */; };
 		0DE829D91D3B25250047FB23 /* GMyExaminationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE829D81D3B25250047FB23 /* GMyExaminationViewController.swift */; };
 		0DE829DB1D3B52050047FB23 /* GMyExamListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE829DA1D3B52050047FB23 /* GMyExamListViewController.swift */; };
@@ -216,6 +219,9 @@
 		0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineModel.swift; sourceTree = "<group>"; };
 		0DB7E1911D38E468001D7B66 /* HSUserPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSUserPageViewController.swift; sourceTree = "<group>"; };
 		0DB7E1921D38E468001D7B66 /* HSUserPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSUserPageViewController.xib; sourceTree = "<group>"; };
+		0DBF54711D40646500B4B5FB /* GNewsCateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GNewsCateViewController.swift; sourceTree = "<group>"; };
+		0DBF54731D406D1900B4B5FB /* GNewsCateDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GNewsCateDetailViewController.swift; sourceTree = "<group>"; };
+		0DBF54751D406EF500B4B5FB /* GCateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCateTableViewCell.swift; sourceTree = "<group>"; };
 		0DE829D61D3B21950047FB23 /* GOnlineExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOnlineExamViewController.swift; sourceTree = "<group>"; };
 		0DE829D81D3B25250047FB23 /* GMyExaminationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyExaminationViewController.swift; sourceTree = "<group>"; };
 		0DE829DA1D3B52050047FB23 /* GMyExamListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyExamListViewController.swift; sourceTree = "<group>"; };
@@ -598,6 +604,7 @@
 				F6D02CDE1D07BB5300353557 /* contentCell.xib */,
 				F605F0BE1D22564300769299 /* HSFindPersonDetailView.xib */,
 				F605F0C01D2266B100769299 /* HSFindPersonDetailView.swift */,
+				0DBF54751D406EF500B4B5FB /* GCateTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -622,6 +629,8 @@
 				185408821CE7052700DFBA7C /* NewsContantViewController.swift */,
 				F61228081D057B1E009E3D4D /* HuLiViewController.swift */,
 				F612280A1D0581D7009E3D4D /* JianKangViewController.swift */,
+				0DBF54711D40646500B4B5FB /* GNewsCateViewController.swift */,
+				0DBF54731D406D1900B4B5FB /* GNewsCateDetailViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1116,12 +1125,14 @@
 				F632EF0E1D18E8890038AF9D /* HSSQCollectionViewCell.swift in Sources */,
 				0BC3878E1D339C2C001460B8 /* AdressPickerView.swift in Sources */,
 				F64C9AC41D3B9C150041E360 /* MineRecDetailsViewController.swift in Sources */,
+				0DBF54721D40646500B4B5FB /* GNewsCateViewController.swift in Sources */,
 				183B86741CE5CFA000709235 /* CornerRadiusViewController.swift in Sources */,
 				F6E86AF61D34DF7E001536B6 /* HSForumDetailCell.swift in Sources */,
 				F6D02CDF1D07BB5300353557 /* contentCell.swift in Sources */,
 				F64C9AC21D3B9C0B0041E360 /* MineRecViewController.swift in Sources */,
 				0BDAB6371D2A58E80081E883 /* NurseStatusViewController.swift in Sources */,
 				0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */,
+				0DBF54741D406D1900B4B5FB /* GNewsCateDetailViewController.swift in Sources */,
 				181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */,
 				1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */,
 				0BD429471D3DD3500064B64C /* MineExamCollectTableViewCell.swift in Sources */,
@@ -1188,6 +1199,7 @@
 				183B84F61CE5BFDC00709235 /* AppDelegate.swift in Sources */,
 				F631470D1D1A2BEE005103C9 /* HSComOpenHeader.swift in Sources */,
 				F661F25C1D33754E00E04CE8 /* HSImageCollectionCell.swift in Sources */,
+				0DBF54761D406EF500B4B5FB /* GCateTableViewCell.swift in Sources */,
 				F61228091D057B1E009E3D4D /* HuLiViewController.swift in Sources */,
 				185408811CE7005A00DFBA7C /* TouTiaoViewController.swift in Sources */,
 				0BDAB62D1D2A43380081E883 /* QuestionModel.swift in Sources */,

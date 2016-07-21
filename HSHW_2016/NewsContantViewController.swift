@@ -81,7 +81,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func collection(){
         let user = NSUserDefaults.standardUserDefaults()
-        let uid = user.stringForKey("userid")
+        let uid = user.stringForKey("userid")//登录用户 id
         let userID = user.stringForKey((self.newsInfo?.object_id)!)
         print(userID)
         if userID == "false"||userID==nil{

@@ -69,6 +69,35 @@ class newsInfoModel: JSONJoy {
     }
 }
 
+class GNewsCateModel: JSONJoy {
+    var status:String?
+    var data = Array<GNewsCate>()
+    var errorData:String?
+    
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string
+        if status == "success" {
+            for child in decoder["data"].array ?? []{
+                data.append(GNewsCate(child))
+            }
+        }
+        else{
+            errorData = decoder["data"].string
+        }
+    }
+}
+
+class GNewsCate: JSONJoy{
+    var name:String?
+    var term_id :String?
+    
+    required init(_ decoder: JSONDecoder){
+        name = decoder["name"].string
+        term_id = decoder["term_id"].string
+    }
+}
+
+
 class NewsInfo: JSONJoy{
     var post_title:String?
     var create_time:String?
