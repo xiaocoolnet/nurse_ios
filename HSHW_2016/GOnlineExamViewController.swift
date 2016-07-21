@@ -49,7 +49,7 @@ class GOnlineExamViewController: UIViewController,UIScrollViewDelegate {
     var helper = HSStudyNetHelper()
     var questionCount = "10"
     let touch = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT-54))
-    
+//    
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
         self.getData()
