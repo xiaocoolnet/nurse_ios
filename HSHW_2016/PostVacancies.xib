@@ -822,6 +822,7 @@
             <connections>
                 <outlet property="bordView" destination="AbV-sH-E0i" id="a31-11-0EK"/>
                 <outlet property="conditionBtn" destination="ytJ-NE-wFM" id="A6i-dK-Lfy"/>
+                <outlet property="conditionImg" destination="q4g-QA-l0P" id="D4N-6B-odI"/>
                 <outlet property="conditionLab" destination="PX1-qJ-67Z" id="O95-Em-6Ox"/>
                 <outlet property="firmNameField" destination="6IW-A6-JTx" id="6Gt-K7-Q7f"/>
                 <outlet property="mailboxField" destination="9Hj-wr-YjR" id="KyO-dD-cq2"/>
@@ -830,12 +831,17 @@
                 <outlet property="moneyLab" destination="kmR-5T-yRW" id="xdt-2d-EZp"/>
                 <outlet property="myScrollview" destination="av2-Nf-MbP" id="6Ow-oz-lof"/>
                 <outlet property="personBtn" destination="FfB-UI-OSS" id="Lrx-00-epA"/>
+                <outlet property="personImg" destination="iOB-Bn-LYU" id="DYH-yP-TRf"/>
                 <outlet property="personLab" destination="ZJ8-FG-iQn" id="rCN-La-b0w"/>
                 <outlet property="phoneField" destination="rmT-66-nlB" id="6kk-Jh-Uz1"/>
+                <outlet property="placeImg_1" destination="9Me-8w-o7q" id="vx6-be-0sg"/>
+                <outlet property="placeImg_2" destination="r9Y-Fi-Yfa" id="3I0-hy-ws1"/>
+                <outlet property="placeImg_3" destination="yWq-Il-Dx4" id="dr3-Fn-oMJ"/>
                 <outlet property="placeLab_1" destination="a6d-jB-RYU" id="fHW-zS-CgS"/>
                 <outlet property="placeLab_2" destination="naR-Rc-Ix1" id="lfB-mt-RfT"/>
                 <outlet property="placeLab_3" destination="7TS-Jk-MYX" id="5MK-tE-0s1"/>
                 <outlet property="positionBtn" destination="wdn-DU-TKZ" id="qYa-jf-e0x"/>
+                <outlet property="positionImg" destination="b6a-8d-7ux" id="enW-Ja-A7p"/>
                 <outlet property="positionLab" destination="yDS-lh-AEQ" id="WfO-0f-2nA"/>
                 <outlet property="postNameField" destination="ig9-nb-Gbf" id="YeF-Dj-1xV"/>
                 <outlet property="requestField" destination="BMi-Vp-ry2" id="9N9-GH-6un"/>
@@ -843,6 +849,7 @@
                 <outlet property="resumeFeild" destination="Fov-9Z-N7E" id="UEB-ei-tMw"/>
                 <outlet property="sendBtn" destination="Ewo-BM-bzV" id="bEe-sm-xVQ"/>
                 <outlet property="treatmentBtn" destination="erl-46-YYQ" id="7mV-Kv-CDp"/>
+                <outlet property="treatmentImg" destination="T2t-uu-goE" id="eJV-R1-bgu"/>
                 <outlet property="treatmentLab" destination="Oh3-Lb-e9n" id="bnw-lD-chk"/>
                 <outlet property="workplaceBtn" destination="LTm-aT-RfE" id="pOj-aU-UwW"/>
             </connections>

@@ -236,6 +236,7 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
             return
         }
         picurl = NSArray(array: imageNames).componentsJoinedByString(",")
+        print(picurl)
         helper.postForumCard(selectTypeModel!.term_id, title: titLab.text!, content: textContent.text, picurl: picurl, handle: { (success, response) in
             if success {
                 dispatch_async(dispatch_get_main_queue(), {
