@@ -316,12 +316,16 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             cell.selectionStyle = .None
             if showType == 1 {
                 cell.showforJobModel(jobDataSource![indexPath.row])
+                cell.delivery.tag = indexPath.row
+                btnTag = cell.delivery.tag
+                cell.delivery.addTarget(self, action: #selector(self.resumeOnline), forControlEvents: .TouchUpInside)
             }else{
                 cell.showforCVModel(CVDataSource![indexPath.row])
+                cell.delivery.tag = indexPath.row
+                btnTag = cell.delivery.tag
+                cell.delivery.addTarget(self, action: #selector(self.invited), forControlEvents: .TouchUpInside)
             }
-            cell.delivery.tag = indexPath.row
-            btnTag = cell.delivery.tag
-            cell.delivery.addTarget(self, action: #selector(self.resumeOnline), forControlEvents: .TouchUpInside)
+            
             return cell
         }else{
             let cell1 = UITableViewCell()
@@ -493,6 +497,42 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.makeCVMessage()
             }
         }
+    }
+    
+    // TODO:邀请面试接口还没有
+    func invited() {
+        print("邀请面试")
+        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要发送邀请吗？", comment: "empty message"), preferredStyle: .Alert)
+        let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+        alertController.addAction(doneAction)
+        var model = String()
+        
+        if showType == 1 {
+            model = self.jobDataSource![btnTag].companyid
+        }
+        let url = PARK_URL_Header+"ApplyJob"
+        let param = [
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "jobid":strId,
+            "companyid":model
+        ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                
+            }else{
+                let result = Http(JSONDecoder(json!))
+                if(result.status == "success"){
+                    
+                    print(111111)
+                }else{
+                    
+                    print(2222222)
+                }
+            }
+        }
+        
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func resumeOnline() {
