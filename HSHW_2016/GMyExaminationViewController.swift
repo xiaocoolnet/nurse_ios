@@ -49,6 +49,16 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
     
     var questionCount = "10"
     
+    var hasChooseIndex = NSMutableArray()
+    let touch = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT-54))
+    
+    var segment:UISegmentedControl?
+    var currentVCIndex:Int = 0
+//    let infoqwe = GExamInfo()
+    var a  = NSInteger()
+    
+    
+    
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
     }
@@ -94,8 +104,10 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         // 根据不同类型设置不同的头
         if type == 1 {
             setSpecificView_ExamPaper_OnView(self.view)
+//            self.AnswerView()
         }else{
             setSpecificView_ErrorExamPaper_OnView(self.view)
+//            self.AnswerView()
         }
         
         self.createScrollerView()
@@ -133,20 +145,7 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         window = ((UIApplication.sharedApplication().delegate?.window)!)!
         window.addSubview(questBack)
         let big = UIView(frame: CGRectMake(0, 44, WIDTH, HEIGHT-163))
-        
-        // 创建渐变色图层
-        let gradientLayer = CAGradientLayer.init()
-        gradientLayer.frame = CGRectMake(0, 0, WIDTH, HEIGHT-163)
-        gradientLayer.colors = [UIColor.init(red: 216/255.0, green: 121/255.0, blue: 168/255.0, alpha: 1).CGColor,UIColor.init(red: 160/255.0, green: 43/255.0, blue: 134/255.0, alpha: 1).CGColor]
-        // 设置渐变方向（0-1）
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 0, y: 1)
-        // 设置渐变色的起始位置和终止位置（颜色分割点）
-        gradientLayer.locations = [ (0.15), (0.98)]
-        gradientLayer.borderWidth = 0.0
-        // 添加图层
-        big.layer.addSublayer(gradientLayer)
-        
+        big.backgroundColor = COLOR
         questBack.addSubview(big)
         let smart = UIScrollView(frame: CGRectMake(10, 10, WIDTH-20, HEIGHT-183))
         smart.backgroundColor = UIColor.whiteColor()
@@ -231,6 +230,9 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
     // MARK:   答案视图
     func AnswerView() {
         //将正确答案放在一个数组中
+        if self.dataSource.count != 0{
+            
+        
         let examInfo = self.dataSource[self.pageControl.currentPage]
         if rightAnswer.count <= pageControl.currentPage {
             for _ in rightAnswer.count-1...pageControl.currentPage {
@@ -253,15 +255,14 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         window = ((UIApplication.sharedApplication().delegate?.window)!)!
         window.addSubview(grayBack)
         
-        let touch = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT-54))
-        touch.backgroundColor = UIColor.init(white: 0.5, alpha: 0.5)
+//        let touch = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT-54))
+        touch.backgroundColor = UIColor.grayColor()
         touch.alpha = 0.4
         touch.addTarget(self, action: #selector(self.touchUp), forControlEvents: .TouchUpInside)
         grayBack.addSubview(touch)
         
         let backeView = UIView(frame: CGRectMake(0, HEIGHT-54-WIDTH*260/375, WIDTH, WIDTH*260/375))
         backeView.backgroundColor = UIColor.whiteColor()
-        backeView.clipsToBounds = true
         grayBack.addSubview(backeView)
         
         let line = UILabel(frame: CGRectMake(10, WIDTH*48/375, WIDTH-20, 2))
@@ -297,31 +298,30 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
                 if self.myChoose.count == 0 || self.pageControl.currentPage+1>self.myChoose.count{
                     answer.text = " "
                 }else{
-                    let isanswer = 65 + (self.myChoose[self.pageControl.currentPage]-1)
+                    let isanswer = 64 + myChoose[self.pageControl.currentPage]
                     let asc:UniChar = UInt16(isanswer)
                     let chara:Character = Character(UnicodeScalar(asc))
                     var string = ""
                     string.append(chara)
                     answer.text = string
-                    //answer.text =  String(self.myChoose[self.pageControl.currentPage])
                 }
             }else if i==1{
                 print(self.rightAnswer)
                 print(self.pageControl.currentPage)
                 
                 print(self.rightAnswer[self.pageControl.currentPage])
-                let isanswer = 65 + (self.rightAnswer[self.pageControl.currentPage] as! Int)
+                let isanswer = 64 + (self.rightAnswer[self.pageControl.currentPage] as! Int)
                 let asc:UniChar = UInt16(isanswer)
                 let chara:Character = Character(UnicodeScalar(asc))
                 var string = ""
                 string.append(chara)
                 answer.text = string
+                
             }else{
                 var difficultyValue = Int()
                 let examInfo = self.dataSource[self.pageControl.currentPage]
                 print(examInfo)
                 difficultyValue = Int(examInfo.post_difficulty!)!
-                print(difficultyValue)
                 let imageArray = NSMutableArray()
                 // let imageView = UIImageView()
                 for i in 0..<3 {
@@ -352,16 +352,19 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         analysis.frame = CGRectMake(10, line.frame.origin.y+12+WIDTH*70/375+10, WIDTH*100/375, WIDTH*20/375)
         analysis.text = "答案解析:"
         analysis.textColor = COLOR
+        //      analysis.backgroundColor = UIColor.redColor()
         backeView.addSubview(analysis)
         let analysisContent = UILabel()
         analysisContent.textColor = UIColor.grayColor()
         analysisContent.text = examInfo.post_description
         analysisContent.numberOfLines = 0
         analysisContent.font = UIFont.systemFontOfSize(15)
+        //      analysisContent.backgroundColor = UIColor.greenColor()
         let height: CGFloat = calculateHeight(examInfo.post_description!, size: 15, width:backeView.frame.size.width-20)
         print(height)
         analysisContent.frame = CGRectMake(10, analysis.frame.size.height+analysis.frame.origin.y, backeView.frame.size.width-20, height)
-        backeView.addSubview(analysisContent)
+            backeView.addSubview(analysisContent)
+        }
     }
     // MARK:  底部视图
     func backBottomView() {
@@ -423,6 +426,9 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.delegate = self
+        
+        scrollView.contentOffset = CGPointMake(CGFloat( a )  * WIDTH, 0)
+        
         for  i in 0 ..< self.dataSource.count {
             let examInfo = self.dataSource[i]
             let contentScrollView :UIScrollView = UIScrollView.init()
@@ -506,7 +512,8 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         }
         
         scrollView.contentSize = CGSizeMake(CGFloat(self.dataSource.count)*self.view.frame.size.width, 0)
-        scrollView.contentOffset = CGPointMake(0, 0)
+//        scrollView.contentOffset = CGPointMake(0, 0)
+        scrollView.contentOffset = CGPointMake(CGFloat( a )  * WIDTH, 0)
         view.addSubview(scrollView)
         let ques = UILabel(frame: CGRectMake(WIDTH/2-80, HEIGHT-146, 80, 12))
         ques.font = UIFont.systemFontOfSize(12)
@@ -517,7 +524,7 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         number.frame = CGRectMake(WIDTH/2+5, HEIGHT-150, 30, 14)
         number.font = UIFont.systemFontOfSize(16)
         number.textColor = UIColor.yellowColor()
-        number.text = "1"
+        number.text = String(a + 1)
         number.sizeToFit()
         self.view.addSubview(number)
         let num = UILabel(frame: CGRectMake(WIDTH/2+5+number.bounds.size.width, HEIGHT-150, 30, 14))
@@ -539,6 +546,7 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
     // 设置不同的头——做题记录
     func setSpecificView_ExamPaper_OnView(backGound:UIView) {
         
+        self.createScrollerView()
         
         let dian = UIImageView(frame: CGRectMake(10, 16, 12, 12))
         dian.image = UIImage(named: "ic_choice.png")
@@ -606,6 +614,36 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         examLab.sizeToFit()
         examBtn.addSubview(examLab)
         
+//        segment = UISegmentedControl(items: ["每日一练","在线考试"])
+//        segment?.frame = CGRectMake(0, 0, WIDTH, 44)
+//        segment?.selectedSegmentIndex = 0
+//        segment?.addTarget(self, action: #selector(selectorSegment(_:)), forControlEvents: UIControlEvents.ValueChanged)
+//        view.addSubview(self.segment!)
+        
+    }
+    
+    func selectorSegment(sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            HSMineHelper().GetErrorExampaper("1", type: "1") { (success, response) in
+                self.dataSource = response as! Array<GExamInfo>
+                self.createScrollerView()
+                if self.dataSource.count > 0 {
+                    self.AnswerView()
+                }
+                self.backBottomView()
+                self.questionCard()
+            }
+        }else if sender.selectedSegmentIndex == 1 {
+            HSMineHelper().GetErrorExampaper("1", type: "2") { (success, response) in
+                self.dataSource = response as! Array<GExamInfo>
+                self.createScrollerView()
+                if self.dataSource.count > 0 {
+                    self.AnswerView()
+                }
+                self.backBottomView()
+                self.questionCard()
+            }
+        }
     }
     
     // MARK:   底部按钮
@@ -807,8 +845,15 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         //        rightBtn?.backgroundColor = UIColor.greenColor()
         //        if btn.tag != rightBtn?.tag {
         // MARK: 这里更改了选中答案的颜色
-        btn.backgroundColor = UIColor.greenColor()
+//        btn.backgroundColor = UIColor.greenColor()
         let exam = dataSource[pageControl.currentPage]
+        
+        if hasChooseIndex.containsObject(pageControl.currentPage) {
+            return
+        }else{
+            hasChooseIndex.addObject(pageControl.currentPage)
+        }
+        btn.backgroundColor = UIColor.redColor()
         
         if self.pageControl.currentPage+1 > self.myChoose.count {
             if self.pageControl.currentPage>0{
@@ -816,23 +861,16 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
                     self.myChoose.insert(0, atIndex: i)
                     chooseId.insert("0", atIndex: i)
                 }
-        
-                self.myChoose.insert(btn.tag-1, atIndex: self.pageControl.currentPage)
-                chooseId.append(exam.answers[btn.tag-1].id)
-                
-            }else{
-                self.myChoose.insert(btn.tag-1, atIndex: self.pageControl.currentPage)
-                chooseId.append(exam.answers[btn.tag-1].id)
             }
-            
+            self.chooseId.append(exam.answers[btn.tag-1].id)
+            self.myChoose.append(btn.tag)
         }else{
             self.myChoose.removeAtIndex(pageControl.currentPage)
             chooseId.removeAtIndex(pageControl.currentPage)
             self.myChoose.insert(btn.tag, atIndex: pageControl.currentPage)
             chooseId.insert(exam.answers[btn.tag-1].id, atIndex: pageControl.currentPage)
-            
-
         }
+
         
         self.questionCard()
         pageControl.currentPage += 1
@@ -868,3 +906,4 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         }
     }
 }
+

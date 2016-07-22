@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1911C01D11222700CDE18D /* LoginModel.swift */; };
+		0B1937741D421CCE00D87F42 /* GMyErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1937731D421CCE00D87F42 /* GMyErrorTableViewCell.swift */; };
 		0B64EBE01D37A60F001548EE /* HSForumDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B64EBDF1D37A60F001548EE /* HSForumDetailCell.xib */; };
 		0B64EBE21D37A626001548EE /* ReleaseTimeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B64EBE11D37A626001548EE /* ReleaseTimeCell.xib */; };
 		0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B6FED4D1D3373FC00A4488E /* DataPickerView.swift */; };
@@ -15,6 +16,8 @@
 		0B6FED521D33999700A4488E /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B6FED511D33999700A4488E /* area.plist */; };
 		0B7392871D40C5AC00F785AF /* OnLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7392861D40C5AC00F785AF /* OnLineViewController.swift */; };
 		0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */; };
+		0B9C64071D41B89F008B7F6C /* GMyExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9C64061D41B89F008B7F6C /* GMyExamViewController.swift */; };
+		0B9C64091D420957008B7F6C /* GMyErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9C64081D420957008B7F6C /* GMyErrorViewController.swift */; };
 		0BAB74BF1D34B95200D2E365 /* HSEditResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */; };
 		0BAF21BC1D1134790065146B /* LoginUserInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAF21BB1D1134790065146B /* LoginUserInfoModel.swift */; };
 		0BAF21C41D113E100065146B /* QCLoginUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAF21C31D113E100065146B /* QCLoginUserInfo.swift */; };
@@ -187,6 +190,7 @@
 
 /* Begin PBXFileReference section */
 		0B1911C01D11222700CDE18D /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		0B1937731D421CCE00D87F42 /* GMyErrorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyErrorTableViewCell.swift; sourceTree = "<group>"; };
 		0B26F5B17459B246981F92CE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		0B64EBDF1D37A60F001548EE /* HSForumDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSForumDetailCell.xib; sourceTree = "<group>"; };
 		0B64EBE11D37A626001548EE /* ReleaseTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReleaseTimeCell.xib; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 		0B6FED511D33999700A4488E /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		0B7392861D40C5AC00F785AF /* OnLineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnLineViewController.swift; sourceTree = "<group>"; };
 		0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeName.swift; sourceTree = "<group>"; };
+		0B9C64061D41B89F008B7F6C /* GMyExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyExamViewController.swift; sourceTree = "<group>"; };
+		0B9C64081D420957008B7F6C /* GMyErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyErrorViewController.swift; sourceTree = "<group>"; };
 		0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSEditResumeViewController.swift; sourceTree = "<group>"; };
 		0BAF21BB1D1134790065146B /* LoginUserInfoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginUserInfoModel.swift; sourceTree = "<group>"; };
 		0BAF21C31D113E100065146B /* QCLoginUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QCLoginUserInfo.swift; sourceTree = "<group>"; };
@@ -411,7 +417,9 @@
 			children = (
 				181E0D261CEBF85100E34A7F /* MineStudyViewController.swift */,
 				0DE829D81D3B25250047FB23 /* GMyExaminationViewController.swift */,
+				0B9C64061D41B89F008B7F6C /* GMyExamViewController.swift */,
 				0DE829DA1D3B52050047FB23 /* GMyExamListViewController.swift */,
+				0B9C64081D420957008B7F6C /* GMyErrorViewController.swift */,
 				0BD429441D3DCDF70064B64C /* MineExaminationViewController.swift */,
 				0BD429481D3DFAA20064B64C /* CollectDetailViewController.swift */,
 			);
@@ -768,6 +776,7 @@
 				F6342C6E1D391CF100800D8E /* HSChartCell.swift */,
 				F639810B1D373C71002EE95B /* HSChartCell.xib */,
 				0DE829DC1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift */,
+				0B1937731D421CCE00D87F42 /* GMyErrorTableViewCell.swift */,
 				F64C9AC91D3B9C7E0041E360 /* MineJobTableViewCell.swift */,
 				F64C9ACB1D3B9C870041E360 /* MineJobDetailsTableViewCell.swift */,
 				0BD429461D3DD3500064B64C /* MineExamCollectTableViewCell.swift */,
@@ -1131,6 +1140,7 @@
 				F6D02CDF1D07BB5300353557 /* contentCell.swift in Sources */,
 				F64C9AC21D3B9C0B0041E360 /* MineRecViewController.swift in Sources */,
 				0BDAB6371D2A58E80081E883 /* NurseStatusViewController.swift in Sources */,
+				0B1937741D421CCE00D87F42 /* GMyErrorTableViewCell.swift in Sources */,
 				0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */,
 				0DBF54741D406D1900B4B5FB /* GNewsCateDetailViewController.swift in Sources */,
 				181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */,
@@ -1191,6 +1201,7 @@
 				185408831CE7052700DFBA7C /* NewsContantViewController.swift in Sources */,
 				F64C9ACA1D3B9C7E0041E360 /* MineJobTableViewCell.swift in Sources */,
 				18C0BF971CEB63FB003E2886 /* QuestionBankViewController.swift in Sources */,
+				0B9C64091D420957008B7F6C /* GMyErrorViewController.swift in Sources */,
 				0DE829D91D3B25250047FB23 /* GMyExaminationViewController.swift in Sources */,
 				18A5148C1CED550800A30AA5 /* RecruitmentViewController.swift in Sources */,
 				F6C04AF81D20D4D2009E1613 /* ConnectModel.m in Sources */,
@@ -1214,6 +1225,7 @@
 				185408891CE70D8A00DFBA7C /* AcademicViewController.swift in Sources */,
 				181E0D231CEBF80B00E34A7F /* SetDataViewController.swift in Sources */,
 				0BD429451D3DCDF70064B64C /* MineExaminationViewController.swift in Sources */,
+				0B9C64071D41B89F008B7F6C /* GMyExamViewController.swift in Sources */,
 				0B6FED501D3382B800A4488E /* EducationModel.swift in Sources */,
 				18A3F4E61CEAAF1100028FA5 /* WordViewController.swift in Sources */,
 				0BDAB6331D2A57320081E883 /* QuestionViewController.swift in Sources */,

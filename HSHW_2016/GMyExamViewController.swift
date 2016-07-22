@@ -1,15 +1,16 @@
 //
-//  WordViewController.swift
+//  GMyExamViewController.swift
 //  HSHW_2016
-//  Created by apple on 16/5/17.
+//
+//  Created by JQ on 16/7/22.
 //  Copyright © 2016年 校酷网络科技公司. All rights reserved.
 //
 
 import UIKit
-import Alamofire
 import MBProgressHUD
+import Alamofire
 
-class OnLineViewController: UIViewController,UIScrollViewDelegate {
+class GMyExamViewController: UIViewController, UIScrollViewDelegate {
     
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
@@ -29,11 +30,11 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     var hear = Bool()
     var timeNow:NSTimer!
     var minute : Int = 1
-    var dataSource = NSArray()
+//    var dataSource = NSArray()
     var count:Int = 13
     let questBack = UIView()//答题卡视图
     var over = Bool()
-//    var isSubmit = Bool()
+    //    var isSubmit = Bool()
     var collection = Bool()//是否收藏
     var timeText:String?
     let totalloc:Int = 5
@@ -51,41 +52,62 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     var isSubmit:Bool = false
     var numb = Int()
     
+    var type = 0 // 1 做题记录  2 错题集  3 收藏记录  4 其他收藏
+    var subType = 0 // 1 每日一练  2 在线考试
+    var dataSource = Array<GExamInfo>()
+
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
-        self.getData()
+//        self.getData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "在线考试"
-        
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
-//        let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: #selector(takeUpTheTest))
-//        navigationItem.rightBarButtonItem = rightBtn
         
-        self.view.backgroundColor = UIColor.whiteColor()
-        self.isSubmit  = false
-        collection = false
-        self.timeDow()
-        // Do any additional setup after loading the view.
+        var title = ""
         
-        self.submit()
-    }
-    
-    func submit(){
-        if isSubmit == false {
-            let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: #selector(self.takeUpTheTest))
-            navigationItem.rightBarButtonItem = rightBtn
-        }else if isSubmit == true {
-            let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: nil)
-            navigationItem.rightBarButtonItem = rightBtn
+        switch type {
+        case 1:
+            title = "做题记录"
+            switch subType {
+            case 1:
+                title += "·每日一练"
+            case 2:
+                title += "·在线考试"
+            default:
+                title += "·系统出错"
+            }
+        case 2:
+            title = "错题集"
+        case 3:
+            title = "收藏记录"
+        case 4:
+            title = "其它收藏"
+        default:
+            self.title = "出错了"
         }
-    }
+        
+        
+        
+        self.title = title
+        
+        numb = 1
+        self.view.backgroundColor = UIColor.whiteColor()
+        isSubmit = false
+        collection = false
+        
+        self.createScrollerView()
+                                self.AnswerView()
+                                self.backBottomView()
+                                self.questionCard()
 
+
+        // Do any additional setup after loading the view.
+    }
     
     override func viewWillDisappear(animated: Bool) {
         if over == false {
@@ -98,99 +120,51 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         }
     }
     
-    func getData(){
-        let user = NSUserDefaults.standardUserDefaults()
-        let uid = user.stringForKey("userid")
-        let url = PARK_URL_Header+"getDaliyExamList"
-        let param = [
-            "userid":uid,
-            "type":"1",
-            "count":questionCount
-        ]
-        
-        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { [unowned self] request, response, json, error in
-            dispatch_async(dispatch_get_main_queue(), {
-                if(error != nil){
-                    
-                }else{
-                    let status = EveryDayModel(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
-                    if(status.status == "error"){
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        //hud.labelText = status.errorData
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
-                    }
-                    if(status.status == "success"){
-                        
-                        print(status)
-                        self.dataSource = DaliyExamList(status.data!).objectlist
-                        print(self.dataSource)
-                        print(self.dataSource.count)
-                        print("-----")
-                        
-                        self.createScrollerView()
-                        self.AnswerView()
-                        self.backBottomView()
-                        self.questionCard()
-                        print(status.data)
-                    }
-                }
-            })
-        }
-    }
+//    func getData(){
+//        let user = NSUserDefaults.standardUserDefaults()
+//        let uid = user.stringForKey("userid")
+//        let url = PARK_URL_Header+"getDaliyExamList"
+//        let param = [
+//            "userid":uid,
+//            "type":"1",
+//            "count":questionCount
+//        ]
+//        
+//        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { [unowned self] request, response, json, error in
+//            dispatch_async(dispatch_get_main_queue(), {
+//                if(error != nil){
+//                    
+//                }else{
+//                    let status = EveryDayModel(JSONDecoder(json!))
+//                    print("状态是")
+//                    print(status.status)
+//                    if(status.status == "error"){
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                        hud.mode = MBProgressHUDMode.Text;
+//                        //hud.labelText = status.errorData
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
+//                        hud.hide(true, afterDelay: 1)
+//                    }
+//                    if(status.status == "success"){
+//                        
+//                        print(status)
+//                        self.dataSource = DaliyExamList(status.data!).objectlist
+//                        print(self.dataSource)
+//                        print(self.dataSource.count)
+//                        print("-----")
+//                        
+//                        self.createScrollerView()
+//                        self.AnswerView()
+//                        self.backBottomView()
+//                        self.questionCard()
+//                        print(status.data)
+//                    }
+//                }
+//            })
+//        }
+//    }
     
-    func timeDow()
-    {
-        timeNow = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(WordViewController.updateTime), userInfo: nil, repeats: true)
-    }
-    
-    func updateTime()
-    {
-        //  print(self.scrollView.subviews)
-        let index :Int = self.pageControl.currentPage
-        var label = UILabel()
-        if self.scrollView.subviews.count==0 {
-            
-        }else{
-            label = self.view.viewWithTag(10+index) as! UILabel
-        }
-        count -= 1
-        if minute>=0 {
-            if (count <= 0)
-            {
-                count = 59
-                minute -= 1
-                
-            }
-            print(label.text)
-            if minute == -1 {
-                minute = 2
-                count = 59
-                
-                label.text = "0"+"\(minute)"+":"+"\(count)"
-                self.timeText = label.text
-                timeNow.invalidate()
-            }
-            label.text = "0"+"\(minute)"+":"+"\(count)"
-            if minute<10 {
-                
-                if count<10 {
-                    label.text = "0"+"\(minute)"+":"+"0"+"\(count)"
-                    self.timeText = label.text
-                    
-                }
-            }else{
-                
-                label.text = "\(minute)"+":"+"\(count)"
-                self.timeText = label.text
-                
-            }
-        }
-    }
     
     // MARK: 答题卡视图
     func questionCard() {
@@ -308,6 +282,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 break
             }
         }
+        
         grayBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-54)
         grayBack.backgroundColor = UIColor.clearColor()
         hear = true
@@ -611,7 +586,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         number.font = UIFont.systemFontOfSize(16)
         number.textColor = UIColor.yellowColor()
         number.text = "1"
-//        number.text = String(scrollView.contentOffset.x/scrollView.frame.size.width)
+        //        number.text = String(scrollView.contentOffset.x/scrollView.frame.size.width)
         number.sizeToFit()
         self.view.addSubview(number)
         let num = UILabel(frame: CGRectMake(WIDTH/2+5+number.bounds.size.width, HEIGHT-150, 30, 14))
@@ -627,7 +602,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         //        pageControl.addTarget(self, action: #selector(self.pageContorllerNumber(_:)), forControlEvents: .TouchUpInside)
         pageControl.numberOfPages = self.dataSource.count
         pageControl.currentPage = 0
-
+        
     }
     
     func pageContorllerNumber(pageControl:UIPageControl) {
@@ -653,7 +628,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             over = true
         }
     }
-//     MARK:   底部按钮  
+    //     MARK:   底部按钮
     func bottomBtnClick(btn:UIButton) {
         print(btn.tag)
         if btn.tag == 1 {
@@ -663,9 +638,9 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             self.AnswerView()
             number.text = "\(self.pageControl.currentPage+1)"
             number.sizeToFit()
-//            numb -= 1
-//            let offSetX:CGFloat = CGFloat(numb) * WIDTH
-//            scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
+            //            numb -= 1
+            //            let offSetX:CGFloat = CGFloat(numb) * WIDTH
+            //            scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
         }else if btn.tag == 2 {
             self.pageControl.currentPage += 1
             let offSetX:CGFloat = CGFloat(self.pageControl.currentPage) * WIDTH
@@ -673,9 +648,9 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             number.text = "\(self.pageControl.currentPage+1)"
             number.sizeToFit()
             self.AnswerView()
-        }else if btn.tag == 3 && self.num == 2{
+        }else if btn.tag == 3 {
             dismissCard()
-        }else if btn.tag == 4 && self.num == 2{
+        }else if btn.tag == 4 {
             if hear == true {
                 UIView.animateWithDuration(0.3, animations: {
                     self.grayBack.frame = CGRectMake(0, 0, WIDTH, HEIGHT-54)
@@ -809,10 +784,10 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         }
         let backView = scrollView.viewWithTag(pageControl.currentPage+110)
         let rightBtn = backView?.viewWithTag(rightAnswer[pageControl.currentPage] as! Int)
-//        rightBtn?.backgroundColor = UIColor.greenColor()
-//        if btn.tag != rightBtn?.tag {
-            btn.backgroundColor = UIColor.redColor()
-//        }
+        //        rightBtn?.backgroundColor = UIColor.greenColor()
+        //        if btn.tag != rightBtn?.tag {
+        btn.backgroundColor = UIColor.redColor()
+        //        }
         let exam = dataSource[pageControl.currentPage] as!ExamInfo
         
         if self.pageControl.currentPage+1 > self.myChoose.count {
@@ -847,8 +822,8 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         var idStr = ""
         var answerStr = ""
         self.num = 2
-        self.submit()
-//        self.navigationItem.rightBarButtonItem
+//        self.submit()
+        //        self.navigationItem.rightBarButtonItem
         if myChoose.count > 0 {
             
             for i in 0...myChoose.count-1 {
@@ -891,4 +866,22 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             self.questionCard()
         }
     }
+
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+
+    /*
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        // Get the new view controller using segue.destinationViewController.
+        // Pass the selected object to the new view controller.
+    }
+    */
+
 }

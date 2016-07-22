@@ -264,7 +264,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 mineHelper.changeBirthday(time, handle: { [unowned self] (success, response) in
                     dispatch_async(dispatch_get_main_queue(), {
                         if success {
-                            QCLoginUserInfo.currentInfo.email = time
+                            QCLoginUserInfo.currentInfo.birthday = time
 //                            self.navigationController?.popViewControllerAnimated(true)
                         }
                     })
@@ -286,7 +286,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 mineHelper.changeAddress(self.twodeArr[indexPath.row], handle: { [unowned self] (success, response) in
                     dispatch_async(dispatch_get_main_queue(), {
                         if success {
-                            QCLoginUserInfo.currentInfo.email = self.twodeArr[indexPath.row]
+                            QCLoginUserInfo.currentInfo.city = self.twodeArr[indexPath.row]
                         }
                     })
                 })
