@@ -32,9 +32,9 @@ class MineExamCollectTableViewCell: UITableViewCell {
         titleLab.frame = CGRectMake(75, 10, 150, 50)
         titleLab.font = UIFont.systemFontOfSize(16)
         
-        timeLab.frame = CGRectMake(WIDTH*(WIDTH - 80 - 20)/375, 10, 100, 50)
+        timeLab.frame = CGRectMake(WIDTH - 80 - 20, 10, 100, 50)
         timeLab.textColor = UIColor.darkGrayColor()
-        timeLab.font = UIFont.systemFontOfSize(15)
+        timeLab.font = UIFont.systemFontOfSize(14)
         
         let line = UILabel(frame: CGRectMake(0, 69.5, WIDTH, 0.5))
         line.backgroundColor = GREY

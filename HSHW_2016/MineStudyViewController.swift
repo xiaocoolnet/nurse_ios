@@ -130,16 +130,18 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
         switch btn.tag {
         case 1:
             let examVC = GMyExamListViewController()
+//            let examVC = GMyExamViewController()
+            
             //        examVC.type = btn.tag
             self.navigationController?.pushViewController(examVC, animated: true)
         case 2:
-            //        examVC.type = btn.tag
-            HSMineHelper().GetErrorExampaper("1", type: "1") { (success, response) in
-                let examVC = GMyExaminationViewController()
-                examVC.type = 2
-                examVC.dataSource = response as! Array<GExamInfo>
+//                    examVC.type = btn.tag
+//            HSMineHelper().GetErrorExampaper("1", type: "1") { (success, response) in
+                let examVC = GMyErrorViewController()
+//                examVC.type = 2
+//                examVC.dataSource = response as! Array<GExamInfo>
                 self.navigationController?.pushViewController(examVC, animated: true)
-            }
+//            }
         case 3:
             let collect = MineExaminationViewController()
             self.navigationController?.pushViewController(collect, animated: true)
