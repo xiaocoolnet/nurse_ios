@@ -69,10 +69,30 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         avatar.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(postInfo?.photo)!), forState: .Normal)
         avatarName.text = postInfo?.name
         postion.text = postInfo?.typename
-        sendTime.text = postInfo?.write_time
+        sendTime.text = timeStampToString((postInfo?.write_time)!)
         seeCount.text = "3346"
         level.text = "Lv.05"
     }
+    
+    // Linux时间戳转标准时间
+    func timeStampToString(timeStamp:String)->String {
+        
+        let string = NSString(string: timeStamp)
+        
+        let timeSta:NSTimeInterval = string.doubleValue
+        let dfmatter = NSDateFormatter()
+        dfmatter.dateFormat="yyyy/MM/dd hh:mm"
+        
+        let date = NSDate(timeIntervalSince1970: timeSta)
+        
+        print(dfmatter.stringFromDate(date))
+        return dfmatter.stringFromDate(date)
+    }
+    
+    func getData() {
+        
+    }
+    
     //MARK:- TableView 代理方法
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
@@ -99,6 +119,14 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSStateCommentCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
+            
+            if postInfo?.userid != postInfo?.comment[indexPath.row].userid {
+                cell.louzhuLab.hidden = true
+            }else{
+                cell.louzhuLab.hidden = false
+            }
+            
+            cell.commentModel = postInfo?.comment[indexPath.row]
             return cell
         }
     }
@@ -110,7 +138,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             if postInfo?.comment.count > 0 {
                 let text = postInfo!.comment[indexPath.row].content
                 let height = calculateHeight(text, size: 15, width: WIDTH - 40)
-                return height
+                return height+107
             }else{
                 // TODO:仅作测试用，后期改为0
                 return 0
@@ -339,10 +367,19 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         print("textfield.text = ",textField.text)
         if textField.text != "" {
-            helper.setComment((postInfo?.mid)!, content: (postInfo?.content)!, type: "2", photo: (postInfo?.photo)!, handle: { (success, response) in
+            helper.setComment((postInfo?.mid)!, content: (textField.text)!, type: "2", photo: "", handle: { (success, response) in
                 print("添加评论",success)
                 if success {
+                    
+                    let dic = ["userid":String(QCLoginUserInfo.currentInfo.userid),"name":String(QCLoginUserInfo.currentInfo.userName),"content":String(UTF8String: textField.text!)!]
+                    let commentModel = CommentModel.init(JSONDecoder(dic))
+                    self.postInfo?.comment.append(commentModel)
+                    
+                    self.contentTableView.reloadData()
+                    self.contentTableView.contentOffset = CGPoint(x: 0, y: self.contentTableView.contentSize.height-self.contentTableView.frame.size.height)
+                    
                     textField.text = nil
+                    
                 }
             })
         }

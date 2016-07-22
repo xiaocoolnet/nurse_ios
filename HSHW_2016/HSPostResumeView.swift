@@ -8,14 +8,21 @@
 
 import UIKit
 import MBProgressHUD
+import Alamofire
+
+//接口类型
+enum OptionType{
+    case sex,condition,welfare,number,money,defaut
+}
 
 protocol HSPostResumeViewDelegate:NSObjectProtocol{
     func uploadAvatar() -> UIImage
     func saveResumeBtnClicked()
 }
 
-class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate, ChangeDelegate {
+class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate, ChangeDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var myScrollview: UIScrollView!
     @IBOutlet weak var borderView1: UIView!
     @IBOutlet weak var borderView2: UIView!
     @IBOutlet weak var selfEvaluate: UITextView!
@@ -31,6 +38,13 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     @IBOutlet weak var eduLable: UILabel!
     @IBOutlet weak var educationBtn: UIButton!
     @IBOutlet weak var plaLable: UILabel!
+    @IBOutlet weak var placeLab_1: UILabel!
+    @IBOutlet weak var placeLab_2: UILabel!
+    @IBOutlet weak var placeLab_3: UILabel!
+    @IBOutlet weak var placeImg_1: UIImageView!
+    @IBOutlet weak var placeImg_2: UIImageView!
+    @IBOutlet weak var placeImg_3: UIImageView!
+    
     @IBOutlet weak var placeBtn: UIButton!
     @IBOutlet weak var workTextField: UITextField!
     @IBOutlet weak var postField: UITextField!
@@ -53,6 +67,7 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     var picker:DatePickerView?
     var pick:AdressPickerView?
     var array = NSArray()
+    var optionDictionary = [String:Array<String>]()
     
     var vc = HSEditResumeViewController()
     var next = HSEditResumeViewController()
@@ -84,6 +99,12 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         
         array = ["北京市","北京市","朝阳区"]
         
+        optionDictionary = ["sex":["男","女"],
+                            "edu":["博士后","博士","硕士","本科","专科","高中","其他"],
+                            "work":["无","01","02","03","04","05","06","07","08","09","更多"],
+                            "salary":["1000","2000","3000","4000","5000","6000","7000","8000","9000","1万","更多"],
+                            "JobStatus":["在职","离职"],
+        "time":["立即到岗","一月以内","暂不考虑"]]
     }
     
     @IBAction func avatarButtonClicked(sender: AnyObject) {
@@ -163,6 +184,106 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
 
     }
     
+    // 性别选择
+    @IBAction func sexBtnClick(sender: AnyObject) {
+        
+    }
+    
+    var bgView = UIView()
+    
+    var chooseTableView = UITableView()
+    var chooseList = Array<String>()
+    
+    var optionType: OptionType = .defaut
+    
+    func listShow(onView:UIView, andType type:OptionType) {
+        optionType = type
+        dataGet(type)
+        bgView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
+        self.myScrollview.addSubview(bgView)
+        
+        chooseTableView = UITableView.init(frame: CGRectMake(CGRectGetMinX(onView.frame)+20, CGRectGetMaxY(onView.superview!.frame), CGRectGetWidth(onView.frame)-20, 108), style: .Plain)
+        chooseTableView.backgroundColor = UIColor.whiteColor()
+        chooseTableView.layer.borderWidth = 1
+        chooseTableView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        chooseTableView.delegate = self
+        chooseTableView.dataSource = self
+        chooseTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        chooseTableView.bounces = false
+        self.myScrollview.addSubview(chooseTableView)
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return chooseList.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell  {
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        //        cell.selectionStyle = .None
+        
+        cell.textLabel?.text = self.chooseList[indexPath.row]
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print(1111)
+
+        chooseTableView.removeFromSuperview()
+        bgView.removeFromSuperview()
+        
+        let string = self.chooseList[indexPath.row]
+        
+//        switch portType {
+//        case PortType.position:
+//            positionLab.text = string
+//            positionLab.enabled = true
+//            positionLab.sizeToFit()
+//            positionImg.frame = CGRectMake(CGRectGetMaxX(positionLab.frame), positionImg.frame.origin.y, 12, 12)
+//        case PortType.condition:
+//            conditionLab.text = string
+//            conditionLab.enabled = true
+//            conditionLab.sizeToFit()
+//            conditionImg.frame = CGRectMake(CGRectGetMaxX(conditionLab.frame), conditionImg.frame.origin.y, 12, 12)
+//        case PortType.welfare:
+//            treatmentLab.text = string
+//            treatmentLab.enabled = true
+//            treatmentLab.sizeToFit()
+//            treatmentImg.frame = CGRectMake(CGRectGetMaxX(treatmentLab.frame), treatmentImg.frame.origin.y, 12, 12)
+//        case PortType.number:
+//            personLab.text = string
+//            personLab.enabled = true
+//            personLab.sizeToFit()
+//            personImg.frame = CGRectMake(CGRectGetMaxX(personLab.frame), personImg.frame.origin.y, 12, 12)
+//        case PortType.money:
+//            moneyLab.text = string
+//            moneyLab.enabled = true
+//            moneyLab.sizeToFit()
+//            moneyImg.frame = CGRectMake(CGRectGetMaxX(moneyLab.frame), moneyImg.frame.origin.y, 12, 12)
+//        default:
+//            print("defaut")
+//        }
+    }
+    
+    func dataGet(optionType:OptionType){
+        
+        switch optionType {
+        case .sex:
+            self.chooseList = optionDictionary["sex"]!
+        
+        default:
+            print("defaut")
+        }
+             
+        self.chooseTableView .reloadData()
+   
+        
+    }
+    
+    
+    @IBOutlet weak var brith_year: UILabel!
+    @IBOutlet weak var brith_month: UILabel!
+    @IBOutlet weak var brith_day: UILabel!
     @IBAction func birthbuttonClick(sender: AnyObject) {
 
         picker = DatePickerView.getShareInstance()
@@ -175,7 +296,15 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
             let string = formatter.stringFromDate(date)
             let range:Range = string.rangeOfString(" ")!
             let time = string.substringToIndex(range.endIndex)
-            self.birthBtn.setTitle(time, forState: .Normal)
+            let timeArr = time.componentsSeparatedByString("-")
+//            self.birthBtn.setTitle(time, forState: .Normal)
+            self.brith_year.text = timeArr.first
+            self.brith_month.text = timeArr[1]
+            self.brith_day.text = timeArr.last
+            
+            self.brith_year.enabled = true
+            self.brith_month.enabled = true
+            self.brith_day.enabled = true
             
         }
  
@@ -216,17 +345,37 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         pick.pickArray=array // 设置第一次加载时需要跳转到相对应的地址
 //        self.addSubview(pick)
          pick.show((UIApplication.sharedApplication().keyWindow)!)
+        
         // 选择完成之后回调
         pick.selectAdress { (dressArray) in
-            
+
             self.array=dressArray
             print("选择的地区是: \(dressArray)")
-            
-//            self.placeBtn.text="\(dressArray[0])  \(dressArray[1])  \(dressArray[2])"
-            self.placeBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
-            print(1111)
+            //            self.workplaceBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
+
+            self.placeLab_1.text =  (dressArray[0] as! String)
+            self.placeLab_2.text =  (dressArray[1] as! String)
+            self.placeLab_3.text =  (dressArray[2] as! String)
+
+            self.placeLab_1.enabled = true
+            self.placeLab_2.enabled = true
+            self.placeLab_3.enabled = true
+
+            self.placeLab_1.sizeToFit()
+            self.placeImg_1.frame = CGRectMake(CGRectGetMaxX(self.placeLab_1.frame), self.placeImg_1.frame.origin.y, 12, 12)
+
+
+            self.placeLab_2.frame = CGRectMake(CGRectGetMaxX(self.placeImg_1.frame)+5, self.placeLab_2.frame.origin.y, self.placeLab_2.frame.size.width, 12)
+            self.placeLab_2.adjustsFontSizeToFitWidth = true
+            self.placeLab_2.sizeToFit()
+            self.placeImg_2.frame = CGRectMake(CGRectGetMaxX(self.placeLab_2.frame), self.placeImg_2.frame.origin.y, 12, 12)
+
+            self.placeLab_3.frame = CGRectMake(CGRectGetMaxX(self.placeImg_2.frame)+5, self.placeLab_3.frame.origin.y, self.placeLab_3.frame.size.width, 12)
+            self.placeLab_3.adjustsFontSizeToFitWidth = true
+            self.placeLab_3.sizeToFit()
+            self.placeImg_3.frame = CGRectMake(CGRectGetMaxX(self.placeLab_3.frame), self.placeImg_3.frame.origin.y, 12, 12)
         }
-               
+        
     }
     
     @IBAction func moneyBtnClick(sender: AnyObject) {
