@@ -53,7 +53,7 @@ class CollectDetailViewController: UIViewController, UITableViewDelegate,UITable
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
     }
-    
+//    
     func getData() {
         helper.GetCollectList(QCLoginUserInfo.currentInfo.userid, type: "3") { (success, response) in
             self.collectListArray = response as! Array<CollectList>
