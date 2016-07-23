@@ -81,6 +81,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func collection(){
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
+        }
+        
         let user = NSUserDefaults.standardUserDefaults()
         let uid = user.stringForKey("userid")//登录用户 id
         let userID = user.stringForKey((self.newsInfo?.object_id)!)
@@ -472,6 +478,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     func zanAddNum(btn:UIButton) {
         
         print("赞")
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
+        }
         
         let user = NSUserDefaults.standardUserDefaults()
         let uid = user.stringForKey("userid")

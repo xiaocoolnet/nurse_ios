@@ -680,6 +680,12 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
             }
             
         }else if btn.tag == 5 {
+            
+            // MARK:要求登录
+            if !requiredLogin(self.navigationController!, hasBackItem: true) {
+                return
+            }
+            
             print(collection)
             print("收藏")
             let examInfo = self.dataSource[self.pageControl.currentPage] as! ExamInfo

@@ -26,7 +26,7 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
     var selectTypeModel:ForumTypeModel?
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
-    }
+     }
     
     override func viewDidLoad() {
         super.viewDidLoad()

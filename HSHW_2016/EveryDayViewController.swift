@@ -143,6 +143,12 @@ class EveryDayViewController: UIViewController,UITableViewDelegate,UITableViewDa
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
+        }
+        
         var info:EveryDayInfo
         if netData.objectlist[indexPath.section].haschild == 0 {
             info = self.netData.objectlist[indexPath.section]

@@ -167,6 +167,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
         if indexPath.section == 0 {
             if indexPath.row == 0 {
                 let next = EveryDayViewController()

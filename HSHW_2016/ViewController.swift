@@ -11,6 +11,8 @@ protocol ViewControllerDelegate:NSObjectProtocol {
 }
 class ViewController: UIViewController,UITextFieldDelegate {
     
+    var hasBackBarButtonItem = true
+    
     var scrollView = UIScrollView()
     var backView = UIView()
     let LOGO = UIImageView()
@@ -40,7 +42,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-        navigationController?.navigationBar.hidden = false
+//        navigationController?.navigationBar.hidden = false
     }
     
     override func viewDidLoad() {
@@ -443,13 +445,14 @@ class ViewController: UIViewController,UITextFieldDelegate {
     }
     //  登录成功
     func loginSuccess(){
-        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        self.navigationController?.popViewControllerAnimated(true)
+//        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         //  得到分栏控制器
-            let vc : UITabBarController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UITabBarController
+//            let vc : UITabBarController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UITabBarController
         //  选择被选中的界面
-            vc.selectedIndex = 4
-            print(vc)
-            self.presentViewController(vc, animated: true, completion: nil)
+//            vc.selectedIndex = 4
+//            print(vc)
+//            self.presentViewController(vc, animated: true, completion: nil)
     }
     
 }

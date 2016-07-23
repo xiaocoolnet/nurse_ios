@@ -123,7 +123,7 @@ class PostModel: JSONJoy {
     
     required init(_ decoder:JSONDecoder){
         
-        mid = decoder["mid"].string ?? ""
+        mid = decoder["mid"].string ?? decoder["object_id"].string! ?? ""
         best = decoder["best"].string ?? ""
         type = decoder["type"].string ?? ""
         typename = decoder["typename"].string ?? ""

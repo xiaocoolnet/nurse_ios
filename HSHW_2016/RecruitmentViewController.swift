@@ -536,6 +536,12 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func resumeOnline() {
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
+        }
+        
         print("投递简历")
         let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
         let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)

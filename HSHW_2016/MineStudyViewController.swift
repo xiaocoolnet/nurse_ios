@@ -14,7 +14,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
     let downNum = UILabel()
     let collNum = UILabel()
     let picArr:[String] = ["ic_pen.png","ic_yuan_purple.png","ic_lifang.png","ic_folder.png"]
-    let picName:[String] = ["做题记录","错题集","收藏记录","其它收藏"]
+    let picName:[String] = ["做题记录","错题集","收藏试题","其它收藏"]
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default

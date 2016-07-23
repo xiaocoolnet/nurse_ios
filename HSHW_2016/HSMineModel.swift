@@ -204,7 +204,7 @@ class GAnswersInfo: JSONJoy {
 }
 
 
-// Model 收藏记录
+// Model 收藏试题
 class CollectModel:JSONJoy {
     var status:String
     var datas = Array<CollectList>()
@@ -219,7 +219,7 @@ class CollectModel:JSONJoy {
     }
 }
 
-// Model 收藏记录（data）
+// Model 收藏试题（data）
 class CollectList:JSONJoy {
     var id:String
     var userid:String

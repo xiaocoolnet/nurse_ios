@@ -69,6 +69,12 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     }
     
     func postedTheView() {
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
+        }
+
         let next = PostViewController()
         self.navigationController?.pushViewController(next, animated: true)
         print("发帖")

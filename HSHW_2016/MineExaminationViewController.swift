@@ -23,7 +23,7 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "收藏记录"
+        self.title = "收藏试题"
         
         // 线
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))

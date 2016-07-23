@@ -30,15 +30,17 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var str = NSString()
     
 //    var dateSource = data()
-    
-    
-    
-    
+
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         self.navigationController?.navigationBar.hidden = true
         self.tabBarController?.tabBar.hidden = false
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
+        }
         
         myTableView.reloadData()
     }

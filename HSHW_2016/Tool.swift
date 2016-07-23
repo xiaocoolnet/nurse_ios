@@ -102,6 +102,23 @@ class TimeTask :NSObject{
 
 }
 
+func requiredLogin(nav:UINavigationController,hasBackItem:Bool) -> Bool{
+    
+    print(LOGIN_STATE)
+    
+    if LOGIN_STATE == true {
+        return true
+    }
+    
+    let controller = ViewController()
+    controller.navigationController?.navigationBar.hidden = hasBackItem
+    controller.title = "登录"
+    nav.pushViewController(controller, animated: true)
+    
+    return false
+}
+
+
 //  提示框
 func alert(message:String,delegate:AnyObject){
     let alert = UIAlertView(title: "提示信息", message: message, delegate: delegate, cancelButtonTitle: "确定")

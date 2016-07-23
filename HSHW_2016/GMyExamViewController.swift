@@ -52,7 +52,7 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
     var isSubmit:Bool = false
     var numb = Int()
     
-    var type = 0 // 1 做题记录  2 错题集  3 收藏记录  4 其他收藏
+    var type = 0 // 1 做题记录  2 错题集  3 收藏试题  4 其他收藏
     var subType = 0 // 1 每日一练  2 在线考试
     var dataSource = Array<GExamInfo>()
 
@@ -84,7 +84,7 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
         case 2:
             title = "错题集"
         case 3:
-            title = "收藏记录"
+            title = "收藏试题"
         case 4:
             title = "其它收藏"
         default:

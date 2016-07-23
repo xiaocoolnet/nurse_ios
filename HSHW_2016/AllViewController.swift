@@ -120,6 +120,12 @@ class AllViewController: UIViewController,UITableViewDelegate,UITableViewDataSou
     }
     
     func postedTheView() {
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
+        }
+
         print("发帖")
         let next = PostViewController()
         self.navigationController?.pushViewController(next, animated: true)

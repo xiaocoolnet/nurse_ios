@@ -14,7 +14,7 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
     
     let scrollView = UIScrollView()
     
-    var type = 0 // 1 做题记录  2 错题集  3 收藏记录  4 其他收藏
+    var type = 0 // 1 做题记录  2 错题集  3 收藏试题  4 其他收藏
     var subType = 0 // 1 每日一练  2 在线考试
 
     let choose:[String] = ["A、消化道症状","B、胃液分析","C、胃镜检查","D、血清学检查","E、胃肠X线检查"]
@@ -85,7 +85,7 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         case 2:
             title = "错题集"
         case 3:
-            title = "收藏记录"
+            title = "收藏试题"
         case 4:
             title = "其它收藏"
         default:
