@@ -123,7 +123,7 @@
                                                                     </connections>
                                                                 </button>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="男" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YRA-86-QYb">
-                                                                    <rect key="frame" x="85" y="8" width="25" height="29"/>
+                                                                    <rect key="frame" x="86" y="9" width="21" height="24"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
@@ -401,9 +401,6 @@
                                                                         <constraint firstAttribute="width" constant="1" id="rcX-JG-wSB"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMZ-JE-c73">
-                                                                    <rect key="frame" x="79" y="0.0" width="213" height="37"/>
-                                                                </button>
                                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="1s3-4w-jQN">
                                                                     <rect key="frame" x="104" y="16" width="12" height="12"/>
                                                                 </imageView>
@@ -419,6 +416,12 @@
                                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uMZ-JE-c73">
+                                                                    <rect key="frame" x="79" y="0.0" width="213" height="37"/>
+                                                                    <connections>
+                                                                        <action selector="workBtnClick:" destination="f8a-kE-qec" eventType="touchUpInside" id="p6g-Rd-6rT"/>
+                                                                    </connections>
+                                                                </button>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
@@ -453,8 +456,8 @@
                                                                         <constraint firstAttribute="width" constant="1" id="b2Q-pM-lky"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入职务名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pEC-bf-UuF">
-                                                                    <rect key="frame" x="83" y="6" width="209" height="30"/>
+                                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入职务名称" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pEC-bf-UuF">
+                                                                    <rect key="frame" x="81" y="8" width="209" height="30"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="209" id="cCg-I5-HN6"/>
                                                                     </constraints>
@@ -514,6 +517,21 @@
                                                                         <constraint firstAttribute="width" constant="1" id="XuI-42-zKp"/>
                                                                     </constraints>
                                                                 </view>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="1000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LfK-tD-LVu">
+                                                                    <rect key="frame" x="87" y="12" width="39" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="3Fd-nW-0OV">
+                                                                    <rect key="frame" x="123" y="16" width="12" height="12"/>
+                                                                </imageView>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="元/月" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Sb-A9-XEl">
+                                                                    <rect key="frame" x="140" y="11" width="40" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
@@ -554,6 +572,21 @@
                                                                         <constraint firstAttribute="width" constant="1" id="cPP-BM-RXL"/>
                                                                     </constraints>
                                                                 </view>
+                                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IUs-bQ-ktq">
+                                                                    <rect key="frame" x="79" y="4" width="203" height="37"/>
+                                                                    <connections>
+                                                                        <action selector="jobStatusClick:" destination="f8a-kE-qec" eventType="touchUpInside" id="deH-j0-SMF"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="在职" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2tR-CZ-mFU">
+                                                                    <rect key="frame" x="89" y="12" width="42" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="SNo-Be-DYj">
+                                                                    <rect key="frame" x="119" y="16" width="12" height="12"/>
+                                                                </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
@@ -636,8 +669,8 @@
                                                                         <constraint firstAttribute="height" constant="20" id="lKy-FT-W4e"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入您的邮箱地址" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RTg-Mp-sa9">
-                                                                    <rect key="frame" x="83" y="7" width="209" height="30"/>
+                                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入您的邮箱地址" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RTg-Mp-sa9">
+                                                                    <rect key="frame" x="81" y="7" width="209" height="30"/>
                                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                     <textInputTraits key="textInputTraits"/>
                                                                 </textField>
@@ -791,6 +824,15 @@
                                                                         <action selector="entryTimeBtnClick:" destination="f8a-kE-qec" eventType="touchUpInside" id="Ukl-Tq-xRL"/>
                                                                     </connections>
                                                                 </button>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="立即到岗" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XZl-db-Wum">
+                                                                    <rect key="frame" x="88" y="12" width="56" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="H20-bu-6ow">
+                                                                    <rect key="frame" x="146" y="16" width="12" height="12"/>
+                                                                </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
@@ -844,6 +886,33 @@
                                                                         <constraint firstAttribute="width" constant="1" id="eE6-Zj-CYB"/>
                                                                     </constraints>
                                                                 </view>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="北京市" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYg-rf-Mkq">
+                                                                    <rect key="frame" x="84" y="14" width="51" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="qSF-dA-xmT">
+                                                                    <rect key="frame" x="129" y="18" width="12" height="12"/>
+                                                                </imageView>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="北京市" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uE5-eS-F6E">
+                                                                    <rect key="frame" x="147" y="14" width="51" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="qpb-mA-JWd">
+                                                                    <rect key="frame" x="192" y="18" width="12" height="12"/>
+                                                                </imageView>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="朝阳区" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnx-0q-y7h">
+                                                                    <rect key="frame" x="206" y="14" width="51" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="hhM-wr-uWf">
+                                                                    <rect key="frame" x="251" y="18" width="12" height="12"/>
+                                                                </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
@@ -897,6 +966,15 @@
                                                                         <constraint firstAttribute="height" constant="20" id="bu6-sv-QNw"/>
                                                                     </constraints>
                                                                 </view>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="5000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IGM-M7-qun">
+                                                                    <rect key="frame" x="86" y="12" width="42" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="AL3-Nr-Wpv">
+                                                                    <rect key="frame" x="123" y="16" width="12" height="12"/>
+                                                                </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
@@ -950,6 +1028,15 @@
                                                                         <constraint firstAttribute="height" constant="20" id="qBb-nC-ZcQ"/>
                                                                     </constraints>
                                                                 </view>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="护士长" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZeX-sw-YDI">
+                                                                    <rect key="frame" x="87" y="12" width="42" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="HZT-Gw-qQ0">
+                                                                    <rect key="frame" x="134" y="16" width="12" height="12"/>
+                                                                </imageView>
                                                             </subviews>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
@@ -1000,7 +1087,7 @@
                                                                 <constraint firstAttribute="height" constant="2" id="zdp-op-Y0u"/>
                                                             </constraints>
                                                         </view>
-                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QH3-s1-pgu">
+                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" tag="100" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QH3-s1-pgu">
                                                             <rect key="frame" x="0.0" y="34" width="300" height="116"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <constraints>
@@ -1010,7 +1097,7 @@
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="自我介绍" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kqk-IQ-qBM">
-                                                            <rect key="frame" x="0.0" y="31" width="68" height="21"/>
+                                                            <rect key="frame" x="8" y="31" width="68" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -1148,11 +1235,18 @@
                 <outlet property="brith_month" destination="a9b-8n-wcj" id="Ikm-72-PH1"/>
                 <outlet property="brith_year" destination="G4P-Ga-dyu" id="pxT-uv-Hgx"/>
                 <outlet property="clickLable" destination="sFJ-HJ-oAD" id="ORE-Yd-O03"/>
-                <outlet property="eduLable" destination="HyN-VZ-XgW" id="GO2-7t-1Q4"/>
+                <outlet property="eduImg" destination="GQt-dd-F5j" id="nC8-rp-rVc"/>
+                <outlet property="eduLable" destination="SAb-Rl-blH" id="GTp-ST-4Yg"/>
                 <outlet property="educationBtn" destination="3xe-rp-pJA" id="reG-iw-005"/>
                 <outlet property="entryTimeBtn" destination="rUp-Xd-ZGm" id="9hc-By-sNa"/>
                 <outlet property="expectPayBtn" destination="MbE-z0-zaM" id="uOT-7J-vCj"/>
                 <outlet property="expectPostBtn" destination="dlf-ao-dcv" id="ofQ-1U-k2j"/>
+                <outlet property="expectPostionImg" destination="HZT-Gw-qQ0" id="qfz-YL-9G7"/>
+                <outlet property="expectPostionLab" destination="ZeX-sw-YDI" id="Rar-0A-fVP"/>
+                <outlet property="expectSalaryImg" destination="AL3-Nr-Wpv" id="TDM-a6-Hmf"/>
+                <outlet property="expectSalaryLab" destination="IGM-M7-qun" id="VKf-v0-YfB"/>
+                <outlet property="jobStatusImg" destination="SNo-Be-DYj" id="fHz-1g-LSi"/>
+                <outlet property="jobStatusLab" destination="2tR-CZ-mFU" id="yfu-ZV-Jw2"/>
                 <outlet property="mailboxField" destination="RTg-Mp-sa9" id="rWr-GI-y1S"/>
                 <outlet property="moneyBtn" destination="hVk-kK-Tau" id="5Ae-QZ-PuW"/>
                 <outlet property="myScrollview" destination="O6E-2r-0ya" id="2dW-Lf-itH"/>
@@ -1168,12 +1262,28 @@
                 <outlet property="placeLab_2" destination="Iqw-7Q-vfJ" id="P6I-9s-Ddm"/>
                 <outlet property="placeLab_3" destination="MH5-V0-2e7" id="nIi-XU-x5v"/>
                 <outlet property="postField" destination="pEC-bf-UuF" id="etW-QC-0JS"/>
+                <outlet property="salaryImg" destination="3Fd-nW-0OV" id="EaG-vn-DjC"/>
+                <outlet property="salaryLab" destination="LfK-tD-LVu" id="iKJ-zo-tqb"/>
+                <outlet property="salary_Lab" destination="6Sb-A9-XEl" id="ybc-XT-QRa"/>
                 <outlet property="savaResume" destination="Hgu-Vf-fzc" id="t1R-zv-ZnL"/>
                 <outlet property="selfEvaluate" destination="QH3-s1-pgu" id="mZ7-Qu-obo"/>
-                <outlet property="sexLable" destination="TND-8t-4kH" id="fOY-pN-Atj"/>
+                <outlet property="selfLab" destination="Kqk-IQ-qBM" id="hCe-Xj-lFI"/>
+                <outlet property="sexImg" destination="bIx-cw-Avo" id="5cp-Xj-lqq"/>
+                <outlet property="sexLable" destination="YRA-86-QYb" id="mzY-gK-GP3"/>
                 <outlet property="targetCityBtn" destination="5lq-Da-Ezh" id="FHN-Ic-Inj"/>
+                <outlet property="targetCity_1_Img" destination="qSF-dA-xmT" id="JGD-VR-jTv"/>
+                <outlet property="targetCity_1_Lab" destination="LYg-rf-Mkq" id="6MC-mB-k3c"/>
+                <outlet property="targetCity_2_Img" destination="qpb-mA-JWd" id="Fhl-SR-5n8"/>
+                <outlet property="targetCity_2_Lab" destination="uE5-eS-F6E" id="Dfh-Hy-51F"/>
+                <outlet property="targetCity_3_Img" destination="hhM-wr-uWf" id="yEV-P6-Mc9"/>
+                <outlet property="targetCity_3_Lab" destination="gnx-0q-y7h" id="o8d-Gg-OP8"/>
+                <outlet property="timeImg" destination="H20-bu-6ow" id="Cza-CT-ebp"/>
+                <outlet property="timeLab" destination="XZl-db-Wum" id="4NF-cU-Qvq"/>
+                <outlet property="workImg" destination="1s3-4w-jQN" id="YLh-Nz-TPb"/>
+                <outlet property="workLab" destination="pg0-LM-Ng3" id="hSl-gS-WA9"/>
+                <outlet property="work_year" destination="9rQ-Hf-esz" id="lYo-wl-YoK"/>
             </connections>
-            <point key="canvasLocation" x="714" y="668.5"/>
+            <point key="canvasLocation" x="613" y="611.5"/>
         </view>
     </objects>
     <resources>

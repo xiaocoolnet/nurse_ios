@@ -165,6 +165,8 @@ class HSNurseStationHelper: NSObject {
         let url = PARK_URL_Header+"SetComment"
         let param = ["userid":QCLoginUserInfo.currentInfo.userid,"id":id,"content":content,"type":type,"photo":photo]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            
+            print(request?.URLString)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
