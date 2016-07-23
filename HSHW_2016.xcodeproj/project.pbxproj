@@ -16,6 +16,8 @@
 		0B6FED521D33999700A4488E /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B6FED511D33999700A4488E /* area.plist */; };
 		0B7392871D40C5AC00F785AF /* OnLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7392861D40C5AC00F785AF /* OnLineViewController.swift */; };
 		0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */; };
+		0B94E7771D4309070008FD57 /* MineMessDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B94E7761D4309070008FD57 /* MineMessDetailViewController.swift */; };
+		0B94E7791D4312E60008FD57 /* MineFinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B94E7781D4312E60008FD57 /* MineFinesView.swift */; };
 		0B9C64071D41B89F008B7F6C /* GMyExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9C64061D41B89F008B7F6C /* GMyExamViewController.swift */; };
 		0B9C64091D420957008B7F6C /* GMyErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9C64081D420957008B7F6C /* GMyErrorViewController.swift */; };
 		0BAB74BF1D34B95200D2E365 /* HSEditResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */; };
@@ -199,6 +201,8 @@
 		0B6FED511D33999700A4488E /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		0B7392861D40C5AC00F785AF /* OnLineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnLineViewController.swift; sourceTree = "<group>"; };
 		0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeName.swift; sourceTree = "<group>"; };
+		0B94E7761D4309070008FD57 /* MineMessDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineMessDetailViewController.swift; sourceTree = "<group>"; };
+		0B94E7781D4312E60008FD57 /* MineFinesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineFinesView.swift; sourceTree = "<group>"; };
 		0B9C64061D41B89F008B7F6C /* GMyExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyExamViewController.swift; sourceTree = "<group>"; };
 		0B9C64081D420957008B7F6C /* GMyErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyErrorViewController.swift; sourceTree = "<group>"; };
 		0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSEditResumeViewController.swift; sourceTree = "<group>"; };
@@ -448,6 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				181E0D2A1CEBF87D00E34A7F /* MineMessageViewController.swift */,
+				0B94E7761D4309070008FD57 /* MineMessDetailViewController.swift */,
 			);
 			name = Message;
 			sourceTree = "<group>";
@@ -792,6 +797,7 @@
 				0BC1B4291D390BAA008A6F3D /* MineMessageView.swift */,
 				F64C9AC51D3B9C2C0041E360 /* MineJobView.swift */,
 				F64C9AC71D3B9C3F0041E360 /* MineChildView.swift */,
+				0B94E7781D4312E60008FD57 /* MineFinesView.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1177,6 +1183,7 @@
 				1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */,
 				18A5148E1CED596F00A30AA5 /* UserViewController.swift in Sources */,
 				185408771CE6C8A600DFBA7C /* GoABroadViewController.swift in Sources */,
+				0B94E7791D4312E60008FD57 /* MineFinesView.swift in Sources */,
 				0BC1B42A1D390BAA008A6F3D /* MineMessageView.swift in Sources */,
 				183B84F81CE5BFDC00709235 /* ViewController.swift in Sources */,
 				F631DFAC1D069C6200E52FDB /* SmetaModel.swift in Sources */,
@@ -1224,6 +1231,7 @@
 				189849B61CE815D3007B37B4 /* AcademicTableViewCell.swift in Sources */,
 				185408891CE70D8A00DFBA7C /* AcademicViewController.swift in Sources */,
 				181E0D231CEBF80B00E34A7F /* SetDataViewController.swift in Sources */,
+				0B94E7771D4309070008FD57 /* MineMessDetailViewController.swift in Sources */,
 				0BD429451D3DCDF70064B64C /* MineExaminationViewController.swift in Sources */,
 				0B9C64071D41B89F008B7F6C /* GMyExamViewController.swift in Sources */,
 				0B6FED501D3382B800A4488E /* EducationModel.swift in Sources */,

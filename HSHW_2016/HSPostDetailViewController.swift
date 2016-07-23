@@ -185,7 +185,9 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             let margin = space+75
             
             let imagesArray:Array<String> = ["ic_two_collect","ic_two_like","ic_two_comment"]
-            let textArray:Array<String> = ["收藏","1136","16"]
+            
+            
+            let textArray:Array<String> = ["收藏","1136",String((postInfo?.comment.count)!)]
             
             for i in 0...2 {
                 let btn:UIButton = UIButton.init(frame: CGRectMake(margin*CGFloat(i)+space, 10, 75, 30))

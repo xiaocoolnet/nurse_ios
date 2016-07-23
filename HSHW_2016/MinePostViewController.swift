@@ -70,9 +70,12 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let model = self.dataSource[indexPath.row]
         cell.title.text = model.title
 //        cell.title.text = "真是醉了，上班时间谈人生"
-        cell.timeLab.text = "2016/05/23"
+//        cell.timeLab.text = "2016/05/23"
         cell.zanNum.text = "232"
         cell.conLab.text = "3421"
+        
+        cell.timeLab.text = timeStampToString(model.write_time)
+        
         
         return cell
 //        
@@ -90,6 +93,21 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
             print(response)
         }
 
+    }
+    
+    // Linux时间戳转标准时间
+    func timeStampToString(timeStamp:String)->String {
+        
+        let string = NSString(string: timeStamp)
+        
+        let timeSta:NSTimeInterval = string.doubleValue
+        let dfmatter = NSDateFormatter()
+        dfmatter.dateFormat="yyyy-MM-dd"
+        
+        let date = NSDate(timeIntervalSince1970: timeSta)
+        
+        print(dfmatter.stringFromDate(date))
+        return dfmatter.stringFromDate(date)
     }
 
 }
