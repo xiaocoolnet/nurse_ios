@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -41,7 +41,10 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="我收藏的文章" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fVz-ho-PCB">
-                        <rect key="frame" x="41" y="16" width="279" height="17"/>
+                        <rect key="frame" x="41" y="16" width="222" height="17"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="17" id="qcP-Xv-pmy"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
@@ -57,7 +60,7 @@
                     <constraint firstItem="vQ0-We-P2K" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="XtR-w1-NXw"/>
                     <constraint firstItem="QAn-65-VH0" firstAttribute="centerY" secondItem="IrW-9v-BAq" secondAttribute="centerY" id="fwW-S4-c1L"/>
                     <constraint firstItem="QAn-65-VH0" firstAttribute="leading" secondItem="Bow-SL-dUx" secondAttribute="trailing" id="hNs-9Y-XIh"/>
-                    <constraint firstItem="fVz-ho-PCB" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="8" id="klL-vD-lsv"/>
+                    <constraint firstItem="fVz-ho-PCB" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" constant="-49" id="klL-vD-lsv"/>
                     <constraint firstItem="QAn-65-VH0" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="vwm-cK-K0I"/>
                 </constraints>
             </tableViewCellContentView>
@@ -66,7 +69,7 @@
                 <outlet property="newsTitle" destination="fVz-ho-PCB" id="oj4-Ny-Wxt"/>
                 <outlet property="timeLabel" destination="IrW-9v-BAq" id="tsl-6W-E8C"/>
             </connections>
-            <point key="canvasLocation" x="415" y="293.5"/>
+            <point key="canvasLocation" x="407" y="292.5"/>
         </tableViewCell>
     </objects>
     <resources>

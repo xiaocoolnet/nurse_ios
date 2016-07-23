@@ -370,7 +370,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         print("textfield.text = ",textField.text)
         if textField.text != "" {
             helper.setComment((postInfo?.mid)!, content: (textField.text)!, type: "2", photo: "", handle: { (success, response) in
-                print("添加评论",success)
+                print("添加评论",success,response)
                 if success {
                     
                     let dic = ["userid":String(QCLoginUserInfo.currentInfo.userid),"name":String(QCLoginUserInfo.currentInfo.userName),"content":String(UTF8String: textField.text!)!]

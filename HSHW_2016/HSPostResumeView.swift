@@ -12,7 +12,7 @@ import Alamofire
 
 //接口类型
 enum OptionType{
-    case sex,condition,welfare,number,money,defaut
+    case sex,edu,work,salary,jobStatus,time,expectSalary,expectPostion,defaut
 }
 
 protocol HSPostResumeViewDelegate:NSObjectProtocol{
@@ -20,22 +20,25 @@ protocol HSPostResumeViewDelegate:NSObjectProtocol{
     func saveResumeBtnClicked()
 }
 
-class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate, ChangeDelegate, UITableViewDelegate, UITableViewDataSource {
+class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate, ChangeDelegate, UITableViewDelegate, UITableViewDataSource,UITextViewDelegate {
     
     @IBOutlet weak var myScrollview: UIScrollView!
     @IBOutlet weak var borderView1: UIView!
     @IBOutlet weak var borderView2: UIView!
+    // 自我介绍
     @IBOutlet weak var selfEvaluate: UITextView!
+    // 保存简历
     @IBOutlet weak var savaResume: UIButton!
     @IBOutlet weak var avatarBtn: UIButton!
     @IBOutlet weak var sexLable: UILabel!
-    @IBOutlet weak var sexTextField: UITextField!
+    @IBOutlet weak var sexImg: UIImageView!
     @IBOutlet weak var nameTextFeild: UITextField!
     @IBOutlet weak var nameLable: UILabel!
     @IBOutlet weak var clickLable: UILabel!
     @IBOutlet weak var birthLable: UILabel!
     @IBOutlet weak var birthBtn: UIButton!
     @IBOutlet weak var eduLable: UILabel!
+    @IBOutlet weak var eduImg: UIImageView!
     @IBOutlet weak var educationBtn: UIButton!
     @IBOutlet weak var plaLable: UILabel!
     @IBOutlet weak var placeLab_1: UILabel!
@@ -46,16 +49,37 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     @IBOutlet weak var placeImg_3: UIImageView!
     
     @IBOutlet weak var placeBtn: UIButton!
-    @IBOutlet weak var workTextField: UITextField!
+    @IBOutlet weak var workLab: UILabel!
+    @IBOutlet weak var workImg: UIImageView!
+    @IBOutlet weak var work_year: UILabel!
+
     @IBOutlet weak var postField: UITextField!
+    @IBOutlet weak var salaryLab: UILabel!
+    @IBOutlet weak var salaryImg: UIImageView!
+    @IBOutlet weak var salary_Lab: UILabel!
     @IBOutlet weak var moneyBtn: UIButton!
-    @IBOutlet weak var stateField: UITextField!
+    @IBOutlet weak var jobStatusLab: UILabel!
+    @IBOutlet weak var jobStatusImg: UIImageView!
     @IBOutlet weak var phoneField: UITextField!
     @IBOutlet weak var mailboxField: UITextField!
+    
+    @IBOutlet weak var timeLab: UILabel!
+    @IBOutlet weak var timeImg: UIImageView!
+    @IBOutlet weak var targetCity_1_Lab: UILabel!
+    @IBOutlet weak var targetCity_2_Lab: UILabel!
+    @IBOutlet weak var targetCity_3_Lab: UILabel!
+    @IBOutlet weak var targetCity_1_Img: UIImageView!
+    @IBOutlet weak var targetCity_2_Img: UIImageView!
+    @IBOutlet weak var targetCity_3_Img: UIImageView!
+    @IBOutlet weak var expectSalaryLab: UILabel!
+    @IBOutlet weak var expectSalaryImg: UIImageView!
+    @IBOutlet weak var expectPostionLab: UILabel!
+    @IBOutlet weak var expectPostionImg: UIImageView!
     @IBOutlet weak var targetCityBtn: UIButton!
     @IBOutlet weak var entryTimeBtn: UIButton!
     @IBOutlet weak var expectPayBtn: UIButton!
     @IBOutlet weak var expectPostBtn: UIButton!
+    @IBOutlet weak var selfLab: UILabel!
     
     var view = UIView()
     var albumBtn = UIButton()
@@ -101,10 +125,16 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         
         optionDictionary = ["sex":["男","女"],
                             "edu":["博士后","博士","硕士","本科","专科","高中","其他"],
-                            "work":["无","01","02","03","04","05","06","07","08","09","更多"],
-                            "salary":["1000","2000","3000","4000","5000","6000","7000","8000","9000","1万","更多"],
-                            "JobStatus":["在职","离职"],
-        "time":["立即到岗","一月以内","暂不考虑"]]
+                            "work":["<01","01","02","03","04","05","06","07","08","09","10+"],
+                            "salary":["1000","2000","3000","4000","5000","6000","7000","8000","9000","1万","1万+"],
+                            "jobStatus":["在职","离职"],
+                            "time":["立即到岗","一月以内","暂不考虑"],
+                            "expectPostion":["院长","护士","护士长","主治医生","护工"]]
+        
+        selfEvaluate.delegate = self
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
     }
     
     @IBAction func avatarButtonClicked(sender: AnyObject) {
@@ -134,7 +164,7 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     @IBAction func saveResumeCilcked(sender: AnyObject) {
 //        delegate?.saveResumeBtnClicked()
         if delegate != nil {
-            if sexTextField.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != "" {
+            if sexLable.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != "" {
                 
                 delegate?.saveResumeBtnClicked()
             }else{
@@ -147,48 +177,124 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
 
             }
         }
-        print(userid)
-        print(imageName)
-        print(nameTextFeild.text)
-        print(workTextField.text)
-        print(sexTextField.text)
-        print(birthBtn.titleLabel?.text)
-        print(educationBtn.titleLabel?.text)
-        print(placeBtn.titleLabel?.text)
-        print(stateField.text)
-        print(moneyBtn.titleLabel?.text)
-        print(phoneField.text)
-        print(mailboxField.text)
-        print(entryTimeBtn.titleLabel?.text)
-        print(targetCityBtn.titleLabel?.text)
-        print(expectPayBtn.titleLabel?.text)
-        print(expectPostBtn.titleLabel?.text)
-        print(selfEvaluate.text)
         
-        if sexTextField.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != ""{
+        if sexLable.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != ""{
             
-        help.postForum(userid, avatar:imageName, name: nameTextFeild.text!, experience: workTextField.text!, sex: sexTextField.text!, birthday:(birthBtn.titleLabel?.text!)!, marital:(educationBtn.titleLabel?.text!)! , address:(placeBtn.titleLabel?.text!)!, jobstate:stateField.text!, currentsalary:(moneyBtn.titleLabel?.text!)!, phone:phoneField.text!, email:mailboxField.text!, hiredate:(entryTimeBtn.titleLabel?.text)!, wantcity:(targetCityBtn.titleLabel?.text!)!, wantsalary:(expectPayBtn.titleLabel?.text!)!, wantposition:(expectPostBtn.titleLabel?.text!)!, description:selfEvaluate.text, handle: { (success, response) in
-            if success {
-                dispatch_async(dispatch_get_main_queue(), {
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "发布成功"
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                    print(success)
-                })
-            }
-        })
+            help.postForum(userid, avatar:imageName, name: nameTextFeild.text!, experience: workLab.text!, sex: sexLable.text!, birthday:(brith_year.text!+brith_month.text!+brith_day.text!), marital:eduLable.text! , address:placeLab_1.text!+placeLab_2.text!+placeLab_3.text!, jobstate:jobStatusLab.text!, currentsalary:salaryLab.text!, phone:phoneField.text!, email:mailboxField.text!, hiredate:timeLab.text!, wantcity:targetCity_1_Lab.text!+targetCity_2_Lab.text!+targetCity_3_Lab.text!, wantsalary:expectSalaryLab.text!, wantposition:expectPostionLab.text!, description:selfEvaluate.text, handle: { (success, response) in
+                if success {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "发布成功"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                        print(success)
+                    })
+                }
+            })
         }
 
     }
     
+    // TODO:
+    func resignTextFieldFirstResponder() {
+        nameTextFeild.resignFirstResponder()
+        postField.resignFirstResponder()
+        phoneField.resignFirstResponder()
+        mailboxField.resignFirstResponder()
+        selfEvaluate.resignFirstResponder()
+    }
+    
     // 性别选择
     @IBAction func sexBtnClick(sender: AnyObject) {
+        resignTextFieldFirstResponder()
+        
+        listShow(sender as! UIView, andType: .sex)
+    }
+    
+    // 点击学历
+    @IBAction func educationbtnClick(sender: AnyObject) {
+        //        let vc = HSEditResumeViewController()
+        //        vc.delegate = self
+        //        vc.num = "1"
+        //        selfNav?.pushViewController(vc, animated: true)
+        
+        resignTextFieldFirstResponder()
+        
+        listShow(sender as! UIView, andType: .edu)
         
     }
     
+    // 工作经验
+    @IBAction func workBtnClick(sender: AnyObject) {
+        resignTextFieldFirstResponder()
+        
+        listShow(sender as! UIView, andType: .work)
+    }
+    
+    // 目前薪资
+    @IBAction func moneyBtnClick(sender: AnyObject) {
+        
+        resignTextFieldFirstResponder()
+        
+        listShow(sender as! UIView, andType: .salary)
+        
+    }
+    
+    // 求职状态
+    @IBAction func jobStatusClick(sender: AnyObject) {
+        
+        resignTextFieldFirstResponder()
+        
+        listShow(sender as! UIView, andType: .jobStatus)
+    }
+    
+    // 到岗时间
+    @IBAction func entryTimeBtnClick(sender: AnyObject) {
+        
+        //        picker = DatePickerView.getShareInstance()
+        //        picker!.textColor = UIColor.redColor()
+        //        picker!.showWithDate(NSDate())
+        //        picker?.block = {
+        //            (date:NSDate)->() in
+        //            let formatter = NSDateFormatter()
+        //            formatter.dateFormat = "yyyy-MM-dd zzz"
+        //            let string = formatter.stringFromDate(date)
+        //            let range:Range = string.rangeOfString(" ")!
+        //            let time = string.substringToIndex(range.endIndex)
+        //            self.entryTimeBtn.setTitle(time, forState: .Normal)
+        //        
+        //        }
+        
+        resignTextFieldFirstResponder()
+        
+        listShow(sender as! UIView, andType: .time)
+        
+    }
+    
+    // 期望薪资
+    @IBAction func expectPayBtn(sender: AnyObject) {
+//        nextVC.delegate = self
+//        nextVC.num = "12"
+//        selfNav?.pushViewController(nextVC, animated: true)
+        resignTextFieldFirstResponder()
+        
+        listShow(sender as! UIView, andType: .expectSalary)
+    }
+    
+    // 期望职位
+    @IBAction func expectPostBtnClick(sender: AnyObject) {
+//        VC.delegate = self
+//        VC.num = "13"
+//        selfNav?.pushViewController(VC, animated: true)
+        resignTextFieldFirstResponder()
+        
+        listShow(sender as! UIView, andType: .expectPostion)
+    }
+    
+    // MARK:- 设置弹出视图
+    /*****             开始             *****/
     var bgView = UIView()
     
     var chooseTableView = UITableView()
@@ -200,9 +306,10 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         optionType = type
         dataGet(type)
         bgView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
-        self.myScrollview.addSubview(bgView)
+        onView.superview?.superview?.addSubview(bgView)
         
-        chooseTableView = UITableView.init(frame: CGRectMake(CGRectGetMinX(onView.frame)+20, CGRectGetMaxY(onView.superview!.frame), CGRectGetWidth(onView.frame)-20, 108), style: .Plain)
+        chooseTableView = UITableView.init(frame: CGRectMake(CGRectGetMinX(onView.frame), CGRectGetMinY((onView.superview?.frame)!)+10, CGRectGetWidth(onView.frame)-20, 60), style: .Plain)
+        chooseTableView.rowHeight = 30
         chooseTableView.backgroundColor = UIColor.whiteColor()
         chooseTableView.layer.borderWidth = 1
         chooseTableView.layer.borderColor = UIColor.lightGrayColor().CGColor
@@ -210,7 +317,7 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         chooseTableView.dataSource = self
         chooseTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         chooseTableView.bounces = false
-        self.myScrollview.addSubview(chooseTableView)
+        onView.superview?.superview?.addSubview(chooseTableView)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -234,35 +341,53 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         
         let string = self.chooseList[indexPath.row]
         
-//        switch portType {
-//        case PortType.position:
-//            positionLab.text = string
-//            positionLab.enabled = true
-//            positionLab.sizeToFit()
-//            positionImg.frame = CGRectMake(CGRectGetMaxX(positionLab.frame), positionImg.frame.origin.y, 12, 12)
-//        case PortType.condition:
-//            conditionLab.text = string
-//            conditionLab.enabled = true
-//            conditionLab.sizeToFit()
-//            conditionImg.frame = CGRectMake(CGRectGetMaxX(conditionLab.frame), conditionImg.frame.origin.y, 12, 12)
-//        case PortType.welfare:
-//            treatmentLab.text = string
-//            treatmentLab.enabled = true
-//            treatmentLab.sizeToFit()
-//            treatmentImg.frame = CGRectMake(CGRectGetMaxX(treatmentLab.frame), treatmentImg.frame.origin.y, 12, 12)
-//        case PortType.number:
-//            personLab.text = string
-//            personLab.enabled = true
-//            personLab.sizeToFit()
-//            personImg.frame = CGRectMake(CGRectGetMaxX(personLab.frame), personImg.frame.origin.y, 12, 12)
-//        case PortType.money:
-//            moneyLab.text = string
-//            moneyLab.enabled = true
-//            moneyLab.sizeToFit()
-//            moneyImg.frame = CGRectMake(CGRectGetMaxX(moneyLab.frame), moneyImg.frame.origin.y, 12, 12)
-//        default:
-//            print("defaut")
-//        }
+        switch optionType {
+        case PortType.sex:
+            sexLable.text = string
+            sexLable.enabled = true
+            sexLable.sizeToFit()
+            sexImg.frame = CGRectMake(CGRectGetMaxX(sexLable.frame), sexImg.frame.origin.y, 12, 12)
+        case PortType.edu:
+            eduLable.text = string
+            eduLable.enabled = true
+            eduLable.sizeToFit()
+            eduImg.frame = CGRectMake(CGRectGetMaxX(eduLable.frame), eduImg.frame.origin.y, 12, 12)
+        case PortType.work:
+            workLab.text = string
+            workLab.enabled = true
+            workLab.sizeToFit()
+            workImg.frame = CGRectMake(CGRectGetMaxX(workLab.frame), workImg.frame.origin.y, 12, 12)
+            work_year.frame = CGRectMake(CGRectGetMaxX(workImg.frame), work_year.frame.origin.y, work_year.frame.size.width, work_year.frame.size.height)
+        case PortType.salary:
+            salaryLab.text = string
+            salaryLab.enabled = true
+            salaryLab.sizeToFit()
+            salaryImg.frame = CGRectMake(CGRectGetMaxX(salaryLab.frame), salaryImg.frame.origin.y, 12, 12)
+            salary_Lab.frame = CGRectMake(CGRectGetMaxX(salaryImg.frame), salary_Lab.frame.origin.y, salary_Lab.frame.size.width, salary_Lab.frame.size.height)
+        case PortType.jobStatus:
+            jobStatusLab.text = string
+            jobStatusLab.enabled = true
+            jobStatusLab.sizeToFit()
+            jobStatusImg.frame = CGRectMake(CGRectGetMaxX(jobStatusLab.frame), jobStatusImg.frame.origin.y, 12, 12)
+        case PortType.time:
+            timeLab.text = string
+            timeLab.enabled = true
+            timeLab.sizeToFit()
+            timeImg.frame = CGRectMake(CGRectGetMaxX(timeLab.frame), timeImg.frame.origin.y, 12, 12)
+        case PortType.expectSalary:
+            expectSalaryLab.text = string
+            expectSalaryLab.enabled = true
+            expectSalaryLab.sizeToFit()
+            expectSalaryImg.frame = CGRectMake(CGRectGetMaxX(expectSalaryLab.frame), expectSalaryImg.frame.origin.y, 12, 12)
+        case PortType.expectPostion:
+            expectPostionLab.text = string
+            expectPostionLab.enabled = true
+            expectPostionLab.sizeToFit()
+            expectPostionImg.frame = CGRectMake(CGRectGetMaxX(expectPostionLab.frame), expectPostionImg.frame.origin.y, 12, 12)
+            
+        default:
+            print("defaut")
+        }
     }
     
     func dataGet(optionType:OptionType){
@@ -270,7 +395,18 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         switch optionType {
         case .sex:
             self.chooseList = optionDictionary["sex"]!
-        
+        case .edu:
+            self.chooseList = optionDictionary["edu"]!
+        case .work:
+            self.chooseList = optionDictionary["work"]!
+        case .salary,.expectSalary:
+            self.chooseList = optionDictionary["salary"]!
+        case .jobStatus:
+            self.chooseList = optionDictionary["jobStatus"]!
+        case .time:
+            self.chooseList = optionDictionary["time"]!
+        case .expectPostion:
+            self.chooseList = optionDictionary["expectPostion"]!
         default:
             print("defaut")
         }
@@ -280,6 +416,8 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         
     }
     
+    /*****             结束             *****/
+    // MARK:-
     
     @IBOutlet weak var brith_year: UILabel!
     @IBOutlet weak var brith_month: UILabel!
@@ -310,13 +448,7 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
  
     }
     
-    @IBAction func educationbtnClick(sender: AnyObject) {
-//        let vc = HSEditResumeViewController()
-        vc.delegate = self
-        vc.num = "1"
-        selfNav?.pushViewController(vc, animated: true)
-    }
-    
+
     func change(controller:HSEditResumeViewController,string:String,idStr:String){
 
         if idStr == "1" {
@@ -378,31 +510,8 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         
     }
     
-    @IBAction func moneyBtnClick(sender: AnyObject) {
-        
-        next.num = "14"
-        next.delegate = self
-        selfNav?.pushViewController(next, animated: true)
+  
 
-    }
-    
-    @IBAction func entryTimeBtnClick(sender: AnyObject) {
-        
-        picker = DatePickerView.getShareInstance()
-        picker!.textColor = UIColor.redColor()
-        picker!.showWithDate(NSDate())
-        picker?.block = {
-            (date:NSDate)->() in
-            let formatter = NSDateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd zzz"
-            let string = formatter.stringFromDate(date)
-            let range:Range = string.rangeOfString(" ")!
-            let time = string.substringToIndex(range.endIndex)
-            self.entryTimeBtn.setTitle(time, forState: .Normal)
-            
-        }
-
-    }
     
     @IBAction func targetCityBtnClick(sender: AnyObject) {
         let pick = AdressPickerView.shareInstance
@@ -417,27 +526,34 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
             
             self.array=dressArray
             print("选择的地区是: \(dressArray)")
+
+            self.targetCity_1_Lab.text =  (dressArray[0] as! String)
+            self.targetCity_2_Lab.text =  (dressArray[1] as! String)
+            self.targetCity_3_Lab.text =  (dressArray[2] as! String)
             
-            //            self.placeBtn.text="\(dressArray[0])  \(dressArray[1])  \(dressArray[2])"
-            self.targetCityBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
-            print(1111)
+            self.targetCity_1_Lab.enabled = true
+            self.targetCity_2_Lab.enabled = true
+            self.targetCity_3_Lab.enabled = true
+            
+            self.targetCity_1_Lab.sizeToFit()
+            self.targetCity_1_Img.frame = CGRectMake(CGRectGetMaxX(self.targetCity_1_Lab.frame), self.targetCity_1_Img.frame.origin.y, 12, 12)
+            
+            
+            self.targetCity_2_Lab.frame = CGRectMake(CGRectGetMaxX(self.targetCity_1_Img.frame)+5, self.targetCity_2_Lab.frame.origin.y, self.targetCity_2_Lab.frame.size.width, 12)
+            self.targetCity_2_Lab.adjustsFontSizeToFitWidth = true
+            self.targetCity_2_Lab.sizeToFit()
+            self.targetCity_2_Img.frame = CGRectMake(CGRectGetMaxX(self.targetCity_2_Lab.frame), self.targetCity_2_Img.frame.origin.y, 12, 12)
+            
+            self.targetCity_3_Lab.frame = CGRectMake(CGRectGetMaxX(self.targetCity_2_Img.frame)+5, self.targetCity_3_Lab.frame.origin.y, self.targetCity_3_Lab.frame.size.width, 12)
+            self.targetCity_3_Lab.adjustsFontSizeToFitWidth = true
+            self.targetCity_3_Lab.sizeToFit()
+            self.targetCity_3_Img.frame = CGRectMake(CGRectGetMaxX(self.targetCity_3_Lab.frame), self.targetCity_3_Img.frame.origin.y, 12, 12)
+            
         }
 
     }
 
-    
-    @IBAction func expectPayBtn(sender: AnyObject) {
-        nextVC.delegate = self
-        nextVC.num = "12"
-        selfNav?.pushViewController(nextVC, animated: true)
-    }
-    
-    @IBAction func expectPostBtnClick(sender: AnyObject) {
-        VC.delegate = self
-        VC.num = "13"
-        selfNav?.pushViewController(VC, animated: true)
-    }
-    
+
     func click(){
         view.removeFromSuperview()
         albumBtn.removeFromSuperview()
@@ -528,6 +644,50 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
         avatarBtn.userInteractionEnabled = true
 
         picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    var keyboardHeight:CGFloat = 0.0
+    
+    func keyboardWillAppear(notification: NSNotification) {
+        
+        // 获取键盘信息
+        let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
+        
+        let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
+        if selfEvaluate.isFirstResponder() {
+            
+            UIView.animateWithDuration(0.3) {
+                self.myScrollview.contentOffset = CGPoint.init(x: 0, y: self.myScrollview.contentSize.height-self.myScrollview.frame.size.height+keyboardheight)
+                self.myScrollview.frame = CGRectMake(self.myScrollview.frame.origin.x, self.myScrollview.frame.origin.y, self.myScrollview.frame.size.width, self.myScrollview.frame.size.height-keyboardheight)
+            }
+        }
+        
+        keyboardHeight = keyboardheight
+        print("键盘弹起")
+        print(keyboardheight)
+        
+    }
+    
+    func keyboardWillDisappear(notification:NSNotification){
+        
+        if self.myScrollview.frame.size.height<=HEIGHT-64-49-keyboardHeight {
+
+            UIView.animateWithDuration(0.3) {
+    //            self.myScrollview.contentOffset = CGPoint.init(x: 0, y: self.myScrollview.contentSize.height-self.myScrollview.frame.size.height)
+
+                self.myScrollview.frame = CGRectMake(self.myScrollview.frame.origin.x, self.myScrollview.frame.origin.y, self.myScrollview.frame.size.width, self.myScrollview.frame.size.height+self.keyboardHeight)
+            }
+        }
+        print("键盘落下")
+    }
+    
+    //MARK:UITextViewDelegate
+    func textViewDidChange(textView: UITextView) {
+        if (textView.text == "") {
+            selfLab.text = "自我介绍"
+        }else{
+            selfLab.text = ""
+        }
     }
 }
 
