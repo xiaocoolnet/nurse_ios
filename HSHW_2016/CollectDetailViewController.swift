@@ -8,16 +8,59 @@
 
 import UIKit
 
-class CollectDetailViewController: UIViewController {
+class CollectDetailViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
-//    private var collect:Array<CollectList> = []
-    var collect:Array<JobModel>?
 
+    let myTableView = UITableView()
+    
+    var helper = HSMineHelper()
+    private var collectListArray:Array<CollectList> = []
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
+        self.title = "其他收藏"
+        
+        // 线
+        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        line.backgroundColor = COLOR
+        self.view.addSubview(line)
+        
+        self.view.backgroundColor = UIColor.whiteColor()
+        
+        myTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-115)
+        myTableView.backgroundColor = UIColor.clearColor()
+        myTableView.registerClass(MineExamCollectTableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.rowHeight = 70
+        myTableView.delegate = self
+        myTableView.dataSource = self
+        self.view.addSubview(myTableView)
+        
+        self.getData()
 
-        // Do any additional setup after loading the view.
     }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.collectListArray.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! MineExamCollectTableViewCell
+        cell.selectionStyle = .None
+        
+        cell.fansModel = collectListArray[indexPath.row]
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print(indexPath.row)
+    }
+    
+    func getData() {
+        helper.GetCollectList(QCLoginUserInfo.currentInfo.userid, type: "3") { (success, response) in
+            self.collectListArray = response as! Array<CollectList>
+            self.myTableView.reloadData()
+        }
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

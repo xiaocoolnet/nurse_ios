@@ -96,6 +96,7 @@ class NurseStatusViewController: UIViewController, UITableViewDelegate, UITableV
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.likeNum = newsInfo.likes.count
+        next.tagNum = 1
         print(newsInfo.likes.count)
         self.navigationController?.pushViewController(next, animated: true)
     }

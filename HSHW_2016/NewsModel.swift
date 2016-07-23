@@ -118,7 +118,7 @@ class NewsInfo: JSONJoy{
     var smeta :JSONDecoder?
     
     required init(_ decoder: JSONDecoder){
-        post_title = decoder["post_title"].string
+        post_title = decoder["post_title"].string ?? ""
         title = decoder["title"].string
         post_excerpt = decoder["post_excerpt"].string
         post_date = decoder["post_date"].string
@@ -135,8 +135,8 @@ class NewsInfo: JSONJoy{
         term_hits = decoder["term_hits"].string ?? ""
         print(post_excerpt)
         print(decoder["likes"].array)
-        if decoder["likes"].array != nil {
-            for childs: JSONDecoder in decoder["likes"].array!{
+        if decoder["post_like"].array != nil {
+            for childs: JSONDecoder in decoder["post_like"].array!{
                 self.likes.append(LikeInfo(childs))
             }
         }

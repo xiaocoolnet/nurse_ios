@@ -185,14 +185,16 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 //                
             }
         } else if indexPath.section == 1 {
-            let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
+//            let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
+            let goAboard = AllStudyViewController()
             goAboard.articleID = "12"
             goAboard.title = "出国考试"
             self.navigationController?.pushViewController(goAboard, animated: true)
         } else if indexPath.section == 2 {
             
             if indexPath.row == 0 {
-                let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
+//                let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
+                let goAboard = AllStudyViewController()
                 goAboard.articleID = "13"
                 goAboard.title = "临床护理"
                 self.navigationController?.pushViewController(goAboard, animated: true)
@@ -203,14 +205,16 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 goAboard.title = "50项护理操作"
                 self.navigationController?.pushViewController(goAboard, animated: true)
             }else if indexPath.row == 2 {
-                let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
+//                let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
+                let goAboard = AllStudyViewController()
                 goAboard.articleID = "15"
                 goAboard.title = "考试宝典"
                 self.navigationController?.pushViewController(goAboard, animated: true)
             }
         }else if indexPath.section == 3 {
             if indexPath.row == 0 {
-                let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
+//                let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
+                let goAboard = AllStudyViewController()
                 goAboard.articleID = "16"
                 goAboard.title = "护理论文"
                 self.navigationController?.pushViewController(goAboard, animated: true)

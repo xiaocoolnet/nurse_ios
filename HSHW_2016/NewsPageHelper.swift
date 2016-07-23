@@ -61,12 +61,12 @@ class NewsPageHelper: NSObject {
 
     }
     
-    func collectionNews(refid:String,title:String,description:String,handle:ResponseBlock){
+    func collectionNews(refid:String,type:String,title:String,description:String,handle:ResponseBlock){
         
         let url = PARK_URL_Header+"addfavorite"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,
-            "type":"1",
+            "type":type,
             "refid":refid,
             "title":title,
             "description":description

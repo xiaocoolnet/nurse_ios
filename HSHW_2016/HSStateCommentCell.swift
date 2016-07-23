@@ -46,6 +46,8 @@ class HSStateCommentCell: UITableViewCell {
             contentLab.text = commentModel?.content
 //            headerBtn.layer.masksToBounds =
             
+            
+            
         }
     }
     

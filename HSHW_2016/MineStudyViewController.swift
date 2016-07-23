@@ -154,6 +154,9 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
             self.navigationController?.pushViewController(collect, animated: true)
         default:
             print("MineStudyViewController.swift  studyTheKind")
+            let vc = CollectDetailViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+            
         }
         
     }

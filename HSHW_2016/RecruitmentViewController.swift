@@ -493,7 +493,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.hiredate = model.hiredate
                 self.wantcity = model.wantcity
                 self.wantsalary = model.wantsalary
-                superViewController?.showRightBtn()
+//                superViewController?.showRightBtn()
                 self.makeCVMessage()
             }
         }
@@ -598,7 +598,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.sendResume.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
             }
             self.sendResume.removeFromSuperview()
-            self.employmentMessage.removeFromSuperview()
+            self.resumeDetail.removeFromSuperview()
             superViewController?.hiddenBtn()
         }
     }
@@ -650,7 +650,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         self.employmentdataSource.removeAllObjects()
         self.employmentMessageTableView.reloadData()
         self.employmentMessage.removeFromSuperview()
-        
+        superViewController?.hiddenBtn()
     }
     
     func takeResume(){
@@ -660,6 +660,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         self.employmentdataSource.removeAllObjects()
         self.employmentMessageTableView.reloadData()
         self.employmentMessage.removeFromSuperview()
+        superViewController?.hiddenBtn()
     }
     
     

@@ -18,6 +18,7 @@
 		0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */; };
 		0B94E7771D4309070008FD57 /* MineMessDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B94E7761D4309070008FD57 /* MineMessDetailViewController.swift */; };
 		0B94E7791D4312E60008FD57 /* MineFinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B94E7781D4312E60008FD57 /* MineFinesView.swift */; };
+		0B94E7851D436B380008FD57 /* AllStudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B94E7841D436B380008FD57 /* AllStudyViewController.swift */; };
 		0B9C64071D41B89F008B7F6C /* GMyExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9C64061D41B89F008B7F6C /* GMyExamViewController.swift */; };
 		0B9C64091D420957008B7F6C /* GMyErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9C64081D420957008B7F6C /* GMyErrorViewController.swift */; };
 		0BAB74BF1D34B95200D2E365 /* HSEditResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */; };
@@ -203,6 +204,7 @@
 		0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeName.swift; sourceTree = "<group>"; };
 		0B94E7761D4309070008FD57 /* MineMessDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineMessDetailViewController.swift; sourceTree = "<group>"; };
 		0B94E7781D4312E60008FD57 /* MineFinesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineFinesView.swift; sourceTree = "<group>"; };
+		0B94E7841D436B380008FD57 /* AllStudyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllStudyViewController.swift; sourceTree = "<group>"; };
 		0B9C64061D41B89F008B7F6C /* GMyExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyExamViewController.swift; sourceTree = "<group>"; };
 		0B9C64081D420957008B7F6C /* GMyErrorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyErrorViewController.swift; sourceTree = "<group>"; };
 		0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSEditResumeViewController.swift; sourceTree = "<group>"; };
@@ -684,6 +686,7 @@
 				18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */,
 				0DE829D61D3B21950047FB23 /* GOnlineExamViewController.swift */,
 				0B7392861D40C5AC00F785AF /* OnLineViewController.swift */,
+				0B94E7841D436B380008FD57 /* AllStudyViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1168,6 +1171,7 @@
 				0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */,
 				F6E9E9531D362AF000E99FDD /* HSHotPostCell.swift in Sources */,
 				181E0D271CEBF85100E34A7F /* MineStudyViewController.swift in Sources */,
+				0B94E7851D436B380008FD57 /* AllStudyViewController.swift in Sources */,
 				0BAB74BF1D34B95200D2E365 /* HSEditResumeViewController.swift in Sources */,
 				183B866F1CE5CF9500709235 /* Http.swift in Sources */,
 				185408791CE6C8B600DFBA7C /* NurseStationViewController.swift in Sources */,

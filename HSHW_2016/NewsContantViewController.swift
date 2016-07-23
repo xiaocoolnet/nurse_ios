@@ -24,6 +24,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     var helper = NewsPageHelper()
     let zan = UIButton(frame: CGRectMake(WIDTH*148/375, WIDTH*80/375, WIDTH*80/375, WIDTH*80/375))
     var finishLoad = false
+    var tagNum = 0
     
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = false
@@ -85,8 +86,16 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         let uid = user.stringForKey("userid")//登录用户 id
         let userID = user.stringForKey((self.newsInfo?.object_id)!)
         print(userID)
+        var str = NSString()
+        if tagNum == 1 {
+            str = "3"
+            
+        }else{
+            str = "1"
+            
+        }
         if userID == "false"||userID==nil{
-           helper.collectionNews(newsInfo!.object_id!, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt!) { (success, response) in
+            helper.collectionNews(newsInfo!.object_id!,type: str as String, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt!) { (success, response) in
             if success {
                 dispatch_async(dispatch_get_main_queue(), { 
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -274,6 +283,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell1.addSubview(title)
                 tableView.rowHeight=height+20
               print(tableView.rowHeight)
+                
+                
+                
                 
             }else if indexPath.row == 1 {
 
@@ -487,7 +499,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 
             let userID = user.stringForKey((self.newsInfo?.object_id)!)
             print(userID)
-            if userID == "false"||userID==nil{
+            if newsInfo?.likes.last?.userid != QCLoginUserInfo.currentInfo.userid{
                 let url = PARK_URL_Header+"SetLike"
                 let param = [
                     "id":newsInfo?.object_id,

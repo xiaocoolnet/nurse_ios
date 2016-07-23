@@ -99,7 +99,7 @@ class HSPostResumeView: UIView,UIImagePickerControllerDelegate,UINavigationContr
     var VC = HSEditResumeViewController()
     
     let help = HSNurseStationHelper()
-    let userid = "1"
+    let userid = QCLoginUserInfo.currentInfo.userid
     let picurl = ""
     
     var imageName = String()
