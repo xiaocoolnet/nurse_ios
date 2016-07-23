@@ -40,7 +40,7 @@ class MineMessageTableViewCell: UITableViewCell {
         
         small.frame = CGRectMake(65, 5, 10, 10)
         
-        timeLable.frame = CGRectMake(WIDTH*(WIDTH - 130)/375, 10, 120, 30)
+        timeLable.frame = CGRectMake(WIDTH - 130, 10, 120, 30)
         timeLable.font = UIFont.systemFontOfSize(16)
         timeLable.textColor = GREY
         timeLable.textAlignment = NSTextAlignment.Right

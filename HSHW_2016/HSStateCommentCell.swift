@@ -46,8 +46,18 @@ class HSStateCommentCell: UITableViewCell {
             contentLab.text = commentModel?.content
 //            headerBtn.layer.masksToBounds =
             
+            
+            
         }
     }
+    
+    var comment:MineCommentModel?{
+        didSet {
+            nameLab.text = commentModel?.name
+            contentLab.text = commentModel?.content
+        }
+    }
+    
 
 
     override func setSelected(selected: Bool, animated: Bool) {

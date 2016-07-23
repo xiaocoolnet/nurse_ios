@@ -96,6 +96,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         let nextVC = NewsContantViewController()
         nextVC.newsInfo = newsInfo
         nextVC.likeNum = newsInfo.likes.count
+        nextVC.tagNum = 1
         print(newsInfo.likes.count)
         self.navigationController?.pushViewController(nextVC, animated: true)
         

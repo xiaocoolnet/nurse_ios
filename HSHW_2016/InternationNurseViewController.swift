@@ -96,6 +96,7 @@ class InternationNurseViewController: UIViewController, UITableViewDelegate, UIT
         let nextVC = NewsContantViewController()
         nextVC.newsInfo = newsInfo
         nextVC.likeNum = newsInfo.likes.count
+        nextVC.tagNum = 1
         print(newsInfo.likes.count)
         self.navigationController?.pushViewController(nextVC, animated: true)
         

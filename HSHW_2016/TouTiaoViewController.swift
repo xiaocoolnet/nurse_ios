@@ -222,6 +222,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let newsInfo = self.dataSource.objectlist[indexPath.row]
+        print(newsInfo)
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.likeNum = newsInfo.likes.count

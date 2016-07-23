@@ -16,6 +16,10 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
     let picArr:[String] = ["ic_pen.png","ic_yuan_purple.png","ic_lifang.png","ic_folder.png"]
     let picName:[String] = ["做题记录","错题集","收藏试题","其它收藏"]
     
+    var helper = HSMineHelper()
+    private var fansListArray:Array<GTestExamList> = []
+    private var focusListArray:Array<GTestExamList> = []
+    
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.hidden = false
@@ -36,6 +40,8 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.registerNib(UINib(nibName:"HSChartCell",bundle: nil), forCellReuseIdentifier: "chartcell")
         self.view.addSubview(myTableView)
+        
+        self.loadData_Exampaper()
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -72,7 +78,8 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
             downNum.font = UIFont.systemFontOfSize(22)
             downNum.textAlignment = .Center
             downNum.textColor = UIColor.whiteColor()
-            downNum.text = "124"
+//            downNum.text = "124"
+            downNum.text = String( self.fansListArray.count + self.focusListArray.count)
             cell.addSubview(downNum)
             collNum.frame = CGRectMake(WIDTH/2, WIDTH*8/375, WIDTH/2, WIDTH*25/375)
             collNum.font = UIFont.systemFontOfSize(22)
@@ -147,7 +154,25 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
             self.navigationController?.pushViewController(collect, animated: true)
         default:
             print("MineStudyViewController.swift  studyTheKind")
+            let vc = CollectDetailViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+            
         }
         
     }
+
+
+// 加载数据_做题记录
+func loadData_Exampaper() {
+    
+    helper.GetExampaper(QCLoginUserInfo.currentInfo.userid, type: "1") { (success, response) in
+        self.fansListArray = response as! Array<GTestExamList>
+        self.myTableView.reloadData()
+    }
+    
+    helper.GetExampaper(QCLoginUserInfo.currentInfo.userid, type: "2") { (success, response) in
+        self.focusListArray = response as! Array<GTestExamList>
+        self.myTableView.reloadData()
+    }
+}
 }

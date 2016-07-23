@@ -102,25 +102,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                     }
                 })
             })
-        }else if showType == .BirthDay {
-            mineHelper.changeBirthday((dataBtn.titleLabel?.text!)!, handle: {[unowned self] (success, response) in
-                dispatch_async(dispatch_get_main_queue(), {
-                    if success {
-                        QCLoginUserInfo.currentInfo.birthday = (self.dataBtn.titleLabel?.text!)!
-                        self.navigationController?.popViewControllerAnimated(true)
-                    }
-                })
-            })
-        }else if showType == .Address {
-            mineHelper.changeAddress((addressBtn.titleLabel?.text!)!, handle: {[unowned self] (success, response) in
-                dispatch_async(dispatch_get_main_queue(), {
-                    if success {
-                        QCLoginUserInfo.currentInfo.city = (self.addressBtn.titleLabel?.text!)!
-                        self.navigationController?.popViewControllerAnimated(true)
-                    }
-                })
-            })
-        }else if showType == .School {
+         }else if showType == .School {
             mineHelper.changeSchool(textFeild.text!, handle: {[unowned self] (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {

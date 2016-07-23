@@ -54,14 +54,38 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
 //        cell.imgBtn.setBackgroundImage(UIImage(named: model.photo), forState: .Normal)
         cell.imgBtn.sd_setImageWithURL(NSURL(string:"http://nurse.xiaocool.net"+model.photo), placeholderImage: UIImage(named: "ic_lan.png"))
         cell.small.setBackgroundImage(UIImage(named: "ic_xin.png"), forState: .Normal)
-        cell.timeLable.text = "2016-07-04"
+//        cell.timeLable.text = "2016-07-04"
+        cell.timeLable.text = timeStampToString(model.create_time)
         return cell
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let vc = MineMessDetailViewController()
+        vc.info = self.dataSource.objectlist[indexPath.row]
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+    }
+    
+    // Linux时间戳转标准时间
+    func timeStampToString(timeStamp:String)->String {
+        
+        let string = NSString(string: timeStamp)
+        
+        let timeSta:NSTimeInterval = string.doubleValue
+        let dfmatter = NSDateFormatter()
+        dfmatter.dateFormat="yyyy-MM-dd"
+        
+        let date = NSDate(timeIntervalSince1970: timeSta)
+        
+        print(dfmatter.stringFromDate(date))
+        return dfmatter.stringFromDate(date)
+    }
+
     
     
     func getDate(){
         let url = PARK_URL_Header+"getsystemmessage"
-        let param = ["userid":"1"]
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 

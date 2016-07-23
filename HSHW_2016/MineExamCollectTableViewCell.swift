@@ -27,7 +27,7 @@ class MineExamCollectTableViewCell: UITableViewCell {
         
         titImg.frame = CGRectMake(10, 10, 50, 50)
 //        titImg.layer.cornerRadius = 25
-//        titImg.clipsToBounds = true  
+//        titImg.clipsToBounds = true
         
         titleLab.frame = CGRectMake(75, 10, 150, 50)
         titleLab.font = UIFont.systemFontOfSize(16)
