@@ -578,6 +578,12 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func postedTheView() {
         print("招聘")
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
+        }
+        
         if showType == 2 {
             sendPostion.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
             self.view.addSubview(sendPostion)

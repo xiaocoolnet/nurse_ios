@@ -120,10 +120,10 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSStateCommentCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
-            if postInfo?.userid != postInfo?.comment[indexPath.row].userid {
-                cell.louzhuLab.hidden = true
-            }else{
+            if postInfo?.userid == postInfo?.comment[indexPath.row].userid {
                 cell.louzhuLab.hidden = false
+            }else{
+                cell.louzhuLab.hidden = true
             }
             
             cell.commentModel = postInfo?.comment[indexPath.row]

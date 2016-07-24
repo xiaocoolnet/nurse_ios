@@ -185,7 +185,13 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func takeTheResume() {
-        print("提交简历")
+        print("点击了提交简历")
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
+        }
+        
         UIView.animateWithDuration(0.2) {
             self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
         }

@@ -164,7 +164,11 @@ class ViewController: UIViewController,UITextFieldDelegate {
 
         var rect:CGRect = self.view.frame
         rect.origin.y = keyBoardTranslate
-        self.view.frame = rect
+        
+        UIView.animateWithDuration(0.3) { 
+            
+            self.view.frame = rect
+        }
     }
     
     //  登录界面UI的搭建
@@ -315,9 +319,9 @@ class ViewController: UIViewController,UITextFieldDelegate {
     //  注册提交事件
     func submitTheUser() {
         print("提交")
-        phoneNum.resignFirstResponder()
-        yanzheng.resignFirstResponder()
-        password.resignFirstResponder()
+//        phoneNum.resignFirstResponder()
+//        yanzheng.resignFirstResponder()
+//        password.resignFirstResponder()
         if phoneNum.text!.isEmpty {
             let alert = UIAlertView(title: "提示信息",message: "请输入手机号",delegate: self,cancelButtonTitle: "确定")
             alert.show()
@@ -372,7 +376,20 @@ class ViewController: UIViewController,UITextFieldDelegate {
     }
     //  成为第一响应
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
+        
+        switch textField {
+        case phoneNumber:
+            passwordNumber.becomeFirstResponder()
+        case passwordNumber:
+            goToMain()
+        case yanzheng:
+            password.becomeFirstResponder()
+        case password:
+            submitTheUser()
+        default:
+            textField.resignFirstResponder()
+        }
+        
         return true
     }
     //  自动登录

@@ -141,6 +141,7 @@ class HSNurseStationHelper: NSObject {
     func postForumCard(typid:String,title:String,content:String,picurl:String, handle:ResponseBlock){
         let url = PARK_URL_Header+"addbbsposts"
         let param = ["userid":QCLoginUserInfo.currentInfo.userid,"typeid":typid,"title":title,"content":content,"picurl":picurl]
+        print(param)
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             
             print(response)
