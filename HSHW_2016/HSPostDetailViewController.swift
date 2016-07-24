@@ -418,6 +418,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         let uid = user.stringForKey("userid")
         let userID = user.stringForKey(self.postInfo!.mid)
             print(userID)
+        
             if userID == "false"||userID==nil{
                 let url = PARK_URL_Header+"SetLike"
                 let param = [

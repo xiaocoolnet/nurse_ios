@@ -27,7 +27,7 @@ class HSArticleCollectCell: UITableViewCell {
     
     func showforModel(model:NewsInfo){
         newsTitle.text = model.title
-//        timeLabel.text = timeStampToString(model.create_time!)
+        timeLabel.text = timeStampToString(model.create_time!)
         selfModel = model
     }
     
