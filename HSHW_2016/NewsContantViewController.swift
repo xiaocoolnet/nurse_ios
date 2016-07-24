@@ -597,7 +597,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             self.isLike=false
                             user.setObject("false", forKey: "isLike")
                             self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"0"], waitUntilDone:true)
-//                            user.removeObjectForKey((self.newsInfo?.object_id)!) 
+//                            user.removeObjectForKey((self.newsInfo?.object_id)!
                         }
                     }
                     
