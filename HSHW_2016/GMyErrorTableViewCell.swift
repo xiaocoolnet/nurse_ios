@@ -71,7 +71,7 @@ class GMyErrorTableViewCell: UITableViewCell {
             titImg.frame = CGRectMake(CGRectGetMaxX(indexLab.frame)+10, 10, 50, 50)
             titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar))
             
-            titleLab.text = fanModel?.post_title
+            titleLab.text = fanModel?.title
             titleLab.sizeToFit()
             titleLab.frame = CGRectMake(CGRectGetMaxX(titImg.frame)+15, 15, CGRectGetWidth(titleLab.frame), 50)
             

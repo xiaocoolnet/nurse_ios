@@ -136,8 +136,8 @@ class NewsInfo: JSONJoy{
         term_hits = decoder["term_hits"].string ?? ""
         print(post_excerpt)
         print(decoder["likes"].array)
-        if decoder["post_like"].array != nil {
-            for childs: JSONDecoder in decoder["post_like"].array!{
+        if decoder["likes"].array != nil {
+            for childs: JSONDecoder in decoder["likes"].array!{
                 self.likes.append(LikeInfo(childs))
             }
         }

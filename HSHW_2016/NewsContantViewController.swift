@@ -510,7 +510,15 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 
             let userID = user.stringForKey((self.newsInfo?.object_id)!)
             print(userID)
-            if newsInfo?.likes.last?.userid != QCLoginUserInfo.currentInfo.userid{
+            let str = newsInfo!.likes
+            var answerInfo = NSString()
+            
+            for j in 0 ..< str.count {
+                answerInfo = str[j].userid!
+            }
+                if answerInfo != QCLoginUserInfo.currentInfo.userid && isLike == false{
+        
+//            if userID == "false"||userID==nil{
                 let url = PARK_URL_Header+"SetLike"
                 let param = [
                     "id":newsInfo?.object_id,
@@ -544,9 +552,10 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"1"], waitUntilDone:true)
 
                             user.setObject("true", forKey: "isLike")
-                            user.setObject("true", forKey: (self.newsInfo?.object_id)!)
+//                            user.setObject("true", forKey: (self.newsInfo?.object_id)!)
                             print(status.data)
                             self.isLike=true
+                            
                         }
                     }
                 }
@@ -573,7 +582,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
                             hud.hide(true, afterDelay: 1)
-                            user.setObject("false", forKey: (self.newsInfo?.object_id)!)
+//                            user.setObject("false", forKey: (self.newsInfo?.object_id)!)
                         }
                         if(status.status == "success"){
                             
@@ -588,7 +597,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             self.isLike=false
                             user.setObject("false", forKey: "isLike")
                             self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"0"], waitUntilDone:true)
-                            user.removeObjectForKey((self.newsInfo?.object_id)!)
+//                            user.removeObjectForKey((self.newsInfo?.object_id)!）
                         }
                     }
                     

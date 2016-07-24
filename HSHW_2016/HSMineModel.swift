@@ -202,19 +202,22 @@ class GExamInfo: JSONJoy{
 
 // Model 错题集（data）
 class xamInfo: JSONJoy{
-    var questionid:String?
-    var post_title:String?
-    var post_description:String?
-    var post_difficulty:String?
-    var answer:String?
+    var questionid:String
+    var post_title:String
+    var title:String
+    
+    var post_description:String
+    var post_difficulty:String
+    var answer:String
     var answers = Array<AnswersInfo>()
     
     required init(_ decoder: JSONDecoder){
-        questionid = decoder["questionid"].string
-        post_title = decoder["post_title"].string
-        post_difficulty = decoder["post_difficulty"].string
-        post_description = decoder["post_description"].string
-        answer = decoder["answer"].string
+        questionid = decoder["questionid"].string ?? ""
+        post_title = decoder["post_title"].string ?? ""
+        post_difficulty = decoder["post_difficulty"].string ?? ""
+        post_description = decoder["post_description"].string ?? ""
+        answer = decoder["answer"].string ?? ""
+        title = decoder["title"].string ?? ""
         for childs: JSONDecoder in decoder["answerslist"].array ?? []{
             answers.append(AnswersInfo(childs))
         }

@@ -28,6 +28,8 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     
     var isCollect:Bool = false
     var isLike:Bool = false
+    var likeNum = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -200,7 +202,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             let imagesArray:Array<String> = ["ic_two_collect","ic_two_like","ic_two_comment"]
             
             
-            let textArray:Array<String> = ["收藏","1136",String((postInfo?.comment.count)!)]
+            let textArray:Array<String> = ["收藏",String((postInfo?.like.count)! + likeNum),String((postInfo?.comment.count)!)]
             
             for i in 0...2 {
                 let btn:UIButton = UIButton.init(frame: CGRectMake(margin*CGFloat(i)+space, 10, 75, 30))
@@ -208,7 +210,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
                 if btn.tag == 3110 {
                     btn.addTarget(self, action: #selector(collectionBtnClicked(_:)), forControlEvents: .TouchUpInside)
                 }else if btn.tag == 3111 {
-                    btn.addTarget(self, action: #selector(shareBtnClick(_:)), forControlEvents: .TouchUpInside)
+                    btn.addTarget(self, action: #selector(zanAddNum(_:)), forControlEvents: .TouchUpInside)
                 }else{
                     btn.addTarget(self, action: #selector(likeBtnClick(_:)), forControlEvents: UIControlEvents.TouchUpInside)
                 }
@@ -348,12 +350,6 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
 
     }
     
-    func shareBtnClick(shareBtn: UIButton) {
-        print("点赞")
-        self.zanAddNum()
-        
-    }
-    
     func likeBtnClick(likeBtn: UIButton) {
         print("评论")
     }
@@ -420,7 +416,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             keyboardShowState = false
         }
     }
-    func zanAddNum() {
+    func zanAddNum(btn:UIButton) {
         
         // MARK:要求登录
         if !requiredLogin(self.navigationController!, hasBackItem: true) {
@@ -431,7 +427,12 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         let uid = user.stringForKey("userid")
         let userID = user.stringForKey(self.postInfo!.mid)
             print(userID)
-            if userID == "false"||userID==nil{
+        let str = postInfo!.like
+        var answerInfo = NSString()
+        for j in 0 ..< str.count {
+            answerInfo = str[j].userid
+        }
+        if answerInfo != QCLoginUserInfo.currentInfo.userid && isLike == false{
                 let url = PARK_URL_Header+"SetLike"
                 let param = [
                     "id":uid,
@@ -463,9 +464,10 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
                             hud.removeFromSuperViewOnHide = true
                             hud.hide(true, afterDelay: 1)
                             user.setObject("true", forKey: "isLike")
-                            user.setObject("true", forKey: self.postInfo!.mid)
+                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"1"], waitUntilDone:true)
                             print(status.data)
                             self.isLike=true
+
                         }
                     }
                 }
@@ -492,7 +494,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
                             hud.hide(true, afterDelay: 1)
-//                            user.setObject("false", forKey: self.postInfo!.mid)
+
                         }
                         if(status.status == "success"){
                             
@@ -502,12 +504,12 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
                             hud.hide(true, afterDelay: 1)
-                            //self.myTableView .reloadData()
+                            
                             print(status.data)
                             self.isLike=false
                             user.setObject("false", forKey: "isLike")
-//                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"0"], waitUntilDone:true)
-                            user.removeObjectForKey(self.postInfo!.mid)
+                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"0"], waitUntilDone:true)
+                            
                         }
                     }
                     
@@ -516,6 +518,18 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             }
         
         }
+    
+    func upDateUI(status:NSArray){
+        if status[1] as! String=="1" {
+            self.likeNum = self.likeNum + 1
+        }else{
+            self.likeNum = self.likeNum - 1
+        }
+        self.contentTableView.reloadData()
+    }
+
+    
+    
     }
     
 

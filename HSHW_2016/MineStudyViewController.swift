@@ -73,7 +73,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
             let line = UILabel(frame: CGRectMake(WIDTH/2-0.5, WIDTH*18/375, 1, WIDTH*25/375))
             line.backgroundColor = UIColor(red: 250/255.0, green: 118/255.0, blue: 210/255.0, alpha: 1.0)
             cell.addSubview(line)
-            let titArr:[String] = ["已经做完(题)","收藏试题(题)"]
+            let titArr:[String] = ["已经做题的次数","收藏试题(题)"]
             downNum.frame = CGRectMake(0, 7, WIDTH/2, WIDTH*25/375)
             downNum.font = UIFont.systemFontOfSize(22)
             downNum.textAlignment = .Center

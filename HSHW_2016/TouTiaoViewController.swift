@@ -35,6 +35,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         if newsType != nil {
             self.navigationController?.navigationBar.hidden = false
         }
+        self.GetDate()
     }
     
     override func viewDidLoad() {
@@ -46,7 +47,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.navigationItem.backBarButtonItem = back;
         
         self.createTableView()
-        self.GetDate()
+//        self.GetDate()
         myTableView.tableFooterView = UIView()
         self.view.backgroundColor = COLOR
         requestHelper.getSlideImages("3") { [unowned self] (success, response) in
@@ -227,6 +228,19 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         next.newsInfo = newsInfo
         next.likeNum = newsInfo.likes.count
         print(newsInfo.likes.count)
+        let str = newsInfo.likes
+        var answerInfo = NSString()
+        for j in 0 ..< str.count {
+            answerInfo = str[j].userid!
+            print(answerInfo)
+        }
+            if answerInfo == QCLoginUserInfo.currentInfo.userid{
+                print(1)
+            }else{
+                print(222)
+            }
+        
+        
         self.navigationController?.pushViewController(next, animated: true)
     }
     
