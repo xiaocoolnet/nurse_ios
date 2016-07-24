@@ -4,7 +4,7 @@
 //
 //  Created by xiaocool on 16/6/21.
 //  Copyright © 2016年 校酷网络科技公司. All rights reserved.
-//
+//  社区首页
 
 import UIKit
 
@@ -25,6 +25,7 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
         bottomTableView.rowHeight = UITableViewAutomaticDimension
         hotTableView.registerNib(UINib(nibName:"HSHotPostCell",bundle: nil), forCellReuseIdentifier: "hotcell")
         hotTableView.tag = 11
+        hotTableView.estimatedRowHeight = 34
         hotTableView.rowHeight = UITableViewAutomaticDimension
         hotTableView.scrollEnabled = false
         hotTableView.tableFooterView = UIView()
@@ -33,7 +34,6 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
         hotTableView.translatesAutoresizingMaskIntoConstraints = true
         print(hotTableView.frame)
         
-
     }
     
     var typeid:String = ""{
@@ -69,7 +69,7 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if tableView.tag == 11 {
             
-            return 60
+            return 34
         }
         return 140
     }

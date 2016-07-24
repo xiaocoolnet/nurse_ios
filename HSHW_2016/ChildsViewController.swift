@@ -73,7 +73,10 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
         // Do any additional setup after loading the view.
     }
     
-    func sendInvite(){
+    func sendInvite(model:CVModel){
+        resumeDetail.removeFromSuperview()
+    }
+    func hiddenResumeDetail() {
         resumeDetail.removeFromSuperview()
     }
     

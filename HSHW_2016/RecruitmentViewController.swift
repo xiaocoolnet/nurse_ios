@@ -7,6 +7,7 @@
 
 import UIKit
 import Alamofire
+import MBProgressHUD
 
 class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,HSFindPersonDetailViewDelegate,PostVacanciesDelegate,HSPostResumeViewDelegate {
 
@@ -239,8 +240,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-    func makeCVMessage(){
+    func makeCVMessage(model:CVModel){
         resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+        resumeDetail.model = model
         resumeDetail.showFor(birthday)
         resumeDetail.showSex(sex)
         resumeDetail.showName(name)
@@ -318,12 +320,12 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.showforJobModel(jobDataSource![indexPath.row])
                 cell.delivery.tag = indexPath.row
                 btnTag = cell.delivery.tag
-                cell.delivery.addTarget(self, action: #selector(self.resumeOnline), forControlEvents: .TouchUpInside)
+                cell.delivery.addTarget(self, action: #selector(self.resumeOnline(_:)), forControlEvents: .TouchUpInside)
             }else{
                 cell.showforCVModel(CVDataSource![indexPath.row])
                 cell.delivery.tag = indexPath.row
                 btnTag = cell.delivery.tag
-                cell.delivery.addTarget(self, action: #selector(self.invited), forControlEvents: .TouchUpInside)
+                cell.delivery.addTarget(self, action: #selector(self.invited(_:)), forControlEvents: .TouchUpInside)
             }
             
             return cell
@@ -469,7 +471,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 print(jobDataSource)
                 print(self.jobDataSource![indexPath.row])
                 print(self.employmentdataSource)
-                superViewController?.showRightBtn()
+//                superViewController?.showRightBtn()
                 self.makeEmploymentMessage()
             }else {
                 let model = self.CVDataSource![indexPath.row]
@@ -494,86 +496,140 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.wantcity = model.wantcity
                 self.wantsalary = model.wantsalary
 //                superViewController?.showRightBtn()
-                self.makeCVMessage()
+                self.makeCVMessage(model)
             }
         }
     }
     
-    // TODO:邀请面试接口还没有
-    func invited() {
+    // MARK:邀请面试
+    func invited(btn:UIButton) {
+        inviteJob(self.CVDataSource![btn.tag])
+    }
+    
+    func inviteJob(model:CVModel) {
         print("邀请面试")
-        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要发送邀请吗？", comment: "empty message"), preferredStyle: .Alert)
-        let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
-        alertController.addAction(doneAction)
-        var model = String()
-        
-        if showType == 1 {
-            model = self.jobDataSource![btnTag].companyid
-        }
-        let url = PARK_URL_Header+"ApplyJob"
-        let param = [
-            "userid":QCLoginUserInfo.currentInfo.userid,
-            "jobid":strId,
-            "companyid":model
-        ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
-            if(error != nil){
-                
-            }else{
-                let result = Http(JSONDecoder(json!))
-                if(result.status == "success"){
-                    
-                    print(111111)
-                }else{
-                    
-                    print(2222222)
-                }
-            }
-        }
-        
-        self.presentViewController(alertController, animated: true, completion: nil)
-    }
-    
-    func resumeOnline() {
         
         // MARK:要求登录
         if !requiredLogin(self.navigationController!, hasBackItem: true) {
             return
         }
         
-        print("投递简历")
-        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
-        let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
-        alertController.addAction(doneAction)
-        var model = String()
+        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要向 \(model.name) 发送邀请吗？", comment: "empty message"), preferredStyle: .Alert)
+        self.presentViewController(alertController, animated: true, completion: nil)
         
-        if showType == 1 {
-            model = self.jobDataSource![btnTag].companyid
+        let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (cancelAction) in
+            
+            let url = PARK_URL_Header+"InviteJob"
+            let param = [
+                "userid":model.userid,
+                "jobid":model.id,
+                "companyid":QCLoginUserInfo.currentInfo.userid
+            ]
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                print(request)
+                if(error != nil){
+                    
+                }else{
+                    let result = Http(JSONDecoder(json!))
+                    if(result.status == "success"){
+                        //  菊花加载
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "发送邀请成功"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                        print(111111)
+                    }else{
+                        //  菊花加载
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "发送邀请失败"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                        print(2222222)
+                    }
+                }
+            }
+            
+        })
+        alertController.addAction(doneAction)
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
+            return
+        })
+        alertController.addAction(cancelAction)
+    }
+    
+    // MARK:投递简历
+    func resumeOnline(btn:UIButton) {
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
         }
-        let url = PARK_URL_Header+"ApplyJob"
-        let param = [
-            "userid":QCLoginUserInfo.currentInfo.userid,
-            "jobid":strId,
-            "companyid":model
-        ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
-            if(error != nil){
+        
+        jobHelper.getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
+            if success {
+                print("投递简历")
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
+                self.presentViewController(alertController, animated: true, completion: nil)
+
+                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
+                    let url = PARK_URL_Header+"ApplyJob"
+                    let param = [
+                        "userid":QCLoginUserInfo.currentInfo.userid,
+                        "jobid":self.jobDataSource![btn.tag].id,
+                        "companyid":self.jobDataSource![btn.tag].companyid
+                    ]
+                    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                        print(request)
+                        if(error != nil){
+                            
+                        }else{
+                            let result = Http(JSONDecoder(json!))
+                            if(result.status == "success"){
+                                //  菊花加载
+                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                                hud.mode = MBProgressHUDMode.Text;
+                                hud.labelText = "投递简历成功"
+                                hud.margin = 10.0
+                                hud.removeFromSuperViewOnHide = true
+                                hud.hide(true, afterDelay: 1)
+                                print(111111)
+                            }else{
+                                //  菊花加载
+                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                                hud.mode = MBProgressHUDMode.Text;
+                                hud.labelText = "投递简历失败"
+                                hud.margin = 10.0
+                                hud.removeFromSuperViewOnHide = true
+                                hud.hide(true, afterDelay: 1)
+                                print(2222222)
+                            }
+                        }
+                    }
+                    
+
+                })
+                alertController.addAction(doneAction)
+                
+                let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
+                    return
+                })
+                alertController.addAction(cancelAction)
+                
                
             }else{
-                let result = Http(JSONDecoder(json!))
-                if(result.status == "success"){
-                    
-                    print(111111)
-                }else{
-                    
-                    print(2222222)
-                }
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您还没有简历，请上传简历后投递？", comment: "empty message"), preferredStyle: .Alert)
+                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                alertController.addAction(doneAction)
+                self.presentViewController(alertController, animated: true, completion: nil)
+
             }
         }
         
-        self.presentViewController(alertController, animated: true, completion: nil)
     }
     
     func postedTheView() {
@@ -628,41 +684,69 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func takeTheResume() {
         print("提交简历")
-        UIView.animateWithDuration(0.2) {
-            self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
-        }
+//        UIView.animateWithDuration(5) {
+//            self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
+//        }
         
-        let model = self.jobDataSource![btnTag].companyid
+        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
+        self.presentViewController(alertController, animated: true, completion: nil)
         
+        let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
+
+        
+            let model = self.employmentdataSource[0] as! JobModel
         
             let url = PARK_URL_Header+"ApplyJob"
             let param = [
                 "userid":QCLoginUserInfo.currentInfo.userid,
-//                "userid":"1",
-//                "jobid":"1"
-                "jobid":strId,
-                "companyid" :model
+                "jobid":model.id,
+                "companyid" :model.companyid
             ]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
                 if(error != nil){
-//                    handle(success: false, response: error?.description)
+                    //  菊花加载
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "投递简历失败（error）"
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
                 }else{
                     let result = Http(JSONDecoder(json!))
                     if(result.status == "success"){
-//                        handle(success: true, response: nil)
+                        //  菊花加载
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "投递简历成功"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
                         print(111111)
                     }else{
-//                        handle(success: false, response: nil)
+                        //  菊花加载
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "投递简历失败"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
                         print(2222222)
                     }
                 }
             }
+            
+            self.employmentdataSource.removeAllObjects()
+            self.employmentMessageTableView.reloadData()
+//            self.employmentMessage.removeFromSuperview()
+//            self.superViewController?.hiddenBtn()
+        })
+        alertController.addAction(doneAction)
         
-        self.employmentdataSource.removeAllObjects()
-        self.employmentMessageTableView.reloadData()
-        self.employmentMessage.removeFromSuperview()
-        superViewController?.hiddenBtn()
+        let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
+            return
+        })
+        alertController.addAction(cancelAction)
     }
     
     func takeResume(){
@@ -678,7 +762,10 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     
     //MARK:delegate-find
-    func sendInvite(){
+    func sendInvite(model:CVModel){
+        inviteJob(model)
+    }
+    func hiddenResumeDetail() {
         UIView.animateWithDuration(0.2) {
             self.resumeDetail.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
         }

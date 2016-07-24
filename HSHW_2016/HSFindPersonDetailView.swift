@@ -8,12 +8,14 @@
 
 import UIKit
 protocol HSFindPersonDetailViewDelegate:NSObjectProtocol {
-    func sendInvite()
+    func sendInvite(model:CVModel)
+    func hiddenResumeDetail()
 }
 
 
 class HSFindPersonDetailView: UIView {
     
+    var model:CVModel?
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userSex: UILabel!
     @IBOutlet weak var birthday: UILabel!
@@ -46,13 +48,13 @@ class HSFindPersonDetailView: UIView {
     }
     @IBAction func sendInvite(sender: AnyObject) {
         if delegate != nil {
-            delegate!.sendInvite()
+            delegate!.sendInvite(model!)
         }
     }
     
     @IBAction func backBtnClick(sender: AnyObject) {
         if delegate != nil {
-            delegate!.sendInvite()
+            delegate!.hiddenResumeDetail()
         }
     }
     

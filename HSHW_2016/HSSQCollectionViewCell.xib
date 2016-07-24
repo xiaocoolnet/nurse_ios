@@ -14,10 +14,10 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="560"/>
                 <subviews>
                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fDb-qd-IhI">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="133"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" priority="250" constant="160" id="Eyx-fj-CEV"/>
+                            <constraint firstAttribute="height" priority="250" constant="133" id="Eyx-fj-CEV"/>
                         </constraints>
                         <connections>
                             <outlet property="dataSource" destination="gTV-IL-0wX" id="PpF-f4-osv"/>
@@ -25,14 +25,14 @@
                         </connections>
                     </tableView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GOX-Pw-NI0">
-                        <rect key="frame" x="0.0" y="160" width="320" height="10"/>
+                        <rect key="frame" x="0.0" y="133" width="320" height="10"/>
                         <color key="backgroundColor" red="0.92941176470588238" green="0.93725490196078431" blue="0.94117647058823528" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="10" id="6Nd-r8-Flj"/>
                         </constraints>
                     </view>
                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="WD8-YY-jfe">
-                        <rect key="frame" x="0.0" y="170" width="320" height="390"/>
+                        <rect key="frame" x="0.0" y="143" width="320" height="417"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
                             <outlet property="dataSource" destination="gTV-IL-0wX" id="82I-Mm-MRs"/>

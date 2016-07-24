@@ -25,6 +25,21 @@ class HSCVListModel: JSONJoy {
         }
     }
 }
+class GCVModel: JSONJoy {
+    var status:String?
+    var datas:CVModel?
+    var errorData:String?
+    var datastring:String?
+    
+    required init(_ decoder:JSONDecoder){
+        status = decoder["status"].string
+        if status == "success"{
+            datas = CVModel(decoder["data"])
+        }else{
+            errorData = decoder["data"].string
+        }
+    }
+}
 class CVModel: JSONJoy {
     
     var id:String
