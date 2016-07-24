@@ -116,14 +116,14 @@ class HSCollectionListController: UITableViewController {
             
             navigationController?.pushViewController(vc, animated: true)
         }else if collectionType == 2 {
-            let userPageVC = GMyExamViewController()
-            userPageVC.type = 1
-            userPageVC.subType = 1
-            print(fansListArray[indexPath.row])
-            userPageVC.a = indexPath.row
-            userPageVC.dataSource = fansListArray
-            
-            self.navigationController?.pushViewController(userPageVC, animated: true)
+//            let userPageVC = GMyExamViewController()
+//            userPageVC.type = 1
+//            userPageVC.subType = 1
+//            print(fansListArray[indexPath.row])
+//            userPageVC.a = indexPath.row
+//            userPageVC.dataSource = fansListArray
+//            
+//            self.navigationController?.pushViewController(userPageVC, animated: true)
 
         }
         

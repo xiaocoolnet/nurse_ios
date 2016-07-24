@@ -89,14 +89,14 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
         
-        let userPageVC = GMyExamViewController()
-        userPageVC.type = 1
-        userPageVC.subType = 1
-        print(fansListArray[indexPath.row])
-        userPageVC.a = indexPath.row
-        userPageVC.dataSource = fansListArray
-        
-        self.navigationController?.pushViewController(userPageVC, animated: true)
+//        let userPageVC = GMyExamViewController()
+//        userPageVC.type = 1
+//        userPageVC.subType = 1
+//        print(fansListArray[indexPath.row])
+//        userPageVC.a = indexPath.row
+//        userPageVC.dataSource = fansListArray
+//        
+//        self.navigationController?.pushViewController(userPageVC, animated: true)
     }
     
 }

@@ -69,46 +69,14 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        var title = ""
-        
-        switch type {
-        case 1:
-            title = "做题记录"
-            switch subType {
-            case 1:
-                title += "·每日一练"
-            case 2:
-                title += "·在线考试"
-            default:
-                title += "·系统出错"
-            }
-        case 2:
-            title = "错题集"
-        case 3:
-            title = "收藏试题"
-        case 4:
-            title = "其它收藏"
-        default:
-            self.title = "出错了"
-        }
-        
-        
-        
-        self.title = title
+        self.title = "收藏记录"
         
         numb = 1
         self.view.backgroundColor = UIColor.whiteColor()
         isSubmit = false
         collection = false
         
-        // 根据不同类型设置不同的头
-        //        if type == 1 {
         setSpecificView_ExamPaper_OnView(self.view)
-        ////            self.AnswerView()
-        //        }else{
-        //            setSpecificView_ErrorExamPaper_OnView(self.view)
-        ////            self.AnswerView()
-        //        }
         
         self.createScrollerView()
         if self.dataSource.count > 0 {
@@ -321,7 +289,7 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
                     var difficultyValue = Int()
                     let examInfo = self.dataSource[self.pageControl.currentPage]
                     print(examInfo)
-                    difficultyValue = Int(examInfo.post_difficulty!)!
+                    difficultyValue = Int(examInfo.post_difficulty)!
                     let imageArray = NSMutableArray()
                     // let imageView = UIImageView()
                     for i in 0..<3 {
@@ -360,7 +328,7 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
             analysisContent.numberOfLines = 0
             analysisContent.font = UIFont.systemFontOfSize(15)
             //      analysisContent.backgroundColor = UIColor.greenColor()
-            let height: CGFloat = calculateHeight(examInfo.post_description!, size: 15, width:backeView.frame.size.width-20)
+            let height: CGFloat = calculateHeight(examInfo.post_description, size: 15, width:backeView.frame.size.width-20)
             print(height)
             analysisContent.frame = CGRectMake(10, analysis.frame.size.height+analysis.frame.origin.y, backeView.frame.size.width-20, height)
             backeView.addSubview(analysisContent)
@@ -539,7 +507,7 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
         pageControl.pageIndicatorTintColor = UIColor.redColor()
         //        pageControl.addTarget(self, action: #selector(self.pageContorllerNumber(_:)), forControlEvents: .TouchUpInside)
         pageControl.numberOfPages = self.dataSource.count
-        pageControl.currentPage = 0
+        pageControl.currentPage = a
         //self.view.addSubview(self.pageControl)
     }
     

@@ -539,7 +539,8 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         pageControl.pageIndicatorTintColor = UIColor.redColor()
         //        pageControl.addTarget(self, action: #selector(self.pageContorllerNumber(_:)), forControlEvents: .TouchUpInside)
         pageControl.numberOfPages = self.dataSource.count
-        pageControl.currentPage = 0
+//        pageControl.currentPage = 0
+        pageControl.currentPage = a 
         //self.view.addSubview(self.pageControl)
     }
     
