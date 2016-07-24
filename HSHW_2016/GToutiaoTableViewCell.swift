@@ -113,7 +113,7 @@ class GToutiaoTableViewCell: UITableViewCell {
         self.timeLab.text = time[0]
         self.contant.text = newsInfo.post_excerpt
         heal.setTitle(newsInfo.term_name, forState: .Normal)
-        heal.tag = Int(newsInfo.term_id!)!
+        heal.tag = Int(newsInfo.term_id)!
         let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
         print(photoUrl)
         self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))

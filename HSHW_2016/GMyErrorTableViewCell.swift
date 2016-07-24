@@ -61,6 +61,25 @@ class GMyErrorTableViewCell: UITableViewCell {
         
     }
     
+    var fanModel:xamInfo?{
+        didSet {
+            //TODO:image 后期要改，从网上获取
+            indexLab.text = "\(inde+1)."
+            indexLab.sizeToFit()
+            indexLab.frame = CGRectMake(10, (70-CGRectGetHeight(indexLab.frame))/2.0, CGRectGetWidth(indexLab.frame), CGRectGetHeight(indexLab.frame))
+            
+            titImg.frame = CGRectMake(CGRectGetMaxX(indexLab.frame)+10, 10, 50, 50)
+            titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar))
+            
+            titleLab.text = fanModel?.post_title
+            titleLab.sizeToFit()
+            titleLab.frame = CGRectMake(CGRectGetMaxX(titImg.frame)+15, 15, CGRectGetWidth(titleLab.frame), 50)
+            
+        }
+        
+    }
+
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

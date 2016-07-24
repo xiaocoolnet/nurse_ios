@@ -134,6 +134,22 @@ class GHSErrorExamModel:JSONJoy {
     }
 }
 
+// Model 错题集
+class HSErrorExamModel:JSONJoy {
+    var status:String
+    var datas = Array<xamInfo>()
+    var errorData:String
+    
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string ?? ""
+        errorData = decoder["errorData"].string ?? ""
+        for childs:JSONDecoder in decoder["data"].array ?? [] {
+            datas.append(xamInfo(childs))
+        }
+    }
+}
+
+
 // Model 做题记录（data）
 class GTestExamList:JSONJoy {
     var id:String
@@ -170,16 +186,40 @@ class GExamInfo: JSONJoy{
     var answers = Array<GAnswersInfo>()
     
     required init(_ decoder: JSONDecoder){
-        questionid = decoder["questionid"].string
-        post_title = decoder["post_title"].string
-        post_difficulty = decoder["post_difficulty"].string
-        post_description = decoder["post_description"].string
-        answer = decoder["answer"].string
+        questionid = decoder["questionid"].string ?? ""
+        post_title = decoder["post_title"].string ?? ""
+        post_difficulty = decoder["post_difficulty"].string ?? ""
+        post_description = decoder["post_description"].string ?? ""
+        answer = decoder["answer"].string ?? ""
         for childs: JSONDecoder in decoder["answers"].array!{
             answers.append(GAnswersInfo(childs))
         }
     }
     func append(list: [GAnswersInfo]){
+        self.answers = list + self.answers
+    }
+}
+
+// Model 错题集（data）
+class xamInfo: JSONJoy{
+    var questionid:String?
+    var post_title:String?
+    var post_description:String?
+    var post_difficulty:String?
+    var answer:String?
+    var answers = Array<AnswersInfo>()
+    
+    required init(_ decoder: JSONDecoder){
+        questionid = decoder["questionid"].string
+        post_title = decoder["post_title"].string
+        post_difficulty = decoder["post_difficulty"].string
+        post_description = decoder["post_description"].string
+        answer = decoder["answer"].string
+        for childs: JSONDecoder in decoder["answerslist"].array ?? []{
+            answers.append(AnswersInfo(childs))
+        }
+    }
+    func append(list: [AnswersInfo]){
         self.answers = list + self.answers
     }
 }
@@ -203,21 +243,56 @@ class GAnswersInfo: JSONJoy {
     }
 }
 
+// Model 错题集（data（answers））
+class AnswersInfo: JSONJoy {
+    
+    var title:String
+    var isanswer :String
+    var id :String
+    var questionid:String
+    var listorder:String
+    
+    required init(_ decoder: JSONDecoder){
+        title = decoder["title"].string ?? ""
+        isanswer = decoder["isanswer"].string ?? ""
+        id = decoder["id"].string ?? ""
+        questionid = decoder["questionid"].string ?? ""
+        listorder = decoder["listorder"].string ?? ""
+    }
+}
 
-// Model 收藏记录
+
+// Model 收藏其他记录
 class CollectModel:JSONJoy {
     var status:String
-    var datas = Array<CollectList>()
+    var datas = Array<NewsInfo>()
     var errorData:String
     
     required init(_ decoder: JSONDecoder) {
         status = decoder["status"].string ?? ""
         errorData = decoder["errorData"].string ?? ""
         for childs:JSONDecoder in decoder["data"].array ?? [] {
-            datas.append(CollectList(childs))
+            datas.append(NewsInfo(childs))
         }
     }
 }
+
+
+//// Model 收藏记录
+//class CollectModel:JSONJoy {
+//    var status:String
+//    var datas = Array<CollectList>()
+//    var errorData:String
+//    
+//    required init(_ decoder: JSONDecoder) {
+//        status = decoder["status"].string ?? ""
+//        errorData = decoder["errorData"].string ?? ""
+//        for childs:JSONDecoder in decoder["data"].array ?? [] {
+//            datas.append(CollectList(childs))
+//        }
+//    }
+//}
+
 
 // Model 收藏记录（data）
 class CollectList:JSONJoy {

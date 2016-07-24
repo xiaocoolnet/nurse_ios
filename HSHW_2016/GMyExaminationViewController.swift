@@ -102,13 +102,13 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         collection = false
         
         // 根据不同类型设置不同的头
-        if type == 1 {
+//        if type == 1 {
             setSpecificView_ExamPaper_OnView(self.view)
-//            self.AnswerView()
-        }else{
-            setSpecificView_ErrorExamPaper_OnView(self.view)
-//            self.AnswerView()
-        }
+////            self.AnswerView()
+//        }else{
+//            setSpecificView_ErrorExamPaper_OnView(self.view)
+////            self.AnswerView()
+//        }
         
         self.createScrollerView()
         if self.dataSource.count > 0 {
@@ -602,17 +602,17 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
         
         // 在线考试(选择的功能还没实现)
         // MARK:- 这里还缺少点击按钮选择的功能，以及无数据时的显示问题
-        let examBtn = UIButton(frame: CGRectMake(CGRectGetMaxX(dailyBtn.frame)+20, 0, (WIDTH-60)/2.0, 44))
-        view.addSubview(examBtn)
-        
-        let examChoice = UIImageView(frame: CGRectMake(0, 16, 12, 12))
-        examChoice.image = UIImage(named: "ic_kuang.png")
-        examBtn.addSubview(examChoice)
-        let examLab = UILabel(frame: CGRectMake(24, 12.5, 40, 17))
-        examLab.font = UIFont.systemFontOfSize(18)
-        examLab.text = "在线考试(选择的功能还没实现)"
-        examLab.sizeToFit()
-        examBtn.addSubview(examLab)
+//        let examBtn = UIButton(frame: CGRectMake(CGRectGetMaxX(dailyBtn.frame)+20, 0, (WIDTH-60)/2.0, 44))
+//        view.addSubview(examBtn)
+//        
+//        let examChoice = UIImageView(frame: CGRectMake(0, 16, 12, 12))
+//        examChoice.image = UIImage(named: "ic_kuang.png")
+//        examBtn.addSubview(examChoice)
+//        let examLab = UILabel(frame: CGRectMake(24, 12.5, 40, 17))
+//        examLab.font = UIFont.systemFontOfSize(18)
+//        examLab.text = "在线考试(选择的功能还没实现)"
+//        examLab.sizeToFit()
+//        examBtn.addSubview(examLab)
         
 //        segment = UISegmentedControl(items: ["每日一练","在线考试"])
 //        segment?.frame = CGRectMake(0, 0, WIDTH, 44)

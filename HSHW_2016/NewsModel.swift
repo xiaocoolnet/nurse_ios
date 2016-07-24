@@ -111,7 +111,7 @@ class NewsInfo: JSONJoy{
     var post_date:String?
     var recommended:String?
     var thumb:String?
-    var term_id :String?
+    var term_id :String
     var term_name:String
     var term_hits:String
     var likes = Array<LikeInfo>()
@@ -119,17 +119,18 @@ class NewsInfo: JSONJoy{
     
     required init(_ decoder: JSONDecoder){
         post_title = decoder["post_title"].string ?? ""
-        title = decoder["title"].string
-        post_excerpt = decoder["post_excerpt"].string
-        post_date = decoder["post_date"].string
-        tid = decoder["tid"].string
-        object_id = decoder["object_id"].string
-        post_source = decoder["post_source"].string
-        post_content = decoder["post_content"].string
-        post_hits = decoder["post_hits"].string
-        recommended = decoder["recommended"].string
-        thumb = decoder["thumb"].string
-        term_id = decoder["term_id"].string
+        title = decoder["title"].string ?? ""
+        post_excerpt = decoder["post_excerpt"].string ?? ""
+        post_date = decoder["post_date"].string ?? ""
+        tid = decoder["tid"].string ?? ""
+        object_id = decoder["object_id"].string ?? ""
+        post_source = decoder["post_source"].string ?? ""
+        post_content = decoder["post_content"].string ?? ""
+        create_time = decoder["createtime"].string ?? ""
+        post_hits = decoder["post_hits"].string ?? ""
+        recommended = decoder["recommended"].string ?? ""
+        thumb = decoder["thumb"].string ?? ""
+        term_id = decoder["term_id"].string ?? ""
         smeta = decoder["smeta"]
         term_name = decoder["term_name"].string ?? ""
         term_hits = decoder["term_hits"].string ?? ""
