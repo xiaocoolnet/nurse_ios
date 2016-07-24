@@ -42,7 +42,7 @@ class HSFindPersonDetailView: UIView {
         
         backBtn.layer.borderColor = COLOR.CGColor
         backBtn.layer.borderWidth = 1
-        backBtn.cornerRadius = 22
+        backBtn.cornerRadius = 17
     }
     @IBAction func sendInvite(sender: AnyObject) {
         if delegate != nil {

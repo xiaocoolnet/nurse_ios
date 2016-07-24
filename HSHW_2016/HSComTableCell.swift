@@ -40,6 +40,11 @@ class HSComTableCell: UITableViewCell {
         fromLabel.text = model.typename
         likeNumber.setTitle(String(model.like.count), forState: .Normal)
         commentNumber.setTitle(String(model.comment.count), forState: .Normal)
+        HSMineHelper().getUserInfo(model.userid) { (success, response) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.position.text = (response as! HSFansAndFollowModel).major
+            })
+        }
     }
     
 }

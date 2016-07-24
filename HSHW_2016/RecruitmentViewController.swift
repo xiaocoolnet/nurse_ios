@@ -216,7 +216,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         self.employmentMessageTableView.frame = CGRectMake(0, 0, employmentMessage.frame.size.width,employmentMessage.frame.size.height - WIDTH*65/375)
 //        employmentMessageTableView.tag = 1
 //        employmentMessageTableView.backgroundColor = UIColor.redColor()
-        let tackBtn = UIButton(frame: CGRectMake(WIDTH*(WIDTH - 145 )/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*130/375, WIDTH*45/375))
+        let tackBtn = UIButton(frame: CGRectMake(WIDTH-WIDTH*130/375-WIDTH*15/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*130/375, WIDTH*45/375))
         tackBtn.layer.cornerRadius = WIDTH*22.5/375
         tackBtn.layer.borderColor = COLOR.CGColor
         tackBtn.layer.borderWidth = 1

@@ -67,11 +67,24 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         avatar.layer.cornerRadius = avatar.frame.size.width/2.0
         avatar.layer.masksToBounds = true
         avatar.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(postInfo?.photo)!), forState: .Normal)
+        print(postion.text,postInfo?.typename)
         avatarName.text = postInfo?.name
-        postion.text = postInfo?.typename
         sendTime.text = timeStampToString((postInfo?.write_time)!)
-        seeCount.text = "3346"
-        level.text = "Lv.05"
+        // MARK: 阅读量
+        seeCount.text = String(arc4random_uniform(10000))
+        
+        HSMineHelper().getUserInfo((postInfo?.userid)!) { (success, response) in
+            
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.level.text = String(format: "Lv.%02d",Int((response as! HSFansAndFollowModel).level)!)
+            })
+        }
+        helper.showPostInfo((postInfo?.mid)!) { (success, response) in
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.postion.text = (response as! PostModel).typename
+            })
+        }
+        
     }
     
     // Linux时间戳转标准时间
