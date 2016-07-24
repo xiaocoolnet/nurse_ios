@@ -57,6 +57,18 @@ class MineExamCollectTableViewCell: UITableViewCell {
         
     }
     
+    var fanModel:NewsInfo?{
+        didSet {
+            
+            titImg.image = UIImage(named: "ic_note.png")
+            titleLab.text = fanModel?.title
+            titleLab.numberOfLines = 0
+            timeLab.text = timeStampToString((fanModel?.create_time)!)
+            
+        }
+        
+    }
+    
     // Linux时间戳转标准时间
     func timeStampToString(timeStamp:String)->String {
         

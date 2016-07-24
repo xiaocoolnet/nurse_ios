@@ -14,6 +14,7 @@ class HSCollectionListController: UITableViewController {
     var dataSource = NSMutableArray()
     
     private var collectListArray:Array<CollectList> = []
+    private var fansListArray:Array<xamInfo> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,11 +32,16 @@ class HSCollectionListController: UITableViewController {
             tableView.registerNib(UINib(nibName:"HSArticleCollectCell",bundle: nil), forCellReuseIdentifier: "cell")
         } else if collectionType == 2 {
             
-            helper.GetCollectList(QCLoginUserInfo.currentInfo.userid, type: "2") { (success, response) in
-                self.collectListArray = response as! Array<CollectList>
+//            helper.GetCollectList(QCLoginUserInfo.currentInfo.userid, type: "2") { (success, response) in
+//                self.collectListArray = response as! Array<CollectList>
+//                self.tableView.reloadData()
+//            }
+            
+            helper.getCollectionInfoWith("2") { (success, response) in
+                self.fansListArray = response as! Array<xamInfo>
                 self.tableView.reloadData()
             }
-            tableView.registerClass(MineExamCollectTableViewCell.self, forCellReuseIdentifier: "cell")
+            tableView.registerClass(GMyErrorTableViewCell.self, forCellReuseIdentifier: "cell")
         } else if collectionType == 3 {
             
             helper.getCollectionInfoWithType("4", handle: { (success, response) in
@@ -63,7 +69,7 @@ class HSCollectionListController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if collectionType == 2 {
-            return collectListArray.count
+            return fansListArray.count
         }else{
             
             return dataSource.count
@@ -78,10 +84,15 @@ class HSCollectionListController: UITableViewController {
 
         }
         else if collectionType == 2 {
-            let cell1 = tableView.dequeueReusableCellWithIdentifier("cell") as! MineExamCollectTableViewCell
-            cell1.selectionStyle = .None
-            cell1.fansModel = collectListArray[indexPath.row]
-            return cell1
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! GMyErrorTableViewCell
+            cell.selectionStyle = .None
+            cell.inde = indexPath.row
+            
+            //        if tableView.tag == 410 {
+            let model = fansListArray[indexPath.row]
+            //            model.post_title = "每日一练"
+            cell.fanModel = model
+            return cell
 
         }
         else if collectionType == 3 {
@@ -104,7 +115,18 @@ class HSCollectionListController: UITableViewController {
             print((dataSource[indexPath.row] as? PostModel)?.mid)
             
             navigationController?.pushViewController(vc, animated: true)
+        }else if collectionType == 2 {
+            let userPageVC = GMyExamViewController()
+            userPageVC.type = 1
+            userPageVC.subType = 1
+            print(fansListArray[indexPath.row])
+            userPageVC.a = indexPath.row
+            userPageVC.dataSource = fansListArray
+            
+            self.navigationController?.pushViewController(userPageVC, animated: true)
+
         }
+        
     }
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if collectionType == 1 {

@@ -10,11 +10,15 @@ import UIKit
 
 class MineExaminationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    let myTableView = UITableView()
     var helper = HSMineHelper()
-    private var collectListArray:Array<CollectList> = []
+    var dailyBtn = UIButton()
+    var examBtn = UIButton()
     
-
+//    let myScrollView = UIScrollView()
+    let fansTableView = UITableView()
+    let focusTableView = UITableView()
+    var navigationBarLineView = UIView()
+    
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.hidden = false
@@ -23,7 +27,9 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "收藏试题"
+        loadData_Exampaper()
+        
+
         
         // 线
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
@@ -32,61 +38,65 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        myTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-115)
-        myTableView.backgroundColor = UIColor.clearColor()
-        myTableView.registerClass(MineExamCollectTableViewCell.self, forCellReuseIdentifier: "cell")
-        myTableView.rowHeight = 70
-        myTableView.delegate = self
-        myTableView.dataSource = self
-        self.view.addSubview(myTableView)
-     
-        self.getData()
+        
+        // 每日一练列表
+        fansTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-115)
+        fansTableView.backgroundColor = UIColor.clearColor()
+        fansTableView.registerClass(GMyErrorTableViewCell.self, forCellReuseIdentifier: "cell")
+        fansTableView.rowHeight = 70
+        fansTableView.tag = 410
+        fansTableView.delegate = self
+        fansTableView.dataSource = self
+        self.view.addSubview(fansTableView)
         
 
         // Do any additional setup after loading the view.
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.collectListArray.count
+
+    private var fansListArray:Array<xamInfo> = []
+    
+    // 加载数据_做题记录
+    func loadData_Exampaper() {
+        
+        helper.getCollectionInfoWith("2") { (success, response) in
+            self.fansListArray = response as! Array<xamInfo>
+            self.fansTableView.reloadData()
+        }
+        
     }
     
+    // MARK: tableView 代理方法
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+            return fansListArray.count
+
+    }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! MineExamCollectTableViewCell
-        cell.selectionStyle = .None
         
-        cell.fansModel = collectListArray[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! GMyErrorTableViewCell
+        cell.selectionStyle = .None
+        cell.inde = indexPath.row
+        
+//        if tableView.tag == 410 {
+            let model = fansListArray[indexPath.row]
+            //            model.post_title = "每日一练"
+            cell.fanModel = model
+        
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(11111)
-//        let vc = CollectDetailViewController()
-//        vc.collect = self.collectListArray
+        print(indexPath.row)
         
+        let userPageVC = GMyExamViewController()
+        userPageVC.type = 1
+        userPageVC.subType = 1
+        print(fansListArray[indexPath.row])
+        userPageVC.a = indexPath.row
+        userPageVC.dataSource = fansListArray
+        
+        self.navigationController?.pushViewController(userPageVC, animated: true)
     }
     
-    
-    func getData() {
-        helper.GetCollectList(QCLoginUserInfo.currentInfo.userid, type: "2") { (success, response) in
-            self.collectListArray = response as! Array<CollectList>
-            self.myTableView.reloadData()
-        }
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

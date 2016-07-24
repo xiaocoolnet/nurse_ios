@@ -14,7 +14,7 @@ class CollectDetailViewController: UIViewController, UITableViewDelegate,UITable
     let myTableView = UITableView()
     
     var helper = HSMineHelper()
-    private var collectListArray:Array<CollectList> = []
+    private var collectListArray:Array<NewsInfo> = []
     
     override func viewDidLoad() {
         self.title = "其他收藏"
@@ -46,17 +46,20 @@ class CollectDetailViewController: UIViewController, UITableViewDelegate,UITable
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! MineExamCollectTableViewCell
         cell.selectionStyle = .None
         
-        cell.fansModel = collectListArray[indexPath.row]
+        cell.fanModel = collectListArray[indexPath.row]
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
+        let next = NewsContantViewController()
+        next.newsInfo = collectListArray[indexPath.row]
+        navigationController!.pushViewController(next, animated: true)
     }
     
     func getData() {
         helper.GetCollectList(QCLoginUserInfo.currentInfo.userid, type: "3") { (success, response) in
-            self.collectListArray = response as! Array<CollectList>
+            self.collectListArray = response as! Array<NewsInfo>
             self.myTableView.reloadData()
         }
     }
