@@ -31,23 +31,24 @@ class HSTabBarController: UITabBarController,UITabBarControllerDelegate,ViewCont
     }
     
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
-        if LOGIN_STATE == true {
-            return true
-        }
         
-        if !viewController.isKindOfClass(NewsViewController.self){
-            if showLogin {
-                return false
-            }
-            let vc = childViewControllers[0] as! UINavigationController
-            let controller = ViewController()
-            controller.delegate = self
-            controller.navigationController?.navigationBar.hidden = false
-            controller.title = "登录"
-            vc.pushViewController(controller, animated: true)
-            showLogin = true
-            return false
-        }
+//        if LOGIN_STATE == true {
+//            return true
+//        }
+//        
+//        if !viewController.isKindOfClass(NewsViewController.self){
+//            if showLogin {
+//                return false
+//            }
+//            let vc = childViewControllers[0] as! UINavigationController
+//            let controller = ViewController()
+//            controller.delegate = self
+//            controller.navigationController?.navigationBar.hidden = false
+//            controller.title = "登录"
+//            vc.pushViewController(controller, animated: true)
+//            showLogin = true
+//            return false
+//        }
         return true
     }
     

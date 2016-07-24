@@ -426,7 +426,7 @@ class HSMineHelper: NSObject {
         }
     }
     
-    // 获取收藏记录
+    // 获取收藏试题
     func GetCollectList(userid:String, type:String, handle:ResponseBlock){
     
         let url = PARK_URL_Header+"getfavoritelist"

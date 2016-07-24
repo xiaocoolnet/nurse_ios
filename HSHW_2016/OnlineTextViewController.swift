@@ -161,6 +161,12 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
+        }
+        
         var info:EveryDayInfo
         if dataSource.objectlist[indexPath.section].haschild == 0 {
             info = dataSource.objectlist[indexPath.section]

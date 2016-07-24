@@ -25,6 +25,7 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
         bottomTableView.rowHeight = UITableViewAutomaticDimension
         hotTableView.registerNib(UINib(nibName:"HSHotPostCell",bundle: nil), forCellReuseIdentifier: "hotcell")
         hotTableView.tag = 11
+        hotTableView.rowHeight = UITableViewAutomaticDimension
         hotTableView.scrollEnabled = false
         hotTableView.tableFooterView = UIView()
         
@@ -43,8 +44,13 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
                     self.bottomTableView.reloadData()
                 })
             }
-            helper.getForumList(typeid, isHot: true) { (success, response) in
+            // TODO: 0 需要改为 typeid
+            helper.getForumList("0", isHot: true) { (success, response) in
                 self.hotData = response as? Array<PostModel> ?? []
+                print("热门数据总共有\(self.hotData.count)条")
+                for obj in self.hotData {
+                    print("------------",obj.title)
+                }
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     self.hotTableView.reloadData()
@@ -73,8 +79,9 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
             let hotcell = tableView.dequeueReusableCellWithIdentifier("hotcell") as! HSHotPostCell
             hotcell.showforForumModel(hotData[indexPath.row])
             hotcell.selectionStyle = .None
-            
-            hotTableView.frame = CGRectMake(hotTableView.frame.origin.x, hotTableView.frame.origin.y, hotTableView.frame.size.width, hotcell.frame.size.height*CGFloat(indexPath.row+1))
+//            hotcell.backgroundColor = UIColor.init(red: CGFloat(arc4random_uniform(255))/255.0, green: CGFloat(arc4random_uniform(255))/255.0, blue: CGFloat(arc4random_uniform(255))/255.0, alpha: 1)
+            hotTableView.frame = CGRectMake(hotTableView.frame.origin.x, hotTableView.frame.origin.y, hotTableView.frame.size.width, hotcell.frame.size.height*CGFloat(hotData.count))
+            print("hotTableView.frame == ",hotTableView.frame,"hotcell.height == ",hotcell.frame.size.height)
             
             return hotcell
         }

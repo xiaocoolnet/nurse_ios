@@ -44,6 +44,16 @@ class HSStateCommentCell: UITableViewCell {
         didSet {
             nameLab.text = commentModel?.name
             contentLab.text = commentModel?.content
+            
+            HSMineHelper().getUserInfo((commentModel?.userid)!) { (success, response) in
+                let model = response as! HSFansAndFollowModel
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.headerBtn.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+model.photo), forState: .Normal)
+                    self.positionLab.text = model.major
+                    self.levelLab.text = String(format: "Lv.%02d", Int(model.level)!)
+                })
+            }
+            
 //            headerBtn.layer.masksToBounds =
             
             

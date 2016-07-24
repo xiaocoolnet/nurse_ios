@@ -168,6 +168,12 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func click1(btn:UIButton){
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
+        }
+        
         print(btn.tag)
         print("赞")
         let newsInfo = self.dataSource.objectlist[btn.tag]

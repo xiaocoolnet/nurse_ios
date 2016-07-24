@@ -19,7 +19,6 @@ class NurseStationViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.tabBarController?.tabBar.hidden = false
-
     }
     
     override func viewDidLoad() {

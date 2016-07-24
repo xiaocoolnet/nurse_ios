@@ -85,7 +85,7 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
         case 2:
             title = "错题集"
         case 3:
-            title = "收藏记录"
+            title = "收藏试题"
         case 4:
             title = "其它收藏"
         default:

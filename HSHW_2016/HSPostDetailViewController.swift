@@ -120,10 +120,10 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSStateCommentCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
-            if postInfo?.userid != postInfo?.comment[indexPath.row].userid {
-                cell.louzhuLab.hidden = true
-            }else{
+            if postInfo?.userid == postInfo?.comment[indexPath.row].userid {
                 cell.louzhuLab.hidden = false
+            }else{
+                cell.louzhuLab.hidden = true
             }
             
             cell.commentModel = postInfo?.comment[indexPath.row]
@@ -262,6 +262,12 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     }
     
     func collectionBtnClicked(btn:UIButton){
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
+        }
+        
         let user = NSUserDefaults.standardUserDefaults()
         let uid = user.stringForKey("userid")
         let userID = user.stringForKey(postInfo!.mid)
@@ -366,6 +372,12 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         print("键盘落下")
     }
     
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        // MARK:要求登录
+        return requiredLogin(self.navigationController!, hasBackItem: true)
+        
+    }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         print("textfield.text = ",textField.text)
         if textField.text != "" {
@@ -396,6 +408,12 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         }
     }
     func zanAddNum() {
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            return
+        }
+        
         let user = NSUserDefaults.standardUserDefaults()
         let uid = user.stringForKey("userid")
         let userID = user.stringForKey(self.postInfo!.mid)
