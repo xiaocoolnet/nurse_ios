@@ -43,6 +43,7 @@
     [value appendFormat:@"Content-Disposition: form-data; name=\"upfile\"; filename=\"%@.png\"\r\n", name];
     //声明上传文件的格式
     [value appendFormat:@"Content-Type: image/*\r\n\r\n"];
+    NSLog(value);
     NSMutableData *data = [NSMutableData dataWithData:[value dataUsingEncoding:NSUTF8StringEncoding]];
     [data appendData:imageData];
     [data appendData:[[NSString stringWithFormat:@"\r\n%@--", formLine] dataUsingEncoding:NSUTF8StringEncoding]];
@@ -50,6 +51,7 @@
     [request setHTTPBody:data];
     NSString *content=[[NSString alloc]initWithFormat:@"multipart/form-data; boundary=%@",@"0xKhTmLbOuNdArY-44DF1AB4-7622-4163-948C-8A1FEADDBF27"];
     [request setValue:content forHTTPHeaderField:@"Content-Type"];
+    NSLog(@"%@",request.allHTTPHeaderFields);
     [NSURLConnection connectionWithRequest:request delegate:self];
 }
 - (void)startFormConnectWithVideoName:(NSString *)name URL:(NSString *)defaulturl imageData:(NSData *)imageData

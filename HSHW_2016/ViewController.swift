@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import MBProgressHUD
+
 protocol ViewControllerDelegate:NSObjectProtocol {
     func viewcontrollerDesmiss()
 }
-class ViewController: UIViewController,UITextFieldDelegate {
+class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegate {
     
     var hasBackBarButtonItem = true
     
@@ -41,8 +43,9 @@ class ViewController: UIViewController,UITextFieldDelegate {
     weak var delegate:ViewControllerDelegate?
     
     override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
-//        navigationController?.navigationBar.hidden = false
+//        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        //UIApplication.sharedApplication().backgroundRefreshStatus = true
+//        navigationController?.navigationBar.hidden = true
     }
     
     override func viewDidLoad() {
@@ -74,15 +77,22 @@ class ViewController: UIViewController,UITextFieldDelegate {
         // Do any additional setup after loading the view, typically from a nib.
         logVM = LoginModel()
         self.view.backgroundColor = UIColor.whiteColor()
+//        self.view.backgroundColor = COLOR
         
-        scrollView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
-        scrollView.contentSize = CGSizeMake(0, 740)
+        if navigationController?.navigationBarHidden == true {
+            scrollView.frame = CGRectMake(0, -20, WIDTH, HEIGHT-49+20)
+        }else{
+            scrollView.frame = CGRectMake(0, -20-64, WIDTH, HEIGHT-49+20)
+        }
+        
+        scrollView.backgroundColor = COLOR
+        scrollView.contentSize = CGSizeMake(0, 0)
         scrollView.showsVerticalScrollIndicator = false
         scrollView.bounces = false
         self.view.addSubview(scrollView)
         print(HEIGHT)
         
-        backView.frame = CGRectMake(0, 0, WIDTH, WIDTH*363/375)
+        backView.frame = CGRectMake(0, 0, WIDTH, WIDTH*333/375)
         backView.backgroundColor = COLOR
         scrollView.addSubview(backView)
         LOGO.frame = CGRectMake(WIDTH*109/375, WIDTH*107/375, WIDTH*157/375, WIDTH*155/375)
@@ -91,14 +101,14 @@ class ViewController: UIViewController,UITextFieldDelegate {
         let btnTit:[String] = ["登录","注册"]
         click = true
         //  登录按钮
-        btnOne.frame = CGRectMake(0, WIDTH*363/375-45, WIDTH/2, 45)
+        btnOne.frame = CGRectMake(0, WIDTH*333/375-45, WIDTH/2, 45)
         btnOne.titleLabel?.font = UIFont.systemFontOfSize(18)
         btnOne.setTitle(btnTit[0], forState: .Normal)
         btnOne.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         btnOne.addTarget(self, action: #selector(self.loginTheView), forControlEvents: .TouchUpInside)
         backView.addSubview(btnOne)
         //  注册按钮
-        btnTwo.frame = CGRectMake(WIDTH/2, WIDTH*363/375-45, WIDTH/2, 45)
+        btnTwo.frame = CGRectMake(WIDTH/2, WIDTH*333/375-45, WIDTH/2, 45)
         btnTwo.titleLabel?.font = UIFont.systemFontOfSize(18)
         btnTwo.setTitle(btnTit[1], forState: .Normal)
         btnTwo.setTitleColor(GREY, forState: .Normal)
@@ -108,7 +118,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         self.loginView()
         self.registerView()
         
-        line.frame = CGRectMake(0, WIDTH*363/375-4, WIDTH/2, 4)
+        line.frame = CGRectMake(0, WIDTH*333/375-4, WIDTH/2, 4)
         line.backgroundColor = UIColor(red: 250/255.0, green: 118/255.0, blue: 210/255.0, alpha: 1.0)
         scrollView.addSubview(line)
         
@@ -130,12 +140,15 @@ class ViewController: UIViewController,UITextFieldDelegate {
     //  登录界面
     func loginTheView() {
         print("登录")
+        
+       
+        
         btnOne.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         btnTwo.setTitleColor(GREY, forState: .Normal)
         UIView.animateWithDuration(0.2) {
-            self.line.frame = CGRectMake(0, WIDTH*363/375-4, WIDTH/2, 4)
-            self.register.frame = CGRectMake(WIDTH, WIDTH*363/375, WIDTH, HEIGHT-WIDTH*363/375)
-            self.login.frame = CGRectMake(0, WIDTH*363/375, WIDTH, HEIGHT-WIDTH*363/375)
+            self.line.frame = CGRectMake(0, WIDTH*333/375-4, WIDTH/2, 4)
+            self.register.frame = CGRectMake(WIDTH, WIDTH*333/375, WIDTH, HEIGHT-WIDTH*333/375)
+            self.login.frame = CGRectMake(0, WIDTH*333/375, WIDTH, HEIGHT-WIDTH*333/375)
         }
         password.resignFirstResponder()
         yanzheng.resignFirstResponder()
@@ -148,9 +161,9 @@ class ViewController: UIViewController,UITextFieldDelegate {
         btnOne.setTitleColor(GREY, forState: .Normal)
         btnTwo.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         UIView.animateWithDuration(0.2) {
-            self.line.frame = CGRectMake(WIDTH/2, WIDTH*363/375-4, WIDTH/2, 4)
-            self.register.frame = CGRectMake(0, WIDTH*363/375, WIDTH, HEIGHT-WIDTH*363/375)
-            self.login.frame = CGRectMake(-WIDTH, WIDTH*363/375, WIDTH, HEIGHT-WIDTH*363/375)
+            self.line.frame = CGRectMake(WIDTH/2, WIDTH*333/375-4, WIDTH/2, 4)
+            self.register.frame = CGRectMake(0, WIDTH*333/375, WIDTH, HEIGHT-WIDTH*333/375)
+            self.login.frame = CGRectMake(-WIDTH, WIDTH*333/375, WIDTH, HEIGHT-WIDTH*333/375)
         }
         phoneNumber.resignFirstResponder()
         passwordNumber.resignFirstResponder()
@@ -163,7 +176,13 @@ class ViewController: UIViewController,UITextFieldDelegate {
         let keyBoardTranslate = CGFloat((keyBoardRect?.origin.y)!-HEIGHT)
 
         var rect:CGRect = self.view.frame
-        rect.origin.y = keyBoardTranslate
+//        rect.origin.y = keyBoardTranslate
+        
+        if navigationController?.navigationBarHidden == true {
+            rect.origin.y = keyBoardTranslate
+        }else{
+            rect.origin.y = keyBoardTranslate+64
+        }
         
         UIView.animateWithDuration(0.3) { 
             
@@ -174,13 +193,15 @@ class ViewController: UIViewController,UITextFieldDelegate {
     //  登录界面UI的搭建
     func loginView() {
         
-        login.frame = CGRectMake(0, WIDTH*363/375, WIDTH, HEIGHT-WIDTH*363/375)
+        login.frame = CGRectMake(0, WIDTH*333/375, WIDTH, HEIGHT-WIDTH*333/375)
         login.backgroundColor = UIColor.whiteColor()
         scrollView.addSubview(login)
         
         phoneNumber.frame = CGRectMake(35, WIDTH*40/375, WIDTH-60, WIDTH*50/375)
         phoneNumber.placeholder = "手机号"
         phoneNumber.font = UIFont.systemFontOfSize(16)
+        phoneNumber.keyboardType = .NumberPad
+        phoneNumber.returnKeyType = .Next
         login.addSubview(phoneNumber)
         phoneNumber.delegate = self
         
@@ -194,6 +215,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         passwordNumber.frame = CGRectMake(35, WIDTH*100/375, WIDTH-60, WIDTH*50/375)
         passwordNumber.placeholder = "密码"
         passwordNumber.font = UIFont.systemFontOfSize(16)
+        passwordNumber.returnKeyType = .Done
         login.addSubview(passwordNumber)
         passwordNumber.delegate = self
         
@@ -217,6 +239,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
         forgetPwdBtn.addTarget(self, action: #selector(self.changePassWord), forControlEvents: .TouchUpInside)
         login.addSubview(forgetPwdBtn)
         
+//        scrollView.contentSize = CGSizeMake(WIDTH, CGRectGetMinY(login.frame)+CGRectGetMaxY(forgetPwdBtn.frame)+10-20)
+        
     }
     
     //  修改密码
@@ -224,25 +248,33 @@ class ViewController: UIViewController,UITextFieldDelegate {
         print("修改密码")
         //  跳转页面 
         let forGetVC = ForgetPasswordController()
-        
+        forGetVC.delegate = self
+        forGetVC.flag = (navigationController?.navigationBar.hidden)!
         self.navigationController?.pushViewController(forGetVC, animated: true)
+    }
+    
+    func changeNavigation(flag:Bool) {
+        navigationController?.navigationBar.hidden = flag
     }
     
     //  注册界面UI的搭建
     func registerView() {
-        register.frame = CGRectMake(WIDTH, WIDTH*363/375, WIDTH, HEIGHT-WIDTH*363/375)
+        register.frame = CGRectMake(WIDTH, WIDTH*333/375, WIDTH, HEIGHT-WIDTH*333/375)
         register.backgroundColor = UIColor.whiteColor()
         scrollView.addSubview(register)
         
         phoneNum.frame = CGRectMake(35, WIDTH*15/375, WIDTH-60, WIDTH*50/375)
         phoneNum.placeholder = "手机号"
         phoneNum.font = UIFont.systemFontOfSize(16)
+        phoneNum.keyboardType = .NumberPad
+        phoneNum.returnKeyType = .Next
         register.addSubview(phoneNum)
         phoneNum.delegate = self
         
         yanzheng.frame = CGRectMake(35, WIDTH*75/375, 150, WIDTH*50/375)
         yanzheng.placeholder = "验证码"
         yanzheng.font = UIFont.systemFontOfSize(16)
+        yanzheng.returnKeyType = .Next
         register.addSubview(yanzheng)
         yanzheng.delegate = self
         
@@ -256,6 +288,7 @@ class ViewController: UIViewController,UITextFieldDelegate {
         password.frame = CGRectMake(35, WIDTH*135/375, WIDTH-60, WIDTH*50/375)
         password.placeholder = "密码"
         password.font = UIFont.systemFontOfSize(16)
+        password.returnKeyType = .Done
         register.addSubview(password)
         password.delegate = self
         
@@ -284,6 +317,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
         submit.setTitleColor(COLOR, forState: .Normal)
         submit.addTarget(self, action: #selector(self.submitTheUser), forControlEvents: .TouchUpInside)
         register.addSubview(submit)
+        
+//        scrollView.contentSize = CGSizeMake(WIDTH, CGRectGetMinY(register.frame)+CGRectGetMaxY(submit.frame)+10-20)
     }
     
     //  点击短信获取验证码
@@ -297,6 +332,11 @@ class ViewController: UIViewController,UITextFieldDelegate {
             
             alert.show()
             return
+        }
+        if !validationEmailFormat(phoneNum.text!) {
+            let alert = UIAlertView(title:"提示信息",message: "手机号格式有误！",delegate: self,cancelButtonTitle: "确定")
+            
+            alert.show()
         }
         logVM?.comfirmPhoneHasRegister(phoneNum.text!, handle: {[unowned self](success, response) in
             dispatch_async(dispatch_get_main_queue(), {
@@ -314,6 +354,15 @@ class ViewController: UIViewController,UITextFieldDelegate {
             
             })
         print("get identify")
+    }
+    
+    // 验证手机号是否正确
+    func validationEmailFormat(string:String) -> Bool {
+    
+        let mobileRegex = "^((13[0-9])|(147)|(170)|(15[^4,//D])|(18[0,5-9]))//d{8}$"
+        let mobileTest:NSPredicate = NSPredicate(format: "SELF MATCHES %@",mobileRegex)
+        return mobileTest.evaluateWithObject(string)
+   
     }
     
     //  注册提交事件
@@ -382,6 +431,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
             passwordNumber.becomeFirstResponder()
         case passwordNumber:
             goToMain()
+        case phoneNum:
+            yanzheng.becomeFirstResponder()
         case yanzheng:
             password.becomeFirstResponder()
         case password:
@@ -429,16 +480,19 @@ class ViewController: UIViewController,UITextFieldDelegate {
      // 通过手机号和密码进行登录操作
     func loginWithNum(num:String,pwd:String){
 //   SVProgressHUD.show()
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        
         logVM?.login(num, passwordNumber: pwd, handle: { [unowned self] (success, response) in
             dispatch_async(dispatch_get_main_queue(), {
                 if success == false {
                     if response != nil {
-                        
+                        hud.hide(true)
                         let string = response as! String
-                        if string == "密码错误！" || string == "用户不存在"{
-                        let alert = UIAlertView(title:"提示信息",message: string,delegate: self,cancelButtonTitle: "确定")
-                        alert.show()
-                    }
+//                        if string == "密码错误！" || string == "用户不存在"{
+                            let alert = UIAlertView(title:"提示信息",message: string,delegate: self,cancelButtonTitle: "确定")
+                            alert.show()
+//                        }
                         print(response as! String)
                     }else{
                         let alert = UIAlertView(title:"提示信息",message: "登录失败",delegate: self,cancelButtonTitle: "确定")
@@ -446,6 +500,8 @@ class ViewController: UIViewController,UITextFieldDelegate {
                     }
                     return
                 }else{
+                    hud.hide(true)
+
                     let ud = NSUserDefaults.standardUserDefaults()
                     //  把得到的用户信息存入到沙盒
                     //  得到 useID
@@ -472,5 +528,12 @@ class ViewController: UIViewController,UITextFieldDelegate {
 //            self.presentViewController(vc, animated: true, completion: nil)
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        phoneNum.resignFirstResponder()
+        yanzheng.resignFirstResponder()
+        password.resignFirstResponder()
+        passwordNumber.resignFirstResponder()
+        phoneNumber.resignFirstResponder()
+    }
 }
 

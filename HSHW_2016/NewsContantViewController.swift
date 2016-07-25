@@ -10,12 +10,17 @@ import UIKit
 import Alamofire
 import MBProgressHUD
 
-class NewsContantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate{
+class NewsContantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate,cateBtnClickedDelegate{
 
     let myTableView = UITableView()
+    var collectBtn = UIButton()
     let number = UILabel()
     let shareArr:[String] = ["ic_pengyouquan.png","ic_wechat.png","ic_weibo.png"]
-    var newsInfo :NewsInfo?
+    var newsInfo :NewsInfo? {
+        didSet {
+            self.getDate()
+        }
+    }
     var likeNum  = 0
     var webHeight:CGFloat = 100
     var isLike:Bool = false
@@ -30,7 +35,10 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         self.navigationController?.navigationBar.hidden = false
         self.tabBarController?.tabBar.hidden = true
         self.navigationItem.leftBarButtonItem?.title = "返回"
-        self.getDate()
+        
+        if LOGIN_STATE {
+            judgeCollection()
+        }
     }
     
     override func viewDidLoad() {
@@ -42,10 +50,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //        self.navigationItem.rightBarButtonItems = [shareBtn,collectBtn]
         
         //收藏按钮
-        let collectBtn = UIButton(frame:CGRectMake(0, 0, 18, 18))
-        collectBtn.setImage(UIImage(named: "ic_shoucang"), forState: .Normal)
-        collectBtn.addTarget(self, action: #selector(collection), forControlEvents: .TouchUpInside)
+        collectBtn = UIButton(frame:CGRectMake(0, 0, 18, 18))
+        collectBtn.setImage(UIImage(named: "btn_collect"), forState: .Normal)
+        collectBtn.setImage(UIImage(named: "btn_collect_sel"), forState: .Selected)
+        collectBtn.addTarget(self, action: #selector(collection(_:)), forControlEvents: .TouchUpInside)
         let barButton1 = UIBarButtonItem(customView: collectBtn)
+        
+       
         
         //分享按钮
         let shareBtn = UIButton(frame:CGRectMake(0, 0, 18, 18))
@@ -75,54 +86,40 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         myTableView.registerNib(UINib.init(nibName: "NewsSourceCell", bundle: nil), forCellReuseIdentifier: "sourceCell")
         myTableView.registerNib(UINib.init(nibName: "contentCell", bundle: nil), forCellReuseIdentifier: "webView")
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "textCell")
-        myTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
+        myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
         self.view.addSubview(myTableView)
         myTableView.separatorColor = UIColor.clearColor()
         
+
     }
     
-    func collection(){
+    // MARK:判断是否已收藏
+    func judgeCollection() {
+      
+        HSMineHelper().getCollectionInfoWithType("1") { (success, response) in
+            let list =  newsInfoModel(response as! JSONDecoder).data
+            for model in list {
+                if model.object_id == self.newsInfo?.object_id{
+                    self.collectBtn.selected = true
+                }
+            }
+        }
+    }
+    
+    // MARK:点击收藏按钮
+    func collection(collectBtn:UIButton){
         
         // MARK:要求登录
         if !requiredLogin(self.navigationController!, hasBackItem: true) {
             return
         }
         
-        let user = NSUserDefaults.standardUserDefaults()
-        let uid = user.stringForKey("userid")//登录用户 id
-        let userID = user.stringForKey((self.newsInfo?.object_id)!)
-        print(userID)
-        var str = NSString()
-        if tagNum == 1 {
-            str = "3"
-            
-        }else{
-            str = "1"
-            
-        }
-        if userID == "false"||userID==nil{
-            helper.collectionNews(newsInfo!.object_id!,type: str as String, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt!) { (success, response) in
-            if success {
-                dispatch_async(dispatch_get_main_queue(), { 
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "收藏成功"
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                    user.setObject("true", forKey: "isCollect")
-                    user.setObject("true", forKey: (self.newsInfo?.object_id)!)
-                    self.isCollect=true
-                })
-            }
-          }
-        }else{
-            
+        if collectBtn.selected {
             let url = PARK_URL_Header+"cancelfavorite"
             let param = [
                 "refid":newsInfo?.object_id,
                 "type":"1",
-                "userid":uid
+                "userid":QCLoginUserInfo.currentInfo.userid
             ];
             Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
                 print(request)
@@ -139,9 +136,10 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                         hud.margin = 10.0
                         hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
-                        user.setObject("false", forKey: (self.newsInfo?.object_id)!)
                     }
                     if(status.status == "success"){
+                        
+                        collectBtn.selected = false
                         
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
@@ -152,14 +150,47 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                         //self.myTableView .reloadData()
                         print(status.data)
                         self.isCollect=false
-                        user.setObject("false", forKey: "isCollect")
-                    user.removeObjectForKey((self.newsInfo?.object_id)!)
                     }
                 }
                 
             }
-            
+        }else{
+            var str = NSString()
+            if tagNum == 1 {
+                str = "3"
+            }else{
+                str = "1"
+            }
+            helper.collectionNews(newsInfo!.object_id!,type: str as String, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt!) { (success, response) in
+                if success {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        collectBtn.selected = true
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "收藏成功"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                        self.isCollect=true
+                    })
+                }
+            }
         }
+        
+//        let user = NSUserDefaults.standardUserDefaults()
+//        let uid = user.stringForKey("userid")//登录用户 id
+//        let userID = user.stringForKey((self.newsInfo?.object_id)!)
+//        print(userID)
+//        
+//        
+//        
+//        if userID == "false"||userID==nil{
+//            
+//        }else{
+//            
+//            
+//            
+//        }
 
     }
     
@@ -187,13 +218,14 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         return one
     }
     
+    // MARK:获取关联文章列表
     func getDate() {
-        
+        print(newsInfo?.term_id,newsInfo?.title)
         let url = PARK_URL_Header+"getRelatedNewslist"
         let param = [
            "refid": newsInfo!.term_id
         ];
-        Alamofire.request(.GET, url, parameters: param as?[String:String]).response { request, response, json, error in
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             print(request)
             if(error != nil){
             }else{
@@ -379,24 +411,39 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             
         }else{
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!GToutiaoTableViewCell
+            //        cell.type = 1
+            cell.delegate = self
+            cell.selectionStyle = .None
             let newsInfo = self.dataSource.objectlist[indexPath.row]
             cell.setCellWithNewsInfo(newsInfo)
-            let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 14, width: WIDTH-140)
-            print(newsInfo.post_title)
-            print(titleHeight)
-            cell.titLab.frame.size.height = titleHeight
-            cell.heal.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-            cell.conNum.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-            cell.timeLab.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-            cell.comBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-            cell.timeBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-            cell.contant.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+20
-            print(newsInfo.thumb)
+            return cell
+            
+//            let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
+//            let newsInfo = self.dataSource.objectlist[indexPath.row]
+//            cell.setCellWithNewsInfo(newsInfo)
+//            let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 14, width: WIDTH-140)
+//            print(newsInfo.post_title)
+//            print(titleHeight)
+//            cell.titLab.frame.size.height = titleHeight
+//            cell.heal.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+//            cell.conNum.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+//            cell.timeLab.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+//            cell.comBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+//            cell.timeBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
+//            cell.contant.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+20
+//            print(newsInfo.thumb)
             return cell
         }
         return cell1
         
+    }
+    
+    // MARK: 点击分类按钮
+    func cateBtnClicked(categoryBtn: UIButton) {
+        let cateDetail = GNewsCateDetailViewController()
+        cateDetail.newsType = categoryBtn.tag
+        self.navigationController!.pushViewController(cateDetail, animated: true)
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {

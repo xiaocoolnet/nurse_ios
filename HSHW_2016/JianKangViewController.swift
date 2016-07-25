@@ -176,7 +176,7 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!GToutiaoTableViewCell
-        cell.type = 1
+//        cell.type = 1
         cell.delegate = self
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
@@ -194,13 +194,11 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     }
     
+    // MARK: 点击分类按钮
     func cateBtnClicked(categoryBtn: UIButton) {
-        let cateVC = GNewsCateViewController()
-        cateVC.type = 1
-        cateVC.id = String(categoryBtn.tag)
-        cateVC.name = categoryBtn.currentTitle!
-        
-        self.navigationController!.pushViewController(cateVC, animated: true)
+        let cateDetail = GNewsCateDetailViewController()
+        cateDetail.newsType = categoryBtn.tag
+        self.navigationController!.pushViewController(cateDetail, animated: true)
     }
     
     override func didReceiveMemoryWarning() {

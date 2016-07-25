@@ -44,7 +44,6 @@
 		0DB7E1901D38B7EC001D7B66 /* HSMineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */; };
 		0DB7E1931D38E468001D7B66 /* HSUserPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB7E1911D38E468001D7B66 /* HSUserPageViewController.swift */; };
 		0DB7E1941D38E468001D7B66 /* HSUserPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DB7E1921D38E468001D7B66 /* HSUserPageViewController.xib */; };
-		0DBF54721D40646500B4B5FB /* GNewsCateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54711D40646500B4B5FB /* GNewsCateViewController.swift */; };
 		0DBF54741D406D1900B4B5FB /* GNewsCateDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54731D406D1900B4B5FB /* GNewsCateDetailViewController.swift */; };
 		0DBF54761D406EF500B4B5FB /* GCateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54751D406EF500B4B5FB /* GCateTableViewCell.swift */; };
 		0DBF54781D40B5CC00B4B5FB /* GToutiaoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54771D40B5CC00B4B5FB /* GToutiaoTableViewCell.swift */; };
@@ -230,7 +229,6 @@
 		0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineModel.swift; sourceTree = "<group>"; };
 		0DB7E1911D38E468001D7B66 /* HSUserPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSUserPageViewController.swift; sourceTree = "<group>"; };
 		0DB7E1921D38E468001D7B66 /* HSUserPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSUserPageViewController.xib; sourceTree = "<group>"; };
-		0DBF54711D40646500B4B5FB /* GNewsCateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GNewsCateViewController.swift; sourceTree = "<group>"; };
 		0DBF54731D406D1900B4B5FB /* GNewsCateDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GNewsCateDetailViewController.swift; sourceTree = "<group>"; };
 		0DBF54751D406EF500B4B5FB /* GCateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCateTableViewCell.swift; sourceTree = "<group>"; };
 		0DBF54771D40B5CC00B4B5FB /* GToutiaoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GToutiaoTableViewCell.swift; sourceTree = "<group>"; };
@@ -644,7 +642,6 @@
 				185408821CE7052700DFBA7C /* NewsContantViewController.swift */,
 				F61228081D057B1E009E3D4D /* HuLiViewController.swift */,
 				F612280A1D0581D7009E3D4D /* JianKangViewController.swift */,
-				0DBF54711D40646500B4B5FB /* GNewsCateViewController.swift */,
 				0DBF54731D406D1900B4B5FB /* GNewsCateDetailViewController.swift */,
 			);
 			name = Controller;
@@ -1143,7 +1140,6 @@
 				F632EF0E1D18E8890038AF9D /* HSSQCollectionViewCell.swift in Sources */,
 				0BC3878E1D339C2C001460B8 /* AdressPickerView.swift in Sources */,
 				F64C9AC41D3B9C150041E360 /* MineRecDetailsViewController.swift in Sources */,
-				0DBF54721D40646500B4B5FB /* GNewsCateViewController.swift in Sources */,
 				183B86741CE5CFA000709235 /* CornerRadiusViewController.swift in Sources */,
 				F6E86AF61D34DF7E001536B6 /* HSForumDetailCell.swift in Sources */,
 				F6D02CDF1D07BB5300353557 /* contentCell.swift in Sources */,

@@ -175,7 +175,7 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if tableView.tag == 410 {
             cell.fansModel = fansListArray[indexPath.row]
         }else if tableView.tag == 411{
-            cell.fansModel = focusListArray[indexPath.row]
+            cell.followModel = focusListArray[indexPath.row]
         }
         
         return cell

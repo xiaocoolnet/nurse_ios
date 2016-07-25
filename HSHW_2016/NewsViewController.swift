@@ -13,7 +13,7 @@ class NewsViewController: UIViewController {
     
     let oneView = TouTiaoViewController()
     let twoView = HuLiViewController()
-    let threeView = TouTiaoViewController()
+    let threeView = JianKangViewController()
     let fourView = AcademicViewController()
     
     override func viewWillAppear(animated: Bool) {

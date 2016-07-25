@@ -8,6 +8,7 @@
 
 import UIKit
 import AFNetworking
+import MBProgressHUD
 //  block
 typealias ResponseBlock = (success:Bool,response:AnyObject?)->Void
 

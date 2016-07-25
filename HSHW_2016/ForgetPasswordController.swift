@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol ForgetPasswordDelegate {
+    func changeNavigation(flag:Bool)
+}
+
 class ForgetPasswordController: UIViewController {
+    
+    var flag = true
     
     var phoneLabel:UILabel!
     var checkLabel:UILabel!
@@ -32,6 +38,8 @@ class ForgetPasswordController: UIViewController {
     var checkView:UIView!
     var passWordView:UIView!
     var checkPassView:UIView!
+    
+    var delegate:ForgetPasswordDelegate?
     
     //  注册功能
     var changeVM:LoginModel?
@@ -294,6 +302,10 @@ class ForgetPasswordController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.delegate?.changeNavigation(flag)
     }
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)

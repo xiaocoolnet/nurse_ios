@@ -22,7 +22,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     let pageControl = UIPageControl()
     var picArr = Array<String>()
     var dataSource = NewsList()
-    var likedataSource = LikeList()
+//    var likedataSource = LikeList()
     var requestHelper = NewsPageHelper()
     
     internal var newsId = String()
@@ -63,7 +63,8 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     
     func GetDate(){
         let url = PARK_URL_Header+"getNewslist"
-        let param = ["channelid":newsType == nil ? "4" : String(newsType!+17)]
+        print(newsType)
+        let param = ["channelid":String(newsType!)]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 
@@ -83,7 +84,17 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
                     print(status)
                     self.dataSource = NewsList(status.data!)
                     print(LikeList(status.data!).objectlist)
-                    self.likedataSource = LikeList(status.data!)
+//                    self.likedataSource = LikeList(status.data!)
+                    switch self.newsType!{
+                        case 4:
+                            self.title = "头条资讯"
+                        case 5:
+                            self.title = "护理园地"
+                        case 6:
+                            self.title = "健康知识"
+                        default:
+                            self.title = self.dataSource.objectlist.first?.term_name
+                    }
                     self.myTableView .reloadData()
                     print(status.data)
                 }
@@ -113,7 +124,6 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!GToutiaoTableViewCell
-        cell.type = 2
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         cell.setCellWithNewsInfo(newsInfo)

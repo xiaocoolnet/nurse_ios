@@ -43,18 +43,36 @@ class FansTableViewCell: UITableViewCell {
     
     var fansModel:HSFansAndFollowModel?{
         didSet {
-            //TODO:image 后期要改，从网上获取
-//            titImg.image = UIImage(named: newValue.headerImage)
-            titImg.image = UIImage(named: "1.png")
-            nameLab.text = self.fansModel!.name
-            nameLab.sizeToFit()
-
-            fansBtn.frame = CGRectMake(75+nameLab.bounds.size.width+5, 26, 19, 18)
-            fansBtn.setTitle(self.fansModel!.level, forState: .Normal)
             
+            HSMineHelper().getUserInfo((fansModel?.id)!) { (success, response) in
+                
+                self.setUI(response as! HSFansAndFollowModel)
+            }
+        }
+    }
+    
+    var followModel:HSFansAndFollowModel?{
+        didSet {
+            HSMineHelper().getUserInfo((followModel?.userid)!) { (success, response) in
+                
+                self.setUI(response as! HSFansAndFollowModel)
+            }
             
         }
         
+    }
+    
+    private func setUI(model:HSFansAndFollowModel) {
+        dispatch_async(dispatch_get_main_queue(), {
+            //TODO:image 后期要改，从网上获取
+            //            titImg.image = UIImage(named: newValue.headerImage)
+            self.titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.photo))
+            self.nameLab.text = model.name
+            self.nameLab.sizeToFit()
+            
+            self.fansBtn.frame = CGRectMake(75+self.nameLab.bounds.size.width+5, 26, 19, 18)
+            self.fansBtn.setTitle(model.level, forState: .Normal)
+        })
     }
     
     

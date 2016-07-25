@@ -213,7 +213,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!GToutiaoTableViewCell
-        cell.type = 1
+//        cell.type = 1
         cell.delegate = self
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
@@ -223,7 +223,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let newsInfo = self.dataSource.objectlist[indexPath.row]
-        print(newsInfo)
+        print(newsInfo.title,newsInfo.term_id)
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.likeNum = newsInfo.likes.count
@@ -234,22 +234,23 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
             answerInfo = str[j].userid!
             print(answerInfo)
         }
-            if answerInfo == QCLoginUserInfo.currentInfo.userid{
-                print(1)
-            }else{
-                print(222)
-            }
+        
+        if answerInfo == QCLoginUserInfo.currentInfo.userid{
+            print(1)
+        }else{
+            print(222)
+        }
         
         
         self.navigationController?.pushViewController(next, animated: true)
     }
     
+    // MARK: 点击分类按钮
     func cateBtnClicked(categoryBtn: UIButton) {
-        let cateVC = GNewsCateViewController()
-        cateVC.type = 1
-        cateVC.id = String(categoryBtn.tag)
-        cateVC.name = categoryBtn.currentTitle!
-        
-        self.navigationController!.pushViewController(cateVC, animated: true)
+        let cateDetail = GNewsCateDetailViewController()
+        cateDetail.newsType = categoryBtn.tag
+        cateDetail.type = 1
+        NSLog("%d", categoryBtn.tag)
+        self.navigationController!.pushViewController(cateDetail, animated: true)
     }
 }

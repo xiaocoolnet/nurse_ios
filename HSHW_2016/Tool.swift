@@ -33,6 +33,14 @@ func calculateHeight(string:String,size:CGFloat,width:  CGFloat) -> CGFloat {
     return boundingRect.height
 }
 
+func calculateWidth(string:String,size:CGFloat,height:  CGFloat) -> CGFloat {
+    let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+    //let screenBounds:CGRect = UIScreen.mainScreen().bounds
+    let boundingRect = String(string).boundingRectWithSize(CGSizeMake(0, height), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(size)], context: nil)
+
+    return boundingRect.width
+}
+
 
 typealias TimerHandle = (timeInterVal:Int)->Void
 
