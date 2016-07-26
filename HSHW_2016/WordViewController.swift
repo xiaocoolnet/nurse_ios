@@ -16,7 +16,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     var timer = NSTimer()
     
     let choose:[String] = ["A、消化道症状","B、胃液分析","C、胃镜检查","D、血清学检查","E、胃肠X线检查"]
-    let picArr:[String] = ["btn_arrow_left.png","btn_arrow_right.png","ic_fenlei.png","btn_eye.png","btn_collet.png"]
+    let picArr:[String] = ["btn_arrow_left.png","btn_arrow_right.png","ic_fenlei.png","btn_eye.png","btn_collect.png"]
     
     let picName:[String] = ["答题卡","答案","收藏"]
     var TitCol = UILabel()
@@ -184,21 +184,9 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         window = ((UIApplication.sharedApplication().delegate?.window)!)!
         window.addSubview(questBack)
         
-        let big = UIView(frame: CGRectMake(0, 44, WIDTH, HEIGHT-163))
-//        big.backgroundColor = COLOR
-        
-        // 创建渐变色图层
-        let gradientLayer = CAGradientLayer.init()
-        gradientLayer.frame = CGRectMake(0, 0, WIDTH, HEIGHT-163)
-        gradientLayer.colors = [UIColor.init(red: 186/255.0, green: 125/255.0, blue: 126/255.0, alpha: 1).CGColor,UIColor.init(red: 140/255.0, green: 20/255.0, blue: 139/255.0, alpha: 1).CGColor]
-        // 设置渐变方向（0-1）
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-        gradientLayer.endPoint = CGPoint(x: 0, y: 1)
-        // 设置渐变色的起始位置和终止位置（颜色分割点）
-        gradientLayer.locations = [ (0.15), (0.98)]
-        gradientLayer.borderWidth = 0.0
-        // 添加图层
-        big.layer.addSublayer(gradientLayer)
+        let big = UIImageView(frame: CGRectMake(0, 44, WIDTH, HEIGHT-163))
+        big.userInteractionEnabled = true
+        big.image = UIImage.init(named: "ic_exam_backgroundImage")
         
         questBack.addSubview(big)
         let smart = UIView(frame: CGRectMake(10, 10, WIDTH-20, HEIGHT-183))
@@ -412,6 +400,9 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         let height: CGFloat = calculateHeight(examInfo.post_description!, size: 15, width:backeView.frame.size.width-20)
         print(height)
         analysisContent.frame = CGRectMake(10, analysis.frame.size.height+analysis.frame.origin.y, backeView.frame.size.width-20, height)
+        if height > WIDTH*20/375 {
+            backeView.frame = CGRectMake(0, HEIGHT-54-WIDTH*260/375-(height-WIDTH*20/375), WIDTH, WIDTH*260/375+(height-WIDTH*20/375))
+        }
         backeView.addSubview(analysisContent)
     }
     // MARK:    底部视图
@@ -481,23 +472,12 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             contentScrollView.backgroundColor = UIColor.whiteColor()
             contentScrollView.layer.cornerRadius = 5
             
-            let backView = UIView()
+            let backView = UIImageView()
+            backView.userInteractionEnabled = true
+            
             let backGound = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH,44))
             backView.frame = CGRectMake(CGFloat(i)*WIDTH, 44, WIDTH, HEIGHT-163)//背景
-//            backView.backgroundColor = COLOR
-            
-            // 创建渐变色图层
-            let gradientLayer = CAGradientLayer.init()
-            gradientLayer.frame = CGRectMake(0, 0, WIDTH, HEIGHT-163)
-            gradientLayer.colors = [UIColor.init(red: 186/255.0, green: 125/255.0, blue: 126/255.0, alpha: 1).CGColor,UIColor.init(red: 140/255.0, green: 20/255.0, blue: 139/255.0, alpha: 1).CGColor]
-            // 设置渐变方向（0-1）
-            gradientLayer.startPoint = CGPoint(x: 0, y: 0)
-            gradientLayer.endPoint = CGPoint(x: 0, y: 1)
-            // 设置渐变色的起始位置和终止位置（颜色分割点）
-            gradientLayer.locations = [ (0.15), (0.98)]
-            gradientLayer.borderWidth = 0.0
-            // 添加图层
-            backView.layer.addSublayer(gradientLayer)
+            backView.image = UIImage.init(named: "ic_exam_backgroundImage")
             
             backView.tag = i+1
             let back = UIView(frame: CGRectMake(CGFloat(i)*WIDTH+10, 54, WIDTH-20, HEIGHT-221))//白色答题区域
@@ -593,7 +573,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         view.addSubview(scrollView)
         
         pageControl.frame = CGRectMake(0, HEIGHT-167, WIDTH, 48)
-        pageControl.pageIndicatorTintColor = UIColor.redColor()
+//        pageControl.pageIndicatorTintColor = UIColor.redColor()
 //        pageControl.addTarget(self, action: #selector(self.pageContorllerNumber(_:)), forControlEvents: .TouchUpInside)
         pageControl.addTarget(self, action: #selector(self.pageContorllerNumber(_:)), forControlEvents: .ValueChanged)
         pageControl.numberOfPages = self.dataSource.count
@@ -642,6 +622,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             dismissCard()
         }else if btn.tag == 4 {
             if hear == true {
+                AnswerView()
                 UIView.animateWithDuration(0.3, animations: {
                     self.grayBack.frame = CGRectMake(0, 0, WIDTH, HEIGHT-54)
                     self.questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
@@ -656,8 +637,17 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 hear = false
             }else{
                 UIView.animateWithDuration(0.3, animations: {
+                    
                     self.grayBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-54)
+                    
+                    }, completion: { (bool) in
+                        if bool {
+                            for obj in self.grayBack.subviews {
+                                obj.removeFromSuperview()
+                            }
+                        }
                 })
+                
                 btn.setImage(UIImage(named: picArr[3]), forState: .Normal)
                 TitAns.textColor = GREY
                 hear = true
@@ -782,7 +772,8 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         let rightBtn = backView?.viewWithTag(rightAnswer[pageControl.currentPage] as! Int)
         rightBtn?.backgroundColor = UIColor.greenColor()
         if btn.tag != rightBtn?.tag {
-            btn.backgroundColor = UIColor.redColor()
+            btn.backgroundColor = UIColor.init(red: 159/255.0, green: 43/255.0, blue: 136/255.0, alpha: 1)
+            btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         }
         let exam = dataSource[pageControl.currentPage] as!ExamInfo
         
@@ -820,19 +811,57 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             for i in 0...myChoose.count-1 {
                 answerStr += (i==0 ? chooseId[i] : ","+chooseId[i])
             }
+        }else{
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = MBProgressHUDMode.Text;
+            hud.labelText = "请答题后提交"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 1)
+            
+            return
         }
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        //        hud.mode = MBProgressHUDMode.;
+        hud.labelText = "正在提交..."
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
         helper.sendtestAnswerByType("1", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
             if(success){
                 dispatch_async(dispatch_get_main_queue(), {
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "提交成功，得分为：" + (response as! String)
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    hud.hide(true)
+                    self.navigationItem.rightBarButtonItem = nil
+                    
+                    let alertController = UIAlertController(title: "提交成功", message: "得分\(response!)", preferredStyle: .Alert)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                    
+                    let cancelAction = UIAlertAction(title: "退出", style: .Cancel) { (cancelAction) in
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                    alertController.addAction(cancelAction)
+                    
+                    let answerAction = UIAlertAction(title: "答案解析", style: .Default){
+                        (cancelAction) in
+                    }
+                    alertController.addAction(answerAction)
+                    
+                })
+            }else{
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    hud.hide(false)
+                    
+                    let hud2 = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud2.mode = MBProgressHUDMode.Text;
+                    hud2.labelText = "提交失败，请稍后再试"
+                    hud2.margin = 10.0
+                    hud2.removeFromSuperViewOnHide = true
+                    hud2.hide(true, afterDelay: 2)
                 })
             }
+            print(response)
         }
     }
     

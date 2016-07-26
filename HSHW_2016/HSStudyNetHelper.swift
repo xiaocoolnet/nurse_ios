@@ -16,7 +16,9 @@ class HSStudyNetHelper: NSObject {
         let param = [
             "type":type,"count":count,"questionlist":questionlist,"answerlist":answerlist,"userid":QCLoginUserInfo.currentInfo.userid
         ]
+        print(param)
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request?.mainDocumentURL)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -25,7 +27,7 @@ class HSStudyNetHelper: NSObject {
                     let result = model.data
                     handle(success: true, response: result)
                 }else{
-                    handle(success: false, response: nil)
+                    handle(success: false, response: error)
                 }
             }
         }
