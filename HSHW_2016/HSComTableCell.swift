@@ -33,7 +33,13 @@ class HSComTableCell: UITableViewCell {
     func showForForumModel(model:PostModel){
         avatarBtn.layer.cornerRadius = avatarBtn.frame.size.width/2.0
         avatarBtn.layer.masksToBounds = true
-        avatarBtn.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+model.photo), forState: .Normal)
+        
+        if model.photo == "default_header" || model.photo == "1234.png" {
+            avatarBtn.setImage(UIImage.init(named: "default_header"), forState: .Normal)
+        }else{
+            avatarBtn.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(model.photo)), forState: .Normal)
+        }
+        
         landLorder.text = model.name
         titleLabel.text = model.title
         contentLabel.text = model.content

@@ -105,6 +105,25 @@ class PostlistModel: JSONJoy {
     }
 }
 
+class PostCollectListModel: JSONJoy {
+    var status:String?
+    var datas = Array<PostModel>()
+    var errorData:String?
+    var datastring:String?
+    
+    required init(_ decoder:JSONDecoder){
+        status = decoder["status"].string
+        if status == "success"{
+            for child:JSONDecoder in decoder["data"].array ?? [] {
+                datas.append(PostModel(child))
+            }
+//            datas = PostModel(decoder["data"])
+        }else{
+            errorData = decoder["data"].string
+        }
+    }
+}
+
 class PostModel: JSONJoy {
     
     var mid:String
@@ -121,6 +140,9 @@ class PostModel: JSONJoy {
     var like = Array<likeModel>()
     var comment = Array<CommentModel>()
     
+    var object_id:String
+    
+    
     required init(_ decoder:JSONDecoder){
         
         mid = decoder["mid"].string ?? decoder["object_id"].string! ?? ""
@@ -132,7 +154,7 @@ class PostModel: JSONJoy {
         title = decoder["title"].string ?? ""
         content = decoder["content"].string ?? ""
         write_time = decoder["write_time"].string ?? ""
-        photo = decoder["photo"].string ?? ""
+        photo = decoder["photo"].string ?? "default_header"
         for child:JSONDecoder in decoder["pic"].array ?? [] {
             pic.append(PicModel(child))
         }
@@ -142,6 +164,8 @@ class PostModel: JSONJoy {
         for child:JSONDecoder in decoder["comment"].array ?? [] {
             comment.append(CommentModel(child))
         }
+        
+        object_id = decoder["object_id"].string ?? ""
     }
 }
 

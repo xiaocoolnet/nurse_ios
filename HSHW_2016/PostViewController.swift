@@ -31,6 +31,8 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "发帖"
+        
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
@@ -130,7 +132,7 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyyMMddHHmmss"
         let dateStr = dateFormatter.stringFromDate(NSDate())
-        let imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
+        let imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid+".png"
         
         ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") {  (data) in
             dispatch_async(dispatch_get_main_queue(), { [unowned self] in
@@ -216,37 +218,69 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
             }, completion: nil)
     }
     
+    // MARK:点击发布按钮
     func takeUpTheTest() {
         print("提交")
         titLab.resignFirstResponder()
         textContent.resignFirstResponder()
         
+        if titLab.text!.isEmpty {
+            
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请输入标题！", comment: "empty message"), preferredStyle: .Alert)
+            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            alertController.addAction(doneAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+            return
+        }
         if (textContent.text!.isEmpty||textContent.text?.characters.count <= 2)
         {
-            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("字数太少，请继续编辑？", comment: "empty message"), preferredStyle: .Alert)
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("正文字数太少，请继续编辑！", comment: "empty message"), preferredStyle: .Alert)
             let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
             alertController.addAction(doneAction)
             self.presentViewController(alertController, animated: true, completion: nil)
             return
         }
-        if titLab.text!.isEmpty {
-            return
-        }
+        
         if selectTypeModel == nil {
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请选择栏目！", comment: "empty message"), preferredStyle: .Alert)
+            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            alertController.addAction(doneAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
             return
         }
         picurl = NSArray(array: imageNames).componentsJoinedByString(",")
         print(picurl)
+        
         helper.postForumCard(selectTypeModel!.term_id, title: titLab.text!, content: textContent.text, picurl: picurl, handle: { (success, response) in
             if success {
-                dispatch_async(dispatch_get_main_queue(), {
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text
-                    hud.labelText = "发布成功"
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                
+                let queueSerial:dispatch_queue_t=dispatch_queue_create("jrqueue1",DISPATCH_QUEUE_SERIAL)
+         
+                dispatch_async(queueSerial, {
+                    
+                    dispatch_sync(dispatch_get_main_queue(), {
+    
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text
+                        hud.labelText = "发布成功"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1.5)
+    
+                    })
                 })
+                
+                dispatch_async(queueSerial, {
+                    
+                    dispatch_sync(dispatch_get_main_queue(), {
+                        
+                        NSThread.sleepForTimeInterval(1.5)
+                        self.navigationController?.popViewControllerAnimated(true)
+                    })
+                })
+
+
             }
         })
         
