@@ -35,7 +35,6 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         if newsType != nil {
             self.navigationController?.navigationBar.hidden = false
         }
-        self.GetDate()
     }
     
     override func viewDidLoad() {
@@ -63,6 +62,9 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 }
             }
         }
+        
+        self.GetDate()
+
         // Do any additional setup after loading the view.
     }
     
@@ -227,6 +229,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.index = indexPath.row
+        next.navTitle = "新闻内容"
         next.delegate = self
         //        print(newsInfo.likes.count)
         //        let str = newsInfo.likes

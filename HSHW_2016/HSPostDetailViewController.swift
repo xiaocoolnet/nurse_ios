@@ -562,12 +562,14 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         self.presentViewController(alertController, animated: true, completion: nil)
         
         let wechatAction = UIAlertAction(title: "微信好友", style: .Default) { (pengyouquanAction) in
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text;
-            hud.labelText = "这几个功能明天做"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 2)
+//            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//            hud.mode = MBProgressHUDMode.Text;
+//            hud.labelText = "这几个功能明天做"
+//            hud.margin = 10.0
+//            hud.removeFromSuperViewOnHide = true
+//            hud.hide(true, afterDelay: 2)
+            
+            self.shareTheNews(1)
         }
         alertController.addAction(wechatAction)
         
@@ -579,21 +581,93 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             hud.removeFromSuperViewOnHide = true
             hud.hide(true, afterDelay: 2)
         }
-        alertController.addAction(weiboAction)
+//        alertController.addAction(weiboAction)
         
         let pengyouquanAction = UIAlertAction(title: "朋友圈", style: .Default) { (pengyouquanAction) in
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text;
-            hud.labelText = "这几个功能明天做"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 2)
+        
+//            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//            hud.mode = MBProgressHUDMode.Text;
+//            hud.labelText = "这几个功能明天做"
+//            hud.margin = 10.0
+//            hud.removeFromSuperViewOnHide = true
+//            hud.hide(true, afterDelay: 2)
+            
+            self.shareTheNews(3)
+            
         }
         alertController.addAction(pengyouquanAction)
         
         
         let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
         alertController.addAction(cancelAction)
+    }
+    
+    func shareTheNews(index:Int) {
+        let shareParames = NSMutableDictionary()
+        // let image : UIImage = UIImage(named: "btn_setting_qq_login")!
+        // 判断是否有图片,如果没有设置默认图片
+        let url = APP_SHARE_URL
+        shareParames.SSDKSetupShareParamsByText("分享内容",
+                                                images : UIImage(named: "AppIcon.png"),
+                                                url : NSURL(string:url),
+                                                title : APP_SHARE_NAME,
+                                                type : SSDKContentType.Auto)
+        
+        if index == 3 {
+            if WXApi.isWXAppInstalled() {
+                
+                //微信朋友圈分享
+                ShareSDK.share(SSDKPlatformType.SubTypeWechatTimeline, parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
+                    
+                    switch state{
+                        
+                    case SSDKResponseState.Success:
+                        print("分享成功")
+                        
+                        let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
+                        alert.show()
+                        
+                    case SSDKResponseState.Fail:    print("分享失败,错误描述:\(error)")
+                    case SSDKResponseState.Cancel:  print("分享取消")
+                        
+                    default:
+                        break
+                    }
+                }
+            }else{
+                let alertView = UIAlertView.init(title:"提示" , message: "没有安装微信", delegate: self, cancelButtonTitle: "确定")
+                alertView.show()
+                
+            }
+        }else if index == 1{
+            
+            if WXApi.isWXAppInstalled() {
+                //微信好友分享
+                ShareSDK.share(SSDKPlatformType.SubTypeWechatSession , parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
+                    switch state{
+                        
+                    case SSDKResponseState.Success:
+                        print("分享成功")
+                        let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
+                        alert.show()
+                        
+                    case SSDKResponseState.Fail:  print("分享失败,错误描述:\(error)")
+                    case SSDKResponseState.Cancel:  print("分享取消")
+                        
+                    default:
+                        break
+                    }
+                }
+            }else{
+                let alertView = UIAlertView.init(title:"提示" , message: "没有安装微信", delegate: self, cancelButtonTitle: "确定")
+                alertView.show()
+                
+            }
+            
+        }
+        
+        print(index)
+        
     }
     
     // MARK:- 获取键盘信息并改变视图

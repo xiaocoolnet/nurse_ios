@@ -24,10 +24,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lmH-xr-AHq">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="98"/>
+                    <rect key="frame" x="10" y="0.0" width="300" height="98"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="标题" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g67-8t-fMF">
-                            <rect key="frame" x="8" y="8" width="304" height="28"/>
+                            <rect key="frame" x="8" y="8" width="284" height="28"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="28" id="oFx-rg-AfI"/>
                             </constraints>
@@ -69,14 +69,14 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_eye_purple" translatesAutoresizingMaskIntoConstraints="NO" id="L0w-cY-CHs">
-                            <rect key="frame" x="196" y="71" width="12" height="8"/>
+                            <rect key="frame" x="166" y="71" width="12" height="8"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="12" id="mk7-zJ-8Np"/>
                                 <constraint firstAttribute="height" constant="8" id="qtB-V4-IfL"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="浏览次数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GLO-Wm-h0d">
-                            <rect key="frame" x="210" y="68" width="44" height="14"/>
+                            <rect key="frame" x="180" y="68" width="44" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="14" id="nx2-p7-s6r"/>
                             </constraints>
@@ -85,14 +85,14 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_time_purple" translatesAutoresizingMaskIntoConstraints="NO" id="q9k-lH-vCi">
-                            <rect key="frame" x="254" y="70" width="10" height="10"/>
+                            <rect key="frame" x="234" y="70" width="10" height="10"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="10" id="B5c-sL-vD1"/>
                                 <constraint firstAttribute="width" constant="10" id="fn7-1u-hX8"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="发帖时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vZp-vc-bX8">
-                            <rect key="frame" x="268" y="68" width="44" height="14"/>
+                            <rect key="frame" x="248" y="68" width="44" height="14"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="14" id="Lqu-60-Yu4"/>
                             </constraints>
@@ -101,7 +101,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bi6-5a-Ljn">
-                            <rect key="frame" x="15" y="97" width="290" height="1"/>
+                            <rect key="frame" x="15" y="97" width="270" height="1"/>
                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="xmn-up-vSc"/>
@@ -144,7 +144,7 @@
                         <constraint firstItem="L0w-cY-CHs" firstAttribute="top" secondItem="g67-8t-fMF" secondAttribute="bottom" constant="35" id="God-xH-Toy"/>
                         <constraint firstItem="bi6-5a-Ljn" firstAttribute="leading" secondItem="lmH-xr-AHq" secondAttribute="leading" constant="15" id="PkC-06-zUe"/>
                         <constraint firstItem="uiO-hA-ab2" firstAttribute="leading" secondItem="Bsc-7k-4tC" secondAttribute="trailing" constant="8" id="QHa-kb-q1h"/>
-                        <constraint firstItem="q9k-lH-vCi" firstAttribute="leading" secondItem="GLO-Wm-h0d" secondAttribute="trailing" id="UOz-aX-iUt"/>
+                        <constraint firstItem="q9k-lH-vCi" firstAttribute="leading" secondItem="GLO-Wm-h0d" secondAttribute="trailing" constant="10" id="UOz-aX-iUt"/>
                         <constraint firstItem="q9k-lH-vCi" firstAttribute="top" secondItem="g67-8t-fMF" secondAttribute="bottom" constant="34" id="UrL-2V-OnC"/>
                         <constraint firstItem="GLO-Wm-h0d" firstAttribute="leading" secondItem="L0w-cY-CHs" secondAttribute="trailing" constant="2" id="Yqw-sK-SFx"/>
                         <constraint firstAttribute="trailing" secondItem="vZp-vc-bX8" secondAttribute="trailing" constant="8" id="bD0-Ij-I5b"/>
@@ -163,8 +163,8 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="lmH-xr-AHq" secondAttribute="trailing" id="NSo-ky-nK9"/>
-                <constraint firstItem="lmH-xr-AHq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="d1O-ss-FlT"/>
+                <constraint firstAttribute="trailing" secondItem="lmH-xr-AHq" secondAttribute="trailing" constant="10" id="NSo-ky-nK9"/>
+                <constraint firstItem="lmH-xr-AHq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="10" id="d1O-ss-FlT"/>
                 <constraint firstItem="lmH-xr-AHq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="tpK-tN-qCb"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>

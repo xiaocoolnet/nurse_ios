@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import MBProgressHUD
 
-class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,cateBtnClickedDelegate {
+class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,cateBtnClickedDelegate,changeModelDelegate {
     
     var myTableView = UITableView()
     let scrollView = UIScrollView()
@@ -295,6 +295,9 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             let newsInfo = self.dataSource.objectlist[indexPath.row]
             //  传值操作
             next.newsInfo = newsInfo
+            next.index = indexPath.row
+            next.navTitle = "出国动态"
+            next.delegate = self
             //  push一个界面
             self.navigationController?.pushViewController(next, animated: true)
         }
@@ -392,4 +395,11 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         cateDetail.newsType = categoryBtn.tag
         self.navigationController!.pushViewController(cateDetail, animated: true)
     }
+    
+    // MARK:更新模型
+    func changeModel(newInfo: NewsInfo, andIndex: Int) {
+        self.dataSource.objectlist[andIndex] = newInfo
+        self.myTableView.reloadData()
+    }
+
 }

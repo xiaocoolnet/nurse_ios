@@ -24,6 +24,9 @@ let USER_NAME = "login_name"
 let USER_PWD = "login_password"
 var LOGIN_STATE = false
 
+let APP_SHARE_URL = "https://www.pgyer.com/kUyM"
+let APP_SHARE_NAME = "中国护士网"
+
 //let ZAN_URL_Header = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a="
 
 func calculateHeight(string:String,size:CGFloat,width:  CGFloat) -> CGFloat {

@@ -224,6 +224,7 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.index = indexPath.row
+        next.navTitle = "新闻内容"
         next.delegate = self
         
         self.navigationController?.pushViewController(next, animated: true)

@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol refreshCollectionViewDelegate {
+    func refreshCollectionView()
+}
+
 class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableViewDataSource {
 
     @IBOutlet weak var bottomTableView: UITableView!
@@ -17,6 +21,11 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
     var dataSource = Array<PostModel>()
     var hotData = Array<PostModel>()
     var cellType:Int?
+    
+    var firstFlag = 1
+    
+    var delegate:refreshCollectionViewDelegate?
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -53,7 +62,12 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.hotTableView.reloadData()
+                    // TODO:这个地方刷新次数有点问题
+                    if self.firstFlag < 4 {
+                        self.hotTableView.reloadData()
+                        self.delegate?.refreshCollectionView()
+                        self.firstFlag += 1
+                    }
                 })
             }
         }

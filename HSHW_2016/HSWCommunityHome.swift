@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,SliderMenuViewDelegate {
+class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,SliderMenuViewDelegate,refreshCollectionViewDelegate {
     
     var sliderMenu: HSZSliderMenuView = HSZSliderMenuView()
     var viewControllers:Array<UIViewController> = []
@@ -99,6 +99,7 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! HSSQCollectionViewCell
         cell.typeid = array[indexPath.row].term_id
+        cell.delegate = self
         print(cell.typeid)
         cell.backgroundColor = .whiteColor()
         return cell
@@ -120,5 +121,11 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         print(scrollView.contentOffset.x/view.frame.width)
         let index = Int(scrollView.contentOffset.x/view.frame.width)
         sliderMenu.setSelectTilteIndex(index)
+    }
+    
+    
+    // MARK:refreshCollectionView   delegate
+    func refreshCollectionView() {
+        self.collectionView.reloadData()
     }
 }

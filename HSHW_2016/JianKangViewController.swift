@@ -26,13 +26,10 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var post_excerpt=String()
     var requestManager:AFHTTPSessionManager?
     let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.GetDate()
-    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //self.GetDate()
+        self.GetDate()
         self.view.backgroundColor = COLOR
         requestManager = AFHTTPSessionManager()
         requestManager?.responseSerializer = AFHTTPResponseSerializer()
@@ -189,6 +186,7 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.index = indexPath.row
+        next.navTitle = "新闻内容"
         next.delegate = self
         
         self.navigationController?.pushViewController(next, animated: true)

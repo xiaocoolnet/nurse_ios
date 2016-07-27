@@ -152,20 +152,8 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.index = indexPath.row
+        next.navTitle = "新闻内容"
         next.delegate = self
-        //        print(newsInfo.likes.count)
-        //        let str = newsInfo.likes
-        //        var answerInfo = NSString()
-        //        for j in 0 ..< str.count {
-        //            answerInfo = str[j].userid!
-        //            print(answerInfo)
-        //        }
-        //
-        //        if answerInfo == QCLoginUserInfo.currentInfo.userid{
-        //            print(1)
-        //        }else{
-        //            print(222)
-        //        }
         
         self.navigationController?.pushViewController(next, animated: true)
     }

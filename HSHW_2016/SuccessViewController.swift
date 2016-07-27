@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import MBProgressHUD
 
-class SuccessViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate,cateBtnClickedDelegate {
+class SuccessViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate,cateBtnClickedDelegate,changeModelDelegate {
     
     let myTableView = UITableView()
     
@@ -225,8 +225,9 @@ class SuccessViewController: UIViewController, UITableViewDelegate, UITableViewD
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
-        next.likeNum = newsInfo.likes.count
-        print(newsInfo.likes.count)
+        next.index = indexPath.row
+        next.navTitle = "成功案例"
+        next.delegate = self
         self.navigationController?.pushViewController(next, animated: true)
     }
     
@@ -237,6 +238,11 @@ class SuccessViewController: UIViewController, UITableViewDelegate, UITableViewD
         self.navigationController!.pushViewController(cateDetail, animated: true)
     }
     
+    // MARK:更新模型
+    func changeModel(newInfo: NewsInfo, andIndex: Int) {
+        self.dataSource.objectlist[andIndex] = newInfo
+        self.myTableView.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

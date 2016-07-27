@@ -211,11 +211,16 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
         let keyBoardRect = infoDic!["UIKeyboardFrameEndUserInfoKey"]?.CGRectValue()
         let keyBoardTranslate = CGFloat((keyBoardRect?.origin.y)!-114)
         
-        UIView.animateWithDuration((infoDic!["UIKeyboardAnimationCurveUserInfoKey"]?.doubleValue)!, delay: 0.2, options: .TransitionNone, animations: {
+        UIView.animateWithDuration((infoDic!["UIKeyboardAnimationCurveUserInfoKey"]?.doubleValue)!, delay: 0.1, options: .TransitionNone, animations: {
             self.bottom.frame = CGRectMake(0, keyBoardTranslate, WIDTH, 50)
             self.textContent.frame = CGRectMake(8, 70, WIDTH-16, keyBoardTranslate-WIDTH*70/375-90)
             self.addImg.frame = CGRectMake(WIDTH-WIDTH*70/375-10, keyBoardTranslate-WIDTH*70/375-10, WIDTH*70/375, WIDTH*70/375)
             }, completion: nil)
+//        UIView.animateWithDuration(0.3, delay: 0.2, options: .TransitionNone, animations: {
+//            self.bottom.frame = CGRectMake(0, keyBoardTranslate, WIDTH, 50)
+//            self.textContent.frame = CGRectMake(8, 70, WIDTH-16, keyBoardTranslate-WIDTH*70/375-90)
+//            self.addImg.frame = CGRectMake(WIDTH-WIDTH*70/375-10, keyBoardTranslate-WIDTH*70/375-10, WIDTH*70/375, WIDTH*70/375)
+//            }, completion: nil)
     }
     
     // MARK:点击发布按钮

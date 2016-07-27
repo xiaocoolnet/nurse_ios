@@ -23,7 +23,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     var newsInfo :NewsInfo? {
         didSet {
             self.likeNum = (newsInfo?.likes.count)!
+            newsInfo?.post_hits = String(Int((newsInfo?.post_hits)!)!+1)
             self.getDate()
+        }
+    }
+    var navTitle:String = "新闻内容" {
+        didSet {
+            self.title = navTitle
         }
     }
     var index = 0
@@ -80,7 +86,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "新闻内容"
+//        self.title = "新闻内容"
         
 //        let collectBtn = UIBarButtonItem(image: UIImage(named: "ic_shoucang"), style: .Plain, target: self, action: #selector(collectionNews))
 //
@@ -219,8 +225,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func collectionNews(){
-        let height = calculateHeight((newsInfo?.post_title)!, size: 19, width: WIDTH-20)
-        self.myTableView.contentOffset = CGPointMake(0, height + webHeight - 20)
+        let height = calculateHeight((newsInfo?.post_title)!, size: 21, width: WIDTH-20)
+        self.myTableView.contentOffset = CGPointMake(0, height + webHeight - 120)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -296,7 +302,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if indexPath.section == 0 {
             if indexPath.row==0 {
                 
-                let height = calculateHeight(newsInfo?.post_title ?? "", size: 19, width: WIDTH-20)
+                let height = calculateHeight(newsInfo?.post_title ?? "", size: 21, width: WIDTH-20)
                 print(newsInfo?.post_title)
                 print(height)
                 return height+20
@@ -344,7 +350,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //                title.textColor = UIColor.redColor()
                 title.font = UIFont.systemFontOfSize(21)
                 cell1.addSubview(title)
-                tableView.rowHeight=height+20
+//                tableView.rowHeight=height+20
                 print(tableView.rowHeight)
             
             }else if indexPath.row == 1 {
@@ -561,7 +567,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     func zanAddNum(btn:UIButton) {
         
         print("赞")
-        
+        self.zan.enabled = false
         // MARK:要求登录
         if !requiredLogin(self.navigationController!, hasBackItem: true) {
             return
@@ -698,7 +704,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     
     func upDateUI(status:NSArray){
-//        self.getDate()
+
         if status[1] as! String=="1" {
              self.likeNum = self.likeNum + 1
             self.zan.selected = true
@@ -706,8 +712,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
              self.likeNum = self.likeNum - 1
             self.zan.selected = false
         }
-//
-//        print(self.likeNum!)
+        
+        self.zan.enabled = true
+        
         let indexPath = NSIndexPath.init(forRow: status[0] as! Int, inSection: 0)
 //        let cell = self.myTableView.cellForRowAtIndexPath(indexPath)
         //self.myTableView.reloadData()
