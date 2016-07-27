@@ -57,8 +57,8 @@ class GToutiaoTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
        
-        titLab.frame = CGRectMake(10, 12, WIDTH-140, 40)
-        titLab.font = UIFont.systemFontOfSize(16)
+//        titLab.frame = CGRectMake(10, 12, WIDTH-140, 40)
+        titLab.font = UIFont.systemFontOfSize(17)
         titLab.numberOfLines = 0
         
         //        heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+22, 46, 15)
@@ -93,6 +93,10 @@ class GToutiaoTableViewCell: UITableViewCell {
     }
     
     func setCellWithNewsInfo(newsInfo:NewsInfo) {
+        
+        let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
+        self.titLab.frame = CGRectMake(10, 12, WIDTH-140, height+10)
+        
         self.titLab.text = newsInfo.post_title
 //        if type == 1 {
 //            heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+22, 46, 15)
@@ -120,8 +124,8 @@ class GToutiaoTableViewCell: UITableViewCell {
         let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
         print(photoUrl)
         self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
-        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
-        titLab.frame.size.height = titleHeight
+//        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
+//        titLab.frame.size.height = titleHeight+100
         heal.frame.origin.y = self.frame.size.height-heal.frame.size.height-1-8
         comBtn.frame.origin.y = self.frame.size.height-comBtn.frame.size.height-4-8
         conNum.frame.origin.y = self.frame.size.height-conNum.frame.size.height-1-8

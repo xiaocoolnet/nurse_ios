@@ -29,6 +29,7 @@ class contentCell: UITableViewCell{
         }
     }
     func loadRequestUrl(requestUrl:NSURL){
+//        contentWebView.scalesPageToFit = true
         contentWebView.loadRequest(NSURLRequest(URL: requestUrl))
     }
  

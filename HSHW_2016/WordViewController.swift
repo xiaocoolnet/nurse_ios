@@ -76,6 +76,10 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         }
     }
     
+//    func judgeCollect() {
+//        
+//    }
+    
     func getData(){
         let user = NSUserDefaults.standardUserDefaults()
         let uid = user.stringForKey("userid")

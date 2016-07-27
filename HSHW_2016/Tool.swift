@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Alamofire
 
 let WIDTH = UIScreen.mainScreen().bounds.size.width
 let HEIGHT = UIScreen.mainScreen().bounds.size.height
@@ -126,6 +127,50 @@ func requiredLogin(nav:UINavigationController,hasBackItem:Bool) -> Bool{
     return false
 }
 
+// MARK:检测是否收藏 type: 1 新闻  2 考试  4 论坛帖子  5招聘  6用户
+func checkHadFavorite(refid:String, type:String, handle:ResponseBlock){
+    let url = PARK_URL_Header+"CheckHadFavorite"
+    let param = [
+        "userid":QCLoginUserInfo.currentInfo.userid,
+        "type":type,
+        "refid":refid
+    ];
+    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        print(request)
+        if(error != nil){
+            handle(success: false, response: error?.description)
+        }else{
+            let result = JSONDecoder(json!)["status"].string ?? ""
+            if(result == "success"){
+                handle(success: true, response: nil)
+            }else{
+                handle(success: false, response: nil)
+            }
+        }
+    }
+}
+// MARK:检测是否点赞 type: 1 新闻  2 论坛
+func checkHadLike(id:String, type:String, handle:ResponseBlock){
+    let url = PARK_URL_Header+"CheckHadLike"
+    let param = [
+        "userid":QCLoginUserInfo.currentInfo.userid,
+        "type":type,
+        "id":id
+    ];
+    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        print(request)
+        if(error != nil){
+            handle(success: false, response: error?.description)
+        }else{
+            let result = JSONDecoder(json!)["status"].string ?? ""
+            if(result == "success"){
+                handle(success: true, response: nil)
+            }else{
+                handle(success: false, response: nil)
+            }
+        }
+    }
+}
 
 //  提示框
 func alert(message:String,delegate:AnyObject){

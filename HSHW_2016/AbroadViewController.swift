@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import MBProgressHUD
 
-class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate {
+class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,cateBtnClickedDelegate {
     
     var myTableView = UITableView()
     let scrollView = UIScrollView()
@@ -39,7 +39,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         myTableView.dataSource = self
         
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        myTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "Abroad")
+        myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "Abroad")
         self.view.addSubview(myTableView)
         channelid = 4
         self.GetDate()
@@ -113,7 +113,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
+        myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
         self.view.addSubview(myTableView)
         
         let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*190/375))
@@ -167,7 +167,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        myTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "Abroad")
+        myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "Abroad")
         self.view.addSubview(myTableView)
     }
     //  段数据
@@ -274,7 +274,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             return cell
             
         }else{
-            let cell = tableView.dequeueReusableCellWithIdentifier("Abroad", forIndexPath: indexPath)as!TouTiaoTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("Abroad", forIndexPath: indexPath)as!GToutiaoTableViewCell
+            cell.delegate = self
             let newsInfo = self.dataSource.objectlist[indexPath.row]
             cell.setCellWithNewsInfo(newsInfo)
             cell.selectionStyle = .None
@@ -383,5 +384,12 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
                 }
             }
         }
+    }
+    
+    // MARK: 点击分类按钮
+    func cateBtnClicked(categoryBtn: UIButton) {
+        let cateDetail = GNewsCateDetailViewController()
+        cateDetail.newsType = categoryBtn.tag
+        self.navigationController!.pushViewController(cateDetail, animated: true)
     }
 }

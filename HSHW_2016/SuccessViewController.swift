@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import MBProgressHUD
 
-class SuccessViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class SuccessViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate,cateBtnClickedDelegate {
     
     let myTableView = UITableView()
     
@@ -108,7 +108,7 @@ class SuccessViewController: UIViewController, UITableViewDelegate, UITableViewD
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
+        myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
         self.view.addSubview(myTableView)
         
         let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*190/375))
@@ -213,7 +213,8 @@ class SuccessViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!GToutiaoTableViewCell
+        cell.delegate = self
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         cell.setCellWithNewsInfo(newsInfo)
@@ -227,6 +228,13 @@ class SuccessViewController: UIViewController, UITableViewDelegate, UITableViewD
         next.likeNum = newsInfo.likes.count
         print(newsInfo.likes.count)
         self.navigationController?.pushViewController(next, animated: true)
+    }
+    
+    // MARK: 点击分类按钮
+    func cateBtnClicked(categoryBtn: UIButton) {
+        let cateDetail = GNewsCateDetailViewController()
+        cateDetail.newsType = categoryBtn.tag
+        self.navigationController!.pushViewController(cateDetail, animated: true)
     }
     
 

@@ -19,6 +19,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     @IBOutlet weak var level: UILabel!
     @IBOutlet weak var seeCount: UILabel!
     @IBOutlet weak var sendTime: UILabel!
+    @IBOutlet weak var louzhuLab: UILabel!
     
     var collectBtn:UIButton = UIButton() // 收藏按钮
     var collectImgBtn:UIButton = UIButton() // 收藏图标
@@ -87,6 +88,10 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         avatar.layer.cornerRadius = avatar.frame.size.width/2.0
         avatar.layer.masksToBounds = true
         print(postInfo?.photo)
+        
+        louzhuLab.layer.cornerRadius = 2
+        louzhuLab.layer.borderWidth = 1
+        louzhuLab.layer.borderColor = COLOR.CGColor
         
         if postInfo?.photo == "default_header" || postInfo?.photo == "1234.png" {
             avatar.setImage(UIImage.init(named: "default_header"), forState: .Normal)
@@ -177,6 +182,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             
             let picArray = postInfo?.pic
             detailCell.postImageView.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+picArray![indexPath.row].pictureurl))
+            print("picurl ===   ",SHOW_IMAGE_HEADER+picArray![indexPath.row].pictureurl)
             
             return detailCell
         }else{
@@ -189,6 +195,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
                 cell.louzhuLab.hidden = true
             }
             
+            cell.floorLab.text = "\(indexPath.row+1)楼"
             cell.commentModel = postInfo?.comment[indexPath.row]
             return cell
         }

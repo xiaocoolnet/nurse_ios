@@ -10,14 +10,14 @@ import UIKit
 import Alamofire
 import MBProgressHUD
 
-class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,changeModelDelegate {
     
     var myTableView = UITableView()
     var dataSource = NewsList()
     var isLike:Bool = false
-    var likeNum :Int!
+//    var likeNum :Int!
     var currentIndexRow:Int?
-    let likeNumDict = NSMutableDictionary()
+//    let likeNumDict = NSMutableDictionary()
     
     var num = 1
     var articleID = NSString()
@@ -30,12 +30,12 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         super.viewDidLoad()
          self.createTableView()
         if num == 2 {
-            self.GetData1()
+//            self.GetData1()
         }else{
             
-            self.GetData()
         }
-        
+        self.GetData()
+
         self.view.backgroundColor = COLOR
         
         // Do any additional setup after loading the view.
@@ -78,43 +78,43 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
     
     }
-    func GetData1(){
-        
-        let url = PARK_URL_Header+"getNewslist"
-        
-        let param = [
-            "channelid":"14"
-        ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
-            if(error != nil){
-                
-            }else{
-                let status = NewsModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    //hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                }
-                if(status.status == "success"){
-                    
-//                    self.createTableView()
-                    print(status)
-                    self.dataSource = NewsList(status.data!)
-                    self.myTableView .reloadData()
-                    print(status.data)
-                }
-            }
-            
-        }
-        
-        
-    }
+//    func GetData1(){
+//        
+//        let url = PARK_URL_Header+"getNewslist"
+//        
+//        let param = [
+//            "channelid":"14"
+//        ];
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+//            print(request)
+//            if(error != nil){
+//                
+//            }else{
+//                let status = NewsModel(JSONDecoder(json!))
+//                print("状态是")
+//                print(status.status)
+//                if(status.status == "error"){
+//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                    hud.mode = MBProgressHUDMode.Text;
+//                    //hud.labelText = status.errorData
+//                    hud.margin = 10.0
+//                    hud.removeFromSuperViewOnHide = true
+//                    hud.hide(true, afterDelay: 1)
+//                }
+//                if(status.status == "success"){
+//                    
+////                    self.createTableView()
+//                    print(status)
+//                    self.dataSource = NewsList(status.data!)
+//                    self.myTableView .reloadData()
+//                    print(status.data)
+//                }
+//            }
+//            
+//        }
+//        
+//        
+//    }
 
     
     func createTableView() {
@@ -139,31 +139,34 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!AcademicTableViewCell
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
-        let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
-        print(photoUrl)
-        cell.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
-        cell.titLab.text = newsInfo.post_title
-//        cell.conNum.text = newsInfo.recommended
-        let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
-        cell.timeLab.text = time[0]
-        let hashValue = newsInfo.likes.count.hashValue
-        print(hashValue)
-        if hashValue != 0 {
-            cell.zan.setImage(UIImage(named:"ic_like_sel"), forState: UIControlState.Normal)
-        }
-        print("\(hashValue)")
-        self.likeNum = hashValue
-        cell.zanNum.text =  String(self.likeNum)
-        cell.zan.addTarget(self, action: #selector(AcademicViewController.click1(_:)), forControlEvents: .TouchUpInside)
-        cell.zan.tag = indexPath.row
+       
+        cell.newsInfo = newsInfo
+        cell.aca_zan.tag = indexPath.row
+        
         return cell
         
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
         let newsInfo = self.dataSource.objectlist[indexPath.row]
+        //        print(newsInfo.title,newsInfo.term_id)
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
+        next.index = indexPath.row
+        next.delegate = self
+        //        print(newsInfo.likes.count)
+        //        let str = newsInfo.likes
+        //        var answerInfo = NSString()
+        //        for j in 0 ..< str.count {
+        //            answerInfo = str[j].userid!
+        //            print(answerInfo)
+        //        }
+        //
+        //        if answerInfo == QCLoginUserInfo.currentInfo.userid{
+        //            print(1)
+        //        }else{
+        //            print(222)
+        //        }
+        
         self.navigationController?.pushViewController(next, animated: true)
     }
     
@@ -285,19 +288,25 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func upDateUI(status:NSArray){
         print("更新UI")
         print(status)
-        if num == 2 {
-            self.GetData1()
-        }else{
-            self.GetData()
-        }
+//        if num == 2 {
+//            self.GetData1()
+//        }else{
+//            self.GetData()
+//        }
         self.myTableView.reloadData()
         let indexPath = NSIndexPath.init(forRow: status[0] as! Int, inSection: 0)
         let cell = self.myTableView.cellForRowAtIndexPath(indexPath)as! AcademicTableViewCell
         if status[1] as! String=="1" {
-            cell.zan.setImage(UIImage(named: "ic_like_sel"), forState: .Normal)
+            cell.aca_zan.setImage(UIImage(named: "ic_like_sel"), forState: .Normal)
         }else{
-            cell.zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
+            cell.aca_zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
         }
 
+    }
+    
+    // MARK:更新模型
+    func changeModel(newInfo: NewsInfo, andIndex: Int) {
+        self.dataSource.objectlist[andIndex] = newInfo
+        self.myTableView.reloadData()
     }
 }

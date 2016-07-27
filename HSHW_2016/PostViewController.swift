@@ -132,7 +132,7 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyyMMddHHmmss"
         let dateStr = dateFormatter.stringFromDate(NSDate())
-        let imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid+".png"
+        let imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
         
         ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") {  (data) in
             dispatch_async(dispatch_get_main_queue(), { [unowned self] in
@@ -140,7 +140,7 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
                 if result.status != nil {
                         if result.status! == "success"{
                             self.selectImages.append(image)
-                            self.imageNames.append(imageName)
+                            self.imageNames.append(imageName+".png")
                             self.collectImageView?.reloadData()
                         }else{
                             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)

@@ -10,6 +10,7 @@
                 <outlet property="avatar" destination="Bsc-7k-4tC" id="NPd-xo-dyR"/>
                 <outlet property="avatarName" destination="k3n-4u-a4A" id="Cf0-3i-OGd"/>
                 <outlet property="level" destination="SXx-Ah-2HQ" id="JcM-PS-ixF"/>
+                <outlet property="louzhuLab" destination="cXU-Yt-w8Y" id="cut-mn-eXT"/>
                 <outlet property="postTitle" destination="g67-8t-fMF" id="fRW-yE-3z2"/>
                 <outlet property="postion" destination="uiO-hA-ab2" id="Bk2-0k-B86"/>
                 <outlet property="seeCount" destination="GLO-Wm-h0d" id="YjR-OG-aSa"/>
@@ -59,7 +60,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lv.5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SXx-Ah-2HQ">
-                            <rect key="frame" x="90" y="67" width="23" height="15"/>
+                            <rect key="frame" x="90" y="66" width="23" height="15"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="15" id="QJF-jE-3bm"/>
                             </constraints>
@@ -119,13 +120,13 @@
                                 </userDefinedRuntimeAttribute>
                             </userDefinedRuntimeAttributes>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="楼主" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXU-Yt-w8Y">
-                            <rect key="frame" x="108" y="42" width="28" height="17"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="楼主" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cXU-Yt-w8Y">
+                            <rect key="frame" x="108" y="42" width="32" height="16"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="28" id="Me3-GF-hU5"/>
-                                <constraint firstAttribute="height" constant="17" id="eyN-2y-3so"/>
+                                <constraint firstAttribute="width" constant="32" id="Me3-GF-hU5"/>
+                                <constraint firstAttribute="height" constant="16" id="eyN-2y-3so"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                             <color key="textColor" red="0.47450980390000003" green="0.0" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>

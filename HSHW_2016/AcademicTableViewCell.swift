@@ -16,7 +16,7 @@ class AcademicTableViewCell: UITableViewCell {
     let conNum = UILabel()
     let timeLab = UILabel()
     let zanNum = UILabel()
-    let zan = UIButton()
+    let aca_zan = UIButton()
     let comBtn = UIButton()
     let timeBtn = UIButton()
     
@@ -54,7 +54,10 @@ class AcademicTableViewCell: UITableViewCell {
         zanNum.font = UIFont.systemFontOfSize(14)
         zanNum.textColor = UIColor.grayColor()
         zanNum.textAlignment = .Left
-        zan.frame = CGRectMake(WIDTH-60, (WIDTH-20)*120/355+42, 14, 14)
+        aca_zan.frame = CGRectMake(WIDTH-60, (WIDTH-20)*120/355+42, 14, 14)
+        aca_zan.setImage(UIImage(named:"ic_like_gray"), forState: UIControlState.Normal)
+        aca_zan.setImage(UIImage(named:"ic_like_sel"), forState: UIControlState.Selected)
+        aca_zan.addTarget(self, action: #selector(AcademicViewController.click1(_:)), forControlEvents: .TouchUpInside)
 //      zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
 //      zan.setBackgroundImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
         
@@ -64,9 +67,39 @@ class AcademicTableViewCell: UITableViewCell {
         self.addSubview(conNum)
         self.addSubview(timeBtn)
         self.addSubview(timeLab)
-        self.addSubview(zan)
+        self.addSubview(aca_zan)
         self.addSubview(zanNum)
     }
+    
+    var newsInfo:NewsInfo?{
+        didSet {
+            aca_zan.selected = false
+            let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo!.thumb!
+            print(photoUrl)
+            titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
+            titLab.text = newsInfo!.post_title
+            //        cell.conNum.text = newsInfo.recommended
+            let time:Array = (newsInfo!.post_date?.componentsSeparatedByString(" "))!
+            timeLab.text = time[0]
+//            let hashValue = newsInfo.likes.count.hashValue
+//            print(hashValue)
+//            if hashValue != 0 {
+//                aca_zan.selected = true
+//            }
+            
+            for obj in newsInfo!.likes {
+                if obj.userid == QCLoginUserInfo.currentInfo.userid {
+                    aca_zan.selected = true
+                }
+            }
+            
+//            print("\(hashValue)")
+//            self.likeNum = newsInfo.likes.count
+            zanNum.text =  String(newsInfo!.likes.count)
+
+        }
+    }
+    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -11,7 +11,7 @@ import AFNetworking
 import Alamofire
 import MBProgressHUD
 
-class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,cateBtnClickedDelegate {
+class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,cateBtnClickedDelegate,changeModelDelegate {
     
     var myTableView = UITableView()
     let scrollView = UIScrollView()
@@ -220,20 +220,27 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
-        
-        let next = NewsContantViewController()
         let newsInfo = self.dataSource.objectlist[indexPath.row]
+        let next = NewsContantViewController()
         next.newsInfo = newsInfo
-        self.navigationController?.pushViewController(next, animated: true)
+        next.index = indexPath.row
+        next.delegate = self
         
+        self.navigationController?.pushViewController(next, animated: true)
     }
+
     
     // MARK: 点击分类按钮
     func cateBtnClicked(categoryBtn: UIButton) {
         let cateDetail = GNewsCateDetailViewController()
         cateDetail.newsType = categoryBtn.tag
         self.navigationController!.pushViewController(cateDetail, animated: true)
+    }
+    
+    // MARK:更新模型
+    func changeModel(newInfo: NewsInfo, andIndex: Int) {
+        self.dataSource.objectlist[andIndex] = newInfo
+        self.myTableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {

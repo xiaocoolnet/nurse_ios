@@ -11,7 +11,7 @@ import AFNetworking
 import Alamofire
 import MBProgressHUD
 
-class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,cateBtnClickedDelegate {
+class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,cateBtnClickedDelegate,changeModelDelegate {
 
     var myTableView = UITableView()
     let scrollView = UIScrollView()
@@ -223,24 +223,24 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let newsInfo = self.dataSource.objectlist[indexPath.row]
-        print(newsInfo.title,newsInfo.term_id)
+        //        print(newsInfo.title,newsInfo.term_id)
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
-        next.likeNum = newsInfo.likes.count
-        print(newsInfo.likes.count)
-        let str = newsInfo.likes
-        var answerInfo = NSString()
-        for j in 0 ..< str.count {
-            answerInfo = str[j].userid!
-            print(answerInfo)
-        }
-        
-        if answerInfo == QCLoginUserInfo.currentInfo.userid{
-            print(1)
-        }else{
-            print(222)
-        }
-        
+        next.index = indexPath.row
+        next.delegate = self
+        //        print(newsInfo.likes.count)
+        //        let str = newsInfo.likes
+        //        var answerInfo = NSString()
+        //        for j in 0 ..< str.count {
+        //            answerInfo = str[j].userid!
+        //            print(answerInfo)
+        //        }
+        //
+        //        if answerInfo == QCLoginUserInfo.currentInfo.userid{
+        //            print(1)
+        //        }else{
+        //            print(222)
+        //        }
         
         self.navigationController?.pushViewController(next, animated: true)
     }
@@ -253,4 +253,11 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         NSLog("%d", categoryBtn.tag)
         self.navigationController!.pushViewController(cateDetail, animated: true)
     }
+    
+    // MARK:更新模型
+    func changeModel(newInfo: NewsInfo, andIndex: Int) {
+        self.dataSource.objectlist[andIndex] = newInfo
+        self.myTableView.reloadData()
+    }
+
 }

@@ -32,11 +32,14 @@ class HSStateCommentCell: UITableViewCell {
     
     @IBOutlet weak var replyBtn: UIButton!
     
+    @IBOutlet weak var floorLab: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
+        louzhuLab.layer.cornerRadius = 2
+        louzhuLab.layer.borderWidth = 1
+        louzhuLab.layer.borderColor = COLOR.CGColor
         
     }
     
