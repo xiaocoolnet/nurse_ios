@@ -23,9 +23,10 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     let resumeDetail = NSBundle.mainBundle().loadNibNamed("HSFindPersonDetailView", owner: nil, options: nil).first as! HSFindPersonDetailView
     let sendPostion = NSBundle.mainBundle().loadNibNamed("PostVacancies", owner: nil, options: nil).first as! PostVacancies
     let sendResume = NSBundle.mainBundle().loadNibNamed("HSPostResumeView", owner: nil, options: nil).first as! HSPostResumeView
-    var employmentdataSource=NSMutableArray()
+//    var employmentdataSource=NSMutableArray()
     let jobHelper = HSNurseStationHelper()
     var jobDataSource:Array<JobModel>?
+    var currentJobModel:JobModel?
     var CVDataSource:Array<CVModel>?
     
     var requestHelper = NewsPageHelper()
@@ -331,20 +332,22 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             return cell
         }else{
             let cell1 = UITableViewCell()
-            print(employmentdataSource)
-            let jobModel = employmentdataSource[0]as! JobModel
-            print(jobModel.title)
+//            print(employmentdataSource)
+//            let jobModel = employmentdataSource[0]as! JobModel
+            let jobModel = currentJobModel
+            
+            print(jobModel!.title)
             cell1.selectionStyle = .None
             cell1.textLabel?.numberOfLines = 0
-            strId = jobModel.id
-            print(jobModel.id)
+            strId = jobModel!.id
+            print(jobModel!.id)
             if showType == 1 {
                 print(indexPath.row)
                 if indexPath.row==0 {
                     let title = UILabel()
-                    let height = calculateHeight(jobModel.title, size: 18, width: WIDTH-20)
+                    let height = calculateHeight(jobModel!.title, size: 18, width: WIDTH-20)
                     title.frame = CGRectMake(10, 10, WIDTH-20, height)
-                    title.text = jobModel.title
+                    title.text = jobModel!.title
                     title.font = UIFont.systemFontOfSize(20)
                     title.textColor = COLOR
                     title.numberOfLines = 0
@@ -372,14 +375,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     nameLabel.text = "企业名称:"
                     let name = UILabel(frame: CGRectMake(120,10,200,25))
                     name.font = UIFont.systemFontOfSize(14)
-                    name.text = jobModel.companyname
+                    name.text = jobModel!.companyname
                     cell1.addSubview(nameLabel)
                     cell1.addSubview(name)
                 }else if indexPath.row == 3 {
                     let descript = UILabel(frame: CGRectMake(10,10,WIDTH-20,50))
                     descript.font = UIFont.boldSystemFontOfSize(15)
                     descript.numberOfLines = 0
-                    let descripStr = "企业简介:" + jobModel.title
+                    let descripStr = "企业简介:" + jobModel!.title
                     let attrStr = NSMutableAttributedString(string: descripStr)
                     attrStr.addAttributes([NSFontAttributeName:UIFont.boldSystemFontOfSize(15)], range: NSMakeRange(0, 5))
                     attrStr.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(5, attrStr.length-5))
@@ -392,13 +395,13 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     criteria.text = "招聘条件:"
                     let criteriaLabel = UILabel(frame: CGRectMake(80,10,75,25))
                     criteriaLabel.font = UIFont.systemFontOfSize(14)
-                    criteriaLabel.text = jobModel.education
+                    criteriaLabel.text = jobModel!.education
                     let address = UILabel(frame: CGRectMake(170,10,70,25))
                     address.font = UIFont.boldSystemFontOfSize(15)
                     address.text = "工作地点:"
                     let addressLabel = UILabel(frame: CGRectMake(240,10,75,25))
                     addressLabel.font = UIFont.systemFontOfSize(14)
-                    addressLabel.text = jobModel.address
+                    addressLabel.text = jobModel!.address
                     cell1.addSubview(criteria)
                     cell1.addSubview(criteriaLabel)
                     cell1.addSubview(address)
@@ -409,13 +412,13 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     criteria.text = "招聘人数:"
                     let criteriaLabel = UILabel(frame: CGRectMake(80,10,75,25))
                     criteriaLabel.font = UIFont.systemFontOfSize(14)
-                    criteriaLabel.text = jobModel.count
+                    criteriaLabel.text = jobModel!.count
                     let address = UILabel(frame: CGRectMake(170,10,70,25))
                     address.font = UIFont.boldSystemFontOfSize(15)
                     address.text = "福利待遇:"
                     let addressLabel = UILabel(frame: CGRectMake(240,10,75,25))
                     addressLabel.font = UIFont.systemFontOfSize(14)
-                    addressLabel.text = jobModel.welfare
+                    addressLabel.text = jobModel!.welfare
                     cell1.addSubview(criteria)
                     cell1.addSubview(criteriaLabel)
                     cell1.addSubview(address)
@@ -428,7 +431,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     descripDetail.font = UIFont.systemFontOfSize(14)
                     descripDetail.textColor = UIColor.lightGrayColor()
                     descripDetail.numberOfLines = 0
-                    descripDetail.text = jobModel.description
+                    descripDetail.text = jobModel!.description
                     cell1.addSubview(positionDescript)
                     cell1.addSubview(descripDetail)
                 }else if indexPath.row == 7 {
@@ -444,7 +447,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         name.setTitle("查看联系方式", forState: .Normal)
                         name.addTarget(self, action: #selector(contactClick), forControlEvents: .TouchUpInside)
                     }else if num == 2{
-                        name.setTitle(jobModel.phone, forState: .Normal)
+                        name.setTitle(jobModel!.phone, forState: .Normal)
 
                     }
                     cell1.addSubview(nameLabel)
@@ -466,11 +469,12 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         print(indexPath.row)
         if tableView.tag == 0 {
             if showType == 1 {
-                let model = self.jobDataSource![indexPath.row]
-                self.employmentdataSource.addObject(model)
+//                let model = self.jobDataSource![indexPath.row]
+//                self.employmentdataSource.addObject(model)
+                self.currentJobModel = self.jobDataSource![indexPath.row]
                 print(jobDataSource)
-                print(self.jobDataSource![indexPath.row])
-                print(self.employmentdataSource)
+                print(self.jobDataSource![indexPath.row].title)
+//                print(self.employmentdataSource)
 //                superViewController?.showRightBtn()
                 self.makeEmploymentMessage()
             }else {
@@ -693,14 +697,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
 
-        
-            let model = self.employmentdataSource[0] as! JobModel
-        
+//        print(self.employmentdataSource.count)
+//            let model = self.employmentdataSource[0] as! JobModel
+        let model = self.currentJobModel
             let url = PARK_URL_Header+"ApplyJob"
             let param = [
                 "userid":QCLoginUserInfo.currentInfo.userid,
-                "jobid":model.id,
-                "companyid" :model.companyid
+                "jobid":model!.id,
+                "companyid" :model!.companyid
             ]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
@@ -736,7 +740,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
             }
             
-            self.employmentdataSource.removeAllObjects()
+//            self.employmentdataSource.removeAllObjects()
             self.employmentMessageTableView.reloadData()
 //            self.employmentMessage.removeFromSuperview()
 //            self.superViewController?.hiddenBtn()
@@ -753,7 +757,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         UIView.animateWithDuration(0.2) {
             self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
         }
-        self.employmentdataSource.removeAllObjects()
+//        self.employmentdataSource.removeAllObjects()
         self.employmentMessageTableView.reloadData()
         self.employmentMessage.removeFromSuperview()
         superViewController?.hiddenBtn()

@@ -10,7 +10,7 @@ import UIKit
 import MBProgressHUD
 import Alamofire
 
-class MineMessageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MineMessageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,refreshSmallImageDelegate {
     
     var myTableView = UITableView()
     var dataSource = MessageList()
@@ -21,9 +21,9 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
-        line.backgroundColor = COLOR
-        self.view.addSubview(line)
+//        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+//        line.backgroundColor = COLOR
+//        self.view.addSubview(line)
         
         self.view.backgroundColor = UIColor.whiteColor()
         
@@ -37,6 +37,10 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         myTableView.rowHeight = 80
 
         self.getDate()
+        
+        let lineView = UIView.init(frame: CGRectMake(0, 0, WIDTH, 1))
+        lineView.backgroundColor = COLOR
+        self.view.addSubview(lineView)
         
         // Do any additional setup after loading the view.
     }
@@ -56,12 +60,16 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         cell.small.setBackgroundImage(UIImage(named: "ic_xin.png"), forState: .Normal)
 //        cell.timeLable.text = "2016-07-04"
         cell.timeLable.text = timeStampToString(model.create_time)
+        
+        
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let vc = MineMessDetailViewController()
         vc.info = self.dataSource.objectlist[indexPath.row]
+        vc.indexPath = indexPath
+        vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
@@ -113,6 +121,13 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
             
         }
 
+    }
+    
+    // MARK:MineMessDetailViewController delegate
+    func refreshSmallImagte(indexPath: NSIndexPath) {
+        let cell = self.myTableView.cellForRowAtIndexPath(indexPath) as! MineMessageTableViewCell
+        cell.small.hidden = true
+        
     }
 
 }

@@ -35,6 +35,23 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         if newsType != nil {
             self.navigationController?.navigationBar.hidden = false
         }
+        
+        let rightItem = UIButton.init(frame: CGRectMake(0, 0, 50, 28))
+        rightItem.backgroundColor = COLOR
+        rightItem.layer.cornerRadius = 5
+        rightItem.addTarget(self, action: #selector(rightItemClick), forControlEvents: .TouchUpInside)
+        
+        let rightLab = UILabel.init(frame: CGRectMake(0, 0, CGRectGetWidth(rightItem.frame), CGRectGetHeight(rightItem.frame)))
+        rightLab.textAlignment = NSTextAlignment.Center
+        rightLab.text = "报名"
+        rightLab.textColor = UIColor.whiteColor()
+        rightItem.addSubview(rightLab)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightItem)
+    }
+    
+    func rightItemClick() {
+        UIApplication.sharedApplication().openURL(NSURL.init(string: "http://crm.chinanurse.cn/form/sign_up.php")!)
     }
     
     override func viewDidLoad() {

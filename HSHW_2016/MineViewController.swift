@@ -29,6 +29,9 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var isLike:Bool = false
     var str = NSString()
     
+    var signLab = UILabel()
+    let signBtn = UIButton()
+    
 //    var dateSource = data()
 
     override func viewWillAppear(animated: Bool) {
@@ -188,20 +191,21 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 let signImg = UIImageView(frame: CGRectMake(WIDTH*137/375, WIDTH-WIDTH*111/375, WIDTH*22/375, WIDTH*22/375))
                 signImg.image = UIImage(named: "ic_lalendar.png")
                 cell.addSubview(signImg)
-                let signLab = UILabel(frame: CGRectMake(WIDTH*169/375, WIDTH-WIDTH*111/375,WIDTH*120/375, WIDTH*22/375))
+                signLab.frame = CGRectMake(WIDTH*169/375, WIDTH-WIDTH*111/375,WIDTH*120/375, WIDTH*22/375)
                 signLab.font = UIFont.systemFontOfSize(18)
                 signLab.textColor = UIColor.yellowColor()
-                signLab.text = "每日签到"
+                signLab.text = "请稍候"
                 cell.addSubview(signLab)
                 
-                let signBtn = UIButton()
+                
                 signBtn.frame = CGRectMake(WIDTH*68/375, WIDTH-WIDTH*121/375, WIDTH*240/375, WIDTH*42/375)
                 signBtn.layer.cornerRadius = WIDTH*42/375/2
                 signBtn.layer.borderColor = UIColor.yellowColor().CGColor
                 signBtn.layer.borderWidth = 2
-                if self.isLike == false {
+//                if self.isLike == false {
                     signBtn.addTarget(self, action: #selector(MineViewController.signInToday), forControlEvents: .TouchUpInside)
-                }
+//                }
+                signBtn.enabled = false
                 cell.addSubview(signBtn)
                 userNameLabel.frame = CGRectMake(WIDTH*160/375, WIDTH*205/375, WIDTH*55/375, 30)
                 userNameLabel.textAlignment = .Center
@@ -331,11 +335,19 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         if isLike == false {
         
             self.zan()
+        }else{
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = MBProgressHUDMode.Text
+            hud.labelText = "已经签过了哦~"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 1)
+            self.isLike = false
         }
     }
     
     func zanAddNum() {
-                
+        
         
                 let url = PARK_URL_Header+"GetMySignLog"
                 let param = [
@@ -351,27 +363,40 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     }else{
                         let status = Http(JSONDecoder(json!))
                         
+                        dispatch_async(dispatch_get_main_queue(), { 
+                            
+                            self.signBtn.enabled = true
+                        })
+
                         print("状态是")
                         print(status.status)
                         if(status.status == "error"){
-                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                            hud.mode = MBProgressHUDMode.Text
-                            hud.labelText = status.errorData
-                            hud.margin = 10.0
-                            hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 1)
+//                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                            hud.mode = MBProgressHUDMode.Text
+////                            hud.labelText = "HAHAHAAHAH"
+//                            hud.margin = 10.0
+//                            hud.removeFromSuperViewOnHide = true
+//                            hud.hide(true, afterDelay: 1)
                             self.isLike = false
+                            dispatch_async(dispatch_get_main_queue(), { 
+                                self.signLab.text = "每日签到"
+                            })
                         }
                         if(status.status == "success"){
                             
-                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                            hud.mode = MBProgressHUDMode.Text;
-                            hud.labelText = "签到成功"
-                            hud.margin = 10.0
-                            hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 1)
+//                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                            hud.mode = MBProgressHUDMode.Text;
+//                            hud.labelText = "签到成功"
+//                            hud.margin = 10.0
+//                            hud.removeFromSuperViewOnHide = true
+//                            hud.hide(true, afterDelay: 1)
                             self.isLike = true
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.signLab.text = "已签到"
+                            })
                         }
+                        
+                        
                     }
                 }
             }
@@ -410,6 +435,10 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
                     self.isLike = true
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.signLab.text = "已签到"
+                    })
                     
                 }
             }

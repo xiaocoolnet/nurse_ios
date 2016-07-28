@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllStudyViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AllStudyViewController: UIViewController, UITableViewDelegate, UITableViewDataSource,cateBtnClickedDelegate,changeModelDelegate {
     
     let listTableView = UITableView()
     
@@ -25,7 +25,7 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
         listTableView.delegate = self
         listTableView.dataSource = self
         self.view.addSubview(listTableView)
-        listTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "cell")
+        listTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "cell")
         if articleID != nil {
             helper.getArticleListWithID(articleID!) {[unowned self] (success, response) in
                 if success {
@@ -63,7 +63,10 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! TouTiaoTableViewCell
+//        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! GToutiaoTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!GToutiaoTableViewCell
+        cell.delegate = self
+        
         cell.selectionStyle = .None
         let newsInfo = self.newsList![indexPath.row]
         cell.setCellWithNewsInfo(newsInfo)
@@ -73,14 +76,36 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
         let newsInfo = newsList![indexPath.row]
+//        let next = NewsContantViewController()
+//        next.newsInfo = newsInfo
+//        next.likeNum = newsInfo.likes.count
+//        next.tagNum = 1
+//        print(newsInfo.likes.count)
+//        self.navigationController?.pushViewController(next, animated: true)
+        
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
-        next.likeNum = newsInfo.likes.count
-        next.tagNum = 1
-        print(newsInfo.likes.count)
+        next.index = indexPath.row
+        next.navTitle = self.title!
+        next.delegate = self
+        
         self.navigationController?.pushViewController(next, animated: true)
     }
-
+    
+    // MARK: 点击分类按钮
+    func cateBtnClicked(categoryBtn: UIButton) {
+        let cateDetail = GNewsCateDetailViewController()
+        cateDetail.newsType = categoryBtn.tag
+        cateDetail.type = 1
+        NSLog("%d", categoryBtn.tag)
+        self.navigationController!.pushViewController(cateDetail, animated: true)
+    }
+    
+    // MARK:更新模型
+    func changeModel(newInfo: NewsInfo, andIndex: Int) {
+        self.newsList![andIndex] = newInfo
+        self.listTableView.reloadData()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

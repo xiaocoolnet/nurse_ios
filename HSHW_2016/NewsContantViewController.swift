@@ -22,6 +22,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     let shareArr:[String] = ["ic_pengyouquan.png","ic_wechat.png","ic_weibo.png"]
     var newsInfo :NewsInfo? {
         didSet {
+            self.title = newsInfo?.term_name
             self.likeNum = (newsInfo?.likes.count)!
             newsInfo?.post_hits = String(Int((newsInfo?.post_hits)!)!+1)
             self.getDate()
@@ -29,7 +30,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     var navTitle:String = "新闻内容" {
         didSet {
-            self.title = navTitle
+//            self.title = navTitle
         }
     }
     var index = 0
@@ -114,11 +115,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         self.navigationItem.rightBarButtonItems = [barButton2,gap,barButton1]
     
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 3))
+        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         self.view.backgroundColor = UIColor.whiteColor()
-        myTableView.frame = CGRectMake(0, 3, WIDTH, HEIGHT-60)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-60)
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.delegate = self
         myTableView.dataSource = self

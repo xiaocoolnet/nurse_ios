@@ -14,7 +14,7 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     var helper = HSNurseStationHelper()
     var typeid = "1"
-    var userid = "599"
+    var userid = QCLoginUserInfo.currentInfo.userid
     var dataSource = Array<PostModel>()
     var hotData = Array<PostModel>()
     var postM:Array<ForumModel>?
@@ -71,8 +71,9 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.title.text = model.title
 //        cell.title.text = "真是醉了，上班时间谈人生"
 //        cell.timeLab.text = "2016/05/23"
-        cell.zanNum.text = "232"
-        cell.conLab.text = "3421"
+        cell.zanNum.text = String(model.like.count)
+        // TODO:阅读量暂无
+        cell.conLab.text = String(model.comment.count)
         
         cell.timeLab.text = timeStampToString(model.write_time)
         

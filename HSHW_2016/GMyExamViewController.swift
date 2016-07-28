@@ -55,7 +55,7 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
     var segment:UISegmentedControl?
     var currentVCIndex:Int = 0
     //    let infoqwe = GExamInfo()
-    var a  = NSInteger()
+    var currentIndex = NSInteger()
     
     
     
@@ -395,7 +395,7 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.delegate = self
         
-        scrollView.contentOffset = CGPointMake(CGFloat( a )  * WIDTH, 0)
+        scrollView.contentOffset = CGPointMake(CGFloat( currentIndex )  * WIDTH, 0)
         
         for  i in 0 ..< self.dataSource.count {
             let examInfo = self.dataSource[i]
@@ -481,7 +481,7 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
         
         scrollView.contentSize = CGSizeMake(CGFloat(self.dataSource.count)*self.view.frame.size.width, 0)
         //        scrollView.contentOffset = CGPointMake(0, 0)
-        scrollView.contentOffset = CGPointMake(CGFloat( a )  * WIDTH, 0)
+        scrollView.contentOffset = CGPointMake(CGFloat( currentIndex )  * WIDTH, 0)
         view.addSubview(scrollView)
         let ques = UILabel(frame: CGRectMake(WIDTH/2-80, HEIGHT-146, 80, 12))
         ques.font = UIFont.systemFontOfSize(12)
@@ -492,7 +492,7 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
         number.frame = CGRectMake(WIDTH/2+5, HEIGHT-150, 30, 14)
         number.font = UIFont.systemFontOfSize(16)
         number.textColor = UIColor.yellowColor()
-        number.text = String(a + 1)
+        number.text = String(currentIndex + 1)
         number.sizeToFit()
         self.view.addSubview(number)
         let num = UILabel(frame: CGRectMake(WIDTH/2+5+number.bounds.size.width, HEIGHT-150, 30, 14))
@@ -507,7 +507,7 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
         pageControl.pageIndicatorTintColor = UIColor.redColor()
         //        pageControl.addTarget(self, action: #selector(self.pageContorllerNumber(_:)), forControlEvents: .TouchUpInside)
         pageControl.numberOfPages = self.dataSource.count
-        pageControl.currentPage = a
+        pageControl.currentPage = currentIndex
         //self.view.addSubview(self.pageControl)
     }
     

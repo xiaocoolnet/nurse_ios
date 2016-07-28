@@ -11,7 +11,7 @@ import AFNetworking
 import Alamofire
 import MBProgressHUD
 
-class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,changeModelDelegate {
 
     let myTableView = UITableView()
     var dataSource = NewsList()
@@ -93,12 +93,18 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         print(indexPath.row)
         
         let newsInfo = self.dataSource.objectlist[indexPath.row]
-        let nextVC = NewsContantViewController()
-        nextVC.newsInfo = newsInfo
-        nextVC.likeNum = newsInfo.likes.count
-        nextVC.tagNum = 1
-        print(newsInfo.likes.count)
-        self.navigationController?.pushViewController(nextVC, animated: true)
+        let next = NewsContantViewController()
+        next.newsInfo = newsInfo
+        next.index = indexPath.row
+        next.navTitle = "美国RN"
+        next.delegate = self
         
+        self.navigationController?.pushViewController(next, animated: true)
+    }
+    
+    // MARK:更新模型
+    func changeModel(newInfo: NewsInfo, andIndex: Int) {
+        self.dataSource.objectlist[andIndex] = newInfo
+        self.myTableView.reloadData()
     }
 }

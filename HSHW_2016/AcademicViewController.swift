@@ -20,7 +20,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //    let likeNumDict = NSMutableDictionary()
     
     var num = 1
-    var articleID = NSString()
+    var articleID:NSString?
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = false
@@ -46,7 +46,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let url = PARK_URL_Header+"getNewslist"
         
         let param = [
-            "channelid":"7"
+            "channelid":articleID == nil ? "7":articleID!
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             print(request)
@@ -152,7 +152,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.index = indexPath.row
-        next.navTitle = "新闻内容"
+        next.navTitle = self.title == nil ? self.title!:"新闻内容"
         next.delegate = self
         
         self.navigationController?.pushViewController(next, animated: true)

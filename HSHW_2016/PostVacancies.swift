@@ -14,7 +14,7 @@ protocol PostVacanciesDelegate:NSObjectProtocol{
     func clickedSendBtn()
 }
 
-class PostVacancies: UIView,UITextViewDelegate,UITableViewDelegate, UITableViewDataSource{
+class PostVacancies: UIView,UITextViewDelegate,UITableViewDelegate, UITableViewDataSource,UITextFieldDelegate{
     
     weak var delegate:PostVacanciesDelegate?
     
@@ -67,10 +67,44 @@ class PostVacancies: UIView,UITextViewDelegate,UITableViewDelegate, UITableViewD
    
     @IBAction func sendBtnClicked(sender: AnyObject) {
         if delegate != nil {
+            
             if firmNameField.text != "" && resumeFeild.text != "" && phoneField.text != "" && postNameField.text != "" && conditionBtn.currentTitle != "" && treatmentBtn.currentTitle != "" && workplaceBtn.currentTitle != "" && personBtn.currentTitle != "" && moneyBtn.currentTitle != "" {
                 
                 delegate?.clickedSendBtn()
             }else{
+                
+                if postNameField.text == "" {
+                    postNameField.layer.borderColor = UIColor.redColor().CGColor
+                    postNameField.layer.masksToBounds = true
+                    postNameField.layer.borderWidth = 1.0
+                    postNameField.layer.cornerRadius = 8.0
+                }
+                if firmNameField.text == "" {
+                    firmNameField.layer.borderColor = UIColor.redColor().CGColor
+                    firmNameField.layer.masksToBounds = true
+                    firmNameField.layer.borderWidth = 1.0
+                    firmNameField.layer.cornerRadius = 8.0
+                    
+                }
+                if resumeFeild.text == "" {
+                    resumeFeild.layer.borderColor = UIColor.redColor().CGColor
+                    resumeFeild.layer.masksToBounds = true
+                    resumeFeild.layer.borderWidth = 1.0
+                    resumeFeild.layer.cornerRadius = 8.0
+                }
+                if phoneField.text == "" {
+                    phoneField.layer.borderColor = UIColor.redColor().CGColor
+                    phoneField.layer.masksToBounds = true
+                    phoneField.layer.borderWidth = 1.0
+                    phoneField.layer.cornerRadius = 8.0
+                }
+                if mailboxField.text == "" {
+                    mailboxField.layer.borderColor = UIColor.redColor().CGColor
+                    mailboxField.layer.masksToBounds = true
+                    mailboxField.layer.borderWidth = 1.0
+                    mailboxField.layer.cornerRadius = 8.0
+                }
+                
                 let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善招聘信息", comment: "empty message"), preferredStyle: .Alert)
                 let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
                 alertController.addAction(doneAction)
@@ -138,6 +172,12 @@ class PostVacancies: UIView,UITextViewDelegate,UITableViewDelegate, UITableViewD
         array = ["北京市","北京市","朝阳区"]
 
         requestField.delegate = self
+        
+        firmNameField.delegate = self
+        resumeFeild.delegate = self
+        phoneField.delegate = self
+        mailboxField.delegate = self
+        postNameField.delegate = self
         
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
@@ -436,6 +476,11 @@ class PostVacancies: UIView,UITextViewDelegate,UITableViewDelegate, UITableViewD
         }else{
             requestLabel.text = ""
         }
+    }
+    
+    // MARK: uitextfiled  delegate
+    func textFieldDidBeginEditing(textField: UITextField) {
+        textField.layer.borderColor = UIColor.clearColor().CGColor
     }
     
 }

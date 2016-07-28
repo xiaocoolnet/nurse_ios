@@ -8,20 +8,27 @@
 
 import UIKit
 
+protocol refreshSmallImageDelegate {
+    func refreshSmallImagte(indexPath:NSIndexPath)
+}
+
 class MineMessDetailViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
 
     let myTableView = UITableView()
     var info = MessageInfo?()
     
+    var indexPath:NSIndexPath = NSIndexPath()
+    var delegate:refreshSmallImageDelegate?
+
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.hidden = false
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
-        line.backgroundColor = COLOR
-        self.view.addSubview(line)
+//        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+//        line.backgroundColor = COLOR
+//        self.view.addSubview(line)
         
         self.view.backgroundColor = UIColor.whiteColor()
         
@@ -35,6 +42,9 @@ class MineMessDetailViewController: UIViewController,UITableViewDelegate, UITabl
         
         self.title = info?.title
         
+        let lineView = UIView.init(frame: CGRectMake(0, 0, WIDTH, 1))
+        lineView.backgroundColor = COLOR
+        self.view.addSubview(lineView)
         
         // Do any additional setup after loading the view.
     }
@@ -55,6 +65,11 @@ class MineMessDetailViewController: UIViewController,UITableViewDelegate, UITabl
         cell.textLabel?.numberOfLines = 0
         cell.textLabel?.sizeToFit()
         return cell
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.delegate!.refreshSmallImagte(self.indexPath)
     }
 
     override func didReceiveMemoryWarning() {

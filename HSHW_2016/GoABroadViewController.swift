@@ -12,7 +12,7 @@ import PagingMenuController
 class GoABroadViewController: UIViewController {
 
     let oneView = AbroadViewController()
-    let twoView = SuccessViewController()
+    let twoView = AcademicViewController()
     let threeView = MagicboxViewController()
     
     override func viewWillAppear(animated: Bool) {
@@ -26,6 +26,7 @@ class GoABroadViewController: UIViewController {
         
         oneView.title = "出国动态"
         twoView.title = "成功案例"
+        twoView.articleID = "4"
         threeView.title = "出国百宝箱"
         let viewControllers = [oneView,twoView,threeView]
         let options = PagingMenuOptions()

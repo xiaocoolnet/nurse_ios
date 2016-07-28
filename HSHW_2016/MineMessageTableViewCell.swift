@@ -16,6 +16,7 @@ class MineMessageTableViewCell: UITableViewCell {
     let imgBtn = UIImageView()
     let small = UIButton()
     
+    var indexPath:NSIndexPath = NSIndexPath()
     
     override func awakeFromNib() {
         super.awakeFromNib()

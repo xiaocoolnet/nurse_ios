@@ -205,6 +205,7 @@ class xamInfo: JSONJoy{
     var questionid:String
     var post_title:String
     var title:String
+    var createtime:String
     
     var post_description:String
     var post_difficulty:String
@@ -214,10 +215,11 @@ class xamInfo: JSONJoy{
     required init(_ decoder: JSONDecoder){
         questionid = decoder["questionid"].string ?? ""
         post_title = decoder["post_title"].string ?? ""
-        post_difficulty = decoder["post_difficulty"].string ?? ""
+        post_difficulty = decoder["post_difficulty"].string ?? "0"
         post_description = decoder["post_description"].string ?? ""
         answer = decoder["answer"].string ?? ""
         title = decoder["title"].string ?? ""
+        createtime = decoder["createtime"].string ?? "0"
         for childs: JSONDecoder in decoder["answerslist"].array ?? []{
             answers.append(AnswersInfo(childs))
         }

@@ -41,13 +41,13 @@ class HSCollectionListController: UITableViewController {
                 self.fansListArray = response as! Array<xamInfo>
                 self.tableView.reloadData()
             }
-            tableView.registerClass(GMyErrorTableViewCell.self, forCellReuseIdentifier: "cell")
+            tableView.registerClass(GHSExamTableViewCell.self, forCellReuseIdentifier: "cell")
         } else if collectionType == 3 {
             
             helper.getCollectionInfoWithType("4", handle: { (success, response) in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
-                        let list = ForumlistModel(response as! JSONDecoder)
+                        let list = PostCollectListModel(response as! JSONDecoder)
                         self.dataSource.addObjectsFromArray(list.datas)
                         self.tableView.reloadData()
                     })
@@ -84,14 +84,16 @@ class HSCollectionListController: UITableViewController {
 
         }
         else if collectionType == 2 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! GMyErrorTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! GHSExamTableViewCell
             cell.selectionStyle = .None
-            cell.inde = indexPath.row
+//            cell.inde = indexPath.row
+            
+            cell.showforModel(fansListArray[indexPath.row])
             
             //        if tableView.tag == 410 {
-            let model = fansListArray[indexPath.row]
+//            let model = fansListArray[indexPath.row]
             //            model.post_title = "每日一练"
-            cell.fanModel = model
+//            cell.fanModel = model
             return cell
 
         }
@@ -107,6 +109,7 @@ class HSCollectionListController: UITableViewController {
             if dataSource.count > indexPath.row {
                 let next = NewsContantViewController()
                 next.newsInfo = dataSource[indexPath.row] as? NewsInfo
+//                next.navTitle = dataSource[indexPath.row] as? NewsInfo)
                 navigationController!.pushViewController(next, animated: true)
             }
         }else if collectionType == 3 {
@@ -116,14 +119,15 @@ class HSCollectionListController: UITableViewController {
             
             navigationController?.pushViewController(vc, animated: true)
         }else if collectionType == 2 {
-//            let userPageVC = GMyExamViewController()
-//            userPageVC.type = 1
-//            userPageVC.subType = 1
-//            print(fansListArray[indexPath.row])
-//            userPageVC.a = indexPath.row
-//            userPageVC.dataSource = fansListArray
-//            
-//            self.navigationController?.pushViewController(userPageVC, animated: true)
+            let userPageVC = GMyExamViewController()
+            userPageVC.type = 1
+            userPageVC.subType = 1
+            print(fansListArray[indexPath.row])
+            // TODO:接口数据，收藏的试题 examInfo.post_difficulty 有时为空
+            userPageVC.currentIndex = indexPath.row
+            userPageVC.dataSource = fansListArray
+            
+            self.navigationController?.pushViewController(userPageVC, animated: true)
 
         }
         

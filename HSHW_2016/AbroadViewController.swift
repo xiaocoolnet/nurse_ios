@@ -23,8 +23,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     var channelid = Int()
     //  初始化数据源
     var dataSource = NewsList()
-    let countryArr:[String] = ["ic_eng.png","ic_canada.png","ic_germany.png","ic_australia.png","ic_meiguo.png","ic_american.png","ic_guo.png","ic_guotwo.png"]
-    let nameArr:[String] = ["美国","加拿大","德国","芬兰","澳洲","新西兰","新加坡","沙特"]
+    let countryArr:[String] = ["ic_eng.png","ic_canada.png","ic_germany.png","ic_australia.png","ic_meiguo.png","ic_guo.png","ic_guotwo.png","ic_american.png"]
+    let nameArr:[String] = ["美国","加拿大","德国","芬兰","澳洲","新加坡","沙特","日本"]
     let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
     var country = Int()
     var requestHelper = NewsPageHelper()
