@@ -66,25 +66,28 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureUI()
+        if showType == 1 {
+            self.setSlideView()
+            requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+                if success {
+                    print(response)
+                    let imageArr = response as! Array<PhotoInfo>
+                    for imageInfo in imageArr {
+                        self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.updateSlideImage()
+                            self.myTableView.reloadData()
+                        })
+                    }
+                }
+            }
+        }
         makeDataSource()
         sendPostion.delegate = self
         sendResume.delegate = self
         employmentMessageTableView.separatorStyle = .None
         resumeDetail.delegate = self
         
-        requestHelper.getSlideImages("3") { [unowned self] (success, response) in
-            if success {
-                print(response)
-                let imageArr = response as! Array<PhotoInfo>
-                for imageInfo in imageArr {
-                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.updateSlideImage()
-                        self.myTableView.reloadData()
-                    })
-                }
-            }
-        }
 
         self.makeEmployment()
     }
@@ -142,6 +145,18 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         employmentMessageTableView.tag = 1
         self.view.addSubview(myTableView)
         
+
+        myTableView.rowHeight = 142
+        
+        let posted = UIButton()
+        posted.frame = CGRectMake(WIDTH-70 , HEIGHT-230, 50, 50)
+        posted.setImage(UIImage(named: "ic_edit.png"), forState: .Normal)
+        posted.addTarget(self, action: #selector(RecruitmentViewController.postedTheView), forControlEvents: .TouchUpInside)
+        self.view.addSubview(posted)
+        posted.becomeFirstResponder()
+    }
+    
+    func setSlideView() {
         let one = UIView(frame: CGRectMake(0, 0.5, WIDTH, WIDTH*140/375))
         self.view.addSubview(one)
         
@@ -180,15 +195,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         one.addSubview(pageControl)
         
         myTableView.tableHeaderView = one
-        myTableView.rowHeight = 142
-        
-        let posted = UIButton()
-        posted.frame = CGRectMake(WIDTH-70 , HEIGHT-230, 50, 50)
-        posted.setImage(UIImage(named: "ic_edit.png"), forState: .Normal)
-        posted.addTarget(self, action: #selector(RecruitmentViewController.postedTheView), forControlEvents: .TouchUpInside)
-        self.view.addSubview(posted)
-        posted.becomeFirstResponder()
     }
+    
 //    发布招聘信息
     func makeEmployment() {
         employment.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-154.5)
@@ -233,7 +241,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         tack.layer.borderWidth = 1
         tack.setTitle("投递简历", forState: .Normal)
         tack.setTitleColor(COLOR, forState: .Normal)
-        tack.addTarget(self, action: #selector(self.takeTheResume), forControlEvents: .TouchUpInside)
+        tack.addTarget(self, action: #selector(self.resumeOnline(_:)), forControlEvents: .TouchUpInside)
         employmentMessage.addSubview(tack)
        
         employmentMessage.addSubview(employmentMessageTableView)
@@ -626,11 +634,21 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 
                
             }else{
-                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您还没有简历，请上传简历后投递？", comment: "empty message"), preferredStyle: .Alert)
-                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
-                alertController.addAction(doneAction)
-                self.presentViewController(alertController, animated: true, completion: nil)
-
+                
+                dispatch_async(dispatch_get_main_queue(), { 
+                    
+                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您还没有简历，请上传简历后投递？", comment: "empty message"), preferredStyle: .Alert)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                    let doneAction = UIAlertAction(title: "现在就去", style: .Default, handler: { (action) in
+                        self.postedTheView()
+                    })
+                    alertController.addAction(doneAction)
+                    
+                    let cancelAction = UIAlertAction(title: "先不投了", style: .Cancel, handler: { (action) in
+                        
+                    })
+                    alertController.addAction(cancelAction)
+                })
             }
         }
         

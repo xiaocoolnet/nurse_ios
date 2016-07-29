@@ -32,6 +32,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var signLab = UILabel()
     let signBtn = UIButton()
     
+    var hud:MBProgressHUD?
+    
 //    var dateSource = data()
 
     override func viewWillAppear(animated: Bool) {
@@ -45,23 +47,13 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             return
         }
         
-        myTableView.reloadData()
+//        myTableView.reloadData()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = COLOR
-        mineHelper.getPersonalInfo {[unowned self] (success, response) in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
-                self.userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
-                self.levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, forState: .Normal)
-                self.fansCountBtn.setTitle(QCLoginUserInfo.currentInfo.fansCount, forState: .Normal)
-                self.attentionBtn.setTitle(QCLoginUserInfo.currentInfo.attentionCount, forState: .Normal)
-                self.nurseCoins.setTitle(QCLoginUserInfo.currentInfo.money, forState: .Normal)
-                self.myTableView.reloadData()
-            })
-        }
+        
         myTableView.frame = CGRectMake(0, -20, WIDTH, HEIGHT)
         myTableView.bounces = false
         myTableView.backgroundColor = RGREY
@@ -71,7 +63,35 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.view.addSubview(myTableView)
         myTableView.separatorStyle = .None
         
-        self.zanAddNum()
+        hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud!.labelText = "正在获取个人信息"
+        hud!.margin = 10.0
+        hud!.removeFromSuperViewOnHide = true
+        
+        mineHelper.getPersonalInfo {[unowned self] (success, response) in
+            if success {
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
+                    self.userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
+                    self.levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, forState: .Normal)
+                    self.fansCountBtn.setTitle(QCLoginUserInfo.currentInfo.fansCount, forState: .Normal)
+                    self.attentionBtn.setTitle(QCLoginUserInfo.currentInfo.attentionCount, forState: .Normal)
+                    self.nurseCoins.setTitle(QCLoginUserInfo.currentInfo.money, forState: .Normal)
+                    self.myTableView.reloadData()
+                    //                self.hud!.hide(true)
+                    self.hud?.labelText = "正在获取签到状态"
+                })
+                self.zanAddNum()
+            }else{
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.hud?.mode = .Text
+                    self.hud?.labelText = "获取个人信息失败"
+                    self.hud?.hide(true, afterDelay: 1)
+                    self.signLab.text = "Error"
+                })
+            }
+        }
         
         // Do any additional setup after loading the view.
     }
@@ -194,7 +214,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 signLab.frame = CGRectMake(WIDTH*169/375, WIDTH-WIDTH*111/375,WIDTH*120/375, WIDTH*22/375)
                 signLab.font = UIFont.systemFontOfSize(18)
                 signLab.textColor = UIColor.yellowColor()
-                signLab.text = "请稍候"
+//                signLab.text = "请稍候"
                 cell.addSubview(signLab)
                 
                 
@@ -330,9 +350,9 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
 
     func signInToday() {
-        print("签到")
-        self.timeNow()
+        print("点击签到")
         if isLike == false {
+            self.timeNow()
         
             self.zan()
         }else{
@@ -342,64 +362,70 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             hud.margin = 10.0
             hud.removeFromSuperViewOnHide = true
             hud.hide(true, afterDelay: 1)
-            self.isLike = false
+//            self.isLike = false
         }
     }
     
     func zanAddNum() {
         
-        
-                let url = PARK_URL_Header+"GetMySignLog"
-                let param = [
+        self.timeNow()
+        let url = PARK_URL_Header+"GetMySignLog"
+        let param = [
 
-                    "userid":QCLoginUserInfo.currentInfo.userid,
-                    "day":self.timeStamp
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "day":self.timeStamp
 
-                    ];
-                Alamofire.request(.GET, url, parameters: param as? [String : AnyObject] ).response { request, response, json, error in
-                    print(request)
-                    if(error != nil){
-                        
-                    }else{
-                        let status = Http(JSONDecoder(json!))
-                        
-                        dispatch_async(dispatch_get_main_queue(), { 
-                            
-                            self.signBtn.enabled = true
-                        })
+            ];
+        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject] ).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.hud?.mode = .Text
+                    self.hud?.labelText = "获取登录状态失败"
+                    self.hud?.hide(true, afterDelay: 1)
+                    self.signLab.text = "Error"
+                })
+            }else{
+                let status = Http(JSONDecoder(json!))
+                
+                dispatch_async(dispatch_get_main_queue(), { 
+                    
+                    self.signBtn.enabled = true
+                    self.hud?.hide(true)
+                })
 
-                        print("状态是")
-                        print(status.status)
-                        if(status.status == "error"){
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
 //                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
 //                            hud.mode = MBProgressHUDMode.Text
 ////                            hud.labelText = "HAHAHAAHAH"
 //                            hud.margin = 10.0
 //                            hud.removeFromSuperViewOnHide = true
 //                            hud.hide(true, afterDelay: 1)
-                            self.isLike = false
-                            dispatch_async(dispatch_get_main_queue(), { 
-                                self.signLab.text = "每日签到"
-                            })
-                        }
-                        if(status.status == "success"){
-                            
+                    self.isLike = false
+                    dispatch_async(dispatch_get_main_queue(), { 
+                        self.signLab.text = "每日签到"
+                    })
+                }
+                if(status.status == "success"){
+                    
 //                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
 //                            hud.mode = MBProgressHUDMode.Text;
 //                            hud.labelText = "签到成功"
 //                            hud.margin = 10.0
 //                            hud.removeFromSuperViewOnHide = true
 //                            hud.hide(true, afterDelay: 1)
-                            self.isLike = true
-                            dispatch_async(dispatch_get_main_queue(), {
-                                self.signLab.text = "已签到"
-                            })
-                        }
-                        
-                        
-                    }
+                    self.isLike = true
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.signLab.text = "已签到"
+                    })
                 }
+                
+                
             }
+        }
+    }
     
     func zan() {
         
@@ -409,6 +435,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //                                "userid":"1",
             "day":self.timeStamp
         ];
+        print(QCLoginUserInfo.currentInfo.userid)
         Alamofire.request(.GET, url, parameters: param as? [String : AnyObject] ).response { request, response, json, error in
             print(request)
             if(error != nil){

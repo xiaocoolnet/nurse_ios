@@ -26,6 +26,8 @@ class FansTableViewCell: UITableViewCell {
         titImg.frame = CGRectMake(15, 10, 50, 50)
         titImg.layer.cornerRadius = 25
         titImg.clipsToBounds = true
+        titImg.layer.borderColor = UIColor.lightGrayColor().CGColor
+        titImg.layer.borderWidth = 0.5
         
         nameLab.frame = CGRectMake(75, 25, 50, 20)
         nameLab.font = UIFont.systemFontOfSize(15)
@@ -44,19 +46,26 @@ class FansTableViewCell: UITableViewCell {
     var fansModel:HSFansAndFollowModel?{
         didSet {
             
-            HSMineHelper().getUserInfo((fansModel?.id)!) { (success, response) in
-                
-                self.setUI(response as! HSFansAndFollowModel)
-            }
+//            self.titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+fansModel!.photo))
+//            self.nameLab.text = fansModel!.name
+//            self.nameLab.sizeToFit()
+//            
+//            self.fansBtn.frame = CGRectMake(75+self.nameLab.bounds.size.width+5, 26, 19, 18)
+//            self.fansBtn.setTitle(fansModel!.level, forState: .Normal)
+            
+//            HSMineHelper().getUserInfo((fansModel?.id)!) { (success, response) in
+
+                self.setUI(fansModel!)
+//            }
         }
     }
     
     var followModel:HSFansAndFollowModel?{
         didSet {
-            HSMineHelper().getUserInfo((followModel?.userid)!) { (success, response) in
-                
-                self.setUI(response as! HSFansAndFollowModel)
-            }
+//            HSMineHelper().getUserInfo((followModel?.userid)!) { (success, response) in
+            
+                self.setUI(followModel!)
+//            }
             
         }
         
@@ -66,7 +75,13 @@ class FansTableViewCell: UITableViewCell {
         dispatch_async(dispatch_get_main_queue(), {
             //TODO:image 后期要改，从网上获取
             //            titImg.image = UIImage(named: newValue.headerImage)
-            self.titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.photo))
+            if model.photo == "" {
+                
+                self.titImg.image = UIImage.init(named: "default_header")
+            }else{
+                
+                self.titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.photo))
+            }
             self.nameLab.text = model.name
             self.nameLab.sizeToFit()
             

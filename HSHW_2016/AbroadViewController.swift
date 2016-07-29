@@ -23,7 +23,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     var channelid = Int()
     //  初始化数据源
     var dataSource = NewsList()
-    let countryArr:[String] = ["ic_eng.png","ic_canada.png","ic_germany.png","ic_australia.png","ic_meiguo.png","ic_guo.png","ic_guotwo.png","ic_american.png"]
+    let countryArr:[String] = ["ic_eng.png","ic_canada.png","ic_germany.png","ic_australia.png","ic_meiguo.png","ic_guo.png","ic_guotwo.png","ic_flag_japan.png"]
     let nameArr:[String] = ["美国","加拿大","德国","芬兰","澳洲","新加坡","沙特","日本"]
     let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
     var country = Int()
@@ -261,6 +261,9 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             for i in 0...7 {
                 let country = UIButton(frame: CGRectMake(WIDTH * (30 + 95 * CGFloat( i % 4 )) / 375, WIDTH * ( 20 + 70 * CGFloat(i / 4)) / 375, WIDTH * 34 / 375, WIDTH * 34 / 375))
                 country.tag = i
+                country.layer.cornerRadius = country.frame.size.width/2.0
+                country.layer.borderColor = UIColor.lightGrayColor().CGColor
+                country.layer.borderWidth = 0.5
                 country.setBackgroundImage(UIImage(named: countryArr[i]), forState: .Normal)
                 country.addTarget(self, action: #selector(AbroadViewController.selectorCountry(_:)), forControlEvents: .TouchUpInside)
                 cell.addSubview(country)

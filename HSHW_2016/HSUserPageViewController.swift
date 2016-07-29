@@ -26,6 +26,7 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableView
     var userInfo:HSFansAndFollowModel?
     
     var dataSource = Array<PostModel>()
+    var focusArray = Array<HSFansAndFollowModel>()
 
     
     override func viewDidLoad() {
@@ -165,6 +166,16 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableView
                 focusBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
                 focusBtn.setTitle("关注Ta", forState: .Normal)
                 focusBtn.setTitle("已关注", forState: .Selected)
+                var flag = true
+                for obj in focusArray {
+                    if obj.id == userid {
+                        focusBtn.selected = true
+                        flag = false
+                    }
+                }
+                if flag {
+                    focusBtn.selected = false
+                }
                 focusBtn.addTarget(self, action: #selector(followBtnClick(_:)), forControlEvents: .TouchUpInside)
                 bgImageView.addSubview(focusBtn)
                 
@@ -204,10 +215,10 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableView
             
             if buttonIndex == 0 {
                 
-                helper.cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: (userInfo?.userid)!, type: "6", handle: { (success, response) in
+                helper.cancelFavorite((userInfo?.userid)!, refid: (userInfo?.object_id)!, type: "6", handle: { (success, response) in
                     
                     dispatch_async(dispatch_get_main_queue(), {
-                        
+                        print("--===   ",success)
                     let alert = UIAlertView.init(title: "已成功取消关注", message: "已成功取消关注 \((self.userInfo?.name)!)", delegate: nil, cancelButtonTitle: "确定")
                     alert.show()
                     self.focusBtn.selected = false

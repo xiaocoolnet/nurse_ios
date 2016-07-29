@@ -125,7 +125,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         myTableView.dataSource = self
         myTableView.registerClass(AcademicTableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(myTableView)
-        myTableView.rowHeight = (WIDTH-20)*120/355+63
+        myTableView.rowHeight = (WIDTH-20)*0.5+63
 
         
     }

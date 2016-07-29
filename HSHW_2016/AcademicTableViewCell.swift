@@ -30,31 +30,34 @@ class AcademicTableViewCell: UITableViewCell {
         for view in self.contentView.subviews {
             view.removeFromSuperview()
         }
-        titImage.frame = CGRectMake(10, 10, WIDTH-20, (WIDTH-20)*120/355)
-        titLab.frame = CGRectMake(10, (WIDTH-20)*120/355+15, WIDTH-20, 20)
+        titImage.frame = CGRectMake(10, 10, WIDTH-20, (WIDTH-20)*0.5)
+        titImage.contentMode = .ScaleAspectFill
+        titImage.clipsToBounds = true
+        
+        titLab.frame = CGRectMake(10, (WIDTH-20)*0.5+15, WIDTH-20, 20)
         titLab.font = UIFont.systemFontOfSize(14)
         
-        conNum.frame = CGRectMake(25, (WIDTH-20)*120/355+36, 60, 20)
+        conNum.frame = CGRectMake(25, (WIDTH-20)*0.5+36, 60, 20)
         conNum.font = UIFont.systemFontOfSize(10)
         conNum.textColor = UIColor.grayColor()
         
-        comBtn.frame = CGRectMake(10, (WIDTH-20)*120/355+40, 18, 12)
+        comBtn.frame = CGRectMake(10, (WIDTH-20)*0.5+40, 18, 12)
 //        comBtn.setImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
 //        comBtn.backgroundColor = UIColor.redColor()
         
-        timeLab.frame = CGRectMake(30, (WIDTH-20)*120/355+40, 100, 20)
+        timeLab.frame = CGRectMake(30, (WIDTH-20)*0.5+40, 100, 20)
         timeLab.font = UIFont.systemFontOfSize(14)
         timeLab.textColor = UIColor.grayColor()
         
-        timeBtn.frame = CGRectMake(10, (WIDTH-20)*120/355+42, 12, 12)
+        timeBtn.frame = CGRectMake(10, (WIDTH-20)*0.5+42, 12, 12)
 //        timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
         timeBtn.setBackgroundImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
         
-        zanNum.frame = CGRectMake(WIDTH-40, (WIDTH-20)*120/355+38, 30, 20)
+        zanNum.frame = CGRectMake(WIDTH-40, (WIDTH-20)*0.5+38, 30, 20)
         zanNum.font = UIFont.systemFontOfSize(14)
         zanNum.textColor = UIColor.grayColor()
         zanNum.textAlignment = .Left
-        aca_zan.frame = CGRectMake(WIDTH-60, (WIDTH-20)*120/355+42, 14, 14)
+        aca_zan.frame = CGRectMake(WIDTH-60, (WIDTH-20)*0.5+42, 14, 14)
         aca_zan.setImage(UIImage(named:"ic_like_gray"), forState: UIControlState.Normal)
         aca_zan.setImage(UIImage(named:"ic_like_sel"), forState: UIControlState.Selected)
         aca_zan.addTarget(self, action: #selector(AcademicViewController.click1(_:)), forControlEvents: .TouchUpInside)

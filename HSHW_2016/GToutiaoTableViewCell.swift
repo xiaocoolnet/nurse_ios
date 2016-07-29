@@ -16,7 +16,7 @@ class GToutiaoTableViewCell: UITableViewCell {
     
     var delegate:cateBtnClickedDelegate?
     
-//    var type = 0 // 1 有分类 2 没分类
+    var type = 1 // 1 有分类 2 没分类
     
     let titLab = UILabel()
     let contant = UILabel()
@@ -37,7 +37,10 @@ class GToutiaoTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        self.addSubview(heal)
+        if type == 1 {
+            
+            self.addSubview(heal)
+        }
         self.addSubview(conNum)
         self.addSubview(timeLab)
         self.addSubview(comBtn)
@@ -90,6 +93,8 @@ class GToutiaoTableViewCell: UITableViewCell {
         contant.font = UIFont.systemFontOfSize(14)
         contant.textColor = UIColor.grayColor()
         titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
+        titImage.contentMode = .ScaleAspectFill
+        titImage.clipsToBounds = true
     }
     
     func setCellWithNewsInfo(newsInfo:NewsInfo) {
@@ -107,22 +112,26 @@ class GToutiaoTableViewCell: UITableViewCell {
         
         let healWidth = calculateWidth(newsInfo.term_name, size: 11, height: 15)+5
         heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+22, healWidth, 15)
+        if type == 2 {
+            heal.removeFromSuperview()
+        }
         
-        comBtn.frame = CGRectMake(CGRectGetMaxX(heal.frame)+5, titLab.frame.size.height+titLab.frame.origin.y+25, 13, 9)
+        comBtn.frame = CGRectMake(type == 1 ? CGRectGetMaxX(heal.frame)+10:5, titLab.frame.size.height+titLab.frame.origin.y+25, 13, 9)
         
         self.conNum.text = newsInfo.post_hits
         conNum.sizeToFit()
         conNum.frame = CGRectMake(CGRectGetMaxX(comBtn.frame)+5, titLab.frame.size.height+titLab.frame.origin.y+22, CGRectGetWidth(conNum.frame), 15)
         
-        timeBtn.frame = CGRectMake(CGRectGetMaxX(conNum.frame)+5, titLab.frame.size.height+titLab.frame.origin.y+24, 11, 11)
+        timeBtn.frame = CGRectMake(CGRectGetMaxX(conNum.frame)+10, titLab.frame.size.height+titLab.frame.origin.y+24, 11, 11)
         timeLab.frame = CGRectMake(CGRectGetMaxX(timeBtn.frame)+5, titLab.frame.size.height+titLab.frame.origin.y+22, 80, 15)
         
         let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
-        self.timeLab.text = time[0]
+        let date:Array = time[0].componentsSeparatedByString("-")
+        self.timeLab.text = "\(date[1])/\(date[2])"
         self.contant.text = newsInfo.post_excerpt
         
         let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
-        print(photoUrl)
+        print("=-=-=-=-=-=-=   ",photoUrl)
         self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
 //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
 //        titLab.frame.size.height = titleHeight+100

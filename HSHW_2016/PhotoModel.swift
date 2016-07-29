@@ -42,11 +42,13 @@ class PhotoInfo: JSONJoy{
     
     var url:String
     var picUrl:String
+    var name:String
     
     required init(_ decoder: JSONDecoder){
         
         url = decoder["slide_url"].string ?? ""
         picUrl = decoder["slide_pic"].string ?? ""
+        name = decoder["slide_name"].string ?? ""
     }
     
 }

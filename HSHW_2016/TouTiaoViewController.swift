@@ -72,6 +72,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 let imageArr = response as! Array<PhotoInfo>
                 for imageInfo in imageArr {
                     self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+//                    self.titArr.append(imageInfo)
                     dispatch_async(dispatch_get_main_queue(), {
                         self.updateSlideImage()
                         self.myTableView.reloadData()
@@ -89,6 +90,13 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         for i in 1...4 {
             let imgView = scrollView.viewWithTag(i) as! UIImageView
             imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+//            print(picArr)
+            for lab in imgView.subviews {
+                if lab.tag == imgView.tag {
+                    let titLab = lab.viewWithTag(i) as? UILabel
+                    titLab!.text = titArr[i-1]
+                }
+            }
         }
     }
     
@@ -105,20 +113,27 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
         
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*190/375)
+        scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
         scrollView.delegate = self
         
         for i in 0...3 {
+            
             let  imageView = UIImageView()
             imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
             imageView.tag = i+1
-            let bottom = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, WIDTH*190/375-30, WIDTH, 30))
+            
+            let bottom = UIView(frame: CGRectMake(0, WIDTH*190/375-25, WIDTH, 25))
             bottom.backgroundColor = UIColor.grayColor()
-            bottom.alpha = 0.3
-            let titLab = UILabel(frame: CGRectMake(CGFloat(i)*WIDTH+10, WIDTH*190/375-30, WIDTH-100, 30))
+            bottom.alpha = 0.5
+            imageView.addSubview(bottom)
+            
+            let titLab = UILabel(frame: CGRectMake(10, WIDTH*190/375-25, WIDTH-100, 25))
             titLab.font = UIFont.systemFontOfSize(14)
             titLab.textColor = UIColor.whiteColor()
-            titLab.text = titArr[i]
+//            titLab.text = titArr[i]
+            titLab.tag = i+1
+            imageView.addSubview(titLab)
             
             //为图片视图添加点击事件
             imageView.userInteractionEnabled = true
@@ -134,7 +149,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
         
-        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*190/375-30, 80, 30)
+        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*190/375-25, 80, 25)
         pageControl.pageIndicatorTintColor = UIColor.whiteColor()
         pageControl.currentPageIndicatorTintColor = COLOR
         pageControl.numberOfPages = 4
@@ -194,6 +209,8 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
+//        timer.fireDate = NSDate.distantPast()
+        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -204,12 +221,13 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     //开始拖拽时
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-            timer.fireDate = NSDate.distantFuture()
+//            timer.fireDate = NSDate.distantFuture()
+        timer.invalidate()
     }
     //结束拖拽时
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-            timer.fireDate = NSDate.distantPast()
-    }
+//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+//            timer.fireDate = NSDate.distantPast()
+//    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 

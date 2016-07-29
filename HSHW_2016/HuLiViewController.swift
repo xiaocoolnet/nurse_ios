@@ -20,7 +20,7 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var timer = NSTimer()
     var dataSource = NewsList()
     var requestManager:AFHTTPSessionManager?
-    let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
+    var titArr:[String] = Array<String>()
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
     }
@@ -34,8 +34,6 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         requestManager = AFHTTPSessionManager()
         requestManager?.responseSerializer = AFHTTPResponseSerializer()
         
-        
-    
         // Do any additional setup after loading the view.
     }
     
@@ -43,6 +41,13 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         for i in 1...4 {
             let imgView = scrollView.viewWithTag(i) as! UIImageView
             imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+            //            print(picArr)
+            for lab in imgView.subviews {
+                if lab.tag == imgView.tag {
+                    let titLab = lab.viewWithTag(i) as? UILabel
+                    titLab!.text = titArr[i-1]
+                }
+            }
         }
     }
     
@@ -59,20 +64,27 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
         
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*190/375)
+        scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
         scrollView.delegate = self
         
         for i in 0...3 {
+            
             let  imageView = UIImageView()
             imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
             imageView.tag = i+1
-            let bottom = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, WIDTH*190/375-30, WIDTH, 30))
+            
+            let bottom = UIView(frame: CGRectMake(0, WIDTH*190/375-25, WIDTH, 25))
             bottom.backgroundColor = UIColor.grayColor()
-            bottom.alpha = 0.3
-            let titLab = UILabel(frame: CGRectMake(CGFloat(i)*WIDTH+10, WIDTH*190/375-30, WIDTH-100, 30))
+            bottom.alpha = 0.5
+            imageView.addSubview(bottom)
+            
+            let titLab = UILabel(frame: CGRectMake(10, WIDTH*190/375-25, WIDTH-100, 25))
             titLab.font = UIFont.systemFontOfSize(14)
             titLab.textColor = UIColor.whiteColor()
-            titLab.text = titArr[i]
+            //            titLab.text = titArr[i]
+            titLab.tag = i+1
+            imageView.addSubview(titLab)
             
             //为图片视图添加点击事件
             imageView.userInteractionEnabled = true
@@ -84,6 +96,7 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             imageView.addGestureRecognizer(tap)
             self.scrollView.addSubview(imageView)
         }
+        
         scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
@@ -131,6 +144,7 @@ class HuLiViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                             let imageArr = response as! Array<PhotoInfo>
                             for imageInfo in imageArr {
                                 self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                                self.titArr.append(imageInfo.name)
                                 dispatch_async(dispatch_get_main_queue(), {
                                     self.updateSlideImage()
                                     self.myTableView.reloadData()

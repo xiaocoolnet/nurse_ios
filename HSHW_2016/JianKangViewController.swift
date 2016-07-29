@@ -16,7 +16,7 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var myTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-    var picArr = NSArray()
+    var picArr = Array<String>()
     var timer = NSTimer()
     var times = Int()
     var dataSource = NewsList()
@@ -25,7 +25,8 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
     internal var post_modified=String()
     var post_excerpt=String()
     var requestManager:AFHTTPSessionManager?
-    let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
+    var requestHelper = NewsPageHelper()
+    var titArr:[String] = Array<String>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,8 +35,39 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
         requestManager = AFHTTPSessionManager()
         requestManager?.responseSerializer = AFHTTPResponseSerializer()
         
+        requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+            if success {
+                print(response)
+                let imageArr = response as! Array<PhotoInfo>
+                for imageInfo in imageArr {
+                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                    self.titArr.append(imageInfo.name)
+                    //                    self.titArr.append(imageInfo)
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.updateSlideImage()
+                        self.myTableView.reloadData()
+                    })
+                }
+            }
+        }
+
         
         // Do any additional setup after loading the view.
+    }
+    
+    
+    func updateSlideImage(){
+        for i in 1...4 {
+            let imgView = scrollView.viewWithTag(i) as! UIImageView
+            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+            //            print(picArr)
+            for lab in imgView.subviews {
+                if lab.tag == imgView.tag {
+                    let titLab = lab.viewWithTag(i) as? UILabel
+                    titLab!.text = titArr[i-1]
+                }
+            }
+        }
     }
     
     func createTableView() {
@@ -51,25 +83,27 @@ class JianKangViewController: UIViewController,UITableViewDelegate,UITableViewDa
         timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
         
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*190/375)
+        scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
         scrollView.delegate = self
         
-        
-        
-        picArr = ["1.png","2.png","3.png","4.png"]
         for i in 0...3 {
+            
             let  imageView = UIImageView()
             imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
-            imageView.image = UIImage(named: picArr[i] as! String)
             imageView.tag = i+1
             
-            let bottom = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, WIDTH*190/375-30, WIDTH, 30))
+            let bottom = UIView(frame: CGRectMake(0, WIDTH*190/375-25, WIDTH, 25))
             bottom.backgroundColor = UIColor.grayColor()
-            bottom.alpha = 0.3
-            let titLab = UILabel(frame: CGRectMake(CGFloat(i)*WIDTH+10, WIDTH*190/375-30, WIDTH-100, 30))
+            bottom.alpha = 0.5
+            imageView.addSubview(bottom)
+            
+            let titLab = UILabel(frame: CGRectMake(10, WIDTH*190/375-25, WIDTH-100, 25))
             titLab.font = UIFont.systemFontOfSize(14)
             titLab.textColor = UIColor.whiteColor()
-            titLab.text = titArr[i]
+            //            titLab.text = titArr[i]
+            titLab.tag = i+1
+            imageView.addSubview(titLab)
             
             //为图片视图添加点击事件
             imageView.userInteractionEnabled = true

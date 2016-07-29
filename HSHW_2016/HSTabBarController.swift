@@ -14,6 +14,7 @@ class HSTabBarController: UITabBarController,UITabBarControllerDelegate,ViewCont
         super.viewDidLoad()
         delegate = self
         childViewControllers[0].tabBarItem.selectedImage = UIImage(named:"ic_news_sel")?.imageWithRenderingMode(.AlwaysOriginal)
+        childViewControllers[1].tabBarItem.image = UIImage.init(named: "ic_study_nor")?.imageWithRenderingMode(.AlwaysOriginal)
         childViewControllers[1].tabBarItem.selectedImage = UIImage(named:"ic_study_sel")?.imageWithRenderingMode(.AlwaysOriginal)
         childViewControllers[4].tabBarItem.image = UIImage(named:"ic_me_nor")?.imageWithRenderingMode(.AlwaysOriginal)
         childViewControllers[4].tabBarItem.selectedImage = UIImage(named:"ic_me_sel")?.imageWithRenderingMode(.AlwaysOriginal)

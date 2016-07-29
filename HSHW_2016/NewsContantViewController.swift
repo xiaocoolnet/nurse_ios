@@ -18,6 +18,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 
     let myTableView = UITableView()
     var collectBtn = UIButton()
+    var collectHud = MBProgressHUD()
     let number = UILabel()
     let shareArr:[String] = ["ic_pengyouquan.png","ic_wechat.png","ic_weibo.png"]
     var newsInfo :NewsInfo? {
@@ -69,7 +70,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     }else{
                         self.zan.selected = false
                     }
-                    dispatch_async(dispatch_get_main_queue(), { 
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.collectBtn.enabled = true
                         hud.hide(true)
                     })
                 })
@@ -95,9 +97,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         
         //收藏按钮
         collectBtn = UIButton(frame:CGRectMake(0, 0, 18, 18))
-        collectBtn.setImage(UIImage(named: "btn_collect"), forState: .Normal)
-        collectBtn.setImage(UIImage(named: "btn_collect_sel"), forState: .Selected)
+        collectBtn.setImage(UIImage(named: "btn_collect_sel"), forState: .Normal)
+        collectBtn.setImage(UIImage(named: "ic_shoucang"), forState: .Highlighted)
+        collectBtn.setImage(UIImage(named: "ic_shoucang"), forState: .Selected)
         collectBtn.addTarget(self, action: #selector(collection(_:)), forControlEvents: .TouchUpInside)
+        collectBtn.enabled = false
         let barButton1 = UIBarButtonItem(customView: collectBtn)
         
        
@@ -144,6 +148,10 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if !requiredLogin(self.navigationController!, hasBackItem: true) {
             return
         }
+        collectHud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+        collectHud.margin = 10.0
+        collectHud.removeFromSuperViewOnHide = true
+        collectBtn.enabled = false
         
         if collectBtn.selected {
             let url = PARK_URL_Header+"cancelfavorite"
@@ -154,36 +162,41 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             ];
             Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
                 print(request)
-                if(error != nil){
-                    
-                }else{
-                    let status = Http(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
-                    if(status.status == "error"){
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = status.errorData
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
-                    }
-                    if(status.status == "success"){
-                        
-                        collectBtn.selected = false
-                        
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "取消收藏成功"
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
-                        //self.myTableView .reloadData()
-                        print(status.data)
-//                        self.isCollect=false
-                    }
-                }
                 
+                dispatch_async(dispatch_get_main_queue(), {
+                
+                    if(error != nil){
+                        
+                    }else{
+                        let status = Http(JSONDecoder(json!))
+                        print("状态是")
+                        print(status.status)
+                        if(status.status == "error"){
+    //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            self.collectHud.mode = MBProgressHUDMode.Text;
+                            self.collectHud.labelText = status.errorData
+//                            hud.margin = 10.0
+//                            hud.removeFromSuperViewOnHide = true
+//                            hud.hide(true, afterDelay: 1)
+                        }
+                        if(status.status == "success"){
+                            
+                            collectBtn.selected = false
+                            
+    //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            self.collectHud.mode = MBProgressHUDMode.Text;
+                            self.collectHud.labelText = "取消收藏成功"
+//                            hud.margin = 10.0
+//                            hud.removeFromSuperViewOnHide = true
+//                            hud.hide(true, afterDelay: 1)
+                            //self.myTableView .reloadData()
+                            print(status.data)
+    //                        self.isCollect=false
+                        }
+                    }
+                    self.collectHud.hide(true, afterDelay: 1)
+                    collectBtn.enabled = true
+                })
             }
         }else{
             var str = NSString()
@@ -196,12 +209,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
                         collectBtn.selected = true
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "收藏成功"
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        self.collectHud.mode = MBProgressHUDMode.Text;
+                        self.collectHud.labelText = "收藏成功"
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
+                        self.collectHud.hide(true, afterDelay: 1)
+                        collectBtn.enabled = true
 //                        self.isCollect=true
                     })
                 }
@@ -303,10 +317,10 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if indexPath.section == 0 {
             if indexPath.row==0 {
                 
-                let height = calculateHeight(newsInfo?.post_title ?? "", size: 21, width: WIDTH-20)
+                let height = calculateHeight(newsInfo?.post_title ?? "", size: 21, width: WIDTH-30)
                 print(newsInfo?.post_title)
                 print(height)
-                return height+20
+                return height+30
             }else if indexPath.row==1{
                 return 20
             }else if indexPath.row==2{
@@ -343,21 +357,21 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             if indexPath.row == 0 {
                
                 cell1 = UITableViewCell.init(style: .Default, reuseIdentifier: "cellIntenfer")
+
                 let title = UILabel()
                 let height = calculateHeight((newsInfo?.post_title)!, size: 21, width: WIDTH-20)
-                title.frame = CGRectMake(10, 5, WIDTH-20, height+10)
+                title.frame = CGRectMake(15, 0, WIDTH-30, height+30)
                 title.text = newsInfo?.post_title
                 title.numberOfLines = 0
 //                title.textColor = UIColor.redColor()
                 title.font = UIFont.systemFontOfSize(21)
                 cell1.addSubview(title)
-//                tableView.rowHeight=height+20
+                tableView.rowHeight=height+30
                 print(tableView.rowHeight)
             
             }else if indexPath.row == 1 {
 
                 let cell = tableView.dequeueReusableCellWithIdentifier("sourceCell", forIndexPath: indexPath)as! NewsSourceCell
-               
                 cell.source.text = cell.source.text!+(newsInfo?.post_source)!
                 cell.post_like.text = newsInfo?.post_hits
                 let time:Array = (newsInfo?.post_date?.componentsSeparatedByString(" "))!
