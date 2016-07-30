@@ -27,6 +27,10 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
             }
         }
         listTableView.tableFooterView = UIView()
+        
+        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 0.5))
+        line.backgroundColor = GREY
+        self.view.addSubview(line)
     }
 
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
