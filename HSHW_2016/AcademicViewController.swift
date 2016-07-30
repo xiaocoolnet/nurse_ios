@@ -28,13 +28,14 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
          self.createTableView()
-        if num == 2 {
-//            self.GetData1()
-        }else{
-            
-        }
-        self.GetData()
+//        if num == 2 {
+////            self.GetData1()
+//        }else{
+//            
+//        }
+//        self.GetData()
 
         self.view.backgroundColor = COLOR
         
@@ -73,6 +74,9 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                     print(status.data)
                 }
             }
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.myTableView.mj_header.endRefreshing()
+            })
             
         }
 
@@ -127,6 +131,8 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         self.view.addSubview(myTableView)
         myTableView.rowHeight = (WIDTH-20)*0.5+63
 
+        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(GetData))
+        myTableView.mj_header.beginRefreshing()
         
     }
     

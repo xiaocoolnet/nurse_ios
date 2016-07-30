@@ -26,6 +26,14 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
         listTableView.dataSource = self
         self.view.addSubview(listTableView)
         listTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "cell")
+        listTableView.tableFooterView = UIView()
+        
+        listTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
+        listTableView.mj_header.beginRefreshing()
+    }
+    
+    func loadData() {
+        
         if articleID != nil {
             helper.getArticleListWithID(articleID!) {[unowned self] (success, response) in
                 if success {
@@ -34,9 +42,9 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
                         self.listTableView.reloadData()
                     })
                 }
+                self.listTableView.mj_header.endRefreshing()
             }
         }
-        listTableView.tableFooterView = UIView()
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

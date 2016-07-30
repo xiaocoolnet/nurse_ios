@@ -41,8 +41,10 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         myTableView.registerClass(MineTableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(myTableView)
         myTableView.separatorStyle = .None
+        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
+        myTableView.mj_header.beginRefreshing()
         
-        let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*188/375+10))
+        let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*188/375))
         self.view.addSubview(one)
         
         timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(StudyViewController.scroll), userInfo: nil, repeats: true)
@@ -85,13 +87,21 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
         
-        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*188/375-30, 80, 30)
+        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*188/375-25, 80, 25)
         pageControl.pageIndicatorTintColor = UIColor.whiteColor()
         pageControl.currentPageIndicatorTintColor = COLOR
         pageControl.numberOfPages = 4
         pageControl.currentPage = 0
         pageControl.addTarget(self, action: #selector(StudyViewController.pageNext), forControlEvents: .ValueChanged)
         one.addSubview(pageControl)
+        
+        myTableView.rowHeight = 60
+        myTableView.tableHeaderView = one
+        
+        // Do any additional setup after loading the view.
+    }
+    
+    func loadData() {
         
         requestHelper.getSlideImages("3") { [unowned self] (success, response) in
             if success {
@@ -103,14 +113,11 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     dispatch_async(dispatch_get_main_queue(), {
                         self.updateSlideImage()
                         self.myTableView.reloadData()
+                        self.myTableView.mj_header.endRefreshing()
                     })
                 }
             }
         }
-        myTableView.rowHeight = 60
-        myTableView.tableHeaderView = one
-        
-        // Do any additional setup after loading the view.
     }
     
     func updateSlideImage(){
@@ -192,7 +199,9 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         if indexPath.section == 0 {
             if indexPath.row == 0 {
-                let next = EveryDayViewController()
+                let next = OnlineTextViewController()
+                next.title = "每日一练"
+                next.type = 1
 //                let nextVC = DayPracticeViewController()
                 self.navigationController?.pushViewController(next, animated: true)
                 
@@ -204,6 +213,8 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             }
             if indexPath.row == 2 {
                 let next = OnlineTextViewController()
+                next.title = "在线考试"
+                next.type = 2
                 self.navigationController?.pushViewController(next, animated: true)
 //                
             }

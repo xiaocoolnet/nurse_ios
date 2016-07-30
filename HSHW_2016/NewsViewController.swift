@@ -12,8 +12,8 @@ import PagingMenuController
 class NewsViewController: UIViewController {
     
     let oneView = TouTiaoViewController()
-    let twoView = HuLiViewController()
-    let threeView = JianKangViewController()
+    let twoView = TouTiaoViewController()
+    let threeView = TouTiaoViewController()
     let fourView = AcademicViewController()
     
     override func viewWillAppear(animated: Bool) {
@@ -27,8 +27,11 @@ class NewsViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.whiteColor()
         oneView.title = "头条"
+        oneView.newsId = "4"
         twoView.title = "护理界"
+        twoView.newsId = "5"
         threeView.title = "健康"
+        threeView.newsId = "6"
         fourView.title = "学术会议"
         fourView.articleID = "7"
         let viewControllers = [oneView,twoView,threeView,fourView]

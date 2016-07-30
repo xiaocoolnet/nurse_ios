@@ -76,14 +76,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     })
                 })
             })
-            // MARK: 检查是否点赞
-//            for obj in (self.newsInfo?.likes)! {
-//                if obj.userid == QCLoginUserInfo.currentInfo.userid {
-//                    self.zan.selected = true
-//                    self.myTableView.reloadData()
-//                }
-//            }
-            
         }
     }
     

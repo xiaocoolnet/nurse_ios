@@ -31,7 +31,6 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     var post_excerpt = String()
     var requestManager:AFHTTPSessionManager?
     var newsType:Int?
-    let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -47,7 +46,6 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         self.title = name
         
         self.createTableView()
-        self.GetDate()
         // Do any additional setup after loading the view.
     }
     
@@ -59,6 +57,9 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         self.view.addSubview(myTableView)
         
         myTableView.rowHeight = 100
+        
+        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(GetDate))
+        myTableView.mj_header.beginRefreshing()
     }
     
     func GetDate(){
@@ -95,7 +96,8 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
                         default:
                             self.title = self.dataSource.objectlist.first?.term_name
                     }
-                    self.myTableView .reloadData()
+                    self.myTableView.reloadData()
+                    self.myTableView.mj_header.endRefreshing()
                     print(status.data)
                 }
             }

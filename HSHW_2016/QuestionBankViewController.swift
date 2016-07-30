@@ -34,8 +34,10 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         self.view.addSubview(myTableView)
         myTableView.rowHeight = 75
         // Do any additional setup after loading the view.
+        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(GetData))
+        myTableView.mj_header.beginRefreshing()
         
-        self.GetData()
+//        self.GetData()
     }
     
     func GetData(){
@@ -67,7 +69,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                     print(status.data)
                 }
             }
-            
+            self.myTableView.mj_header.endRefreshing()
         }
     }
 

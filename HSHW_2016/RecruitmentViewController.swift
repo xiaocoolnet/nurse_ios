@@ -16,6 +16,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
     var picArr = Array<String>()
+    var titArr = Array<String>()
     var timer = NSTimer()
     var times = Int()
     let employment = UIView()
@@ -74,6 +75,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     let imageArr = response as! Array<PhotoInfo>
                     for imageInfo in imageArr {
                         self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                        self.titArr.append(imageInfo.name)
                         dispatch_async(dispatch_get_main_queue(), {
                             self.updateSlideImage()
                             self.myTableView.reloadData()
@@ -97,6 +99,13 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         for i in 1...4 {
             let imgView = scrollView.viewWithTag(i) as! UIImageView
             imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+            //            print(picArr)
+            for lab in imgView.subviews {
+                if lab.tag == imgView.tag {
+                    let titLab = lab.viewWithTag(i) as? UILabel
+                    titLab!.text = titArr[i-1]
+                }
+            }
         }
     }
     
@@ -163,16 +172,28 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(RecruitmentViewController.scroll), userInfo: nil, repeats: true)
         timer.fire()
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*140/375)
+        scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
         scrollView.delegate = self
         
         for i in 0...3 {
+            
             let  imageView = UIImageView()
             imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*140/375)
             imageView.tag = i+1
-            let bottom = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, WIDTH*140/375-30, WIDTH, 30))
+            
+            let bottom = UIView(frame: CGRectMake(0, WIDTH*140/375-25, WIDTH, 25))
             bottom.backgroundColor = UIColor.grayColor()
-            bottom.alpha = 0.3
+            bottom.alpha = 0.5
+            imageView.addSubview(bottom)
+            
+            let titLab = UILabel(frame: CGRectMake(10, WIDTH*140/375-25, WIDTH-100, 25))
+            titLab.font = UIFont.systemFontOfSize(14)
+            titLab.textColor = UIColor.whiteColor()
+            //            titLab.text = titArr[i]
+            titLab.tag = i+1
+            imageView.addSubview(titLab)
+            
             //为图片视图添加点击事件
             imageView.userInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
@@ -187,7 +208,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
         
-        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*140/375-30, 80, 30)
+        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*140/375-25, 80, 25)
         pageControl.pageIndicatorTintColor = UIColor.whiteColor()
         pageControl.currentPageIndicatorTintColor = COLOR
         pageControl.numberOfPages = 4

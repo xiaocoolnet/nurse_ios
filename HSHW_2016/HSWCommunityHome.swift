@@ -26,6 +26,8 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         collectionView.registerNib(UINib(nibName: "HSSQCollectionViewCell",bundle: nil), forCellWithReuseIdentifier: "cell")
         collectionView.pagingEnabled = true
         collectionView.bounces = false
+        collectionView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
+        collectionView.mj_header.beginRefreshing()
 //        forumHelper.getForumList("1",isHot: false) { (success, response) in
 //        }
         
@@ -37,14 +39,14 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
         posted.becomeFirstResponder()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+    func loadData() {
+        
         if sliderMenu.selectIndex == nil {
             sliderMenu.frame = sliderHead.frame
             
             forumHelper.getBBSTypeData({ (success, response) in
                 self.array = response as! Array<ForumTypeModel>
-
+                
                 let tempArray:NSMutableArray = []
                 
                 if !self.array.isEmpty {
@@ -55,14 +57,15 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
                     self.sliderMenu.setSelectTilteIndex(0)
                     self.collectionView.reloadData()
                 }
-
+                self.collectionView.mj_header.endRefreshing()
             })
-
+            
             sliderMenu.delegate = self
             view.addSubview(sliderMenu)
         }
         collectionView.reloadData()
     }
+    
     // MARK: ---sliderMenuDelegate----
     func sliderMenuClickIndex(index: NSInteger) {
         collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)

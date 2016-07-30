@@ -1,14 +1,14 @@
 //
-//  GSuccessViewController.swift
+//  CompanyAuthViewController.swift
 //  HSHW_2016
 //
-//  Created by DreamCool on 16/7/28.
+//  Created by DreamCool on 16/7/30.
 //  Copyright © 2016年 校酷网络科技公司. All rights reserved.
 //
 
 import UIKit
 
-class GSuccessViewController: UIViewController {
+class CompanyAuthViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

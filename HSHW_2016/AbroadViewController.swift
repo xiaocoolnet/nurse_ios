@@ -25,7 +25,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     var dataSource = NewsList()
     let countryArr:[String] = ["ic_eng.png","ic_canada.png","ic_germany.png","ic_australia.png","ic_meiguo.png","ic_guo.png","ic_guotwo.png","ic_flag_japan.png"]
     let nameArr:[String] = ["美国","加拿大","德国","芬兰","澳洲","新加坡","沙特","日本"]
-    let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
+    var titArr:[String] = Array<String>()
     var country = Int()
     var requestHelper = NewsPageHelper()
     
@@ -41,30 +41,29 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "Abroad")
         self.view.addSubview(myTableView)
-        channelid = 4
-        self.GetDate()
         
-        requestHelper.getSlideImages("3") { [unowned self] (success, response) in
-            if success {
-                print(response)
-                let imageArr = response as! Array<PhotoInfo>
-                for imageInfo in imageArr {
-                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.updateSlideImage()
-                        self.myTableView.reloadData()
-                    })
-                }
-            }
-        }
+        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(GetDate))
+        myTableView.mj_header.beginRefreshing()
+        
+        channelid = 4
+//        self.GetDate()
+
         
         // Do any additional setup after loading the view.
     }
+    
     
     func updateSlideImage(){
         for i in 1...4 {
             let imgView = scrollView.viewWithTag(i) as! UIImageView
             imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+            //            print(picArr)
+            for lab in imgView.subviews {
+                if lab.tag == imgView.tag {
+                    let titLab = lab.viewWithTag(i) as? UILabel
+                    titLab!.text = titArr[i-1]
+                }
+            }
         }
     }
     
@@ -79,6 +78,25 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             "channelid":NSString.localizedStringWithFormat("%ld", channelid)
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            
+            
+            self.requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+                if success {
+                    print(response)
+                    let imageArr = response as! Array<PhotoInfo>
+                    for imageInfo in imageArr {
+                        self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                        self.titArr.append(imageInfo.name)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.updateSlideImage()
+                            self.myTableView.reloadData()
+                        })
+                    }
+                }
+                
+                self.myTableView.mj_header.endRefreshing()
+            }
+            
             print(request)
             if(error != nil){
                 print(error)
@@ -195,25 +213,32 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     //  段尾视图的定义
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         //  创建视图
-        let one = UIView(frame: CGRectMake(0, 0, WIDTH, WIDTH*140/375))
+        let one = UIView(frame: CGRectMake(0, 0, WIDTH, WIDTH*188/375))
         //  添加定时器
         timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
         
-        scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*140/375)
+        scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*188/375)
+        scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
         scrollView.delegate = self
         
         for i in 0...3 {
+            
             let  imageView = UIImageView()
-            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*140/375)
+            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*188/375)
             imageView.tag = i+1
-            let bottom = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, WIDTH*140/375-30, WIDTH, 30))
+            
+            let bottom = UIView(frame: CGRectMake(0, WIDTH*188/375-25, WIDTH, 25))
             bottom.backgroundColor = UIColor.grayColor()
-            bottom.alpha = 0.3
-            let titLab = UILabel(frame: CGRectMake(CGFloat(i)*WIDTH+10, WIDTH*140/375-30, WIDTH-100, 30))
+            bottom.alpha = 0.5
+            imageView.addSubview(bottom)
+            
+            let titLab = UILabel(frame: CGRectMake(10, WIDTH*188/375-25, WIDTH-100, 25))
             titLab.font = UIFont.systemFontOfSize(14)
             titLab.textColor = UIColor.whiteColor()
-            titLab.text = titArr[i]
+            //            titLab.text = titArr[i]
+            titLab.tag = i+1
+            imageView.addSubview(titLab)
             
             //为图片视图添加点击事件
             imageView.userInteractionEnabled = true
@@ -229,7 +254,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
         
-        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*140/375-30, 80, 30)
+        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*188/375-25, 80, 25)
         pageControl.pageIndicatorTintColor = UIColor.whiteColor()
         pageControl.currentPageIndicatorTintColor = COLOR
         pageControl.numberOfPages = 4
@@ -246,7 +271,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     //  段尾高度设置
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 0 {
-            return WIDTH * 140 / 375
+            return WIDTH * 188 / 375
         }else{
             return 0
         }
@@ -255,15 +280,16 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
             cell.selectionStyle = .None
+            cell.backgroundColor = UIColor.init(red: 242/255.0, green: 242/255.0, blue: 242/255.0, alpha: 1)
             for view in cell.contentView.subviews {
                 view.removeFromSuperview()
             }
             for i in 0...7 {
                 let country = UIButton(frame: CGRectMake(WIDTH * (30 + 95 * CGFloat( i % 4 )) / 375, WIDTH * ( 20 + 70 * CGFloat(i / 4)) / 375, WIDTH * 34 / 375, WIDTH * 34 / 375))
                 country.tag = i
-                country.layer.cornerRadius = country.frame.size.width/2.0
-                country.layer.borderColor = UIColor.lightGrayColor().CGColor
-                country.layer.borderWidth = 0.5
+//                country.layer.cornerRadius = country.frame.size.width/2.0
+//                country.layer.borderColor = UIColor.lightGrayColor().CGColor
+//                country.layer.borderWidth = 0.5
                 country.setBackgroundImage(UIImage(named: countryArr[i]), forState: .Normal)
                 country.addTarget(self, action: #selector(AbroadViewController.selectorCountry(_:)), forControlEvents: .TouchUpInside)
                 cell.addSubview(country)

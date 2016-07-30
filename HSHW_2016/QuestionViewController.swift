@@ -12,8 +12,8 @@ import PagingMenuController
 class QuestionViewController: UIViewController {
         
         let oneView = QuestionBankViewController()
-        let twoView = InternationNurseViewController()
-        let threeView = NurseStatusViewController()
+        let twoView = QuestionBankViewController()
+        let threeView = QuestionBankViewController()
         
         override func viewWillAppear(animated: Bool) {
             UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default

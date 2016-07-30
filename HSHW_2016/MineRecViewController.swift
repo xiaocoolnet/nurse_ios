@@ -23,7 +23,7 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
         super.viewDidLoad()
         
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 0.5))
-        line.backgroundColor = GREY
+        line.backgroundColor = COLOR
         self.view.addSubview(line)
         
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-115)

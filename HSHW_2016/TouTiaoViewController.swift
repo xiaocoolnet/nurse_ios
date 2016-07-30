@@ -28,7 +28,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var post_excerpt = String()
     var requestManager:AFHTTPSessionManager?
     var newsType:Int?
-    let titArr:[String] = ["韩国美女，都长一个样～","有这样的治疗，我想受伤！","兄弟，就是打打闹闹。","石中剑，你是王者吗？"]
+    var titArr:[String] = Array<String>()
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -65,26 +65,36 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.createTableView()
 //        self.GetDate()
         myTableView.tableFooterView = UIView()
+        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
+        myTableView.mj_header.beginRefreshing()
+        
         self.view.backgroundColor = COLOR
+
+
+        // Do any additional setup after loading the view.
+    }
+    
+    
+    func loadData() {
         requestHelper.getSlideImages("3") { [unowned self] (success, response) in
             if success {
                 print(response)
                 let imageArr = response as! Array<PhotoInfo>
                 for imageInfo in imageArr {
                     self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-//                    self.titArr.append(imageInfo)
+                    self.titArr.append(imageInfo.name)
+                    //                    self.titArr.append(imageInfo)
                     dispatch_async(dispatch_get_main_queue(), {
                         self.updateSlideImage()
                         self.myTableView.reloadData()
                     })
                 }
+                self.GetDate()
             }
         }
         
-        self.GetDate()
-
-        // Do any additional setup after loading the view.
     }
+    
     
     func updateSlideImage(){
         for i in 1...4 {
@@ -162,7 +172,8 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func GetDate(){
         let url = PARK_URL_Header+"getNewslist"
-        let param = ["channelid":newsType == nil ? "4" : String(newsType!+17)]
+        let param = ["channelid":newsType == nil ? newsId : String(newsType!+17)]
+        
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 
@@ -187,7 +198,9 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     print(status.data)
                 }
             }
-    
+            dispatch_async(dispatch_get_main_queue(), { 
+                self.myTableView.mj_header.endRefreshing()
+            })
        }
     }
     //    图片点击事件

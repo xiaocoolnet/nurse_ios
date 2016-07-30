@@ -13,6 +13,7 @@ import Alamofire
 class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
     let myTableView = UITableView()
+    var type = 1 // 1 每日一练  2在线考试
     var dataSource = titleList()
     let picArr:[String] = ["ic_rn.png","ic_earth.png","ic_moon.png","ic_maozi_one.png","ic_maozi_two.png","ic_maozi_three.png"]
     
@@ -29,10 +30,10 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         
         self.view.backgroundColor = RGREY
         self.view .addSubview(line)
-        self.title = "在线考试"
+//        self.title = "在线考试"
         
         self.createTableView()
-        self.getData()
+//        self.getData()
     }
     
     func createTableView(){
@@ -46,6 +47,9 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         
         let one = UIView(frame: CGRectMake(0, 0, WIDTH, 10))
         myTableView.tableHeaderView = one
+        
+        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(getData))
+        myTableView.mj_header.beginRefreshing()
     }
     
     func getData(){
@@ -54,7 +58,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         let url = PARK_URL_Header+"getDaliyExamTypeList"
         let param = [
             "userid":uid,
-            "type":"11"
+            "type":type == 1 ? "1":"11"
         ];
         Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
             print(request)
@@ -84,7 +88,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
                     print(status.data)
                 }
             }
-            
+            self.myTableView.mj_header.endRefreshing()
         }
     }
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
