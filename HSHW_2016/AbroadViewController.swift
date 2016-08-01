@@ -45,10 +45,11 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(GetDate))
         myTableView.mj_header.beginRefreshing()
         
-        channelid = 4
-//        self.GetDate()
-
+        //  添加定时器
+        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(AbroadViewController.scroll), userInfo: nil, repeats: true)
         
+        channelid = 4
+//        self.GetDate()        
         // Do any additional setup after loading the view.
     }
     
@@ -137,7 +138,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*190/375))
         self.view.addSubview(one)
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(AbroadViewController.scroll), userInfo: nil, repeats: true)
         
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*190/375)
         scrollView.pagingEnabled = true
@@ -148,8 +149,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
             imageView.tag = i+1
             let bottom = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, WIDTH*190/375-30, WIDTH, 30))
-            bottom.backgroundColor = UIColor.grayColor()
-            bottom.alpha = 0.3
+            bottom.backgroundColor = UIColor.init(white: 0.5, alpha: 0.5)
+//            bottom.alpha = 0.3
             let titLab = UILabel(frame: CGRectMake(CGFloat(i)*WIDTH+10, WIDTH*190/375-30, WIDTH-100, 30))
             titLab.font = UIFont.systemFontOfSize(14)
             titLab.textColor = UIColor.whiteColor()
@@ -214,9 +215,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         //  创建视图
         let one = UIView(frame: CGRectMake(0, 0, WIDTH, WIDTH*188/375))
-        //  添加定时器
-        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
-        
+       
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*188/375)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
@@ -288,7 +287,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
                 let country = UIButton(frame: CGRectMake(WIDTH * (30 + 95 * CGFloat( i % 4 )) / 375, WIDTH * ( 20 + 70 * CGFloat(i / 4)) / 375, WIDTH * 34 / 375, WIDTH * 34 / 375))
                 country.tag = i
 //                country.layer.cornerRadius = country.frame.size.width/2.0
-//                country.layer.borderColor = UIColor.lightGrayColor().CGColor
+//                country.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
 //                country.layer.borderWidth = 0.5
                 country.setBackgroundImage(UIImage(named: countryArr[i]), forState: .Normal)
                 country.addTarget(self, action: #selector(AbroadViewController.selectorCountry(_:)), forControlEvents: .TouchUpInside)
@@ -362,6 +361,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
+        //        timer.fireDate = NSDate.distantPast()
+        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(AbroadViewController.scroll), userInfo: nil, repeats: true)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -370,14 +371,19 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         let page:Int = Int(offsetX)/Int(self.scrollView.frame.size.width)
         pageControl.currentPage = page
     }
+
     //开始拖拽时
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        timer.fireDate = NSDate.distantFuture()
+//        timer.fireDate = NSDate.distantFuture()
+        timer.invalidate()
+        
     }
-    //结束拖拽时
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        timer.fireDate = NSDate.distantPast()
-    }
+//    //结束拖拽时
+//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+////        timer.fireDate = NSDate.distantPast()
+//        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(AbroadViewController.scroll), userInfo: nil, repeats: true)
+//
+//    }
 
     
     func getData(){

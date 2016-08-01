@@ -170,7 +170,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         self.view.addSubview(one)
         
         timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(RecruitmentViewController.scroll), userInfo: nil, repeats: true)
-        timer.fire()
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*140/375)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
@@ -860,5 +859,12 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }else{
             pageControl.currentPage = number
         }
+        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
+
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        //            timer.fireDate = NSDate.distantFuture()
+        timer.invalidate()
     }
 }

@@ -13,7 +13,7 @@ class MineRecruitViewController: UIViewController {
     
     let oneView = ChildsViewController()
     let twoView = MineRecViewController()
-    let threeView = ChildsViewController()
+    let threeView = CompanyAuthViewController()
 
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
