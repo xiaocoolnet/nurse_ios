@@ -31,9 +31,6 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
     
     var selectedImage:UIImage?
     
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,6 +45,12 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
         submitBtn.setTitleColor(COLOR, forState: .Normal)
 
         self.uploadBtn.imageView?.contentMode = .ScaleAspectFit
+        
+        nameField.borderStyle = .None
+        descriptionField.borderStyle = .None
+        contactField.borderStyle = .None
+        telField.borderStyle = .None
+        mailField.borderStyle = .None
     }
 
     @IBAction func uploadBtnClick(sender: AnyObject) {
