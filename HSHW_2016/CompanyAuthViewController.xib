@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10116" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -8,7 +8,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CompanyAuthViewController" customModule="HSHW_2016" customModuleProvider="target">
             <connections>
                 <outlet property="bgView" destination="PL1-Ii-69D" id="AyZ-OA-som"/>
-                <outlet property="licenseBtn" destination="43B-sm-STv" id="vR5-bA-QzL"/>
+                <outlet property="contactField" destination="Mel-GE-9CN" id="rlU-Zj-ntE"/>
+                <outlet property="descriptionField" destination="pb9-eC-NSw" id="MCJ-tV-lVj"/>
+                <outlet property="mailField" destination="eNQ-pD-WFG" id="Na3-lf-vBB"/>
+                <outlet property="nameField" destination="NYv-Nq-GlY" id="0ef-5B-0IQ"/>
+                <outlet property="submitBtn" destination="Eu4-Mz-18k" id="kyF-zV-L00"/>
+                <outlet property="telField" destination="hR3-G5-JQO" id="RW5-em-jP6"/>
+                <outlet property="uploadBtn" destination="43B-sm-STv" id="54l-mv-zRM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -17,8 +23,15 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cIu-jf-z18">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                    <color key="backgroundColor" red="0.56862745098039214" green="0.10196078431372549" blue="0.41960784313725491" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="leM-1p-6yj"/>
+                    </constraints>
+                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PL1-Ii-69D">
-                    <rect key="frame" x="30" y="33" width="260" height="335"/>
+                    <rect key="frame" x="30" y="33" width="260" height="340"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DdP-oA-VLC" userLabel="Name View">
                             <rect key="frame" x="0.0" y="0.0" width="260" height="50"/>
@@ -301,10 +314,10 @@
                             </variation>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kfS-FH-DYj" userLabel="License View">
-                            <rect key="frame" x="0.0" y="250" width="260" height="85"/>
+                            <rect key="frame" x="0.0" y="250" width="260" height="90"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="营业执照" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uuy-vV-Nle">
-                                    <rect key="frame" x="0.0" y="0.0" width="96" height="85"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="96" height="90"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="96" id="i7d-RP-oD1"/>
                                     </constraints>
@@ -313,23 +326,32 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yxz-cu-sEa">
-                                    <rect key="frame" x="96" y="30" width="1" height="25"/>
+                                    <rect key="frame" x="96" y="30" width="1" height="30"/>
                                     <color key="backgroundColor" red="0.80000000000000004" green="0.80000000000000004" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="1" id="VU5-GR-zRL"/>
                                     </constraints>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="43B-sm-STv">
-                                    <rect key="frame" x="107" y="10" width="130" height="65"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="43B-sm-STv">
+                                    <rect key="frame" x="107" y="15" width="143" height="60"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="65" id="ZhP-Zx-aap"/>
+                                        <constraint firstAttribute="height" constant="60" id="ZhP-Zx-aap"/>
                                         <constraint firstAttribute="width" constant="130" id="ezT-e1-nXP"/>
                                     </constraints>
-                                    <state key="normal" title="点击上传"/>
+                                    <state key="normal" image="ic_shangchuan"/>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="ezT-e1-nXP"/>
+                                        </mask>
+                                    </variation>
+                                    <connections>
+                                        <action selector="uploadBtnClick:" destination="-1" eventType="touchUpInside" id="L1c-Ka-Agb"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
+                                <constraint firstAttribute="trailing" secondItem="43B-sm-STv" secondAttribute="trailing" constant="10" id="1NY-UO-3vx"/>
                                 <constraint firstAttribute="bottom" secondItem="uuy-vV-Nle" secondAttribute="bottom" id="F0I-95-8Ph"/>
                                 <constraint firstItem="Yxz-cu-sEa" firstAttribute="leading" secondItem="uuy-vV-Nle" secondAttribute="trailing" id="L4n-Bs-XsC"/>
                                 <constraint firstItem="43B-sm-STv" firstAttribute="leading" secondItem="Yxz-cu-sEa" secondAttribute="trailing" constant="10" id="SS5-YY-f8A"/>
@@ -372,7 +394,7 @@
                         <constraint firstAttribute="trailing" secondItem="Tnq-q7-JHX" secondAttribute="trailing" id="WqL-ij-sxw"/>
                         <constraint firstItem="kfS-FH-DYj" firstAttribute="top" secondItem="ZcD-Gs-WyG" secondAttribute="bottom" id="aOR-jq-qje"/>
                         <constraint firstItem="ER6-Bb-wkr" firstAttribute="leading" secondItem="PL1-Ii-69D" secondAttribute="leading" id="co5-hE-8YF"/>
-                        <constraint firstAttribute="height" constant="335" id="ddp-Xs-Zwp"/>
+                        <constraint firstAttribute="height" constant="340" id="ddp-Xs-Zwp"/>
                         <constraint firstAttribute="trailing" secondItem="Ajr-G7-3Oe" secondAttribute="trailing" id="dh3-n1-sCe"/>
                         <constraint firstItem="ER6-Bb-wkr" firstAttribute="top" secondItem="DdP-oA-VLC" secondAttribute="bottom" id="gf9-fM-Xdy"/>
                         <constraint firstItem="Tnq-q7-JHX" firstAttribute="leading" secondItem="PL1-Ii-69D" secondAttribute="leading" id="lGG-sF-tla"/>
@@ -381,14 +403,34 @@
                         <constraint firstItem="Ajr-G7-3Oe" firstAttribute="top" secondItem="Tnq-q7-JHX" secondAttribute="bottom" id="wDj-vf-bmb"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eu4-Mz-18k">
+                    <rect key="frame" x="30" y="433" width="260" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="OpD-Uq-5N5"/>
+                    </constraints>
+                    <state key="normal" title="提交"/>
+                    <connections>
+                        <action selector="submitBtnClick:" destination="-1" eventType="touchUpInside" id="j4T-lE-7MP"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="PL1-Ii-69D" secondAttribute="trailing" constant="30" id="6AI-iX-Awm"/>
+                <constraint firstItem="cIu-jf-z18" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="P2o-aN-CdO"/>
                 <constraint firstItem="PL1-Ii-69D" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="33" id="PaI-7M-1sx"/>
                 <constraint firstItem="PL1-Ii-69D" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="QeD-a2-6St"/>
+                <constraint firstItem="Eu4-Mz-18k" firstAttribute="top" secondItem="PL1-Ii-69D" secondAttribute="bottom" constant="60" id="UDy-jb-OPi"/>
+                <constraint firstItem="Eu4-Mz-18k" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="30" id="daq-MK-6lY"/>
+                <constraint firstAttribute="trailing" secondItem="Eu4-Mz-18k" secondAttribute="trailing" constant="30" id="jD5-mY-Jbc"/>
+                <constraint firstItem="cIu-jf-z18" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qjZ-0p-uFN"/>
+                <constraint firstAttribute="trailing" secondItem="cIu-jf-z18" secondAttribute="trailing" id="vgH-BW-AuR"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+            <point key="canvasLocation" x="169" y="314"/>
         </view>
     </objects>
+    <resources>
+        <image name="ic_shangchuan" width="209" height="58"/>
+    </resources>
 </document>

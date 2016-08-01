@@ -7,13 +7,32 @@
 //
 
 import UIKit
-import QuartzCore
+import MBProgressHUD
 
-class CompanyAuthViewController: UIViewController {
+class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     @IBOutlet weak var bgView: UIView!
     
-    @IBOutlet weak var licenseBtn: UIButton!
+    @IBOutlet weak var submitBtn: UIButton!
+    
+    @IBOutlet weak var uploadBtn: UIButton!
+    
+    @IBOutlet weak var nameField: UITextField!
+    
+    @IBOutlet weak var descriptionField: UITextField!
+    
+    @IBOutlet weak var contactField: UITextField!
+    
+    @IBOutlet weak var telField: UITextField!
+    
+    @IBOutlet weak var mailField: UITextField!
+    
+    var imageUrl:String?
+    
+    var selectedImage:UIImage?
+    
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,15 +42,144 @@ class CompanyAuthViewController: UIViewController {
         bgView.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
         bgView.layer.borderWidth = 1
         
-        licenseBtn.layer.borderColor = UIColor.grayColor().CGColor
-        licenseBtn.layer.borderWidth = 1
-        
-//        let dashPattern[] = {3.0, 2}
-        
-//        var content = UIGraphicsGetCurrentContext()
-//        CGContext.
+        submitBtn.layer.borderColor = COLOR.CGColor
+        submitBtn.layer.borderWidth = 1
+        submitBtn.layer.cornerRadius = submitBtn.frame.size.height/2.0
+        submitBtn.setTitleColor(COLOR, forState: .Normal)
+
+        self.uploadBtn.imageView?.contentMode = .ScaleAspectFit
     }
 
+    @IBAction func uploadBtnClick(sender: AnyObject) {
+        
+        let picker = UIImagePickerController()
+        picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        picker.delegate = self
+        picker.allowsEditing = true
+        presentViewController(picker, animated: true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        let type = info[UIImagePickerControllerMediaType] as! String
+        if type != "public.image" {
+            return
+        }
+        
+        //裁剪后图片
+        selectedImage = (info[UIImagePickerControllerEditedImage] as! UIImage)
+        
+        self.uploadBtn.setImage(selectedImage, forState: .Normal)
+        
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func delBtnClick(delBtn:UIButton) {
+//        self.uploadBtn.imageView?.contentMode = .ScaleAspectFit
+        self.uploadBtn.setImage(UIImage.init(named: "ic_shangchuan"), forState: .Normal)
+        delBtn.removeFromSuperview()
+    }
+    
+    //MARK:点击提交按钮
+    @IBAction func submitBtnClick(sender: AnyObject) {
+        
+        if self.nameField.text == "" {
+            
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请输入企业名称！", comment: "empty message"), preferredStyle: .Alert)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            alertController.addAction(doneAction)
+        }else if self.descriptionField.text == "" {
+            
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请输入企业简介！", comment: "empty message"), preferredStyle: .Alert)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            alertController.addAction(doneAction)
+        }else if self.contactField.text == "" {
+            
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请输入联系人姓名！", comment: "empty message"), preferredStyle: .Alert)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            alertController.addAction(doneAction)
+        }else if self.telField.text == "" {
+            
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请输入联系电话！", comment: "empty message"), preferredStyle: .Alert)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            alertController.addAction(doneAction)
+        }else if self.mailField.text == "" {
+            
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请输入邮箱地址！", comment: "empty message"), preferredStyle: .Alert)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            alertController.addAction(doneAction)
+        }else if selectedImage == nil {
+            
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请上传营业执照！", comment: "empty message"), preferredStyle: .Alert)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            alertController.addAction(doneAction)
+        }else {
+            
+            // 正在上传提示
+            let tipHud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            tipHud.labelText = "正在上传营业执照"
+            tipHud.margin = 10.0
+            tipHud.removeFromSuperViewOnHide = true
+            
+            let data = UIImageJPEGRepresentation(selectedImage!, 0.1)!
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyyMMddHHmmss"
+            let dateStr = dateFormatter.stringFromDate(NSDate())
+            let imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
+            
+            ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") {  (data) in
+                dispatch_async(dispatch_get_main_queue(), { [unowned self] in
+                    let result = Http(JSONDecoder(data))
+                    if result.status != nil {
+                        if result.status! == "success"{
+                            //                        self.selectImages.append(image)
+                            //                        self.imageNames.append(imageName+".png")
+                            //                        self.collectImageView?.reloadData()
+                            
+                            self.imageUrl = imageName+".png"
+                            
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "营业执照上传成功"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                            
+                            let alertController = UIAlertController(title: "执照上传成功，等待接口！", message: "企业名称：\(self.nameField!.text)\n企业简介：\(self.descriptionField!.text)\n联系人：\(self.contactField!.text)\n企业电话\(self.telField!.text)\n企业邮箱：\(self.mailField!.text)\n营业执照URL：\(self.imageUrl!)", preferredStyle: .Alert)
+                            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                            alertController.addAction(doneAction)
+                            self.presentViewController(alertController, animated: true, completion: nil)
+                        }else{
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "营业执照上传失败"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                        }
+                        
+                        tipHud.hide(true)
+                    }
+                    })
+            }
+            
+            
+        }
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
