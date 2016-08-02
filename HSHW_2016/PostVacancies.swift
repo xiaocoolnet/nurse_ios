@@ -47,6 +47,8 @@ class PostVacancies: UIView,UITextViewDelegate,UITableViewDelegate, UITableViewD
     @IBOutlet weak var placeLab_3: UILabel!
     @IBOutlet weak var placeImg_3: UIImageView!
     
+    @IBOutlet weak var detailPlaceTF: UITextField!
+    
     @IBOutlet weak var positionLab: UILabel!
     @IBOutlet weak var positionImg: UIImageView!
     
@@ -77,32 +79,32 @@ class PostVacancies: UIView,UITextViewDelegate,UITableViewDelegate, UITableViewD
                     postNameField.layer.borderColor = UIColor.redColor().CGColor
                     postNameField.layer.masksToBounds = true
                     postNameField.layer.borderWidth = 1.0
-                    postNameField.layer.cornerRadius = 8.0
+                    postNameField.layer.cornerRadius = 2
                 }
                 if firmNameField.text == "" {
                     firmNameField.layer.borderColor = UIColor.redColor().CGColor
                     firmNameField.layer.masksToBounds = true
                     firmNameField.layer.borderWidth = 1.0
-                    firmNameField.layer.cornerRadius = 8.0
+                    firmNameField.layer.cornerRadius = 2
                     
                 }
                 if resumeFeild.text == "" {
                     resumeFeild.layer.borderColor = UIColor.redColor().CGColor
                     resumeFeild.layer.masksToBounds = true
                     resumeFeild.layer.borderWidth = 1.0
-                    resumeFeild.layer.cornerRadius = 8.0
+                    resumeFeild.layer.cornerRadius = 2
                 }
                 if phoneField.text == "" {
                     phoneField.layer.borderColor = UIColor.redColor().CGColor
                     phoneField.layer.masksToBounds = true
                     phoneField.layer.borderWidth = 1.0
-                    phoneField.layer.cornerRadius = 8.0
+                    phoneField.layer.cornerRadius = 2
                 }
                 if mailboxField.text == "" {
                     mailboxField.layer.borderColor = UIColor.redColor().CGColor
                     mailboxField.layer.masksToBounds = true
                     mailboxField.layer.borderWidth = 1.0
-                    mailboxField.layer.cornerRadius = 8.0
+                    mailboxField.layer.cornerRadius = 2
                 }
                 
                 let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善招聘信息", comment: "empty message"), preferredStyle: .Alert)
@@ -129,6 +131,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITableViewDelegate, UITableViewD
         phoneField.text = nil
         mailboxField.text = nil
         postNameField.text = nil
+
 //        positionBtn.setTitle("请选择工作地点", forState: .Normal)
 //        conditionBtn.setTitle("请选择招聘职位", forState: .Normal)
 //        treatmentBtn.setTitle("请选择招聘条件", forState: .Normal)
@@ -163,7 +166,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITableViewDelegate, UITableViewD
         sendBtn.layer.borderWidth = 1
         sendBtn.layer.cornerRadius = sendBtn.frame.height/2
         
-        bordView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        bordView.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
         bordView.layer.borderWidth = 1
         
         let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
@@ -178,6 +181,15 @@ class PostVacancies: UIView,UITextViewDelegate,UITableViewDelegate, UITableViewD
         phoneField.delegate = self
         mailboxField.delegate = self
         postNameField.delegate = self
+        
+        
+        firmNameField.borderStyle = .None
+        resumeFeild.borderStyle = .None
+        phoneField.borderStyle = .None
+        mailboxField.borderStyle = .None
+        postNameField.borderStyle = .None
+        
+        detailPlaceTF.borderStyle = .None
         
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)

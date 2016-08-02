@@ -17,6 +17,7 @@ class HSWebViewDetailController: UIViewController {
         navigationController?.navigationBar.hidden = false
         if url != nil {
             netView.loadRequest(NSURLRequest(URL: url!))
+            netView.scalesPageToFit = true
         }
     }
 

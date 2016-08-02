@@ -96,7 +96,8 @@ class MagicboxViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let vc = HSWebViewDetailController(nibName: "HSWebViewDetailController", bundle: nil)
         vc.navigationController?.navigationBar.hidden = false
         if btn.tag == 0 {
-            vc.url = NSURL(string: "http://fanyi.youdao.com")
+//            vc.url = NSURL(string: "http://fanyi.youdao.com")
+            vc.url = NSURL(string: "http://m.youdao.com/translate?vendor=fanyi.web")
             vc.title = "翻译"
         }else if btn.tag == 1{
             vc.url = NSURL(string: "http://www.boc.cn/sourcedb/whpj")

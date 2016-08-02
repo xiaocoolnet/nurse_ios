@@ -48,7 +48,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         //  添加定时器
         timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(AbroadViewController.scroll), userInfo: nil, repeats: true)
         
-        channelid = 4
+        channelid = 8
 //        self.GetDate()        
         // Do any additional setup after loading the view.
     }

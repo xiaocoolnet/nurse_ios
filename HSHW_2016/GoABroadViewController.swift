@@ -26,7 +26,7 @@ class GoABroadViewController: UIViewController {
         
         oneView.title = "出国动态"
         twoView.title = "成功案例"
-        twoView.articleID = "4"
+        twoView.articleID = "9"
         threeView.title = "出国百宝箱"
         let viewControllers = [oneView,twoView,threeView]
         let options = PagingMenuOptions()

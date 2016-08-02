@@ -11,6 +11,8 @@ import MBProgressHUD
 
 class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    @IBOutlet weak var bigScrollview: UIScrollView!
+    
     @IBOutlet weak var bgView: UIView!
     
     @IBOutlet weak var submitBtn: UIButton!
@@ -27,30 +29,125 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBOutlet weak var mailField: UITextField!
     
+    
     var imageUrl:String?
     
     var selectedImage:UIImage?
+    
+    var type = 0 {
+        didSet {
+            print("-=-=-=-==-  \(type)")
+            
+            if type == 1 {
+                
+                authView.frame.size = CGSizeMake(WIDTH, HEIGHT)
+                self.view.addSubview(authView)
+            }else if type == 2 {
+                
+                waitView.frame.size = CGSizeMake(WIDTH, HEIGHT)
+                self.view.addSubview(waitView)
+            }else if type == 3 {
+                
+                successView.frame.size = CGSizeMake(WIDTH, HEIGHT)
+                self.view.addSubview(successView)
+            }
+        }
+    }
+    
+    @IBOutlet weak var waitImg: UIImageView!
+    
+    @IBOutlet weak var successBgView: UIView!
+    
+    @IBOutlet weak var successNameLab: UILabel!
+    
+    @IBOutlet weak var successDescriptionLab: UILabel!
+    
+    @IBOutlet weak var successContactLab: UILabel!
+    
+    @IBOutlet weak var successTelLab: UILabel!
+    
+    @IBOutlet weak var successMailLab: UILabel!
+    
+    @IBOutlet weak var successLicenseImg: UIImageView!
+    
+    @IBOutlet weak var successChangeBtn: UIButton!
+    
+    var authView = UIView()
+    var waitView = UIView()
+    var successView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        
+        
+        let viewArr = NSBundle.mainBundle().loadNibNamed("CompanyAuthViewController", owner: self, options: nil) as! Array<UIView>
+        
+        for myView in viewArr {
+            
+            if myView.restorationIdentifier == "auth" {
+                
+                bgView.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
+                bgView.layer.borderWidth = 1
+                
+                submitBtn.layer.borderColor = COLOR.CGColor
+                submitBtn.layer.borderWidth = 1
+                submitBtn.layer.cornerRadius = submitBtn.frame.size.height/2.0
+                submitBtn.setTitleColor(COLOR, forState: .Normal)
+                
+                self.uploadBtn.imageView?.contentMode = .ScaleAspectFit
+                
+                nameField.borderStyle = .None
+                descriptionField.borderStyle = .None
+                contactField.borderStyle = .None
+                telField.borderStyle = .None
+                mailField.borderStyle = .None
+                
+                authView = myView
+            }else if myView.restorationIdentifier == "wait" {
+                
+//                [UIView beginAnimations:nil context:nil];
+//                [UIView setAnimationDuration:0.01];
+//                [UIView setAnimationDelegate:self];
+//                [UIView setAnimationDidStopSelector:@selector(endAnimation)];
+//                imageView.transform = CGAffineTransformMakeRotation(angle * (M_PI / 180.0f));
+//                [UIView commitAnimations];
+                
+               self.startAnimation()
+                
+                waitView = myView
+            }else if myView.restorationIdentifier == "success" {
+                
+                successBgView?.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
+                successBgView?.layer.borderWidth = 1
+                
+                successChangeBtn?.layer.borderColor = COLOR.CGColor
+                successChangeBtn?.layer.borderWidth = 1
+                successChangeBtn?.layer.cornerRadius = (successChangeBtn?.frame.size.height)!/2.0
+                successChangeBtn?.setTitleColor(COLOR, forState: .Normal)
+                
+                successLicenseImg?.contentMode = .ScaleAspectFit
+                
+                successView = myView
+            }
+        }
+        
+     
+        
+    }
     
-        bgView.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
-        bgView.layer.borderWidth = 1
-        
-        submitBtn.layer.borderColor = COLOR.CGColor
-        submitBtn.layer.borderWidth = 1
-        submitBtn.layer.cornerRadius = submitBtn.frame.size.height/2.0
-        submitBtn.setTitleColor(COLOR, forState: .Normal)
-
-        self.uploadBtn.imageView?.contentMode = .ScaleAspectFit
-        
-        nameField.borderStyle = .None
-        descriptionField.borderStyle = .None
-        contactField.borderStyle = .None
-        telField.borderStyle = .None
-        mailField.borderStyle = .None
+    func startAnimation() {
+        let endAngle = CGAffineTransformMakeRotation(360*(CGFloat(M_PI)/180.0))
+                                                     
+         UIView.animateWithDuration(1, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: {
+            
+            self.waitImg.transform = endAngle
+            
+            }, completion: { (finished) in
+                self.startAnimation()
+                
+         })
     }
 
     @IBAction func uploadBtnClick(sender: AnyObject) {
@@ -181,6 +278,13 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
             
         }
         
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        for view in self.view.subviews {
+            view.removeFromSuperview()
+        }
     }
     
     override func didReceiveMemoryWarning() {

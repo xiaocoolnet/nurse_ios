@@ -11,7 +11,7 @@ import MBProgressHUD
 protocol ViewControllerDelegate:NSObjectProtocol {
     func viewcontrollerDesmiss()
 }
-class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegate {
+class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegate, UIAlertViewDelegate {
     
     var hasBackBarButtonItem = true
     
@@ -490,8 +490,10 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
                         hud.hide(true)
                         let string = response as! String
 //                        if string == "密码错误！" || string == "用户不存在"{
-                            let alert = UIAlertView(title:"提示信息",message: string,delegate: self,cancelButtonTitle: "确定")
-                            alert.show()
+//                        let alert = UIAlertView(title:"提示信息",message: string,delegate: self,cancelButtonTitle: "确定")
+                        let alert = UIAlertView(title: "提示信息", message: string, delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "重试")
+                        alert.tag = 100
+                        alert.show()
 //                        }
                         print(response as! String)
                     }else{
@@ -516,6 +518,14 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
             })
         })
     }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if alertView.tag == 100 && buttonIndex == 1 {
+            self.goToMain()
+        }
+    }
+    
+    
     //  登录成功
     func loginSuccess(){
         self.navigationController?.popViewControllerAnimated(true)

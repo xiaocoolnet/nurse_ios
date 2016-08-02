@@ -46,7 +46,7 @@ class GToutiaoTableViewCell: UITableViewCell {
         self.addSubview(comBtn)
         self.addSubview(timeBtn)
         self.addSubview(titLab)
-        self.addSubview(titImage)
+//        self.addSubview(titImage)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -92,6 +92,7 @@ class GToutiaoTableViewCell: UITableViewCell {
         contant.numberOfLines = 0
         contant.font = UIFont.systemFontOfSize(14)
         contant.textColor = UIColor.grayColor()
+        
         titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
         titImage.contentMode = .ScaleAspectFill
         titImage.clipsToBounds = true
@@ -130,16 +131,27 @@ class GToutiaoTableViewCell: UITableViewCell {
         self.timeLab.text = "\(date[1])/\(date[2])"
         self.contant.text = newsInfo.post_excerpt
         
-        let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
-        print("=-=-=-=-=-=-=   ",photoUrl)
-        self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
-//        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
-//        titLab.frame.size.height = titleHeight+100
+        if newsInfo.thumb == "/data/upload/" {
+            
+            self.titImage.removeFromSuperview()
+            
+            self.titLab.frame.size.width = WIDTH-20
+            
+        }else{
+            
+            let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
+            print("=-=-=-=-=-=-=   ",photoUrl)
+            self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
+            self.addSubview(self.titImage)
+            //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
+            //        titLab.frame.size.height = titleHeight+100
+        }
         heal.frame.origin.y = self.frame.size.height-heal.frame.size.height-1-8
         comBtn.frame.origin.y = self.frame.size.height-comBtn.frame.size.height-4-8
         conNum.frame.origin.y = self.frame.size.height-conNum.frame.size.height-1-8
         timeBtn.frame.origin.y = self.frame.size.height-timeBtn.frame.size.height-3-8
         timeLab.frame.origin.y = self.frame.size.height-timeLab.frame.size.height-1-8
+        
     }
     
     func categoryBtnClick(categoryBtn:UIButton) {
