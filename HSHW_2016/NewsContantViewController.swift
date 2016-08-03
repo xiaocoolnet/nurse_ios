@@ -232,7 +232,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func collectionNews(){
-        let height = calculateHeight((newsInfo?.post_title)!, size: 21, width: WIDTH-20)
+        let height = calculateHeight((newsInfo?.post_title)!, size: 17, width: WIDTH-20)
         self.myTableView.contentOffset = CGPointMake(0, height + webHeight - 120)
     }
     
@@ -309,7 +309,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if indexPath.section == 0 {
             if indexPath.row==0 {
                 
-                let height = calculateHeight(newsInfo?.post_title ?? "", size: 21, width: WIDTH-30)
+                let height = calculateHeight(newsInfo?.post_title ?? "", size: 17, width: WIDTH-30)
                 print(newsInfo?.post_title)
                 print(height)
                 return height+30
@@ -351,7 +351,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell1 = UITableViewCell.init(style: .Default, reuseIdentifier: "cellIntenfer")
 
                 let title = UILabel()
-                let height = calculateHeight((newsInfo?.post_title)!, size: 21, width: WIDTH-20)
+                let height = calculateHeight((newsInfo?.post_title)!, size: 17, width: WIDTH-20)
                 title.frame = CGRectMake(15, 0, WIDTH-30, height+30)
                 title.text = newsInfo?.post_title
                 title.numberOfLines = 0

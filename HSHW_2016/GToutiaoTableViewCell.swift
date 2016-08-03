@@ -101,7 +101,7 @@ class GToutiaoTableViewCell: UITableViewCell {
     func setCellWithNewsInfo(newsInfo:NewsInfo) {
         
         let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
-        self.titLab.frame = CGRectMake(10, 12, WIDTH-140, height+10)
+        self.titLab.frame = CGRectMake(10, 9, WIDTH-140, height)
         
         self.titLab.text = newsInfo.post_title
 //        if type == 1 {
@@ -119,7 +119,32 @@ class GToutiaoTableViewCell: UITableViewCell {
         
         comBtn.frame = CGRectMake(type == 1 ? CGRectGetMaxX(heal.frame)+10:5, titLab.frame.size.height+titLab.frame.origin.y+25, 13, 9)
         
-        self.conNum.text = newsInfo.post_hits
+        var conNumStr = "0"
+        if Int(newsInfo.post_hits!) > 99999 {
+            conNumStr = "10W+"
+        }else if Int(newsInfo.post_hits!) > 199999 {
+            conNumStr = "20W+"
+        }else if Int(newsInfo.post_hits!) > 299999 {
+            conNumStr = "30W+"
+        }else if Int(newsInfo.post_hits!) > 399999 {
+            conNumStr = "40W+"
+        }else if Int(newsInfo.post_hits!) > 499999 {
+            conNumStr = "50W+"
+        }else if Int(newsInfo.post_hits!) > 599999 {
+            conNumStr = "60W+"
+        }else if Int(newsInfo.post_hits!) > 799999 {
+            conNumStr = "80W+"
+        }else if Int(newsInfo.post_hits!) > 899999 {
+            conNumStr = "90W+"
+        }else if Int(newsInfo.post_hits!) > 999999 {
+            conNumStr = "100W+"
+        }else if Int(newsInfo.post_hits!) > 9999999 {
+            conNumStr = "1000W+"
+        }else{
+            conNumStr = newsInfo.post_hits!
+        }
+        
+        self.conNum.text = conNumStr
         conNum.sizeToFit()
         conNum.frame = CGRectMake(CGRectGetMaxX(comBtn.frame)+5, titLab.frame.size.height+titLab.frame.origin.y+22, CGRectGetWidth(conNum.frame), 15)
         
@@ -128,7 +153,7 @@ class GToutiaoTableViewCell: UITableViewCell {
         
         let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
         let date:Array = time[0].componentsSeparatedByString("-")
-        self.timeLab.text = "\(date[1])/\(date[2])"
+        self.timeLab.text = "\(date[0])/\(date[1])/\(date[2])"
         self.contant.text = newsInfo.post_excerpt
         
         if newsInfo.thumb == "/data/upload/" {
