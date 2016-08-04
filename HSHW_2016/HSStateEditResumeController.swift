@@ -38,7 +38,7 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
             dataGet(portType)
         }
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = COLOR

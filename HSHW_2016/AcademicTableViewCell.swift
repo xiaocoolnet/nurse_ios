@@ -60,7 +60,7 @@ class AcademicTableViewCell: UITableViewCell {
         aca_zan.frame = CGRectMake(WIDTH-60, (WIDTH-20)*0.5+42, 14, 14)
         aca_zan.setImage(UIImage(named:"ic_like_gray"), forState: UIControlState.Normal)
         aca_zan.setImage(UIImage(named:"ic_like_sel"), forState: UIControlState.Selected)
-        aca_zan.addTarget(self, action: #selector(AcademicViewController.click1(_:)), forControlEvents: .TouchUpInside)
+//        aca_zan.addTarget(self, action: #selector(AcademicViewController.click1(_:)), forControlEvents: .TouchUpInside)
 //      zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
 //      zan.setBackgroundImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
         

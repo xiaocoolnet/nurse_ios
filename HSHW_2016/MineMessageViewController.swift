@@ -57,7 +57,20 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         cell.nameLable.text = model.content
 //        cell.imgBtn.setBackgroundImage(UIImage(named: model.photo), forState: .Normal)
         cell.imgBtn.sd_setImageWithURL(NSURL(string:"http://nurse.xiaocool.net"+model.photo), placeholderImage: UIImage(named: "ic_lan.png"))
-        cell.small.setBackgroundImage(UIImage(named: "ic_xin.png"), forState: .Normal)
+        
+        var flag = true
+        if (NSUserDefaults.standardUserDefaults().valueForKey("markReadMessageID") != nil) {
+
+            let markReadMessageIDArray = NSUserDefaults.standardUserDefaults().valueForKey("markReadMessageID") as? Array<String>
+            for markReadMessageID in markReadMessageIDArray! {
+                if markReadMessageID == model.id {
+                    flag = false
+                }
+            }
+        }
+        if flag {
+            cell.small.setBackgroundImage(UIImage(named: "ic_xin.png"), forState: .Normal)
+        }
 //        cell.timeLable.text = "2016-07-04"
         cell.timeLable.text = timeStampToString(model.create_time)
         
@@ -66,6 +79,18 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let model = self.dataSource.objectlist[indexPath.row]
+        
+        var markReadMessageIDArray = Array<String>()
+        if (NSUserDefaults.standardUserDefaults().valueForKey("markReadMessageID") != nil) {
+            
+            markReadMessageIDArray = NSUserDefaults.standardUserDefaults().valueForKey("markReadMessageID") as! Array<String>
+        }
+        markReadMessageIDArray.append(model.id)
+        
+        NSUserDefaults.standardUserDefaults().setValue(markReadMessageIDArray, forKey: "markReadMessageID")
+        
         let vc = MineMessDetailViewController()
         vc.info = self.dataSource.objectlist[indexPath.row]
         vc.indexPath = indexPath

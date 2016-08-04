@@ -17,7 +17,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     let numNameArr:[String] = ["粉丝","关注","护士币"]
     let userNameLabel = UILabel()
     let levelBtn = UIButton()
-    let titLabArr:[String] = ["我的帖子","我的消息","我的收藏"]
+//    let titLabArr:[String] = ["我的帖子","我的消息","我的收藏"]
+    let titLabArr:[String] = ["我的消息","我的收藏"]
     let titImgArr:[String] = ["ic_liuyan.png","ic_message.png","ic_fangkuai.png"]
     let titImage = UIButton(type:.Custom)
     
@@ -120,7 +121,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }else if section == 1 {
             return 1
         }else if section == 2 {
-            return 3
+            return 2
         }else if section == 3 {
             return 1
         }else if section == 4{
@@ -256,7 +257,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 line.backgroundColor = UIColor.grayColor()
                 
                 cell.addSubview(line)
-                if indexPath.row == 2 {
+                if indexPath.row == 1 {
                     line.removeFromSuperview()
                 }
             }else if indexPath.section == 3 {
@@ -302,17 +303,17 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         
         if indexPath.section == 2 {
+//            if indexPath.row == 0 {
+//                let next = MinePostViewController()
+//                self.navigationController?.pushViewController(next, animated: true)
+//                next.title = "我的帖子"
+//            }
             if indexPath.row == 0 {
-                let next = MinePostViewController()
-                self.navigationController?.pushViewController(next, animated: true)
-                next.title = "我的帖子"
-            }
-            if indexPath.row == 1 {
                 let next = MineMessageViewController()
                 self.navigationController?.pushViewController(next, animated: true)
                 next.title = "我的消息"
             }
-            if indexPath.row == 2 {
+            if indexPath.row == 1 {
                 let next = MineCollectionViewController()
                 self.navigationController?.pushViewController(next, animated: true)
                 next.title = "我的收藏"

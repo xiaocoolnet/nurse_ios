@@ -145,9 +145,9 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!AcademicTableViewCell
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
-       
         cell.newsInfo = newsInfo
         cell.aca_zan.tag = indexPath.row
+        cell.aca_zan.addTarget(self, action: #selector(click1(_:)), forControlEvents: .TouchUpInside)
         
         return cell
         
@@ -171,111 +171,226 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
             return
         }
         
-        print(btn.tag)
-        print("赞")
         let newsInfo = self.dataSource.objectlist[btn.tag]
-        let user = NSUserDefaults.standardUserDefaults()
-        let uid = user.stringForKey("userid")
-        user.setObject("true", forKey: String(btn.tag))
-        print(uid)
-        if uid==nil {
-            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-            let vc  = mainStoryboard.instantiateViewControllerWithIdentifier("Login")
-            self.navigationController?.pushViewController(vc, animated: true)
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//        hud.mode = MBProgressHUDMode.Text;
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        
+        if btn.selected {
             
-        }else{
-            print(newsInfo.object_id)
-            let userID = user.stringForKey((newsInfo.object_id)!)
-            let row = user.stringForKey(String(btn.tag))
-            print(userID)
-            print(row)
-            if (userID == nil || row == nil)||(userID == "false"||row == "false") {
-                let url = PARK_URL_Header+"SetLike"
-                let param = [
+            hud.labelText = "正在取消点赞"
+            
+            let url = PARK_URL_Header+"ResetLike"
+            let param = [
+                "id":newsInfo.object_id,
+                "type":"1",
+                "userid":QCLoginUserInfo.currentInfo.userid,
+                ];
+            Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+                print(request)
+                if(error != nil){
                     
-                    "id":newsInfo.object_id,
-                    "type":"1",
-                    "userid":uid,
-                    ];
-                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
-                    print(request)
-                    if(error != nil){
-                        
-                    }else{
-                        let status = Http(JSONDecoder(json!))
-                        print("状态是")
-                        print(status.status)
-                        if(status.status == "error"){
-                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                            hud.mode = MBProgressHUDMode.Text;
-                            hud.labelText = status.errorData
-                            hud.margin = 10.0
-                            hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 3)
-                        }
-                        if(status.status == "success"){
-                            
-                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                            hud.mode = MBProgressHUDMode.Text;
-                            hud.labelText = "点赞成功"
-                            hud.margin = 10.0
-                            hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 0.5)
-                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"1"], waitUntilDone:true)
-                            
-                            user.setObject("true", forKey: "isLike")
-                            user.setObject("true", forKey: (newsInfo.object_id)!)
-                            user.setObject("true", forKey: String(btn.tag))
-                            print(status.data)
-                            self.isLike=true
-                        }
+                }else{
+                    let status = Http(JSONDecoder(json!))
+                    print("状态是")
+                    print(status.status)
+                    if(status.status == "error"){
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = status.errorData
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
                     }
-                    
-                }
-                
-            }else{
-                
-                let url = PARK_URL_Header+"ResetLike"
-                let param = [
-                    "id":newsInfo.object_id,
-                    "type":"1",
-                    "userid":uid,
-                    ];
-                Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
-                    print(request)
-                    if(error != nil){
+                    if(status.status == "success"){
                         
-                    }else{
-                        let status = Http(JSONDecoder(json!))
-                        print("状态是")
-                        print(status.status)
-                        if(status.status == "error"){
-                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                            hud.mode = MBProgressHUDMode.Text;
-                            hud.labelText = status.errorData
-                            hud.margin = 10.0
-                            hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 1)
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "取消点赞成功"
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 0.5)
+                        print(status.data)
+                        
+                        for (i,obj) in (newsInfo.likes).enumerate() {
+                            if obj.userid == QCLoginUserInfo.currentInfo.userid {
+                                newsInfo.likes.removeAtIndex(i)
+                            }
                         }
-                        if(status.status == "success"){
-                            
-                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                            hud.mode = MBProgressHUDMode.Text;
-                            hud.labelText = "取消点赞成功"
-                            hud.margin = 10.0
-                            hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 0.5)
-                            print(status.data)
-                            self.isLike=false
-                            user.setObject("false", forKey: "isLike")
-                            user.setObject("false", forKey: (newsInfo.object_id)!)
-                            user.setObject("false", forKey: String(btn.tag))
-                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"0"], waitUntilDone:true)
-                            
-                        }
+                        
+                        self.dataSource.objectlist[btn.tag] = newsInfo
+                        
+                        self.myTableView.reloadData()
+                        
+//                        self.isLike=false
+//                        user.setObject("false", forKey: "isLike")
+//                        user.setObject("false", forKey: (newsInfo.object_id)!)
+//                        user.setObject("false", forKey: String(btn.tag))
+//                        self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"0"], waitUntilDone:true)
+                        
                     }
                 }
             }
+        }else {
+            
+            hud.labelText = "正在点赞"
+            
+            let url = PARK_URL_Header+"SetLike"
+            let param = [
+                
+                "id":newsInfo.object_id,
+                "type":"1",
+                "userid":QCLoginUserInfo.currentInfo.userid,
+                ];
+            Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+                print(request)
+                if(error != nil){
+                    
+                }else{
+                    let status = Http(JSONDecoder(json!))
+                    print("状态是")
+                    print(status.status)
+                    if(status.status == "error"){
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = status.errorData
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 3)
+                    }
+                    if(status.status == "success"){
+                        
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "点赞成功"
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 0.5)
+                        
+                        let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
+                        let model:LikeInfo = LikeInfo.init(JSONDecoder(dic))
+                        newsInfo.likes.append(model)
+                        self.dataSource.objectlist[btn.tag] = newsInfo
+                        
+                        self.myTableView.reloadData()
+                        //                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"1"], waitUntilDone:true)
+                        
+                        //                            user.setObject("true", forKey: "isLike")
+                        //                            user.setObject("true", forKey: (newsInfo.object_id)!)
+                        //                            user.setObject("true", forKey: String(btn.tag))
+                        print(status.data)
+                        //                            self.isLike=true
+                    }
+                }
+        }
+        
+//        print(btn.tag)
+//        print("赞")
+//        let newsInfo = self.dataSource.objectlist[btn.tag]
+//        let user = NSUserDefaults.standardUserDefaults()
+//        let uid = user.stringForKey("userid")
+//        user.setObject("true", forKey: String(btn.tag))
+//        print(uid)
+//        if uid==nil {
+//            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+//            let vc  = mainStoryboard.instantiateViewControllerWithIdentifier("Login")
+//            self.navigationController?.pushViewController(vc, animated: true)
+//            
+//        }else{
+//            print(newsInfo.object_id)
+//            let userID = user.stringForKey((newsInfo.object_id)!)
+//            let row = user.stringForKey(String(btn.tag))
+//            print(userID)
+//            print(row)
+//            if (userID == nil || row == nil)||(userID == "false"||row == "false") {
+//                let url = PARK_URL_Header+"SetLike"
+//                let param = [
+//                    
+//                    "id":newsInfo.object_id,
+//                    "type":"1",
+//                    "userid":uid,
+//                    ];
+//                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+//                    print(request)
+//                    if(error != nil){
+//                        
+//                    }else{
+//                        let status = Http(JSONDecoder(json!))
+//                        print("状态是")
+//                        print(status.status)
+//                        if(status.status == "error"){
+//                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                            hud.mode = MBProgressHUDMode.Text;
+//                            hud.labelText = status.errorData
+//                            hud.margin = 10.0
+//                            hud.removeFromSuperViewOnHide = true
+//                            hud.hide(true, afterDelay: 3)
+//                        }
+//                        if(status.status == "success"){
+//                            
+//                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                            hud.mode = MBProgressHUDMode.Text;
+//                            hud.labelText = "点赞成功"
+//                            hud.margin = 10.0
+//                            hud.removeFromSuperViewOnHide = true
+//                            hud.hide(true, afterDelay: 0.5)
+//                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"1"], waitUntilDone:true)
+//                            
+//                            user.setObject("true", forKey: "isLike")
+//                            user.setObject("true", forKey: (newsInfo.object_id)!)
+//                            user.setObject("true", forKey: String(btn.tag))
+//                            print(status.data)
+//                            self.isLike=true
+//                        }
+//                    }
+//                    
+//                }
+//                
+//            }else{
+//                
+//                let url = PARK_URL_Header+"ResetLike"
+//                let param = [
+//                    "id":newsInfo.object_id,
+//                    "type":"1",
+//                    "userid":uid,
+//                    ];
+//                Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+//                    print(request)
+//                    if(error != nil){
+//                        
+//                    }else{
+//                        let status = Http(JSONDecoder(json!))
+//                        print("状态是")
+//                        print(status.status)
+//                        if(status.status == "error"){
+//                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                            hud.mode = MBProgressHUDMode.Text;
+//                            hud.labelText = status.errorData
+//                            hud.margin = 10.0
+//                            hud.removeFromSuperViewOnHide = true
+//                            hud.hide(true, afterDelay: 1)
+//                        }
+//                        if(status.status == "success"){
+//                            
+//                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                            hud.mode = MBProgressHUDMode.Text;
+//                            hud.labelText = "取消点赞成功"
+//                            hud.margin = 10.0
+//                            hud.removeFromSuperViewOnHide = true
+//                            hud.hide(true, afterDelay: 0.5)
+//                            print(status.data)
+//                            self.isLike=false
+//                            user.setObject("false", forKey: "isLike")
+//                            user.setObject("false", forKey: (newsInfo.object_id)!)
+//                            user.setObject("false", forKey: String(btn.tag))
+//                            self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"0"], waitUntilDone:true)
+//                            
+//                        }
+//                    }
+//                }
+//            }
         }
     }
     

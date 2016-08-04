@@ -47,7 +47,7 @@ class TouTiaoTableViewCell: UITableViewCell {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        titLab.frame = CGRectMake(10, 12, WIDTH-140, 40)
+        titLab.frame = CGRectMake(10, 9, WIDTH-140, 40)
         titLab.font = UIFont.systemFontOfSize(16)
         titLab.numberOfLines = 0
         heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+22, 46, 15)

@@ -17,7 +17,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="15Q-cc-QZx">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <rect key="frame" x="0.0" y="1" width="320" height="567"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="nry-tl-hf4"/>
@@ -29,7 +29,7 @@
             <constraints>
                 <constraint firstAttribute="bottom" secondItem="15Q-cc-QZx" secondAttribute="bottom" id="KZ3-1p-Prk"/>
                 <constraint firstAttribute="trailing" secondItem="15Q-cc-QZx" secondAttribute="trailing" id="tC4-aL-LTc"/>
-                <constraint firstItem="15Q-cc-QZx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="tft-U6-uyd"/>
+                <constraint firstItem="15Q-cc-QZx" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="1" id="tft-U6-uyd"/>
                 <constraint firstItem="15Q-cc-QZx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ziN-x3-YUt"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>

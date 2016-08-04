@@ -182,6 +182,15 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     @IBOutlet weak var saveResumeBtn: UIButton!
     
     var dropDownDic = [String:Array<String>]()
+    var dropDownFinishDic = [String:String]()
+    var headerImage = UIImage()
+    var sexFinishStr = String()
+    var birthFinishArr = Array<String>()
+    var homeFinishArr = Array<String>()
+    var jobStatusStr = String()
+    var targetCityFinishArr = Array<String>()
+
+    
     
 //    @IBOutlet weak var myScrollview: UIScrollView!
 //    @IBOutlet weak var avatarBtn: UIButton!
@@ -265,7 +274,6 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         // 设置下拉列表
         setDropDownMenu()
         
-        
 //        let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
 //        selfNav = tabBar.selectedViewController as? UINavigationController
 //        
@@ -299,6 +307,8 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             self.eduLab.text = item
             self.eduLab.sizeToFit()
             self.eduImg.frame.origin.x = CGRectGetMaxX(self.eduLab.frame)+5
+        
+            self.dropDownFinishDic["edu"] = item
         }
         
         // 工作经验
@@ -315,6 +325,8 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             self.expLab.sizeToFit()
             self.expImg.frame.origin.x = CGRectGetMaxX(self.expLab.frame)+5
             self.expLab_year.frame.origin.x = CGRectGetMaxX(self.expImg.frame)+5
+            
+            self.dropDownFinishDic["exp"] = item
         }
         
         // 职称
@@ -330,6 +342,8 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             self.professionalLab.text = item
             self.professionalLab.sizeToFit()
             self.professionalImg.frame.origin.x = CGRectGetMaxX(self.professionalLab.frame)+5
+            
+            self.dropDownFinishDic["professional"] = item
         }
         
         // 目前薪资
@@ -346,6 +360,8 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             self.salaryLab.sizeToFit()
             self.salaryImg.frame.origin.x = CGRectGetMaxX(self.salaryLab.frame)+5
             self.salaryLab_unit.frame.origin.x = CGRectGetMaxX(self.salaryImg.frame)+5
+            
+            self.dropDownFinishDic["salary"] = item
         }
         
         // 到岗时间
@@ -361,6 +377,8 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             self.jobTimeLab.text = item
             self.jobTimeLab.sizeToFit()
             self.jobTimeImg.frame.origin.x = CGRectGetMaxX(self.jobTimeLab.frame)+5
+            
+            self.dropDownFinishDic["jobTime"] = item
         }
         
         // 期望薪资
@@ -377,6 +395,8 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             self.expectedSalaryLab.sizeToFit()
             self.expectedSalaryImg.frame.origin.x = CGRectGetMaxX(self.expectedSalaryLab.frame)+5
             self.expectedSalaryLab_unit.frame.origin.x = CGRectGetMaxX(self.expectedSalaryImg.frame)+5
+            
+            self.dropDownFinishDic["expectedSalary"] = item
         }
         
         // 期望职位
@@ -392,6 +412,8 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             self.expectedPositionLab.text = item
             self.expectedPositionLab.sizeToFit()
             self.expectedPositionImg.frame.origin.x = CGRectGetMaxX(self.expectedPositionLab.frame)+5
+            
+            self.dropDownFinishDic["expectedPosition"] = item
         }
     }
     
@@ -399,36 +421,50 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     @IBAction func eduBtnClick(sender: AnyObject) {
         resignTextFieldFirstResponder()
         eduDropDown.show()
+        eduBtn.selected = true
+        eduBtn.tintColor = UIColor.clearColor()
     }
     
     @IBAction func expBtnClick(sender: AnyObject) {
         resignTextFieldFirstResponder()
         expDropDown.show()
+        expBtn.selected = true
+        expBtn.tintColor = UIColor.clearColor()
     }
     
     @IBAction func professionalBtnClick(sender: AnyObject) {
         resignTextFieldFirstResponder()
         professionalDropDown.show()
+        professionalBtn.selected = true
+        professionalBtn.tintColor = UIColor.clearColor()
     }
     
     @IBAction func salaryBtnClick(sender: AnyObject) {
         resignTextFieldFirstResponder()
         salaryDropDown.show()
+        salaryBtn.selected = true
+        salaryBtn.tintColor = UIColor.clearColor()
     }
     
     @IBAction func jobTimeBtnClick(sender: AnyObject) {
         resignTextFieldFirstResponder()
         jobTimeDropDown.show()
+        jobTimeBtn.selected = true
+        jobTimeBtn.tintColor = UIColor.clearColor()
     }
     
     @IBAction func expectedSalaryBtnClick(sender: AnyObject) {
         resignTextFieldFirstResponder()
         expectedSalaryDropDown.show()
+        expectedSalaryBtn.selected = true
+        expectedSalaryBtn.tintColor = UIColor.clearColor()
     }
     
     @IBAction func expectedPositionBtnClick(sender: AnyObject) {
         resignTextFieldFirstResponder()
         expectedPositionDropDown.show()
+        expectedPositionBtn.selected = true
+        expectedPositionBtn.tintColor = UIColor.clearColor()
     }
     // MARK:下拉列表 点击事件   结束
     // MARK:-
@@ -469,9 +505,17 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         case 11:
             manImg.image = UIImage.init(named: "ic_yuan_purple")
             womanImg.image = UIImage.init(named: "ic_yuan")
+            manBtn.selected = true
+            manBtn.tintColor = UIColor.clearColor()
+            womanBtn.selected = false
+            sexFinishStr = "男"
         case 12:
             manImg.image = UIImage.init(named: "ic_yuan")
             womanImg.image = UIImage.init(named: "ic_yuan_purple")
+            manBtn.selected = false
+            womanBtn.selected = true
+            womanBtn.tintColor = UIColor.clearColor()
+            sexFinishStr = "女"
             
         default:
             break
@@ -488,14 +532,37 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             onJobImg.image = UIImage.init(named: "ic_yuan_purple")
             leaveJobImg.image = UIImage.init(named: "ic_yuan")
             undergraduateImg.image = UIImage.init(named: "ic_yuan")
+            
+            onJobBtn.selected = true
+            onJobBtn.tintColor = UIColor.clearColor()
+            leaveJobBtn.selected = false
+            undergraduateBtn.selected = false
+            
+            jobStatusStr = "在职"
+            
         case 102:
             onJobImg.image = UIImage.init(named: "ic_yuan")
             leaveJobImg.image = UIImage.init(named: "ic_yuan_purple")
             undergraduateImg.image = UIImage.init(named: "ic_yuan")
+            
+            onJobBtn.selected = false
+            leaveJobBtn.selected = true
+            leaveJobBtn.tintColor = UIColor.clearColor()
+            undergraduateBtn.selected = false
+            
+            jobStatusStr = "离职"
+            
         case 103:
             onJobImg.image = UIImage.init(named: "ic_yuan")
             leaveJobImg.image = UIImage.init(named: "ic_yuan")
             undergraduateImg.image = UIImage.init(named: "ic_yuan_purple")
+            
+            onJobBtn.selected = false
+            leaveJobBtn.selected = false
+            undergraduateBtn.selected = true
+            undergraduateBtn.tintColor = UIColor.clearColor()
+            
+            jobStatusStr = "在校生"
             
         default:
             break
@@ -524,12 +591,109 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         resignTextFieldFirstResponder()
 //        delegate?.saveResumeBtnClicked()
         
-        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("熬不住了，明天做吧。。。", comment: "empty message"), preferredStyle: .Alert)
-            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
-            alertController.addAction(doneAction)
+        if delegate != nil {
+            if headerBtn.selected && nameTF.text != "" && (manBtn.selected || womanBtn.selected) && birthBtn.selected && eduBtn.selected && homeBtn.selected && expBtn.selected && professionalBtn.selected && salaryBtn.selected && (onJobBtn.selected || leaveJobBtn.selected || undergraduateBtn.selected) && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected && targetCityBtn.selected && expectedSalaryBtn.selected && expectedPositionBtn.selected {
+                
+                let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+//                hud.mode = MBProgressHUDMode.Text;
+                hud.labelText = "正在发布"
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                
+                uploadHeader(hud)
 
-            let vc = responderVC()
-            vc!.presentViewController(alertController, animated: true, completion: nil)
+            }else{
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善简历信息", comment: "empty message"), preferredStyle: .Alert)
+                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                alertController.addAction(doneAction)
+
+                let vc = responderVC()
+                vc!.presentViewController(alertController, animated: true, completion: nil)
+
+            }
+        }
+
+//        if sexLable.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != ""{
+//
+//            HSNurseStationHelper().postForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName, name: nameTextFeild.text!, experience: workLab.text!, sex: sexLable.text!, birthday:(brith_year.text!+brith_month.text!+brith_day.text!), marital:eduLable.text! , address:placeLab_1.text!+placeLab_2.text!+placeLab_3.text!, jobstate:jobStatusLab.text!, currentsalary:salaryLab.text!, phone:phoneField.text!, email:mailboxField.text!, hiredate:timeLab.text!, wantcity:targetCity_1_Lab.text!+targetCity_2_Lab.text!+targetCity_3_Lab.text!, wantsalary:expectSalaryLab.text!, wantposition:expectPostionLab.text!, description:selfEvaluate.text, handle: { (success, response) in
+//                if success {
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                        hud.mode = MBProgressHUDMode.Text;
+//                        hud.labelText = "发布成功"
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
+//                        hud.hide(true, afterDelay: 1)
+//                        print(success)
+//                    })
+//                }
+//            })
+//        }
+    }
+    
+    func uploadHeader(hud:MBProgressHUD) {
+        let data = UIImageJPEGRepresentation(headerImage, 0.1)!
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyyMMddHHmmss"
+        let dateStr = dateFormatter.stringFromDate(NSDate())
+        imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
+        
+        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") { [unowned self] (data) in
+            dispatch_async(dispatch_get_main_queue(), {
+                let result = Http(JSONDecoder(data))
+                if result.status != nil {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if result.status! == "success"{
+//                            self.mainHelper.changeUserAvatar(result.data!, handle: { (success, response) in
+//                                if success {
+//                                    QCLoginUserInfo.currentInfo.avatar = result.data!
+//                                }
+//                            })
+                            self.uploadResume(hud)
+                        }else{
+//                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "图片上传失败"
+//                            hud.margin = 10.0
+//                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                        }
+                    })
+                }
+            })
+        }
+
+    }
+    
+    func uploadResume(hud:MBProgressHUD) {
+        HSNurseStationHelper().postForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName+".png", name: nameTF.text!, experience: dropDownFinishDic["exp"]!, sex: sexFinishStr, birthday:(birthFinishArr[0]+birthFinishArr[1]+birthFinishArr[2]), marital:dropDownFinishDic["edu"]! , address:(homeFinishArr[0]+homeFinishArr[1]+homeFinishArr[2]), jobstate:jobStatusStr, currentsalary:dropDownFinishDic["salary"]!, phone:telTF.text!, email:mailTF.text!, hiredate:dropDownFinishDic["jobTime"]!, wantcity:(targetCityFinishArr[0]+targetCityFinishArr[1]), wantsalary:dropDownFinishDic["expectedSalary"]!, wantposition:dropDownFinishDic["expectedPosition"]!, description:selfEvaluate.text!, handle: { (success, response) in
+            if success {
+                dispatch_async(dispatch_get_main_queue(), {
+                    //                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "发布成功"
+                    //                            hud.margin = 10.0
+                    //                            hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                    print(success)
+                    
+                    self.delegate?.saveResumeBtnClicked()
+                })
+            }else {
+                hud.hide(true)
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .Alert)
+                let doneAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
+                    self.uploadHeader(hud)
+                })
+                alertController.addAction(doneAction)
+                
+                let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                
+                let vc = self.responderVC()
+                vc!.presentViewController(alertController, animated: true, completion: nil)
+            }
+        })
     }
     
     // TODO:
@@ -572,6 +736,11 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             self.birth_year_Lab.text = timeArr.first
             self.birth_month_Lab.text = timeArr[1]
             self.birth_day_Lab.text = timeArr.last
+            
+            self.birthBtn.selected = true
+            self.birthBtn.tintColor = UIColor.clearColor()
+            
+            self.birthFinishArr = [timeArr[0],timeArr[1],timeArr[2]]
         }
     }
     
@@ -609,7 +778,12 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             self.homeLab_3.frame.origin.x = CGRectGetMaxX(self.homeImg_2.frame)+5
             self.homeLab_3.adjustsFontSizeToFitWidth = true
             self.homeLab_3.sizeToFit()
-            self.homeImg_3.frame.origin.x = CGRectGetMaxX(self.homeLab_3.frame)+5            
+            self.homeImg_3.frame.origin.x = CGRectGetMaxX(self.homeLab_3.frame)+5
+            
+            self.homeBtn.selected = true
+            self.homeBtn.tintColor = UIColor.clearColor()
+            
+            self.homeFinishArr = [self.homeLab_1.text!,self.homeLab_2.text!,self.homeLab_3.text!]
         }
     }
 
@@ -618,7 +792,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     
         print("点击目标城市")
         // 初始化
-        let pick = AdressPickerView.shareInstance
+        let pick = AdressPickerView_2.shareInstance
         
         // 设置是否显示区县等，默认为false不显示
         pick.showTown = false
@@ -642,6 +816,13 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             self.targetCityLab_2.adjustsFontSizeToFitWidth = true
             self.targetCityLab_2.sizeToFit()
             self.targetCityImg_2.frame.origin.x = CGRectGetMaxX(self.targetCityLab_2.frame)+5
+        
+            self.targetCityBtn.selected = true
+            self.targetCityBtn.tintColor = UIColor.clearColor()
+            
+            self.targetCityFinishArr = [self.targetCityLab_1.text!,self.targetCityLab_2.text!]
+
+            
         }
     }
 
@@ -733,48 +914,24 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         }
         
         //裁剪后图片
-        let image = info[UIImagePickerControllerEditedImage] as! UIImage
-        let data = UIImageJPEGRepresentation(image, 0.1)!
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "yyyyMMddHHmmss"
-        let dateStr = dateFormatter.stringFromDate(NSDate())
-        imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
+        headerImage = info[UIImagePickerControllerEditedImage] as! UIImage
         
-        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") { [unowned self] (data) in
-            dispatch_async(dispatch_get_main_queue(), {
-                let result = Http(JSONDecoder(data))
-                if result.status != nil {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        if result.status! == "success"{
-                            self.headerImg.image = image
-                            self.mainHelper.changeUserAvatar(result.data!, handle: { (success, response) in
-                                if success {
-                                    QCLoginUserInfo.currentInfo.avatar = result.data!
-                                }
-                            })
-                        }else{
-                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
-                            hud.mode = MBProgressHUDMode.Text;
-                            hud.labelText = "图片上传失败"
-                            hud.margin = 10.0
-                            hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 1)
-                        }
-                    })
-                }
-            })
-        }
-        headerImg.image = image
+        headerImg.image = headerImage
         headerImg.layer.cornerRadius = headerImg.frame.size.width/2.0
         headerImg.clipsToBounds = true
         headerImg.userInteractionEnabled = true
         
         headerLab.hidden = true
-
+        
+        headerBtn.selected = true
+        headerBtn.tintColor = UIColor.clearColor()
+        
         picker.dismissViewControllerAnimated(true, completion: nil)
     }
 
+    // MARK: 监控键盘弹起落下
     var keyboardHeight:CGFloat = 0.0
+    var flag = true // 防止键盘弹起方法走两次
     
     func keyboardWillAppear(notification: NSNotification) {
         
@@ -782,15 +939,18 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
         
         let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
-        if selfEvaluate.isFirstResponder() {
-            
+        if selfEvaluate.isFirstResponder() && flag {
+        
             UIView.animateWithDuration(0.3) {
-                self.myScrollView.contentOffset = CGPoint.init(x: 0, y: self.myScrollView.contentSize.height-self.myScrollView.frame.size.height+keyboardheight)
-                self.myScrollView.frame = CGRectMake(self.myScrollView.frame.origin.x, self.myScrollView.frame.origin.y, self.myScrollView.frame.size.width, self.myScrollView.frame.size.height-keyboardheight)
+//                self.myScrollView.contentOffset = CGPoint.init(x: 0, y: self.myScrollView.contentSize.height-self.myScrollView.frame.size.height+keyboardheight)
+//                self.myScrollView.frame = CGRectMake(self.myScrollView.frame.origin.x, self.myScrollView.frame.origin.y, self.myScrollView.frame.size.width, self.myScrollView.frame.size.height-keyboardheight)
+                self.myScrollView.frame.size.height = self.myScrollView.frame.size.height-keyboardheight
+                self.myScrollView.contentOffset.y = self.myScrollView.contentSize.height-self.myScrollView.frame.size.height
+                self.keyboardHeight = keyboardheight
+                self.flag = false
             }
         }
         
-        keyboardHeight = keyboardheight
         print("键盘弹起")
         print(keyboardheight)
         
@@ -803,12 +963,13 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             UIView.animateWithDuration(0.3) {
     //            self.myScrollview.contentOffset = CGPoint.init(x: 0, y: self.myScrollview.contentSize.height-self.myScrollview.frame.size.height)
 
-                self.myScrollView.frame = CGRectMake(self.myScrollView.frame.origin.x, self.myScrollView.frame.origin.y, self.myScrollView.frame.size.width, self.myScrollView.frame.size.height+self.keyboardHeight)
+                self.myScrollView.frame.size.height = self.myScrollView.frame.size.height+self.keyboardHeight
+                self.flag = true
             }
         }
         print("键盘落下")
     }
-    
+
     //MARK:UITextViewDelegate
     func textViewDidChange(textView: UITextView) {
         if (textView.text == "") {

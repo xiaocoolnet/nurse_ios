@@ -122,6 +122,8 @@
 		1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */; };
 		1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */; };
 		1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */; };
+		1FE6E4C21D52EBE3009E036B /* AdressPickerView_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE6E4C11D52EBE3009E036B /* AdressPickerView_2.swift */; };
+		1FE6E4C41D536171009E036B /* GHSExamCollectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE6E4C31D536171009E036B /* GHSExamCollectTableViewCell.swift */; };
 		1FEF15A81D5047EE00FF343C /* MainCompanyAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF15A71D5047EE00FF343C /* MainCompanyAuthViewController.swift */; };
 		1FFD9EC91D518F8500951098 /* contentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD9EC81D518F8500951098 /* contentTableViewCell.swift */; };
 		1FFD9ECD1D519C4D00951098 /* GHSPostResumeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD9ECC1D519C4D00951098 /* GHSPostResumeView.swift */; };
@@ -366,6 +368,8 @@
 		1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayModel.swift; sourceTree = "<group>"; };
 		1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaliyExamModel.swift; sourceTree = "<group>"; };
 		1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTimeCell.swift; sourceTree = "<group>"; };
+		1FE6E4C11D52EBE3009E036B /* AdressPickerView_2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdressPickerView_2.swift; sourceTree = "<group>"; };
+		1FE6E4C31D536171009E036B /* GHSExamCollectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GHSExamCollectTableViewCell.swift; sourceTree = "<group>"; };
 		1FEF15A71D5047EE00FF343C /* MainCompanyAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCompanyAuthViewController.swift; sourceTree = "<group>"; };
 		1FFD9EC81D518F8500951098 /* contentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = contentTableViewCell.swift; sourceTree = "<group>"; };
 		1FFD9ECC1D519C4D00951098 /* GHSPostResumeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GHSPostResumeView.swift; sourceTree = "<group>"; };
@@ -915,6 +919,7 @@
 				F6CC83991D2797F300B9A358 /* HSPostResumeView.swift */,
 				0B6FED4D1D3373FC00A4488E /* DataPickerView.swift */,
 				0BC3878D1D339C2C001460B8 /* AdressPickerView.swift */,
+				1FE6E4C11D52EBE3009E036B /* AdressPickerView_2.swift */,
 				F6338B931D29105B00EE5CA2 /* HSStateCommentCell.swift */,
 				F6338B941D29105B00EE5CA2 /* HSStateCommentCell.xib */,
 				F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */,
@@ -970,6 +975,7 @@
 				0BD429461D3DD3500064B64C /* MineExamCollectTableViewCell.swift */,
 				0DB082E41D49F14D004510B1 /* GHSExamTableViewCell.swift */,
 				0DB082E51D49F14D004510B1 /* GHSExamTableViewCell.xib */,
+				1FE6E4C31D536171009E036B /* GHSExamCollectTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1388,6 +1394,7 @@
 				0DB467AF1D4C8600009AE2AD /* MJRefreshAutoGifFooter.m in Sources */,
 				0BD429471D3DD3500064B64C /* MineExamCollectTableViewCell.swift in Sources */,
 				0DE829DB1D3B52050047FB23 /* GMyExamListViewController.swift in Sources */,
+				1FE6E4C41D536171009E036B /* GHSExamCollectTableViewCell.swift in Sources */,
 				18C0BF991CEB655F003E2886 /* QuestionTableViewCell.swift in Sources */,
 				F6C265C81D24FD770033D2A9 /* PostVacancies.swift in Sources */,
 				1FFD9EE61D51EBD700951098 /* DropDown+Appearance.swift in Sources */,
@@ -1418,6 +1425,7 @@
 				F6B4083D1D1D212800BDFDBE /* HSNurseStationHelper.swift in Sources */,
 				18ADDDEF1CE9995700557FFE /* PostTableViewCell.swift in Sources */,
 				181DE09B1CEAFFC00085ECB1 /* PostViewController.swift in Sources */,
+				1FE6E4C21D52EBE3009E036B /* AdressPickerView_2.swift in Sources */,
 				181E0D2B1CEBF87D00E34A7F /* MineMessageViewController.swift in Sources */,
 				0DB467BB1D4C8600009AE2AD /* UIScrollView+MJExtension.m in Sources */,
 				F632EF121D192F530038AF9D /* HSWorkPlaceController.swift in Sources */,

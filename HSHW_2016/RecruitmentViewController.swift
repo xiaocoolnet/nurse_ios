@@ -92,6 +92,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
 
         self.makeEmployment()
+        self.view.backgroundColor = COLOR
+
     }
     
     
@@ -136,12 +138,13 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func configureUI(){
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 0.5))
-        line.backgroundColor = GREY
+        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        line.backgroundColor = COLOR
         self.view.addSubview(line)
         
         self.view.backgroundColor = UIColor.whiteColor()
-        myTableView.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+//        myTableView.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
         myTableView.backgroundColor = UIColor.whiteColor()
         myTableView.tag = 0
         myTableView.delegate = self

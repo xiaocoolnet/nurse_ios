@@ -1,19 +1,17 @@
 //
-//  HSArticleCollectCell.swift
+//  GHSExamCollectTableViewCell.swift
 //  HSHW_2016
 //
-//  Created by xiaocool on 16/7/15.
+//  Created by zhang on 16/8/4.
 //  Copyright © 2016年 校酷网络科技公司. All rights reserved.
 //
 
 import UIKit
 
-class HSArticleCollectCell: UITableViewCell {
-    @IBOutlet weak var newsTitle: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var from: UILabel!
-    var selfModel:NewsInfo?
+class GHSExamCollectTableViewCell: UITableViewCell {
 
+    let examTitle = UILabel()
+    let timeLabel = UILabel()
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,21 +19,27 @@ class HSArticleCollectCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-      
+
         // Configure the view for the selected state
     }
     
-    func showforModel(model:NewsInfo){
-        newsTitle.text = model.title
-        timeLabel.text = timeStampToString(model.create_time!)
-        from.text = model.term_name
-        selfModel = model
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        examTitle.frame = CGRectMake(5, 4, WIDTH, 18)
+        self.addSubview(examTitle)
+        
     }
-    
-    func showforModel_exam(model:xamInfo){
-        newsTitle.text = model.title
-//        timeLabel.text = timeStampToString(model.create_time!)
-//        from.text = model.term_name
+
+    func showforModel(model:xamInfo){
+//        print(model.title)
+//        examTitle.text = "123456789"
+//        if (newsTitle != nil) {
+//            newsTitle.text = model.title
+//        }
+//        if (timeLab != nil) {
+//            timeLab.text = timeStampToString(model.createtime)
+//        }
 //        selfModel = model
     }
     
@@ -53,6 +57,5 @@ class HSArticleCollectCell: UITableViewCell {
         print(dfmatter.stringFromDate(date))
         return dfmatter.stringFromDate(date)
     }
-
     
 }

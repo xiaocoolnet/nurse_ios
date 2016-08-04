@@ -17,6 +17,7 @@ class MineCollectionViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.hidden = false
+        self.tabBarController?.tabBar.hidden = true
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +32,7 @@ class MineCollectionViewController: UIViewController {
         ForumViewController.title = "帖子"
         ForumViewController.collectionType = 3
         
-        let viewControllers = [articleViewController,testViewController,ForumViewController]
+        let viewControllers = [articleViewController,testViewController]
         let options = PagingMenuOptions()
         options.menuItemMargin = 5
         options.menuHeight = 40
@@ -43,7 +44,7 @@ class MineCollectionViewController: UIViewController {
         options.selectedTextColor = COLOR
         options.menuItemMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
         let pagingMenuController = PagingMenuController(viewControllers: viewControllers, options: options)
-        pagingMenuController.view.frame = CGRectMake(0, 1, WIDTH, HEIGHT-45)
+        pagingMenuController.view.frame = CGRectMake(0, 1, WIDTH, HEIGHT)
         pagingMenuController.view.frame.origin.y += 0
         pagingMenuController.view.frame.size.height -= 0
         addChildViewController(pagingMenuController)

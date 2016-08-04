@@ -75,7 +75,9 @@ class FansTableViewCell: UITableViewCell {
         dispatch_async(dispatch_get_main_queue(), {
             //TODO:image 后期要改，从网上获取
             //            titImg.image = UIImage(named: newValue.headerImage)
-            if model.photo == "" {
+            
+            // TODO: 数据问题 理应删掉model.photo == "21.jpg"
+            if model.photo == "" || model.photo == "21.jpg" {
                 
                 self.titImg.image = UIImage.init(named: "default_header")
             }else{

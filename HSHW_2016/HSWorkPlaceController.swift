@@ -28,8 +28,8 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
         }
         listTableView.tableFooterView = UIView()
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 0.5))
-        line.backgroundColor = GREY
+        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        line.backgroundColor = COLOR
         self.view.addSubview(line)
     }
 

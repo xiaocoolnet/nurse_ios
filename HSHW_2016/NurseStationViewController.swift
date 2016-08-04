@@ -67,6 +67,11 @@ class NurseStationViewController: UIViewController {
             if currentVCIndex == 0 {
                 return
             }
+            
+            if RecVC.pagingMenuController!.currentPage == 0 || RecVC.pagingMenuController!.currentPage == 1 {
+                (RecVC.pagingMenuController!.currentViewController as! RecruitmentViewController).saveResumeBtnClicked()
+            }
+            
             self.transitionFromViewController(RecVC, toViewController: ComVC, duration: 0, options: .TransitionNone, animations: nil, completion: { [unowned self](Bool) in
                 self.currentVCIndex = 0
             })

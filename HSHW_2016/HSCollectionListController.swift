@@ -69,6 +69,7 @@ class HSCollectionListController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if collectionType == 2 {
+            print(fansListArray.count)
             return fansListArray.count
         }else{
             
@@ -82,8 +83,7 @@ class HSCollectionListController: UITableViewController {
             (cell as! HSArticleCollectCell).showforModel(dataSource[indexPath.row] as! NewsInfo)
             return cell!
 
-        }
-        else if collectionType == 2 {
+        }else if collectionType == 2 {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! GHSExamTableViewCell
             cell.selectionStyle = .None
 //            cell.inde = indexPath.row
@@ -96,8 +96,7 @@ class HSCollectionListController: UITableViewController {
 //            cell.fanModel = model
             return cell
 
-        }
-        else if collectionType == 3 {
+        }else if collectionType == 3 {
 
             (cell as! HSComTableCell).showForForumModel(dataSource[indexPath.row] as! PostModel)
             return cell!

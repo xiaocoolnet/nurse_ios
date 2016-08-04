@@ -213,7 +213,7 @@
                                                 <action selector="sexBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="R22-JK-VL9"/>
                                             </connections>
                                         </button>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_yuan_purple" translatesAutoresizingMaskIntoConstraints="NO" id="F7I-bS-oO1">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_yuan" translatesAutoresizingMaskIntoConstraints="NO" id="F7I-bS-oO1">
                                             <rect key="frame" x="105" y="18" width="9" height="9"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="9" id="24p-iJ-dX6"/>
@@ -728,8 +728,8 @@
                                             </state>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="Pf4-up-Rry"/>
                                                     <exclude reference="43W-aY-yJT"/>
+                                                    <exclude reference="Pf4-up-Rry"/>
                                                 </mask>
                                             </variation>
                                             <connections>
@@ -910,7 +910,7 @@
                                                 <action selector="jobStatusBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="J5l-Hy-8yl"/>
                                             </connections>
                                         </button>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_yuan_purple" translatesAutoresizingMaskIntoConstraints="NO" id="xQF-bN-kj0">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_yuan" translatesAutoresizingMaskIntoConstraints="NO" id="xQF-bN-kj0">
                                             <rect key="frame" x="105" y="18" width="9" height="9"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="9" id="iST-5O-qzd"/>
@@ -2914,7 +2914,6 @@
     <resources>
         <image name="ic_down" width="8" height="4"/>
         <image name="ic_yuan" width="9" height="9"/>
-        <image name="ic_yuan_purple" width="50" height="50"/>
         <image name="img_head_nor" width="100" height="100"/>
     </resources>
 </document>
