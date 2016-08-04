@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //                break
             case SSDKPlatformType.TypeWechat:
                 //设置微信应用信息
-                appInfo.SSDKSetupWeChatByAppId("wxe61df5d7fee96861", appSecret: "0dbfa83f68bfca4d3b60412e581301e2")
+                appInfo.SSDKSetupWeChatByAppId("15ad6d49bc7b3", appSecret: "b54397eff1c1c45d73392d5fb7dfff12")
                 break
             default:
                 break

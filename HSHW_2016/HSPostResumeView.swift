@@ -20,13 +20,23 @@ protocol HSPostResumeViewDelegate:NSObjectProtocol{
     func saveResumeBtnClicked()
 }
 
-class HSPostResumeView: UIView {
-//    ,UIImagePickerControllerDelegate,UINavigationControllerDelegate,UIActionSheetDelegate, ChangeDelegate, UITableViewDelegate, UITableViewDataSource,UITextViewDelegate
+class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
+//    ,,,UIActionSheetDelegate, ChangeDelegate, UITableViewDelegate, UITableViewDataSource,
+    
+    @IBOutlet weak var myScrollView: UIScrollView!
     
     // 边框
     @IBOutlet weak var borderView_1: UIView!
     
     @IBOutlet weak var borderView_2: UIView!
+    
+    // 头像
+    
+    @IBOutlet weak var headerBtn: UIButton!
+    
+    @IBOutlet weak var headerImg: UIImageView!
+    
+    @IBOutlet weak var headerLab: UILabel!
     
     // 姓名
     @IBOutlet weak var nameTF: UITextField!
@@ -183,17 +193,6 @@ class HSPostResumeView: UIView {
 //    @IBOutlet weak var eduImg: UIImageView!
 //    @IBOutlet weak var educationBtn: UIButton!
 //    @IBOutlet weak var plaLable: UILabel!
-//    @IBOutlet weak var placeLab_1: UILabel!
-//    @IBOutlet weak var placeLab_2: UILabel!
-//    @IBOutlet weak var placeLab_3: UILabel!
-//    @IBOutlet weak var placeImg_1: UIImageView!
-//    @IBOutlet weak var placeImg_2: UIImageView!
-//    @IBOutlet weak var placeImg_3: UIImageView!
-//
-//    @IBOutlet weak var placeBtn: UIButton!
-//    @IBOutlet weak var workLab: UILabel!
-//    @IBOutlet weak var workImg: UIImageView!
-//    @IBOutlet weak var work_year: UILabel!
 //
 //    @IBOutlet weak var postField: UITextField!
 //    @IBOutlet weak var salaryLab: UILabel!
@@ -207,13 +206,11 @@ class HSPostResumeView: UIView {
 //
 //    @IBOutlet weak var timeLab: UILabel!
 //    @IBOutlet weak var timeImg: UIImageView!
-//    @IBOutlet weak var selfLab: UILabel!
-//
 //    var view = UIView()
 //    var albumBtn = UIButton()
-//    var myActionSheet:UIAlertController?
+    var myActionSheet:UIAlertController?
 //    var avatarView = UIButton(type: UIButtonType.Custom)
-//    var mainHelper = HSMineHelper()
+    var mainHelper = HSMineHelper()
 //    var selfNav:UINavigationController?
 
     var picker:DatePickerView?
@@ -230,10 +227,7 @@ class HSPostResumeView: UIView {
 //    let userid = QCLoginUserInfo.currentInfo.userid
 //    let picurl = ""
 //
-//    var imageName = String()
-//
-//
-//
+    var imageName = String()
     
     weak var delegate:HSPostResumeViewDelegate?
     override func layoutSubviews() {
@@ -279,10 +273,10 @@ class HSPostResumeView: UIView {
         homeArray = ["北京市","北京市","朝阳区"]
         targetCityArray = ["北京市","北京市"]
         
-//        selfEvaluate.delegate = self
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
-//        
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        selfEvaluate.delegate = self
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
     }
     
     // MARK:设置下拉列表
@@ -403,37 +397,109 @@ class HSPostResumeView: UIView {
     
     // MARK:- 下拉列表 点击事件   开始
     @IBAction func eduBtnClick(sender: AnyObject) {
+        resignTextFieldFirstResponder()
         eduDropDown.show()
     }
     
     @IBAction func expBtnClick(sender: AnyObject) {
+        resignTextFieldFirstResponder()
         expDropDown.show()
     }
     
     @IBAction func professionalBtnClick(sender: AnyObject) {
+        resignTextFieldFirstResponder()
         professionalDropDown.show()
     }
     
     @IBAction func salaryBtnClick(sender: AnyObject) {
+        resignTextFieldFirstResponder()
         salaryDropDown.show()
     }
     
     @IBAction func jobTimeBtnClick(sender: AnyObject) {
+        resignTextFieldFirstResponder()
         jobTimeDropDown.show()
     }
     
     @IBAction func expectedSalaryBtnClick(sender: AnyObject) {
+        resignTextFieldFirstResponder()
         expectedSalaryDropDown.show()
     }
     
     @IBAction func expectedPositionBtnClick(sender: AnyObject) {
+        resignTextFieldFirstResponder()
         expectedPositionDropDown.show()
     }
     // MARK:下拉列表 点击事件   结束
     // MARK:-
     
-    @IBAction func jobStatusBtnClick(sender: AnyObject) {
-        //        job.show()
+    // MARK:头像点击事件
+    @IBAction func headerBtnClick(sender: UIButton) {
+        
+//        delegate?.uploadAvatar()
+        resignTextFieldFirstResponder()
+        
+        print("头像点击事件")
+        
+        myActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        myActionSheet?.addAction(UIAlertAction(title: "拍照", style: .Default, handler: {[unowned self] (UIAlertAction) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.takePhoto()
+            })
+            }))
+        
+        myActionSheet?.addAction(UIAlertAction(title: "从相册获取", style: .Default, handler: { [unowned self] (UIAlertAction) in
+            dispatch_async(dispatch_get_main_queue(), {
+                self.LocalPhoto()
+            })
+            }))
+        
+        myActionSheet?.addAction(UIAlertAction(title: "取消", style: .Cancel, handler:nil))
+        
+        let vc = responderVC()
+        vc!.presentViewController(myActionSheet!, animated: true, completion: nil)
+    }
+    
+    // MARK:选择性别
+    @IBAction func sexBtnClick(sender: UIButton) {
+        
+        resignTextFieldFirstResponder()
+        
+        switch sender.tag {
+        case 11:
+            manImg.image = UIImage.init(named: "ic_yuan_purple")
+            womanImg.image = UIImage.init(named: "ic_yuan")
+        case 12:
+            manImg.image = UIImage.init(named: "ic_yuan")
+            womanImg.image = UIImage.init(named: "ic_yuan_purple")
+            
+        default:
+            break
+        }
+    }
+    
+    // MARK:选择求职状态
+    @IBAction func jobStatusBtnClick(sender: UIButton) {
+        
+        resignTextFieldFirstResponder()
+        
+        switch sender.tag {
+        case 101:
+            onJobImg.image = UIImage.init(named: "ic_yuan_purple")
+            leaveJobImg.image = UIImage.init(named: "ic_yuan")
+            undergraduateImg.image = UIImage.init(named: "ic_yuan")
+        case 102:
+            onJobImg.image = UIImage.init(named: "ic_yuan")
+            leaveJobImg.image = UIImage.init(named: "ic_yuan_purple")
+            undergraduateImg.image = UIImage.init(named: "ic_yuan")
+        case 103:
+            onJobImg.image = UIImage.init(named: "ic_yuan")
+            leaveJobImg.image = UIImage.init(named: "ic_yuan")
+            undergraduateImg.image = UIImage.init(named: "ic_yuan_purple")
+            
+        default:
+            break
+        }
     }
     
     // MARK:自定义下拉列表样式
@@ -452,77 +518,43 @@ class HSPostResumeView: UIView {
         appearance.textColor = .darkGrayColor()
         //		appearance.textFont = UIFont(name: "Georgia", size: 14)
     }
-
-//    @IBAction func avatarButtonClicked(sender: AnyObject) {
-//        delegate?.uploadAvatar()
-//        
-//        print("lalal")
-//        
-//        myActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-//        myActionSheet?.addAction(UIAlertAction(title: "拍照", style: .Default, handler: {[unowned self] (UIAlertAction) in
-//            dispatch_async(dispatch_get_main_queue(), {
-//                self.takePhoto()
-//            })
-//        }))
-//        
-//        myActionSheet?.addAction(UIAlertAction(title: "从相册获取", style: .Default, handler: { [unowned self] (UIAlertAction) in
-//            dispatch_async(dispatch_get_main_queue(), {
-//                self.LocalPhoto()
-//            })
-//            }))
-//        
-//        myActionSheet?.addAction(UIAlertAction(title: "取消", style: .Cancel, handler:nil))
-//
-//        let vc = responderVC()
-//        vc!.presentViewController(myActionSheet!, animated: true, completion: nil)
-//    }
     
-//    @IBAction func saveResumeCilcked(sender: AnyObject) {
-////        delegate?.saveResumeBtnClicked()
-//        if delegate != nil {
-//            if sexLable.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != "" {
-//                
-//                delegate?.saveResumeBtnClicked()
-//            }else{
-//                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善简历信息", comment: "empty message"), preferredStyle: .Alert)
-//                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
-//                alertController.addAction(doneAction)
-//
-//                let vc = responderVC()
-//                vc!.presentViewController(alertController, animated: true, completion: nil)
-//
-//            }
-//        }
-//        
-//        if sexLable.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != ""{
-//            
-//            help.postForum(userid, avatar:imageName, name: nameTextFeild.text!, experience: workLab.text!, sex: sexLable.text!, birthday:(brith_year.text!+brith_month.text!+brith_day.text!), marital:eduLable.text! , address:placeLab_1.text!+placeLab_2.text!+placeLab_3.text!, jobstate:jobStatusLab.text!, currentsalary:salaryLab.text!, phone:phoneField.text!, email:mailboxField.text!, hiredate:timeLab.text!, wantcity:targetCity_1_Lab.text!+targetCity_2_Lab.text!+targetCity_3_Lab.text!, wantsalary:expectSalaryLab.text!, wantposition:expectPostionLab.text!, description:selfEvaluate.text, handle: { (success, response) in
-//                if success {
-//                    dispatch_async(dispatch_get_main_queue(), {
-//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                        hud.mode = MBProgressHUDMode.Text;
-//                        hud.labelText = "发布成功"
-//                        hud.margin = 10.0
-//                        hud.removeFromSuperViewOnHide = true
-//                        hud.hide(true, afterDelay: 1)
-//                        print(success)
-//                    })
-//                }
-//            })
-//        }
-//
-//    }
+    @IBAction func saveResumeCilcked(sender: AnyObject) {
+        
+        resignTextFieldFirstResponder()
+//        delegate?.saveResumeBtnClicked()
+        
+        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("熬不住了，明天做吧。。。", comment: "empty message"), preferredStyle: .Alert)
+            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            alertController.addAction(doneAction)
+
+            let vc = responderVC()
+            vc!.presentViewController(alertController, animated: true, completion: nil)
+    }
     
     // TODO:
-//    func resignTextFieldFirstResponder() {
-//        nameTextFeild.resignFirstResponder()
-//        postField.resignFirstResponder()
-//        phoneField.resignFirstResponder()
-//        mailboxField.resignFirstResponder()
-//        selfEvaluate.resignFirstResponder()
-//    }
+    func resignTextFieldFirstResponder() {
+        nameTF.resignFirstResponder()
+        telTF.resignFirstResponder()
+        mailTF.resignFirstResponder()
+        selfEvaluate.resignFirstResponder()
+    }
 //    // MARK:-
+//    func change(controller:HSEditResumeViewController,string:String,idStr:String){
+//
+//        if idStr == "1" {
+//            educationBtn.setTitle(string, forState: .Normal)
+//        }else if idStr == "14"{
+//            moneyBtn.setTitle(string, forState: .Normal)
+//        }else if idStr == "12"{
+//            expectPayBtn.setTitle(string, forState: .Normal)
+//        }else if idStr == "13"{
+//            expectPostBtn.setTitle(string, forState: .Normal)
+//        }
+//        
+//    }
     
+    // MARK:选择出生日期
     @IBAction func birthBtnClick(sender: AnyObject) {
         
         picker = DatePickerView.getShareInstance()
@@ -539,24 +571,11 @@ class HSPostResumeView: UIView {
             
             self.birth_year_Lab.text = timeArr.first
             self.birth_month_Lab.text = timeArr[1]
-            self.birth_day_Lab.text = timeArr.last 
+            self.birth_day_Lab.text = timeArr.last
         }
     }
-//    func change(controller:HSEditResumeViewController,string:String,idStr:String){
-//
-//        if idStr == "1" {
-//            educationBtn.setTitle(string, forState: .Normal)
-//        }else if idStr == "14"{
-//            moneyBtn.setTitle(string, forState: .Normal)
-//        }else if idStr == "12"{
-//            expectPayBtn.setTitle(string, forState: .Normal)
-//        }else if idStr == "13"{
-//            expectPostBtn.setTitle(string, forState: .Normal)
-//        }
-//        
-//    }
     
-    
+    // MARK:选择居住地
     @IBAction func homeBtnClick(sender: AnyObject) {
         
         print("点击居住地")
@@ -594,10 +613,10 @@ class HSPostResumeView: UIView {
         }
     }
 
-
+    // MARK:选择目标城市
     @IBAction func targetCityBtnClick(sender: AnyObject) {
     
-        print("点击居住地")
+        print("点击目标城市")
         // 初始化
         let pick = AdressPickerView.shareInstance
         
@@ -626,47 +645,41 @@ class HSPostResumeView: UIView {
         }
     }
 
-//    @IBAction func targetCityBtnClick(sender: AnyObject) {
-//        let pick = AdressPickerView.shareInstance
-//
-//        // 设置是否显示区县等，默认为false不显示
-//        pick.showTown=true
-//        pick.pickArray=array // 设置第一次加载时需要跳转到相对应的地址
-//        //        self.addSubview(pick)
-//        pick.show((UIApplication.sharedApplication().keyWindow)!)
-//        // 选择完成之后回调
-//        pick.selectAdress { (dressArray) in
-//            
-//            self.array=dressArray
-//            print("选择的地区是: \(dressArray)")
-//
-//            self.targetCity_1_Lab.text =  (dressArray[0] as! String)
-//            self.targetCity_2_Lab.text =  (dressArray[1] as! String)
-//            self.targetCity_3_Lab.text =  (dressArray[2] as! String)
-//            
-//            self.targetCity_1_Lab.enabled = true
-//            self.targetCity_2_Lab.enabled = true
-//            self.targetCity_3_Lab.enabled = true
-//            
-//            self.targetCity_1_Lab.sizeToFit()
-//            self.targetCity_1_Img.frame = CGRectMake(CGRectGetMaxX(self.targetCity_1_Lab.frame), self.targetCity_1_Img.frame.origin.y, 12, 12)
-//            
-//            
-//            self.targetCity_2_Lab.frame = CGRectMake(CGRectGetMaxX(self.targetCity_1_Img.frame)+5, self.targetCity_2_Lab.frame.origin.y, self.targetCity_2_Lab.frame.size.width, 12)
-//            self.targetCity_2_Lab.adjustsFontSizeToFitWidth = true
-//            self.targetCity_2_Lab.sizeToFit()
-//            self.targetCity_2_Img.frame = CGRectMake(CGRectGetMaxX(self.targetCity_2_Lab.frame), self.targetCity_2_Img.frame.origin.y, 12, 12)
-//            
-//            self.targetCity_3_Lab.frame = CGRectMake(CGRectGetMaxX(self.targetCity_2_Img.frame)+5, self.targetCity_3_Lab.frame.origin.y, self.targetCity_3_Lab.frame.size.width, 12)
-//            self.targetCity_3_Lab.adjustsFontSizeToFitWidth = true
-//            self.targetCity_3_Lab.sizeToFit()
-//            self.targetCity_3_Img.frame = CGRectMake(CGRectGetMaxX(self.targetCity_3_Lab.frame), self.targetCity_3_Img.frame.origin.y, 12, 12)
-//            
+//    @IBAction func saveResumeBtnClick(sender: UIButton) {
+//        
+//        if delegate != nil {
+//            if sexLable.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != "" {
+//                
+//                delegate?.saveResumeBtnClicked()
+//            }else{
+//                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善简历信息", comment: "empty message"), preferredStyle: .Alert)
+//                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+//                alertController.addAction(doneAction)
+//                
+//                let vc = responderVC()
+//                vc!.presentViewController(alertController, animated: true, completion: nil)
+//                
+//            }
 //        }
-//
+//        
+//        if sexLable.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != ""{
+//            
+//            help.postForum(userid, avatar:imageName, name: nameTextFeild.text!, experience: workLab.text!, sex: sexLable.text!, birthday:(brith_year.text!+brith_month.text!+brith_day.text!), marital:eduLable.text! , address:placeLab_1.text!+placeLab_2.text!+placeLab_3.text!, jobstate:jobStatusLab.text!, currentsalary:salaryLab.text!, phone:phoneField.text!, email:mailboxField.text!, hiredate:timeLab.text!, wantcity:targetCity_1_Lab.text!+targetCity_2_Lab.text!+targetCity_3_Lab.text!, wantsalary:expectSalaryLab.text!, wantposition:expectPostionLab.text!, description:selfEvaluate.text, handle: { (success, response) in
+//                if success {
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                        hud.mode = MBProgressHUDMode.Text;
+//                        hud.labelText = "发布成功"
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
+//                        hud.hide(true, afterDelay: 1)
+//                        print(success)
+//                    })
+//                }
+//            })
+//        }
 //    }
-//
-//
+    
 //    func click(){
 //        view.removeFromSuperview()
 //        albumBtn.removeFromSuperview()
@@ -679,129 +692,131 @@ class HSPostResumeView: UIView {
 //        
 //    }
 //    
-//    func responderVC() -> (UIViewController?) {
-//        var temp:AnyObject
-//        temp = nextResponder()!
-//        while ((temp.isKindOfClass(UIViewController)) != true) {
-//            temp = temp.nextResponder()!
-//        }
-//        return temp as? UIViewController
-//    }
-//    
-//    func takePhoto(){
-//        
-//        let sourceType = UIImagePickerControllerSourceType.Camera
-//        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
-//            let picker = UIImagePickerController()
-//            picker.delegate = self
-//            picker.allowsEditing = true
-//            picker.sourceType = sourceType
-//            let vc = responderVC()
-//            vc!.presentViewController(picker, animated: true, completion: nil)
-//        }else{
-//            print("无法打开相机")
-//        }
-//    }
-//
-//    func LocalPhoto(){
-//        let picker = UIImagePickerController()
-//        picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-//        picker.delegate = self
-//        picker.allowsEditing = true
-//        let vc = responderVC()
-//        vc!.presentViewController(picker, animated: true, completion: nil)
-//    }
-//    
-//    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-//        
-//        let type = info[UIImagePickerControllerMediaType] as! String
-//        if type != "public.image" {
-//            return
-//        }
-//        
-//        //裁剪后图片
-//        let image = info[UIImagePickerControllerEditedImage] as! UIImage
-//        let data = UIImageJPEGRepresentation(image, 0.1)!
-//        let dateFormatter = NSDateFormatter()
-//        dateFormatter.dateFormat = "yyyyMMddHHmmss"
-//        let dateStr = dateFormatter.stringFromDate(NSDate())
-//        imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
-//        
-//        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") { [unowned self] (data) in
-//            dispatch_async(dispatch_get_main_queue(), {
-//                let result = Http(JSONDecoder(data))
-//                if result.status != nil {
-//                    dispatch_async(dispatch_get_main_queue(), {
-//                        if result.status! == "success"{
-//                            self.avatarBtn.setImage(image, forState: .Normal)
-//                            self.mainHelper.changeUserAvatar(result.data!, handle: { (success, response) in
-//                                if success {
-//                                    QCLoginUserInfo.currentInfo.avatar = result.data!
-//                                }
-//                            })
-//                        }else{
-//                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                            hud.mode = MBProgressHUDMode.Text;
-//                            hud.labelText = "图片上传失败"
-//                            hud.margin = 10.0
-//                            hud.removeFromSuperViewOnHide = true
-//                            hud.hide(true, afterDelay: 1)
-//                        }
-//                    })
-//                }
-//            })
-//        }
-//        avatarBtn.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar) , forState: .Normal)
-//        avatarBtn.layer.cornerRadius = 40
-//        avatarBtn.clipsToBounds = true
-//        avatarBtn.userInteractionEnabled = true
-//
-//        picker.dismissViewControllerAnimated(true, completion: nil)
-//    }
-//    
-//    var keyboardHeight:CGFloat = 0.0
-//    
-//    func keyboardWillAppear(notification: NSNotification) {
-//        
-//        // 获取键盘信息
-//        let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
-//        
-//        let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
-//        if selfEvaluate.isFirstResponder() {
-//            
-//            UIView.animateWithDuration(0.3) {
-//                self.myScrollview.contentOffset = CGPoint.init(x: 0, y: self.myScrollview.contentSize.height-self.myScrollview.frame.size.height+keyboardheight)
-//                self.myScrollview.frame = CGRectMake(self.myScrollview.frame.origin.x, self.myScrollview.frame.origin.y, self.myScrollview.frame.size.width, self.myScrollview.frame.size.height-keyboardheight)
-//            }
-//        }
-//        
-//        keyboardHeight = keyboardheight
-//        print("键盘弹起")
-//        print(keyboardheight)
-//        
-//    }
-//    
-//    func keyboardWillDisappear(notification:NSNotification){
-//        
-//        if self.myScrollview.frame.size.height<=HEIGHT-64-49-keyboardHeight {
-//
-//            UIView.animateWithDuration(0.3) {
-//    //            self.myScrollview.contentOffset = CGPoint.init(x: 0, y: self.myScrollview.contentSize.height-self.myScrollview.frame.size.height)
-//
-//                self.myScrollview.frame = CGRectMake(self.myScrollview.frame.origin.x, self.myScrollview.frame.origin.y, self.myScrollview.frame.size.width, self.myScrollview.frame.size.height+self.keyboardHeight)
-//            }
-//        }
-//        print("键盘落下")
-//    }
-//    
-//    //MARK:UITextViewDelegate
-//    func textViewDidChange(textView: UITextView) {
-//        if (textView.text == "") {
-//            selfLab.text = "自我介绍"
-//        }else{
-//            selfLab.text = ""
-//        }
-//    }
+    func responderVC() -> (UIViewController?) {
+        var temp:AnyObject
+        temp = nextResponder()!
+        while ((temp.isKindOfClass(UIViewController)) != true) {
+            temp = temp.nextResponder()!
+        }
+        return temp as? UIViewController
+    }
+
+    func takePhoto(){
+        
+        let sourceType = UIImagePickerControllerSourceType.Camera
+        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.allowsEditing = true
+            picker.sourceType = sourceType
+            let vc = responderVC()
+            vc!.presentViewController(picker, animated: true, completion: nil)
+        }else{
+            print("无法打开相机")
+        }
+    }
+
+    func LocalPhoto(){
+        let picker = UIImagePickerController()
+        picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        picker.delegate = self
+        picker.allowsEditing = true
+        let vc = responderVC()
+        vc!.presentViewController(picker, animated: true, completion: nil)
+    }
+
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        let type = info[UIImagePickerControllerMediaType] as! String
+        if type != "public.image" {
+            return
+        }
+        
+        //裁剪后图片
+        let image = info[UIImagePickerControllerEditedImage] as! UIImage
+        let data = UIImageJPEGRepresentation(image, 0.1)!
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyyMMddHHmmss"
+        let dateStr = dateFormatter.stringFromDate(NSDate())
+        imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
+        
+        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") { [unowned self] (data) in
+            dispatch_async(dispatch_get_main_queue(), {
+                let result = Http(JSONDecoder(data))
+                if result.status != nil {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        if result.status! == "success"{
+                            self.headerImg.image = image
+                            self.mainHelper.changeUserAvatar(result.data!, handle: { (success, response) in
+                                if success {
+                                    QCLoginUserInfo.currentInfo.avatar = result.data!
+                                }
+                            })
+                        }else{
+                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "图片上传失败"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                        }
+                    })
+                }
+            })
+        }
+        headerImg.image = image
+        headerImg.layer.cornerRadius = headerImg.frame.size.width/2.0
+        headerImg.clipsToBounds = true
+        headerImg.userInteractionEnabled = true
+        
+        headerLab.hidden = true
+
+        picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    var keyboardHeight:CGFloat = 0.0
+    
+    func keyboardWillAppear(notification: NSNotification) {
+        
+        // 获取键盘信息
+        let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
+        
+        let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
+        if selfEvaluate.isFirstResponder() {
+            
+            UIView.animateWithDuration(0.3) {
+                self.myScrollView.contentOffset = CGPoint.init(x: 0, y: self.myScrollView.contentSize.height-self.myScrollView.frame.size.height+keyboardheight)
+                self.myScrollView.frame = CGRectMake(self.myScrollView.frame.origin.x, self.myScrollView.frame.origin.y, self.myScrollView.frame.size.width, self.myScrollView.frame.size.height-keyboardheight)
+            }
+        }
+        
+        keyboardHeight = keyboardheight
+        print("键盘弹起")
+        print(keyboardheight)
+        
+    }
+    
+    func keyboardWillDisappear(notification:NSNotification){
+        
+        if self.myScrollView.frame.size.height<=HEIGHT-64-49-keyboardHeight {
+
+            UIView.animateWithDuration(0.3) {
+    //            self.myScrollview.contentOffset = CGPoint.init(x: 0, y: self.myScrollview.contentSize.height-self.myScrollview.frame.size.height)
+
+                self.myScrollView.frame = CGRectMake(self.myScrollView.frame.origin.x, self.myScrollView.frame.origin.y, self.myScrollView.frame.size.width, self.myScrollView.frame.size.height+self.keyboardHeight)
+            }
+        }
+        print("键盘落下")
+    }
+    
+    //MARK:UITextViewDelegate
+    func textViewDidChange(textView: UITextView) {
+        if (textView.text == "") {
+            selfEvaluateLab.text = "请填写自我介绍的内容"
+        }else{
+            selfEvaluateLab.text = ""
+        }
+    }
 }
 
 

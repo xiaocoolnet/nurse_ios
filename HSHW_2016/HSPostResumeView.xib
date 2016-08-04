@@ -67,14 +67,23 @@
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fEQ-eA-sJU">
                                     <rect key="frame" x="0.0" y="0.0" width="290" height="164"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n4w-0Z-Zii">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sda-UM-mv6">
+                                            <rect key="frame" x="85" y="15" width="120" height="138"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="120" id="Mzu-2w-NJr"/>
+                                            </constraints>
+                                            <state key="normal" title="Button"/>
+                                            <connections>
+                                                <action selector="headerBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="TGY-Cy-bUy"/>
+                                            </connections>
+                                        </button>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_head_nor" translatesAutoresizingMaskIntoConstraints="NO" id="Ags-Bi-qYL">
                                             <rect key="frame" x="95" y="20" width="100" height="100"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="100" id="Esb-MJ-xkb"/>
-                                                <constraint firstAttribute="height" constant="100" id="V4Z-Gs-pno"/>
+                                                <constraint firstAttribute="width" constant="100" id="8cb-tg-hjh"/>
+                                                <constraint firstAttribute="height" constant="100" id="uk1-6f-Azy"/>
                                             </constraints>
-                                            <state key="normal" image="img_head_nor"/>
-                                        </button>
+                                        </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击上传头像" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cpj-yD-Hdf">
                                             <rect key="frame" x="103" y="128" width="84" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -91,19 +100,22 @@
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="Cpj-yD-Hdf" firstAttribute="top" secondItem="n4w-0Z-Zii" secondAttribute="bottom" constant="8" id="09m-MM-c8i"/>
-                                        <constraint firstItem="n4w-0Z-Zii" firstAttribute="top" secondItem="fEQ-eA-sJU" secondAttribute="top" constant="11" id="31P-Tw-0dt"/>
+                                        <constraint firstItem="Ags-Bi-qYL" firstAttribute="top" secondItem="fEQ-eA-sJU" secondAttribute="top" constant="20" id="0pd-9q-sDt"/>
+                                        <constraint firstItem="sda-UM-mv6" firstAttribute="top" secondItem="fEQ-eA-sJU" secondAttribute="top" constant="15" id="1cg-cI-OWa"/>
+                                        <constraint firstItem="sda-UM-mv6" firstAttribute="centerX" secondItem="fEQ-eA-sJU" secondAttribute="centerX" id="EKl-ix-Ffh"/>
                                         <constraint firstAttribute="bottom" secondItem="R7J-Sv-ZY5" secondAttribute="bottom" id="R5m-JF-yW1"/>
+                                        <constraint firstItem="Ags-Bi-qYL" firstAttribute="centerX" secondItem="fEQ-eA-sJU" secondAttribute="centerX" id="Wyu-7b-hz0"/>
                                         <constraint firstAttribute="trailing" secondItem="R7J-Sv-ZY5" secondAttribute="trailing" id="XFe-BL-Km2"/>
+                                        <constraint firstItem="R7J-Sv-ZY5" firstAttribute="top" secondItem="sda-UM-mv6" secondAttribute="bottom" constant="10" id="cAS-k1-yw2"/>
                                         <constraint firstAttribute="height" constant="164" id="grI-ar-vQ6"/>
-                                        <constraint firstItem="n4w-0Z-Zii" firstAttribute="top" secondItem="fEQ-eA-sJU" secondAttribute="top" constant="20" id="gz6-Nb-9Yf"/>
+                                        <constraint firstItem="sda-UM-mv6" firstAttribute="centerY" secondItem="fEQ-eA-sJU" secondAttribute="centerY" id="i5Z-Dh-6Oi"/>
                                         <constraint firstItem="R7J-Sv-ZY5" firstAttribute="leading" secondItem="fEQ-eA-sJU" secondAttribute="leading" id="kMB-4A-RVe"/>
                                         <constraint firstItem="Cpj-yD-Hdf" firstAttribute="centerX" secondItem="fEQ-eA-sJU" secondAttribute="centerX" id="oQB-zv-1g9"/>
-                                        <constraint firstItem="n4w-0Z-Zii" firstAttribute="centerX" secondItem="fEQ-eA-sJU" secondAttribute="centerX" id="oSw-cE-Ym3"/>
+                                        <constraint firstItem="Cpj-yD-Hdf" firstAttribute="top" secondItem="Ags-Bi-qYL" secondAttribute="bottom" constant="8" id="uth-HX-Oar"/>
                                     </constraints>
                                     <variation key="default">
                                         <mask key="constraints">
-                                            <exclude reference="31P-Tw-0dt"/>
+                                            <exclude reference="i5Z-Dh-6Oi"/>
                                         </mask>
                                     </variation>
                                 </view>
@@ -192,11 +204,14 @@
                                                 </mask>
                                             </variation>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bpW-Oi-mOo" userLabel="男">
+                                        <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bpW-Oi-mOo" userLabel="男">
                                             <rect key="frame" x="105" y="13" width="45" height="18"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="45" id="bfq-ZF-gM9"/>
                                             </constraints>
+                                            <connections>
+                                                <action selector="sexBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="R22-JK-VL9"/>
+                                            </connections>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_yuan_purple" translatesAutoresizingMaskIntoConstraints="NO" id="F7I-bS-oO1">
                                             <rect key="frame" x="105" y="18" width="9" height="9"/>
@@ -211,7 +226,7 @@
                                             <color key="textColor" red="0.7803921568627451" green="0.7803921568627451" blue="0.80392156862745101" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tw2-9j-Vyu" userLabel="女">
+                                        <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tw2-9j-Vyu" userLabel="女">
                                             <rect key="frame" x="150" y="8" width="45" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="45" id="hJs-v5-5bM"/>
@@ -222,6 +237,9 @@
                                                     <exclude reference="zum-1R-nTB"/>
                                                 </mask>
                                             </variation>
+                                            <connections>
+                                                <action selector="sexBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="3uk-sr-sVM"/>
+                                            </connections>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_yuan" translatesAutoresizingMaskIntoConstraints="NO" id="qrg-ct-I8v">
                                             <rect key="frame" x="150" y="18" width="9" height="9"/>
@@ -889,7 +907,7 @@
                                                 </mask>
                                             </variation>
                                             <connections>
-                                                <action selector="jobStatusBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="ujB-dg-GKP"/>
+                                                <action selector="jobStatusBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="J5l-Hy-8yl"/>
                                             </connections>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_yuan_purple" translatesAutoresizingMaskIntoConstraints="NO" id="xQF-bN-kj0">
@@ -917,7 +935,7 @@
                                                 </mask>
                                             </variation>
                                             <connections>
-                                                <action selector="jobStatusBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="xiZ-Yp-VWL"/>
+                                                <action selector="jobStatusBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="ahJ-Rb-X7m"/>
                                             </connections>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_yuan" translatesAutoresizingMaskIntoConstraints="NO" id="3yb-3S-TyW">
@@ -945,7 +963,7 @@
                                                 </mask>
                                             </variation>
                                             <connections>
-                                                <action selector="jobStatusBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="4AD-zv-g5R"/>
+                                                <action selector="jobStatusBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="00a-SD-iwz"/>
                                             </connections>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_yuan" translatesAutoresizingMaskIntoConstraints="NO" id="v45-uc-E44">
@@ -1539,7 +1557,7 @@
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请填写自我介绍的内容" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fqR-Pj-PJh">
-                                    <rect key="frame" x="6" y="51" width="170" height="21"/>
+                                    <rect key="frame" x="6" y="53" width="170" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -1552,7 +1570,7 @@
                                 <constraint firstAttribute="bottom" secondItem="DaT-rv-wZ3" secondAttribute="bottom" id="D1B-BE-fQV"/>
                                 <constraint firstItem="Moe-9w-QpD" firstAttribute="leading" secondItem="MEb-KF-sp1" secondAttribute="leading" id="GPd-h6-A4J"/>
                                 <constraint firstAttribute="trailing" secondItem="DaT-rv-wZ3" secondAttribute="trailing" id="L0o-ao-vX1"/>
-                                <constraint firstItem="fqR-Pj-PJh" firstAttribute="top" secondItem="Moe-9w-QpD" secondAttribute="bottom" constant="8" id="RYa-BN-2KE"/>
+                                <constraint firstItem="fqR-Pj-PJh" firstAttribute="top" secondItem="Moe-9w-QpD" secondAttribute="bottom" constant="10" id="RYa-BN-2KE"/>
                                 <constraint firstAttribute="trailing" secondItem="Moe-9w-QpD" secondAttribute="trailing" id="VHw-Nj-16D"/>
                                 <constraint firstItem="DaT-rv-wZ3" firstAttribute="top" secondItem="Moe-9w-QpD" secondAttribute="bottom" constant="5" id="ZV8-Fq-Vrp"/>
                                 <constraint firstItem="T5d-oi-wl6" firstAttribute="top" secondItem="MEb-KF-sp1" secondAttribute="top" constant="20" id="dRg-17-eD3"/>
@@ -1572,19 +1590,30 @@
                             <rect key="frame" x="15" y="1118" width="290" height="60"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R2s-jV-wAv">
-                                    <rect key="frame" x="10" y="13" width="270" height="34"/>
+                                    <rect key="frame" x="10" y="0.0" width="270" height="60"/>
                                     <state key="normal" title="保存简历">
                                         <color key="titleColor" red="0.47450980390000003" green="0.0" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
+                                    <connections>
+                                        <action selector="saveResumeCilcked:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="5C8-nf-Sxj"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="ACJ-U4-OMf"/>
+                                <constraint firstAttribute="bottom" secondItem="R2s-jV-wAv" secondAttribute="bottom" id="AbJ-NY-gw7"/>
                                 <constraint firstItem="R2s-jV-wAv" firstAttribute="leading" secondItem="tUv-cR-aeP" secondAttribute="leading" constant="10" id="FlJ-g2-wyl"/>
                                 <constraint firstAttribute="trailing" secondItem="R2s-jV-wAv" secondAttribute="trailing" constant="10" id="J3h-8F-s3q"/>
                                 <constraint firstItem="R2s-jV-wAv" firstAttribute="centerY" secondItem="tUv-cR-aeP" secondAttribute="centerY" id="V1z-cv-9Gt"/>
                                 <constraint firstAttribute="height" constant="60" id="okz-ka-NVe"/>
+                                <constraint firstItem="R2s-jV-wAv" firstAttribute="top" secondItem="tUv-cR-aeP" secondAttribute="top" id="sf9-aC-afS"/>
                             </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="ACJ-U4-OMf"/>
+                                    <exclude reference="V1z-cv-9Gt"/>
+                                </mask>
+                            </variation>
                         </view>
                     </subviews>
                     <constraints>
@@ -1655,6 +1684,9 @@
                 <outlet property="expectedSalaryImg" destination="Ntw-p7-A3y" id="Uq5-RK-NzC"/>
                 <outlet property="expectedSalaryLab" destination="sNw-Lh-rID" id="bFG-86-I8c"/>
                 <outlet property="expectedSalaryLab_unit" destination="eWv-Jq-5KJ" id="YuN-hO-wWU"/>
+                <outlet property="headerBtn" destination="sda-UM-mv6" id="OoI-N6-N8F"/>
+                <outlet property="headerImg" destination="Ags-Bi-qYL" id="IQv-An-NA9"/>
+                <outlet property="headerLab" destination="Cpj-yD-Hdf" id="K6D-ja-NwP"/>
                 <outlet property="homeBtn" destination="1xt-8h-5xc" id="e6C-Mb-e1i"/>
                 <outlet property="homeImg_1" destination="xrO-pf-o3X" id="oGc-pt-qYW"/>
                 <outlet property="homeImg_2" destination="ESA-dd-g2f" id="jp5-za-foH"/>
@@ -1670,6 +1702,7 @@
                 <outlet property="mailTF" destination="DfW-f3-8hc" id="99Q-qZ-rRT"/>
                 <outlet property="manBtn" destination="bpW-Oi-mOo" id="Nmd-TA-tic"/>
                 <outlet property="manImg" destination="F7I-bS-oO1" id="iYb-5e-gqg"/>
+                <outlet property="myScrollView" destination="lv8-wV-Jl1" id="Geu-Ni-Zua"/>
                 <outlet property="nameTF" destination="dbN-4k-9xy" id="FID-HA-8Fg"/>
                 <outlet property="onJobBtn" destination="uGO-P3-mob" id="FEG-IX-OgA"/>
                 <outlet property="onJobImg" destination="xQF-bN-kj0" id="ReH-vA-vsj"/>
