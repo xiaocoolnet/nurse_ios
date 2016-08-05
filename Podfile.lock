@@ -25,12 +25,6 @@ PODS:
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
-  - ShareSDK3 (3.3.1):
-    - ShareSDK3/ShareSDK (= 3.3.1)
-  - ShareSDK3/ShareSDK (3.3.1)
-  - ShareSDK3/ShareSDKPlatforms/SinaWeibo (3.3.1)
-  - ShareSDK3/ShareSDKPlatforms/WeChat (3.3.1)
-  - ShareSDK3/ShareSDKUI (3.3.1)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0.1)
@@ -41,10 +35,6 @@ DEPENDENCIES:
   - MOBFoundation
   - PagingMenuController (~> 0.9.1)
   - SDWebImage (~> 3.7.3)
-  - ShareSDK3
-  - ShareSDK3/ShareSDKPlatforms/SinaWeibo
-  - ShareSDK3/ShareSDKPlatforms/WeChat
-  - ShareSDK3/ShareSDKUI
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
@@ -55,6 +45,5 @@ SPEC CHECKSUMS:
   MOBFoundation: a42168392e216fc56cbcbdfc3d5dcb3bbce5ef87
   PagingMenuController: 95bab00761e1ba4f4f9fa6bf22ac71b065a675aa
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
-  ShareSDK3: 8423b4dca9f5a3a210d536fc4f0c4b1555022810
 
 COCOAPODS: 0.39.0

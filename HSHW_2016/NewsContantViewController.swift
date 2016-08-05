@@ -52,10 +52,10 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         self.tabBarController?.tabBar.hidden = true
         self.navigationItem.leftBarButtonItem?.title = "返回"
         
-//        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//        MBProgressHUD().labelText = ""
         
         if LOGIN_STATE {
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            //        MBProgressHUD().labelText = ""
             
             // MARK: 检查是否收藏
             checkHadFavorite((self.newsInfo?.object_id)!, type: "1", handle: { (success, response) in
@@ -72,7 +72,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                     dispatch_async(dispatch_get_main_queue(), {
                         self.collectBtn.enabled = true
-//                        hud.hide(true)
+                        hud.hide(true)
                     })
                 })
             })
@@ -115,7 +115,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         self.view.backgroundColor = UIColor.whiteColor()
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-60)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-64-1)
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.delegate = self
         myTableView.dataSource = self

@@ -3,11 +3,7 @@
 //
 
 #import "MBProgressHUD/MBProgressHUD.h"
-#import <ShareSDK/ShareSDK.h>
-#import <ShareSDKUI/ShareSDK+SSUI.h>
-#import <ShareSDKConnector/ShareSDKConnector.h>
 #import "WXApi.h"
-#import "WeiboSDK.h"
 #import "ConnectModel.h"
 #import "CFLineChartView.h"
 #import "MJRefresh.h"

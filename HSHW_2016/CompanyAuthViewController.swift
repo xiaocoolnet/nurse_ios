@@ -145,7 +145,11 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
             self.waitImg.transform = endAngle
             
             }, completion: { (finished) in
-                self.startAnimation()
+                
+                if finished {
+                    
+                    self.startAnimation()
+                }
                 
          })
     }

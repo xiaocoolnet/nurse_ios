@@ -156,7 +156,22 @@ class GToutiaoTableViewCell: UITableViewCell {
         self.timeLab.text = "\(date[0])/\(date[1])/\(date[2])"
         self.contant.text = newsInfo.post_excerpt
         
-        if newsInfo.thumb == "/data/upload/" {
+//        if newsInfo.thumb == "/data/upload/" {
+//            
+//            self.titImage.removeFromSuperview()
+//            
+//            self.titLab.frame.size.width = WIDTH-20
+//            
+//        }else{
+//            
+//            let photoUrl:String = DomainName+newsInfo.thumb!
+//            print("=-=-=-=-=-=-=   ",photoUrl)
+//            self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
+//            self.addSubview(self.titImage)
+//            //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
+//            //        titLab.frame.size.height = titleHeight+100
+//        }
+        if newsInfo.thumbArr.count == 0 {
             
             self.titImage.removeFromSuperview()
             
@@ -164,7 +179,7 @@ class GToutiaoTableViewCell: UITableViewCell {
             
         }else{
             
-            let photoUrl:String = DomainName+newsInfo.thumb!
+            let photoUrl:String = DomainName+"data/upload/"+(newsInfo.thumbArr.first?.url)!
             print("=-=-=-=-=-=-=   ",photoUrl)
             self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
             self.addSubview(self.titImage)

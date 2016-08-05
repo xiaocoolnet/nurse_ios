@@ -111,6 +111,7 @@ class NewsInfo: JSONJoy{
     var post_date:String?
     var recommended:String?
     var thumb:String?
+    var thumbArr = Array<thumbModel>()
     var term_id :String
     var term_name:String
     var term_hits:String
@@ -141,12 +142,28 @@ class NewsInfo: JSONJoy{
                 self.likes.append(LikeInfo(childs))
             }
         }
+        if decoder["thumb"].array != nil {
+            for childs: JSONDecoder in decoder["thumb"].array!{
+                self.thumbArr.append(thumbModel(childs))
+            }
+        }
     }
     func addpend(list: [LikeInfo]){
         self.likes = list + self.likes
     }
    
 }
+
+class thumbModel: JSONJoy {
+    var url:String
+    var alt:String
+    
+    required init(_ decoder: JSONDecoder) {
+        url = decoder["url"].string ?? ""
+        alt = decoder["alt"].string ?? ""
+    }
+}
+
 
 class LikeList: JSONJoy {
     var status:String?
