@@ -119,6 +119,11 @@
 		18C0BF991CEB655F003E2886 /* QuestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C0BF981CEB655F003E2886 /* QuestionTableViewCell.swift */; };
 		18C240601CEEB6340059BF48 /* TalentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2405F1CEEB6340059BF48 /* TalentViewController.swift */; };
 		18C240621CEF10150059BF48 /* OnlineExaminationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */; };
+		1F0BE12A1D54A84300842B80 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F0BE1251D54A84300842B80 /* libWeChatSDK.a */; };
+		1F0BE12B1D54A84300842B80 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F0BE1261D54A84300842B80 /* README.txt */; };
+		1F1A33951D548D7A00F7C20A /* editResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */; };
+		1F1A33961D548D7A00F7C20A /* editResumeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */; };
+		1F1A33981D54952600F7C20A /* PostVacanciewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */; };
 		1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */; };
 		1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */; };
 		1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */; };
@@ -365,6 +370,14 @@
 		18C0BF981CEB655F003E2886 /* QuestionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionTableViewCell.swift; sourceTree = "<group>"; };
 		18C2405F1CEEB6340059BF48 /* TalentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalentViewController.swift; sourceTree = "<group>"; };
 		18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineExaminationViewController.swift; sourceTree = "<group>"; };
+		1F0BE1251D54A84300842B80 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		1F0BE1261D54A84300842B80 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		1F0BE1271D54A84300842B80 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
+		1F0BE1281D54A84300842B80 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		1F0BE1291D54A84300842B80 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editResumeViewController.swift; sourceTree = "<group>"; };
+		1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = editResumeViewController.xib; sourceTree = "<group>"; };
+		1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVacanciewViewController.swift; sourceTree = "<group>"; };
 		1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayModel.swift; sourceTree = "<group>"; };
 		1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaliyExamModel.swift; sourceTree = "<group>"; };
 		1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTimeCell.swift; sourceTree = "<group>"; };
@@ -464,6 +477,7 @@
 			files = (
 				F604A4E41D0E7A2E008A4888 /* libsqlite3.tbd in Frameworks */,
 				F604A4E21D0E7A1D008A4888 /* JavaScriptCore.framework in Frameworks */,
+				1F0BE12A1D54A84300842B80 /* libWeChatSDK.a in Frameworks */,
 				F604A4E01D0E7A16008A4888 /* libstdc++.tbd in Frameworks */,
 				F604A4DE1D0E7A03008A4888 /* libz.tbd in Frameworks */,
 				F604A4DC1D0E79F7008A4888 /* libicucore.tbd in Frameworks */,
@@ -731,6 +745,7 @@
 		183B866B1CE5CF7900709235 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				1F0BE1241D54A84300842B80 /* openSDK1.7.2 */,
 				1FFD9ED41D51EBD700951098 /* DropDown */,
 				0DB4677B1D4C8600009AE2AD /* MJRefresh */,
 				F63981041D373945002EE95B /* CFLineChart */,
@@ -1044,6 +1059,9 @@
 				F63B3A6E1D2F953600C5B2CF /* HSStateEditResumeController.swift */,
 				0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */,
 				F6342C631D38DB4000800D8E /* HSCollectionListController.swift */,
+				1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */,
+				1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */,
+				1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */,
 			);
 			name = Recruitment;
 			sourceTree = "<group>";
@@ -1072,6 +1090,18 @@
 				181E0D3C1CEC429F00E34A7F /* Recruit */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		1F0BE1241D54A84300842B80 /* openSDK1.7.2 */ = {
+			isa = PBXGroup;
+			children = (
+				1F0BE1251D54A84300842B80 /* libWeChatSDK.a */,
+				1F0BE1261D54A84300842B80 /* README.txt */,
+				1F0BE1271D54A84300842B80 /* WechatAuthSDK.h */,
+				1F0BE1281D54A84300842B80 /* WXApi.h */,
+				1F0BE1291D54A84300842B80 /* WXApiObject.h */,
+			);
+			path = openSDK1.7.2;
 			sourceTree = "<group>";
 		};
 		1FFD9ED41D51EBD700951098 /* DropDown */ = {
@@ -1282,6 +1312,7 @@
 				0DB467C51D4CADFA009AE2AD /* CompanyAuthViewController.xib in Resources */,
 				F632EF151D1949910038AF9D /* HSComOpenHeader.xib in Resources */,
 				F605F0BF1D22564300769299 /* HSFindPersonDetailView.xib in Resources */,
+				1F0BE12B1D54A84300842B80 /* README.txt in Resources */,
 				0B64EBE01D37A60F001548EE /* HSForumDetailCell.xib in Resources */,
 				F6C265CE1D2513560033D2A9 /* HSWebViewDetailController.xib in Resources */,
 				0B64EBE21D37A626001548EE /* ReleaseTimeCell.xib in Resources */,
@@ -1290,6 +1321,7 @@
 				F6C265C61D24F08C0033D2A9 /* PostVacancies.xib in Resources */,
 				F63E19821D17C38A001BDE8A /* HSWCommunityHome.xib in Resources */,
 				F632EF0F1D18E8890038AF9D /* HSSQCollectionViewCell.xib in Resources */,
+				1F1A33961D548D7A00F7C20A /* editResumeViewController.xib in Resources */,
 				F6D02CE01D07BB5300353557 /* contentCell.xib in Resources */,
 				0DB082E71D49F14D004510B1 /* GHSExamTableViewCell.xib in Resources */,
 				F63981091D373945002EE95B /* CFLineChartView.xib in Resources */,
@@ -1382,6 +1414,7 @@
 				0BC3878E1D339C2C001460B8 /* AdressPickerView.swift in Sources */,
 				F64C9AC41D3B9C150041E360 /* MineRecDetailsViewController.swift in Sources */,
 				183B86741CE5CFA000709235 /* CornerRadiusViewController.swift in Sources */,
+				1F1A33981D54952600F7C20A /* PostVacanciewViewController.swift in Sources */,
 				F6E86AF61D34DF7E001536B6 /* HSForumDetailCell.swift in Sources */,
 				F6D02CDF1D07BB5300353557 /* contentCell.swift in Sources */,
 				0DB467BD1D4C8600009AE2AD /* UIView+MJExtension.m in Sources */,
@@ -1428,6 +1461,7 @@
 				1FE6E4C21D52EBE3009E036B /* AdressPickerView_2.swift in Sources */,
 				181E0D2B1CEBF87D00E34A7F /* MineMessageViewController.swift in Sources */,
 				0DB467BB1D4C8600009AE2AD /* UIScrollView+MJExtension.m in Sources */,
+				1F1A33951D548D7A00F7C20A /* editResumeViewController.swift in Sources */,
 				F632EF121D192F530038AF9D /* HSWorkPlaceController.swift in Sources */,
 				1FEF15A81D5047EE00FF343C /* MainCompanyAuthViewController.swift in Sources */,
 				F61228051D0558C4009E3D4D /* NewsModel.swift in Sources */,
@@ -1682,6 +1716,10 @@
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HSHW_2016/openSDK1.7.2",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1716,6 +1754,10 @@
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HSHW_2016/openSDK1.7.2",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

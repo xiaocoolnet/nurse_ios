@@ -52,7 +52,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         self.tabBarController?.tabBar.hidden = true
         self.navigationItem.leftBarButtonItem?.title = "返回"
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
 //        MBProgressHUD().labelText = ""
         
         if LOGIN_STATE {
@@ -72,7 +72,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                     dispatch_async(dispatch_get_main_queue(), {
                         self.collectBtn.enabled = true
-                        hud.hide(true)
+//                        hud.hide(true)
                     })
                 })
             })
@@ -309,7 +309,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if indexPath.section == 0 {
             if indexPath.row==0 {
                 
-                let height = calculateHeight(newsInfo?.post_title ?? "", size: 17, width: WIDTH-30)
+                let height = calculateHeight(newsInfo?.post_title ?? "", size: 21, width: WIDTH-30)
                 print(newsInfo?.post_title)
                 print(height)
                 return height+30
@@ -351,7 +351,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell1 = UITableViewCell.init(style: .Default, reuseIdentifier: "cellIntenfer")
 
                 let title = UILabel()
-                let height = calculateHeight((newsInfo?.post_title)!, size: 17, width: WIDTH-20)
+                let height = calculateHeight((newsInfo?.post_title)!, size: 21, width: WIDTH-20)
                 title.frame = CGRectMake(15, 0, WIDTH-30, height+30)
                 title.text = newsInfo?.post_title
                 title.numberOfLines = 0
@@ -504,69 +504,98 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 
    
     func shareTheNews(btn:UIButton) {
-        let shareParames = NSMutableDictionary()
-    // let image : UIImage = UIImage(named: "btn_setting_qq_login")!
-    // 判断是否有图片,如果没有设置默认图片
-        let url = NewsInfo_Header+(newsInfo?.object_id)!
-        shareParames.SSDKSetupShareParamsByText("分享内容",
-                                                images : UIImage(named: "1.png"),
-                                                url : NSURL(string:url),
-                                                title : newsInfo?.post_title,
-                                                type : SSDKContentType.Auto)
-
-        if btn.tag==0 {
-            if WXApi.isWXAppInstalled() {
-                
-                //微信朋友圈分享
-                ShareSDK.share(SSDKPlatformType.SubTypeWechatTimeline, parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
-                    
-                    switch state{
-                        
-                    case SSDKResponseState.Success:
-                        print("分享成功")
-                    
-                        let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
-                        alert.show()
-                        
-                    case SSDKResponseState.Fail:    print("分享失败,错误描述:\(error)")
-                    case SSDKResponseState.Cancel:  print("分享取消")
-                        
-                    default:
-                        break
-                    }
-                }
-            }else{
-                let alertView = UIAlertView.init(title:"提示" , message: "没有安装微信", delegate: self, cancelButtonTitle: "确定")
-                alertView.show()
-                
-            }
-        }else if btn.tag == 1{
-            
-            if WXApi.isWXAppInstalled() {
-                //微信好友分享
-                ShareSDK.share(SSDKPlatformType.SubTypeWechatSession , parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
-                    switch state{
-                        
-                    case SSDKResponseState.Success:
-                        print("分享成功")
-                        let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
-                        alert.show()
-                        
-                    case SSDKResponseState.Fail:  print("分享失败,错误描述:\(error)")
-                    case SSDKResponseState.Cancel:  print("分享取消")
-                        
-                    default:
-                        break
-                    }
-                }
-            }else{
-                let alertView = UIAlertView.init(title:"提示" , message: "没有安装微信", delegate: self, cancelButtonTitle: "确定")
-                alertView.show()
-                
-            }
         
+        let message = WXMediaMessage()
+        message.title = "中国护士网"
+        message.description = newsInfo?.post_title
+        // TODO:
+        message.setThumbImage(UIImage())
+        
+        let webPageObject = WXWebpageObject()
+        webPageObject.webpageUrl = NewsInfo_Header+(newsInfo?.object_id)!
+        message.mediaObject = webPageObject
+        
+        let req = SendMessageToWXReq()
+        req.bText = false
+        req.message = message
+        
+        switch btn.tag {
+        case 0:
+            req.scene = Int32(WXSceneTimeline.rawValue)
+        case 1:
+            req.scene = Int32(WXSceneSession.rawValue)
+            
+        default:
+            break
         }
-    
+        
+//        req.scene = Int32(WXSceneTimeline.rawValue)
+        
+        WXApi.sendReq(req)
+        
+//        let shareParames = NSMutableDictionary()
+//    // let image : UIImage = UIImage(named: "btn_setting_qq_login")!
+//    // 判断是否有图片,如果没有设置默认图片
+//        let url = NewsInfo_Header+(newsInfo?.object_id)!
+//        shareParames.SSDKSetupShareParamsByText("分享内容",
+//                                                images : UIImage(named: "1.png"),
+//                                                url : NSURL(string:url),
+//                                                title : newsInfo?.post_title,
+//                                                type : SSDKContentType.Auto)
+//
+//        if btn.tag==0 {
+//            if WXApi.isWXAppInstalled() {
+//                
+//                //微信朋友圈分享
+//                ShareSDK.share(SSDKPlatformType.SubTypeWechatTimeline, parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
+//                    
+//                    switch state{
+//                        
+//                    case SSDKResponseState.Success:
+//                        print("分享成功")
+//                    
+//                        let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
+//                        alert.show()
+//                        
+//                    case SSDKResponseState.Fail:    print("分享失败,错误描述:\(error)")
+//                    case SSDKResponseState.Cancel:  print("分享取消")
+//                        
+//                    default:
+//                        break
+//                    }
+//                }
+//            }else{
+//                let alertView = UIAlertView.init(title:"提示" , message: "没有安装微信", delegate: self, cancelButtonTitle: "确定")
+//                alertView.show()
+//                
+//            }
+//        }else if btn.tag == 1{
+//            
+//            if WXApi.isWXAppInstalled() {
+//                //微信好友分享
+//                ShareSDK.share(SSDKPlatformType.SubTypeWechatSession , parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
+//                    switch state{
+//                        
+//                    case SSDKResponseState.Success:
+//                        print("分享成功")
+//                        let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
+//                        alert.show()
+//                        
+//                    case SSDKResponseState.Fail:  print("分享失败,错误描述:\(error)")
+//                    case SSDKResponseState.Cancel:  print("分享取消")
+//                        
+//                    default:
+//                        break
+//                    }
+//                }
+//            }else{
+//                let alertView = UIAlertView.init(title:"提示" , message: "没有安装微信", delegate: self, cancelButtonTitle: "确定")
+//                alertView.show()
+//                
+//            }
+//        
+//        }
+//    
         print(btn.tag)
         
     }

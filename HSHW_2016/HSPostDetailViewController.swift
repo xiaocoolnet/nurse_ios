@@ -576,7 +576,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         let weiboAction = UIAlertAction(title: "新浪微博", style: .Default) { (pengyouquanAction) in
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.mode = MBProgressHUDMode.Text;
-            hud.labelText = "这几个功能明天做"
+            hud.labelText = "新浪微博 敬请期待"
             hud.margin = 10.0
             hud.removeFromSuperViewOnHide = true
             hud.hide(true, afterDelay: 2)
@@ -603,68 +603,34 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     }
     
     func shareTheNews(index:Int) {
-        let shareParames = NSMutableDictionary()
-        // let image : UIImage = UIImage(named: "btn_setting_qq_login")!
-        // 判断是否有图片,如果没有设置默认图片
-        let url = APP_SHARE_URL
-        shareParames.SSDKSetupShareParamsByText("分享内容",
-                                                images : UIImage(named: "AppIcon.png"),
-                                                url : NSURL(string:url),
-                                                title : APP_SHARE_NAME,
-                                                type : SSDKContentType.Auto)
+            
+        let message = WXMediaMessage()
+        message.title = "中国护士网"
+        message.description = APP_SHARE_NAME
+        // TODO:
+        message.setThumbImage(UIImage())
         
-        if index == 3 {
-            if WXApi.isWXAppInstalled() {
-                
-                //微信朋友圈分享
-                ShareSDK.share(SSDKPlatformType.SubTypeWechatTimeline, parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
-                    
-                    switch state{
-                        
-                    case SSDKResponseState.Success:
-                        print("分享成功")
-                        
-                        let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
-                        alert.show()
-                        
-                    case SSDKResponseState.Fail:    print("分享失败,错误描述:\(error)")
-                    case SSDKResponseState.Cancel:  print("分享取消")
-                        
-                    default:
-                        break
-                    }
-                }
-            }else{
-                let alertView = UIAlertView.init(title:"提示" , message: "没有安装微信", delegate: self, cancelButtonTitle: "确定")
-                alertView.show()
-                
-            }
-        }else if index == 1{
+        let webPageObject = WXWebpageObject()
+        webPageObject.webpageUrl = APP_SHARE_URL
+        message.mediaObject = webPageObject
+        
+        let req = SendMessageToWXReq()
+        req.bText = false
+        req.message = message
+        
+        switch index {
+        case 1:
+            req.scene = Int32(WXSceneTimeline.rawValue)
+        case 3:
+            req.scene = Int32(WXSceneSession.rawValue)
             
-            if WXApi.isWXAppInstalled() {
-                //微信好友分享
-                ShareSDK.share(SSDKPlatformType.SubTypeWechatSession , parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
-                    switch state{
-                        
-                    case SSDKResponseState.Success:
-                        print("分享成功")
-                        let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
-                        alert.show()
-                        
-                    case SSDKResponseState.Fail:  print("分享失败,错误描述:\(error)")
-                    case SSDKResponseState.Cancel:  print("分享取消")
-                        
-                    default:
-                        break
-                    }
-                }
-            }else{
-                let alertView = UIAlertView.init(title:"提示" , message: "没有安装微信", delegate: self, cancelButtonTitle: "确定")
-                alertView.show()
-                
-            }
-            
+        default:
+            break
         }
+        
+        //        req.scene = Int32(WXSceneTimeline.rawValue)
+        
+        WXApi.sendReq(req)
         
         print(index)
         

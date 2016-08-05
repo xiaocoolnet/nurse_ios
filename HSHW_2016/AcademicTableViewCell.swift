@@ -77,7 +77,7 @@ class AcademicTableViewCell: UITableViewCell {
     var newsInfo:NewsInfo?{
         didSet {
             aca_zan.selected = false
-            let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo!.thumb!
+            let photoUrl:String = DomainName+newsInfo!.thumb!
             print(photoUrl)
             titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
             titLab.text = newsInfo!.post_title

@@ -33,6 +33,20 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     let phoneNum = UITextField()
     let yanzheng = UITextField()
     let password = UITextField()
+    
+    // 个人
+    let personalBtn = UIButton()
+    let personalImg = UIImageView()
+    let personalLab = UILabel()
+    
+    // 企业
+    let businessBtn = UIButton()
+    let businessImg = UIImageView()
+    let businessLab = UILabel()
+    
+    // 1 用户  2 企业
+    var usertype = "1"
+    
     let acquire = UIButton()
     let gain = UILabel()
     let submit = UIButton()
@@ -257,7 +271,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         navigationController?.navigationBar.hidden = flag
     }
     
-    //  注册界面UI的搭建
+    //  MARK:注册界面UI的搭建
     func registerView() {
         register.frame = CGRectMake(WIDTH, WIDTH*333/375, WIDTH, HEIGHT-WIDTH*333/375)
         register.backgroundColor = UIColor.whiteColor()
@@ -292,6 +306,40 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         register.addSubview(password)
         password.delegate = self
         
+        let btnWidth:CGFloat = 60
+        let btnHeight:CGFloat = 20
+        let margin:CGFloat = 10
+        
+        // 个人
+        personalBtn.frame = CGRectMake(WIDTH/2.0-margin-btnWidth, CGRectGetMaxY(password.frame)+10, btnWidth, btnHeight)
+        personalBtn.addTarget(self, action: #selector(personalOrBusinessBtnClick(_:)), forControlEvents: .TouchUpInside)
+        register.addSubview(personalBtn)
+        
+        personalImg.frame = CGRectMake(0, 2, btnHeight-4, btnHeight-4)
+        personalImg.image = UIImage.init(named: "ic_gou_sel")
+        personalBtn.addSubview(personalImg)
+        
+        personalLab.frame = CGRectMake(btnHeight+5, 0, btnWidth-btnHeight-5, btnHeight)
+        personalLab.textColor = COLOR
+        personalLab.font = UIFont.systemFontOfSize(14)
+        personalLab.text = "个人"
+        personalBtn.addSubview(personalLab)
+        
+        // 企业
+        businessBtn.frame = CGRectMake(WIDTH/2.0+margin, CGRectGetMaxY(password.frame)+10, btnWidth, btnHeight)
+        businessBtn.addTarget(self, action: #selector(personalOrBusinessBtnClick(_:)), forControlEvents: .TouchUpInside)
+        register.addSubview(businessBtn)
+        
+        businessImg.frame = CGRectMake(0, 2, btnHeight-4, btnHeight-4)
+        businessImg.image = UIImage.init(named: "ic_kuang")
+        businessBtn.addSubview(businessImg)
+        
+        businessLab.frame = CGRectMake(btnHeight+5, 0, btnWidth-btnHeight-5, btnHeight)
+        businessLab.textColor = GREY
+        businessLab.font = UIFont.systemFontOfSize(14)
+        businessLab.text = "企业"
+        businessBtn.addSubview(businessLab)
+        
         gain.frame = CGRectMake(WIDTH-130, WIDTH*75/375+(WIDTH*50/375-30)/2, 95, 30)
         gain.text = "获取验证码"
         gain.font = UIFont.systemFontOfSize(14)
@@ -307,7 +355,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         acquire.layer.borderWidth = 1.5
         register.addSubview(acquire)
   
-        submit.frame = CGRectMake(25, WIDTH*212/375, WIDTH-50, WIDTH*50/375)
+        submit.frame = CGRectMake(25, WIDTH*212/375+btnHeight, WIDTH-50, WIDTH*50/375)
         submit.layer.cornerRadius = WIDTH*25/375
         submit.layer.borderWidth = 1.5
         submit.layer.borderColor = COLOR.CGColor
@@ -319,6 +367,28 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         register.addSubview(submit)
         
 //        scrollView.contentSize = CGSizeMake(WIDTH, CGRectGetMinY(register.frame)+CGRectGetMaxY(submit.frame)+10-20)
+    }
+    
+    func personalOrBusinessBtnClick(button:UIButton) {
+        if button == personalBtn {
+            
+            personalImg.image = UIImage.init(named: "ic_gou_sel")
+            personalLab.textColor = COLOR
+            
+            businessImg.image = UIImage.init(named: "ic_kuang")
+            businessLab.textColor = GREY
+            
+            usertype = "1"
+        }else if button == businessBtn {
+            
+            businessImg.image = UIImage.init(named: "ic_gou_sel")
+            businessLab.textColor = COLOR
+            
+            personalImg.image = UIImage.init(named: "ic_kuang")
+            personalLab.textColor = GREY
+            
+            usertype = "2"
+        }
     }
     
     //  点击短信获取验证码
@@ -337,6 +407,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
             let alert = UIAlertView(title:"提示信息",message: "手机号格式有误！",delegate: self,cancelButtonTitle: "确定")
             
             alert.show()
+            return
         }
         logVM?.comfirmPhoneHasRegister(phoneNum.text!, handle: {[unowned self](success, response) in
             dispatch_async(dispatch_get_main_queue(), {
@@ -359,7 +430,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     // 验证手机号是否正确
     func validationEmailFormat(string:String) -> Bool {
     
-        let mobileRegex = "^((13[0-9])|(147)|(170)|(15[^4,//D])|(18[0,5-9]))//d{8}$"
+        let mobileRegex = "^((13[0-9])|(147)|(170)|(15[^4,\\D])|(18[0-9]))\\d{8}$"
         let mobileTest:NSPredicate = NSPredicate(format: "SELF MATCHES %@",mobileRegex)
         return mobileTest.evaluateWithObject(string)
    
@@ -391,7 +462,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         
 
         logVM?.register(phoneNum.text!,password:password.text!,
-                        code:yanzheng.text!,usertype:"1",devicestate:"1", handle: { [unowned self] (success, response) in
+                        code:yanzheng.text!,usertype:usertype,devicestate:"1", handle: { [unowned self] (success, response) in
             dispatch_async(dispatch_get_main_queue(), {
                 if success {
                     

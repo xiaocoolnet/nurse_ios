@@ -10,4 +10,4 @@
 #import "WeiboSDK.h"
 #import "ConnectModel.h"
 #import "CFLineChartView.h"
-#import "MJRefreshNormalHeader.h"
+#import "MJRefresh.h"

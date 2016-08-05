@@ -75,8 +75,8 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     var array = NSArray()
    
     @IBAction func sendBtnClicked(sender: AnyObject) {
-        if delegate != nil {
-            
+//        if delegate != nil {
+        
             if postNameField.text != "" && firmNameField.text != "" && resumeFeild.text != "" && phoneField.text != "" && mailboxField.text != "" && workplaceBtn.selected && detailPlaceTF.text != "" && positionBtn.selected && conditionBtn.selected && treatmentBtn.selected && personBtn.selected && moneyBtn.selected && requestField.text != "" {
                 
                 let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
@@ -94,8 +94,35 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
                         hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = "提交成功"
                         hud.hide(true, afterDelay: 1)
-
-                        self.delegate?.clickedSendBtn()
+                        
+                        self.selfNav?.popViewControllerAnimated(true)
+//                        self.delegate?.clickedSendBtn()
+                        
+                        
+                        //提交后还原表格样式
+                        self.firmNameField.text = nil
+                        self.resumeFeild.text = nil
+                        self.phoneField.text = nil
+                        self.mailboxField.text = nil
+                        self.postNameField.text = nil
+                        
+                        //        positionBtn.setTitle("请选择工作地点", forState: .Normal)
+                        //        conditionBtn.setTitle("请选择招聘职位", forState: .Normal)
+                        //        treatmentBtn.setTitle("请选择招聘条件", forState: .Normal)
+                        //        workplaceBtn.setTitle("请选择福利待遇", forState: .Normal)
+                        //        personBtn.setTitle("请选择招聘人数", forState: .Normal)
+                        //        moneyBtn.setTitle("请选择薪资待遇", forState: .Normal)
+                        
+                        self.positionLab.text = "主管护士"
+                        self.conditionLab.text = "研究生"
+                        self.treatmentLab.text = "五险一金"
+                        self.placeLab_1.text = "北京市"
+                        self.placeLab_2.text = "北京市"
+                        self.placeLab_3.text = "朝阳区"
+                        self.personLab.text = "10人以上"
+                        self.moneyLab.text = "面议"
+                        self.requestField.text = nil
+                        self.requestLabel.text = "职位要求"
                     }else {
                         hud.hide(true)
                         let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .Alert)
@@ -155,41 +182,17 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
                 let vc = responderVC()
                 vc!.presentViewController(alertController, animated: true, completion: nil)
             }
-        }
+//        }
         
 //        print(firmNameField.text!,resumeFeild.text!,phoneField.text!,mailboxField.text!,postNameField.text!,"1",conditionBtn.currentTitle!,treatmentBtn.currentTitle!,workplaceBtn.currentTitle!,personBtn.currentTitle!,moneyBtn.currentTitle!,requestField.text)
         
-        if firmNameField.text != "" && resumeFeild.text != "" && phoneField.text != "" && postNameField.text != "" && conditionBtn.currentTitle != "" && treatmentBtn.currentTitle != "" && workplaceBtn.currentTitle != "" && personBtn.currentTitle != "" && moneyBtn.currentTitle != "" {
+//        if firmNameField.text != "" && resumeFeild.text != "" && phoneField.text != "" && postNameField.text != "" && conditionBtn.currentTitle != "" && treatmentBtn.currentTitle != "" && workplaceBtn.currentTitle != "" && personBtn.currentTitle != "" && moneyBtn.currentTitle != "" {
+//
+//            helper.publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionLab.text!, education: conditionLab.text!, welfare: treatmentLab.text!, address: placeLab_1.text!+placeLab_2.text!+placeLab_3.text!, count: personLab.text!, salary: moneyLab.text!, description: requestField.text) { (success, response) in
+//                print(success)
+//           }
+//        }
 
-            helper.publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionLab.text!, education: conditionLab.text!, welfare: treatmentLab.text!, address: placeLab_1.text!+placeLab_2.text!+placeLab_3.text!, count: personLab.text!, salary: moneyLab.text!, description: requestField.text) { (success, response) in
-                print(success)
-           }
-        }
-        
-        //提交后还原表格样式
-        firmNameField.text = nil
-        resumeFeild.text = nil
-        phoneField.text = nil
-        mailboxField.text = nil
-        postNameField.text = nil
-
-//        positionBtn.setTitle("请选择工作地点", forState: .Normal)
-//        conditionBtn.setTitle("请选择招聘职位", forState: .Normal)
-//        treatmentBtn.setTitle("请选择招聘条件", forState: .Normal)
-//        workplaceBtn.setTitle("请选择福利待遇", forState: .Normal)
-//        personBtn.setTitle("请选择招聘人数", forState: .Normal)
-//        moneyBtn.setTitle("请选择薪资待遇", forState: .Normal)
-        
-        positionLab.text = "主管护士"
-        conditionLab.text = "研究生"
-        treatmentLab.text = "五险一金"
-        placeLab_1.text = "北京市"
-        placeLab_2.text = "北京市"
-        placeLab_3.text = "朝阳区"
-        personLab.text = "10人以上"
-        moneyLab.text = "面议"
-        requestField.text = nil
-        requestLabel.text = "职位要求"
     }
     
     func responderVC() -> (UIViewController?) {
@@ -283,6 +286,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         // 下拉列表选中后的回调方法
         coditionDrop.selectionAction = { [unowned self] (index, item) in
             
+            self.conditionBtn.selected = true
             self.conditionLab.text = item
             self.conditionLab.sizeToFit()
             self.conditionImg.frame.origin.x = CGRectGetMaxX(self.conditionLab.frame)+5
@@ -299,6 +303,9 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         
         // 下拉列表选中后的回调方法
         treatmentDrop.selectionAction = { [unowned self] (index, item) in
+            
+            self.conditionBtn.selected = true
+            
             self.treatmentLab.text = item
             self.treatmentLab.sizeToFit()
             self.treatmentImg.frame.origin.x = CGRectGetMaxX(self.treatmentLab.frame)+5
@@ -315,6 +322,9 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         
         // 下拉列表选中后的回调方法
         personDrop.selectionAction = { [unowned self] (index, item) in
+            
+            self.conditionBtn.selected = true
+            
             self.personLab.text = item
             self.personLab.sizeToFit()
             self.personImg.frame.origin.x = CGRectGetMaxX(self.personLab.frame)+5
@@ -331,6 +341,9 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         
         // 下拉列表选中后的回调方法
         moneyDrop.selectionAction = { [unowned self] (index, item) in
+            
+            self.conditionBtn.selected = true
+            
             self.moneyLab.text = item
             self.moneyLab.sizeToFit()
             self.moneyImg.frame.origin.x = CGRectGetMaxX(self.moneyLab.frame)+5
@@ -383,23 +396,28 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             self.placeLab_2.text =  (dressArray[1] as! String)
             self.placeLab_3.text =  (dressArray[2] as! String)
             
-            self.placeLab_1.enabled = true
-            self.placeLab_2.enabled = true
-            self.placeLab_3.enabled = true
+//            self.placeLab_1.enabled = true
+//            self.placeLab_2.enabled = true
+//            self.placeLab_3.enabled = true
             
             self.placeLab_1.sizeToFit()
-            self.placeImg_1.frame = CGRectMake(CGRectGetMaxX(self.placeLab_1.frame), self.placeImg_1.frame.origin.y, 12, 12)
+            self.placeLab_1.center.y = self.placeImg_1.center.y
+            self.placeImg_1.frame.origin.x = CGRectGetMaxX(self.placeLab_1.frame)+5
             
             
-            self.placeLab_2.frame = CGRectMake(CGRectGetMaxX(self.placeImg_1.frame)+5, self.placeLab_2.frame.origin.y, self.placeLab_2.frame.size.width, 12)
-            self.placeLab_2.adjustsFontSizeToFitWidth = true
+            self.placeLab_2.frame.origin.x = CGRectGetMaxX(self.placeImg_1.frame)+5
+//            self.placeLab_2.adjustsFontSizeToFitWidth = true
             self.placeLab_2.sizeToFit()
-            self.placeImg_2.frame = CGRectMake(CGRectGetMaxX(self.placeLab_2.frame), self.placeImg_2.frame.origin.y, 12, 12)
+            self.placeLab_2.center.y = self.placeLab_1.center.y
+            self.placeImg_2.frame.origin.x = CGRectGetMaxX(self.placeLab_2.frame)+5
             
-            self.placeLab_3.frame = CGRectMake(CGRectGetMaxX(self.placeImg_2.frame)+5, self.placeLab_3.frame.origin.y, self.placeLab_3.frame.size.width, 12)
-            self.placeLab_3.adjustsFontSizeToFitWidth = true
+            self.placeLab_3.frame.origin.x = CGRectGetMaxX(self.placeImg_2.frame)+5
+//            self.placeLab_3.adjustsFontSizeToFitWidth = true
             self.placeLab_3.sizeToFit()
-            self.placeImg_3.frame = CGRectMake(CGRectGetMaxX(self.placeLab_3.frame), self.placeImg_3.frame.origin.y, 12, 12)
+            self.placeLab_3.center.y = self.placeLab_1.center.y
+            self.placeImg_3.frame.origin.x = CGRectGetMaxX(self.placeLab_3.frame)+5
+            
+            (sender as! UIButton).selected = true
         }
         
     }

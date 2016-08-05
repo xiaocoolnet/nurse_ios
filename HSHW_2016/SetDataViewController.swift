@@ -103,7 +103,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let dateStr = dateFormatter.stringFromDate(NSDate())
         let imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
         
-        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") { [unowned self] (data) in
+        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "\(PARK_URL_Header)uploadavatar") { [unowned self] (data) in
             dispatch_async(dispatch_get_main_queue(), {
                 
                 let result = Http(JSONDecoder(data))

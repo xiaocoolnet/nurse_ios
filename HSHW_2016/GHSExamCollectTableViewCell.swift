@@ -10,6 +10,7 @@ import UIKit
 
 class GHSExamCollectTableViewCell: UITableViewCell {
 
+    let iconImg = UIImageView()
     let examTitle = UILabel()
     let timeLabel = UILabel()
     override func awakeFromNib() {
@@ -26,14 +27,30 @@ class GHSExamCollectTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        examTitle.frame = CGRectMake(5, 4, WIDTH, 18)
-        self.addSubview(examTitle)
+        iconImg.frame = CGRectMake(8, 5+8, 25, 30)
+        iconImg.image = UIImage.init(named: "ic_note")
+        self.contentView.addSubview(iconImg)
+        
+        examTitle.frame = CGRectMake(CGRectGetMaxX(iconImg.frame)+5, 4+8, WIDTH-16-CGRectGetMaxX(iconImg.frame)-5, 18)
+        examTitle.font = UIFont.systemFontOfSize(14)
+        examTitle.textColor = UIColor.blackColor()
+        examTitle.textAlignment = NSTextAlignment.Left
+        self.contentView.addSubview(examTitle)
+        
+        timeLabel.frame = CGRectMake(CGRectGetMaxX(iconImg.frame)+5, CGRectGetMaxY(examTitle.frame)+1, WIDTH-16-CGRectGetMaxX(iconImg.frame)-5, 13)
+        timeLabel.font = UIFont.systemFontOfSize(12)
+        timeLabel.textColor = UIColor.lightGrayColor()
+        timeLabel.textAlignment = NSTextAlignment.Right
+        self.contentView.addSubview(timeLabel)
         
     }
 
     func showforModel(model:xamInfo){
-//        print(model.title)
+        print(model.title)
 //        examTitle.text = "123456789"
+        examTitle.text = model.title
+        timeLabel.text = timeStampToString(model.createtime)
+
 //        if (newsTitle != nil) {
 //            newsTitle.text = model.title
 //        }

@@ -134,7 +134,7 @@ class PostViewController: UIViewController,UITextFieldDelegate,UITextViewDelegat
         let dateStr = dateFormatter.stringFromDate(NSDate())
         let imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
         
-        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") {  (data) in
+        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "\(PARK_URL_Header)uploadavatar") {  (data) in
             dispatch_async(dispatch_get_main_queue(), { [unowned self] in
                 let result = Http(JSONDecoder(data))
                 if result.status != nil {

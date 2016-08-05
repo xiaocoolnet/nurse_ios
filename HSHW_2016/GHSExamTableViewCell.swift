@@ -29,9 +29,9 @@ class GHSExamTableViewCell: UITableViewCell {
     
     func showforModel(model:xamInfo){
         print(model.title)
-//        newsTitle.text = "123456789"
-//        newsTitle.text = model.title
-//        timeLabel.text = timeStampToString(model.createtime)
+        newsTitle.text = "123456789"
+        newsTitle.text = model.title
+        timeLabel.text = timeStampToString(model.createtime)
 //        selfModel = model
     }
     

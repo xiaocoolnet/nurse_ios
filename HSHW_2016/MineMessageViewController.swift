@@ -56,7 +56,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         cell.titleLable.text = model.title
         cell.nameLable.text = model.content
 //        cell.imgBtn.setBackgroundImage(UIImage(named: model.photo), forState: .Normal)
-        cell.imgBtn.sd_setImageWithURL(NSURL(string:"http://nurse.xiaocool.net"+model.photo), placeholderImage: UIImage(named: "ic_lan.png"))
+        cell.imgBtn.sd_setImageWithURL(NSURL(string:DomainName+model.photo), placeholderImage: UIImage(named: "ic_lan.png"))
         
         var flag = true
         if (NSUserDefaults.standardUserDefaults().valueForKey("markReadMessageID") != nil) {

@@ -106,6 +106,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     func GetDate(){
         let url = PARK_URL_Header+"getMyReciveResumeList"
+        // TODO: userid 待更新
         let param = ["userid":"1"]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){

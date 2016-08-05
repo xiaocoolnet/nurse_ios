@@ -56,13 +56,25 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.view.backgroundColor = COLOR
         
         myTableView.frame = CGRectMake(0, -20, WIDTH, HEIGHT)
-        myTableView.bounces = false
+//        myTableView.bounces = false
         myTableView.backgroundColor = RGREY
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.registerClass(MineTableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(myTableView)
         myTableView.separatorStyle = .None
+        
+        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
+        loadData()
+        
+        // Do any additional setup after loading the view.
+    }
+    
+    func loadData() {
+        
+        if myTableView.mj_header.isRefreshing() {
+            myTableView.mj_header.endRefreshing()
+        }
         
         hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         hud!.labelText = "正在获取个人信息"
@@ -93,15 +105,14 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 })
             }
         }
-        
-        // Do any additional setup after loading the view.
     }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 6
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 {
-            return WIDTH
+            return WIDTH*232/375+100
         }else{
             return 60
         }
@@ -147,7 +158,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if indexPath.row == 0 {
                 // 创建渐变色图层
                 let gradientLayer = CAGradientLayer.init()
-                gradientLayer.frame = CGRectMake(0, 0, WIDTH, WIDTH)
+                gradientLayer.frame = CGRectMake(0, 0, WIDTH, WIDTH*232/375+100)
                 gradientLayer.colors = [UIColor.init(red: 186/255.0, green: 125/255.0, blue: 126/255.0, alpha: 1).CGColor,UIColor.init(red: 140/255.0, green: 20/255.0, blue: 139/255.0, alpha: 1).CGColor]
                 // 设置渐变方向（0-1）
                 gradientLayer.startPoint = CGPoint(x: 0, y: 0)
@@ -157,44 +168,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 gradientLayer.borderWidth = 0.0
                 // 添加图层
                 cell.layer.addSublayer(gradientLayer)
-                for i in 0...2 {
-                    if i == 0 {
-                        fansCountBtn.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH-60, WIDTH/3, 20)
-                        fansCountBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
-                        cell.addSubview(fansCountBtn)
-                    }else if i == 1 {
-                        attentionBtn.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH-60, WIDTH/3, 20)
-                        attentionBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
-                        cell.addSubview(attentionBtn)
-                    }else {
-                        nurseCoins.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH-60, WIDTH/3, 20)
-                        nurseCoins.titleLabel?.font = UIFont.systemFontOfSize(14)
-                        cell.addSubview(nurseCoins)
-                    }
-                    
-                    let numName = UILabel(frame: CGRectMake(WIDTH/3*CGFloat(i), WIDTH-40, WIDTH/3, 20))
-                    numName.textColor = UIColor(red: 250/255.0, green: 118/255.0, blue: 210/255.0, alpha: 1.0)
-                    numName.textAlignment = .Center
-                    numName.font = UIFont.systemFontOfSize(12)
-                    numName.text = numNameArr[i]
-                    cell.addSubview(numName)
-                    let line = UILabel(frame: CGRectMake(WIDTH/3*CGFloat(i)-0.5, WIDTH-50, 0.5, 20))
-                    line.backgroundColor = UIColor(red: 250/255.0, green: 118/255.0, blue: 210/255.0, alpha: 1.0)
-                    cell.addSubview(line)
-                    let btn = UIButton(frame: CGRectMake(WIDTH/3*CGFloat(i), WIDTH-60, WIDTH/3, 40))
-                    btn.addTarget(self, action: #selector(self.fineAndContact(_:)), forControlEvents: .TouchUpInside)
-                    btn.tag = i+1
-                    cell.addSubview(btn)
-                }
-                
-                titImage.frame = CGRectMake(WIDTH*128/375, WIDTH*74/375, WIDTH*120/375, WIDTH*120/375)
-                self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
-                titImage.addTarget(self, action: #selector(MineViewController.changeTitImage), forControlEvents: .TouchUpInside)
-                titImage.layer.cornerRadius = WIDTH*120/375/2
-                titImage.clipsToBounds = true
-                titImage.layer.borderWidth = 3
-                titImage.layer.borderColor = UIColor.whiteColor().CGColor
-                cell.addSubview(titImage)
+
                 let person = UILabel()
                 person.frame = CGRectMake(WIDTH*128/375, WIDTH*29/375, WIDTH*120/375, WIDTH*30/375)
                 person.textColor = UIColor.whiteColor()
@@ -209,17 +183,43 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 setBtn.addTarget(self, action: #selector(self.setUpData), forControlEvents: .TouchUpInside)
                 cell.addSubview(setBtn)
                 
-                let signImg = UIImageView(frame: CGRectMake(WIDTH*137/375, WIDTH-WIDTH*111/375, WIDTH*22/375, WIDTH*22/375))
+                titImage.frame = CGRectMake(WIDTH*128/375, WIDTH*69/375, WIDTH*120/375, WIDTH*120/375)
+                self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
+                titImage.addTarget(self, action: #selector(MineViewController.changeTitImage), forControlEvents: .TouchUpInside)
+                titImage.layer.cornerRadius = WIDTH*120/375/2
+                titImage.clipsToBounds = true
+                titImage.layer.borderWidth = 3
+                titImage.layer.borderColor = UIColor.whiteColor().CGColor
+                cell.addSubview(titImage)
+                
+                userNameLabel.frame = CGRectMake(WIDTH*160/375, WIDTH*200/375, WIDTH*55/375, 19)
+                userNameLabel.textAlignment = .Center
+                userNameLabel.font = UIFont.systemFontOfSize(18)
+                userNameLabel.textColor = UIColor.whiteColor()
+                userNameLabel.sizeToFit()
+                userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
+                
+                userNameLabel.frame = CGRectMake(WIDTH/2-userNameLabel.bounds.size.width/2, WIDTH*200/375, userNameLabel.bounds.size.width, userNameLabel.bounds.size.height)
+                cell.addSubview(userNameLabel)
+                
+                levelBtn.frame = CGRectMake(userNameLabel.bounds.size.width/2+5+WIDTH/2, WIDTH*200/375, 20, 19)
+                levelBtn.setBackgroundImage(UIImage(named: "ic_shield_yellow.png"), forState: .Normal)
+                levelBtn.setTitleColor(UIColor.yellowColor(), forState: .Normal)
+                levelBtn.titleLabel?.font = UIFont.systemFontOfSize(9)
+                levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, forState: .Normal)
+                cell.addSubview(levelBtn)
+                
+                let signImg = UIImageView(frame: CGRectMake(WIDTH*137/375, WIDTH*200/375+40, WIDTH*22/375, WIDTH*22/375))
                 signImg.image = UIImage(named: "ic_lalendar.png")
                 cell.addSubview(signImg)
-                signLab.frame = CGRectMake(WIDTH*169/375, WIDTH-WIDTH*111/375,WIDTH*120/375, WIDTH*22/375)
+                
+                signLab.frame = CGRectMake(WIDTH*169/375, WIDTH*200/375+40,WIDTH*120/375, WIDTH*22/375)
                 signLab.font = UIFont.systemFontOfSize(18)
                 signLab.textColor = UIColor.yellowColor()
 //                signLab.text = "请稍候"
                 cell.addSubview(signLab)
                 
-                
-                signBtn.frame = CGRectMake(WIDTH*68/375, WIDTH-WIDTH*121/375, WIDTH*240/375, WIDTH*42/375)
+                signBtn.frame = CGRectMake(WIDTH*68/375, WIDTH*190/375+40, WIDTH*240/375, WIDTH*42/375)
                 signBtn.layer.cornerRadius = WIDTH*42/375/2
                 signBtn.layer.borderColor = UIColor.yellowColor().CGColor
                 signBtn.layer.borderWidth = 2
@@ -228,20 +228,41 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //                }
                 signBtn.enabled = false
                 cell.addSubview(signBtn)
-                userNameLabel.frame = CGRectMake(WIDTH*160/375, WIDTH*205/375, WIDTH*55/375, 30)
-                userNameLabel.textAlignment = .Center
-                userNameLabel.font = UIFont.systemFontOfSize(18)
-                userNameLabel.textColor = UIColor.whiteColor()
-                userNameLabel.sizeToFit()
-                userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
-                userNameLabel.frame = CGRectMake(WIDTH/2-userNameLabel.bounds.size.width/2, WIDTH*205/375, userNameLabel.bounds.size.width, userNameLabel.bounds.size.height)
-                cell.addSubview(userNameLabel)
                 
-                levelBtn.frame = CGRectMake(userNameLabel.bounds.size.width/2+5+WIDTH/2, WIDTH*205/375, 20, 19)
-                levelBtn.setBackgroundImage(UIImage(named: "ic_shield_yellow.png"), forState: .Normal)
-                levelBtn.setTitleColor(UIColor.yellowColor(), forState: .Normal)
-                levelBtn.titleLabel?.font = UIFont.systemFontOfSize(9)
-                cell.addSubview(levelBtn)
+                for i in 0...2 {
+                    if i == 0 {
+                        fansCountBtn.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH*232/375+50, WIDTH/3, 20)
+                        fansCountBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
+                        fansCountBtn.setTitle(QCLoginUserInfo.currentInfo.fansCount, forState: .Normal)
+                        cell.addSubview(fansCountBtn)
+                    }else if i == 1 {
+                        attentionBtn.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH*232/375+50, WIDTH/3, 20)
+                        attentionBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
+                        attentionBtn.setTitle(QCLoginUserInfo.currentInfo.attentionCount, forState: .Normal)
+                        cell.addSubview(attentionBtn)
+                    }else {
+                        nurseCoins.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH*232/375+50, WIDTH/3, 20)
+                        nurseCoins.titleLabel?.font = UIFont.systemFontOfSize(14)
+                        nurseCoins.setTitle(QCLoginUserInfo.currentInfo.money, forState: .Normal)
+                        cell.addSubview(nurseCoins)
+                    }
+                    
+                    let numName = UILabel(frame: CGRectMake(WIDTH/3*CGFloat(i), WIDTH*232/375+70, WIDTH/3, 20))
+                    numName.textColor = UIColor(red: 250/255.0, green: 118/255.0, blue: 210/255.0, alpha: 1.0)
+                    numName.textAlignment = .Center
+                    numName.font = UIFont.systemFontOfSize(12)
+                    numName.text = numNameArr[i]
+                    cell.addSubview(numName)
+                    let line = UILabel(frame: CGRectMake(WIDTH/3*CGFloat(i)-0.5, WIDTH-50, 0.5, 20))
+                    line.backgroundColor = UIColor(red: 250/255.0, green: 118/255.0, blue: 210/255.0, alpha: 1.0)
+                    cell.addSubview(line)
+                    let btn = UIButton(frame: CGRectMake(WIDTH/3*CGFloat(i), WIDTH-60, WIDTH/3, 40))
+                    btn.addTarget(self, action: #selector(self.fineAndContact(_:)), forControlEvents: .TouchUpInside)
+                    btn.tag = i+1
+                    cell.addSubview(btn)
+                }
+                
+                
             }
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MineTableViewCell

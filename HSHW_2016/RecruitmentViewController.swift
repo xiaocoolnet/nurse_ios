@@ -686,15 +686,17 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         
         if showType == 2 {
-            sendPostion.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
-            self.view.addSubview(sendPostion)
-            superViewController?.showRightBtn()
+//            sendPostion.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-113)
+//            self.view.addSubview(sendPostion)
+//            superViewController?.showRightBtn()
+            self.navigationController?.pushViewController(editResumeViewController(), animated: true)
         } else if showType == 1 {
-            sendResume.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
-            self.view.addSubview(sendResume)
+//            sendResume.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-113)
+//            self.view.addSubview(sendResume)
+//            
+//            superViewController?.showRightBtn()
             
-            superViewController?.showRightBtn()
-            
+            self.navigationController?.pushViewController(PostVacanciewViewController(), animated: true)
         }
     }
     

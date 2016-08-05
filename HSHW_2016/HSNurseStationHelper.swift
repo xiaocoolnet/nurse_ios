@@ -185,7 +185,7 @@ class HSNurseStationHelper: NSObject {
     //添加评论
     func setComment(id:String,content:String,type:String,photo:String, handle:ResponseBlock){
         
-//        http://nurse.xiaocool.net/index.php?g=apps&m=index&a=SetComment&userid=600&id=4&content=你好&type=2&photo=9.jpg
+//        http://app.chinanurse.cn/index.php?g=apps&m=index&a=SetComment&userid=600&id=4&content=你好&type=2&photo=9.jpg
         let url = PARK_URL_Header+"SetComment"
         let param = ["userid":QCLoginUserInfo.currentInfo.userid,"id":id,"content":content,"type":type,"photo":photo]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in

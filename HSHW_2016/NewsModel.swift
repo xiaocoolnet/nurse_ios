@@ -127,7 +127,7 @@ class NewsInfo: JSONJoy{
         post_source = decoder["post_source"].string ?? ""
         post_content = decoder["post_content"].string ?? ""
         create_time = decoder["createtime"].string ?? ""
-        post_hits = decoder["post_hits"].string ?? ""
+        post_hits = decoder["post_hits"].string ?? "0"
         recommended = decoder["recommended"].string ?? ""
         thumb = decoder["thumb"].string ?? ""
         term_id = decoder["term_id"].string ?? ""

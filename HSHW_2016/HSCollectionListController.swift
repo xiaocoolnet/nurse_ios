@@ -8,7 +8,8 @@
 
 import UIKit
 
-class HSCollectionListController: UITableViewController {
+class HSCollectionListController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    let myTableView: UITableView! = UITableView()
     var collectionType = 0
     var helper = HSMineHelper()
     var dataSource = NSMutableArray()
@@ -18,56 +19,78 @@ class HSCollectionListController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
+        myTableView.delegate = self
+        myTableView.dataSource = self
+        myTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData))
+        self.view.addSubview(myTableView)
+        
+        myTableView.backgroundColor = UIColor.whiteColor()
+        
+        loadData()
+    }
+    
+    // MARK: 获取数据
+    func loadData() {
         if collectionType == 1 {
+            
+            myTableView.registerNib(UINib(nibName:"HSArticleCollectCell",bundle: nil), forCellReuseIdentifier: "cell")
+            
             //返回json
             helper.getCollectionInfoWithType("1", handle: { (success, response) in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
                         let list =  newsInfoModel(response as! JSONDecoder).data
                         self.dataSource.addObjectsFromArray(list)
-                        self.tableView.reloadData()
+                        self.myTableView.reloadData()
                     })
                 }
+                if self.myTableView.mj_header.isRefreshing(){
+                    self.myTableView.mj_header.endRefreshing()
+                }
             })
-            tableView.registerNib(UINib(nibName:"HSArticleCollectCell",bundle: nil), forCellReuseIdentifier: "cell")
         } else if collectionType == 2 {
             
-//            helper.GetCollectList(QCLoginUserInfo.currentInfo.userid, type: "2") { (success, response) in
-//                self.collectListArray = response as! Array<CollectList>
-//                self.tableView.reloadData()
-//            }
+            myTableView.registerClass(GHSExamCollectTableViewCell.self, forCellReuseIdentifier: "cell")
             
             helper.getCollectionInfoWith("2") { (success, response) in
                 self.fansListArray = response as! Array<xamInfo>
-                self.tableView.reloadData()
+                self.myTableView.reloadData()
+                
+                if self.myTableView.mj_header.isRefreshing(){
+                    self.myTableView.mj_header.endRefreshing()
+                }
             }
-            tableView.registerClass(GHSExamTableViewCell.self, forCellReuseIdentifier: "cell")
         } else if collectionType == 3 {
+            
+            myTableView.registerNib(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
             
             helper.getCollectionInfoWithType("4", handle: { (success, response) in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
                         let list = PostCollectListModel(response as! JSONDecoder)
                         self.dataSource.addObjectsFromArray(list.datas)
-                        self.tableView.reloadData()
+                        self.myTableView.reloadData()
                     })
                 }
+                
+                if self.myTableView.mj_header.isRefreshing(){
+                    self.myTableView.mj_header.endRefreshing()
+                }
             })
-            tableView.registerNib(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
-        } else {
-            tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         }
-        tableView.tableFooterView = UIView()
     }
 
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if collectionType == 2 {
             print(fansListArray.count)
             return fansListArray.count
@@ -77,14 +100,15 @@ class HSCollectionListController: UITableViewController {
         }
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if collectionType == 1 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+            cell?.selectionStyle = .None
             (cell as! HSArticleCollectCell).showforModel(dataSource[indexPath.row] as! NewsInfo)
             return cell!
 
         }else if collectionType == 2 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! GHSExamTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! GHSExamCollectTableViewCell
             cell.selectionStyle = .None
 //            cell.inde = indexPath.row
             
@@ -97,13 +121,18 @@ class HSCollectionListController: UITableViewController {
             return cell
 
         }else if collectionType == 3 {
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell")
 
             (cell as! HSComTableCell).showForForumModel(dataSource[indexPath.row] as! PostModel)
             return cell!
+        }else {
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+            
+            return cell!
         }
-        return cell!
     }
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if collectionType == 1{
             if dataSource.count > indexPath.row {
                 let next = NewsContantViewController()
@@ -131,7 +160,7 @@ class HSCollectionListController: UITableViewController {
         }
         
     }
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if collectionType == 1 {
             return 60
         }else if collectionType == 2{

@@ -15,10 +15,12 @@ let HEIGHT = UIScreen.mainScreen().bounds.size.height
 let COLOR = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 1.0)
 let GREY = UIColor(red: 158/255.0, green: 158/255.0, blue: 158/255.0, alpha: 1.0)
 let RGREY = UIColor(red: 242/255.0, green: 242/255.0, blue: 242/255.0, alpha: 1.0)
-let PARK_URL_Header = "http://nurse.xiaocool.net/index.php?g=apps&m=index&a="
-let NewsInfo_Header = "http://nurse.xiaocool.net/index.php?g=portal&m=article&a=index&id="
-let IMAGE_URL_HEADER = "http://nurse.xiaocool.net"
-let SHOW_IMAGE_HEADER = "http://nurse.xiaocool.net/uploads/microblog/"
+let DomainName = "http://nurse.xiaocool.net/"
+//let PARK_URL_Header = "http://app.chinanurse.cn/index.php?g=apps&m=index&a="
+let PARK_URL_Header = "\(DomainName)index.php?g=apps&m=index&a="
+let NewsInfo_Header = "\(DomainName)index.php?g=portal&m=article&a=index&id="
+let IMAGE_URL_HEADER = "\(DomainName)"
+let SHOW_IMAGE_HEADER = "\(DomainName)uploads/microblog/"
 let LOGINFO_KEY = "login_info"
 let USER_NAME = "login_name"
 let USER_PWD = "login_password"

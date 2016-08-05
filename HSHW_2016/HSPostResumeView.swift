@@ -591,7 +591,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         resignTextFieldFirstResponder()
 //        delegate?.saveResumeBtnClicked()
         
-        if delegate != nil {
+//        if delegate != nil {
             if headerBtn.selected && nameTF.text != "" && (manBtn.selected || womanBtn.selected) && birthBtn.selected && eduBtn.selected && homeBtn.selected && expBtn.selected && professionalBtn.selected && salaryBtn.selected && (onJobBtn.selected || leaveJobBtn.selected || undergraduateBtn.selected) && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected && targetCityBtn.selected && expectedSalaryBtn.selected && expectedPositionBtn.selected {
                 
                 let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
@@ -611,7 +611,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                 vc!.presentViewController(alertController, animated: true, completion: nil)
 
             }
-        }
+//        }
 
 //        if sexLable.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != ""{
 //
@@ -638,7 +638,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         let dateStr = dateFormatter.stringFromDate(NSDate())
         imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
         
-        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "http://nurse.xiaocool.net/index.php?g=apps&m=index&a=uploadavatar") { [unowned self] (data) in
+        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "\(PARK_URL_Header)uploadavatar") { [unowned self] (data) in
             dispatch_async(dispatch_get_main_queue(), {
                 let result = Http(JSONDecoder(data))
                 if result.status != nil {
@@ -677,7 +677,10 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                     hud.hide(true, afterDelay: 1)
                     print(success)
                     
-                    self.delegate?.saveResumeBtnClicked()
+//                    self.delegate?.saveResumeBtnClicked()
+                    let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
+                    let selfNav = tabBar.selectedViewController as? UINavigationController
+                    selfNav?.popViewControllerAnimated(true)
                 })
             }else {
                 hud.hide(true)

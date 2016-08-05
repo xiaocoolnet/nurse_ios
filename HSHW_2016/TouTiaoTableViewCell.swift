@@ -84,7 +84,7 @@ class TouTiaoTableViewCell: UITableViewCell {
         self.timeLab.text = time[0]
         self.contant.text = newsInfo.post_excerpt
         heal.setTitle(newsInfo.term_name, forState: .Normal)
-        let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
+        let photoUrl:String = DomainName+newsInfo.thumb!
         print(photoUrl)
         self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
         let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)

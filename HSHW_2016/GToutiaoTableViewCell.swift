@@ -164,7 +164,7 @@ class GToutiaoTableViewCell: UITableViewCell {
             
         }else{
             
-            let photoUrl:String = "http://nurse.xiaocool.net"+newsInfo.thumb!
+            let photoUrl:String = DomainName+newsInfo.thumb!
             print("=-=-=-=-=-=-=   ",photoUrl)
             self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
             self.addSubview(self.titImage)

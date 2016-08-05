@@ -9,38 +9,41 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 
     var window: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        ShareSDK.registerApp("13be4c6c247e0", activePlatforms:
-            
-            [SSDKPlatformType.TypeQQ.rawValue,SSDKPlatformType.TypeWechat.rawValue], onImport: { (platform : SSDKPlatformType) -> Void in
-                
-                switch platform{
-                case SSDKPlatformType.TypeWechat:
-                    ShareSDKConnector.connectWeChat(WXApi.classForCoder())
-                    
-                default:
-                    break
-                }
-                
-        }) { (platform : SSDKPlatformType,appInfo : NSMutableDictionary!) -> Void in
-            switch platform {
-//            case  SSDKPlatformType.TypeQQ:
-//                appInfo.SSDKSetupQQByAppId("1105281857", appKey: "bysMNvzaiLTMsXjQ", authType: "qq分享")
+        WXApi.registerApp("wxe61df5d7fee96861")
+        
+        
+//        ShareSDK.registerApp("13be4c6c247e0", activePlatforms:
+//            
+//            [SSDKPlatformType.TypeQQ.rawValue,SSDKPlatformType.TypeWechat.rawValue], onImport: { (platform : SSDKPlatformType) -> Void in
+//                
+//                switch platform{
+//                case SSDKPlatformType.TypeWechat:
+//                    ShareSDKConnector.connectWeChat(WXApi.classForCoder())
+//                    
+//                default:
+//                    break
+//                }
+//                
+//        }) { (platform : SSDKPlatformType,appInfo : NSMutableDictionary!) -> Void in
+//            switch platform {
+////            case  SSDKPlatformType.TypeQQ:
+////                appInfo.SSDKSetupQQByAppId("1105281857", appKey: "bysMNvzaiLTMsXjQ", authType: "qq分享")
+////                break
+//            case SSDKPlatformType.TypeWechat:
+//                //设置微信应用信息
+//                appInfo.SSDKSetupWeChatByAppId("wxe61df5d7fee96861", appSecret: "0dbfa83f68bfca4d3b60412e581301e2")
 //                break
-            case SSDKPlatformType.TypeWechat:
-                //设置微信应用信息
-                appInfo.SSDKSetupWeChatByAppId("15ad6d49bc7b3", appSecret: "b54397eff1c1c45d73392d5fb7dfff12")
-                break
-            default:
-                break
-            }
-        }
+//            default:
+//                break
+//            }
+//        }
         NSThread.sleepForTimeInterval(2.0)
         UITabBar.appearance().tintColor = COLOR
         UITabBar.appearance().backgroundColor = UIColor.whiteColor()
@@ -56,6 +59,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), forBarMetrics: UIBarMetrics.Default)
         
         return true
+    }
+    
+    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+        return WXApi.handleOpenURL(url, delegate: self)
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        return WXApi.handleOpenURL(url, delegate: self)
     }
 
     func applicationWillResignActive(application: UIApplication) {
