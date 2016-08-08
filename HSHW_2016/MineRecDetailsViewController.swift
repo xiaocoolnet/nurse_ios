@@ -26,13 +26,6 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
     var phone = NSString()
     var num = 1
     
-    
-    
-    
-    
-    
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -46,6 +39,7 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
         self.view.backgroundColor = UIColor.whiteColor()
     
         employmentMessageTableView.registerClass(MineJobDetailsTableViewCell.self, forCellReuseIdentifier: "cell")
+        employmentMessageTableView.showsHorizontalScrollIndicator = true
         employmentMessageTableView.delegate = self
         employmentMessageTableView.dataSource = self
         employmentMessageTableView.tag = 1
@@ -56,30 +50,32 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
     
     //  招聘信息详情
     func makeEmploymentMessage() {
-        employmentMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-108.5)
+        employmentMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-64)
         employmentMessage.backgroundColor = UIColor.whiteColor()
         
         self.view.addSubview(employmentMessage)
-        self.employmentMessageTableView.frame = CGRectMake(0, 0, employmentMessage.frame.size.width,employmentMessage.frame.size.height - WIDTH*65/375)
+//        self.employmentMessageTableView.frame = CGRectMake(0, 0, employmentMessage.frame.size.width,employmentMessage.frame.size.height - WIDTH*65/375)
+        self.employmentMessageTableView.frame = CGRectMake(0, 0, employmentMessage.frame.size.width,HEIGHT-64)
+
         //        employmentMessageTableView.tag = 1
         //        employmentMessageTableView.backgroundColor = UIColor.redColor()
-        let tackBtn = UIButton(frame: CGRectMake(WIDTH*(WIDTH - 145 )/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*130/375, WIDTH*45/375))
-        tackBtn.layer.cornerRadius = WIDTH*22.5/375
-        tackBtn.layer.borderColor = COLOR.CGColor
-        tackBtn.layer.borderWidth = 1
-        tackBtn.setTitle("返回", forState: .Normal)
-        tackBtn.setTitleColor(COLOR, forState: .Normal)
-        tackBtn.addTarget(self, action: #selector(self.takeResume), forControlEvents: .TouchUpInside)
-        employmentMessage.addSubview(tackBtn)
+//        let tackBtn = UIButton(frame: CGRectMake(WIDTH*(WIDTH - 145 )/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*130/375, WIDTH*45/375))
+//        tackBtn.layer.cornerRadius = WIDTH*22.5/375
+//        tackBtn.layer.borderColor = COLOR.CGColor
+//        tackBtn.layer.borderWidth = 1
+//        tackBtn.setTitle("返回", forState: .Normal)
+//        tackBtn.setTitleColor(COLOR, forState: .Normal)
+//        tackBtn.addTarget(self, action: #selector(self.takeResume), forControlEvents: .TouchUpInside)
+//        employmentMessage.addSubview(tackBtn)
         
-        let tack = UIButton(frame: CGRectMake(WIDTH*15/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*130/375, WIDTH*45/375))
-        tack.layer.cornerRadius = WIDTH*22.5/375
-        tack.layer.borderColor = COLOR.CGColor
-        tack.layer.borderWidth = 1
-        tack.setTitle("投递简历", forState: .Normal)
-        tack.setTitleColor(COLOR, forState: .Normal)
-        tack.addTarget(self, action: #selector(self.takeTheResume), forControlEvents: .TouchUpInside)
-        employmentMessage.addSubview(tack)
+//        let tack = UIButton(frame: CGRectMake(WIDTH*15/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*130/375, WIDTH*45/375))
+//        tack.layer.cornerRadius = WIDTH*22.5/375
+//        tack.layer.borderColor = COLOR.CGColor
+//        tack.layer.borderWidth = 1
+//        tack.setTitle("投递简历", forState: .Normal)
+//        tack.setTitleColor(COLOR, forState: .Normal)
+//        tack.addTarget(self, action: #selector(self.takeTheResume), forControlEvents: .TouchUpInside)
+//        employmentMessage.addSubview(tack)
         
         employmentMessage.addSubview(employmentMessageTableView)
         
@@ -101,7 +97,9 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
             }else if indexPath.row == 5 {
                 return 35
             }else if indexPath.row == 6 {
-                return 300
+            
+                let height = calculateHeight(self.descripDetail as String, size: 14, width: WIDTH-20)
+                return height+40
             }else if indexPath.row == 7 {
                 return 35
             }
@@ -158,6 +156,8 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
         }else if indexPath.row == 6 {
             cell1.positionDescript.text = "职位描述:"
             cell1.descripDetail.text = self.descripDetail as String
+            let height = calculateHeight(self.descripDetail as String, size: 14, width: WIDTH-20)
+            cell1.descripDetail.frame = CGRectMake(10, 40, WIDTH-20, height)
             return cell1
         }else if indexPath.row == 7 {
             cell1.namLabel.text = "联系方式:"

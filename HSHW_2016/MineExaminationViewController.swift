@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class MineExaminationViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -26,7 +27,7 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "收藏试题"
         loadData_Exampaper()
         
 
@@ -59,9 +60,16 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
     // 加载数据_做题记录
     func loadData_Exampaper() {
         
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        //        hud.mode = MBProgressHUDMode.Text;
+        hud.labelText = "正在获取收藏试题"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        
         helper.getCollectionInfoWith("2") { (success, response) in
             self.fansListArray = response as! Array<xamInfo>
             self.fansTableView.reloadData()
+            hud.hide(true, afterDelay: 1)
         }
         
     }

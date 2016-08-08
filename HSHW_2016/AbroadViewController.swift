@@ -208,7 +208,20 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         if indexPath.section == 0 {
             return WIDTH*160/375
         }else{
-            return 100
+            let newsInfo = self.dataSource.objectlist[indexPath.row]
+            
+            let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
+            
+            if newsInfo.thumbArr.count >= 3 {
+                let margin:CGFloat = 15
+                return (WIDTH-20-margin*2)/3.0*2/3.0+10+height+27
+            }else{
+                if height+27>100 {
+                    return height+27
+                }else{
+                    return 100
+                }
+            }
         }
     }
     //  段尾视图的定义
@@ -305,7 +318,11 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             let cell = tableView.dequeueReusableCellWithIdentifier("Abroad", forIndexPath: indexPath)as!GToutiaoTableViewCell
             cell.delegate = self
             let newsInfo = self.dataSource.objectlist[indexPath.row]
-            cell.setCellWithNewsInfo(newsInfo)
+            if newsInfo.thumbArr.count >= 3 {
+                cell.setThreeImgCellWithNewsInfo(newsInfo)
+            }else{
+                cell.setCellWithNewsInfo(newsInfo)
+            }
             cell.selectionStyle = .None
             return cell
         }

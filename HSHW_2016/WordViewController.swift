@@ -46,6 +46,9 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     var hasChooseIndex = NSMutableArray()
     let touch = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT-54))
     
+    var type = "1"
+    
+    
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
         self.getData()
@@ -81,12 +84,18 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
 //    }
     
     func getData(){
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//        hud.mode = MBProgressHUDMode.Text;
+        hud.labelText = "正在获取试题详情"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        
         let user = NSUserDefaults.standardUserDefaults()
         let uid = user.stringForKey("userid")
         let url = PARK_URL_Header+"getDaliyExamList"
         let param = [
             "userid":uid,
-            "type":"1",
+            "type":type,
             "count":questionCount
         ]
         
@@ -99,11 +108,11 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                     print("状态是")
                     print(status.status)
                     if(status.status == "error"){
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
-                        //hud.labelText = status.errorData
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
+                        hud.labelText = status.errorData
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                     }
                     if(status.status == "success"){
@@ -114,6 +123,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                         print(self.dataSource.count)
                         print("-----")
                         
+                        hud.hide(true, afterDelay: 1)
                         self.createScrollerView()
                         self.AnswerView()
                         self.backBottomView()

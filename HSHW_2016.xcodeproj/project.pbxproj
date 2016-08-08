@@ -119,6 +119,7 @@
 		18C0BF991CEB655F003E2886 /* QuestionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C0BF981CEB655F003E2886 /* QuestionTableViewCell.swift */; };
 		18C240601CEEB6340059BF48 /* TalentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2405F1CEEB6340059BF48 /* TalentViewController.swift */; };
 		18C240621CEF10150059BF48 /* OnlineExaminationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */; };
+		1F019CAF1D587286009A0818 /* MineRecruit_userViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F019CAE1D587286009A0818 /* MineRecruit_userViewController.swift */; };
 		1F0BE12A1D54A84300842B80 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F0BE1251D54A84300842B80 /* libWeChatSDK.a */; };
 		1F0BE12B1D54A84300842B80 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F0BE1261D54A84300842B80 /* README.txt */; };
 		1F1A33951D548D7A00F7C20A /* editResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */; };
@@ -370,6 +371,7 @@
 		18C0BF981CEB655F003E2886 /* QuestionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionTableViewCell.swift; sourceTree = "<group>"; };
 		18C2405F1CEEB6340059BF48 /* TalentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalentViewController.swift; sourceTree = "<group>"; };
 		18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineExaminationViewController.swift; sourceTree = "<group>"; };
+		1F019CAE1D587286009A0818 /* MineRecruit_userViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineRecruit_userViewController.swift; sourceTree = "<group>"; };
 		1F0BE1251D54A84300842B80 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		1F0BE1261D54A84300842B80 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		1F0BE1271D54A84300842B80 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
@@ -674,6 +676,7 @@
 				0DB467C21D4CADFA009AE2AD /* CompanyAuthViewController.swift */,
 				0DB467C31D4CADFA009AE2AD /* CompanyAuthViewController.xib */,
 				1FEF15A71D5047EE00FF343C /* MainCompanyAuthViewController.swift */,
+				1F019CAE1D587286009A0818 /* MineRecruit_userViewController.swift */,
 			);
 			name = Recruit;
 			sourceTree = "<group>";
@@ -1495,6 +1498,7 @@
 				F661F25F1D33BB7B00E04CE8 /* HSSelectController.swift in Sources */,
 				F64C9AC01D3B9BFC0041E360 /* ChildsViewController.swift in Sources */,
 				1FFD9EE71D51EBD700951098 /* DropDown.swift in Sources */,
+				1F019CAF1D587286009A0818 /* MineRecruit_userViewController.swift in Sources */,
 				181E0D2F1CEBF8E000E34A7F /* MineRecruitViewController.swift in Sources */,
 				185408831CE7052700DFBA7C /* NewsContantViewController.swift in Sources */,
 				F64C9ACA1D3B9C7E0041E360 /* MineJobTableViewCell.swift in Sources */,

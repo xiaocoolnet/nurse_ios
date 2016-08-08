@@ -37,7 +37,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func createTableView(){
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT - 60)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT - 64-49)
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.delegate = self
         myTableView.dataSource = self
@@ -161,6 +161,11 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
                 cell.addSubview(lastLine)
             }
         }
+        if type == 1 {
+            cell.startBtn.setTitle("开始作答", forState: .Normal)
+        }else{
+            cell.startBtn.setTitle("开始考试", forState: .Normal)
+        }
         cell.numLable.text = info.count
         return cell
     }
@@ -178,9 +183,19 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
             info = dataSource.objectlist[indexPath.section].childlist[indexPath.row]
         }
 
-        let nextVC = OnLineViewController()
-        nextVC.questionCount = info.count
-        self.navigationController?.pushViewController(nextVC, animated: true)
+        if type == 1 {
+            let nextVC = WordViewController()
+            nextVC.title = "每日一练·\(info.name)"
+            nextVC.questionCount = info.count
+            nextVC.type = info.term_id
+            self.navigationController?.pushViewController(nextVC, animated: true)
+        }else{
+            let nextVC = OnLineViewController()
+            nextVC.title = "在线考试·\(info.name)"
+            nextVC.questionCount = info.count
+            nextVC.type = info.term_id
+            self.navigationController?.pushViewController(nextVC, animated: true)
+        }
     }
     
 

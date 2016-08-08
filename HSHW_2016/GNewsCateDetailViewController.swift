@@ -111,16 +111,20 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let newsInfo = self.dataSource.objectlist[indexPath.row]
         
-        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
-        let screenBounds:CGRect = UIScreen.mainScreen().bounds
-        let boundingRect = String(newsInfo.post_title).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(16)], context: nil)
-        print(boundingRect.height)
-        if boundingRect.height+60>100 {
-            return boundingRect.height+60
+        let newsInfo = self.dataSource.objectlist[indexPath.row]
+
+        let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
+        
+        if newsInfo.thumbArr.count >= 3 {
+            let margin:CGFloat = 15
+            return (WIDTH-20-margin*2)/3.0*2/3.0+10+height+27
         }else{
-            return 100
+            if height+27>100 {
+                return height+27
+            }else{
+                return 100
+            }
         }
     }
     
@@ -129,7 +133,11 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         cell.type = 2
         cell.selectionStyle = .None
         let newsInfo = self.dataSource.objectlist[indexPath.row]
-        cell.setCellWithNewsInfo(newsInfo)
+        if newsInfo.thumbArr.count >= 3 {
+            cell.setThreeImgCellWithNewsInfo(newsInfo)
+        }else{
+            cell.setCellWithNewsInfo(newsInfo)
+        }
         return cell
     }
     

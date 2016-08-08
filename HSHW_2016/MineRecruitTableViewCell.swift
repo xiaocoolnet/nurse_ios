@@ -38,7 +38,7 @@ class MineRecruitTableViewCell: UITableViewCell {
         
         ones.frame = CGRectMake(WIDTH-35, 26, 20, 20)
         ones.setImage(UIImage(named: "ic_you.png"), forState: .Normal)
-        timeLab.frame = CGRectMake(25, 40, 80, 20)
+        timeLab.frame = CGRectMake(15, 40, 80, 20)
         timeLab.font = UIFont.systemFontOfSize(10)
         timeLab.textColor = GREY
         time.frame = CGRectMake(15, 46.5, 7, 7)
@@ -49,7 +49,7 @@ class MineRecruitTableViewCell: UITableViewCell {
         
         self.addSubview(line)
         self.addSubview(ones)
-        self.addSubview(timeLab)
+//        self.addSubview(timeLab)
         self.addSubview(time)
         self.addSubview(nameTit)
         self.addSubview(one)
@@ -58,17 +58,17 @@ class MineRecruitTableViewCell: UITableViewCell {
         
     }
     
-    func showforCVModel(model:ChildInfo) {
+    func showforCVModel(model:CVModel) {
         timeLab.text = "15分钟前"
         timeLab.sizeToFit()
+        
         nameTit.frame = CGRectMake(15, 15, 50, 20)
         nameTit.font = UIFont.systemFontOfSize(14)
         nameTit.textColor = COLOR
 
-        nameTit.text = "李率丁"
+        nameTit.text = model.name
         nameTit.sizeToFit()
         one.frame =  CGRectMake(15+nameTit.bounds.size.width, 15, 59, 20)
-//        one.text = "申请面试"
         one.font = UIFont.systemFontOfSize(14)
         one.textColor = UIColor.grayColor()
         one.text = "申请面试"
@@ -77,7 +77,7 @@ class MineRecruitTableViewCell: UITableViewCell {
         job.textColor = COLOR
         job.font = UIFont.systemFontOfSize(14)
     
-        job.text = "儿科护士主管"
+        job.text = model.wantposition
         job.sizeToFit()
         two.frame = CGRectMake(15+nameTit.bounds.size.width+one.bounds.size.width+job.bounds.size.width, 15, 50, 20)
         two.textColor = UIColor.grayColor()
@@ -85,6 +85,35 @@ class MineRecruitTableViewCell: UITableViewCell {
         two.font = UIFont.systemFontOfSize(14)
         two.sizeToFit()
 
+    }
+    
+    func showforUserModel(model:InvitedInfo) {
+        timeLab.text = "15分钟前"
+        timeLab.sizeToFit()
+        
+        nameTit.frame = CGRectMake(15, 15, 50, 20)
+        nameTit.font = UIFont.systemFontOfSize(14)
+        nameTit.textColor = COLOR
+        
+        nameTit.text = model.companyname
+        nameTit.sizeToFit()
+        one.frame =  CGRectMake(15+nameTit.bounds.size.width, 15, 59, 20)
+        one.font = UIFont.systemFontOfSize(14)
+        one.textColor = UIColor.grayColor()
+        one.text = "诚邀您参加面试"
+        one.sizeToFit()
+        job.frame = CGRectMake(15+nameTit.bounds.size.width+one.bounds.size.width, 15, 50, 20)
+        job.textColor = COLOR
+        job.font = UIFont.systemFontOfSize(14)
+        
+        job.text = ""
+        job.sizeToFit()
+        two.frame = CGRectMake(15+nameTit.bounds.size.width+one.bounds.size.width+job.bounds.size.width, 15, 50, 20)
+        two.textColor = UIColor.grayColor()
+        two.text = ""
+        two.font = UIFont.systemFontOfSize(14)
+        two.sizeToFit()
+        
     }
     
     required init?(coder aDecoder: NSCoder) {

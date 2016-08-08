@@ -43,14 +43,17 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     var chooseId = Array<String>() //已选择的答案ID
     var helper = HSStudyNetHelper()
     var startPage = 0
-    var questionCount = "10"
+    var questionCount = "100"
     var hasChooseIndex = NSMutableArray()
     let touch = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT-54))
     
     let number = UILabel()
     var num = 1
+    var totalNum = UILabel()
     var isSubmit:Bool = false
     var numb = Int()
+    
+    var type = "1"
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
@@ -60,7 +63,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "在线考试"
+//        self.title = "在线考试"
         
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
@@ -106,9 +109,15 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         let url = PARK_URL_Header+"getDaliyExamList"
         let param = [
             "userid":uid,
-            "type":"1",
+            "type":type,
             "count":questionCount
         ]
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//        hud.mode = MBProgressHUDMode.Text;
+        hud.labelText = "正在获取试题详情"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
         Alamofire.request(.GET, url, parameters: param as? [String:String]).response { [unowned self] request, response, json, error in
             dispatch_async(dispatch_get_main_queue(), {
@@ -119,11 +128,11 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                     print("状态是")
                     print(status.status)
                     if(status.status == "error"){
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
-                        //hud.labelText = status.errorData
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
+                        hud.labelText = status.errorData
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                     }
                     if(status.status == "success"){
@@ -134,6 +143,8 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                         print(self.dataSource.count)
                         print("-----")
                         
+                        hud.hide(true, afterDelay: 1)
+
                         self.createScrollerView()
                         self.AnswerView()
                         self.backBottomView()
@@ -701,20 +712,20 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         ques.textColor = UIColor(red: 250/255.0, green: 118/255.0, blue: 210/255.0, alpha: 1.0)
         ques.text = "考试进度："
         self.view.addSubview(ques)
-        number.frame = CGRectMake(WIDTH/2+5, HEIGHT-150, 30, 14)
+        number.frame = CGRectMake(WIDTH/2+5, HEIGHT-150, 50, 14)
         number.font = UIFont.systemFontOfSize(16)
         number.textColor = UIColor.yellowColor()
         number.text = "1"
 //        number.text = String(scrollView.contentOffset.x/scrollView.frame.size.width)
         number.sizeToFit()
         self.view.addSubview(number)
-        let num = UILabel(frame: CGRectMake(WIDTH/2+5+number.bounds.size.width, HEIGHT-150, 30, 14))
-        num.textColor = UIColor.whiteColor()
-        num.font = UIFont.systemFontOfSize(16)
+        totalNum.frame = CGRectMake(WIDTH/2+5+number.bounds.size.width, HEIGHT-150, 30, 14)
+        totalNum.textColor = UIColor.whiteColor()
+        totalNum.font = UIFont.systemFontOfSize(16)
         //        String(self.dataSource.count)
-        num.text = " /"+String(self.dataSource.count)
-        num.sizeToFit()
-        self.view.addSubview(num)
+        totalNum.text = " /"+String(self.dataSource.count)
+        totalNum.sizeToFit()
+        self.view.addSubview(totalNum)
         
         pageControl.frame = CGRectMake(0, HEIGHT-167, WIDTH, 48)
         pageControl.pageIndicatorTintColor = UIColor.redColor()
@@ -776,6 +787,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             self.AnswerView()
             number.text = "\(self.pageControl.currentPage+1)"
             number.sizeToFit()
+            totalNum.frame.origin.x = WIDTH/2+5+number.bounds.size.width
 //            numb -= 1
 //            let offSetX:CGFloat = CGFloat(numb) * WIDTH
 //            scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
@@ -785,6 +797,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
             number.text = "\(self.pageControl.currentPage+1)"
             number.sizeToFit()
+            totalNum.frame.origin.x = WIDTH/2+5+number.bounds.size.width
             self.AnswerView()
         }else if btn.tag == 3 {
             if self.num == 2 {
@@ -1084,6 +1097,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
             number.text = "\(self.pageControl.currentPage+1)"
             number.sizeToFit()
+            totalNum.frame.origin.x = WIDTH/2+5+number.bounds.size.width
             self.AnswerView()
             self.questionCard_uncommit()
             self.questionCard_commit()

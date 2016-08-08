@@ -12,11 +12,14 @@ import MBProgressHUD
 
 class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, HSFindPersonDetailViewDelegate {
     
+    var type = 2 // 1 个人 2 企业
+    
     let myTableView = UITableView()
     let resumeDetail = NSBundle.mainBundle().loadNibNamed("HSFindPersonDetailView", owner: nil, options: nil).first as! HSFindPersonDetailView
     var CVDataSource:Array<CVModel>?
     let jobHelper = HSNurseStationHelper()
-    var dataSource = ChildList()
+    var dataSource = Array<CVModel>()
+    var myInvitedList = InvitedList()
     
     weak var superViewController:MineRecruitViewController?
     
@@ -42,7 +45,6 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
     var ema = NSString()
     var hiredate = NSString()
     var wantcity = NSString()
-    
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
@@ -74,8 +76,66 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func sendInvite(model:CVModel){
-        resumeDetail.removeFromSuperview()
+        inviteJob(model)
     }
+    
+    func inviteJob(model:CVModel) {
+        print("邀请面试")
+
+        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要向 \(model.name) 发送邀请吗？", comment: "empty message"), preferredStyle: .Alert)
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
+        let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (cancelAction) in
+            
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//            hud.mode = MBProgressHUDMode.Text;
+            hud.labelText = "正在发送邀请"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            
+            let url = PARK_URL_Header+"InviteJob"
+            let param = [
+                "userid":model.userid,
+                "jobid":model.id,
+                "companyid":QCLoginUserInfo.currentInfo.userid
+            ]
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                print(request)
+                if(error != nil){
+                    
+                }else{
+                    let result = Http(JSONDecoder(json!))
+                    if(result.status == "success"){
+                        //  菊花加载
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "发送邀请成功"
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                        print(111111)
+                    }else{
+                        //  菊花加载
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "发送邀请失败"
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                        print(2222222)
+                    }
+                }
+            }
+            
+        })
+        alertController.addAction(doneAction)
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
+            return
+        })
+        alertController.addAction(cancelAction)
+    }
+    
     func hiddenResumeDetail() {
         resumeDetail.removeFromSuperview()
     }
@@ -83,16 +143,25 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return CVDataSource?.count ?? 0
-        return self.dataSource.objectlist.count
+        if type == 1 {
+            print(self.myInvitedList.data.count)
+            return self.myInvitedList.data.count
+        }else{
+            return self.dataSource.count
+        }
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MineRecruitTableViewCell
         cell.selectionStyle = .None
         
-        let model = self.dataSource.objectlist[indexPath.row]
         
-        cell.showforCVModel(model)
+        if type == 1 {
+            cell.showforUserModel(self.myInvitedList.data[indexPath.row])
+        }else{
+            let model = self.dataSource[indexPath.row]
+            cell.showforCVModel(model)
+        }
 //        cell.timeLab.text = "15分钟前"
 //        cell.job.text = model.birthday
 //        cell.nameTit.text = model.userid
@@ -105,36 +174,73 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     
     func GetDate(){
-        let url = PARK_URL_Header+"getMyReciveResumeList"
-        // TODO: userid 待更新
-        let param = ["userid":"1"]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            if(error != nil){
-                
-            }else{
-                let status = ChildModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    //hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                }
-                if(status.status == "success"){
-                    print(status)
-                    self.dataSource = ChildList(status.data!)
-                    self.myTableView .reloadData()
-                    print(status.data)
-                }
-            }
+        
+        if type == 1 {
             
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.labelText = "正在获取面试邀请"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            
+            let url = PARK_URL_Header+"UserGetInvite"
+            // TODO: userid 待更新
+            let param = ["userid":"607"]
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                if(error != nil){
+                    
+                }else{
+                    let status = InvitedModel(JSONDecoder(json!))
+                    print("状态是")
+                    print(status.status)
+                    if(status.status == "error"){
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = status.errorData
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    if(status.status == "success"){
+                        print(status)
+                        self.myInvitedList = InvitedList(status.data!)
+                        self.myTableView.reloadData()
+                        print(status.data)
+                        hud.hide(true, afterDelay: 1)
+                    }
+                }
+                
+            }
+        }else{
+            
+            let url = PARK_URL_Header+"getMyReciveResumeList"
+            // TODO: userid 待更新
+            let param = ["userid":"1"]
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                if(error != nil){
+                    
+                }else{
+                    let status = HSCVListModel(JSONDecoder(json!))
+                    print("状态是")
+                    print(status.status)
+                    if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        //hud.labelText = status.errorData
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    if(status.status == "success"){
+                        print(status)
+                        self.dataSource = status.datas
+                        self.myTableView .reloadData()
+                        print(status.datas)
+                    }
+                }
+                
+            }
         }
     }
-
-    
 
     func makeCVMessage(){
         resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
@@ -160,7 +266,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
-        let model = self.dataSource.objectlist[indexPath.row]
+        let model = self.dataSource[indexPath.row]
         self.name = model.name
         self.sex = model.sex
         self.avatar = model.avatar
@@ -183,7 +289,11 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.wantsalary = model.wantsalary
         superViewController?.showRightBtn()
         
-        self.makeCVMessage()
+//        self.makeCVMessage()
+        resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-107.5)
+        resumeDetail.delegate = self
+        resumeDetail.model = model
+        self.view.addSubview(resumeDetail)
     }
     
     func rightBarButtonClicked(){

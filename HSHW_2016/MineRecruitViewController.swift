@@ -18,6 +18,7 @@ class MineRecruitViewController: UIViewController, PagingMenuControllerDelegate 
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.hidden = false
+        self.tabBarController?.tabBar.hidden = true
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +46,7 @@ class MineRecruitViewController: UIViewController, PagingMenuControllerDelegate 
         
         pagingMenuController.delegate = self
         
-        pagingMenuController.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT-44)
+        pagingMenuController.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
         pagingMenuController.view.frame.origin.y += 0
         pagingMenuController.view.frame.size.height -= 0
         addChildViewController(pagingMenuController)

@@ -30,7 +30,7 @@ class OnlineTextTableViewCell: UITableViewCell {
         titleLable.frame = CGRectMake(57, 15, WIDTH / 3, 30)
         titleLable.font = UIFont.systemFontOfSize(18)
         startBtn.frame = CGRectMake(WIDTH-10-WIDTH/4, 15, WIDTH/4, 30)
-        startBtn.setTitle("开始考试", forState: .Normal)
+//        startBtn.setTitle("开始考试", forState: .Normal)
         startBtn.setTitleColor(COLOR, forState: .Normal)
         startBtn.layer.cornerRadius = 15
         startBtn.layer.borderColor = COLOR.CGColor

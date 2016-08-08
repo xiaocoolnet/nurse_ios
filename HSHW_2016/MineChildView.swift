@@ -103,3 +103,91 @@ class ChildInfo: JSONJoy {
         wantsalary = decoder["wantsalary"].string ?? ""
     }
 }
+
+class InvitedModel: JSONJoy{
+    var status:String?
+    var data: JSONDecoder?
+    var array : Array<JSONDecoder>?
+    var errorData:String?
+    init(){
+    }
+    required init(_ decoder:JSONDecoder){
+        
+        status = decoder["status"].string
+        if status == "success" {
+            data = decoder["data"]
+        }else{
+            errorData = decoder["data"].string
+        }
+    }
+}
+
+class InvitedList: JSONJoy {
+    var status:String?
+    var data: [InvitedInfo]
+    
+    init(){
+        data = Array<InvitedInfo>()
+    }
+    required init(_ decoder: JSONDecoder) {
+        
+        data = Array<InvitedInfo>()
+        for childs: JSONDecoder in decoder.array!{
+            data.append(InvitedInfo(childs))
+        }
+    }
+    
+    func append(list: [InvitedInfo]){
+        self.data = list + self.data
+    }
+    
+}
+
+class InvitedInfo: JSONJoy {
+    
+    var id:String
+    var userid:String
+    var photo:String
+    var companyname:String
+    var companyinfo:String
+    var title:String
+    var experience:String
+    var jobtype:String
+    var education:String
+    var certificate:String
+    var address:String
+    var salary:String
+    var description:String
+    var welfare:String
+    var count:String
+    var linkman:String
+    var phone:String
+    var email:String
+    var listorder:String
+    var create_time:String
+    var state:String
+    
+    required init(_ decoder:JSONDecoder){
+        id = decoder["id"].string ?? ""
+        userid = decoder["userid"].string ?? ""
+        photo = decoder["photo"].string ?? ""
+        companyname = decoder["companyname"].string ?? ""
+        companyinfo = decoder["companyinfo"].string ?? ""
+        title = decoder["title"].string ?? ""
+        experience = decoder["experience"].string ?? ""
+        jobtype = decoder["jobtype"].string ?? ""
+        education = decoder["education"].string ?? ""
+        certificate = decoder["certificate"].string ?? ""
+        address = decoder["address"].string ?? ""
+        salary = decoder["salary"].string ?? ""
+        description = decoder["description"].string ?? ""
+        welfare = decoder["welfare"].string ?? ""
+        count = decoder["count"].string ?? ""
+        linkman = decoder["linkman"].string ?? ""
+        phone = decoder["phone"].string ?? ""
+        email = decoder["email"].string ?? ""
+        listorder = decoder["listorder"].string ?? ""
+        create_time = decoder["create_time"].string ?? ""
+        state = decoder["state"].string ?? ""
+    }
+}

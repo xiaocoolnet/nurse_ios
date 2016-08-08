@@ -242,7 +242,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
 //  招聘信息详情
     func makeEmploymentMessage() {
-        employmentMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+        employmentMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-64-49-0.5)
         employmentMessage.backgroundColor = UIColor.whiteColor()
         
         self.view.addSubview(employmentMessage)
@@ -273,7 +273,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func makeCVMessage(model:CVModel){
-        resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+        resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-64-49-0.5)
         resumeDetail.model = model
         resumeDetail.showFor(birthday)
         resumeDetail.showSex(sex)

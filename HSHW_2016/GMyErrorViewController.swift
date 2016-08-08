@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate {
     
@@ -142,14 +143,31 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
     // 加载数据_做题记录
     func loadData_Exampaper() {
         
-        helper.GetErrorExampaper(QCLoginUserInfo.currentInfo.userid, type: "1") { (success, response) in
+//        let userid = QCLoginUserInfo.currentInfo.userid
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        //        hud.mode = MBProgressHUDMode.Text;
+        hud.labelText = "正在获取试题详情"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        var flag = 0
+        
+        let userid = "1"
+        helper.GetErrorExampaper(userid, type: "1") { (success, response) in
             self.fansListArray = response as! Array<GExamInfo>
             self.fansTableView.reloadData()
+            flag += 1
+            if flag == 2 {
+                hud.hide(true, afterDelay: 1)
+            }
         }
         
-        helper.GetErrorExampaper(QCLoginUserInfo.currentInfo.userid, type: "2") { (success, response) in
+        helper.GetErrorExampaper(userid, type: "2") { (success, response) in
             self.focusListArray = response as! Array<GExamInfo>
             self.focusTableView.reloadData()
+            flag += 1
+            if flag == 2 {
+                hud.hide(true, afterDelay: 1)
+            }
         }
     }
     

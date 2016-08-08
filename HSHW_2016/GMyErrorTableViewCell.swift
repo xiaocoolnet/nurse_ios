@@ -33,7 +33,7 @@ class GMyErrorTableViewCell: UITableViewCell {
         titImg.clipsToBounds = true
         
         titleLab.frame = CGRectMake(75+50+15, 15, WIDTH - 150, 50)
-        titleLab.font = UIFont.systemFontOfSize(16)
+        titleLab.font = UIFont.systemFontOfSize(14)
         titleLab.numberOfLines = 0
         
         self.addSubview(indexLab)
@@ -55,8 +55,7 @@ class GMyErrorTableViewCell: UITableViewCell {
             
             titleLab.text = fansModel?.post_title
             titleLab.sizeToFit()
-            titleLab.frame = CGRectMake(CGRectGetMaxX(titImg.frame)+15, 15, CGRectGetWidth(titleLab.frame), 50)
-            
+            titleLab.frame = CGRectMake(CGRectGetMaxX(titImg.frame)+15, 15, WIDTH-CGRectGetMaxX(titImg.frame)-30, 50)
         }
         
     }

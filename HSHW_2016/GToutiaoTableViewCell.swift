@@ -26,6 +26,7 @@ class GToutiaoTableViewCell: UITableViewCell {
     let timeLab = UILabel()
     let comBtn = UIButton()
     let timeBtn = UIButton()
+    let titSubImg = UIImageView()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -93,7 +94,7 @@ class GToutiaoTableViewCell: UITableViewCell {
         contant.font = UIFont.systemFontOfSize(14)
         contant.textColor = UIColor.grayColor()
         
-        titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
+//        titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
         titImage.contentMode = .ScaleAspectFill
         titImage.clipsToBounds = true
     }
@@ -157,13 +158,13 @@ class GToutiaoTableViewCell: UITableViewCell {
         self.contant.text = newsInfo.post_excerpt
         
 //        if newsInfo.thumb == "/data/upload/" {
-//            
+//
 //            self.titImage.removeFromSuperview()
-//            
+//
 //            self.titLab.frame.size.width = WIDTH-20
-//            
+//
 //        }else{
-//            
+//
 //            let photoUrl:String = DomainName+newsInfo.thumb!
 //            print("=-=-=-=-=-=-=   ",photoUrl)
 //            self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
@@ -181,6 +182,8 @@ class GToutiaoTableViewCell: UITableViewCell {
             
             let photoUrl:String = DomainName+"data/upload/"+(newsInfo.thumbArr.first?.url)!
             print("=-=-=-=-=-=-=   ",photoUrl)
+            
+            titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
             self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
             self.addSubview(self.titImage)
             //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
@@ -191,6 +194,91 @@ class GToutiaoTableViewCell: UITableViewCell {
         conNum.frame.origin.y = self.frame.size.height-conNum.frame.size.height-1-8
         timeBtn.frame.origin.y = self.frame.size.height-timeBtn.frame.size.height-3-8
         timeLab.frame.origin.y = self.frame.size.height-timeLab.frame.size.height-1-8
+        
+    }
+    
+    func setThreeImgCellWithNewsInfo(newsInfo:NewsInfo) {
+        
+        let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-20)
+        self.titLab.frame = CGRectMake(10, 9, WIDTH-20, height)
+        
+        self.titLab.text = newsInfo.post_title
+            
+        let margin:CGFloat = 15
+        
+        titImage.frame = CGRectMake(10, CGRectGetMaxY(titLab.frame)+10, WIDTH-20, (WIDTH-20-margin*2)/3.0*2/3.0)
+//        titImage.backgroundColor = UIColor.redColor()
+
+        for index in 0 ... 2 {
+            
+            let titSubImg = UIImageView()
+            titSubImg.contentMode = .ScaleAspectFill
+            titSubImg.clipsToBounds = true
+            titSubImg.frame = CGRectMake(((WIDTH-20-margin*2)/3.0+margin)*CGFloat(index), 0, (WIDTH-20-margin*2)/3.0, (WIDTH-20-margin*2)/3.0*2/3.0)
+            
+            let photoUrl:String = DomainName+"data/upload/"+(newsInfo.thumbArr[index].url)
+            titSubImg.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
+//            titSubImg.image = UIImage.init(named: "1.png")
+            titImage.addSubview(titSubImg)
+        }
+        self.addSubview(titImage)
+        
+        heal.setTitle(newsInfo.term_name, forState: .Normal)
+        heal.tag = Int(newsInfo.term_id)!
+        
+        let healWidth = calculateWidth(newsInfo.term_name, size: 11, height: 15)+5
+        heal.frame = CGRectMake(10, CGRectGetMaxY(titImage.frame)+12, healWidth, 15)
+        if type == 2 {
+            heal.removeFromSuperview()
+        }
+        
+        comBtn.frame = CGRectMake(type == 1 ? CGRectGetMaxX(heal.frame)+10:5, CGRectGetMaxY(titImage.frame)+15, 13, 9)
+        
+        var conNumStr = "0"
+        if Int(newsInfo.post_hits!) > 99999 {
+            conNumStr = "10W+"
+        }else if Int(newsInfo.post_hits!) > 199999 {
+            conNumStr = "20W+"
+        }else if Int(newsInfo.post_hits!) > 299999 {
+            conNumStr = "30W+"
+        }else if Int(newsInfo.post_hits!) > 399999 {
+            conNumStr = "40W+"
+        }else if Int(newsInfo.post_hits!) > 499999 {
+            conNumStr = "50W+"
+        }else if Int(newsInfo.post_hits!) > 599999 {
+            conNumStr = "60W+"
+        }else if Int(newsInfo.post_hits!) > 799999 {
+            conNumStr = "80W+"
+        }else if Int(newsInfo.post_hits!) > 899999 {
+            conNumStr = "90W+"
+        }else if Int(newsInfo.post_hits!) > 999999 {
+            conNumStr = "100W+"
+        }else if Int(newsInfo.post_hits!) > 9999999 {
+            conNumStr = "1000W+"
+        }else{
+            conNumStr = newsInfo.post_hits!
+        }
+        
+        self.conNum.text = conNumStr
+        conNum.sizeToFit()
+        conNum.frame = CGRectMake(CGRectGetMaxX(comBtn.frame)+5, CGRectGetMaxY(titImage.frame)+12, CGRectGetWidth(conNum.frame), 15)
+        
+        timeBtn.frame = CGRectMake(CGRectGetMaxX(conNum.frame)+10, CGRectGetMaxY(titImage.frame)+14, 11, 11)
+        timeLab.frame = CGRectMake(CGRectGetMaxX(timeBtn.frame)+5, CGRectGetMaxY(titImage.frame)+12, 80, 15)
+        
+        let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
+        let date:Array = time[0].componentsSeparatedByString("-")
+        self.timeLab.text = "\(date[0])/\(date[1])/\(date[2])"
+        self.contant.text = newsInfo.post_excerpt
+        
+        //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
+        //        titLab.frame.size.height = titleHeight+100
+
+//        heal.frame.origin.y = self.frame.size.height-heal.frame.size.height-1-8
+//        comBtn.frame.origin.y = self.frame.size.height-comBtn.frame.size.height-4-8
+//        conNum.frame.origin.y = self.frame.size.height-conNum.frame.size.height-1-8
+//        timeBtn.frame.origin.y = self.frame.size.height-timeBtn.frame.size.height-3-8
+//        timeLab.frame.origin.y = self.frame.size.height-timeLab.frame.size.height-1-8
         
     }
     

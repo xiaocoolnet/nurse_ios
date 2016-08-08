@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class CollectDetailViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
     
@@ -26,7 +27,7 @@ class CollectDetailViewController: UIViewController, UITableViewDelegate,UITable
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        myTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-115)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-115)
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.registerClass(MineExamCollectTableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.rowHeight = 70
@@ -58,9 +59,17 @@ class CollectDetailViewController: UIViewController, UITableViewDelegate,UITable
     }
     
     func getData() {
-        helper.GetCollectList(QCLoginUserInfo.currentInfo.userid, type: "3") { (success, response) in
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        //        hud.mode = MBProgressHUDMode.Text;
+        hud.labelText = "正在获取其他收藏"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        
+        let userid = QCLoginUserInfo.currentInfo.userid
+        helper.GetCollectList(userid, type: "3") { (success, response) in
             self.collectListArray = response as! Array<NewsInfo>
             self.myTableView.reloadData()
+            hud.hide(true, afterDelay: 1)
         }
     }
 

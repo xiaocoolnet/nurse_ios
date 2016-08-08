@@ -128,7 +128,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "textCell")
         myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
         self.view.addSubview(myTableView)
-        myTableView.separatorColor = UIColor.clearColor()
+//        myTableView.separatorColor = UIColor.clearColor()
+        myTableView.separatorStyle = .SingleLine
         
 
     }
@@ -232,8 +233,42 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func collectionNews(){
-        let height = calculateHeight((newsInfo?.post_title)!, size: 17, width: WIDTH-20)
-        self.myTableView.contentOffset = CGPointMake(0, height + webHeight - 120)
+//        let height = calculateHeight((newsInfo?.post_title)!, size: 17, width: WIDTH-20)
+//        self.myTableView.contentOffset = CGPointMake(0, height + webHeight - 120)
+        
+        let alertController = UIAlertController(title: "分享到...", message: nil, preferredStyle: .ActionSheet)
+        self.presentViewController(alertController, animated: true, completion: nil)
+        
+        let wechatAction = UIAlertAction(title: "微信好友", style: .Default) { (pengyouquanAction) in
+            
+            let btn = UIButton()
+            btn.tag = 1
+            self.shareTheNews(btn)
+        }
+        alertController.addAction(wechatAction)
+        
+        let weiboAction = UIAlertAction(title: "新浪微博", style: .Default) { (pengyouquanAction) in
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = MBProgressHUDMode.Text;
+            hud.labelText = "新浪微博 敬请期待"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 2)
+        }
+        //        alertController.addAction(weiboAction)
+        
+        let pengyouquanAction = UIAlertAction(title: "朋友圈", style: .Default) { (pengyouquanAction) in
+            
+            let btn = UIButton()
+            btn.tag = 0
+            self.shareTheNews(btn)
+            
+        }
+        alertController.addAction(pengyouquanAction)
+        
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+        alertController.addAction(cancelAction)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -323,15 +358,20 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }
          
         }else{
+            
             let newsInfo = self.dataSource.objectlist[indexPath.row]
-            let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
-            let screenBounds:CGRect = UIScreen.mainScreen().bounds
-            let boundingRect = String(newsInfo.post_title).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(14)], context: nil)
-            print(boundingRect.height)
-            if boundingRect.height+60>100 {
-                return boundingRect.height+60
+            
+            let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
+            
+            if newsInfo.thumbArr.count >= 3 {
+                let margin:CGFloat = 15
+                return (WIDTH-20-margin*2)/3.0*2/3.0+10+height+27
             }else{
-                return 100
+                if height+27>100 {
+                    return height+27
+                }else{
+                    return 100
+                }
             }
         }
     }
@@ -452,7 +492,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             cell.delegate = self
             cell.selectionStyle = .None
             let newsInfo = self.dataSource.objectlist[indexPath.row]
-            cell.setCellWithNewsInfo(newsInfo)
+            if newsInfo.thumbArr.count >= 3 {
+                cell.setThreeImgCellWithNewsInfo(newsInfo)
+            }else{
+                cell.setCellWithNewsInfo(newsInfo)
+            }
             return cell
             
 //            let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell

@@ -51,158 +51,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/OnlineTextViewController.swift"
-            timestampString = "491994878.461637"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "getData()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/OnlineTextViewController.swift"
-            timestampString = "491994887.250201"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "getData()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/OnlineTextViewController.swift"
-            timestampString = "491994895.766594"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "getData()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/OnlineTextViewController.swift"
-            timestampString = "491994898.467822"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "56"
-            endingLineNumber = "56"
-            landmarkName = "getData()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/OnlineTextViewController.swift"
-            timestampString = "491994924.579564"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "createTableView()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/OnlineTextViewController.swift"
-            timestampString = "491994997.818236"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "73"
-            endingLineNumber = "73"
-            landmarkName = "getData()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/OnlineTextViewController.swift"
-            timestampString = "491995005.897476"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
-            landmarkName = "numberOfSectionsInTableView(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "HSHW_2016/OnLineViewController.swift"
-            timestampString = "491995207.095052"
+            timestampString = "492328434.422321"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1031"
-            endingLineNumber = "1031"
+            startingLineNumber = "1044"
+            endingLineNumber = "1044"
             landmarkName = "takeUpTheTest()"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "HSHW_2016.OnLineViewController.takeUpTheTest () -&gt; ()"
-                  moduleName = "HSHW_2016"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/OnLineViewController.swift"
-                  timestampString = "492092586.779122"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1031"
-                  endingLineNumber = "1031"
-                  offsetFromSymbolStart = "4472">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "HSHW_2016.OnLineViewController.(takeUpTheTest () -&gt; ()).(closure #1)"
-                  moduleName = "HSHW_2016"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/OnLineViewController.swift"
-                  timestampString = "492092586.779264"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1033"
-                  endingLineNumber = "1033"
-                  offsetFromSymbolStart = "51">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -212,45 +68,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/WordViewController.swift"
-            timestampString = "491995209.399546"
+            timestampString = "492328434.422321"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "835"
-            endingLineNumber = "835"
+            startingLineNumber = "845"
+            endingLineNumber = "845"
             landmarkName = "takeUpTheTest()"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "HSHW_2016.WordViewController.takeUpTheTest () -&gt; ()"
-                  moduleName = "HSHW_2016"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/WordViewController.swift"
-                  timestampString = "492092586.781358"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "835"
-                  endingLineNumber = "835"
-                  offsetFromSymbolStart = "4434">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "HSHW_2016.WordViewController.(takeUpTheTest () -&gt; ()).(closure #1)"
-                  moduleName = "HSHW_2016"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/WordViewController.swift"
-                  timestampString = "492092586.781503"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "836"
-                  endingLineNumber = "836"
-                  offsetFromSymbolStart = "51">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -267,38 +91,6 @@
             endingLineNumber = "858"
             landmarkName = "takeUpTheTest()"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "HSHW_2016.OnlineExaminationViewController.takeUpTheTest () -&gt; ()"
-                  moduleName = "HSHW_2016"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/OnlineExaminationViewController.swift"
-                  timestampString = "492092586.782899"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "858"
-                  endingLineNumber = "858"
-                  offsetFromSymbolStart = "2364">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "HSHW_2016.OnlineExaminationViewController.(takeUpTheTest () -&gt; ()).(closure #1)"
-                  moduleName = "HSHW_2016"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/OnlineExaminationViewController.swift"
-                  timestampString = "492092586.783214"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "859"
-                  endingLineNumber = "859"
-                  offsetFromSymbolStart = "47">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -315,38 +107,6 @@
             endingLineNumber = "882"
             landmarkName = "takeUpTheTest()"
             landmarkType = "5">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "HSHW_2016.GOnlineExamViewController.takeUpTheTest () -&gt; ()"
-                  moduleName = "HSHW_2016"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/GOnlineExamViewController.swift"
-                  timestampString = "492092586.784639"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "882"
-                  endingLineNumber = "882"
-                  offsetFromSymbolStart = "2402">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "HSHW_2016.GOnlineExamViewController.(takeUpTheTest () -&gt; ()).(closure #1)"
-                  moduleName = "HSHW_2016"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/GOnlineExamViewController.swift"
-                  timestampString = "492092586.784768"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "883"
-                  endingLineNumber = "883"
-                  offsetFromSymbolStart = "47">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -355,29 +115,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/HSCollectionListController.swift"
-            timestampString = "492068864.861051"
+            filePath = "HSHW_2016/ChildsViewController.swift"
+            timestampString = "492342099.147436"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "96"
-            endingLineNumber = "96"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/HSMineHelper.swift"
-            timestampString = "492001766.5211"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "492"
-            endingLineNumber = "492"
-            landmarkName = "getCollectionInfoWith(_:handle:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

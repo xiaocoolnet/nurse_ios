@@ -321,9 +321,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let next = MineStudyViewController()
             self.navigationController?.pushViewController(next, animated: true)
             next.title = "我的学习"
-        }
-        
-        if indexPath.section == 2 {
+        }else if indexPath.section == 2 {
 //            if indexPath.row == 0 {
 //                let next = MinePostViewController()
 //                self.navigationController?.pushViewController(next, animated: true)
@@ -339,12 +337,16 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.navigationController?.pushViewController(next, animated: true)
                 next.title = "我的收藏"
             }
-        }
-        
-        if indexPath.section == 3 {
-            let next = MineRecruitViewController()
-            self.navigationController?.pushViewController(next, animated: true)
-            next.title = "我的招聘"
+        }else if indexPath.section == 3 {
+//            if QCLoginUserInfo.currentInfo.usertype == "1" {
+//                let next = MineRecruit_userViewController()
+//                self.navigationController?.pushViewController(next, animated: true)
+//                next.title = "我的招聘"
+//            }else{
+                let next = MineRecruitViewController()
+                self.navigationController?.pushViewController(next, animated: true)
+                next.title = "我的招聘"
+//            }
         }
     }
 
