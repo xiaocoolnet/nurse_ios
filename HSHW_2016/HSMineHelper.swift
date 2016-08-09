@@ -27,14 +27,24 @@ class HSMineHelper: NSObject {
                     QCLoginUserInfo.currentInfo.avatar = result.data?.user_avatar ?? ""
                     QCLoginUserInfo.currentInfo.userName = result.data?.user_name ?? ""
                     QCLoginUserInfo.currentInfo.level = result.data?.user_level ?? ""
+                    QCLoginUserInfo.currentInfo.sex = result.data!.user_sex ?? ""
                     QCLoginUserInfo.currentInfo.fansCount = result.data?.user_fanscount ?? "0"
-                    QCLoginUserInfo.currentInfo.attentionCount = result.data?.user_score ?? "0"
+                    QCLoginUserInfo.currentInfo.attentionCount = result.data?.user_followcount ?? "0"
+                    QCLoginUserInfo.currentInfo.score = result.data?.user_score ?? "0"
+                    QCLoginUserInfo.currentInfo.birthday = result.data?.user_birthDay ?? ""
+                    QCLoginUserInfo.currentInfo.realName = result.data?.user_realname ?? ""
+                    QCLoginUserInfo.currentInfo.phoneNumber = result.data?.user_phone ?? ""
+                    QCLoginUserInfo.currentInfo.qqNumber = result.data?.user_qq ?? ""
+                    QCLoginUserInfo.currentInfo.weixinNumber = result.data?.user_weixin ?? ""
+                    QCLoginUserInfo.currentInfo.time = result.data?.user_time ?? ""
                     QCLoginUserInfo.currentInfo.money = result.data?.user_money ?? "0"
                     QCLoginUserInfo.currentInfo.city = result.data?.user_city ?? ""
-                    QCLoginUserInfo.currentInfo.email = result.data?.user_email ?? ""
+                    QCLoginUserInfo.currentInfo.email = result.data?.user_email_2 ?? ""
                     QCLoginUserInfo.currentInfo.school = result.data?.user_school ?? ""
                     QCLoginUserInfo.currentInfo.major = result.data?.user_major ?? ""
                     QCLoginUserInfo.currentInfo.education = result.data?.user_education ?? ""
+                    QCLoginUserInfo.currentInfo.usertype = result.data?.user_usertype ?? ""
+                    print("=-=-=-=-=-=-"+String(QCLoginUserInfo.currentInfo.email))
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)

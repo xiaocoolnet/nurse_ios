@@ -41,6 +41,7 @@ class LoginUserInfo: JSONJoy {
     var user_phone:String
     var user_devicestate:String
     var user_usertype:String
+    var user_sex:String
     var user_id:String
     var user_name:String
     var user_city:String
@@ -50,9 +51,13 @@ class LoginUserInfo: JSONJoy {
     var user_time:String
     var user_level:String
     var user_score:String
+    var user_birthDay:String
+    var user_realname:String
     var user_fanscount:String
+    var user_followcount:String
     var user_money:String
     var user_email:String
+    var user_email_2:String
     var user_school:String
     var user_major:String
     var user_education:String
@@ -63,6 +68,7 @@ class LoginUserInfo: JSONJoy {
         user_phone = decoder["phone"].string ?? ""
         user_id = decoder["userid"].string ?? ""
         user_usertype = decoder["usertype"].string ?? ""
+        user_sex = decoder["sex"].string ?? ""
         user_devicestate = decoder["devicestate"].string ?? ""
         user_name = decoder["name"].string ?? ""
         user_city = decoder["city"].string ?? ""
@@ -72,9 +78,13 @@ class LoginUserInfo: JSONJoy {
         user_time = decoder["time"].string ?? ""
         user_level = String(decoder["level"].integer ?? 1)
         user_score = String(decoder["score"].integer ?? 0)
+        user_birthDay = decoder["birthday"].string ?? ""
+        user_realname = decoder["realname"].string ?? ""
         user_fanscount = String(decoder["fanscount"].integer ?? 0)
+        user_followcount = String(decoder["followcount"].integer ?? 0)
         user_money = String(decoder["money"].integer ?? 0)
         user_email = decoder["user_email"].string ?? ""
+        user_email_2 = decoder["email"].string ?? ""
         user_school = decoder["user_school"].string ?? ""
         user_major = decoder["user_major"].string ?? ""
         user_education = decoder["user_education"].string ?? ""

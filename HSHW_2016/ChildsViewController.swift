@@ -12,10 +12,14 @@ import MBProgressHUD
 
 class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource, HSFindPersonDetailViewDelegate {
     
-    var type = 2 // 1 个人 2 企业
+    var type = 1 // 1 个人 2 企业
     
     let myTableView = UITableView()
     let resumeDetail = NSBundle.mainBundle().loadNibNamed("HSFindPersonDetailView", owner: nil, options: nil).first as! HSFindPersonDetailView
+    let employmentMessageTableView = UITableView()
+    let employmentMessage = UIView()
+    var num = 1
+    var currentJobModel:InvitedInfo?
     var CVDataSource:Array<CVModel>?
     let jobHelper = HSNurseStationHelper()
     var dataSource = Array<CVModel>()
@@ -69,6 +73,12 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
         myTableView.registerClass(MineRecruitTableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(myTableView)
         myTableView.rowHeight = 72
+        
+        employmentMessageTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "employmentMessage")
+        employmentMessageTableView.delegate = self
+        employmentMessageTableView.dataSource = self
+        employmentMessageTableView.tag = 1
+        employmentMessageTableView.separatorStyle = .None
         
         self.GetDate()
     
@@ -140,27 +150,191 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
         resumeDetail.removeFromSuperview()
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+
+        if tableView.tag == 1 {
+        
+            if indexPath.row == 0 {
+                let jobModel = myInvitedList.data[indexPath.row]
+                let height = calculateHeight(jobModel.title, size: 18, width: WIDTH-20)
+                return 20+height
+            }else if indexPath.row == 1 {
+                return 20
+            }else if indexPath.row == 2 {
+                return 35
+            }else if indexPath.row == 3 {
+                return 50
+            }else if indexPath.row == 4 {
+                return 35
+            }else if indexPath.row == 5 {
+                return 35
+            }else if indexPath.row == 6 {
+                return 300
+            }else if indexPath.row == 7 {
+                return 35
+            }
+            else{
+                return 100
+            }
+        }else{
+            return 72
+        }
+        
+    }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //        return CVDataSource?.count ?? 0
-        if type == 1 {
-            print(self.myInvitedList.data.count)
-            return self.myInvitedList.data.count
+        if tableView.tag == 1 {
+            return 8
         }else{
-            return self.dataSource.count
+            
+            if type == 1 {
+                print(self.myInvitedList.data.count)
+                return self.myInvitedList.data.count
+            }else{
+                return self.dataSource.count
+            }
         }
     }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MineRecruitTableViewCell
-        cell.selectionStyle = .None
         
-        
-        if type == 1 {
-            cell.showforUserModel(self.myInvitedList.data[indexPath.row])
+        if tableView.tag == 1 {
+            let cell1 = UITableViewCell()
+            //            print(employmentdataSource)
+            //            let jobModel = employmentdataSource[0]as! JobModel
+            let jobModel = currentJobModel
+            
+            print(jobModel!.title)
+            cell1.selectionStyle = .None
+            cell1.textLabel?.numberOfLines = 0
+//            strId = jobModel!.id
+//            print(jobModel.id)
+            print(indexPath.row)
+            if indexPath.row==0 {
+                let title = UILabel()
+                let height = calculateHeight(jobModel!.title, size: 18, width: WIDTH-20)
+                title.frame = CGRectMake(10, 10, WIDTH-20, height)
+                title.text = jobModel!.title
+                title.font = UIFont.systemFontOfSize(20)
+                title.textColor = COLOR
+                title.numberOfLines = 0
+                cell1.addSubview(title)
+            }else if indexPath.row == 1 {
+                let eyeImage = UIImageView(image: UIImage(named: "ic_eye_purple.png"))
+                eyeImage.frame = CGRectMake(10,10,8,8)
+                let lookCount = UILabel(frame: CGRectMake(20,10,30,10))
+                lookCount.font = UIFont.systemFontOfSize(10)
+                lookCount.text = "3346"
+                let timeImage = UIImageView(image: UIImage(named: "ic_time_purple.png"))
+                timeImage.frame = CGRectMake(55, 10, 8, 8)
+                let timeLabel = UILabel(frame: CGRectMake(65,10,100,10))
+                timeLabel.font = UIFont.systemFontOfSize(10)
+                timeLabel.text = "2016/03/16"
+                
+                cell1.addSubview(eyeImage)
+                cell1.addSubview(lookCount)
+                cell1.addSubview(timeImage)
+                cell1.addSubview(timeLabel)
+                
+            }else if indexPath.row == 2 {
+                let nameLabel = UILabel(frame: CGRectMake(10,10,100,25))
+                nameLabel.font = UIFont.boldSystemFontOfSize(15)
+                nameLabel.text = "企业名称:"
+                let name = UILabel(frame: CGRectMake(120,10,200,25))
+                name.font = UIFont.systemFontOfSize(14)
+                name.text = jobModel!.companyname
+                cell1.addSubview(nameLabel)
+                cell1.addSubview(name)
+            }else if indexPath.row == 3 {
+                let descript = UILabel(frame: CGRectMake(10,10,WIDTH-20,50))
+                descript.font = UIFont.boldSystemFontOfSize(15)
+                descript.numberOfLines = 0
+                let descripStr = "企业简介:" + jobModel!.title
+                let attrStr = NSMutableAttributedString(string: descripStr)
+                attrStr.addAttributes([NSFontAttributeName:UIFont.boldSystemFontOfSize(15)], range: NSMakeRange(0, 5))
+                attrStr.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(5, attrStr.length-5))
+                attrStr.addAttributes([NSForegroundColorAttributeName:UIColor.lightGrayColor()], range: NSMakeRange(5, attrStr.length-5))
+                descript.attributedText = attrStr
+                cell1.addSubview(descript)
+            }else if indexPath.row == 4 {
+                let criteria = UILabel(frame: CGRectMake(10,10,70,25))
+                criteria.font = UIFont.boldSystemFontOfSize(15)
+                criteria.text = "招聘条件:"
+                let criteriaLabel = UILabel(frame: CGRectMake(80,10,75,25))
+                criteriaLabel.font = UIFont.systemFontOfSize(14)
+                criteriaLabel.text = jobModel!.education
+                let address = UILabel(frame: CGRectMake(170,10,70,25))
+                address.font = UIFont.boldSystemFontOfSize(15)
+                address.text = "工作地点:"
+                let addressLabel = UILabel(frame: CGRectMake(240,10,75,25))
+                addressLabel.font = UIFont.systemFontOfSize(14)
+                addressLabel.text = jobModel!.address
+                cell1.addSubview(criteria)
+                cell1.addSubview(criteriaLabel)
+                cell1.addSubview(address)
+                cell1.addSubview(addressLabel)
+            }else if indexPath.row == 5{
+                let criteria = UILabel(frame: CGRectMake(10,10,70,25))
+                criteria.font = UIFont.boldSystemFontOfSize(15)
+                criteria.text = "招聘人数:"
+                let criteriaLabel = UILabel(frame: CGRectMake(80,10,75,25))
+                criteriaLabel.font = UIFont.systemFontOfSize(14)
+                criteriaLabel.text = jobModel!.count
+                let address = UILabel(frame: CGRectMake(170,10,70,25))
+                address.font = UIFont.boldSystemFontOfSize(15)
+                address.text = "福利待遇:"
+                let addressLabel = UILabel(frame: CGRectMake(240,10,75,25))
+                addressLabel.font = UIFont.systemFontOfSize(14)
+                addressLabel.text = jobModel!.welfare
+                cell1.addSubview(criteria)
+                cell1.addSubview(criteriaLabel)
+                cell1.addSubview(address)
+                cell1.addSubview(addressLabel)
+            }else if indexPath.row == 6 {
+                let positionDescript = UILabel(frame: CGRectMake(10,10,100,25))
+                positionDescript.font = UIFont.boldSystemFontOfSize(15)
+                positionDescript.text = "职位描述:"
+                let descripDetail = UILabel(frame: CGRectMake(10,40,WIDTH-20,200))
+                descripDetail.font = UIFont.systemFontOfSize(14)
+                descripDetail.textColor = UIColor.lightGrayColor()
+                descripDetail.numberOfLines = 0
+                descripDetail.text = jobModel!.description
+                cell1.addSubview(positionDescript)
+                cell1.addSubview(descripDetail)
+            }else if indexPath.row == 7 {
+                let nameLabel = UILabel(frame: CGRectMake(10,10,80,25))
+                nameLabel.font = UIFont.boldSystemFontOfSize(15)
+                nameLabel.text = "联系方式:"
+                
+                let name = UIButton(type: UIButtonType.Custom)
+                name.frame = CGRectMake(100, 10, 100, 25)
+                name.setTitleColor(COLOR, forState: .Normal)
+                name.titleLabel!.font = UIFont.systemFontOfSize(14)
+                if num == 1 {
+                    name.setTitle("查看联系方式", forState: .Normal)
+                    name.addTarget(self, action: #selector(contactClick), forControlEvents: .TouchUpInside)
+                }else if num == 2{
+                    name.setTitle(jobModel!.phone, forState: .Normal)
+                    
+                }
+                cell1.addSubview(nameLabel)
+                cell1.addSubview(name)
+            }
+            return cell1
         }else{
-            let model = self.dataSource[indexPath.row]
-            cell.showforCVModel(model)
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MineRecruitTableViewCell
+            cell.selectionStyle = .None
+            
+            
+            if type == 1 {
+                cell.showforUserModel(self.myInvitedList.data[indexPath.row])
+            }else{
+                let model = self.dataSource[indexPath.row]
+                cell.showforCVModel(model)
+            }
+            return cell
         }
 //        cell.timeLab.text = "15分钟前"
 //        cell.job.text = model.birthday
@@ -168,10 +342,14 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
 //        cell.one.text = "申请面试"
 //        cell.two.text = "的面试"
 
-        return cell
         
     }
     
+    func contactClick() {
+        num = 2
+        self.employmentMessageTableView.reloadData()
+        
+    }
     
     func GetDate(){
         
@@ -265,37 +443,165 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
-        let model = self.dataSource[indexPath.row]
-        self.name = model.name
-        self.sex = model.sex
-        self.avatar = model.avatar
-        self.birthday = model.birthday
-        self.address = model.address
-        self.education = model.education
-        self.certificate = model.certificate
-        self.currentsalary = model.currentsalary
-        self.count = model.count
-        self.descrip = model.description
-        self.linkman = model.linkman
-        self.phone = model.phone
-        self.experience = model.experience
-        self.wantposition = model.wantposition
-        self.tit = model.title
-        self.jobstate = model.jobstate
-        self.ema = model.email
-        self.hiredate = model.hiredate
-        self.wantcity = model.wantcity
-        self.wantsalary = model.wantsalary
-        superViewController?.showRightBtn()
         
-//        self.makeCVMessage()
-        resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-107.5)
-        resumeDetail.delegate = self
-        resumeDetail.model = model
-        self.view.addSubview(resumeDetail)
+        if type == 1 {
+            currentJobModel = self.myInvitedList.data[indexPath.row]
+            makeEmploymentMessage()
+        }else {
+            
+            print(indexPath.row)
+            let model = self.dataSource[indexPath.row]
+            self.name = model.name
+            self.sex = model.sex
+            self.avatar = model.avatar
+            self.birthday = model.birthday
+            self.address = model.address
+            self.education = model.education
+            self.certificate = model.certificate
+            self.currentsalary = model.currentsalary
+            self.count = model.count
+            self.descrip = model.description
+            self.linkman = model.linkman
+            self.phone = model.phone
+            self.experience = model.experience
+            self.wantposition = model.wantposition
+            self.tit = model.title
+            self.jobstate = model.jobstate
+            self.ema = model.email
+            self.hiredate = model.hiredate
+            self.wantcity = model.wantcity
+            self.wantsalary = model.wantsalary
+            superViewController?.showRightBtn()
+            
+            //        self.makeCVMessage()
+            resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-107.5)
+            resumeDetail.delegate = self
+            resumeDetail.model = model
+            self.view.addSubview(resumeDetail)
+        }
     }
     
+    func makeEmploymentMessage() {
+        
+        employmentMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-0.5)
+        employmentMessage.backgroundColor = UIColor.whiteColor()
+        self.view.addSubview(employmentMessage)
+        
+        self.employmentMessageTableView.frame = CGRectMake(0, 0, employmentMessage.frame.size.width,employmentMessage.frame.size.height - WIDTH*65/375-64-49)
+//        self.employmentMessageTableView.backgroundColor = UIColor.redColor()
+
+        let tackBtn = UIButton(frame: CGRectMake(WIDTH-WIDTH*130/375-WIDTH*15/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+WIDTH*10/375, WIDTH*130/375, WIDTH*45/375))
+        tackBtn.layer.cornerRadius = WIDTH*22.5/375
+        tackBtn.layer.borderColor = COLOR.CGColor
+        tackBtn.layer.borderWidth = 1
+        tackBtn.setTitle("返回", forState: .Normal)
+        tackBtn.setTitleColor(COLOR, forState: .Normal)
+        tackBtn.addTarget(self, action: #selector(self.takeResume), forControlEvents: .TouchUpInside)
+        employmentMessage.addSubview(tackBtn)
+        
+        let tack = UIButton(frame: CGRectMake(WIDTH*15/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+WIDTH*10/375, WIDTH*130/375, WIDTH*45/375))
+        tack.layer.cornerRadius = WIDTH*22.5/375
+        tack.layer.borderColor = COLOR.CGColor
+        tack.layer.borderWidth = 1
+        tack.setTitle("投递简历", forState: .Normal)
+        tack.setTitleColor(COLOR, forState: .Normal)
+        tack.addTarget(self, action: #selector(self.resumeOnline(_:)), forControlEvents: .TouchUpInside)
+        employmentMessage.addSubview(tack)
+        
+        employmentMessage.addSubview(employmentMessageTableView)
+        
+        
+    }
+    
+    func takeResume(){
+        UIView.animateWithDuration(0.2) {
+            self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
+        }
+        //        self.employmentdataSource.removeAllObjects()
+        self.employmentMessageTableView.reloadData()
+        self.employmentMessage.removeFromSuperview()
+    }
+    
+    // MARK:投递简历
+    func resumeOnline(btn:UIButton) {
+        
+//        // MARK:要求登录
+//        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+//            return
+//        }
+        
+//        jobHelper.getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
+//            if success {
+//                print("投递简历")
+//                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
+//                self.presentViewController(alertController, animated: true, completion: nil)
+//                
+//                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
+//                    let url = PARK_URL_Header+"ApplyJob"
+//                    let param = [
+//                        "userid":QCLoginUserInfo.currentInfo.userid,
+//                        "jobid":self.jobDataSource![btn.tag].id,
+//                        "companyid":self.jobDataSource![btn.tag].companyid
+//                    ]
+//                    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+//                        print(request)
+//                        if(error != nil){
+//                            
+//                        }else{
+//                            let result = Http(JSONDecoder(json!))
+//                            if(result.status == "success"){
+//                                //  菊花加载
+//                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                                hud.mode = MBProgressHUDMode.Text;
+//                                hud.labelText = "投递简历成功"
+//                                hud.margin = 10.0
+//                                hud.removeFromSuperViewOnHide = true
+//                                hud.hide(true, afterDelay: 1)
+//                                print(111111)
+//                            }else{
+//                                //  菊花加载
+//                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                                hud.mode = MBProgressHUDMode.Text;
+//                                hud.labelText = "投递简历失败"
+//                                hud.margin = 10.0
+//                                hud.removeFromSuperViewOnHide = true
+//                                hud.hide(true, afterDelay: 1)
+//                                print(2222222)
+//                            }
+//                        }
+//                    }
+//                    
+//                    
+//                })
+//                alertController.addAction(doneAction)
+//                
+//                let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
+//                    return
+//                })
+//                alertController.addAction(cancelAction)
+//                
+//                
+//            }else{
+        
+//                dispatch_async(dispatch_get_main_queue(), {
+        
+                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已投递该简历，不需要重复投递", comment: "empty message"), preferredStyle: .Alert)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+//                    let doneAction = UIAlertAction(title: "现在就去", style: .Default, handler: { (action) in
+//                        self.postedTheView()
+//                    })
+//                    alertController.addAction(doneAction)
+        
+                    let cancelAction = UIAlertAction(title: "好的", style: .Cancel, handler: { (action) in
+                        
+                    })
+                    alertController.addAction(cancelAction)
+//                })
+//            }
+//        }
+        
+    }
+
     func rightBarButtonClicked(){
     
 //        findPersonnel.rightBarButtonClicked()

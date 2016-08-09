@@ -29,6 +29,7 @@ class MineRecruitViewController: UIViewController, PagingMenuControllerDelegate 
         self.view.backgroundColor = UIColor.whiteColor()
         
         oneView.title = "收到的简历"
+        oneView.type = 2
         twoView.title = "招聘列表"
         threeView.title = "企业认证"
         let viewControllers = [oneView,twoView,threeView]

@@ -112,7 +112,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 })
             })
         }
-        self.navigationController?.popViewControllerAnimated(true)
+//        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

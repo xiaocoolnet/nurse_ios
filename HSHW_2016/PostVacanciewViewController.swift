@@ -21,7 +21,7 @@ class PostVacanciewViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        self.title = "编辑简历"
+        self.title = "发布招聘"
         
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR

@@ -129,7 +129,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
         self.view.addSubview(myTableView)
 //        myTableView.separatorColor = UIColor.clearColor()
-        myTableView.separatorStyle = .SingleLine
+        myTableView.separatorStyle = .None
         
 
     }
@@ -375,7 +375,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         }
     }
-
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell1:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cellIntenfer")!
         
@@ -389,6 +389,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             if indexPath.row == 0 {
                
                 cell1 = UITableViewCell.init(style: .Default, reuseIdentifier: "cellIntenfer")
+                cell1.selectionStyle = .None
 
                 let title = UILabel()
                 let height = calculateHeight((newsInfo?.post_title)!, size: 21, width: WIDTH-20)
@@ -404,7 +405,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }else if indexPath.row == 1 {
 
                 let cell = tableView.dequeueReusableCellWithIdentifier("sourceCell", forIndexPath: indexPath)as! NewsSourceCell
-                cell.source.text = cell.source.text!+(newsInfo?.post_source)!
+                cell.source.text = "来源：\((newsInfo?.post_source)!)"
+                
                 cell.post_like.text = newsInfo?.post_hits
                 let time:Array = (newsInfo?.post_date?.componentsSeparatedByString(" "))!
                 cell.createTime.text = time[0]

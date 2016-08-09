@@ -10,6 +10,7 @@ import UIKit
 
 class editResumeViewController: UIViewController {
 
+    var height = HEIGHT-64
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -21,14 +22,14 @@ class editResumeViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.title = "发布招聘"
+        self.title = "我的简历"
         
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
 
         let view = NSBundle.mainBundle().loadNibNamed("HSPostResumeView", owner: nil, options: nil).first as! HSPostResumeView
-        view.frame = CGRectMake(0, 1, WIDTH, HEIGHT-64)
+        view.frame = CGRectMake(0, 1, WIDTH, height)
         self.view.addSubview(view)
     }
 

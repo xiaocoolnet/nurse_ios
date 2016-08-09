@@ -154,7 +154,7 @@ class GToutiaoTableViewCell: UITableViewCell {
         
         let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
         let date:Array = time[0].componentsSeparatedByString("-")
-        self.timeLab.text = "\(date[0])/\(date[1])/\(date[2])"
+        self.timeLab.text = "\(date[1])/\(date[2])"
         self.contant.text = newsInfo.post_excerpt
         
 //        if newsInfo.thumb == "/data/upload/" {
@@ -268,7 +268,7 @@ class GToutiaoTableViewCell: UITableViewCell {
         
         let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
         let date:Array = time[0].componentsSeparatedByString("-")
-        self.timeLab.text = "\(date[0])/\(date[1])/\(date[2])"
+        self.timeLab.text = "\(date[1])/\(date[2])"
         self.contant.text = newsInfo.post_excerpt
         
         //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)

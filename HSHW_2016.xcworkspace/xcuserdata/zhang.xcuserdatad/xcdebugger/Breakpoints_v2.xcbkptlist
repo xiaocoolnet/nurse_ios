@@ -59,6 +59,38 @@
             endingLineNumber = "1044"
             landmarkName = "takeUpTheTest()"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.OnLineViewController.takeUpTheTest () -&gt; ()"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/OnLineViewController.swift"
+                  timestampString = "492423827.806541"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1044"
+                  endingLineNumber = "1044"
+                  offsetFromSymbolStart = "4472">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.OnLineViewController.(takeUpTheTest () -&gt; ()).(closure #1)"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/OnLineViewController.swift"
+                  timestampString = "492423827.80667"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "1046"
+                  endingLineNumber = "1046"
+                  offsetFromSymbolStart = "51">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -75,6 +107,38 @@
             endingLineNumber = "845"
             landmarkName = "takeUpTheTest()"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.WordViewController.takeUpTheTest () -&gt; ()"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/WordViewController.swift"
+                  timestampString = "492423827.807545"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "845"
+                  endingLineNumber = "845"
+                  offsetFromSymbolStart = "4434">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.WordViewController.(takeUpTheTest () -&gt; ()).(closure #1)"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/WordViewController.swift"
+                  timestampString = "492423827.807681"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "846"
+                  endingLineNumber = "846"
+                  offsetFromSymbolStart = "51">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -91,6 +155,38 @@
             endingLineNumber = "858"
             landmarkName = "takeUpTheTest()"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.OnlineExaminationViewController.takeUpTheTest () -&gt; ()"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/OnlineExaminationViewController.swift"
+                  timestampString = "492423827.808589"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "858"
+                  endingLineNumber = "858"
+                  offsetFromSymbolStart = "2364">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.OnlineExaminationViewController.(takeUpTheTest () -&gt; ()).(closure #1)"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/OnlineExaminationViewController.swift"
+                  timestampString = "492423827.808887"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "859"
+                  endingLineNumber = "859"
+                  offsetFromSymbolStart = "47">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -107,22 +203,38 @@
             endingLineNumber = "882"
             landmarkName = "takeUpTheTest()"
             landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/ChildsViewController.swift"
-            timestampString = "492342099.147436"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "148"
-            endingLineNumber = "148"
-            landmarkName = "tableView(_:numberOfRowsInSection:)"
-            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.GOnlineExamViewController.takeUpTheTest () -&gt; ()"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/GOnlineExamViewController.swift"
+                  timestampString = "492423827.810219"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "882"
+                  endingLineNumber = "882"
+                  offsetFromSymbolStart = "2402">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.GOnlineExamViewController.(takeUpTheTest () -&gt; ()).(closure #1)"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/GOnlineExamViewController.swift"
+                  timestampString = "492423827.810501"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "883"
+                  endingLineNumber = "883"
+                  offsetFromSymbolStart = "47">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

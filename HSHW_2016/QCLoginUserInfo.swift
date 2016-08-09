@@ -31,6 +31,8 @@ class QCLoginUserInfo {
     var school = ""
     var major = ""
     var education = ""
+    var score = ""
+    
     
     static let currentInfo = QCLoginUserInfo()
     private init() {

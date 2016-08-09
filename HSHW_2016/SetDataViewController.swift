@@ -12,13 +12,21 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     let myTableView = UITableView()
     var oneArr:[String] = ["头像","用户名","性别","手机","邮箱"]
-    var onedeArr:[String] = ["",QCLoginUserInfo.currentInfo.userName,QCLoginUserInfo.currentInfo.sex,QCLoginUserInfo.currentInfo.phoneNumber,QCLoginUserInfo.currentInfo.email]
+    var onedeArr:[String] = ["",
+                             QCLoginUserInfo.currentInfo.userName,
+                             QCLoginUserInfo.currentInfo.sex == "0" ? "女":"男",
+                             QCLoginUserInfo.currentInfo.phoneNumber,
+                             QCLoginUserInfo.currentInfo.email]
     
     var twoArr:[String] = ["姓名","出生日期","地址"]
-    var twodeArr:[String] = [QCLoginUserInfo.currentInfo.realName ,QCLoginUserInfo.currentInfo.birthday,QCLoginUserInfo.currentInfo.city]
+    var twodeArr:[String] = [QCLoginUserInfo.currentInfo.realName,
+                             QCLoginUserInfo.currentInfo.birthday,
+                             QCLoginUserInfo.currentInfo.city]
     
     var threeArr:[String] = ["学校","专业","学历"]
-    var threedeArr:[String] = [QCLoginUserInfo.currentInfo.school,QCLoginUserInfo.currentInfo.major,QCLoginUserInfo.currentInfo.education]
+    var threedeArr:[String] = [QCLoginUserInfo.currentInfo.school,
+                               QCLoginUserInfo.currentInfo.major,
+                               QCLoginUserInfo.currentInfo.education]
     var mainHelper = HSMineHelper()
     var myActionSheet:UIAlertController?
     var avatarView = UIButton(type: UIButtonType.Custom)
@@ -194,6 +202,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
             cell.textLabel?.text = threeArr[indexPath.row]
             cell.detailTextLabel?.text = threedeArr[indexPath.row]
         }
+        print("text == \((cell.textLabel?.text)!)   detailTextLabel == \((cell.detailTextLabel?.text)!)")
         return cell
     }
     
