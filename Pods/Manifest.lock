@@ -25,6 +25,7 @@ PODS:
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
+  - WeiboSDK (3.1.4)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0.1)
@@ -35,6 +36,16 @@ DEPENDENCIES:
   - MOBFoundation
   - PagingMenuController (~> 0.9.1)
   - SDWebImage (~> 3.7.3)
+  - WeiboSDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk.git`)
+
+EXTERNAL SOURCES:
+  WeiboSDK:
+    :git: https://github.com/sinaweibosdk/weibo_ios_sdk.git
+
+CHECKOUT OPTIONS:
+  WeiboSDK:
+    :commit: 6031a8da4ce17867ff5887b8dfc59ea45930274e
+    :git: https://github.com/sinaweibosdk/weibo_ios_sdk.git
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
@@ -45,5 +56,6 @@ SPEC CHECKSUMS:
   MOBFoundation: a42168392e216fc56cbcbdfc3d5dcb3bbce5ef87
   PagingMenuController: 95bab00761e1ba4f4f9fa6bf22ac71b065a675aa
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  WeiboSDK: bceab625ec59b7039ba721cc4ba9f5868804f63e
 
 COCOAPODS: 0.39.0

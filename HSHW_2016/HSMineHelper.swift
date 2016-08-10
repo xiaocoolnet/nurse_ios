@@ -40,9 +40,9 @@ class HSMineHelper: NSObject {
                     QCLoginUserInfo.currentInfo.money = result.data?.user_money ?? "0"
                     QCLoginUserInfo.currentInfo.city = result.data?.user_city ?? ""
                     QCLoginUserInfo.currentInfo.email = result.data?.user_email_2 ?? ""
-                    QCLoginUserInfo.currentInfo.school = result.data?.user_school ?? ""
-                    QCLoginUserInfo.currentInfo.major = result.data?.user_major ?? ""
-                    QCLoginUserInfo.currentInfo.education = result.data?.user_education ?? ""
+                    QCLoginUserInfo.currentInfo.school = result.data?.user_school_2 ?? ""
+                    QCLoginUserInfo.currentInfo.major = result.data?.user_major_2 ?? ""
+                    QCLoginUserInfo.currentInfo.education = result.data?.user_education_2 ?? ""
                     QCLoginUserInfo.currentInfo.usertype = result.data?.user_usertype ?? ""
                     print("=-=-=-=-=-=-"+String(QCLoginUserInfo.currentInfo.email))
                     handle(success: true, response: nil)
@@ -175,7 +175,8 @@ class HSMineHelper: NSObject {
     func changeBirthday(birthday:String,handle:ResponseBlock){
         let url = PARK_URL_Header+"UpdateUserBirthday"
         let param = [
-            "userid":QCLoginUserInfo.currentInfo.userid,"birthday":birthday
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "birthday":birthday
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             print(request)

@@ -26,6 +26,8 @@ let LOGINFO_KEY = "login_info"
 let USER_NAME = "login_name"
 let USER_PWD = "login_password"
 var LOGIN_STATE = false
+let kAppKey = "3139633252"
+let kRedirectURI = "http://app.chinanurse.cn"
 
 let APP_SHARE_URL = "https://www.pgyer.com/kUyM"
 let APP_SHARE_NAME = "中国护士网"

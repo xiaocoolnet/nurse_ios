@@ -25,7 +25,15 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wxe61df5d7fee96861</string>
+				<string>wxdd50558e711439e8</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>wb3139633252</string>
 			</array>
 		</dict>
 	</array>

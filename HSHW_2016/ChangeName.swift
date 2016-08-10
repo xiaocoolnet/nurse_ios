@@ -119,7 +119,6 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
         if showType == .Education || showType == .Sex || showType == .Major {
             return self.dateSource.objectlist.count
         }else{
-            
             return 1
         }
     }
@@ -210,7 +209,11 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
             let time = string.substringToIndex(range.endIndex)
             self.dataBtn.setTitle(time, forState: .Normal)
             self.dataBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
-            
+//            self.mineHelper.changeBirthday(self.dataBtn.currentTitle!, handle: { (success, response) in
+//                dispatch_async(dispatch_get_main_queue(), { 
+//                    QCLoginUserInfo.currentInfo.birthday = self.dataBtn.currentTitle!
+//                })
+//            })
         }
     }
     
@@ -220,9 +223,10 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
         pick.pickArray=array
         pick.show((UIApplication.sharedApplication().keyWindow)!)
         pick.selectAdress { (dressArray) in
-        self.array=dressArray
-        self.addressBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
-        self.addressBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            self.array=dressArray
+            self.addressBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
+            self.addressBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            
         }
     }
     

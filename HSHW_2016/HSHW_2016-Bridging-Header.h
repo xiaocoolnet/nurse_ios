@@ -7,3 +7,4 @@
 #import "ConnectModel.h"
 #import "CFLineChartView.h"
 #import "MJRefresh.h"
+#import "WeiboSDK.h"

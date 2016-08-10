@@ -7,16 +7,24 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDelegate {
 
     var window: UIWindow?
+    var wbtoken: String?
+    var wbCurrentUserID: String?
+    var wbRefreshToken: String?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        WXApi.registerApp("wxe61df5d7fee96861")
+        WXApi.registerApp("wxdd50558e711439e8")
+        
+        WeiboSDK.enableDebugMode(true)
+        WeiboSDK.registerApp(kAppKey)
+        
         
         
 //        ShareSDK.registerApp("13be4c6c247e0", activePlatforms:
@@ -62,13 +70,65 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     }
     
     func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
-        return WXApi.handleOpenURL(url, delegate: self)
+        let str = url.absoluteString
+        if str.hasPrefix("wx") {
+            return WXApi.handleOpenURL(url, delegate: self)
+        }else{
+            return WeiboSDK.handleOpenURL(url, delegate: self)
+        }
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        return WXApi.handleOpenURL(url, delegate: self)
+        
+        let str = url.absoluteString
+        if str.hasPrefix("wx") {
+            return WXApi.handleOpenURL(url, delegate: self)
+        }else{
+            return WeiboSDK.handleOpenURL(url, delegate: self)
+        }
     }
 
+    func didReceiveWeiboRequest(request: WBBaseRequest!) {
+        
+    }
+    
+    func didReceiveWeiboResponse(response: WBBaseResponse!) {
+
+//        print(response.isKindOfClass(WBSendMessageToWeiboResponse))
+//        print(response.isKindOfClass(WBAuthorizeResponse))
+//        print(response.isKindOfClass(WBPaymentResponse))
+//        print(response.isKindOfClass(WBSDKAppRecommendResponse))
+//        print(response.isKindOfClass(WBShareMessageToContactResponse))
+//        print(response.isKindOfClass(WBShareMessageToContactResponse))
+
+        if response.isKindOfClass(WBAuthorizeResponse) {
+            
+//            WBShareMessageToContactResponse* shareMessageToContactResponse = (WBShareMessageToContactResponse*)response;
+//            NSString* accessToken = [shareMessageToContactResponse.authResponse accessToken];
+//            let shareMessageToContactResponse:WBShareMessageToContactResponse = response as! WBShareMessageToContactResponse
+//            let accessToken = shareMessageToContactResponse.authResponse.accessToken
+//            print(shareMessageToContactResponse.authResponse.debugDescription)
+//            if (accessToken != nil) {
+//                wbtoken = accessToken
+//            }
+            let authorizeResponse:WBAuthorizeResponse = response as! WBAuthorizeResponse
+            self.wbtoken = authorizeResponse.accessToken
+            self.wbCurrentUserID = authorizeResponse.userID
+            self.wbRefreshToken = authorizeResponse.refreshToken
+            
+            print(authorizeResponse.debugDescription)
+//            self.wbtoken = [(WBAuthorizeResponse *)response accessToken];
+//            self.wbCurrentUserID = [(WBAuthorizeResponse *)response userID];
+//            self.wbRefreshToken = [(WBAuthorizeResponse *)response refreshToken];
+            
+            let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+            //            hud.mode = MBProgressHUDMode.Text;
+            hud.labelText = response.statusCode.rawValue == 0 ? "分享成功":"分享失败"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 1)
+        }
+    }
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

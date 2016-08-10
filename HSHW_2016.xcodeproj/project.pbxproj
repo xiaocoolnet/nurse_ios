@@ -128,6 +128,14 @@
 		1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */; };
 		1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */; };
 		1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */; };
+		1FE3A6341D5AFC2D0039D94D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */; };
+		1FE3A6361D5AFC370039D94D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */; };
+		1FE3A6381D5AFC430039D94D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6371D5AFC430039D94D /* Security.framework */; };
+		1FE3A63A1D5AFC4F0039D94D /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6391D5AFC4F0039D94D /* CoreTelephony.framework */; };
+		1FE3A63C1D5AFC570039D94D /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A63B1D5AFC570039D94D /* CoreText.framework */; };
+		1FE3A63E1D5AFC650039D94D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A63D1D5AFC650039D94D /* UIKit.framework */; };
+		1FE3A6401D5AFC720039D94D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A63F1D5AFC720039D94D /* Foundation.framework */; };
+		1FE3A6421D5AFC7A0039D94D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6411D5AFC7A0039D94D /* CoreGraphics.framework */; };
 		1FE6E4C21D52EBE3009E036B /* AdressPickerView_2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE6E4C11D52EBE3009E036B /* AdressPickerView_2.swift */; };
 		1FE6E4C41D536171009E036B /* GHSExamCollectTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE6E4C31D536171009E036B /* GHSExamCollectTableViewCell.swift */; };
 		1FEF15A81D5047EE00FF343C /* MainCompanyAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF15A71D5047EE00FF343C /* MainCompanyAuthViewController.swift */; };
@@ -383,6 +391,14 @@
 		1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayModel.swift; sourceTree = "<group>"; };
 		1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaliyExamModel.swift; sourceTree = "<group>"; };
 		1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTimeCell.swift; sourceTree = "<group>"; };
+		1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		1FE3A6371D5AFC430039D94D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		1FE3A6391D5AFC4F0039D94D /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		1FE3A63B1D5AFC570039D94D /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		1FE3A63D1D5AFC650039D94D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		1FE3A63F1D5AFC720039D94D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1FE3A6411D5AFC7A0039D94D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		1FE6E4C11D52EBE3009E036B /* AdressPickerView_2.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdressPickerView_2.swift; sourceTree = "<group>"; };
 		1FE6E4C31D536171009E036B /* GHSExamCollectTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GHSExamCollectTableViewCell.swift; sourceTree = "<group>"; };
 		1FEF15A71D5047EE00FF343C /* MainCompanyAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCompanyAuthViewController.swift; sourceTree = "<group>"; };
@@ -477,6 +493,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1FE3A6421D5AFC7A0039D94D /* CoreGraphics.framework in Frameworks */,
+				1FE3A6401D5AFC720039D94D /* Foundation.framework in Frameworks */,
+				1FE3A63E1D5AFC650039D94D /* UIKit.framework in Frameworks */,
+				1FE3A63C1D5AFC570039D94D /* CoreText.framework in Frameworks */,
+				1FE3A63A1D5AFC4F0039D94D /* CoreTelephony.framework in Frameworks */,
+				1FE3A6381D5AFC430039D94D /* Security.framework in Frameworks */,
+				1FE3A6361D5AFC370039D94D /* SystemConfiguration.framework in Frameworks */,
+				1FE3A6341D5AFC2D0039D94D /* QuartzCore.framework in Frameworks */,
 				F604A4E41D0E7A2E008A4888 /* libsqlite3.tbd in Frameworks */,
 				F604A4E21D0E7A1D008A4888 /* JavaScriptCore.framework in Frameworks */,
 				1F0BE12A1D54A84300842B80 /* libWeChatSDK.a in Frameworks */,
@@ -1159,6 +1183,14 @@
 		F1AF83881B75F01938A9D1A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1FE3A6411D5AFC7A0039D94D /* CoreGraphics.framework */,
+				1FE3A63F1D5AFC720039D94D /* Foundation.framework */,
+				1FE3A63D1D5AFC650039D94D /* UIKit.framework */,
+				1FE3A63B1D5AFC570039D94D /* CoreText.framework */,
+				1FE3A6391D5AFC4F0039D94D /* CoreTelephony.framework */,
+				1FE3A6371D5AFC430039D94D /* Security.framework */,
+				1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */,
+				1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */,
 				F604A4E31D0E7A2E008A4888 /* libsqlite3.tbd */,
 				F604A4E11D0E7A1D008A4888 /* JavaScriptCore.framework */,
 				F604A4DF1D0E7A16008A4888 /* libstdc++.tbd */,

@@ -248,14 +248,18 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         alertController.addAction(wechatAction)
         
         let weiboAction = UIAlertAction(title: "新浪微博", style: .Default) { (pengyouquanAction) in
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text;
-            hud.labelText = "新浪微博 敬请期待"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 2)
+
+            let btn = UIButton()
+            btn.tag = 2
+            self.shareTheNews(btn)
+//            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//            hud.mode = MBProgressHUDMode.Text;
+//            hud.labelText = "新浪微博 敬请期待"
+//            hud.margin = 10.0
+//            hud.removeFromSuperViewOnHide = true
+//            hud.hide(true, afterDelay: 2)
         }
-        //        alertController.addAction(weiboAction)
+        alertController.addAction(weiboAction)
         
         let pengyouquanAction = UIAlertAction(title: "朋友圈", style: .Default) { (pengyouquanAction) in
             
@@ -551,33 +555,57 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
    
     func shareTheNews(btn:UIButton) {
         
-        let message = WXMediaMessage()
-        message.title = "中国护士网"
-        message.description = newsInfo?.post_title
-        // TODO:
-        message.setThumbImage(UIImage())
-        
-        let webPageObject = WXWebpageObject()
-        webPageObject.webpageUrl = NewsInfo_Header+(newsInfo?.object_id)!
-        message.mediaObject = webPageObject
-        
-        let req = SendMessageToWXReq()
-        req.bText = false
-        req.message = message
-        
-        switch btn.tag {
-        case 0:
-            req.scene = Int32(WXSceneTimeline.rawValue)
-        case 1:
-            req.scene = Int32(WXSceneSession.rawValue)
+        if btn.tag == 0 || btn.tag == 1 {
             
-        default:
-            break
+            let message = WXMediaMessage()
+            message.title = "中国护士网"
+            message.description = newsInfo?.post_title
+            // TODO:
+            //        let imageName = newsInfo?.thumbArr.count == 0 ? "1":newsInfo?.thumbArr.first?.url
+            message.setThumbImage(UIImage())
+            
+            let webPageObject = WXWebpageObject()
+            webPageObject.webpageUrl = NewsInfo_Header+(newsInfo?.object_id)!
+            message.mediaObject = webPageObject
+            
+            let req = SendMessageToWXReq()
+            req.bText = false
+            req.message = message
+            
+            switch btn.tag {
+            case 0:
+                req.scene = Int32(WXSceneTimeline.rawValue)
+            case 1:
+                req.scene = Int32(WXSceneSession.rawValue)
+            default:
+                break
+            }
+            
+            //        req.scene = Int32(WXSceneTimeline.rawValue)
+            
+            WXApi.sendReq(req)
+        }else{
+            //            let myDelegate = UIApplication.sharedApplication().delegate
+            let authRequest:WBAuthorizeRequest = WBAuthorizeRequest.request() as! WBAuthorizeRequest
+            authRequest.redirectURI = kRedirectURI
+            authRequest.scope = "all"
+            
+            let message = WBMessageObject.message() as! WBMessageObject
+            message.text = "@Mr__大脸猫"
+            let webpage:WBWebpageObject = WBWebpageObject.object() as! WBWebpageObject
+            webpage.objectID = "identifier1"
+            webpage.title = "分享网页的标题-中国护士网"
+            webpage.description = "分享网页的内容简介-\((newsInfo?.post_title)!)"
+//            webpage.thumbnailData = NSDa
+            webpage.webpageUrl = NewsInfo_Header+(newsInfo?.object_id)!
+            message.mediaObject = webpage
+            print(message.mediaObject.debugDescription)
+            
+            let request = WBSendMessageToWeiboRequest.requestWithMessage(message, authInfo: authRequest, access_token: AppDelegate().wbtoken) as! WBSendMessageToWeiboRequest
+            request.userInfo = ["ShareMessageFrom":"NewsContantViewController"]
+            
+            WeiboSDK.sendRequest(request)
         }
-        
-//        req.scene = Int32(WXSceneTimeline.rawValue)
-        
-        WXApi.sendReq(req)
         
 //        let shareParames = NSMutableDictionary()
 //    // let image : UIImage = UIImage(named: "btn_setting_qq_login")!
