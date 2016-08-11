@@ -510,5 +510,88 @@ class HSMineHelper: NSObject {
         }
 
     }
+    
+    // MARK: 发布企业认证
+    func updataCompanyCertifyWith(companyname:String, companyinfo:String, create_time:String, phone:String, email:String, linkman:String, license:String, handle:ResponseBlock){
+        let url = PARK_URL_Header+"UpdataCompanyCertify"
+        let param = [
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "companyname":companyname,
+            "companyinfo":companyinfo,
+            "create_time":create_time,
+            "phone":phone,
+            "email":email,
+            "linkman":linkman,
+            "license":license
+            
+        ];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                do {
+                    
+                    let result = try NSJSONSerialization.JSONObjectWithData(json!, options: NSJSONReadingOptions.MutableLeaves) as! NSDictionary
+                    print("状态是")
+                    print(result["status"])
+                    if(String(result["status"]!) == "success"){
+                        handle(success: true, response: String(result["data"]!))
+                    }else{
+                        handle(success: false, response: String(result["data"]!))
+                    }
+                }catch{
+                    handle(success: false, response: "json解析异常")
+                    
+                }
 
+//                let result = Http(JSONDecoder(json!))
+//                print("状态是")
+//                print(result.status)
+//                if(result.status == "success"){
+//                    handle(success: true, response: result.data)
+//                }else{
+//                    handle(success: false, response: result.errorData)
+//                }
+            }
+            
+        }
+    }
+    
+    // MARK: 获取企业认证状态
+    func getCompanyCertify(handle:ResponseBlock){
+        let url = PARK_URL_Header+"getCompanyCertify"
+        let param = [
+            "userid":QCLoginUserInfo.currentInfo.userid,
+        ];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = CompanyInfoStatus(JSONDecoder(json!))
+                print(result.status)
+                if(result.status == "success"){
+                    handle(success: true, response: result.data)
+                }else{
+                    handle(success: false, response: "获取企业认证状态失败")
+                }
+//
+//                do {
+//                    
+//                    let result = try NSJSONSerialization.JSONObjectWithData(json!, options: NSJSONReadingOptions.MutableLeaves) as! NSDictionary
+//                    print("状态是")
+//                    print(result["status"])
+//                    if(String(result["status"]!) == "success"){
+//                        handle(success: true, response: String((result["data"]!["status"]!)!))
+//                    }else{
+//                        handle(success: false, response: String((result["data"]!["status"]!)!))
+//                    }
+//                }catch{
+//                    handle(success: false, response: "json解析异常")
+//
+//                }
+            }
+        }
+    }
 }

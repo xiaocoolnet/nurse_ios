@@ -14,6 +14,7 @@
                 <outlet property="descriptionField" destination="pb9-eC-NSw" id="MCJ-tV-lVj"/>
                 <outlet property="mailField" destination="eNQ-pD-WFG" id="Na3-lf-vBB"/>
                 <outlet property="nameField" destination="NYv-Nq-GlY" id="0ef-5B-0IQ"/>
+                <outlet property="reCertifyBtn" destination="LnU-Hw-1TX" id="8gx-mC-BeB"/>
                 <outlet property="submitBtn" destination="Eu4-Mz-18k" id="kyF-zV-L00"/>
                 <outlet property="successBgView" destination="sDn-lu-R2Y" id="Y9S-P9-gZC"/>
                 <outlet property="successChangeBtn" destination="Fsf-vG-kFZ" id="SSB-cL-dDJ"/>
@@ -914,6 +915,9 @@
                                 <constraint firstAttribute="height" constant="45" id="Kp6-Oq-JA6"/>
                             </constraints>
                             <state key="normal" title="修改"/>
+                            <connections>
+                                <action selector="changeCompanyInfo:" destination="-1" eventType="touchUpInside" id="YQP-wa-f3U"/>
+                            </connections>
                         </button>
                     </subviews>
                     <constraints>
@@ -940,10 +944,83 @@
                 <constraint firstAttribute="bottom" secondItem="cpd-H7-Rea" secondAttribute="bottom" id="y0i-fa-MbD"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-            <point key="canvasLocation" x="113.5" y="1780.5"/>
+            <point key="canvasLocation" x="344.5" y="1773.5"/>
+        </view>
+        <view contentMode="scaleToFill" restorationIdentifier="fail" id="HOm-5n-kh0" userLabel="Wait View">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T8a-wC-exj" userLabel="Line View">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
+                    <color key="backgroundColor" red="0.56862745100000001" green="0.1019607843" blue="0.41960784309999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="BTu-NP-YOO"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J4g-8b-Gac">
+                    <rect key="frame" x="58" y="135" width="260" height="250"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_renzhengshibai" translatesAutoresizingMaskIntoConstraints="NO" id="7Zw-Fq-OGe">
+                            <rect key="frame" x="112" y="87" width="36" height="36"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="7Zw-Fq-OGe" secondAttribute="height" multiplier="8:9" id="7ZK-YE-krI"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="7ZK-YE-krI"/>
+                                </mask>
+                            </variation>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="认证失败，请重新认证" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rai-bY-lu9">
+                            <rect key="frame" x="0.0" y="143" width="260" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="30" id="35m-7g-phq"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="Rai-bY-lu9" firstAttribute="top" secondItem="7Zw-Fq-OGe" secondAttribute="bottom" constant="20" id="B91-Hf-3a2"/>
+                        <constraint firstItem="7Zw-Fq-OGe" firstAttribute="centerY" secondItem="J4g-8b-Gac" secondAttribute="centerY" constant="-20" id="NnR-Ky-Qoo"/>
+                        <constraint firstAttribute="height" constant="250" id="fLU-jT-5kj"/>
+                        <constraint firstItem="7Zw-Fq-OGe" firstAttribute="centerX" secondItem="J4g-8b-Gac" secondAttribute="centerX" id="jAk-79-Qlf"/>
+                        <constraint firstAttribute="trailing" secondItem="Rai-bY-lu9" secondAttribute="trailing" id="l9s-5A-0I4"/>
+                        <constraint firstItem="Rai-bY-lu9" firstAttribute="leading" secondItem="J4g-8b-Gac" secondAttribute="leading" id="lmh-eC-qqH"/>
+                        <constraint firstAttribute="width" constant="260" id="mru-yr-OJD"/>
+                    </constraints>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LnU-Hw-1TX">
+                    <rect key="frame" x="30" y="415" width="315" height="45"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="45" id="hxy-lY-WWu"/>
+                    </constraints>
+                    <state key="normal" title="重新认证"/>
+                    <connections>
+                        <action selector="reCertify:" destination="-1" eventType="touchUpInside" id="hub-7m-cgn"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="T8a-wC-exj" secondAttribute="trailing" id="0bd-hS-sM3"/>
+                <constraint firstItem="J4g-8b-Gac" firstAttribute="centerX" secondItem="HOm-5n-kh0" secondAttribute="centerX" id="0eX-wh-Z2G"/>
+                <constraint firstItem="T8a-wC-exj" firstAttribute="leading" secondItem="HOm-5n-kh0" secondAttribute="leading" id="4Bn-wc-K2D"/>
+                <constraint firstItem="T8a-wC-exj" firstAttribute="top" secondItem="HOm-5n-kh0" secondAttribute="top" id="Plx-hj-q7B"/>
+                <constraint firstAttribute="trailing" secondItem="LnU-Hw-1TX" secondAttribute="trailing" constant="30" id="Vnn-uR-ISI"/>
+                <constraint firstItem="LnU-Hw-1TX" firstAttribute="top" secondItem="J4g-8b-Gac" secondAttribute="bottom" constant="30" id="b5B-LN-tBW"/>
+                <constraint firstItem="LnU-Hw-1TX" firstAttribute="centerX" secondItem="HOm-5n-kh0" secondAttribute="centerX" id="cZp-1b-mUT"/>
+                <constraint firstItem="LnU-Hw-1TX" firstAttribute="leading" secondItem="HOm-5n-kh0" secondAttribute="leading" constant="30" id="eCr-aU-Ve0"/>
+                <constraint firstItem="J4g-8b-Gac" firstAttribute="centerY" secondItem="HOm-5n-kh0" secondAttribute="centerY" constant="-74" id="vcF-yn-MJT"/>
+            </constraints>
+            <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+            <point key="canvasLocation" x="-136.5" y="1773.5"/>
         </view>
     </objects>
     <resources>
+        <image name="ic_renzhengshibai" width="36" height="36"/>
         <image name="ic_shangchuan" width="209" height="58"/>
         <image name="ic_wait" width="32" height="36"/>
     </resources>

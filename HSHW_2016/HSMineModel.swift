@@ -330,12 +330,57 @@ class CollectList:JSONJoy {
     }
 }
 
+// Model 企业信息状态
+class CompanyInfoStatus:JSONJoy {
 
+    var status: String?
 
+    var data:CompanyInfo?
+    
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string
+        if status == "success"{
+            data = (CompanyInfo(decoder["data"]))
+        }else{
+        }
+    }
+}
 
+// Model 企业信息（data）
+class CompanyInfo:JSONJoy {
 
+    var userid: String?
 
+    var companyinfo: String?
 
+    var phone: String?
 
+    var id: String?
 
+    var status: String?
+
+    var linkman: String?
+
+    var email: String?
+
+    var create_time: String?
+
+    var license: String?
+
+    var companyname: String?
+    
+    
+    required init(_ decoder: JSONDecoder) {
+        userid = decoder["userid"].string ?? ""
+        companyinfo = decoder["companyinfo"].string ?? ""
+        phone = decoder["phone"].string ?? ""
+        id = decoder["id"].string ?? ""
+        status = decoder["status"].string ?? ""
+        linkman = decoder["linkman"].string ?? ""
+        email = decoder["email"].string ?? ""
+        create_time = decoder["create_time"].string ?? ""
+        license = decoder["license"].string ?? ""
+        companyname = decoder["companyname"].string ?? ""
+    }
+}
 

@@ -206,6 +206,9 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        getCompanyStatus()
+        
         sendBtn.layer.borderColor = COLOR.CGColor
         sendBtn.layer.borderWidth = 1
         sendBtn.layer.cornerRadius = sendBtn.frame.height/2
@@ -243,6 +246,47 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
         
 
+    }
+    
+    // MARK: 获取企业认证状态
+    func getCompanyStatus() {
+        HSMineHelper().getCompanyCertify { (success, response) in
+            print("1234567890====== \(String(response!))")
+            if success {
+//                hud.mode = MBProgressHUDMode.Text
+//                hud.labelText = "获取企业认证状态成功"
+//                hud.hide(true, afterDelay: 0.5)
+                let companyInfo = response as! CompanyInfo
+                switch companyInfo.status! {
+                case "1":
+                    self.firmNameField.text = companyInfo.companyname
+                    self.resumeFeild.text = companyInfo.companyinfo
+                    self.phoneField.text = companyInfo.phone
+                    self.mailboxField.text = companyInfo.email
+                    
+                default:
+                    break
+                }
+            }else{
+//                hud.mode = MBProgressHUDMode.Text
+//                hud.labelText = "获取企业认证状态失败"
+//                hud.hide(true)
+                
+//                let alert = UIAlertController(title: nil, message: "获取企业认证状态失败", preferredStyle: .Alert)
+//                self.presentViewController(alert, animated: true, completion: nil)
+//                
+//                let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (action) in
+//                    //                        self.presentViewController(previousMenuController, animated: true, completion: nil)
+//                    //                        self.willMoveToPageMenuController(previousMenuController, previousMenuController: menuController)
+//                })
+//                alert.addAction(cancelAction)
+//                
+//                let replyAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
+//                    self.willMoveToPageMenuController(menuController, previousMenuController: previousMenuController)
+//                })
+//                alert.addAction(replyAction)
+            }
+        }
     }
     
     // MARK:设置下拉列表

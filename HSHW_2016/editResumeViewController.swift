@@ -32,6 +32,17 @@ class editResumeViewController: UIViewController {
         view.frame = CGRectMake(0, 1, WIDTH, height)
         self.view.addSubview(view)
     }
+    
+    func getMyResume() {
+        let view = NSBundle.mainBundle().loadNibNamed("HSPostResumeView", owner: nil, options: nil).first as! HSPostResumeView
+        HSNurseStationHelper().getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
+            if success {
+                let model = response as! CVModel
+                view.nameTF.text = model.name
+//                view.
+            }
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
