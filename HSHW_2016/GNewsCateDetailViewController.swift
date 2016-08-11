@@ -34,7 +34,9 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-            self.navigationController?.navigationBar.hidden = false
+        
+        self.navigationController?.navigationBar.hidden = false
+        self.tabBarController?.tabBar.hidden = true
     }
     
     override func viewDidLoad() {
@@ -45,12 +47,16 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         self.navigationItem.backBarButtonItem = back
         self.title = name
         
+        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        line.backgroundColor = COLOR
+        self.view.addSubview(line)
+        
         self.createTableView()
         // Do any additional setup after loading the view.
     }
     
     func createTableView() {
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65)
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")

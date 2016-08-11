@@ -683,6 +683,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             return
         }
         
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//        hud.mode = MBProgressHUDMode.Text;
+//        hud.labelText = status.errorData
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        
         if zan.selected {
             let url = PARK_URL_Header+"ResetLike"
             let param = [
@@ -693,27 +699,29 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
                 print(request)
                 if(error != nil){
-                    
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = "取消点赞失败"
+                    hud.hide(true, afterDelay: 1)
                 }else{
                     let status = Http(JSONDecoder(json!))
                     print("状态是")
                     print(status.status)
                     if(status.status == "error"){
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = status.errorData
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                         //                            user.setObject("false", forKey: (self.newsInfo?.object_id)!)
                     }
                     if(status.status == "success"){
                         
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = "取消点赞成功"
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                         //self.myTableView .reloadData()
                         print(status.data)
@@ -741,26 +749,28 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
                 print(request)
                 if(error != nil){
-                    
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = "点赞失败"
+                    hud.hide(true, afterDelay: 1)
                 }else{
                     let status = Http(JSONDecoder(json!))
                     print("状态是")
                     print(status.status)
                     if(status.status == "error"){
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text
                         hud.labelText = status.errorData
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                     }
                     if(status.status == "success"){
                         
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = "点赞成功"
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
+//                        hud.margin = 10.0
+//                        hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                         self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"1"], waitUntilDone:true)
                         

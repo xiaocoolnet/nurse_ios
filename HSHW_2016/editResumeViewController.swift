@@ -39,7 +39,8 @@ class editResumeViewController: UIViewController {
             if success {
                 let model = response as! CVModel
                 view.nameTF.text = model.name
-//                view.
+                view.eduLab.text = model.education
+                
             }
         }
     }

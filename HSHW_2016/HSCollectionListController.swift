@@ -54,7 +54,7 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
         } else if collectionType == 2 {
             
             myTableView.registerClass(GHSExamCollectTableViewCell.self, forCellReuseIdentifier: "cell")
-            
+
             helper.getCollectionInfoWith("2") { (success, response) in
                 self.fansListArray = response as! Array<xamInfo>
                 self.myTableView.reloadData()
@@ -162,9 +162,9 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if collectionType == 1 {
-            return 60
+            return 56
         }else if collectionType == 2{
-            return 70
+            return 56
         }else if collectionType == 3 {
             return 140
         }

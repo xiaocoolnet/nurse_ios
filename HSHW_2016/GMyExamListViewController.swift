@@ -39,8 +39,8 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
         self.view.backgroundColor = UIColor.whiteColor()
         
         // 总滚动视图
-        myScrollView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-115)
-        myScrollView.contentSize = CGSizeMake(WIDTH*2.0, HEIGHT-115)
+        myScrollView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65)
+        myScrollView.contentSize = CGSizeMake(WIDTH*2.0, HEIGHT-65)
         myScrollView.pagingEnabled = true
         myScrollView.showsHorizontalScrollIndicator = false
         myScrollView.delegate = self
@@ -48,7 +48,7 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
         self.view.addSubview(myScrollView)
         
         // 每日一练列表
-        fansTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-115)
+        fansTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-64)
         fansTableView.backgroundColor = UIColor.clearColor()
         fansTableView.registerClass(GMyExamListTableViewCell.self, forCellReuseIdentifier: "cell")
         fansTableView.rowHeight = 70
@@ -58,7 +58,7 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
         myScrollView.addSubview(fansTableView)
         
         // 在线考试列表
-        focusTableView.frame = CGRectMake(WIDTH, 0, WIDTH, HEIGHT-115)
+        focusTableView.frame = CGRectMake(WIDTH, 0, WIDTH, HEIGHT-64)
         focusTableView.backgroundColor = UIColor.clearColor()
         focusTableView.registerClass(GMyExamListTableViewCell.self, forCellReuseIdentifier: "cell")
         focusTableView.rowHeight = 70

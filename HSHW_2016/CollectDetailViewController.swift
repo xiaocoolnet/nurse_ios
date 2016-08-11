@@ -27,7 +27,7 @@ class CollectDetailViewController: UIViewController, UITableViewDelegate,UITable
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-115)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65)
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.registerClass(MineExamCollectTableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.rowHeight = 70

@@ -23,6 +23,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.hidden = false
+        self.tabBarController?.tabBar.hidden = true
     }
     
     override func viewDidLoad() {
@@ -32,7 +33,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
         self.view.addSubview(line)
         self.view.backgroundColor = UIColor.whiteColor()
         
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-115)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65)
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.delegate = self
         myTableView.dataSource = self
@@ -54,7 +55,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
         }else if indexPath.row == 1 {
             return WIDTH*60/375
         }else{
-            return WIDTH*270/375
+            return WIDTH*310/375
         }
     }
     
@@ -100,19 +101,19 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
         else{
             let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
             cell.selectionStyle = .None
-            let lineH = UILabel(frame: CGRectMake(WIDTH/2-0.25, 0, 0.5, WIDTH*270/375))
+            let lineH = UILabel(frame: CGRectMake(WIDTH/2-0.25, 0, 0.5, WIDTH*310/375))
             lineH.backgroundColor = GREY
-            let lineL = UILabel(frame: CGRectMake(0, WIDTH*135/375-0.25, WIDTH, 0.5))
+            let lineL = UILabel(frame: CGRectMake(0, WIDTH*155/375-0.25, WIDTH, 0.5))
             lineL.backgroundColor = GREY
-            let lineLl = UILabel(frame: CGRectMake(0, WIDTH*270/375-0.3, WIDTH, 0.5))
+            let lineLl = UILabel(frame: CGRectMake(0, WIDTH*310/375-0.3, WIDTH, 0.5))
             lineLl.backgroundColor = GREY
             for i in 0...3 {
-                let btn = UIButton(frame: CGRectMake(WIDTH/2*CGFloat(i%2), WIDTH*135/375*CGFloat(i/2), WIDTH/2, WIDTH*135/375-20))
+                let btn = UIButton(frame: CGRectMake(WIDTH/2*CGFloat(i%2), WIDTH*155/375*CGFloat(i/2), WIDTH/2, WIDTH*155/375-20))
                 btn.tag = i+1
                 btn.addTarget(self, action: #selector(self.studyTheKind(_:)), forControlEvents: .TouchUpInside)
                 btn.setImage(UIImage(named: picArr[i]), forState: .Normal)
                 cell.addSubview(btn)
-                let name = UILabel(frame: CGRectMake(WIDTH/2*CGFloat(i%2), WIDTH*90/375+WIDTH*135/375*CGFloat(i/2), WIDTH/2, 16))
+                let name = UILabel(frame: CGRectMake(WIDTH/2*CGFloat(i%2), WIDTH*90/375+WIDTH*155/375*CGFloat(i/2), WIDTH/2, 16))
                 name.font = UIFont.systemFontOfSize(12)
                 name.textColor = UIColor.grayColor()
                 name.textAlignment = .Center

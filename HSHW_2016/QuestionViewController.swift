@@ -28,8 +28,11 @@ class QuestionViewController: UIViewController {
             
             self.view.backgroundColor = UIColor.whiteColor()
             oneView.title = "美国RN"
+            oneView.term_id = "93"
             twoView.title = "国际护士证"
+            twoView.term_id = "94"
             threeView.title = "护士资格"
+            threeView.term_id = "95"
             let viewControllers = [oneView,twoView,threeView]
             let options = PagingMenuOptions()
             options.menuItemMargin = 5

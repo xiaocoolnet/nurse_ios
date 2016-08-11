@@ -12,8 +12,8 @@ class QuestionTableViewCell: UITableViewCell {
 
     let titLab = UILabel()
     let titLeb = UILabel()
-    let zanNum = UILabel()
     let conNum = UILabel()
+    let zanNum = UILabel()
   
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,18 +31,18 @@ class QuestionTableViewCell: UITableViewCell {
         titLab.font = UIFont.systemFontOfSize(14)
         titLeb.frame = CGRectMake(40, 40, WIDTH/2, 17)
         titLeb.font = UIFont.systemFontOfSize(14)
-        let zanImage = UIButton(frame: CGRectMake(WIDTH-60, 21, 12, 12))
+        let zanImage = UIButton(frame: CGRectMake(WIDTH-60, 21, 12, 8))
         zanImage.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
         
-        zanNum.frame = CGRectMake(WIDTH-40, 18, 35, 18)
-        zanNum.font = UIFont.systemFontOfSize(15)
-        zanNum.textColor = UIColor.grayColor()
-        let conImage = UIButton(frame: CGRectMake(WIDTH-60, 43, 12, 12))
-//        conImage.setImage(UIImage(named: "ic_collect_sel.png"), forState: .Normal)
-        conImage.setBackgroundImage(UIImage(named: "ic_collect_sel.png"), forState: .Normal)
-        conNum.frame = CGRectMake(WIDTH-40, 40, 35, 17)
+        conNum.frame = CGRectMake(WIDTH-40, 16, 35, 18)
         conNum.font = UIFont.systemFontOfSize(15)
         conNum.textColor = UIColor.grayColor()
+        let conImage = UIButton(frame: CGRectMake(WIDTH-60, 43, 10, 10))
+//        conImage.setImage(UIImage(named: "ic_collect_sel.png"), forState: .Normal)
+        conImage.setBackgroundImage(UIImage(named: "ic_collect_sel.png"), forState: .Normal)
+        zanNum.frame = CGRectMake(WIDTH-40, 40, 35, 17)
+        zanNum.font = UIFont.systemFontOfSize(15)
+        zanNum.textColor = UIColor.grayColor()
         let line = UILabel(frame: CGRectMake(0, 74.5, WIDTH, 0.5))
         line.backgroundColor = GREY
         
@@ -51,9 +51,9 @@ class QuestionTableViewCell: UITableViewCell {
         self.addSubview(titLab)
         self.addSubview(titLeb)
         self.addSubview(zanImage)
-        self.addSubview(zanNum)
-        self.addSubview(conImage)
         self.addSubview(conNum)
+        self.addSubview(conImage)
+        self.addSubview(zanNum)
     }
     
     required init?(coder aDecoder: NSCoder) {

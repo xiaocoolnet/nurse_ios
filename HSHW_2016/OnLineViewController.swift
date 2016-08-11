@@ -877,6 +877,12 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 collection = false
             }else if collection == false {
                 
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                hud.mode = MBProgressHUDMode.Text;
+//                hud.labelText = status.errorData
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                
                 let url = PARK_URL_Header+"addfavorite"
                 let param = [
                     
@@ -889,25 +895,28 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
                     print(request)
                     if(error != nil){
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "收藏失败"
+                        hud.hide(true, afterDelay: 0.5)
                     }else{
                         let status = Http(JSONDecoder(json!))
                         print("状态是")
                         print(status.status)
                         dispatch_async(dispatch_get_main_queue(), {
                             if(status.status == "error"){
-                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                                 hud.mode = MBProgressHUDMode.Text;
                                 hud.labelText = status.errorData
-                                hud.margin = 10.0
-                                hud.removeFromSuperViewOnHide = true
+//                                hud.margin = 10.0
+//                                hud.removeFromSuperViewOnHide = true
                                 hud.hide(true, afterDelay: 0.5)
                             }
                             if(status.status == "success"){
-                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                                 hud.mode = MBProgressHUDMode.Text;
                                 hud.labelText = "收藏成功"
-                                hud.margin = 10.0
-                                hud.removeFromSuperViewOnHide = true
+//                                hud.margin = 10.0
+//                                hud.removeFromSuperViewOnHide = true
                                 hud.hide(true, afterDelay: 0.5)
                                 btn.setImage(UIImage(named: "btn_collect_sel.png"), forState: .Normal)
                                 self.TitCol.textColor = COLOR
@@ -918,6 +927,9 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                     }
                 }
             }else{
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
                 let url = PARK_URL_Header+"cancelfavorite"
                 let param = [
                     "refid":examInfo.id,
@@ -927,26 +939,28 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
                     print(request)
                     if(error != nil){
-                        
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "取消收藏失败"
+                        hud.hide(true, afterDelay: 0.5)
                     }else{
                         let status = Http(JSONDecoder(json!))
                         print("状态是")
                         print(status.status)
                         dispatch_async(dispatch_get_main_queue(), {
                             if(status.status == "error"){
-                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                                 hud.mode = MBProgressHUDMode.Text;
                                 hud.labelText = status.errorData
-                                hud.margin = 10.0
-                                hud.removeFromSuperViewOnHide = true
+//                                hud.margin = 10.0
+//                                hud.removeFromSuperViewOnHide = true
                                 hud.hide(true, afterDelay: 0.5)
                             }
                             if(status.status == "success"){
-                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                                 hud.mode = MBProgressHUDMode.Text;
                                 hud.labelText = "取消收藏成功"
-                                hud.margin = 10.0
-                                hud.removeFromSuperViewOnHide = true
+//                                hud.margin = 10.0
+//                                hud.removeFromSuperViewOnHide = true
                                 hud.hide(true, afterDelay: 0.5)
                                 btn.setImage(UIImage(named: self.picArr[4]), forState: .Normal)
                                 self.TitCol.textColor = GREY

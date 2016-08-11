@@ -52,11 +52,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/OnLineViewController.swift"
-            timestampString = "492328434.422321"
+            timestampString = "492594156.373651"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1044"
-            endingLineNumber = "1044"
+            startingLineNumber = "1058"
+            endingLineNumber = "1058"
             landmarkName = "takeUpTheTest()"
             landmarkType = "5">
             <Locations>
@@ -100,11 +100,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/WordViewController.swift"
-            timestampString = "492328434.422321"
+            timestampString = "492594156.373651"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "845"
-            endingLineNumber = "845"
+            startingLineNumber = "861"
+            endingLineNumber = "861"
             landmarkName = "takeUpTheTest()"
             landmarkType = "5">
             <Locations>

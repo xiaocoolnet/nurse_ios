@@ -16,6 +16,8 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
     let myTableView = UITableView()
     var dataSource = NewsList()
 
+    var term_id = "11"
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +45,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
     func GetData(){
         let url = PARK_URL_Header+"getNewslist"
         let param = [
-            "channelid":"11"
+            "channelid":term_id
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             print(request)
@@ -84,8 +86,8 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         let QuestionInfo = self.dataSource.objectlist[indexPath.row]
         cell.titLab.text = QuestionInfo.post_title
         cell.titLeb.text = QuestionInfo.post_excerpt
-        cell.zanNum.text = QuestionInfo.post_hits
-//        cell.conNum.text = QuestionInfo.post_hits
+        cell.zanNum.text = String(QuestionInfo.likes.count)
+        cell.conNum.text = QuestionInfo.post_hits
         
         return cell
         

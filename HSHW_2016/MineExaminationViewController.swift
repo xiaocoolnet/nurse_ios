@@ -41,7 +41,7 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
         
         
         // 每日一练列表
-        fansTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-115)
+        fansTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65)
         fansTableView.backgroundColor = UIColor.clearColor()
         fansTableView.registerClass(GMyErrorTableViewCell.self, forCellReuseIdentifier: "cell")
         fansTableView.rowHeight = 70

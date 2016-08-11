@@ -409,14 +409,23 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
             alert.show()
             return
         }
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        //            hud.mode = MBProgressHUDMode.Text;
+        //        hud.labelText = "正在发送邀请"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        
         logVM?.comfirmPhoneHasRegister(phoneNum.text!, handle: {[unowned self](success, response) in
             dispatch_async(dispatch_get_main_queue(), {
                 //  不管填什么内容都走了这个方法
                 if success {
+                    hud.hide(true)
                     let alert = UIAlertView(title:"提示信息",message: "手机已注册",delegate: self,cancelButtonTitle: "确定")
                     
                     alert.show()
                 }else{
+                    hud.hide(true)
                     //  单例进行倒计时
                     TimeManager.shareManager.begainTimerWithKey("register", timeInterval: 30, process: self.processHandle!, finish: self.finishHandle!)
                     self.logVM?.sendMobileCodeWithPhoneNumber(self.phoneNum.text!)
@@ -560,12 +569,14 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
                     if response != nil {
                         hud.hide(true)
                         let string = response as! String
-//                        if string == "密码错误！" || string == "用户不存在"{
-//                        let alert = UIAlertView(title:"提示信息",message: string,delegate: self,cancelButtonTitle: "确定")
-                        let alert = UIAlertView(title: "提示信息", message: string, delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "重试")
-                        alert.tag = 100
-                        alert.show()
-//                        }
+                        if string == "密码错误！" || string == "用户不存在"{
+                            let alert = UIAlertView(title:"提示信息",message: string,delegate: self,cancelButtonTitle: "确定")
+                            alert.show()
+                        }else {
+                            let alert = UIAlertView(title: "提示信息", message: string, delegate: self, cancelButtonTitle: "取消", otherButtonTitles: "重试")
+                            alert.tag = 100
+                            alert.show()
+                        }
                         print(response as! String)
                     }else{
                         let alert = UIAlertView(title:"提示信息",message: "登录失败",delegate: self,cancelButtonTitle: "确定")
