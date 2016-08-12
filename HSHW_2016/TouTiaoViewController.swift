@@ -111,7 +111,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func createTableView() {
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-114)
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
@@ -258,10 +258,10 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         if newsInfo.thumbArr.count >= 3 {
             let margin:CGFloat = 15
-            return (WIDTH-20-margin*2)/3.0*2/3.0+10+height+27
+            return (WIDTH-20-margin*2)/3.0*2/3.0+19+height+27+4
         }else{
             if height+27>100 {
-                return height+27
+                return height+27+4
             }else{
                 return 100
             }

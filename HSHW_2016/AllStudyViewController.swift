@@ -54,10 +54,10 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
         
         if newsInfo.thumbArr.count >= 3 {
             let margin:CGFloat = 15
-            return (WIDTH-20-margin*2)/3.0*2/3.0+10+height+27
+            return (WIDTH-20-margin*2)/3.0*2/3.0+19+height+27+4
         }else{
             if height+27>100 {
-                return height+27
+                return height+27+4
             }else{
                 return 100
             }

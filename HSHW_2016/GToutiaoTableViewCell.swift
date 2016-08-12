@@ -27,6 +27,7 @@ class GToutiaoTableViewCell: UITableViewCell {
     let comBtn = UIButton()
     let timeBtn = UIButton()
     let titSubImg = UIImageView()
+    let line = UIView()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -47,7 +48,16 @@ class GToutiaoTableViewCell: UITableViewCell {
         self.addSubview(comBtn)
         self.addSubview(timeBtn)
         self.addSubview(titLab)
+        
+        if reuseIdentifier == "RelatedNewsListCell" {
+            line.frame = CGRectMake(WIDTH*3/62.0, self.contentView.frame.size.height-0.5, WIDTH-WIDTH*3/62.0, 0.5)
+            line.backgroundColor = UIColor.lightGrayColor()
+            self.addSubview(line)
+        }else{
+            line.removeFromSuperview()
+        }
 //        self.addSubview(titImage)
+        self.setSubViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -58,8 +68,7 @@ class GToutiaoTableViewCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
-    override func layoutSubviews() {
-        super.layoutSubviews()
+    func setSubViews() {
        
 //        titLab.frame = CGRectMake(10, 12, WIDTH-140, 40)
         titLab.font = UIFont.systemFontOfSize(17)
@@ -195,6 +204,7 @@ class GToutiaoTableViewCell: UITableViewCell {
         timeBtn.frame.origin.y = self.frame.size.height-timeBtn.frame.size.height-3-8
         timeLab.frame.origin.y = self.frame.size.height-timeLab.frame.size.height-1-8
         
+        line.frame.origin.y = self.frame.size.height-0.5
     }
     
     func setThreeImgCellWithNewsInfo(newsInfo:NewsInfo) {
@@ -271,6 +281,8 @@ class GToutiaoTableViewCell: UITableViewCell {
         self.timeLab.text = "\(date[1])/\(date[2])"
         self.contant.text = newsInfo.post_excerpt
         
+        line.frame.origin.y = self.frame.size.height-0.5
+
         //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
         //        titLab.frame.size.height = titleHeight+100
 

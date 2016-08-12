@@ -389,15 +389,15 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 next.title = "我的收藏"
             }
         }else if indexPath.section == 3 {
-//            if QCLoginUserInfo.currentInfo.usertype == "1" {
-//                let next = MineRecruit_userViewController()
-//                self.navigationController?.pushViewController(next, animated: true)
-//                next.title = "我的招聘"
-//            }else{
+            if QCLoginUserInfo.currentInfo.usertype == "1" {
+                let next = MineRecruit_userViewController()
+                self.navigationController?.pushViewController(next, animated: true)
+                next.title = "我的招聘"
+            }else{
                 let next = MineRecruitViewController()
                 self.navigationController?.pushViewController(next, animated: true)
                 next.title = "我的招聘"
-//            }
+            }
         }
     }
     // MARK:-

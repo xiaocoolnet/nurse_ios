@@ -29,6 +29,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     var country = Int()
     var requestHelper = NewsPageHelper()
     
+    let one = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +44,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "Abroad")
         self.view.addSubview(myTableView)
         
+        setFooterView()
+
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(GetDate))
         myTableView.mj_header.beginRefreshing()
         
@@ -214,25 +218,26 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             
             if newsInfo.thumbArr.count >= 3 {
                 let margin:CGFloat = 15
-                return (WIDTH-20-margin*2)/3.0*2/3.0+10+height+27
+                return (WIDTH-20-margin*2)/3.0*2/3.0+19+height+27+4
             }else{
                 if height+27>100 {
-                    return height+27
+                    return height+27+4
                 }else{
                     return 100
                 }
             }
         }
     }
-    //  段尾视图的定义
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    
+    func setFooterView() {
         //  创建视图
-        let one = UIView(frame: CGRectMake(0, 0, WIDTH, WIDTH*188/375))
-       
+        one.frame = CGRectMake(0, 0, WIDTH, WIDTH*188/375)
+        
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*188/375)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
         scrollView.delegate = self
+        scrollView.tag = 1000
         
         for i in 0...3 {
             
@@ -272,6 +277,11 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         pageControl.numberOfPages = 4
         pageControl.currentPage = 0
         one.addSubview(pageControl)
+    }
+    
+    //  段尾视图的定义
+    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
         
 //        myTableView.rowHeight = 100
 //        myTableView.tableHeaderView = one
@@ -383,10 +393,13 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        var offsetX:CGFloat = self.scrollView.contentOffset.x
-        offsetX = offsetX + (self.scrollView.frame.size.width * 0.5)
-        let page:Int = Int(offsetX)/Int(self.scrollView.frame.size.width)
-        pageControl.currentPage = page
+        if scrollView.tag == 1000 {
+            
+            var offsetX:CGFloat = self.scrollView.contentOffset.x
+            offsetX = offsetX + (self.scrollView.frame.size.width * 0.5)
+            let page:Int = Int(offsetX)/Int(self.scrollView.frame.size.width)
+            pageControl.currentPage = page
+        }
     }
 
     //开始拖拽时

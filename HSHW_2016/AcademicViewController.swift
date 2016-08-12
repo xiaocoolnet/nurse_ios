@@ -123,7 +123,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func createTableView() {
         
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-108)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-114)
 //        myTableView.backgroundColor = UIColor.whiteColor()
         myTableView.delegate = self
         myTableView.dataSource = self

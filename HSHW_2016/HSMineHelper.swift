@@ -73,6 +73,27 @@ class HSMineHelper: NSObject {
         }
 
     }
+    //修改姓名
+    func changeUserRealName(realName:String,handle:ResponseBlock){
+        let url = PARK_URL_Header+"UpdateUserRealName"
+        let param = [
+            "userid":QCLoginUserInfo.currentInfo.userid,"realname":realName
+        ];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = Http(JSONDecoder(json!))
+                if(result.status == "success"){
+                    handle(success: true, response: nil)
+                }else{
+                    handle(success: false, response: result.errorData)
+                }
+            }
+        }
+        
+    }
     //上传图片
     func uploadImageWithData(imageData:NSData,imageName:String,handle:ResponseBlock){
         let url = PARK_URL_Header+"uploadavatar"

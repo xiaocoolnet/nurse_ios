@@ -69,20 +69,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         self.configureUI()
         if showType == 1 {
             self.setSlideView()
-            requestHelper.getSlideImages("3") { [unowned self] (success, response) in
-                if success {
-                    print(response)
-                    let imageArr = response as! Array<PhotoInfo>
-                    for imageInfo in imageArr {
-                        self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-                        self.titArr.append(imageInfo.name)
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.updateSlideImage()
-                            self.myTableView.reloadData()
-                        })
-                    }
-                }
-            }
+
         }
         makeDataSource()
         sendPostion.delegate = self
@@ -113,6 +100,26 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func makeDataSource(){
         if showType == 1 {
+            var flag = 0
+            requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+                if success {
+                    print(response)
+                    let imageArr = response as! Array<PhotoInfo>
+                    for imageInfo in imageArr {
+                        self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                        self.titArr.append(imageInfo.name)
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.updateSlideImage()
+                            self.myTableView.reloadData()
+                        })
+                    }
+                }
+                flag += 1
+                if flag == 2 {
+                    self.myTableView.mj_header.endRefreshing()
+                }
+            }
+            
             jobHelper.getJobList({[unowned self] (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if !success {
@@ -121,6 +128,10 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.jobDataSource = response as? Array<JobModel> ?? []
                     self.myTableView.reloadData()
 //                     self.configureUI()
+                    flag += 1
+                    if flag == 2 {
+                        self.myTableView.mj_header.endRefreshing()
+                    }
                 })
             })
         } else if showType == 2 {
@@ -133,6 +144,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.myTableView.reloadData()
 //                    self.configureUI()
                 })
+                self.myTableView.mj_header.endRefreshing()
             })
         }
     }
@@ -151,6 +163,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         myTableView.dataSource = self
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "identifier")
         myTableView.registerClass(RecruitTableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
+        myTableView.mj_header.beginRefreshing()
+        
         employmentMessageTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "employmentMessage")
         employmentMessageTableView.delegate = self
         employmentMessageTableView.dataSource = self

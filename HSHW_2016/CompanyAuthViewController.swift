@@ -327,7 +327,7 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyyMMddHHmmss"
 //        let dateStr = dateFormatter.stringFromDate(NSDate())
-        let dateStr = String(NSTimeIntervalSince1970)
+        let dateStr = String(NSDate().timeIntervalSince1970)
         
         HSMineHelper().updataCompanyCertifyWith(self.nameField.text!, companyinfo: self.descriptionField.text!, create_time: dateStr, phone: self.telField.text!, email: self.mailField.text!, linkman: self.contactField.text!, license: self.imageUrl!, handle: { (success, response) in
             print("=-=-+++++-=-=-=  \(success) \(response)")

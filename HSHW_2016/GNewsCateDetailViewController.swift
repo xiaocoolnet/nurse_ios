@@ -11,7 +11,7 @@ import AFNetworking
 import Alamofire
 import MBProgressHUD
 
-class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate {
+class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,changeModelDelegate {
         
     var type = 0
     var id = ""
@@ -124,10 +124,10 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         
         if newsInfo.thumbArr.count >= 3 {
             let margin:CGFloat = 15
-            return (WIDTH-20-margin*2)/3.0*2/3.0+10+height+27
+            return (WIDTH-20-margin*2)/3.0*2/3.0+19+height+27+4
         }else{
             if height+27>100 {
-                return height+27
+                return height+27+4
             }else{
                 return 100
             }
@@ -152,7 +152,14 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.likeNum = newsInfo.likes.count
+        next.delegate = self
         print(newsInfo.likes.count)
         self.navigationController?.pushViewController(next, animated: true)
+    }
+    
+    // MARK:更新模型
+    func changeModel(newInfo: NewsInfo, andIndex: Int) {
+        self.dataSource.objectlist[andIndex] = newInfo
+        self.myTableView.reloadData()
     }
 }

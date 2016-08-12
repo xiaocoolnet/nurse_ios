@@ -181,6 +181,24 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     // 保存简历
     @IBOutlet weak var saveResumeBtn: UIButton!
     
+    let coverView = UIView()
+    
+    var alreadyHasResume = true {
+        didSet {
+            if alreadyHasResume {
+                coverView.frame = CGRectMake(0, 0, WIDTH, 1127-80)//23+659+40+180+165+60 = 1127
+                self.myScrollView.addSubview(coverView)
+                
+                self.saveResumeBtn.setTitle("修改简历", forState: .Normal)
+                changeResume = true
+            }else{
+                coverView.removeFromSuperview()
+            }
+        }
+    }
+    
+    var changeResume = false
+    
     var dropDownDic = [String:Array<String>]()
     var dropDownFinishDic = [String:String]()
     var headerImage = UIImage()
@@ -238,6 +256,9 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
 //
     var imageName = String()
     
+    var getDicFlag = 0
+    var getDicCheckFlag = 0
+    
     weak var delegate:HSPostResumeViewDelegate?
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -246,6 +267,9 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         nameTF.borderStyle = .None
         telTF.borderStyle = .None
         mailTF.borderStyle = .None
+        headerImg.layer.cornerRadius = headerImg.frame.size.width/2.0
+        headerImg.clipsToBounds = true
+        headerImg.userInteractionEnabled = true
         
         // 设置边框
         borderView_1.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
@@ -262,17 +286,25 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         saveResumeBtn.cornerRadius = saveResumeBtn.frame.height/2
         
         // 设置下拉列表的数据
-        let eduArray = ["小学","初中","高中","专科","本科","硕士","博士","博士后"]
-        let expArray = ["01","02","03"]
-        let professionalArray = ["主管护师","别的"]
-        let salaryArray = ["1万多","两万多","其实吧","这些数据","以后要","从网上获取"]
-        let jobTimeArray = ["其实吧","这些数据","以后要","从网上获取"]
-        let expectedSalaryArray = ["不嫌多","其实吧","这些数据","以后要","从网上获取"]
-        let expectedPositionArray = ["护士长","其实吧","这些数据","以后要","从网上获取"]
-        dropDownDic = ["edu":eduArray,"exp":expArray,"professional":professionalArray,"salary":salaryArray,"jobTime":jobTimeArray,"expectedSalary":expectedSalaryArray,"expectedPosition":expectedPositionArray]
+//        let eduArray = ["小学","初中","高中","专科","本科","硕士","博士","博士后"]
+//        let expArray = ["01","02","03"]
+//        let professionalArray = ["主管护师","别的"]
+//        let salaryArray = ["1万多","两万多","其实吧","这些数据","以后要","从网上获取"]
+//        let jobTimeArray = ["其实吧","这些数据","以后要","从网上获取"]
+//        let expectedSalaryArray = ["不嫌多","其实吧","这些数据","以后要","从网上获取"]
+//        let expectedPositionArray = ["护士长","其实吧","这些数据","以后要","从网上获取"]
+//        dropDownDic = ["edu":eduArray,"exp":expArray,"professional":professionalArray,"salary":salaryArray,"jobTime":jobTimeArray,"expectedSalary":expectedSalaryArray,"expectedPosition":expectedPositionArray]
+        dropDownDic = [:]
+        getDictionaryList("1", key: "edu")
+        getDictionaryList("15", key: "exp")
+        getDictionaryList("6", key: "professional")
+        getDictionaryList("14", key: "salary")
+        getDictionaryList("16", key: "jobTime")
+        getDictionaryList("12", key: "expectedSalary")
+        getDictionaryList("13", key: "expectedPosition")
         
-        // 设置下拉列表
-        setDropDownMenu()
+//        // 设置下拉列表
+//        setDropDownMenu()
         
 //        let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
 //        selfNav = tabBar.selectedViewController as? UINavigationController
@@ -285,6 +317,57 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func getDictionaryList(type:String, key:String) {
+
+        dropDownDic[key] = Array<String>()
+        
+        let url = PARK_URL_Header+"getDictionaryList"
+        let param = ["type":type]
+        print(param)
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            self.getDicCheckFlag += 1
+            print("self.getDicCheckFlag  ===  ",self.getDicCheckFlag)
+            if(error != nil){
+                
+            }else{
+                let status = EduModel(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    
+                }
+                if(status.status == "success"){
+                    print(status)
+                    self.getDicFlag += 1
+                    for obj in EduList(status.data!).objectlist {
+                        self.dropDownDic[key]!.append(obj.name)
+                    }
+                    if self.getDicCheckFlag == 7 {
+                        print("self.getDicFlag  ===  ",self.getDicFlag)
+                        
+                        if self.getDicFlag == 7 {
+                            self.setDropDownMenu()
+                            self.getDicFlag = 0
+                            self.getDicCheckFlag = 0
+                        }else{
+                            self.getDicFlag = 0
+                            self.getDicCheckFlag = 0
+                            self.getDictionaryList("1", key: "edu")
+                            self.getDictionaryList("15", key: "exp")
+                            self.getDictionaryList("6", key: "professional")
+                            self.getDictionaryList("14", key: "salary")
+                            self.getDictionaryList("16", key: "jobTime")
+                            self.getDictionaryList("12", key: "expectedSalary")
+                            self.getDictionaryList("13", key: "expectedPosition")
+                        }
+                    }
+                }else{
+                }
+            }
+            
+        }
     }
     
     // MARK:设置下拉列表
@@ -508,14 +591,14 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             manBtn.selected = true
             manBtn.tintColor = UIColor.clearColor()
             womanBtn.selected = false
-            sexFinishStr = "男"
+            sexFinishStr = "1"
         case 12:
             manImg.image = UIImage.init(named: "ic_yuan")
             womanImg.image = UIImage.init(named: "ic_yuan_purple")
             manBtn.selected = false
             womanBtn.selected = true
             womanBtn.tintColor = UIColor.clearColor()
-            sexFinishStr = "女"
+            sexFinishStr = "0"
             
         default:
             break
@@ -588,47 +671,69 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     
     @IBAction func saveResumeCilcked(sender: AnyObject) {
         
-        resignTextFieldFirstResponder()
-//        delegate?.saveResumeBtnClicked()
-        
-//        if delegate != nil {
-            if headerBtn.selected && nameTF.text != "" && (manBtn.selected || womanBtn.selected) && birthBtn.selected && eduBtn.selected && homeBtn.selected && expBtn.selected && professionalBtn.selected && salaryBtn.selected && (onJobBtn.selected || leaveJobBtn.selected || undergraduateBtn.selected) && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected && targetCityBtn.selected && expectedSalaryBtn.selected && expectedPositionBtn.selected {
+        if alreadyHasResume {
+            // 修改简历
+            let alert = UIAlertController(title: "确认修改简历？", message: "修改简历会丢失原简历，确认修改？", preferredStyle: .Alert)
+            UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+            
+            let replyAction = UIAlertAction(title: "修改", style: .Default, handler: { (action) in
+                self.coverView.removeFromSuperview()
+                self.saveResumeBtn.setTitle("保存简历", forState: .Normal)
+                self.alreadyHasResume = false
+            })
+            alert.addAction(replyAction)
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (action) in
+            })
+            alert.addAction(cancelAction)
+        }else{
+            
+            resignTextFieldFirstResponder()
+            //        delegate?.saveResumeBtnClicked()
+            
+            //        if delegate != nil {
+            if (headerBtn.selected && nameTF.text != "" && (manBtn.selected || womanBtn.selected) && birthBtn.selected && eduBtn.selected && homeBtn.selected && expBtn.selected && professionalBtn.selected && salaryBtn.selected && (onJobBtn.selected || leaveJobBtn.selected || undergraduateBtn.selected) && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected && targetCityBtn.selected && expectedSalaryBtn.selected && expectedPositionBtn.selected)||changeResume {
                 
                 let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-//                hud.mode = MBProgressHUDMode.Text;
+                //                hud.mode = MBProgressHUDMode.Text;
                 hud.labelText = "正在发布"
                 hud.margin = 10.0
                 hud.removeFromSuperViewOnHide = true
                 
-                uploadHeader(hud)
-
+                if headerBtn.selected {
+                    uploadHeader(hud)
+                }else{
+                    changeResume(hud)
+                }
+                
             }else{
                 let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善简历信息", comment: "empty message"), preferredStyle: .Alert)
                 let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
                 alertController.addAction(doneAction)
-
+                
                 let vc = responderVC()
                 vc!.presentViewController(alertController, animated: true, completion: nil)
-
+                
             }
-//        }
-
-//        if sexLable.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != ""{
-//
-//            HSNurseStationHelper().postForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName, name: nameTextFeild.text!, experience: workLab.text!, sex: sexLable.text!, birthday:(brith_year.text!+brith_month.text!+brith_day.text!), marital:eduLable.text! , address:placeLab_1.text!+placeLab_2.text!+placeLab_3.text!, jobstate:jobStatusLab.text!, currentsalary:salaryLab.text!, phone:phoneField.text!, email:mailboxField.text!, hiredate:timeLab.text!, wantcity:targetCity_1_Lab.text!+targetCity_2_Lab.text!+targetCity_3_Lab.text!, wantsalary:expectSalaryLab.text!, wantposition:expectPostionLab.text!, description:selfEvaluate.text, handle: { (success, response) in
-//                if success {
-//                    dispatch_async(dispatch_get_main_queue(), {
-//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                        hud.mode = MBProgressHUDMode.Text;
-//                        hud.labelText = "发布成功"
-//                        hud.margin = 10.0
-//                        hud.removeFromSuperViewOnHide = true
-//                        hud.hide(true, afterDelay: 1)
-//                        print(success)
-//                    })
-//                }
-//            })
-//        }
+            //        }
+            
+            //        if sexLable.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != ""{
+            //
+            //            HSNurseStationHelper().postForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName, name: nameTextFeild.text!, experience: workLab.text!, sex: sexLable.text!, birthday:(brith_year.text!+brith_month.text!+brith_day.text!), marital:eduLable.text! , address:placeLab_1.text!+placeLab_2.text!+placeLab_3.text!, jobstate:jobStatusLab.text!, currentsalary:salaryLab.text!, phone:phoneField.text!, email:mailboxField.text!, hiredate:timeLab.text!, wantcity:targetCity_1_Lab.text!+targetCity_2_Lab.text!+targetCity_3_Lab.text!, wantsalary:expectSalaryLab.text!, wantposition:expectPostionLab.text!, description:selfEvaluate.text, handle: { (success, response) in
+            //                if success {
+            //                    dispatch_async(dispatch_get_main_queue(), {
+            //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            //                        hud.mode = MBProgressHUDMode.Text;
+            //                        hud.labelText = "发布成功"
+            //                        hud.margin = 10.0
+            //                        hud.removeFromSuperViewOnHide = true
+            //                        hud.hide(true, afterDelay: 1)
+            //                        print(success)
+            //                    })
+            //                }
+            //            })
+            //        }
+        }
     }
     
     func uploadHeader(hud:MBProgressHUD) {
@@ -649,7 +754,11 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
 //                                    QCLoginUserInfo.currentInfo.avatar = result.data!
 //                                }
 //                            })
-                            self.uploadResume(hud)
+                            if self.changeResume {
+                                self.changeResume(hud)
+                            }else{
+                                self.uploadResume(hud)
+                            }
                         }else{
 //                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
                             hud.mode = MBProgressHUDMode.Text;
@@ -665,8 +774,9 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
 
     }
     
+    // MARK:发布简历
     func uploadResume(hud:MBProgressHUD) {
-        HSNurseStationHelper().postForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName+".png", name: nameTF.text!, experience: dropDownFinishDic["exp"]!, sex: sexFinishStr, birthday:(birthFinishArr[0]+birthFinishArr[1]+birthFinishArr[2]), marital:dropDownFinishDic["edu"]! , address:(homeFinishArr[0]+homeFinishArr[1]+homeFinishArr[2]), jobstate:jobStatusStr, currentsalary:dropDownFinishDic["salary"]!, phone:telTF.text!, email:mailTF.text!, hiredate:dropDownFinishDic["jobTime"]!, wantcity:(targetCityFinishArr[0]+targetCityFinishArr[1]), wantsalary:dropDownFinishDic["expectedSalary"]!, wantposition:dropDownFinishDic["expectedPosition"]!, description:selfEvaluate.text!, handle: { (success, response) in
+        HSNurseStationHelper().postForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName+".png", name: nameTF.text!, experience: dropDownFinishDic["exp"]!, sex: sexFinishStr, birthday:"\(birthFinishArr[0])-\(birthFinishArr[1])-\(birthFinishArr[2])", marital:dropDownFinishDic["edu"]! , address:"\(homeFinishArr[0])-\(homeFinishArr[1])-\(homeFinishArr[2])", jobstate:jobStatusStr, currentsalary:dropDownFinishDic["salary"]!, phone:telTF.text!, email:mailTF.text!, hiredate:dropDownFinishDic["jobTime"]!, wantcity:"\(targetCityFinishArr[0])-\(targetCityFinishArr[1])", wantsalary:dropDownFinishDic["expectedSalary"]!, wantposition:dropDownFinishDic["expectedPosition"]!, description:selfEvaluate.text!, handle: { (success, response) in
             if success {
                 dispatch_async(dispatch_get_main_queue(), {
                     //                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
@@ -699,6 +809,42 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         })
     }
     
+    // MARK: 修改简历
+    func changeResume(hud:MBProgressHUD) {
+        HSNurseStationHelper().changeForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName+".png", name: nameTF.text!, experience: dropDownFinishDic["exp"]!, sex: sexFinishStr, birthday:"\(birthFinishArr[0])-\(birthFinishArr[1])-\(birthFinishArr[2])", marital:dropDownFinishDic["edu"]! , address:"\(homeFinishArr[0])-\(homeFinishArr[1])-\(homeFinishArr[2])", jobstate:jobStatusStr, currentsalary:dropDownFinishDic["salary"]!, phone:telTF.text!, email:mailTF.text!, hiredate:dropDownFinishDic["jobTime"]!, wantcity:"\(targetCityFinishArr[0])-\(targetCityFinishArr[1])", wantsalary:dropDownFinishDic["expectedSalary"]!, wantposition:dropDownFinishDic["expectedPosition"]!, description:selfEvaluate.text!, handle: { (success, response) in
+            if success {
+                dispatch_async(dispatch_get_main_queue(), {
+                    //                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "修改成功"
+                    //                            hud.margin = 10.0
+                    //                            hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                    print(success)
+                    
+                    //                    self.delegate?.saveResumeBtnClicked()
+                    let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
+                    let selfNav = tabBar.selectedViewController as? UINavigationController
+                    selfNav?.popViewControllerAnimated(true)
+                })
+            }else {
+                hud.hide(true)
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .Alert)
+                let doneAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
+                    self.uploadHeader(hud)
+                })
+                alertController.addAction(doneAction)
+                
+                let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+                alertController.addAction(cancelAction)
+                
+                let vc = self.responderVC()
+                vc!.presentViewController(alertController, animated: true, completion: nil)
+            }
+        })
+    }
+
+    
     // TODO:
     func resignTextFieldFirstResponder() {
         nameTF.resignFirstResponder()
@@ -730,11 +876,11 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         picker?.block = {
             (date:NSDate)->() in
             let formatter = NSDateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd zzz"
+            formatter.dateFormat = "yyyy-MM-dd"
             let string = formatter.stringFromDate(date)
-            let range:Range = string.rangeOfString(" ")!
-            let time = string.substringToIndex(range.endIndex)
-            let timeArr = time.componentsSeparatedByString("-")
+//            let range:Range = string.rangeOfString(" ")!
+//            let time = string.substringToIndex(range.endIndex)
+            let timeArr = string.componentsSeparatedByString("-")
             
             self.birth_year_Lab.text = timeArr.first
             self.birth_month_Lab.text = timeArr[1]
@@ -920,9 +1066,6 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         headerImage = info[UIImagePickerControllerEditedImage] as! UIImage
         
         headerImg.image = headerImage
-        headerImg.layer.cornerRadius = headerImg.frame.size.width/2.0
-        headerImg.clipsToBounds = true
-        headerImg.userInteractionEnabled = true
         
         headerLab.hidden = true
         

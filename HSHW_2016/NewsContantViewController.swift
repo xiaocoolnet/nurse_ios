@@ -126,7 +126,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         myTableView.registerNib(UINib.init(nibName: "NewsSourceCell", bundle: nil), forCellReuseIdentifier: "sourceCell")
         myTableView.registerNib(UINib.init(nibName: "contentCell", bundle: nil), forCellReuseIdentifier: "webView")
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "textCell")
-        myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
+        myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "RelatedNewsListCell")
         self.view.addSubview(myTableView)
 //        myTableView.separatorColor = UIColor.clearColor()
         myTableView.separatorStyle = .None
@@ -369,10 +369,10 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             
             if newsInfo.thumbArr.count >= 3 {
                 let margin:CGFloat = 15
-                return (WIDTH-20-margin*2)/3.0*2/3.0+10+height+27
+                return (WIDTH-20-margin*2)/3.0*2/3.0+19+height+27+4
             }else{
                 if height+27>100 {
-                    return height+27
+                    return height+27+4
                 }else{
                     return 100
                 }
@@ -493,7 +493,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             
         }else{
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!GToutiaoTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("RelatedNewsListCell", forIndexPath: indexPath) as! GToutiaoTableViewCell
             //        cell.type = 1
             cell.delegate = self
             cell.selectionStyle = .None

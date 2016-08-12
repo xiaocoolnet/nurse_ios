@@ -83,11 +83,19 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 handle!(changeType: showType,value: textFeild.text!)
             }
         }
-        if showType == .UserName||showType == .RealName {
+        if showType == .UserName {
             mineHelper.changeUserName(textFeild.text!, handle: {[unowned self] (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
                         QCLoginUserInfo.currentInfo.userName = self.textFeild.text!
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                })
+            })
+        }else if showType == .RealName {
+            mineHelper.changeUserRealName(textFeild.text!, handle: {[unowned self] (success, response) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    if success {
                         QCLoginUserInfo.currentInfo.realName = self.textFeild.text!
                         self.navigationController?.popViewControllerAnimated(true)
                     }
