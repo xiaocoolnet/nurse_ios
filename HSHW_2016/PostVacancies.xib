@@ -987,6 +987,7 @@
                 <outlet property="conditionLab" destination="PX1-qJ-67Z" id="O95-Em-6Ox"/>
                 <outlet property="detailPlaceTF" destination="nzv-am-TqU" id="mUh-XE-QyA"/>
                 <outlet property="firmNameField" destination="6IW-A6-JTx" id="6Gt-K7-Q7f"/>
+                <outlet property="firmNameView" destination="OxE-24-yi3" id="NhA-vH-n6i"/>
                 <outlet property="mailboxField" destination="9Hj-wr-YjR" id="KyO-dD-cq2"/>
                 <outlet property="moneyBtn" destination="jlj-d1-ad8" id="9HR-aJ-La2"/>
                 <outlet property="moneyImg" destination="tVu-qx-c7O" id="Ip6-3y-pwS"/>

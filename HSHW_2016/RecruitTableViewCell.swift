@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class RecruitTableViewCell: UITableViewCell {
     //圆形图片
@@ -62,7 +63,12 @@ class RecruitTableViewCell: UITableViewCell {
     }
     
     func showforCVModel(model:CVModel){
-        titImg.sd_setImageWithURL(NSURL(string:SHOW_IMAGE_HEADER + model.avatar),placeholderImage: UIImage(named: "1"))
+        if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+            titImg.image = UIImage.init(named: "img_head_nor")
+        }else{
+            titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))
+        }
+//        titImg.sd_setImageWithURL(NSURL(string:SHOW_IMAGE_HEADER + model.avatar),placeholderImage: UIImage(named: "1"))
         title.text = model.name
         name.text = model.name
         location.text = model.address

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 protocol cateBtnClickedDelegate:NSObjectProtocol {
     func cateBtnClicked(categoryBtn:UIButton)
@@ -176,7 +177,7 @@ class GToutiaoTableViewCell: UITableViewCell {
 //
 //            let photoUrl:String = DomainName+newsInfo.thumb!
 //            print("=-=-=-=-=-=-=   ",photoUrl)
-//            self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
+//            self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
 //            self.addSubview(self.titImage)
 //            //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
 //            //        titLab.frame.size.height = titleHeight+100
@@ -189,14 +190,21 @@ class GToutiaoTableViewCell: UITableViewCell {
             
         }else{
             
-            let photoUrl:String = DomainName+"data/upload/"+(newsInfo.thumbArr.first?.url)!
-            print("=-=-=-=-=-=-=   ",photoUrl)
-            
-            titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
-            self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
-            self.addSubview(self.titImage)
-            //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
-            //        titLab.frame.size.height = titleHeight+100
+            if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
+                
+                titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
+                self.titImage.image = UIImage.init(named: "defaultImage.png")
+                self.addSubview(self.titImage)
+            }else{
+                let photoUrl:String = DomainName+"data/upload/"+(newsInfo.thumbArr.first?.url)!
+                print("=-=-=-=-=-=-=   ",photoUrl)
+                
+                titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
+                self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
+                self.addSubview(self.titImage)
+                //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
+                //        titLab.frame.size.height = titleHeight+100
+            }
         }
         heal.frame.origin.y = self.frame.size.height-heal.frame.size.height-1-8
         comBtn.frame.origin.y = self.frame.size.height-comBtn.frame.size.height-4-8
@@ -226,10 +234,17 @@ class GToutiaoTableViewCell: UITableViewCell {
             titSubImg.clipsToBounds = true
             titSubImg.frame = CGRectMake(((WIDTH-20-margin*2)/3.0+margin)*CGFloat(index), 0, (WIDTH-20-margin*2)/3.0, (WIDTH-20-margin*2)/3.0*2/3.0)
             
-            let photoUrl:String = DomainName+"data/upload/"+(newsInfo.thumbArr[index].url)
-            titSubImg.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
-//            titSubImg.image = UIImage.init(named: "1.png")
-            titImage.addSubview(titSubImg)
+            if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
+                
+                titSubImg.image = UIImage(named: "defaultImage.png")
+                titImage.addSubview(titSubImg)
+            }else {
+                
+                let photoUrl:String = DomainName+"data/upload/"+(newsInfo.thumbArr[index].url)
+                titSubImg.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
+                //            titSubImg.image = UIImage.init(named: "1.png")
+                titImage.addSubview(titSubImg)
+            }
         }
         self.addSubview(titImage)
         

@@ -38,6 +38,7 @@ class MineMessDetailViewController: UIViewController,UITableViewDelegate, UITabl
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.separatorStyle = .None
         self.view.addSubview(myTableView)
         
         self.title = info?.title

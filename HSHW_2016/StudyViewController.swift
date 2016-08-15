@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate {
     
@@ -123,7 +124,12 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func updateSlideImage(){
         for i in 1...4 {
             let imgView = scrollView.viewWithTag(i) as! UIImageView
-            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                imgView.image = UIImage.init(named: "defaultImage.png")
+            }else{
+                imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]), placeholderImage: UIImage.init(named: "defaultImage.png"))
+            }
+//            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
             //            print(picArr)
             for lab in imgView.subviews {
                 if lab.tag == imgView.tag {

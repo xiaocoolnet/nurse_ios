@@ -41,6 +41,7 @@ class HSNurseStationHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
+                print(request?.URLString)
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
                     handle(success: true, response: nil)
@@ -221,9 +222,44 @@ class HSNurseStationHelper: NSObject {
     }
     
     // 发布简历
-    func postForum(userid:String,avatar:String,name:String,experience:String,sex:String,birthday:String,marital:String,address:String,jobstate:String,currentsalary:String,phone:String,email:String,hiredate:String,wantcity:String,wantsalary:String,wantposition:String,description:String, handle:ResponseBlock){
+    func postForum(userid:String,
+                   avatar:String,
+                   name:String,
+                   experience:String,
+                   sex:String,
+                   birthday:String,
+                   certificate:String,
+                   education:String,
+                   address:String,
+                   jobstate:String,
+                   currentsalary:String,
+                   phone:String,
+                   email:String,
+                   hiredate:String,
+                   wantcity:String,
+                   wantsalary:String,
+                   wantposition:String,
+                   description:String,
+                   handle:ResponseBlock){
         let url = PARK_URL_Header+"PublishResume"
-        let param = ["userid":QCLoginUserInfo.currentInfo.userid,"avatar":avatar,"name":name,"experience":experience,"sex":sex,"birthday":birthday,"marital":marital,"address":address,"jobstate":jobstate,"currentsalary":currentsalary,"phone":phone,"email":email,"hiredate":hiredate,"wantcity":wantcity,"wantposition":wantposition,"description":description,]
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid,
+                     "avatar":avatar,
+                     "name":name,
+                     "experience":experience,
+                     "sex":sex,
+                     "birthday":birthday,
+                     "certificate":certificate,
+                     "education":education,
+                     "address":address,
+                     "jobstate":jobstate,
+                     "currentsalary":currentsalary,
+                     "phone":phone,
+                     "email":email,
+                     "hiredate":hiredate,
+                     "wantcity":wantcity,
+                     "wantsalary":wantsalary,
+                     "wantposition":wantposition,
+                     "description":description,]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             print(request?.URLString)
             if(error != nil){
@@ -240,9 +276,45 @@ class HSNurseStationHelper: NSObject {
     }
     
     // 修改简历
-    func changeForum(userid:String,avatar:String,name:String,experience:String,sex:String,birthday:String,marital:String,address:String,jobstate:String,currentsalary:String,phone:String,email:String,hiredate:String,wantcity:String,wantsalary:String,wantposition:String,description:String, handle:ResponseBlock){
-        let url = PARK_URL_Header+"UpdataMyResume"
-        let param = ["userid":QCLoginUserInfo.currentInfo.userid,"avatar":avatar,"name":name,"experience":experience,"sex":sex,"birthday":birthday,"marital":marital,"address":address,"jobstate":jobstate,"currentsalary":currentsalary,"phone":phone,"email":email,"hiredate":hiredate,"wantcity":wantcity,"wantposition":wantposition,"description":description,]
+    func changeForum(userid:String,
+                     avatar:String,
+                     name:String,
+                     experience:String,
+                     sex:String,
+                     birthday:String,
+                     certificate:String,
+                     education:String,
+                     address:String,
+                     jobstate:String,
+                     currentsalary:String,
+                     phone:String,
+                     email:String,
+                     hiredate:String,
+                     wantcity:String,
+                     wantsalary:String,
+                     wantposition:String,
+                     description:String,
+                     type:Int,//1 发布  2 修改
+                     handle:ResponseBlock){
+        let url = type == 1 ? PARK_URL_Header+"PublishResume":PARK_URL_Header+"UpdataMyResume"
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid,
+                     "avatar":avatar,
+                     "name":name,
+                     "experience":experience,
+                     "sex":sex,
+                     "birthday":birthday,
+                     "certificate":certificate,
+                     "education":education,
+                     "address":address,
+                     "jobstate":jobstate,
+                     "currentsalary":currentsalary,
+                     "phone":phone,
+                     "email":email,
+                     "hiredate":hiredate,
+                     "wantcity":wantcity,
+                     "wantsalary":wantsalary,
+                     "wantposition":wantposition,
+                     "description":description,]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             print(request?.URLString)
             if(error != nil){

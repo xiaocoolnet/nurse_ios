@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate {
 
@@ -117,7 +118,12 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableView
                 headerView = UIImageView.init(frame: CGRectMake(WIDTH/3.0, 30, WIDTH/3.0, WIDTH/3.0))
                 headerView.backgroundColor = UIColor.cyanColor()
                 let str = SHOW_IMAGE_HEADER+(userInfo?.photo)!
-                headerView.sd_setImageWithURL(NSURL.init(string: str))
+                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                    headerView.image = UIImage.init(named: "defaultImage.png")
+                }else{
+                    headerView.sd_setImageWithURL(NSURL.init(string: str), placeholderImage: UIImage.init(named: "defaultImage.png"))
+                }
+//                headerView.sd_setImageWithURL(NSURL.init(string: str))
                 headerView.layer.cornerRadius = WIDTH/6.0
                 headerView.clipsToBounds = true
                 headerView.layer.borderWidth = 3

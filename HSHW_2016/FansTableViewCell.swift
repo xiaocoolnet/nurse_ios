@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class FansTableViewCell: UITableViewCell {
 
@@ -79,10 +80,14 @@ class FansTableViewCell: UITableViewCell {
             // TODO: 数据问题 理应删掉model.photo == "21.jpg"
             if model.photo == "" || model.photo == "21.jpg" {
                 
-                self.titImg.image = UIImage.init(named: "default_header")
+                self.titImg.image = UIImage.init(named: "img_head_nor")
             }else{
-                
-                self.titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.photo))
+                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                    self.titImg.image = UIImage.init(named: "img_head_nor")
+                }else{
+                    self.titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+model.photo), placeholderImage: UIImage.init(named: "img_head_nor"))
+                }
+//                self.titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.photo))
             }
             self.nameLab.text = model.name
             self.nameLab.sizeToFit()

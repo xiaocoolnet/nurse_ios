@@ -23,6 +23,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     @IBOutlet weak var bordView:UIView!
     @IBOutlet weak var sendBtn: UIButton!
     @IBOutlet weak var postNameField: UITextField!
+    @IBOutlet weak var firmNameView: UIView!
     @IBOutlet weak var firmNameField: UITextField!
     @IBOutlet weak var resumeFeild: UITextField!
     @IBOutlet weak var phoneField: UITextField!
@@ -73,6 +74,32 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     var dropDownDic = [String:Array<String>]()
 
     var array = NSArray()
+    
+    let coverView = UIButton()
+    
+    var alreadyCertify = true {
+        didSet {
+            if alreadyCertify {
+                coverView.frame = CGRectMake(0, 90, WIDTH, 45*4)
+                coverView.addTarget(self, action: #selector(coverBtnClick), forControlEvents: .TouchUpInside)
+                self.myScrollview.addSubview(coverView)
+                
+            }else{
+                coverView.removeFromSuperview()
+            }
+        }
+    }
+    
+    func coverBtnClick() {
+        // 重新认证
+        let alert = UIAlertController(title: "您已进行企业认证", message: "如需修改企业信息，请到我的招聘中重新认证", preferredStyle: .Alert)
+        UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+        
+        let doneAction = UIAlertAction(title: "确定", style: .Default, handler: nil)
+        alert.addAction(doneAction)
+        
+
+    }
    
     @IBAction func sendBtnClicked(sender: AnyObject) {
 //        if delegate != nil {
@@ -717,7 +744,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     
     func keyboardWillDisappear(notification:NSNotification){
         
-        if self.myScrollview.frame.size.height<=HEIGHT-64-49-keyboardHeight {
+        if self.myScrollview.frame.size.height<=HEIGHT-64-keyboardHeight {
             
             UIView.animateWithDuration(0.3) {
                 //            self.myScrollview.contentOffset = CGPoint.init(x: 0, y: self.myScrollview.contentSize.height-self.myScrollview.frame.size.height)

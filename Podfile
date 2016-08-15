@@ -1,5 +1,6 @@
 use_frameworks!
 
+pod 'ReachabilitySwift'
 pod 'Alamofire', '~> 3.0'
 pod 'MBProgressHUD'
 pod 'IQKeyboardManagerSwift'

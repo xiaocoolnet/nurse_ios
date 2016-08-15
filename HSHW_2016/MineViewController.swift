@@ -85,7 +85,12 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if success {
                 
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
+                    if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                        self.titImage.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
+                    }else{
+                        self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
+                    }
+//                    self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
                     self.userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
                     self.levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, forState: .Normal)
                     self.fansCountBtn.setTitle(QCLoginUserInfo.currentInfo.fansCount, forState: .Normal)
@@ -240,7 +245,12 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 cell.addSubview(setBtn)
                 
                 titImage.frame = CGRectMake(WIDTH*128/375, WIDTH*69/375, WIDTH*120/375, WIDTH*120/375)
-                self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
+                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                    self.titImage.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
+                }else{
+                    self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
+                }
+//                self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
                 titImage.addTarget(self, action: #selector(MineViewController.changeTitImage), forControlEvents: .TouchUpInside)
                 titImage.layer.cornerRadius = WIDTH*120/375/2
                 titImage.clipsToBounds = true
@@ -345,6 +355,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 cell.titLab.text = "仅WiFi下载图片"
 
                 let swi = UISwitch.init(frame: CGRectMake(WIDTH-51-10, 29/2.0, 51, 31))
+
+                swi.on = NSUserDefaults.standardUserDefaults().boolForKey("loadPictureOnlyWiFi")
                 swi.addTarget(self, action: #selector(switchValueChanged(_:)), forControlEvents: .ValueChanged)
                 cell.contentView.addSubview(swi)
                 cell.accessoryType = .None
@@ -404,6 +416,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     // MARK: switch valueChanged
     func switchValueChanged(swi:UISwitch) {
+        NSUserDefaults.standardUserDefaults().setBool(swi.on, forKey: "loadPictureOnlyWiFi")
+        loadPictureOnlyWiFi = swi.on
         print("switch value changed , and swi.on = \(swi.on)")
     }
     

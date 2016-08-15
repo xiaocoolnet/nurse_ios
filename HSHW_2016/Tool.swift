@@ -32,6 +32,8 @@ let kRedirectURI = "http://app.chinanurse.cn"
 let APP_SHARE_URL = "https://www.pgyer.com/kUyM"
 let APP_SHARE_NAME = "中国护士网"
 
+var loadPictureOnlyWiFi = false
+
 //let ZAN_URL_Header = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a="
 
 func calculateHeight(string:String,size:CGFloat,width:  CGFloat) -> CGFloat {

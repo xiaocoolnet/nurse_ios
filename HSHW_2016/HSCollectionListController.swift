@@ -25,11 +25,12 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData))
+        myTableView.mj_header.beginRefreshing()
         self.view.addSubview(myTableView)
         
         myTableView.backgroundColor = UIColor.whiteColor()
         
-        loadData()
+//        loadData()
     }
     
     // MARK: 获取数据

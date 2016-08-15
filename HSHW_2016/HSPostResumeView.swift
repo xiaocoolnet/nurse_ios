@@ -696,14 +696,14 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                 
                 let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
                 //                hud.mode = MBProgressHUDMode.Text;
-                hud.labelText = "正在发布"
+                hud.labelText = changeResume ? "正在修改":"正在发布"
                 hud.margin = 10.0
                 hud.removeFromSuperViewOnHide = true
                 
                 if headerBtn.selected {
                     uploadHeader(hud)
                 }else{
-                    changeResume(hud)
+                    changeResume(hud, type: 2)
                 }
                 
             }else{
@@ -755,9 +755,9 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
 //                                }
 //                            })
                             if self.changeResume {
-                                self.changeResume(hud)
+                                self.changeResume(hud, type: 2)
                             }else{
-                                self.uploadResume(hud)
+                                self.changeResume(hud, type: 1)
                             }
                         }else{
 //                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
@@ -776,7 +776,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     
     // MARK:发布简历
     func uploadResume(hud:MBProgressHUD) {
-        HSNurseStationHelper().postForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName+".png", name: nameTF.text!, experience: dropDownFinishDic["exp"]!, sex: sexFinishStr, birthday:"\(birthFinishArr[0])-\(birthFinishArr[1])-\(birthFinishArr[2])", marital:dropDownFinishDic["edu"]! , address:"\(homeFinishArr[0])-\(homeFinishArr[1])-\(homeFinishArr[2])", jobstate:jobStatusStr, currentsalary:dropDownFinishDic["salary"]!, phone:telTF.text!, email:mailTF.text!, hiredate:dropDownFinishDic["jobTime"]!, wantcity:"\(targetCityFinishArr[0])-\(targetCityFinishArr[1])", wantsalary:dropDownFinishDic["expectedSalary"]!, wantposition:dropDownFinishDic["expectedPosition"]!, description:selfEvaluate.text!, handle: { (success, response) in
+        HSNurseStationHelper().postForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName+".png", name: nameTF.text!, experience: dropDownFinishDic["exp"]!, sex: sexFinishStr, birthday:"\(birthFinishArr[0])-\(birthFinishArr[1])-\(birthFinishArr[2])", certificate:dropDownFinishDic["professional"]!, education:dropDownFinishDic["edu"]! , address:"\(homeFinishArr[0])-\(homeFinishArr[1])-\(homeFinishArr[2])", jobstate:jobStatusStr, currentsalary:dropDownFinishDic["salary"]!, phone:telTF.text!, email:mailTF.text!, hiredate:dropDownFinishDic["jobTime"]!, wantcity:"\(targetCityFinishArr[0])-\(targetCityFinishArr[1])", wantsalary:dropDownFinishDic["expectedSalary"]!, wantposition:dropDownFinishDic["expectedPosition"]!, description:selfEvaluate.text!, handle: { (success, response) in
             if success {
                 dispatch_async(dispatch_get_main_queue(), {
                     //                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
@@ -809,14 +809,14 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         })
     }
     
-    // MARK: 修改简历
-    func changeResume(hud:MBProgressHUD) {
-        HSNurseStationHelper().changeForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName+".png", name: nameTF.text!, experience: dropDownFinishDic["exp"]!, sex: sexFinishStr, birthday:"\(birthFinishArr[0])-\(birthFinishArr[1])-\(birthFinishArr[2])", marital:dropDownFinishDic["edu"]! , address:"\(homeFinishArr[0])-\(homeFinishArr[1])-\(homeFinishArr[2])", jobstate:jobStatusStr, currentsalary:dropDownFinishDic["salary"]!, phone:telTF.text!, email:mailTF.text!, hiredate:dropDownFinishDic["jobTime"]!, wantcity:"\(targetCityFinishArr[0])-\(targetCityFinishArr[1])", wantsalary:dropDownFinishDic["expectedSalary"]!, wantposition:dropDownFinishDic["expectedPosition"]!, description:selfEvaluate.text!, handle: { (success, response) in
+    // MARK: 修改/发布 简历
+    func changeResume(hud:MBProgressHUD, type:Int) {
+        HSNurseStationHelper().changeForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName+".png", name: nameTF.text!, experience: dropDownFinishDic["exp"]!, sex: sexFinishStr, birthday:"\(birthFinishArr[0])-\(birthFinishArr[1])-\(birthFinishArr[2])", certificate:dropDownFinishDic["professional"]!, education:dropDownFinishDic["edu"]! , address:"\(homeFinishArr[0])-\(homeFinishArr[1])-\(homeFinishArr[2])", jobstate:jobStatusStr, currentsalary:dropDownFinishDic["salary"]!, phone:telTF.text!, email:mailTF.text!, hiredate:dropDownFinishDic["jobTime"]!, wantcity:"\(targetCityFinishArr[0])-\(targetCityFinishArr[1])", wantsalary:dropDownFinishDic["expectedSalary"]!, wantposition:dropDownFinishDic["expectedPosition"]!, description:selfEvaluate.text!, type:type, handle: { (success, response) in
             if success {
                 dispatch_async(dispatch_get_main_queue(), {
                     //                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "修改成功"
+                    hud.labelText = type == 1 ? "发布成功":"修改成功"
                     //                            hud.margin = 10.0
                     //                            hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)

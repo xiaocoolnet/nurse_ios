@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class HSComTableCell: UITableViewCell {
     
@@ -37,7 +38,12 @@ class HSComTableCell: UITableViewCell {
         if model.photo == "default_header" || model.photo == "1234.png" {
             avatarBtn.setImage(UIImage.init(named: "default_header"), forState: .Normal)
         }else{
-            avatarBtn.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(model.photo)), forState: .Normal)
+            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                avatarBtn.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
+            }else{
+                avatarBtn.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(model.photo)), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
+            }
+//            avatarBtn.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(model.photo)), forState: .Normal)
         }
         
         landLorder.text = model.name

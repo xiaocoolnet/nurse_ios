@@ -8,6 +8,8 @@
 
 import UIKit
 import MBProgressHUD
+import Alamofire
+
 class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
     
     let myTableView = UITableView()
@@ -187,7 +189,12 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
             cell.textLabel?.text = oneArr[indexPath.row]
             cell.detailTextLabel?.text = onedeArr[indexPath.row]
             if indexPath.row == 0 {
-                avatarView.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar) , forState: .Normal)
+                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                    avatarView.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
+                }else{
+                    avatarView.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
+                }
+//                avatarView.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar) , forState: .Normal)
                 avatarView.frame = CGRectMake(WIDTH-86, 11, 50, 50)
                 avatarView.layer.cornerRadius = 25
                 avatarView.clipsToBounds = true

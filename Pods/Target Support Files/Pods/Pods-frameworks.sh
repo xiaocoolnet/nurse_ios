@@ -90,6 +90,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods/ImageSlideshow.framework"
   install_framework "Pods/MBProgressHUD.framework"
   install_framework "Pods/PagingMenuController.framework"
+  install_framework "Pods/ReachabilitySwift.framework"
   install_framework "Pods/SDWebImage.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
@@ -99,5 +100,6 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods/ImageSlideshow.framework"
   install_framework "Pods/MBProgressHUD.framework"
   install_framework "Pods/PagingMenuController.framework"
+  install_framework "Pods/ReachabilitySwift.framework"
   install_framework "Pods/SDWebImage.framework"
 fi

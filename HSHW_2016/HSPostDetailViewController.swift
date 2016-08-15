@@ -96,7 +96,12 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         if postInfo?.photo == "default_header" || postInfo?.photo == "1234.png" {
             avatar.setImage(UIImage.init(named: "default_header"), forState: .Normal)
         }else{
-            avatar.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(postInfo?.photo)!), forState: .Normal)
+            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                avatar.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
+            }else{
+                avatar.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(postInfo?.photo)!), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
+            }
+//            avatar.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(postInfo?.photo)!), forState: .Normal)
         }
     
         print(postion.text,postInfo?.typename)
@@ -181,7 +186,12 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
             detailCell.selectionStyle = UITableViewCellSelectionStyle.None
             
             let picArray = postInfo?.pic
-            detailCell.postImageView.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+picArray![indexPath.row].pictureurl))
+            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                detailCell.postImageView.image = UIImage.init(named: "defaultImage.png")
+            }else{
+                detailCell.postImageView.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+picArray![indexPath.row].pictureurl), placeholderImage: UIImage.init(named: "defaultImage.png"))
+            }
+//            detailCell.postImageView.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+picArray![indexPath.row].pictureurl))
             print("picurl ===   ",SHOW_IMAGE_HEADER+picArray![indexPath.row].pictureurl)
             
             return detailCell

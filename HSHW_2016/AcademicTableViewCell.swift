@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class AcademicTableViewCell: UITableViewCell {
 
@@ -79,7 +80,12 @@ class AcademicTableViewCell: UITableViewCell {
             aca_zan.selected = false
             let photoUrl:String = DomainName+newsInfo!.thumb!
             print(photoUrl)
-            titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
+            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                titImage.image = UIImage.init(named: "defaultImage.png")
+            }else{
+                titImage.sd_setImageWithURL(NSURL.init(string: photoUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
+            }
+//            titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
             titLab.text = newsInfo!.post_title
             //        cell.conNum.text = newsInfo.recommended
             let time:Array = (newsInfo!.post_date?.componentsSeparatedByString(" "))!
