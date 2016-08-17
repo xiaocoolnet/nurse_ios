@@ -58,7 +58,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
-                    //hud.labelText = status.errorData
+                    hud.labelText = status.errorData
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)

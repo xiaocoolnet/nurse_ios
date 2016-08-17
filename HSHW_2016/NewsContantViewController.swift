@@ -138,7 +138,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     func collection(collectBtn:UIButton){
         
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
             return
         }
         collectHud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
@@ -561,8 +561,22 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             message.title = "中国护士网"
             message.description = newsInfo?.post_title
             // TODO:
-            //        let imageName = newsInfo?.thumbArr.count == 0 ? "1":newsInfo?.thumbArr.first?.url
-            message.setThumbImage(UIImage())
+//            let imageName = newsInfo?.thumbArr.count == 0 ? "1":newsInfo?.thumbArr.first?.url
+            if newsInfo?.thumbArr.count == 0 {
+                let thumbImage = UIImage(named: "appLogo")
+                message.setThumbImage(thumbImage)
+
+            }else{
+                
+                let str = DomainName+"data/upload/"+(newsInfo?.thumbArr.first?.url)!
+                let url = NSURL(string: str)
+                let data = NSData(contentsOfURL: url!)
+                let thumbImage = UIImage(data: data!)
+                
+                let data2 = thumbImage!.compressImage(thumbImage!, maxLength: 32700)
+                
+                message.setThumbImage(UIImage(data: data2!))
+            }
             
             let webPageObject = WXWebpageObject()
             webPageObject.webpageUrl = NewsInfo_Header+(newsInfo?.object_id)!
@@ -591,11 +605,31 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             authRequest.scope = "all"
             
             let message = WBMessageObject.message() as! WBMessageObject
-            message.text = "@Mr__大脸猫"
+            message.text = "中国护士网"
             let webpage:WBWebpageObject = WBWebpageObject.object() as! WBWebpageObject
-            webpage.objectID = "identifier1"
-            webpage.title = "分享网页的标题-中国护士网"
-            webpage.description = "分享网页的内容简介-\((newsInfo?.post_title)!)"
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "yyyyMMddHHmmss"
+            let dateStr = dateFormatter.stringFromDate(NSDate())
+            webpage.objectID = "chinanurse\(kAppKey)\(dateStr)"
+            webpage.title = "中国护士网"
+            webpage.description = (newsInfo?.post_title)!
+            if newsInfo?.thumbArr.count == 0 {
+                let thumbImage = UIImage(named: "appLogo")
+                let data = UIImageJPEGRepresentation(thumbImage!, 0.5)!
+                webpage.thumbnailData = data
+            }else{
+                
+                let str = DomainName+"data/upload/"+(newsInfo?.thumbArr.first?.url)!
+                let url = NSURL(string: str)
+                let data = NSData(contentsOfURL: url!)
+                let thumbImage = UIImage(data: data!)
+                
+                let data2 = thumbImage!.compressImage(thumbImage!, maxLength: 32700)
+
+//                let data2 = UIImageJPEGRepresentation(thumbImage!, 0.000001)!
+//                message.setThumbImage(thumbImage)
+                webpage.thumbnailData = data2
+            }
 //            webpage.thumbnailData = NSDa
             webpage.webpageUrl = NewsInfo_Header+(newsInfo?.object_id)!
             message.mediaObject = webpage
@@ -679,7 +713,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         print("赞")
         self.zan.enabled = false
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
             return
         }
         
@@ -734,6 +768,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                                 self.newsInfo?.likes.removeAtIndex(i)
                             }
                         }
+                        
+                        for (i,obj) in self.dataSource.objectlist.enumerate() {
+                            if obj.object_id == self.newsInfo?.object_id {
+                                self.dataSource.objectlist[i] = self.newsInfo!
+                            }
+                        }
                         //                            user.removeObjectForKey((self.newsInfo?.object_id)!）
                     }
                 }
@@ -782,6 +822,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                         let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
                         let model:LikeInfo = LikeInfo.init(JSONDecoder(dic))
                         self.newsInfo?.likes.append(model)
+                        
+                        for (i,obj) in self.dataSource.objectlist.enumerate() {
+                            if obj.object_id == self.newsInfo?.object_id {
+                                self.dataSource.objectlist[i] = self.newsInfo!
+                            }
+                        }
                         
                     }
                 }
@@ -841,35 +887,35 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
          self.myTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
     
-    func GetDate1(){
- 
-        let url = PARK_URL_Header+"SetLike"
-        let param = [
-            "userid":"4",
-            "id":"2",
-            "type":"1"
-        ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
-            if(error != nil){
-            }else{
-                let status = Http(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                }
-                if(status.status == "success"){
-                    print(status.data)
-                }
-            }
-        }
-    }
+//    func GetDate1(){
+// 
+//        let url = PARK_URL_Header+"SetLike"
+//        let param = [
+//            "userid":"4",
+//            "id":"2",
+//            "type":"1"
+//        ];
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+//            print(request)
+//            if(error != nil){
+//            }else{
+//                let status = Http(JSONDecoder(json!))
+//                print("状态是")
+//                print(status.status)
+//                if(status.status == "error"){
+//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                    hud.mode = MBProgressHUDMode.Text;
+//                    hud.labelText = status.errorData
+//                    hud.margin = 10.0
+//                    hud.removeFromSuperViewOnHide = true
+//                    hud.hide(true, afterDelay: 1)
+//                }
+//                if(status.status == "success"){
+//                    print(status.data)
+//                }
+//            }
+//        }
+//    }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)

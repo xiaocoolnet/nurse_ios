@@ -181,20 +181,38 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     // 保存简历
     @IBOutlet weak var saveResumeBtn: UIButton!
     
-    let coverView = UIView()
+    let coverBtn = UIButton()
     
     var alreadyHasResume = true {
         didSet {
             if alreadyHasResume {
-                coverView.frame = CGRectMake(0, 0, WIDTH, 1127-80)//23+659+40+180+165+60 = 1127
-                self.myScrollView.addSubview(coverView)
+                coverBtn.frame = CGRectMake(0, 0, WIDTH, 1127-80)//23+659+40+180+165+60 = 1127
+                coverBtn.addTarget(self, action: #selector(coverBtnClick), forControlEvents: .TouchUpInside)
+                self.myScrollView.addSubview(coverBtn)
                 
                 self.saveResumeBtn.setTitle("修改简历", forState: .Normal)
                 changeResume = true
             }else{
-                coverView.removeFromSuperview()
+                coverBtn.removeFromSuperview()
             }
         }
+    }
+    
+    func coverBtnClick() {
+        // 修改简历
+        let alert = UIAlertController(title: "确认修改简历？", message: "修改简历会覆盖原简历，确认修改？", preferredStyle: .Alert)
+        UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+        
+        let replyAction = UIAlertAction(title: "修改", style: .Default, handler: { (action) in
+            self.coverBtn.removeFromSuperview()
+            self.saveResumeBtn.setTitle("保存简历", forState: .Normal)
+            self.alreadyHasResume = false
+        })
+        alert.addAction(replyAction)
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (action) in
+        })
+        alert.addAction(cancelAction)
     }
     
     var changeResume = false
@@ -314,9 +332,9 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         targetCityArray = ["北京市","北京市"]
         
         selfEvaluate.delegate = self
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+//        
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
     }
     
     func getDictionaryList(type:String, key:String) {
@@ -673,11 +691,11 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         if alreadyHasResume {
             // 修改简历
-            let alert = UIAlertController(title: "确认修改简历？", message: "修改简历会丢失原简历，确认修改？", preferredStyle: .Alert)
+            let alert = UIAlertController(title: "确认修改简历？", message: "修改简历会覆盖原简历，确认修改？", preferredStyle: .Alert)
             UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
             
             let replyAction = UIAlertAction(title: "修改", style: .Default, handler: { (action) in
-                self.coverView.removeFromSuperview()
+                self.coverBtn.removeFromSuperview()
                 self.saveResumeBtn.setTitle("保存简历", forState: .Normal)
                 self.alreadyHasResume = false
             })
@@ -1085,17 +1103,22 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
         
         let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
-        if selfEvaluate.isFirstResponder() && flag {
+        print(selfEvaluate.isFirstResponder(),flag)
+//        if selfEvaluate.isFirstResponder() {
         
             UIView.animateWithDuration(0.3) {
 //                self.myScrollView.contentOffset = CGPoint.init(x: 0, y: self.myScrollView.contentSize.height-self.myScrollView.frame.size.height+keyboardheight)
 //                self.myScrollView.frame = CGRectMake(self.myScrollView.frame.origin.x, self.myScrollView.frame.origin.y, self.myScrollView.frame.size.width, self.myScrollView.frame.size.height-keyboardheight)
-                self.myScrollView.frame.size.height = self.myScrollView.frame.size.height-keyboardheight
-                self.myScrollView.contentOffset.y = self.myScrollView.contentSize.height-self.myScrollView.frame.size.height
+                self.myScrollView.frame.size.height = HEIGHT-keyboardheight-64
+//                self.myScrollView.contentOffset.y = self.myScrollView.contentSize.height-self.myScrollView.frame.size.height
+                if self.myScrollView.contentSize.height-self.myScrollView.contentOffset.y < HEIGHT-64{
+                    
+                    self.myScrollView.contentOffset.y = self.myScrollView.contentOffset.y+keyboardheight
+                }
                 self.keyboardHeight = keyboardheight
                 self.flag = false
             }
-        }
+//        }
         
         print("键盘弹起")
         print(keyboardheight)
@@ -1104,15 +1127,16 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     
     func keyboardWillDisappear(notification:NSNotification){
         
-        if self.myScrollView.frame.size.height<=HEIGHT-64-49-keyboardHeight {
+//        if self.myScrollView.frame.size.height<=HEIGHT-64-keyboardHeight {
 
             UIView.animateWithDuration(0.3) {
     //            self.myScrollview.contentOffset = CGPoint.init(x: 0, y: self.myScrollview.contentSize.height-self.myScrollview.frame.size.height)
 
-                self.myScrollView.frame.size.height = self.myScrollView.frame.size.height+self.keyboardHeight
+//                self.myScrollView.frame.size.height = self.myScrollView.frame.size.height+self.keyboardHeight
+                self.myScrollView.frame.size.height = HEIGHT-64
                 self.flag = true
             }
-        }
+//        }
         print("键盘落下")
     }
 

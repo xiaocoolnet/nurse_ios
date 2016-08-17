@@ -565,7 +565,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         print("邀请面试")
         
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
             return
         }
         
@@ -621,7 +621,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     func resumeOnline(btn:UIButton) {
         
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
             return
         }
         
@@ -701,7 +701,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         print("招聘")
         
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
             return
         }
         

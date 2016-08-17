@@ -74,13 +74,16 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
         self.view.addSubview(myTableView)
         myTableView.rowHeight = 72
         
+        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(GetDate))
+        myTableView.mj_header.beginRefreshing()
+        
         employmentMessageTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "employmentMessage")
         employmentMessageTableView.delegate = self
         employmentMessageTableView.dataSource = self
         employmentMessageTableView.tag = 1
         employmentMessageTableView.separatorStyle = .None
         
-        self.GetDate()
+//        self.GetDate()
     
         // Do any additional setup after loading the view.
     }
@@ -386,7 +389,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                         hud.hide(true, afterDelay: 1)
                     }
                 }
-                
+                self.myTableView.mj_header.endRefreshing()
             }
         }else{
             
@@ -415,7 +418,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                         print(status.datas)
                     }
                 }
-                
+                self.myTableView.mj_header.endRefreshing()
             }
         }
     }

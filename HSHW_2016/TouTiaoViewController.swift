@@ -34,6 +34,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         super.viewWillAppear(animated)
         if newsType != nil {
             self.navigationController?.navigationBar.hidden = false
+            self.tabBarController?.tabBar.hidden = true
         }
         
         let rightItem = UIButton.init(frame: CGRectMake(0, 0, 50, 28))
@@ -116,7 +117,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func createTableView() {
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-114)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, newsType == nil ? HEIGHT-114:HEIGHT-64)
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")

@@ -167,7 +167,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     func click1(btn:UIButton){
         
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
             return
         }
         

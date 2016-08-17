@@ -151,7 +151,7 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
         hud.removeFromSuperViewOnHide = true
         var flag = 0
         
-        let userid = "1"
+        let userid = QCLoginUserInfo.currentInfo.userid
         helper.GetErrorExampaper(userid, type: "1") { (success, response) in
             self.fansListArray = response as! Array<GExamInfo>
             self.fansTableView.reloadData()
@@ -183,7 +183,7 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! GMyErrorTableViewCell
         cell.selectionStyle = .None
-        cell.inde = indexPath.row
+//        cell.inde = indexPath.row
         
         if tableView.tag == 410 {
             let model = fansListArray[indexPath.row]
@@ -193,8 +193,8 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }else if tableView.tag == 411{
             let model = focusListArray[indexPath.row]
 //            model.post_title = "在线考试"
-//            cell.fansModel = model
-            cell.textLabel?.text = model.post_title
+            cell.fansModel = model
+//            cell.textLabel?.text = model.post_title
         }
         
         return cell

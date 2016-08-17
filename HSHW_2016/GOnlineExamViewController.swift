@@ -698,7 +698,7 @@ class GOnlineExamViewController: UIViewController,UIScrollViewDelegate {
         }else if btn.tag == 5 {
             
             // MARK:要求登录
-            if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
                 return
             }
             

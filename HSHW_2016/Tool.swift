@@ -121,7 +121,7 @@ class TimeTask :NSObject{
 
 }
 
-func requiredLogin(nav:UINavigationController,hasBackItem:Bool) -> Bool{
+func requiredLogin(nav:UINavigationController, previousViewController:UIViewController, hasBackItem:Bool) -> Bool{
     
     print(LOGIN_STATE)
     
@@ -132,6 +132,7 @@ func requiredLogin(nav:UINavigationController,hasBackItem:Bool) -> Bool{
     let controller = ViewController()
     controller.navigationController?.navigationBar.hidden = hasBackItem
     controller.title = "登录"
+    controller.previousViewcontroller = previousViewController
     nav.pushViewController(controller, animated: true)
     
     return false

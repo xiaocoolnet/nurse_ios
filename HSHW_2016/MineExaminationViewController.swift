@@ -84,7 +84,7 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
         
         let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! GMyErrorTableViewCell
         cell.selectionStyle = .None
-        cell.inde = indexPath.row
+//        cell.inde = indexPath.row
         
 //        if tableView.tag == 410 {
             let model = fansListArray[indexPath.row]

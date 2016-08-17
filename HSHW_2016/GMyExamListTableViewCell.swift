@@ -12,7 +12,7 @@ import Alamofire
 class GMyExamListTableViewCell: UITableViewCell {
 
     var inde:Int = 0
-    let indexLab = UILabel()
+//    let indexLab = UILabel()
     let titImg = UIImageView()
     let titleLab = UILabel()
     let timeLab = UILabel()
@@ -29,17 +29,18 @@ class GMyExamListTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        indexLab.frame = CGRectMake(10, 10, 50, 50)
-        indexLab.textColor = UIColor.darkGrayColor()
+//        indexLab.frame = CGRectMake(10, 10, 50, 50)
+//        indexLab.textColor = UIColor.darkGrayColor()
         
-        titImg.frame = CGRectMake(70, 10, 50, 50)
-        titImg.layer.cornerRadius = 25
-        titImg.clipsToBounds = true
+        titImg.frame = CGRectMake(8, 20, 25, 30)
+        titImg.image = UIImage.init(named: "ic_note")
+//        titImg.layer.cornerRadius = 25
+//        titImg.clipsToBounds = true
         
-        titleLab.frame = CGRectMake(75+50+15, 15, 50, 20)
+        titleLab.frame = CGRectMake(75+30+15, 15, 50, 20)
         titleLab.font = UIFont.systemFontOfSize(15)
         
-        timeLab.frame = CGRectMake(75+50+15, 15, 50, 20)
+        timeLab.frame = CGRectMake(75+30+15, 15, 50, 20)
         timeLab.textColor = UIColor.darkGrayColor()
         timeLab.font = UIFont.systemFontOfSize(12)
         
@@ -50,7 +51,7 @@ class GMyExamListTableViewCell: UITableViewCell {
         countLab.font = UIFont.systemFontOfSize(12)
         countLab.adjustsFontSizeToFitWidth = true
         
-        self.addSubview(indexLab)
+//        self.addSubview(indexLab)
         self.addSubview(titImg)
         self.addSubview(titleLab)
         self.addSubview(timeLab)
@@ -61,16 +62,17 @@ class GMyExamListTableViewCell: UITableViewCell {
     var fansModel:GTestExamList?{
         didSet {
             //TODO:image 后期要改，从网上获取
-            indexLab.text = "\(inde+1)."
-            indexLab.sizeToFit()
-            indexLab.frame = CGRectMake(10, (70-CGRectGetHeight(indexLab.frame))/2.0, CGRectGetWidth(indexLab.frame), CGRectGetHeight(indexLab.frame))
+//            indexLab.text = "\(inde+1)."
+//            indexLab.sizeToFit()
+//            indexLab.frame = CGRectMake(10, (70-CGRectGetHeight(indexLab.frame))/2.0, CGRectGetWidth(indexLab.frame), CGRectGetHeight(indexLab.frame))
             
-            titImg.frame = CGRectMake(CGRectGetMaxX(indexLab.frame)+10, 10, 50, 50)
-            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-                titImg.image = UIImage.init(named: "img_head_nor")
-            }else{
-                titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))
-            }
+//            titImg.frame = CGRectMake(CGRectGetMaxX(indexLab.frame)+10, 10, 50, 50)
+//            titImg.image = UIImage.init(named: "ic_note")
+//            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+//                titImg.image = UIImage.init(named: "img_head_nor")
+//            }else{
+//                titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))
+//            }
 //            titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar))
             
             titleLab.text = fansModel?.post_title

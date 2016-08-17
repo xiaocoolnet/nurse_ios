@@ -227,6 +227,11 @@ class GToutiaoTableViewCell: UITableViewCell {
         titImage.frame = CGRectMake(10, CGRectGetMaxY(titLab.frame)+10, WIDTH-20, (WIDTH-20-margin*2)/3.0*2/3.0)
 //        titImage.backgroundColor = UIColor.redColor()
 
+        for subview in titImage.subviews {
+            if subview.isKindOfClass(UIImageView) {
+                subview.removeFromSuperview()
+            }
+        }
         for index in 0 ... 2 {
             
             let titSubImg = UIImageView()

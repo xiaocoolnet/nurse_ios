@@ -393,7 +393,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     // MARK:点击收藏按钮
     func collectIconClick() {
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
             return
         }
         
@@ -457,7 +457,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     func likeBtnClicked() {
         
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
             return
         }
         
@@ -677,7 +677,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         // MARK:要求登录
-        return requiredLogin(self.navigationController!, hasBackItem: true)
+        return requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true)
         
     }
     

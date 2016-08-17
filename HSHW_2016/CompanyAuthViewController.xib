@@ -52,7 +52,7 @@
                                 <constraint firstAttribute="height" constant="1" id="leM-1p-6yj"/>
                             </constraints>
                         </view>
-                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zYc-0H-b2R">
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zYc-0H-b2R" customClass="TPKeyboardAvoidingScrollView">
                             <rect key="frame" x="0.0" y="2" width="375" height="665"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PL1-Ii-69D">

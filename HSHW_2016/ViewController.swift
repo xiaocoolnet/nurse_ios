@@ -14,7 +14,7 @@ protocol ViewControllerDelegate:NSObjectProtocol {
 class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegate, UIAlertViewDelegate {
     
     var hasBackBarButtonItem = true
-    
+    var previousViewcontroller = UIViewController()
     var scrollView = UIScrollView()
     var backView = UIView()
     let LOGO = UIImageView()
@@ -608,9 +608,15 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     }
     
     
-    //  登录成功
+    //  MARK:登录成功
     func loginSuccess(){
-        self.navigationController?.popViewControllerAnimated(true)
+//        self.navigationController?.popViewControllerAnimated(true)
+        if previousViewcontroller.isKindOfClass(MineViewController) {
+            self.navigationController?.pushViewController(MineViewController(), animated: true)
+        }else{
+            self.navigationController?.popViewControllerAnimated(true)
+        }
+        
 //        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         //  得到分栏控制器
 //            let vc : UITabBarController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UITabBarController

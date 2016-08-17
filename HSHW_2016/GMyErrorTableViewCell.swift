@@ -11,8 +11,8 @@ import Alamofire
 
 class GMyErrorTableViewCell: UITableViewCell {
 
-    var inde:Int = 0
-    let indexLab = UILabel()
+//    var inde:Int = 0
+//    let indexLab = UILabel()
     let titImg = UIImageView()
     let titleLab = UILabel()
     
@@ -26,18 +26,20 @@ class GMyErrorTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        indexLab.frame = CGRectMake(10, 10, 50, 50)
-        indexLab.textColor = UIColor.darkGrayColor()
+//        indexLab.frame = CGRectMake(10, 10, 50, 50)
+//        indexLab.textColor = UIColor.darkGrayColor()
         
-        titImg.frame = CGRectMake(70, 10, 50, 50)
-        titImg.layer.cornerRadius = 25
-        titImg.clipsToBounds = true
+        titImg.frame = CGRectMake(8, 25, 25, 30)
+        titImg.image = UIImage.init(named: "ic_note")
+//        titImg.frame = CGRectMake(70, 10, 50, 50)
+//        titImg.layer.cornerRadius = 25
+//        titImg.clipsToBounds = true
         
         titleLab.frame = CGRectMake(75+50+15, 15, WIDTH - 150, 50)
         titleLab.font = UIFont.systemFontOfSize(14)
         titleLab.numberOfLines = 0
         
-        self.addSubview(indexLab)
+//        self.addSubview(indexLab)
         self.addSubview(titImg)
         self.addSubview(titleLab)
 
@@ -47,16 +49,17 @@ class GMyErrorTableViewCell: UITableViewCell {
     var fansModel:GExamInfo?{
         didSet {
             //TODO:image 后期要改，从网上获取
-            indexLab.text = "\(inde+1)."
-            indexLab.sizeToFit()
-            indexLab.frame = CGRectMake(10, (70-CGRectGetHeight(indexLab.frame))/2.0, CGRectGetWidth(indexLab.frame), CGRectGetHeight(indexLab.frame))
+//            indexLab.text = "\(inde+1)."
+//            indexLab.sizeToFit()
+//            indexLab.frame = CGRectMake(10, (70-CGRectGetHeight(indexLab.frame))/2.0, CGRectGetWidth(indexLab.frame), CGRectGetHeight(indexLab.frame))
             
-            titImg.frame = CGRectMake(CGRectGetMaxX(indexLab.frame)+10, 10, 50, 50)
-            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-                titImg.image = UIImage.init(named: "img_head_nor")
-            }else{
-                titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))
-            }
+//            titImg.frame = CGRectMake(CGRectGetMaxX(indexLab.frame)+10, 10, 50, 50)
+//            titImg.image = UIImage.init(named: "ic_note")
+//            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+//                titImg.image = UIImage.init(named: "img_head_nor")
+//            }else{
+//                titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))
+//            }
 //            titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar))
             
             titleLab.text = fansModel?.post_title
@@ -69,16 +72,16 @@ class GMyErrorTableViewCell: UITableViewCell {
     var fanModel:xamInfo?{
         didSet {
             //TODO:image 后期要改，从网上获取
-            indexLab.text = "\(inde+1)."
-            indexLab.sizeToFit()
-            indexLab.frame = CGRectMake(10, (70-CGRectGetHeight(indexLab.frame))/2.0, CGRectGetWidth(indexLab.frame), CGRectGetHeight(indexLab.frame))
-            
-            titImg.frame = CGRectMake(CGRectGetMaxX(indexLab.frame)+10, 10, 50, 50)
-            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-                titImg.image = UIImage.init(named: "img_head_nor")
-            }else{
-                titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))
-            }
+//            indexLab.text = "\(inde+1)."
+//            indexLab.sizeToFit()
+//            indexLab.frame = CGRectMake(10, (70-CGRectGetHeight(indexLab.frame))/2.0, CGRectGetWidth(indexLab.frame), CGRectGetHeight(indexLab.frame))
+//            
+//            titImg.frame = CGRectMake(CGRectGetMaxX(indexLab.frame)+10, 10, 50, 50)
+//            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+//                titImg.image = UIImage.init(named: "img_head_nor")
+//            }else{
+//                titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))
+//            }
 //            titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar))
             
             titleLab.text = fanModel?.title

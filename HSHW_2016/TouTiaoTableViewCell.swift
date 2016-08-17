@@ -211,6 +211,12 @@ class TouTiaoTableViewCell: UITableViewCell {
 //        print(titImage.frame)
         //        titImage.backgroundColor = UIColor.redColor()
         
+        for subview in titImage.subviews {
+            if subview.isKindOfClass(UIImageView) {
+                subview.removeFromSuperview()
+            }
+        }
+        
         for index in 0 ... 2 {
             
             let titSubImg = UIImageView()

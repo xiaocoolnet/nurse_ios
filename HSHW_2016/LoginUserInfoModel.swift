@@ -79,12 +79,12 @@ class LoginUserInfo: JSONJoy {
         user_weixin = decoder["weixin"].string ?? ""
         user_avatar = decoder["photo"].string ?? ""
         user_time = decoder["time"].string ?? ""
-        user_level = String(decoder["level"].integer ?? 1)
-        user_score = String(decoder["score"].integer ?? 0)
+        user_level = decoder["level"].string ?? "1"
+        user_score = decoder["score"].string ?? "1"
         user_birthDay = decoder["birthday"].string ?? ""
         user_realname = decoder["realname"].string ?? ""
-        user_fanscount = String(decoder["fanscount"].integer ?? 0)
-        user_followcount = String(decoder["followcount"].integer ?? 0)
+        user_fanscount = decoder["fanscount"].string ?? "0"
+        user_followcount = decoder["followcount"].string ?? "0"
         user_money = String(decoder["money"].integer ?? 0)
         user_email = decoder["user_email"].string ?? ""
         user_email_2 = decoder["email"].string ?? ""

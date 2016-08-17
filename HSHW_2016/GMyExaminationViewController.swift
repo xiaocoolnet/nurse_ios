@@ -624,8 +624,9 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
     }
     
     func selectorSegment(sender: UISegmentedControl) {
+        let userid = QCLoginUserInfo.currentInfo.userid
         if sender.selectedSegmentIndex == 0 {
-            HSMineHelper().GetErrorExampaper("1", type: "1") { (success, response) in
+            HSMineHelper().GetErrorExampaper(userid, type: "1") { (success, response) in
                 self.dataSource = response as! Array<GExamInfo>
                 self.createScrollerView()
                 if self.dataSource.count > 0 {
@@ -635,7 +636,7 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
                 self.questionCard()
             }
         }else if sender.selectedSegmentIndex == 1 {
-            HSMineHelper().GetErrorExampaper("1", type: "2") { (success, response) in
+            HSMineHelper().GetErrorExampaper(userid, type: "2") { (success, response) in
                 self.dataSource = response as! Array<GExamInfo>
                 self.createScrollerView()
                 if self.dataSource.count > 0 {

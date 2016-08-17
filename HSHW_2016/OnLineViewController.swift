@@ -858,7 +858,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         }else if btn.tag == 5 {
             
             // MARK:要求登录
-            if !requiredLogin(self.navigationController!, hasBackItem: true) {
+            if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
                 return
             }
             
@@ -1072,6 +1072,20 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                     
                     let answerAction = UIAlertAction(title: "答案解析", style: .Default){
                         (cancelAction) in
+                        
+                        dispatch_async(dispatch_get_main_queue(), { 
+                            
+//                            let btn = UIButton()
+//                            btn.tag = 4
+                            self.bottomBtnClick(self.btnTwo)
+                            
+                            let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+                            hud.mode = MBProgressHUDMode.Text
+                            hud.labelText = "点击 < 答案 > 按钮即可查看答案"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1.5)
+                        })
                     }
                     alertController.addAction(answerAction)
                     
