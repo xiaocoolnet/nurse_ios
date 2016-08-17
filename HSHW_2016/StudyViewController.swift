@@ -19,6 +19,9 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     var timer = NSTimer()
     var times = Int()
     var requestHelper = NewsPageHelper()
+    var newsList = Array<NewsInfo>()
+    var imageArr = Array<PhotoInfo>()
+    
     
     let titLabArr:[String] = ["每日一练","5万道题库","在线考试"]
     let titImgArr:[String] = ["ic_bi.png","ic_fuzhi.png","ic_phone.png"]
@@ -104,18 +107,24 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     func loadData() {
         
-        requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+        HSNurseStationHelper().getArticleListWithID("10") {[unowned self] (success, response) in
             if success {
-                print(response)
-                let imageArr = response as! Array<PhotoInfo>
-                for imageInfo in imageArr {
-                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-                    self.titArr.append(imageInfo.name)
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.updateSlideImage()
-                        self.myTableView.reloadData()
-                        self.myTableView.mj_header.endRefreshing()
-                    })
+                self.newsList = response as? Array<NewsInfo> ?? []
+                
+                self.requestHelper.getSlideImages("6") { [unowned self] (success, response) in
+                    if success {
+                        print(response)
+                        self.imageArr = response as! Array<PhotoInfo>
+                        for imageInfo in self.imageArr {
+                            self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                            self.titArr.append(imageInfo.name)
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.updateSlideImage()
+                                self.myTableView.reloadData()
+                                self.myTableView.mj_header.endRefreshing()
+                            })
+                        }
+                    }
                 }
             }
         }
@@ -261,11 +270,23 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             }
         }
     }
-    //    图片点击事件
+    // MARK:图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
+        
+        for (_,newsInfo) in self.newsList.enumerate() {
+            print(imageArr[imageView.tag-1].url)
+            if newsInfo.object_id == imageArr[imageView.tag-1].url {
+                
+                let next = NewsContantViewController()
+                next.newsInfo = newsInfo
+                next.navTitle = newsInfo.post_source!
+                
+                self.navigationController?.pushViewController(next, animated: true)
+            }
+        }
     }
     
     func pageNext() {

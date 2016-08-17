@@ -32,6 +32,7 @@ class JobModel: JSONJoy {
     var id:String
     var companyid:String
     var companyname:String
+    var photo:String
     var title:String
     var education:String
     var certificate:String
@@ -47,6 +48,7 @@ class JobModel: JSONJoy {
         id = decoder["id"].string ?? ""
         companyid = decoder["companyid"].string ?? ""
         companyname = decoder["companyname"].string ?? ""
+        photo = decoder["photo"].string ?? ""
         title = decoder["title"].string ?? ""
         education = decoder["education"].string ?? ""
         certificate = decoder["certificate"].string ?? ""

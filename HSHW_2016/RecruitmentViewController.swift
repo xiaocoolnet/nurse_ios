@@ -17,6 +17,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     let pageControl = UIPageControl()
     var picArr = Array<String>()
     var titArr = Array<String>()
+    var imageArr = Array<PhotoInfo>()
     var timer = NSTimer()
     var times = Int()
     let employment = UIView()
@@ -105,27 +106,11 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func makeDataSource(){
         if showType == 1 {
-            var flag = 0
-            requestHelper.getSlideImages("3") { [unowned self] (success, response) in
-                if success {
-                    print(response)
-                    let imageArr = response as! Array<PhotoInfo>
-                    for imageInfo in imageArr {
-                        self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-                        self.titArr.append(imageInfo.name)
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.updateSlideImage()
-                            self.myTableView.reloadData()
-                        })
-                    }
-                }
-                flag += 1
-                if flag == 2 {
-                    self.myTableView.mj_header.endRefreshing()
-                }
-            }
+//            var flag = 0
+            
             
             jobHelper.getJobList({[unowned self] (success, response) in
+                
                 dispatch_async(dispatch_get_main_queue(), {
                     if !success {
                         return
@@ -133,9 +118,28 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.jobDataSource = response as? Array<JobModel> ?? []
                     self.myTableView.reloadData()
 //                     self.configureUI()
-                    flag += 1
-                    if flag == 2 {
+//                    flag += 1
+//                    if flag == 2 {
+//                        self.myTableView.mj_header.endRefreshing()
+//                    }
+                    
+                    self.requestHelper.getSlideImages("2") { [unowned self] (success, response) in
+                        if success {
+                            print(response)
+                            self.imageArr = response as! Array<PhotoInfo>
+                            for imageInfo in self.imageArr {
+                                self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                                self.titArr.append(imageInfo.name)
+                                dispatch_async(dispatch_get_main_queue(), {
+                                    self.updateSlideImage()
+                                    self.myTableView.reloadData()
+                                })
+                            }
+                        }
+//                        flag += 1
+//                        if flag == 2 {
                         self.myTableView.mj_header.endRefreshing()
+//                        }
                     }
                 })
             })
@@ -189,11 +193,11 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func setSlideView() {
-        let one = UIView(frame: CGRectMake(0, 0.5, WIDTH, WIDTH*140/375))
+        let one = UIView(frame: CGRectMake(0, 0.5, WIDTH, WIDTH*190/375))
         self.view.addSubview(one)
         
         timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(RecruitmentViewController.scroll), userInfo: nil, repeats: true)
-        scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*140/375)
+        scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*190/375)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
         scrollView.delegate = self
@@ -201,15 +205,15 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         for i in 0...3 {
             
             let  imageView = UIImageView()
-            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*140/375)
+            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
             imageView.tag = i+1
             
-            let bottom = UIView(frame: CGRectMake(0, WIDTH*140/375-25, WIDTH, 25))
+            let bottom = UIView(frame: CGRectMake(0, WIDTH*190/375-25, WIDTH, 25))
             bottom.backgroundColor = UIColor.grayColor()
             bottom.alpha = 0.5
             imageView.addSubview(bottom)
             
-            let titLab = UILabel(frame: CGRectMake(10, WIDTH*140/375-25, WIDTH-100, 25))
+            let titLab = UILabel(frame: CGRectMake(10, WIDTH*190/375-25, WIDTH-100, 25))
             titLab.font = UIFont.systemFontOfSize(14)
             titLab.textColor = UIColor.whiteColor()
             //            titLab.text = titArr[i]
@@ -230,7 +234,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
         
-        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*140/375-25, 80, 25)
+        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*190/375-25, 80, 25)
         pageControl.pageIndicatorTintColor = UIColor.whiteColor()
         pageControl.currentPageIndicatorTintColor = COLOR
         pageControl.numberOfPages = 4
@@ -336,7 +340,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             }else if indexPath.row == 5 {
                 return 35
             }else if indexPath.row == 6 {
-                return 300
+                let jobModel = jobDataSource![0]
+                let height = calculateHeight(jobModel.description, size: 14, width: WIDTH-20)
+                return 40+height
             }else if indexPath.row == 7 {
                 return 35
             }
@@ -450,7 +456,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     let address = UILabel(frame: CGRectMake(170,10,70,25))
                     address.font = UIFont.boldSystemFontOfSize(15)
                     address.text = "工作地点:"
-                    let addressLabel = UILabel(frame: CGRectMake(240,10,75,25))
+                    let addressLabel = UILabel(frame: CGRectMake(240,10,WIDTH-240,25))
                     addressLabel.font = UIFont.systemFontOfSize(14)
                     addressLabel.text = jobModel!.address
                     cell1.addSubview(criteria)
@@ -467,7 +473,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     let address = UILabel(frame: CGRectMake(170,10,70,25))
                     address.font = UIFont.boldSystemFontOfSize(15)
                     address.text = "福利待遇:"
-                    let addressLabel = UILabel(frame: CGRectMake(240,10,75,25))
+                    let addressLabel = UILabel(frame: CGRectMake(240,10,WIDTH-240,25))
                     addressLabel.font = UIFont.systemFontOfSize(14)
                     addressLabel.text = jobModel!.welfare
                     cell1.addSubview(criteria)
@@ -483,6 +489,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     descripDetail.textColor = UIColor.lightGrayColor()
                     descripDetail.numberOfLines = 0
                     descripDetail.text = jobModel!.description
+                    descripDetail.frame.size.height = calculateHeight((jobModel?.description)!, size: 14, width: WIDTH-20)
                     cell1.addSubview(positionDescript)
                     cell1.addSubview(descripDetail)
                 }else if indexPath.row == 7 {
@@ -569,55 +576,87 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             return
         }
         
-        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要向 \(model.name) 发送邀请吗？", comment: "empty message"), preferredStyle: .Alert)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        let inviteHud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        inviteHud.labelText = "正在获取邀请状态"
+        inviteHud.removeFromSuperViewOnHide = true
+        inviteHud.margin = 10.0
         
-        let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (cancelAction) in
+        jobHelper.InviteJob_judge(model.userid, companyid: QCLoginUserInfo.currentInfo.userid, jobid: model.id) { (success, response) in
             
-            let url = PARK_URL_Header+"InviteJob"
-            let param = [
-                "userid":model.userid,
-                "jobid":model.id,
-                "companyid":QCLoginUserInfo.currentInfo.userid
-            ]
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                print(request)
-                if(error != nil){
+            if success {
+                inviteHud.hide(true)
+                if String(response!) == "1" {
                     
+                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已邀请过 \(model.name) 面试该职位，无需再次邀请", comment: "empty message"), preferredStyle: .Alert)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                    let doneAction = UIAlertAction(title: "好的", style: .Default, handler: nil)
+                    alertController.addAction(doneAction)
                 }else{
-                    let result = Http(JSONDecoder(json!))
-                    if(result.status == "success"){
-                        //  菊花加载
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "发送邀请成功"
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
-                        print(111111)
-                    }else{
-                        //  菊花加载
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "发送邀请失败"
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
-                        print(2222222)
-                    }
+                    
+                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要向 \(model.name) 发送邀请吗？", comment: "empty message"), preferredStyle: .Alert)
+                    self.presentViewController(alertController, animated: true, completion: nil)
+                    
+                    let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (cancelAction) in
+                        
+                        let sendInviteHud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        sendInviteHud.labelText = "正在发送邀请"
+                        sendInviteHud.removeFromSuperViewOnHide = true
+                        sendInviteHud.margin = 10.0
+                        
+                        let url = PARK_URL_Header+"InviteJob"
+                        let param = [
+                            "userid":model.userid,
+                            "jobid":model.id,
+                            "companyid":QCLoginUserInfo.currentInfo.userid
+                        ]
+                        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                            print(request)
+                            if(error != nil){
+                                sendInviteHud.mode = MBProgressHUDMode.Text;
+                                sendInviteHud.labelText = "发送邀请失败 \(error?.domain)"
+                                sendInviteHud.hide(true, afterDelay: 1)
+                            }else{
+                                let result = Http(JSONDecoder(json!))
+                                if(result.status == "success"){
+                                    //  菊花加载
+//                                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                                    sendInviteHud.mode = MBProgressHUDMode.Text;
+                                    sendInviteHud.labelText = "发送邀请成功"
+//                                    hud.margin = 10.0
+//                                    hud.removeFromSuperViewOnHide = true
+                                    sendInviteHud.hide(true, afterDelay: 1)
+                                    print(111111)
+                                }else{
+                                    //  菊花加载
+//                                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                                    sendInviteHud.mode = MBProgressHUDMode.Text;
+                                    sendInviteHud.labelText = "发送邀请失败"
+//                                    hud.margin = 10.0
+//                                    hud.removeFromSuperViewOnHide = true
+                                    sendInviteHud.hide(true, afterDelay: 1)
+                                    print(2222222)
+                                }
+                            }
+                        }
+                        
+                    })
+                    alertController.addAction(doneAction)
+                    
+                    let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
+                        return
+                    })
+                    alertController.addAction(cancelAction)
                 }
+            }else{
+                inviteHud.mode = MBProgressHUDMode.Text
+                inviteHud.labelText = "获取邀请状态失败"
+                inviteHud.hide(true, afterDelay: 1)
             }
-            
-        })
-        alertController.addAction(doneAction)
+        }
         
-        let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
-            return
-        })
-        alertController.addAction(cancelAction)
     }
     
-    // MARK:投递简历
+    // MARK: 投递简历
     func resumeOnline(btn:UIButton) {
         
         // MARK:要求登录
@@ -625,76 +664,113 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             return
         }
         
+        let resumeHud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        resumeHud.labelText = "正在获取简历信息"
+        resumeHud.removeFromSuperViewOnHide = true
+        resumeHud.margin = 10.0
+        
         jobHelper.getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
             if success {
-                print("投递简历")
-                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
-                self.presentViewController(alertController, animated: true, completion: nil)
-
-                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
-                    let url = PARK_URL_Header+"ApplyJob"
-                    let param = [
-                        "userid":QCLoginUserInfo.currentInfo.userid,
-                        "jobid":self.jobDataSource![btn.tag].id,
-                        "companyid":self.jobDataSource![btn.tag].companyid
-                    ]
-                    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                        print(request)
-                        if(error != nil){
-                            
-                        }else{
-                            let result = Http(JSONDecoder(json!))
-                            if(result.status == "success"){
-                                //  菊花加载
-                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                hud.mode = MBProgressHUDMode.Text;
-                                hud.labelText = "投递简历成功"
-                                hud.margin = 10.0
-                                hud.removeFromSuperViewOnHide = true
-                                hud.hide(true, afterDelay: 1)
-                                print(111111)
-                            }else{
-                                //  菊花加载
-                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                hud.mode = MBProgressHUDMode.Text;
-                                hud.labelText = "投递简历失败"
-                                hud.margin = 10.0
-                                hud.removeFromSuperViewOnHide = true
-                                hud.hide(true, afterDelay: 1)
-                                print(2222222)
-                            }
-                        }
-                    }
-                    
-
-                })
-                alertController.addAction(doneAction)
                 
-                let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
-                    return
+                // 判断是否已投递简历
+                resumeHud.labelText = "正在获取简历投递状态"
+                
+                self.jobHelper.ApplyJob_judge(QCLoginUserInfo.currentInfo.userid, companyid: self.jobDataSource![btn.tag].companyid, jobid: self.jobDataSource![btn.tag].id, handle: { (success, response) in
+                    if success {
+                        resumeHud.hide(true)
+                        if String(response!) == "1" {
+                            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已投递过该职位，无需再次投递", comment: "empty message"), preferredStyle: .Alert)
+                            self.presentViewController(alertController, animated: true, completion: nil)
+                            let doneAction = UIAlertAction(title: "好的", style: .Default, handler: nil)
+                            alertController.addAction(doneAction)
+                        }else{
+                            
+                            print("投递简历")
+                            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
+                            self.presentViewController(alertController, animated: true, completion: nil)
+                            
+                            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
+                                
+                                let applyJobHud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                                applyJobHud.labelText = "正在投递简历"
+                                applyJobHud.removeFromSuperViewOnHide = true
+                                applyJobHud.margin = 10.0
+                                
+                                let url = PARK_URL_Header+"ApplyJob"
+                                let param = [
+                                    "userid":QCLoginUserInfo.currentInfo.userid,
+                                    "jobid":self.jobDataSource![btn.tag].id,
+                                    "companyid":self.jobDataSource![btn.tag].companyid
+                                ]
+                                Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                                    print(request)
+                                    if(error != nil){
+                                        
+                                    }else{
+                                        let result = Http(JSONDecoder(json!))
+                                        if(result.status == "success"){
+                                            //  菊花加载
+//                                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                                            applyJobHud.mode = MBProgressHUDMode.Text;
+                                            applyJobHud.labelText = "投递简历成功"
+//                                            hud.margin = 10.0
+//                                            hud.removeFromSuperViewOnHide = true
+                                            applyJobHud.hide(true, afterDelay: 1)
+                                            print(111111)
+                                        }else{
+                                            //  菊花加载
+//                                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                                            applyJobHud.mode = MBProgressHUDMode.Text;
+                                            applyJobHud.labelText = "投递简历失败"
+//                                            hud.margin = 10.0
+//                                            hud.removeFromSuperViewOnHide = true
+                                            applyJobHud.hide(true, afterDelay: 1)
+                                            print(2222222)
+                                        }
+                                    }
+                                }
+                                
+                                
+                            })
+                            alertController.addAction(doneAction)
+                            
+                            let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
+                                return
+                            })
+                            alertController.addAction(cancelAction)
+                        }
+                    }else{
+                        resumeHud.mode = MBProgressHUDMode.Text
+                        resumeHud.labelText = "获取简历投递状态失败"
+                        resumeHud.hide(true, afterDelay: 1)
+                    }
                 })
-                alertController.addAction(cancelAction)
                 
                
             }else{
-                
-                dispatch_async(dispatch_get_main_queue(), { 
+                if String(response!) == "no data" {
                     
-                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您还没有简历，请上传简历后投递？", comment: "empty message"), preferredStyle: .Alert)
-                    self.presentViewController(alertController, animated: true, completion: nil)
-                    let doneAction = UIAlertAction(title: "现在就去", style: .Default, handler: { (action) in
-                        self.postedTheView()
-                    })
-                    alertController.addAction(doneAction)
-                    
-                    let cancelAction = UIAlertAction(title: "先不投了", style: .Cancel, handler: { (action) in
+                    dispatch_async(dispatch_get_main_queue(), {
+                        resumeHud.hide(true)
+                        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您还没有简历，请上传简历后投递？", comment: "empty message"), preferredStyle: .Alert)
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                        let doneAction = UIAlertAction(title: "现在就去", style: .Default, handler: { (action) in
+                            self.postedTheView()
+                        })
+                        alertController.addAction(doneAction)
                         
+                        let cancelAction = UIAlertAction(title: "先不投了", style: .Cancel, handler: { (action) in
+                            
+                        })
+                        alertController.addAction(cancelAction)
                     })
-                    alertController.addAction(cancelAction)
-                })
+                }else{
+                    resumeHud.mode = MBProgressHUDMode.Text
+                    resumeHud.labelText = "获取简历信息失败"
+                    resumeHud.hide(true, afterDelay: 1)
+                }
             }
         }
-        
     }
     
     func postedTheView() {
@@ -845,11 +921,20 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     func saveResumeBtnClicked(){
         rightBarButtonClicked()
     }
-    //    图片点击事件
+    // MARK:图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
+        
+        for (_,jobModel) in self.jobDataSource!.enumerate() {
+            print(imageArr[imageView.tag-1].url)
+            if jobModel.id == imageArr[imageView.tag-1].url {
+                
+                self.currentJobModel = jobModel
+                self.makeEmploymentMessage()
+            }
+        }
     }
     
     func pageNext() {

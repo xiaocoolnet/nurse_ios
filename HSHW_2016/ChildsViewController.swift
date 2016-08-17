@@ -270,7 +270,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                 let address = UILabel(frame: CGRectMake(170,10,70,25))
                 address.font = UIFont.boldSystemFontOfSize(15)
                 address.text = "工作地点:"
-                let addressLabel = UILabel(frame: CGRectMake(240,10,75,25))
+                let addressLabel = UILabel(frame: CGRectMake(240,10,WIDTH-240,25))
                 addressLabel.font = UIFont.systemFontOfSize(14)
                 addressLabel.text = jobModel!.address
                 cell1.addSubview(criteria)
@@ -287,7 +287,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                 let address = UILabel(frame: CGRectMake(170,10,70,25))
                 address.font = UIFont.boldSystemFontOfSize(15)
                 address.text = "福利待遇:"
-                let addressLabel = UILabel(frame: CGRectMake(240,10,75,25))
+                let addressLabel = UILabel(frame: CGRectMake(240,10,WIDTH-240,25))
                 addressLabel.font = UIFont.systemFontOfSize(14)
                 addressLabel.text = jobModel!.welfare
                 cell1.addSubview(criteria)

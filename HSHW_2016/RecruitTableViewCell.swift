@@ -37,7 +37,11 @@ class RecruitTableViewCell: UITableViewCell {
     }
     
     func showforJobModel(model:JobModel){
-        titImg.image = UIImage(named: "2")
+        if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || model.photo == "" {
+            titImg.image = UIImage.init(named: "img_head_nor")
+        }else{
+            titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.photo), placeholderImage: UIImage.init(named: "img_head_nor"))
+        }
         title.text = model.title
         name.text = model.companyname
         location.text = model.address
@@ -63,10 +67,10 @@ class RecruitTableViewCell: UITableViewCell {
     }
     
     func showforCVModel(model:CVModel){
-        if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+        if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || model.avatar == "" {
             titImg.image = UIImage.init(named: "img_head_nor")
         }else{
-            titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))
+            titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))
         }
 //        titImg.sd_setImageWithURL(NSURL(string:SHOW_IMAGE_HEADER + model.avatar),placeholderImage: UIImage(named: "1"))
         title.text = model.name

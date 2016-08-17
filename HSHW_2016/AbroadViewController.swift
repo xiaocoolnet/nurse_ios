@@ -26,6 +26,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     let countryArr:[String] = ["ic_eng.png","ic_canada.png","ic_germany.png","ic_australia.png","ic_meiguo.png","ic_guo.png","ic_guotwo.png","ic_flag_japan.png"]
     let nameArr:[String] = ["美国","加拿大","德国","芬兰","澳洲","新加坡","沙特","日本"]
     var titArr:[String] = Array<String>()
+    var imageArr = Array<PhotoInfo>()
     var country = Int()
     var requestHelper = NewsPageHelper()
     
@@ -89,11 +90,11 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             
             
-            self.requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+            self.requestHelper.getSlideImages("7") { [unowned self] (success, response) in
                 if success {
                     print(response)
-                    let imageArr = response as! Array<PhotoInfo>
-                    for imageInfo in imageArr {
+                    self.imageArr = response as! Array<PhotoInfo>
+                    for imageInfo in self.imageArr {
                         self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
                         self.titArr.append(imageInfo.name)
                         dispatch_async(dispatch_get_main_queue(), {
@@ -218,12 +219,16 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         }else{
             let newsInfo = self.dataSource.objectlist[indexPath.row]
             
-            let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
-            
             if newsInfo.thumbArr.count >= 3 {
+                
+                let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-20)
+                
                 let margin:CGFloat = 15
                 return (WIDTH-20-margin*2)/3.0*2/3.0+19+height+27+4
             }else{
+                
+                let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
+                
                 if height+27>100 {
                     return height+27+4
                 }else{
@@ -373,11 +378,25 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    //    图片点击事件
+    // MARK:图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
+        
+        for (i,newsInfo) in self.dataSource.objectlist.enumerate() {
+            print(imageArr[imageView.tag-1].url)
+            if newsInfo.object_id == imageArr[imageView.tag-1].url {
+                
+                let next = NewsContantViewController()
+                next.newsInfo = newsInfo
+                next.index = i
+                next.navTitle = newsInfo.term_name
+                next.delegate = self
+                
+                self.navigationController?.pushViewController(next, animated: true)
+            }
+        }
     }
     
     func scroll(){

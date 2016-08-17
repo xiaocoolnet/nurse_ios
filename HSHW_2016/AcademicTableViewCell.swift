@@ -78,14 +78,19 @@ class AcademicTableViewCell: UITableViewCell {
     var newsInfo:NewsInfo?{
         didSet {
             aca_zan.selected = false
-            let photoUrl:String = DomainName+newsInfo!.thumb!
-            print(photoUrl)
-            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-                titImage.image = UIImage.init(named: "defaultImage.png")
+            if (newsInfo?.thumbArr.count > 0) {
+                
+                let photoUrl:String = DomainName+"data/upload/"+(newsInfo!.thumbArr.first?.url)!
+                print(photoUrl)
+                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                    titImage.image = UIImage.init(named: "defaultImage.png")
+                }else{
+                    titImage.sd_setImageWithURL(NSURL.init(string: photoUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
+                }
+                //            titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
             }else{
-                titImage.sd_setImageWithURL(NSURL.init(string: photoUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
+                titImage.image = UIImage.init(named: "defaultImage.png")
             }
-//            titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
             titLab.text = newsInfo!.post_title
             //        cell.conNum.text = newsInfo.recommended
             let time:Array = (newsInfo!.post_date?.componentsSeparatedByString(" "))!

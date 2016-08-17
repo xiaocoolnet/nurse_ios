@@ -39,7 +39,7 @@ class QuestionTableViewCell: UITableViewCell {
         conNum.textColor = UIColor.grayColor()
         let conImage = UIButton(frame: CGRectMake(WIDTH-60, 43, 10, 10))
 //        conImage.setImage(UIImage(named: "ic_collect_sel.png"), forState: .Normal)
-        conImage.setBackgroundImage(UIImage(named: "ic_collect_sel.png"), forState: .Normal)
+        conImage.setBackgroundImage(UIImage(named: "ic_like_sel.png"), forState: .Normal)
         zanNum.frame = CGRectMake(WIDTH-40, 40, 35, 17)
         zanNum.font = UIFont.systemFontOfSize(15)
         zanNum.textColor = UIColor.grayColor()

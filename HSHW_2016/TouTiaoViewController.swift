@@ -29,6 +29,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var requestManager:AFHTTPSessionManager?
     var newsType:Int?
     var titArr:[String] = Array<String>()
+    var imageArr = Array<PhotoInfo>()
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -77,11 +78,12 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     
     func loadData() {
-        requestHelper.getSlideImages("3") { [unowned self] (success, response) in
+        let slideTypeId = Int(newsId)!-1
+        requestHelper.getSlideImages(String(slideTypeId)) { [unowned self] (success, response) in
             if success {
                 print(response)
-                let imageArr = response as! Array<PhotoInfo>
-                for imageInfo in imageArr {
+                self.imageArr = response as! Array<PhotoInfo>
+                for imageInfo in self.imageArr {
                     self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
                     self.titArr.append(imageInfo.name)
                     //                    self.titArr.append(imageInfo)
@@ -209,11 +211,25 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
             })
        }
     }
-    //    图片点击事件
+    // MARK: 图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
+        
+        for (i,newsInfo) in self.dataSource.objectlist.enumerate() {
+            print(imageArr[imageView.tag-1].url)
+            if newsInfo.object_id == imageArr[imageView.tag-1].url {
+
+                let next = NewsContantViewController()
+                next.newsInfo = newsInfo
+                next.index = i
+                next.navTitle = newsInfo.term_name
+                next.delegate = self
+                
+                self.navigationController?.pushViewController(next, animated: true)
+            }
+        }
     }
     
     func scroll(){
@@ -259,13 +275,19 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
 //        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
 //        let screenBounds:CGRect = UIScreen.mainScreen().bounds
 //        let boundingRect = String(newsInfo.post_title).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-        let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
+//        let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
 //        print(boundingRect.height)
         
         if newsInfo.thumbArr.count >= 3 {
+            
+            let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-20)
+
             let margin:CGFloat = 15
             return (WIDTH-20-margin*2)/3.0*2/3.0+19+height+27+4
         }else{
+            
+            let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
+            
             if height+27>100 {
                 return height+27+4
             }else{

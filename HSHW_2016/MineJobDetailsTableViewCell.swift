@@ -77,7 +77,7 @@ class MineJobDetailsTableViewCell: UITableViewCell {
         address.frame = CGRectMake(170,10,70,25)
         address.font = UIFont.boldSystemFontOfSize(15)
 //        address.text = "工作地点:"
-        addressLabel.frame = CGRectMake(240,10,75,25)
+        addressLabel.frame = CGRectMake(240,10,WIDTH-240,25)
         addressLabel.font = UIFont.systemFontOfSize(14)
         
         criteri.frame = CGRectMake(10,10,70,25)
@@ -88,7 +88,7 @@ class MineJobDetailsTableViewCell: UITableViewCell {
         addres.frame = CGRectMake(170,10,70,25)
         addres.font = UIFont.boldSystemFontOfSize(15)
 //        addres.text = "福利待遇:"
-        addresLabel.frame = CGRectMake(240,10,75,25)
+        addresLabel.frame = CGRectMake(240,10,WIDTH-240,25)
         addresLabel.font = UIFont.systemFontOfSize(14)
 
         positionDescript.frame = CGRectMake(10,10,100,25)

@@ -35,22 +35,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/RecruitmentViewController.swift"
-            timestampString = "492951385.444322"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "289"
-            endingLineNumber = "289"
-            landmarkName = "makeEmploymentMessage()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "HSHW_2016/OnLineViewController.swift"
             timestampString = "492594156.373651"
             startingColumnNumber = "9223372036854775807"
@@ -68,12 +52,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/OnLineViewController.swift"
-                  timestampString = "493036353.115537"
+                  timestampString = "493120518.929401"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1058"
                   endingLineNumber = "1058"
-                  offsetFromSymbolStart = "4984">
+                  offsetFromSymbolStart = "4472">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -83,12 +67,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/OnLineViewController.swift"
-                  timestampString = "493036353.115673"
+                  timestampString = "493120518.929524"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1060"
                   endingLineNumber = "1060"
-                  offsetFromSymbolStart = "32">
+                  offsetFromSymbolStart = "51">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -116,12 +100,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/WordViewController.swift"
-                  timestampString = "493036353.116446"
+                  timestampString = "493120518.930465"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "861"
                   endingLineNumber = "861"
-                  offsetFromSymbolStart = "4944">
+                  offsetFromSymbolStart = "4434">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -131,12 +115,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/WordViewController.swift"
-                  timestampString = "493036353.11657"
+                  timestampString = "493120518.930591"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "862"
                   endingLineNumber = "862"
-                  offsetFromSymbolStart = "32">
+                  offsetFromSymbolStart = "51">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -164,12 +148,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/OnlineExaminationViewController.swift"
-                  timestampString = "493036353.117409"
+                  timestampString = "493120518.932999"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "858"
                   endingLineNumber = "858"
-                  offsetFromSymbolStart = "2224">
+                  offsetFromSymbolStart = "2364">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -179,12 +163,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/OnlineExaminationViewController.swift"
-                  timestampString = "493036353.11754"
+                  timestampString = "493120518.933259"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "859"
                   endingLineNumber = "859"
-                  offsetFromSymbolStart = "28">
+                  offsetFromSymbolStart = "47">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -212,12 +196,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/GOnlineExamViewController.swift"
-                  timestampString = "493036353.118359"
+                  timestampString = "493120518.935014"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "882"
                   endingLineNumber = "882"
-                  offsetFromSymbolStart = "2264">
+                  offsetFromSymbolStart = "2402">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -227,12 +211,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/GOnlineExamViewController.swift"
-                  timestampString = "493036353.118476"
+                  timestampString = "493120518.93527"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "883"
                   endingLineNumber = "883"
-                  offsetFromSymbolStart = "28">
+                  offsetFromSymbolStart = "47">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -260,11 +244,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/GToutiaoTableViewCell.swift"
-            timestampString = "492951385.444322"
+            timestampString = "493096871.50696"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "192"
-            endingLineNumber = "192"
+            startingLineNumber = "217"
+            endingLineNumber = "217"
             landmarkName = "setCellWithNewsInfo(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -356,12 +340,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/HSPostResumeView.swift"
-                  timestampString = "493036353.123104"
+                  timestampString = "493120518.940103"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1109"
                   endingLineNumber = "1109"
-                  offsetFromSymbolStart = "1680">
+                  offsetFromSymbolStart = "1468">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -371,12 +355,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/HSPostResumeView.swift"
-                  timestampString = "493036353.123238"
+                  timestampString = "493120518.940225"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1112"
                   endingLineNumber = "1112"
-                  offsetFromSymbolStart = "28">
+                  offsetFromSymbolStart = "27">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -404,12 +388,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/HSPostResumeView.swift"
-                  timestampString = "493036353.124019"
+                  timestampString = "493120518.94105"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1132"
                   endingLineNumber = "1132"
-                  offsetFromSymbolStart = "20">
+                  offsetFromSymbolStart = "19">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -419,12 +403,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/HSPostResumeView.swift"
-                  timestampString = "493036353.124293"
+                  timestampString = "493120518.941174"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1136"
                   endingLineNumber = "1136"
-                  offsetFromSymbolStart = "16">
+                  offsetFromSymbolStart = "22">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -452,12 +436,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/HSPostResumeView.swift"
-                  timestampString = "493036353.126355"
+                  timestampString = "493120518.942123"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1132"
                   endingLineNumber = "1132"
-                  offsetFromSymbolStart = "20">
+                  offsetFromSymbolStart = "19">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -467,12 +451,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/HSPostResumeView.swift"
-                  timestampString = "493036353.126488"
+                  timestampString = "493120518.942252"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "1136"
                   endingLineNumber = "1136"
-                  offsetFromSymbolStart = "16">
+                  offsetFromSymbolStart = "22">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -484,11 +468,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/NewsContantViewController.swift"
-            timestampString = "493035816.844529"
+            timestampString = "493098040.907878"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "576"
-            endingLineNumber = "576"
+            startingLineNumber = "580"
+            endingLineNumber = "580"
             landmarkName = "shareTheNews(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -500,11 +484,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/NewsContantViewController.swift"
-            timestampString = "493032387.534213"
+            timestampString = "493098040.907878"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "571"
-            endingLineNumber = "571"
+            startingLineNumber = "575"
+            endingLineNumber = "575"
             landmarkName = "shareTheNews(_:)"
             landmarkType = "5">
             <Locations>
@@ -516,12 +500,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/NewsContantViewController.swift"
-                  timestampString = "493036353.127934"
+                  timestampString = "493120518.943621"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "571"
-                  endingLineNumber = "571"
-                  offsetFromSymbolStart = "1488">
+                  startingLineNumber = "575"
+                  endingLineNumber = "575"
+                  offsetFromSymbolStart = "1398">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -531,12 +515,12 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Documents/nurse_ios/HSHW_2016/NewsContantViewController.swift"
-                  timestampString = "493036353.128063"
+                  timestampString = "493120518.943738"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "571"
-                  endingLineNumber = "571"
-                  offsetFromSymbolStart = "13276">
+                  startingLineNumber = "575"
+                  endingLineNumber = "575"
+                  offsetFromSymbolStart = "12706">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -548,11 +532,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/NewsContantViewController.swift"
-            timestampString = "493035851.597366"
+            timestampString = "493098040.907878"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "627"
-            endingLineNumber = "627"
+            startingLineNumber = "631"
+            endingLineNumber = "631"
             landmarkName = "shareTheNews(_:)"
             landmarkType = "5">
          </BreakpointContent>

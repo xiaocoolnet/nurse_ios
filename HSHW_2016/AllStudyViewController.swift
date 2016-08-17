@@ -50,12 +50,16 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let newsInfo = newsList![indexPath.row]
         
-        let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
-        
         if newsInfo.thumbArr.count >= 3 {
+            
+            let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-20)
+            
             let margin:CGFloat = 15
             return (WIDTH-20-margin*2)/3.0*2/3.0+19+height+27+4
         }else{
+            
+            let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
+            
             if height+27>100 {
                 return height+27+4
             }else{

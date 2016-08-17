@@ -100,6 +100,56 @@ class HSNurseStationHelper: NSObject {
         }
     }
     
+    // 判断是否已投递
+    func ApplyJob_judge(userid:String, companyid:String, jobid:String, handle:ResponseBlock){
+        let url = PARK_URL_Header+"ApplyJob_judge"
+        let param = [
+            "userid":userid,
+            "companyid":companyid,
+            "jobid":jobid
+        ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = Http(JSONDecoder(json!))
+                print("状态是")
+                print(result.status)
+                if(result.status == "success"){
+                    handle(success: true, response: result.data)
+                }else{
+                    handle(success: false, response: result.errorData)
+                }
+            }
+        }
+    }
+    
+    // 判断是否已邀请
+    func InviteJob_judge(userid:String, companyid:String, jobid:String, handle:ResponseBlock){
+        let url = PARK_URL_Header+"InviteJob_judge"
+        let param = [
+            "userid":userid,
+            "companyid":companyid,
+            "jobid":jobid
+        ]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = Http(JSONDecoder(json!))
+                print("状态是")
+                print(result.status)
+                if(result.status == "success"){
+                    handle(success: true, response: result.data)
+                }else{
+                    handle(success: false, response: result.errorData)
+                }
+            }
+        }
+    }
+    
     //获取资讯文章列表
     func getArticleListWithID(articleid:String,handle:ResponseBlock){
         let url = PARK_URL_Header+"getNewslist"

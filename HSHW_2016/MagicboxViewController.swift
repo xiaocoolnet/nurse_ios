@@ -11,7 +11,7 @@ import UIKit
 class MagicboxViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     var myTableView = UITableView()
-    let nameArr:[String] = ["在线翻译","汇率查询","时差查询","学历认证","天气查询","地图查询","机票查询","酒店预订","签证查询"]
+    let nameArr:[String] = ["在线翻译","汇率查询","时差查询","学历认证","天气查询","地图查询","机票查询","酒店预订"]
     let picArr:[String] = ["ic_translate.png","ic_huilv.png","ic_shicha.png","ic_xueli.png","ic_weather.png","ic_map.png","ic_jipiao.png","ic_jiudian.png","ic_qianzhen.png"]
     
     
@@ -37,7 +37,8 @@ class MagicboxViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 1 {
-            return WIDTH*281/375
+//            return WIDTH*281/375
+            return WIDTH*281/3*2/375
         }else{
             return WIDTH*140/375
         }
@@ -47,16 +48,16 @@ class MagicboxViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.selectionStyle = .None
         
         if indexPath.row == 1 {
-            for i in 0...8 {
-                let line = UILabel(frame: CGRectMake(0, WIDTH*281/3*CGFloat(i%4)/375, WIDTH, 0.5))
+            for i in 0...7 {
+                let line = UILabel(frame: CGRectMake(0, WIDTH*281/3*CGFloat(i%3)/375, WIDTH, 0.5))
                 line.backgroundColor = UIColor.grayColor()
                 cell.addSubview(line)
                 let linel = UILabel(frame: CGRectMake(WIDTH/4*CGFloat(i), 0, 0.5, WIDTH*281/3*2/375))
                 linel.backgroundColor = UIColor.grayColor()
                 cell.addSubview(linel)
-                let lineS = UILabel(frame: CGRectMake(WIDTH/4, WIDTH*281/3*2/375, 0.5, WIDTH*281/3/375))
-                lineS.backgroundColor = UIColor.grayColor()
-                cell.addSubview(lineS)
+//                let lineS = UILabel(frame: CGRectMake(WIDTH/4, WIDTH*281/3*2/375, 0.5, WIDTH*281/3/375))
+//                lineS.backgroundColor = UIColor.grayColor()
+//                cell.addSubview(lineS)
 
                 let name = UILabel(frame: CGRectMake(WIDTH/4*CGFloat(i%4), WIDTH*(62+94*CGFloat(i/4))/375, WIDTH/4, 15))
                 name.font = UIFont.systemFontOfSize(12)
@@ -118,7 +119,7 @@ class MagicboxViewController: UIViewController,UITableViewDelegate,UITableViewDa
             vc.url = NSURL(string: "http://flight.qunar.com")
             vc.title = "机票查询"
         }else if btn.tag == 7{
-            vc.url = NSURL(string: "http://baidu.com")
+            vc.url = NSURL(string: "http://m.ctrip.com/html5/")
             vc.title = "酒店"
         }else if btn.tag == 8{
             vc.url = NSURL(string: "http://baidu.com")
