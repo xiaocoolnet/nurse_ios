@@ -55,7 +55,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         super.viewDidLoad()
         self.view.backgroundColor = COLOR
         
-        myTableView.frame = CGRectMake(0, -20, WIDTH, HEIGHT)
+        myTableView.frame = CGRectMake(0, -20, WIDTH, HEIGHT+20)
 //        myTableView.bounces = false
         myTableView.backgroundColor = RGREY
         myTableView.delegate = self
@@ -153,6 +153,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.isLike = false
                     dispatch_async(dispatch_get_main_queue(), {
                         self.signLab.text = "每日签到"
+//                        print(status.errorData)
                     })
                 }
                 if(status.status == "success"){
@@ -441,11 +442,17 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let next = FansViewController()
             next.userType = 0
             self.navigationController?.pushViewController(next, animated: true)
-        }
-        if btn.tag == 2 {
+        }else if btn.tag == 2 {
             let next = FansViewController()
             next.userType = 1
             self.navigationController?.pushViewController(next, animated: true)
+        }else if btn.tag == 3 {
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = MBProgressHUDMode.Text
+            hud.labelText = "敬请期待"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 1)
         }
     }
 
@@ -528,7 +535,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         // 创建一个日期格式器
         let dformatter = NSDateFormatter()
-        dformatter.dateFormat = "yyyy年MM月dd日 HH:mm:ss"
+        dformatter.dateFormat = "yyyy年MM月dd日"
         print("当前日期时间：\(dformatter.stringFromDate(now))")
         
         //当前时间的时间戳

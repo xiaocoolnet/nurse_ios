@@ -15,18 +15,17 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     var myTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-//  var picArr = NSArray()
-    var picArr = Array<String>()
+//    var picArr = Array<String>()
     var timer = NSTimer()
     var times = Int()
     //  请求认证id
     var channelid = Int()
     //  初始化数据源
-    var dataSource = NewsList()
+    var dataSource = Array<NewsInfo>()
     let countryArr:[String] = ["ic_eng.png","ic_canada.png","ic_germany.png","ic_australia.png","ic_meiguo.png","ic_guo.png","ic_guotwo.png","ic_flag_japan.png"]
     let nameArr:[String] = ["美国","加拿大","德国","芬兰","澳洲","新加坡","沙特","日本"]
-    var titArr:[String] = Array<String>()
-    var imageArr = Array<PhotoInfo>()
+//    var titArr:[String] = Array<String>()
+    var imageArr = Array<NewsInfo>()
     var country = Int()
     var requestHelper = NewsPageHelper()
     
@@ -59,82 +58,145 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     
+//    func updateSlideImage(){
+//        for i in 1...4 {
+//            let imgView = scrollView.viewWithTag(i) as! UIImageView
+//            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+//                imgView.image = UIImage.init(named: "defaultImage.png")
+//            }else{
+//                imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+//            }
+//            //            print(picArr)
+//            for lab in imgView.subviews {
+//                if lab.tag == imgView.tag {
+//                    let titLab = lab.viewWithTag(i) as? UILabel
+//                    titLab!.text = titArr[i-1]
+//                }
+//            }
+//        }
+//    }
+    
     func updateSlideImage(){
-        for i in 1...4 {
-            let imgView = scrollView.viewWithTag(i) as! UIImageView
-            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-                imgView.image = UIImage.init(named: "defaultImage.png")
-            }else{
-                imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
-            }
-            //            print(picArr)
-            for lab in imgView.subviews {
-                if lab.tag == imgView.tag {
-                    let titLab = lab.viewWithTag(i) as? UILabel
-                    titLab!.text = titArr[i-1]
-                }
+        
+        for subView in self.scrollView.subviews {
+            if subView.isKindOfClass(UIImageView) {
+                subView.removeFromSuperview()
             }
         }
+        
+        for (i,slideImage) in self.imageArr.enumerate() {
+            
+            let  imageView = UIImageView()
+            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
+            imageView.tag = i+1
+            if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || slideImage.thumbArr.count == 0 {
+                imageView.image = UIImage.init(named: "defaultImage.png")
+            }else{
+                imageView.sd_setImageWithURL(NSURL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
+            }
+            
+            let bottom = UIView(frame: CGRectMake(0, WIDTH*190/375-25, WIDTH, 25))
+            bottom.backgroundColor = UIColor.grayColor()
+            bottom.alpha = 0.5
+            imageView.addSubview(bottom)
+            
+            let titLab = UILabel(frame: CGRectMake(10, WIDTH*190/375-25, WIDTH-100, 25))
+            titLab.font = UIFont.systemFontOfSize(14)
+            titLab.textColor = UIColor.whiteColor()
+            titLab.text = slideImage.post_title
+            titLab.tag = i+1
+            imageView.addSubview(titLab)
+            
+            //为图片视图添加点击事件
+            imageView.userInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
+            //            手指头
+            tap.numberOfTapsRequired = 1
+            //            单击
+            tap.numberOfTouchesRequired = 1
+            imageView.addGestureRecognizer(tap)
+            self.scrollView.addSubview(imageView)
+        }
+        
+        scrollView.contentSize = CGSizeMake(CGFloat(self.imageArr.count)*WIDTH, 0)
+        scrollView.contentOffset = CGPointMake(0, 0)
+        
+        pageControl.numberOfPages = self.imageArr.count
+        pageControl.frame = CGRectMake(WIDTH-20*CGFloat(imageArr.count), WIDTH*190/375-25, 20*CGFloat(imageArr.count), 25)
+        pageControl.currentPage = 0
+        
+
     }
     
     //  数据请求
     func GetDate( ){
         
-        let url = PARK_URL_Header+"getNewslist"
+        var flag = 0
         
-        //  请求体
+        HSNurseStationHelper().getArticleListWithID("104") { (success, response) in
+            
+            if success {
+                print(response)
+                self.imageArr = response as! Array<NewsInfo>
+                //                for imageInfo in self.imageArr {
+                //                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                //                    self.titArr.append(imageInfo.name)
+                //                    //                    self.titArr.append(imageInfo)
+                
+                //                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.updateSlideImage()
+                    self.myTableView.reloadData()
+                })
+                
+                flag += 1
+                if flag == 2 {
+                    self.myTableView.mj_header.endRefreshing()
+                }
+            }else{
+                self.myTableView.mj_header.endRefreshing()
+                
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.Text;
+                hud.labelText = "轮播图获取失败"
+                hud.detailsLabelText = String(response!)
+                print(response!)
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 1)
+            }
+        }
         
-        let param = [
-            "channelid":NSString.localizedStringWithFormat("%ld", channelid)
-        ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        HSNurseStationHelper().getArticleListWithID(String(channelid)) { (success, response) in
             
-            
-            self.requestHelper.getSlideImages("7") { [unowned self] (success, response) in
-                if success {
-                    print(response)
-                    self.imageArr = response as! Array<PhotoInfo>
-                    for imageInfo in self.imageArr {
-                        self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-                        self.titArr.append(imageInfo.name)
-                        dispatch_async(dispatch_get_main_queue(), {
-                            self.updateSlideImage()
-                            self.myTableView.reloadData()
-                        })
-                    }
+            if success {
+                print(response)
+                
+                self.dataSource = response as! Array<NewsInfo>
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.updateSlideImage()
+                    self.myTableView.reloadData()
+                })
+                
+                flag += 1
+                if flag == 2 {
+                    self.myTableView.mj_header.endRefreshing()
                 }
                 
-                self.myTableView.mj_header.endRefreshing()
-            }
-            
-            print(request)
-            if(error != nil){
-                print(error)
             }else{
-                let status = NewsModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                    //  菊花加载
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                }
-                if(status.status == "success"){
-                    
-                    //  请求成功
-                    print(status)
-                    //  填充数据源
-                    self.dataSource = NewsList(status.data!)
-                    //  刷新界面
-                    self.myTableView .reloadData()
-                    print(status.data)
-                }
+                self.myTableView.mj_header.endRefreshing()
+                
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.Text;
+                hud.labelText = "文章列表获取失败"
+                hud.detailsLabelText = String(response!)
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 1)
             }
-            
         }
+        
     }
     
     func createTableView1(){
@@ -147,41 +209,21 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*190/375))
         self.view.addSubview(one)
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(AbroadViewController.scroll), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(scroll), userInfo: nil, repeats: true)
         
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*190/375)
+        scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
         scrollView.delegate = self
         
-        for i in 0...3 {
-            let  imageView = UIImageView()
-            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
-            imageView.tag = i+1
-            let bottom = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, WIDTH*190/375-30, WIDTH, 30))
-            bottom.backgroundColor = UIColor.init(white: 0.5, alpha: 0.5)
-//            bottom.alpha = 0.3
-            let titLab = UILabel(frame: CGRectMake(CGFloat(i)*WIDTH+10, WIDTH*190/375-30, WIDTH-100, 30))
-            titLab.font = UIFont.systemFontOfSize(14)
-            titLab.textColor = UIColor.whiteColor()
-            titLab.text = titArr[i]
-            //为图片视图添加点击事件
-            imageView.userInteractionEnabled = true
-            let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
-            //        手指头
-            tap.numberOfTapsRequired = 1
-            //        单击
-            tap.numberOfTouchesRequired = 1
-            imageView.addGestureRecognizer(tap)
-            self.scrollView.addSubview(imageView)
-        }
         scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
         
-        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*190/375-30, 80, 30)
+        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*190/375-25, 80, 25)
         pageControl.pageIndicatorTintColor = UIColor.whiteColor()
         pageControl.currentPageIndicatorTintColor = COLOR
-        pageControl.numberOfPages = 4
+        pageControl.numberOfPages = self.imageArr.count
         pageControl.currentPage = 0
         one.addSubview(pageControl)
         
@@ -217,7 +259,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         if indexPath.section == 0 {
             return WIDTH*160/375
         }else{
-            let newsInfo = self.dataSource.objectlist[indexPath.row]
+            let newsInfo = self.dataSource[indexPath.row]
             
             if newsInfo.thumbArr.count >= 3 {
                 
@@ -336,7 +378,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("Abroad", forIndexPath: indexPath)as!GToutiaoTableViewCell
             cell.delegate = self
-            let newsInfo = self.dataSource.objectlist[indexPath.row]
+            let newsInfo = self.dataSource[indexPath.row]
             if newsInfo.thumbArr.count >= 3 {
                 cell.setThreeImgCellWithNewsInfo(newsInfo)
             }else{
@@ -356,7 +398,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             //  进入详情界面
             let next = NewsContantViewController()
             //  需要传值的内容
-            let newsInfo = self.dataSource.objectlist[indexPath.row]
+            let newsInfo = self.dataSource[indexPath.row]
             //  传值操作
             next.newsInfo = newsInfo
             next.index = indexPath.row
@@ -374,6 +416,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         country = btn.tag
         let vc = TouTiaoViewController()
         vc.newsType = btn.tag
+        // TODO:后期 后台加各个国家幻灯片分类，对应newsId为分类ID+1
+        vc.slideImageId = "104"
         vc.title = nameArr[btn.tag]
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -384,19 +428,11 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
         
-        for (i,newsInfo) in self.dataSource.objectlist.enumerate() {
-            print(imageArr[imageView.tag-1].url)
-            if newsInfo.object_id == imageArr[imageView.tag-1].url {
-                
-                let next = NewsContantViewController()
-                next.newsInfo = newsInfo
-                next.index = i
-                next.navTitle = newsInfo.term_name
-                next.delegate = self
-                
-                self.navigationController?.pushViewController(next, animated: true)
-            }
-        }
+        let next = NewsContantViewController()
+        next.newsInfo = imageArr[imageView.tag-1]
+        next.navTitle = imageArr[imageView.tag-1].term_name
+        
+        self.navigationController?.pushViewController(next, animated: true)
     }
     
     func scroll(){
@@ -412,7 +448,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
         //        timer.fireDate = NSDate.distantPast()
-        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(AbroadViewController.scroll), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(scroll), userInfo: nil, repeats: true)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -439,43 +475,43 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
 //    }
 
     
-    func getData(){
-        
-        let url = PARK_URL_Header+"getNewslist"
+//    func getData(){
+//        
+//        let url = PARK_URL_Header+"getNewslist"
+////        let param = [
+////            "channelid":"17"
+////        ];
+//    
 //        let param = [
-//            "channelid":"17"
-//        ];
-    
-        let param = [
-            "channelid":NSString.localizedStringWithFormat("%ld", country + 17)
-            ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
-            if(error != nil){
-                
-            }else{
-                let status = NewsModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    //hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                }
-                if(status.status == "success"){
-                    print(status)
-                    self.dataSource = NewsList(status.data!)
-                    print(LikeList(status.data!).objectlist)
-                    self.dataSource = NewsList(status.data!)
-                    self.myTableView .reloadData()
-                    print(status.data)
-                }
-            }
-        }
-    }
+//            "channelid":NSString.localizedStringWithFormat("%ld", country + 17)
+//            ]
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+//            print(request)
+//            if(error != nil){
+//                
+//            }else{
+//                let status = NewsModel(JSONDecoder(json!))
+//                print("状态是")
+//                print(status.status)
+//                if(status.status == "error"){
+//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                    hud.mode = MBProgressHUDMode.Text;
+//                    //hud.labelText = status.errorData
+//                    hud.margin = 10.0
+//                    hud.removeFromSuperViewOnHide = true
+//                    hud.hide(true, afterDelay: 1)
+//                }
+//                if(status.status == "success"){
+//                    print(status)
+//                    self.dataSource = NewsList(status.data!)
+//                    print(LikeList(status.data!).objectlist)
+//                    self.dataSource = NewsList(status.data!)
+//                    self.myTableView .reloadData()
+//                    print(status.data)
+//                }
+//            }
+//        }
+//    }
     
     // MARK: 点击分类按钮
     func cateBtnClicked(categoryBtn: UIButton) {
@@ -486,7 +522,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     // MARK:更新模型
     func changeModel(newInfo: NewsInfo, andIndex: Int) {
-        self.dataSource.objectlist[andIndex] = newInfo
+        self.dataSource[andIndex] = newInfo
         self.myTableView.reloadData()
     }
 

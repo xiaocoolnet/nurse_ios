@@ -15,9 +15,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     let employmentMessageTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-    var picArr = Array<String>()
-    var titArr = Array<String>()
-    var imageArr = Array<PhotoInfo>()
+//    var picArr = Array<String>()
+//    var titArr = Array<String>()
+    var imageArr = Array<NewsInfo>()
     var timer = NSTimer()
     var times = Int()
     let employment = UIView()
@@ -86,63 +86,115 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     
     func updateSlideImage(){
-        for i in 1...4 {
-            let imgView = scrollView.viewWithTag(i) as! UIImageView
-            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-                imgView.image = UIImage.init(named: "defaultImage.png")
-            }else{
-                imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]), placeholderImage: UIImage.init(named: "defaultImage.png"))
-            }
-//            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
-            //            print(picArr)
-            for lab in imgView.subviews {
-                if lab.tag == imgView.tag {
-                    let titLab = lab.viewWithTag(i) as? UILabel
-                    titLab!.text = titArr[i-1]
-                }
+        
+        for subView in self.scrollView.subviews {
+            if subView.isKindOfClass(UIImageView) {
+                subView.removeFromSuperview()
             }
         }
+        
+        for (i,slideImage) in self.imageArr.enumerate() {
+            
+            let  imageView = UIImageView()
+            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
+            imageView.tag = i+1
+            if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || slideImage.thumbArr.count == 0 {
+                imageView.image = UIImage.init(named: "defaultImage.png")
+            }else{
+                imageView.sd_setImageWithURL(NSURL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
+            }
+            
+            let bottom = UIView(frame: CGRectMake(0, WIDTH*190/375-25, WIDTH, 25))
+            bottom.backgroundColor = UIColor.grayColor()
+            bottom.alpha = 0.5
+            imageView.addSubview(bottom)
+            
+            let titLab = UILabel(frame: CGRectMake(10, WIDTH*190/375-25, WIDTH-100, 25))
+            titLab.font = UIFont.systemFontOfSize(14)
+            titLab.textColor = UIColor.whiteColor()
+            titLab.text = slideImage.post_title
+            titLab.tag = i+1
+            imageView.addSubview(titLab)
+            
+            //为图片视图添加点击事件
+            imageView.userInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
+            //            手指头
+            tap.numberOfTapsRequired = 1
+            //            单击
+            tap.numberOfTouchesRequired = 1
+            imageView.addGestureRecognizer(tap)
+            self.scrollView.addSubview(imageView)
+        }
+        
+        scrollView.contentSize = CGSizeMake(CGFloat(self.imageArr.count)*WIDTH, 0)
+        scrollView.contentOffset = CGPointMake(0, 0)
+        
+        pageControl.numberOfPages = self.imageArr.count
+        pageControl.frame = CGRectMake(WIDTH-20*CGFloat(imageArr.count), WIDTH*190/375-25, 20*CGFloat(imageArr.count), 25)
+        pageControl.currentPage = 0        
     }
     
     func makeDataSource(){
         if showType == 1 {
-//            var flag = 0
             
+            var flag = 0
             
             jobHelper.getJobList({[unowned self] (success, response) in
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    if !success {
-                        return
-                    }
-                    self.jobDataSource = response as? Array<JobModel> ?? []
-                    self.myTableView.reloadData()
-//                     self.configureUI()
-//                    flag += 1
-//                    if flag == 2 {
-//                        self.myTableView.mj_header.endRefreshing()
-//                    }
+                if success {
                     
-                    self.requestHelper.getSlideImages("2") { [unowned self] (success, response) in
-                        if success {
-                            print(response)
-                            self.imageArr = response as! Array<PhotoInfo>
-                            for imageInfo in self.imageArr {
-                                self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-                                self.titArr.append(imageInfo.name)
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    self.updateSlideImage()
-                                    self.myTableView.reloadData()
-                                })
-                            }
-                        }
-//                        flag += 1
-//                        if flag == 2 {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.jobDataSource = response as? Array<JobModel> ?? []
+                        self.myTableView.reloadData()
+                        
+                    })
+                    
+                    flag += 1
+                    if flag == 2 {
                         self.myTableView.mj_header.endRefreshing()
-//                        }
                     }
-                })
+                }else{
+                    self.myTableView.mj_header.endRefreshing()
+                    
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "文章列表获取失败"
+                    hud.detailsLabelText = String(response!)
+                    print(response!)
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
             })
+            
+            HSNurseStationHelper().getArticleListWithID("104") { (success, response) in
+                
+                if success {
+                    print(response)
+                    self.imageArr = response as! Array<NewsInfo>
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.updateSlideImage()
+                        self.myTableView.reloadData()
+                    })
+                    
+                    flag += 1
+                    if flag == 2 {
+                        self.myTableView.mj_header.endRefreshing()
+                    }
+                }else{
+                    self.myTableView.mj_header.endRefreshing()
+                    
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "轮播图获取失败"
+                    hud.detailsLabelText = String(response!)
+                    print(response!)
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+            }
         } else if showType == 2 {
             jobHelper.getCVList({[unowned self] (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
@@ -193,43 +245,17 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func setSlideView() {
-        let one = UIView(frame: CGRectMake(0, 0.5, WIDTH, WIDTH*190/375))
+        let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*190/375))
         self.view.addSubview(one)
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(RecruitmentViewController.scroll), userInfo: nil, repeats: true)
+        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(scroll), userInfo: nil, repeats: true)
+        
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*190/375)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
         scrollView.delegate = self
+        scrollView.tag = 1000
         
-        for i in 0...3 {
-            
-            let  imageView = UIImageView()
-            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
-            imageView.tag = i+1
-            
-            let bottom = UIView(frame: CGRectMake(0, WIDTH*190/375-25, WIDTH, 25))
-            bottom.backgroundColor = UIColor.grayColor()
-            bottom.alpha = 0.5
-            imageView.addSubview(bottom)
-            
-            let titLab = UILabel(frame: CGRectMake(10, WIDTH*190/375-25, WIDTH-100, 25))
-            titLab.font = UIFont.systemFontOfSize(14)
-            titLab.textColor = UIColor.whiteColor()
-            //            titLab.text = titArr[i]
-            titLab.tag = i+1
-            imageView.addSubview(titLab)
-            
-            //为图片视图添加点击事件
-            imageView.userInteractionEnabled = true
-            let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
-            //            手指头
-            tap.numberOfTapsRequired = 1
-            //            单击
-            tap.numberOfTouchesRequired = 1
-            imageView.addGestureRecognizer(tap)
-            self.scrollView.addSubview(imageView)
-        }
         scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
@@ -237,7 +263,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         pageControl.frame = CGRectMake(WIDTH-80, WIDTH*190/375-25, 80, 25)
         pageControl.pageIndicatorTintColor = UIColor.whiteColor()
         pageControl.currentPageIndicatorTintColor = COLOR
-        pageControl.numberOfPages = 4
+        pageControl.numberOfPages = self.imageArr.count
         pageControl.currentPage = 0
         one.addSubview(pageControl)
         
@@ -921,60 +947,93 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     func saveResumeBtnClicked(){
         rightBarButtonClicked()
     }
+
     // MARK:图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
         
-        for (_,jobModel) in self.jobDataSource!.enumerate() {
-            print(imageArr[imageView.tag-1].url)
-            if jobModel.id == imageArr[imageView.tag-1].url {
-                
-                self.currentJobModel = jobModel
-                self.makeEmploymentMessage()
-            }
-        }
+        let next = NewsContantViewController()
+        next.newsInfo = imageArr[imageView.tag-1]
+        next.navTitle = imageArr[imageView.tag-1].term_name
+        
+        self.navigationController?.pushViewController(next, animated: true)
     }
     
-    func pageNext() {
-        scrollView.contentOffset = CGPointMake(WIDTH*CGFloat(pageControl.currentPage), 0)
-    }
+//    func pageNext() {
+//        scrollView.contentOffset = CGPointMake(WIDTH*CGFloat(pageControl.currentPage), 0)
+//    }
     
     func scroll(){
-        if times == 4 {
-            pageControl.currentPage = 0
+        
+        if self.pageControl.currentPage == self.pageControl.numberOfPages-1 {
+            self.pageControl.currentPage = 0
         }else{
-            pageControl.currentPage = times
+            self.pageControl.currentPage += 1
         }
-        scrollView.setContentOffset(CGPointMake(WIDTH*CGFloat(times), 0), animated: true)
-        times += 1
-        //MARK:注释掉两条输出信息
-//        print("招聘1")
-    }
-    
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-        if times >= 5 {
-            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
-            times = 1
-        }
-//        print("招聘2")
+        let offSetX:CGFloat = CGFloat(self.pageControl.currentPage) * CGFloat(self.scrollView.frame.size.width)
+        scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        var number = Int(scrollView.contentOffset.x/WIDTH)
-        if number == 4 {
-            number = 0
-            pageControl.currentPage = number
-        }else{
-            pageControl.currentPage = number
+        if scrollView.tag == 1000 {
+            pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
+            //        timer.fireDate = NSDate.distantPast()
+            timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
         }
-        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
-
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView.tag == 1000 {
+            var offsetX:CGFloat = self.scrollView.contentOffset.x
+            offsetX = offsetX + (self.scrollView.frame.size.width * 0.5)
+            let page:Int = Int(offsetX)/Int(self.scrollView.frame.size.width)
+            pageControl.currentPage = page
+        }
+    }
+    //开始拖拽时
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         //            timer.fireDate = NSDate.distantFuture()
-        timer.invalidate()
+        if scrollView.tag == 1000 {
+            timer.invalidate()
+        }
     }
+    
+//    func scroll(){
+//        if times == 4 {
+//            pageControl.currentPage = 0
+//        }else{
+//            pageControl.currentPage = times
+//        }
+//        scrollView.setContentOffset(CGPointMake(WIDTH*CGFloat(times), 0), animated: true)
+//        times += 1
+//        //MARK:注释掉两条输出信息
+////        print("招聘1")
+//    }
+//    
+//    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+//        if times >= 5 {
+//            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
+//            times = 1
+//        }
+////        print("招聘2")
+//    }
+//    
+//    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+//        var number = Int(scrollView.contentOffset.x/WIDTH)
+//        if number == 4 {
+//            number = 0
+//            pageControl.currentPage = number
+//        }else{
+//            pageControl.currentPage = number
+//        }
+//        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(scroll), userInfo: nil, repeats: true)
+//
+//    }
+//    
+//    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+//        //            timer.fireDate = NSDate.distantFuture()
+//        timer.invalidate()
+//    }
 }

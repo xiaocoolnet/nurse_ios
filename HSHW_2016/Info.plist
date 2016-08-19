@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleDisplayName</key>
+	<string>中国护士网</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>zh_CN</string>
 	<key>CFBundleExecutable</key>
@@ -36,6 +38,14 @@
 				<string>wb3139633252</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>tencent1105552541</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>2</string>
@@ -51,6 +61,13 @@
 		<string>sinaweibo</string>
 		<string>weixin</string>
 		<string>wechat</string>
+<string>mqqwpa</string>
+    <string>mqqopensdkapiV3</string>
+    <string>wtloginmqq2</string>
+    <string>mqzone</string>
+    <string>mqqopensdkapiV2</string>
+    <string>mqqapi</string>
+    <string>mqq</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

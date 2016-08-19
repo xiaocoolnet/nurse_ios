@@ -8,19 +8,20 @@
 
 import UIKit
 import Alamofire
+import MBProgressHUD
 
 class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate {
     
     var myTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-    var picArr = Array<String>()
-    var titArr = Array<String>()
+//    var picArr = Array<String>()
+//    var titArr = Array<String>()
     var timer = NSTimer()
     var times = Int()
     var requestHelper = NewsPageHelper()
     var newsList = Array<NewsInfo>()
-    var imageArr = Array<PhotoInfo>()
+    var imageArr = Array<NewsInfo>()
     
     
     let titLabArr:[String] = ["每日一练","5万道题库","在线考试"]
@@ -51,19 +52,140 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*188/375))
         self.view.addSubview(one)
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(StudyViewController.scroll), userInfo: nil, repeats: true)
-        timer.fire()
+        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(scroll), userInfo: nil, repeats: true)
         
         scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*188/375)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
         scrollView.delegate = self
         
-        for i in 0...3 {
+        scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
+        scrollView.contentOffset = CGPointMake(0, 0)
+        one.addSubview(scrollView)
+        
+        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*188/375-25, 80, 25)
+        pageControl.pageIndicatorTintColor = UIColor.whiteColor()
+        pageControl.currentPageIndicatorTintColor = COLOR
+        pageControl.numberOfPages = self.imageArr.count
+        pageControl.currentPage = 0
+        one.addSubview(pageControl)
+        
+        myTableView.rowHeight = 60
+        myTableView.tableHeaderView = one
+        
+        // Do any additional setup after loading the view.
+    }
+    
+    func loadData() {
+        
+//        HSNurseStationHelper().getArticleListWithID("10") {[unowned self] (success, response) in
+//            if success {
+//                self.newsList = response as? Array<NewsInfo> ?? []
+//                
+//                self.requestHelper.getSlideImages("6") { [unowned self] (success, response) in
+//                    if success {
+//                        print(response)
+//                        self.imageArr = response as! Array<PhotoInfo>
+////                        for imageInfo in self.imageArr {
+////                            self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+////                            self.titArr.append(imageInfo.name)
+//                            dispatch_async(dispatch_get_main_queue(), {
+//                                self.updateSlideImage()
+//                                self.myTableView.reloadData()
+//                                self.myTableView.mj_header.endRefreshing()
+//                            })
+////                        }
+//                    }
+//                }
+//            }
+//        }
+        
+        
+        var flag = 0
+        
+        HSNurseStationHelper().getArticleListWithID("105") { (success, response) in
+            
+            if success {
+                print(response)
+                self.imageArr = response as! Array<NewsInfo>
+                //                for imageInfo in self.imageArr {
+                //                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                //                    self.titArr.append(imageInfo.name)
+                //                    //                    self.titArr.append(imageInfo)
+                
+                //                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.updateSlideImage()
+                    self.myTableView.reloadData()
+                })
+                
+                flag += 1
+                if flag == 2 {
+                    self.myTableView.mj_header.endRefreshing()
+                }
+            }else{
+                self.myTableView.mj_header.endRefreshing()
+                
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.Text;
+                hud.labelText = "轮播图获取失败"
+                hud.detailsLabelText = String(response!)
+                print(response!)
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 1)
+            }
+        }
+        
+        HSNurseStationHelper().getArticleListWithID("10") { (success, response) in
+            
+            if success {
+                print(response)
+                
+                self.newsList = response as! Array<NewsInfo>
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.updateSlideImage()
+                    self.myTableView.reloadData()
+                })
+                
+                flag += 1
+                if flag == 2 {
+                    self.myTableView.mj_header.endRefreshing()
+                }
+                
+            }else{
+                self.myTableView.mj_header.endRefreshing()
+                
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.Text;
+                hud.labelText = "文章列表获取失败"
+                hud.detailsLabelText = String(response!)
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 1)
+            }
+        }
+    }
+    
+    func updateSlideImage(){
+        
+        for subView in self.scrollView.subviews {
+            if subView.isKindOfClass(UIImageView) {
+                subView.removeFromSuperview()
+            }
+        }
+        
+        for (i,slideImage) in self.imageArr.enumerate() {
             
             let  imageView = UIImageView()
             imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*188/375)
             imageView.tag = i+1
+            if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || slideImage.thumbArr.count == 0 {
+                imageView.image = UIImage.init(named: "defaultImage.png")
+            }else{
+                imageView.sd_setImageWithURL(NSURL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
+            }
             
             let bottom = UIView(frame: CGRectMake(0, WIDTH*188/375-25, WIDTH, 25))
             bottom.backgroundColor = UIColor.grayColor()
@@ -73,7 +195,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             let titLab = UILabel(frame: CGRectMake(10, WIDTH*188/375-25, WIDTH-100, 25))
             titLab.font = UIFont.systemFontOfSize(14)
             titLab.textColor = UIColor.whiteColor()
-            //            titLab.text = titArr[i]
+            titLab.text = slideImage.post_title
             titLab.tag = i+1
             imageView.addSubview(titLab)
             
@@ -87,66 +209,13 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             imageView.addGestureRecognizer(tap)
             self.scrollView.addSubview(imageView)
         }
-        scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
+        
+        scrollView.contentSize = CGSizeMake(CGFloat(self.imageArr.count)*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
-        one.addSubview(scrollView)
         
-        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*188/375-25, 80, 25)
-        pageControl.pageIndicatorTintColor = UIColor.whiteColor()
-        pageControl.currentPageIndicatorTintColor = COLOR
-        pageControl.numberOfPages = 4
+        pageControl.numberOfPages = self.imageArr.count
+        pageControl.frame = CGRectMake(WIDTH-20*CGFloat(imageArr.count), WIDTH*188/375-25, 20*CGFloat(imageArr.count), 25)
         pageControl.currentPage = 0
-        pageControl.addTarget(self, action: #selector(StudyViewController.pageNext), forControlEvents: .ValueChanged)
-        one.addSubview(pageControl)
-        
-        myTableView.rowHeight = 60
-        myTableView.tableHeaderView = one
-        
-        // Do any additional setup after loading the view.
-    }
-    
-    func loadData() {
-        
-        HSNurseStationHelper().getArticleListWithID("10") {[unowned self] (success, response) in
-            if success {
-                self.newsList = response as? Array<NewsInfo> ?? []
-                
-                self.requestHelper.getSlideImages("6") { [unowned self] (success, response) in
-                    if success {
-                        print(response)
-                        self.imageArr = response as! Array<PhotoInfo>
-                        for imageInfo in self.imageArr {
-                            self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-                            self.titArr.append(imageInfo.name)
-                            dispatch_async(dispatch_get_main_queue(), {
-                                self.updateSlideImage()
-                                self.myTableView.reloadData()
-                                self.myTableView.mj_header.endRefreshing()
-                            })
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    func updateSlideImage(){
-        for i in 1...4 {
-            let imgView = scrollView.viewWithTag(i) as! UIImageView
-            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-                imgView.image = UIImage.init(named: "defaultImage.png")
-            }else{
-                imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]), placeholderImage: UIImage.init(named: "defaultImage.png"))
-            }
-//            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
-            //            print(picArr)
-            for lab in imgView.subviews {
-                if lab.tag == imgView.tag {
-                    let titLab = lab.viewWithTag(i) as? UILabel
-                    titLab!.text = titArr[i-1]
-                }
-            }
-        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -276,47 +345,70 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
         
-        for (_,newsInfo) in self.newsList.enumerate() {
-            print(imageArr[imageView.tag-1].url)
-            if newsInfo.object_id == imageArr[imageView.tag-1].url {
-                
-                let next = NewsContantViewController()
-                next.newsInfo = newsInfo
-                next.navTitle = newsInfo.post_source!
-                
-                self.navigationController?.pushViewController(next, animated: true)
-            }
-        }
+        let next = NewsContantViewController()
+        next.newsInfo = imageArr[imageView.tag-1]
+        next.navTitle = imageArr[imageView.tag-1].term_name
+        
+        self.navigationController?.pushViewController(next, animated: true)
     }
     
     func pageNext() {
         scrollView.contentOffset = CGPointMake(WIDTH*CGFloat(pageControl.currentPage), 0)
     }
     
+//    func scroll(){
+//        if times == 4 {
+//            self.pageControl.currentPage = 0
+//        }else{
+//            self.pageControl.currentPage = times
+//        }
+//        scrollView.setContentOffset(CGPointMake(WIDTH*CGFloat(times), 0), animated: true)
+//        times += 1
+//        print("学习1")
+//    }
+    
     func scroll(){
-        if times == 4 {
+        if self.pageControl.currentPage == self.pageControl.numberOfPages-1 {
             self.pageControl.currentPage = 0
         }else{
-            self.pageControl.currentPage = times
+            self.pageControl.currentPage += 1
         }
-        scrollView.setContentOffset(CGPointMake(WIDTH*CGFloat(times), 0), animated: true)
-        times += 1
-        print("学习1")
+        let offSetX:CGFloat = CGFloat(self.pageControl.currentPage) * CGFloat(self.scrollView.frame.size.width)
+        scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
     }
-    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-        if times >= 5 {
-            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
-            times = 1
-        }
-        print("学习2")
-    }
+    
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        var number = Int(scrollView.contentOffset.x/WIDTH)
-        if number == 4 {
-            number = 0
-            pageControl.currentPage = number
-        }else{
-            pageControl.currentPage = number
-        }
+        pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
+        //        timer.fireDate = NSDate.distantPast()
+        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
     }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        var offsetX:CGFloat = self.scrollView.contentOffset.x
+        offsetX = offsetX + (self.scrollView.frame.size.width * 0.5)
+        let page:Int = Int(offsetX)/Int(self.scrollView.frame.size.width)
+        pageControl.currentPage = page
+    }
+    //开始拖拽时
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        //            timer.fireDate = NSDate.distantFuture()
+        timer.invalidate()
+    }
+//
+//    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
+//        if times >= 5 {
+//            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
+//            times = 1
+//        }
+//        print("学习2")
+//    }
+//    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+//        var number = Int(scrollView.contentOffset.x/WIDTH)
+//        if number == 4 {
+//            number = 0
+//            pageControl.currentPage = number
+//        }else{
+//            pageControl.currentPage = number
+//        }
+//    }
 }

@@ -22,7 +22,7 @@ class HSChartCell: UITableViewCell {
     }
     override func layoutSubviews() {
         chartView = NSBundle.mainBundle().loadNibNamed("CFLineChartView", owner: nil, options: nil).last as? CFLineChartView
-        chartView!.frame = CGRectMake(0, 0, chartLineView.frame.width, chartLineView.frame.height)
+        chartView!.frame = CGRectMake(0, 0, WIDTH-20, chartLineView.frame.height)
         chartView?.selfConfigure()
         chartView!.xValues = ["7月1", "7月2", "7月3", "7月4", "7月5", "7月6", "7月7"]
         chartView!.yValues = [35, 5, 80, 40,100,60,80,57];

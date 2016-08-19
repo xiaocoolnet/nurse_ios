@@ -78,7 +78,7 @@ class editResumeViewController: UIViewController {
                 self.resumeView.birth_year_Lab.text = birthArray[0]
                 self.resumeView.birth_month_Lab.text = birthArray[1]
                 self.resumeView.birth_day_Lab.text = birthArray[2]
-                self.resumeView.birthFinishArr = birthArray
+                self.resumeView.birthFinishArr = [self.resumeView.birth_year_Lab.text!, self.resumeView.birth_month_Lab.text!, self.resumeView.birth_day_Lab.text!]
                 
                 self.resumeView.eduLab.text = model.education
                 self.resumeView.dropDownFinishDic["edu"] = model.education
@@ -87,7 +87,7 @@ class editResumeViewController: UIViewController {
                 self.resumeView.homeLab_1.text = homeArray[0] ?? ""
                 self.resumeView.homeLab_2.text = homeArray.count>=2 ? homeArray[1]:""
                 self.resumeView.homeLab_3.text = homeArray.count>=3 ? homeArray[2]:""
-                self.resumeView.homeFinishArr = homeArray
+                self.resumeView.homeFinishArr = [self.resumeView.homeLab_1.text!, self.resumeView.homeLab_2.text!, self.resumeView.homeLab_3.text!]
                 
                 self.resumeView.expLab.text = model.experience
                 self.resumeView.dropDownFinishDic["exp"] = model.experience
@@ -113,7 +113,7 @@ class editResumeViewController: UIViewController {
                 let targetCityArray = model.wantcity.componentsSeparatedByString("-")
                 self.resumeView.targetCityLab_1.text = targetCityArray.count>=1 ? targetCityArray[0]:""
                 self.resumeView.targetCityLab_2.text = targetCityArray.count>=2 ? targetCityArray[1]:""
-                self.resumeView.targetCityFinishArr = targetCityArray
+                self.resumeView.targetCityFinishArr = [self.resumeView.targetCityLab_1.text!, self.resumeView.targetCityLab_2.text!]
                 
                 self.resumeView.expectedSalaryLab.text = model.wantsalary
                 self.resumeView.dropDownFinishDic["expectedSalary"] = model.wantsalary
@@ -138,7 +138,7 @@ class editResumeViewController: UIViewController {
                     })
                     alert.addAction(replyAction)
                     
-                    let cancelAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
+                    let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (action) in
                         self.navigationController?.popViewControllerAnimated(true)
                     })
                     alert.addAction(cancelAction)

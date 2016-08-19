@@ -16,20 +16,21 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var myTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-    var picArr = Array<String>()
+//    var picArr = Array<String>()
     var timer = NSTimer()
-    var dataSource = NewsList()
-    var likedataSource = LikeList()
+    var dataSource = Array<NewsInfo>()
+//    var likedataSource = LikeList()
     var requestHelper = NewsPageHelper()
     
     internal var newsId = String()
+    var slideImageId = String()
     internal var post_title=String()
     internal var post_modified=String()
     var post_excerpt = String()
     var requestManager:AFHTTPSessionManager?
     var newsType:Int?
-    var titArr:[String] = Array<String>()
-    var imageArr = Array<PhotoInfo>()
+//    var titArr:[String] = Array<String>()
+    var imageArr = Array<NewsInfo>()
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -78,44 +79,169 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     
     func loadData() {
-        let slideTypeId = Int(newsId)!-1
-        requestHelper.getSlideImages(String(slideTypeId)) { [unowned self] (success, response) in
+        
+        var flag = 0
+        
+        HSNurseStationHelper().getArticleListWithID(slideImageId) { (success, response) in
+            
             if success {
                 print(response)
-                self.imageArr = response as! Array<PhotoInfo>
-                for imageInfo in self.imageArr {
-                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-                    self.titArr.append(imageInfo.name)
-                    //                    self.titArr.append(imageInfo)
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.updateSlideImage()
-                        self.myTableView.reloadData()
-                    })
+                self.imageArr = response as! Array<NewsInfo>
+                //                for imageInfo in self.imageArr {
+                //                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+                //                    self.titArr.append(imageInfo.name)
+                //                    //                    self.titArr.append(imageInfo)
+
+                //                }
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.updateSlideImage()
+                    self.myTableView.reloadData()
+                })
+                
+                flag += 1
+                if flag == 2 {
+                    self.myTableView.mj_header.endRefreshing()
                 }
-                self.GetDate()
+            }else{
+                self.myTableView.mj_header.endRefreshing()
+                
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.Text;
+                hud.labelText = "轮播图获取失败"
+                hud.detailsLabelText = String(response!)
+                print(response!)
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 1)
             }
         }
+        
+        HSNurseStationHelper().getArticleListWithID(newsType == nil ? newsId : String(newsType!+17)) { (success, response) in
+            
+            if success {
+                print(response)
+                
+                self.dataSource = response as! Array<NewsInfo>
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.updateSlideImage()
+                    self.myTableView.reloadData()
+                })
+                
+                flag += 1
+                if flag == 2 {
+                    self.myTableView.mj_header.endRefreshing()
+                }
+
+            }else{
+                self.myTableView.mj_header.endRefreshing()
+                
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.Text;
+                hud.labelText = "文章列表获取失败"
+                hud.detailsLabelText = String(response!)
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 1)
+            }
+        }
+        
+//        let slideTypeId = Int(newsId)!-1
+//        requestHelper.getSlideImages(String(slideTypeId)) { [unowned self] (success, response) in
+//            if success {
+//                print(response)
+//                self.imageArr = response as! Array<PhotoInfo>
+////                for imageInfo in self.imageArr {
+////                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+////                    self.titArr.append(imageInfo.name)
+////                    //                    self.titArr.append(imageInfo)
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                        self.updateSlideImage()
+//                        self.myTableView.reloadData()
+//                    })
+////                }
+//                self.GetDate()
+//            }else{
+//                self.myTableView.mj_header.endRefreshing()
+//                
+//                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                hud.mode = MBProgressHUDMode.Text;
+//                hud.labelText = String(response!)
+//                hud.margin = 10.0
+//                hud.removeFromSuperViewOnHide = true
+//                hud.hide(true, afterDelay: 1)
+//            }
+//        }
         
     }
     
     
     func updateSlideImage(){
-        for i in 1...4 {
-            let imgView = scrollView.viewWithTag(i) as! UIImageView
-            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-                imgView.image = UIImage.init(named: "defaultImage.png")
-            }else{
-                imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]), placeholderImage: UIImage.init(named: "defaultImage.png"))
-            }
-//            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
-//            print(picArr)
-            for lab in imgView.subviews {
-                if lab.tag == imgView.tag {
-                    let titLab = lab.viewWithTag(i) as? UILabel
-                    titLab!.text = titArr[i-1]
-                }
+        
+        for subView in self.scrollView.subviews {
+            if subView.isKindOfClass(UIImageView) {
+                subView.removeFromSuperview()
             }
         }
+        
+        for (i,slideImage) in self.imageArr.enumerate() {
+            
+            let  imageView = UIImageView()
+            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
+            imageView.tag = i+1
+            if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || slideImage.thumbArr.count == 0 {
+                imageView.image = UIImage.init(named: "defaultImage.png")
+            }else{
+                imageView.sd_setImageWithURL(NSURL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
+            }
+            
+            let bottom = UIView(frame: CGRectMake(0, WIDTH*190/375-25, WIDTH, 25))
+            bottom.backgroundColor = UIColor.grayColor()
+            bottom.alpha = 0.5
+            imageView.addSubview(bottom)
+            
+            let titLab = UILabel(frame: CGRectMake(10, WIDTH*190/375-25, WIDTH-100, 25))
+            titLab.font = UIFont.systemFontOfSize(14)
+            titLab.textColor = UIColor.whiteColor()
+            titLab.text = slideImage.post_title
+            titLab.tag = i+1
+            imageView.addSubview(titLab)
+            
+            //为图片视图添加点击事件
+            imageView.userInteractionEnabled = true
+            let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
+            //            手指头
+            tap.numberOfTapsRequired = 1
+            //            单击
+            tap.numberOfTouchesRequired = 1
+            imageView.addGestureRecognizer(tap)
+            self.scrollView.addSubview(imageView)
+        }
+        
+        scrollView.contentSize = CGSizeMake(CGFloat(self.imageArr.count)*WIDTH, 0)
+        scrollView.contentOffset = CGPointMake(0, 0)
+        
+        pageControl.numberOfPages = self.imageArr.count
+        pageControl.frame = CGRectMake(WIDTH-20*CGFloat(imageArr.count), WIDTH*190/375-25, 20*CGFloat(imageArr.count), 25)
+        pageControl.currentPage = 0
+        
+        
+//        for (i,slideImage) in self.imageArr.enumerate() {
+//            let imgView = scrollView.viewWithTag(i) as! UIImageView
+//            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+//                imgView.image = UIImage.init(named: "defaultImage.png")
+//            }else{
+//                imgView.sd_setImageWithURL(NSURL(string: slideImage.picUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
+//            }
+////            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+////            print(picArr)
+//            for lab in imgView.subviews {
+//                if lab.tag == imgView.tag {
+//                    let titLab = lab.viewWithTag(i) as? UILabel
+//                    titLab!.text = slideImage.name
+//                }
+//            }
+//        }
     }
     
     func createTableView() {
@@ -134,35 +260,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
         scrollView.delegate = self
-        
-        for i in 0...3 {
-            
-            let  imageView = UIImageView()
-            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
-            imageView.tag = i+1
-            
-            let bottom = UIView(frame: CGRectMake(0, WIDTH*190/375-25, WIDTH, 25))
-            bottom.backgroundColor = UIColor.grayColor()
-            bottom.alpha = 0.5
-            imageView.addSubview(bottom)
-            
-            let titLab = UILabel(frame: CGRectMake(10, WIDTH*190/375-25, WIDTH-100, 25))
-            titLab.font = UIFont.systemFontOfSize(14)
-            titLab.textColor = UIColor.whiteColor()
-//            titLab.text = titArr[i]
-            titLab.tag = i+1
-            imageView.addSubview(titLab)
-            
-            //为图片视图添加点击事件
-            imageView.userInteractionEnabled = true
-            let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
-            //            手指头
-            tap.numberOfTapsRequired = 1
-            //            单击
-            tap.numberOfTouchesRequired = 1
-            imageView.addGestureRecognizer(tap)
-            self.scrollView.addSubview(imageView)
-        }
+
         scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
@@ -170,66 +268,66 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         pageControl.frame = CGRectMake(WIDTH-80, WIDTH*190/375-25, 80, 25)
         pageControl.pageIndicatorTintColor = UIColor.whiteColor()
         pageControl.currentPageIndicatorTintColor = COLOR
-        pageControl.numberOfPages = 4
+        pageControl.numberOfPages = self.imageArr.count
         pageControl.currentPage = 0
         one.addSubview(pageControl)
-        
+
         myTableView.rowHeight = 100
         myTableView.tableHeaderView = one
     }
     
-    func GetDate(){
-        let url = PARK_URL_Header+"getNewslist"
-        let param = ["channelid":newsType == nil ? newsId : String(newsType!+17)]
-        
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            if(error != nil){
-                
-            }else{
-                let status = NewsModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    //hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
-                }
-                if(status.status == "success"){
-                    print(status)
-                    self.dataSource = NewsList(status.data!)
-                    print(LikeList(status.data!).objectlist)
-                    self.likedataSource = LikeList(status.data!)
-                    self.myTableView .reloadData()
-                    print(status.data)
-                }
-            }
-            dispatch_async(dispatch_get_main_queue(), { 
-                self.myTableView.mj_header.endRefreshing()
-            })
-       }
-    }
+//    func GetDate(){
+//        let url = PARK_URL_Header+"getNewslist"
+//        let param = ["channelid":newsType == nil ? newsId : String(newsType!+17)]
+//        
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+//            if(error != nil){
+//                
+//            }else{
+//                let status = NewsModel(JSONDecoder(json!))
+//                print("状态是")
+//                print(status.status)
+//                if(status.status == "error"){
+//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                    hud.mode = MBProgressHUDMode.Text;
+//                    //hud.labelText = status.errorData
+//                    hud.margin = 10.0
+//                    hud.removeFromSuperViewOnHide = true
+//                    hud.hide(true, afterDelay: 1)
+//                }
+//                if(status.status == "success"){
+//                    print(status)
+//                    self.dataSource = NewsList(status.data!)
+//                    print(LikeList(status.data!).objectlist)
+//                    self.likedataSource = LikeList(status.data!)
+//                    self.myTableView .reloadData()
+//                    print(status.data)
+//                }
+//            }
+//            dispatch_async(dispatch_get_main_queue(), { 
+//                self.myTableView.mj_header.endRefreshing()
+//            })
+//       }
+//    }
     // MARK: 图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
         
-        for (i,newsInfo) in self.dataSource.objectlist.enumerate() {
-            print(imageArr[imageView.tag-1].url)
-            if newsInfo.object_id == imageArr[imageView.tag-1].url {
-
-                let next = NewsContantViewController()
-                next.newsInfo = newsInfo
-                next.index = i
-                next.navTitle = newsInfo.term_name
-                next.delegate = self
-                
-                self.navigationController?.pushViewController(next, animated: true)
-            }
-        }
+        let next = NewsContantViewController()
+        next.newsInfo = imageArr[imageView.tag-1]
+        next.index = imageView.tag-1
+        next.navTitle = imageArr[imageView.tag-1].term_name
+        next.delegate = self
+        
+        self.navigationController?.pushViewController(next, animated: true)
+//        for (i,newsInfo) in self.dataSource.objectlist.enumerate() {
+//            print(imageArr[imageView.tag-1].thumbArr.first?.url)
+//            if newsInfo.object_id == imageArr[imageView.tag-1].thumbArr.first?.url {
+//
+//            }
+//        }
     }
     
     func scroll(){
@@ -270,7 +368,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let newsInfo = self.dataSource.objectlist[indexPath.row]
+        let newsInfo = self.dataSource[indexPath.row]
         
 //        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
 //        let screenBounds:CGRect = UIScreen.mainScreen().bounds
@@ -301,7 +399,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
 //        cell.type = 1
         cell.delegate = self
         cell.selectionStyle = .None
-        let newsInfo = self.dataSource.objectlist[indexPath.row]
+        let newsInfo = self.dataSource[indexPath.row]
                 
         if newsInfo.thumbArr.count >= 3 {
             cell.setThreeImgCellWithNewsInfo(newsInfo)
@@ -312,7 +410,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let newsInfo = self.dataSource.objectlist[indexPath.row]
+        let newsInfo = self.dataSource[indexPath.row]
         //        print(newsInfo.title,newsInfo.term_id)
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
@@ -347,7 +445,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     // MARK:更新模型
     func changeModel(newInfo: NewsInfo, andIndex: Int) {
-        self.dataSource.objectlist[andIndex] = newInfo
+        self.dataSource[andIndex] = newInfo
         self.myTableView.reloadData()
     }
 

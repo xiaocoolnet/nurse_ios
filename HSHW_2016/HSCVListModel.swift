@@ -73,7 +73,12 @@ class CVModel: JSONJoy {
         avatar = decoder["avatar"].string ?? ""
         birthday = decoder["birthday"].string ?? ""
         address = decoder["address"].string ?? ""
+        
         currentsalary = decoder["currentsalary"].string ?? ""
+        currentsalary = currentsalary.stringByReplacingOccurrencesOfString("&lt;", withString: "<")
+        currentsalary = currentsalary.stringByReplacingOccurrencesOfString("&gt;", withString: ">")
+        currentsalary = currentsalary.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
+        
         certificate = decoder["certificate"].string ?? ""
         count = decoder["count"].string ?? ""
         description = decoder["description"].string ?? ""
@@ -89,6 +94,10 @@ class CVModel: JSONJoy {
         phone = decoder["phone"].string ?? ""
         hiredate = decoder["hiredate"].string ?? ""
         wantcity = decoder["wantcity"].string ?? ""
+        
         wantsalary = decoder["wantsalary"].string ?? ""
+        wantsalary = wantsalary.stringByReplacingOccurrencesOfString("&lt;", withString: "<")
+        wantsalary = wantsalary.stringByReplacingOccurrencesOfString("&gt;", withString: ">")
+        wantsalary = wantsalary.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
     }
 }

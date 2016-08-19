@@ -59,5 +59,9 @@ class EduInfo: JSONJoy{
         
         id = decoder["id"].string ?? ""
         name = decoder["name"].string ?? ""
+        
+        name = name.stringByReplacingOccurrencesOfString("&lt;", withString: "<")
+        name = name.stringByReplacingOccurrencesOfString("&gt;", withString: ">")
+        name = name.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
     }
 }

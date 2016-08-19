@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         WeiboSDK.enableDebugMode(true)
         WeiboSDK.registerApp(kAppKey)
         
+        let _ = TencentOAuth(appId: "1105552541", andDelegate: nil)
+        
         
         
 //        ShareSDK.registerApp("13be4c6c247e0", activePlatforms:
@@ -73,8 +75,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         let str = url.absoluteString
         if str.hasPrefix("wx") {
             return WXApi.handleOpenURL(url, delegate: self)
-        }else{
+        }else if str.hasPrefix("wb"){
             return WeiboSDK.handleOpenURL(url, delegate: self)
+        }else{
+            QQApiInterface.handleOpenURL(url, delegate: qqDelegate())
+            return TencentOAuth.HandleOpenURL(url)
         }
     }
     
@@ -83,11 +88,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         let str = url.absoluteString
         if str.hasPrefix("wx") {
             return WXApi.handleOpenURL(url, delegate: self)
-        }else{
+        }else if str.hasPrefix("wb"){
             return WeiboSDK.handleOpenURL(url, delegate: self)
+        }else{
+            return TencentOAuth.HandleOpenURL(url)
         }
     }
 
+    // MARK:- 微博回调
     func didReceiveWeiboRequest(request: WBBaseRequest!) {
         
     }
@@ -129,6 +137,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
             hud.hide(true, afterDelay: 1)
         }
     }
+    // MARK:-
+    
+    
+    
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.

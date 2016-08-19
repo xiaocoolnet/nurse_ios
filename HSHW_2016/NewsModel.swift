@@ -104,7 +104,7 @@ class NewsInfo: JSONJoy{
     var post_excerpt:String?
     var tid:String?
     var title:String?
-    var object_id : String?
+    var object_id : String
     var post_source :String?
     var post_content:String?
     var post_hits:String?

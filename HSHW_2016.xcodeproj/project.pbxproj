@@ -125,6 +125,11 @@
 		1F1A33951D548D7A00F7C20A /* editResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */; };
 		1F1A33961D548D7A00F7C20A /* editResumeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */; };
 		1F1A33981D54952600F7C20A /* PostVacanciewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */; };
+		1F1B7F271D66DF2B009910DF /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1B7F261D66DF2B009910DF /* libiconv.tbd */; };
+		1F1B7F291D66E03C009910DF /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1B7F281D66E03C009910DF /* TencentOpenAPI.framework */; };
+		1F1B7F2B1D66E0EB009910DF /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1F1B7F2A1D66E0EB009910DF /* TencentOpenApi_IOS_Bundle.bundle */; };
+		1F1B7F311D66F1CA009910DF /* qqDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B7F301D66F1CA009910DF /* qqDelegate.swift */; };
+		1F1B7F331D66F480009910DF /* wechatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B7F321D66F480009910DF /* wechatDelegate.swift */; };
 		1F1EA38A1D61AAB200151FA7 /* ReachabilitySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */; };
 		1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */; };
 		1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */; };
@@ -394,6 +399,11 @@
 		1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editResumeViewController.swift; sourceTree = "<group>"; };
 		1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = editResumeViewController.xib; sourceTree = "<group>"; };
 		1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVacanciewViewController.swift; sourceTree = "<group>"; };
+		1F1B7F261D66DF2B009910DF /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
+		1F1B7F281D66E03C009910DF /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
+		1F1B7F2A1D66E0EB009910DF /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
+		1F1B7F301D66F1CA009910DF /* qqDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = qqDelegate.swift; sourceTree = "<group>"; };
+		1F1B7F321D66F480009910DF /* wechatDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wechatDelegate.swift; sourceTree = "<group>"; };
 		1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReachabilitySwift.framework; path = "../../Library/Developer/Xcode/DerivedData/HSHW_2016-amsbvsmqvgzeibcteymcunjxavqg/Build/Products/Debug-iphonesimulator/ReachabilitySwift.framework"; sourceTree = "<group>"; };
 		1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayModel.swift; sourceTree = "<group>"; };
 		1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaliyExamModel.swift; sourceTree = "<group>"; };
@@ -509,13 +519,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F1EA38A1D61AAB200151FA7 /* ReachabilitySwift.framework in Frameworks */,
 				1FE3A6421D5AFC7A0039D94D /* CoreGraphics.framework in Frameworks */,
+				1F1B7F271D66DF2B009910DF /* libiconv.tbd in Frameworks */,
+				1F1EA38A1D61AAB200151FA7 /* ReachabilitySwift.framework in Frameworks */,
 				1FE3A6401D5AFC720039D94D /* Foundation.framework in Frameworks */,
 				1FE3A63E1D5AFC650039D94D /* UIKit.framework in Frameworks */,
 				1FE3A63C1D5AFC570039D94D /* CoreText.framework in Frameworks */,
 				1FE3A63A1D5AFC4F0039D94D /* CoreTelephony.framework in Frameworks */,
 				1FE3A6381D5AFC430039D94D /* Security.framework in Frameworks */,
+				1F1B7F291D66E03C009910DF /* TencentOpenAPI.framework in Frameworks */,
 				1FE3A6361D5AFC370039D94D /* SystemConfiguration.framework in Frameworks */,
 				1FE3A6341D5AFC2D0039D94D /* QuartzCore.framework in Frameworks */,
 				F604A4E41D0E7A2E008A4888 /* libsqlite3.tbd in Frameworks */,
@@ -725,6 +737,7 @@
 		183B84E91CE5BFDC00709235 = {
 			isa = PBXGroup;
 			children = (
+				1F1B7F2A1D66E0EB009910DF /* TencentOpenApi_IOS_Bundle.bundle */,
 				183B84F41CE5BFDC00709235 /* HSHW_2016 */,
 				183B85091CE5BFDC00709235 /* HSHW_2016Tests */,
 				183B85141CE5BFDC00709235 /* HSHW_2016UITests */,
@@ -801,6 +814,8 @@
 				183B866E1CE5CF9500709235 /* JSONJoy.swift */,
 				183B86721CE5CFA000709235 /* CornerRadiusViewController.swift */,
 				1FFD49C71D631F9F00AB1460 /* UIImage+Extension.swift */,
+				1F1B7F301D66F1CA009910DF /* qqDelegate.swift */,
+				1F1B7F321D66F480009910DF /* wechatDelegate.swift */,
 			);
 			name = Tool;
 			sourceTree = "<group>";
@@ -1217,6 +1232,8 @@
 		F1AF83881B75F01938A9D1A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F1B7F281D66E03C009910DF /* TencentOpenAPI.framework */,
+				1F1B7F261D66DF2B009910DF /* libiconv.tbd */,
 				1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */,
 				1FE3A6411D5AFC7A0039D94D /* CoreGraphics.framework */,
 				1FE3A63F1D5AFC720039D94D /* Foundation.framework */,
@@ -1364,6 +1381,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F1B7F2B1D66E0EB009910DF /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				183B85001CE5BFDC00709235 /* LaunchScreen.storyboard in Resources */,
 				F6338B961D29105B00EE5CA2 /* HSStateCommentCell.xib in Resources */,
 				0DB467B81D4C8600009AE2AD /* MJRefresh.bundle in Resources */,
@@ -1566,6 +1584,7 @@
 				189849B41CE812CB007B37B4 /* TouTiaoTableViewCell.swift in Sources */,
 				F6D02CDB1D07A46800353557 /* NewsSourceCell.swift in Sources */,
 				F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */,
+				1F1B7F311D66F1CA009910DF /* qqDelegate.swift in Sources */,
 				F661F25F1D33BB7B00E04CE8 /* HSSelectController.swift in Sources */,
 				F64C9AC01D3B9BFC0041E360 /* ChildsViewController.swift in Sources */,
 				1FFD9EE71D51EBD700951098 /* DropDown.swift in Sources */,
@@ -1621,6 +1640,7 @@
 				0DB467B61D4C8600009AE2AD /* MJRefreshNormalHeader.m in Sources */,
 				18C240601CEEB6340059BF48 /* TalentViewController.swift in Sources */,
 				F6342C641D38DB4000800D8E /* HSCollectionListController.swift in Sources */,
+				1F1B7F331D66F480009910DF /* wechatDelegate.swift in Sources */,
 				185408751CE6C88D00DFBA7C /* StudyViewController.swift in Sources */,
 				1FFD9EC91D518F8500951098 /* contentTableViewCell.swift in Sources */,
 				1854088F1CE713A100DFBA7C /* MagicboxViewController.swift in Sources */,
@@ -1789,6 +1809,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xu enjiang (5UKAG2PM43)";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HSHW_2016",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1811,6 +1836,7 @@
 					"\"PagingMenuController\"",
 					"-framework",
 					"\"SDWebImage\"",
+					"-fobjc-arc",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1827,6 +1853,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xu enjiang (5UKAG2PM43)";
 				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HSHW_2016",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1849,6 +1880,7 @@
 					"\"PagingMenuController\"",
 					"-framework",
 					"\"SDWebImage\"",
+					"-fobjc-arc",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -804,21 +804,21 @@
                                                 <constraint firstAttribute="height" constant="20" id="Vr9-lO-fdl"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10000~15000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="af4-Bg-c7u">
-                                            <rect key="frame" x="105" y="14" width="91" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="af4-Bg-c7u">
+                                            <rect key="frame" x="105" y="14" width="33" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="s2g-nA-ub1">
-                                            <rect key="frame" x="201" y="20" width="7" height="4"/>
+                                            <rect key="frame" x="143" y="20" width="7" height="4"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="7" id="fxt-u9-hB7"/>
                                                 <constraint firstAttribute="height" constant="4" id="oxZ-fi-F4a"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="元/月" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3wl-lN-qQf">
-                                            <rect key="frame" x="213" y="14" width="35" height="18"/>
+                                            <rect key="frame" x="155" y="14" width="35" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -1394,21 +1394,21 @@
                                                 <action selector="expectedSalaryBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="uao-eU-zBh"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10000~15000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sNw-Lh-rID">
-                                            <rect key="frame" x="105" y="14" width="91" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sNw-Lh-rID">
+                                            <rect key="frame" x="105" y="14" width="33" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="Ntw-p7-A3y">
-                                            <rect key="frame" x="201" y="20" width="7" height="4"/>
+                                            <rect key="frame" x="143" y="20" width="7" height="4"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="4" id="kec-RZ-rL1"/>
                                                 <constraint firstAttribute="width" constant="7" id="osR-xY-hH7"/>
                                             </constraints>
                                         </imageView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="元/月" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWv-Jq-5KJ">
-                                            <rect key="frame" x="213" y="12" width="40" height="21"/>
+                                            <rect key="frame" x="155" y="12" width="40" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -2913,6 +2913,6 @@
     <resources>
         <image name="ic_down" width="8" height="4"/>
         <image name="ic_yuan" width="9" height="9"/>
-        <image name="img_head_nor" width="100" height="100"/>
+        <image name="img_head_nor" width="294" height="295"/>
     </resources>
 </document>

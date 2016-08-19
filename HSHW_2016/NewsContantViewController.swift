@@ -47,6 +47,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     var finishLoad = false
     var tagNum = 0
     
+    var webFlag = true// 防止多次加载网页
+    
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = false
         self.tabBarController?.tabBar.hidden = true
@@ -198,7 +200,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }else{
                 str = "1"
             }
-            helper.collectionNews(newsInfo!.object_id!,type: str as String, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt!) { (success, response) in
+            helper.collectionNews(newsInfo!.object_id,type: str as String, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt!) { (success, response) in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
                         collectBtn.selected = true
@@ -232,7 +234,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 
     }
     
-    func collectionNews(){
+    func collectionNews_1(){
 //        let height = calculateHeight((newsInfo?.post_title)!, size: 17, width: WIDTH-20)
 //        self.myTableView.contentOffset = CGPointMake(0, height + webHeight - 120)
         
@@ -275,6 +277,107 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         alertController.addAction(cancelAction)
     }
     
+    // MARK:- 分享视图
+    func collectionNews() {
+        let imageArray = ["ic_share_friendzone","ic_share_wechat","ic_share_qq","ic_share_qzone","ic_share_weibo"]
+        let imageNameArray = ["微信朋友圈","微信好友","QQ好友","QQ空间","新浪微博"]
+        
+        let bgView = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT))
+        bgView.backgroundColor = UIColor(white: 0.5, alpha: 0.3)
+        bgView.tag = 101
+        bgView.addTarget(self, action: #selector(shareViewHide(_:)), forControlEvents: .TouchUpInside)
+        UIApplication.sharedApplication().keyWindow!.addSubview(bgView)
+        
+        let bottomView = UIView(frame: CGRectMake(0, CGRectGetMaxY(bgView.frame), WIDTH, HEIGHT*0.4))
+        bottomView.backgroundColor = UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
+        bgView.addSubview(bottomView)
+        
+        let shareBtnWidth:CGFloat = 80
+        let maxMargin:CGFloat = 40
+        let shareBtnCount:Int = Int((WIDTH - maxMargin)/(maxMargin+shareBtnWidth))+1
+        let margin = (WIDTH - shareBtnWidth*CGFloat(shareBtnCount))/(CGFloat(shareBtnCount)+1)
+        
+        let labelHeight = margin/2.0
+        
+        var labelMaxY:CGFloat = 0
+        
+        for i in 0...4 {
+            
+            let shareBtn_1 = UIButton(frame: CGRectMake(margin*(CGFloat(i%shareBtnCount)+1)+shareBtnWidth*CGFloat(i%shareBtnCount), margin*(CGFloat(i/shareBtnCount)+1)+(shareBtnWidth+margin+labelHeight)*CGFloat(i/shareBtnCount), shareBtnWidth, shareBtnWidth))
+            shareBtn_1.layer.cornerRadius = shareBtnWidth/2.0
+            shareBtn_1.backgroundColor = UIColor.whiteColor()
+            shareBtn_1.setImage(UIImage(named: imageArray[i]), forState: .Normal)
+            shareBtn_1.tag = 1000+i
+            shareBtn_1.addTarget(self, action: #selector(shareBtnClick(_:)), forControlEvents: .TouchUpInside)
+            bottomView.addSubview(shareBtn_1)
+            print(shareBtn_1.frame)
+            
+            let shareLab_1 = UILabel(frame: CGRectMake(CGRectGetMinX(shareBtn_1.frame)-margin/2.0, CGRectGetMaxY(shareBtn_1.frame)+margin/2.0, shareBtnWidth+margin, labelHeight))
+            shareLab_1.textColor = UIColor.grayColor()
+            shareLab_1.font = UIFont.systemFontOfSize(12)
+            shareLab_1.textAlignment = .Center
+            shareLab_1.text = imageNameArray[i]
+            bottomView.addSubview(shareLab_1)
+            
+            labelMaxY = CGRectGetMaxY(shareLab_1.frame)
+        }
+        
+        let line = UIView(frame: CGRectMake(0, labelMaxY+margin, WIDTH, 0.5))
+        line.backgroundColor = UIColor.lightGrayColor()
+        bottomView.addSubview(line)
+        
+        let cancelBtnHeight = shareBtnWidth*0.8
+        
+        let cancelBtn = UIButton(frame: CGRectMake(0, CGRectGetMaxY(line.frame), WIDTH, cancelBtnHeight))
+        cancelBtn.backgroundColor = UIColor(red: 248/255.0, green: 248/255.0, blue: 248/255.0, alpha: 1)
+        cancelBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        cancelBtn.setTitle("取消", forState: .Normal)
+        cancelBtn.tag = 102
+        cancelBtn.addTarget(self, action: #selector(shareViewHide(_:)), forControlEvents: .TouchUpInside)
+        bottomView.addSubview(cancelBtn)
+        
+        bottomView.frame.size.height = CGRectGetMaxY(cancelBtn.frame)
+        
+        UIView.animateWithDuration(0.5) {
+            bottomView.frame.origin.y = HEIGHT - CGRectGetMaxY(cancelBtn.frame)
+        }
+    }
+    
+    // 分享视图取消事件
+    func shareViewHide(shareView:UIButton) {
+        if shareView.tag == 102 {
+            shareView.superview!.superview!.removeFromSuperview()
+        }else{
+            shareView.removeFromSuperview()
+        }
+    }
+    
+    // 分享视图分享按钮点击事件
+    func shareBtnClick(shareBtn:UIButton) {
+        shareBtn.superview!.superview!.removeFromSuperview()
+        
+        let btn = UIButton()
+        
+        switch shareBtn.tag {
+        case 1000://朋友圈
+            btn.tag = 0
+        case 1001://微信好友
+            btn.tag = 1
+        case 1002://QQ好友
+            btn.tag = 3
+        case 1003://QQ空间
+            btn.tag = 4
+        case 1004://新浪微博
+            btn.tag = 2
+            
+        default:
+            return
+        }
+        self.shareTheNews(btn)
+    }
+    
+    // MARK:-
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
@@ -296,10 +399,10 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     // MARK:获取关联文章列表
     func getDate() {
-        print(newsInfo?.term_id,newsInfo?.title)
+        print(newsInfo?.object_id,newsInfo?.title)
         let url = PARK_URL_Header+"getRelatedNewslist"
         let param = [
-           "refid": newsInfo!.term_id
+           "refid": newsInfo!.object_id
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             print(request)
@@ -311,7 +414,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
-                    //hud.labelText = status.errorData
+                    hud.labelText = "获取关联文章失败"
+                    hud.detailsLabelText = status.errorData
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
@@ -386,7 +490,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell1:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cellIntenfer")!
-        
+        print(indexPath.section,indexPath.row)
         //let cell = tableView.dequeueReusableCellWithIdentifier("cellIntenfer", forIndexPath: indexPath)
         cell1.selectionStyle = .None
         if indexPath.section == 0 {
@@ -420,10 +524,15 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.createTime.text = time[0]
 
             }else if indexPath.row == 2 {
+                
                 let webCell = tableView.dequeueReusableCellWithIdentifier("webView") as! contentCell
-                let url = NSURL(string:NewsInfo_Header+(newsInfo?.object_id)!)
-                webCell.loadRequestUrl(url!)
-                webCell.contentWebView.delegate = self
+                if webFlag {
+                    
+                    let url = NSURL(string:NewsInfo_Header+(newsInfo?.object_id)!)
+                    webCell.loadRequestUrl(url!)
+                    webCell.contentWebView.delegate = self
+                    webFlag = false
+                }
                 return webCell
                
             }else if indexPath.row == 3{
@@ -562,8 +671,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if btn.tag == 0 || btn.tag == 1 {
             
             let message = WXMediaMessage()
-            message.title = "中国护士网"
-            message.description = newsInfo?.post_title
+            message.title = newsInfo?.post_title
+            message.description = newsInfo?.post_excerpt
             // TODO:
 //            let imageName = newsInfo?.thumbArr.count == 0 ? "1":newsInfo?.thumbArr.first?.url
             if newsInfo?.thumbArr.count == 0 {
@@ -602,21 +711,21 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             //        req.scene = Int32(WXSceneTimeline.rawValue)
             
             WXApi.sendReq(req)
-        }else{
+        }else if btn.tag == 2 {
             //            let myDelegate = UIApplication.sharedApplication().delegate
             let authRequest:WBAuthorizeRequest = WBAuthorizeRequest.request() as! WBAuthorizeRequest
             authRequest.redirectURI = kRedirectURI
             authRequest.scope = "all"
             
             let message = WBMessageObject.message() as! WBMessageObject
-            message.text = "中国护士网"
+            message.text = newsInfo?.post_title
             let webpage:WBWebpageObject = WBWebpageObject.object() as! WBWebpageObject
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyyMMddHHmmss"
             let dateStr = dateFormatter.stringFromDate(NSDate())
             webpage.objectID = "chinanurse\(kAppKey)\(dateStr)"
-            webpage.title = "中国护士网"
-            webpage.description = (newsInfo?.post_title)!
+            webpage.title = newsInfo?.post_title
+            webpage.description = newsInfo?.post_excerpt
             if newsInfo?.thumbArr.count == 0 {
                 let thumbImage = UIImage(named: "appLogo")
                 let data = UIImageJPEGRepresentation(thumbImage!, 0.5)!
@@ -626,13 +735,21 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let str = DomainName+"data/upload/"+(newsInfo?.thumbArr.first?.url)!
                 let url = NSURL(string: str)
                 let data = NSData(contentsOfURL: url!)
-                let thumbImage = UIImage(data: data!)
-                
-                let data2 = thumbImage!.compressImage(thumbImage!, maxLength: 32700)
+                if data == nil {
+                    let thumbImage = UIImage(named: "appLogo")
+                    let data = UIImageJPEGRepresentation(thumbImage!, 0.5)!
+                    webpage.thumbnailData = data
 
-//                let data2 = UIImageJPEGRepresentation(thumbImage!, 0.000001)!
-//                message.setThumbImage(thumbImage)
-                webpage.thumbnailData = data2
+                }else{
+                    
+                    let thumbImage = UIImage(data: data!)
+                    
+                    let data2 = thumbImage!.compressImage(thumbImage!, maxLength: 32700)
+                    
+                    //                let data2 = UIImageJPEGRepresentation(thumbImage!, 0.000001)!
+                    //                message.setThumbImage(thumbImage)
+                    webpage.thumbnailData = data2
+                }
             }
 //            webpage.thumbnailData = NSDa
             webpage.webpageUrl = NewsInfo_Header+(newsInfo?.object_id)!
@@ -643,71 +760,46 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             request.userInfo = ["ShareMessageFrom":"NewsContantViewController"]
             
             WeiboSDK.sendRequest(request)
+        }else{
+            
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = MBProgressHUDMode.Text;
+            hud.labelText = "周一见"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 2)
+            
+//            let newsUrl = NSURL(string: NewsInfo_Header+(newsInfo?.object_id)!)
+//            let title = newsInfo?.post_title
+//            let description = newsInfo?.post_excerpt
+//            
+//            var previewImageData = NSData()
+//            if newsInfo?.thumbArr.count == 0 {
+//                let thumbImage = UIImage(named: "appLogo")
+//                previewImageData = UIImageJPEGRepresentation(thumbImage!, 0.5)!
+//            }else{
+//                
+//                let str = DomainName+"data/upload/"+(newsInfo?.thumbArr.first?.url)!
+//                let url = NSURL(string: str)
+//                let data = NSData(contentsOfURL: url!)
+//                let thumbImage = UIImage(data: data!)
+//                
+//                previewImageData = thumbImage!.compressImage(thumbImage!, maxLength: 32700)!
+//                
+//                //                let data2 = UIImageJPEGRepresentation(thumbImage!, 0.000001)!
+//                //                message.setThumbImage(thumbImage)
+//            }
+//            
+//            let newsObj = QQApiNewsObject(URL: newsUrl, title: title, description: description, previewImageData: previewImageData, targetContentType: QQApiURLTargetTypeNews)
+//            let req = SendMessageToQQReq(content: newsObj)
+//            
+//            if btn.tag == 3 {
+//                QQApiInterface.sendReq(req)
+//            }else if btn.tag == 4 {
+//                QQApiInterface.SendReqToQZone(req)
+//            }
         }
         
-//        let shareParames = NSMutableDictionary()
-//    // let image : UIImage = UIImage(named: "btn_setting_qq_login")!
-//    // 判断是否有图片,如果没有设置默认图片
-//        let url = NewsInfo_Header+(newsInfo?.object_id)!
-//        shareParames.SSDKSetupShareParamsByText("分享内容",
-//                                                images : UIImage(named: "1.png"),
-//                                                url : NSURL(string:url),
-//                                                title : newsInfo?.post_title,
-//                                                type : SSDKContentType.Auto)
-//
-//        if btn.tag==0 {
-//            if WXApi.isWXAppInstalled() {
-//                
-//                //微信朋友圈分享
-//                ShareSDK.share(SSDKPlatformType.SubTypeWechatTimeline, parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
-//                    
-//                    switch state{
-//                        
-//                    case SSDKResponseState.Success:
-//                        print("分享成功")
-//                    
-//                        let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
-//                        alert.show()
-//                        
-//                    case SSDKResponseState.Fail:    print("分享失败,错误描述:\(error)")
-//                    case SSDKResponseState.Cancel:  print("分享取消")
-//                        
-//                    default:
-//                        break
-//                    }
-//                }
-//            }else{
-//                let alertView = UIAlertView.init(title:"提示" , message: "没有安装微信", delegate: self, cancelButtonTitle: "确定")
-//                alertView.show()
-//                
-//            }
-//        }else if btn.tag == 1{
-//            
-//            if WXApi.isWXAppInstalled() {
-//                //微信好友分享
-//                ShareSDK.share(SSDKPlatformType.SubTypeWechatSession , parameters: shareParames) { (state : SSDKResponseState, userData : [NSObject : AnyObject]!, contentEntity :SSDKContentEntity!, error : NSError!) -> Void in
-//                    switch state{
-//                        
-//                    case SSDKResponseState.Success:
-//                        print("分享成功")
-//                        let alert = UIAlertView(title: "分享成功", message: "分享成功", delegate: self, cancelButtonTitle: "确定")
-//                        alert.show()
-//                        
-//                    case SSDKResponseState.Fail:  print("分享失败,错误描述:\(error)")
-//                    case SSDKResponseState.Cancel:  print("分享取消")
-//                        
-//                    default:
-//                        break
-//                    }
-//                }
-//            }else{
-//                let alertView = UIAlertView.init(title:"提示" , message: "没有安装微信", delegate: self, cancelButtonTitle: "确定")
-//                alertView.show()
-//                
-//            }
-//        
-//        }
-//    
         print(btn.tag)
         
     }
