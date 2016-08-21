@@ -453,6 +453,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             hud.margin = 10.0
             hud.removeFromSuperViewOnHide = true
             hud.hide(true, afterDelay: 1)
+//            let next = RankViewController()
+//            self.navigationController?.pushViewController(next, animated: true)
         }
     }
 

@@ -322,7 +322,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             labelMaxY = CGRectGetMaxY(shareLab_1.frame)
         }
         
-        let line = UIView(frame: CGRectMake(0, labelMaxY+margin, WIDTH, 0.5))
+        let line = UIView(frame: CGRectMake(0, labelMaxY+margin, WIDTH, 1))
         line.backgroundColor = UIColor.lightGrayColor()
         bottomView.addSubview(line)
         
@@ -762,42 +762,39 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             WeiboSDK.sendRequest(request)
         }else{
             
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text;
-            hud.labelText = "周一见"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 2)
+//            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//            hud.mode = MBProgressHUDMode.Text;
+//            hud.labelText = "周一见"
+//            hud.margin = 10.0
+//            hud.removeFromSuperViewOnHide = true
+//            hud.hide(true, afterDelay: 2)
             
-//            let newsUrl = NSURL(string: NewsInfo_Header+(newsInfo?.object_id)!)
-//            let title = newsInfo?.post_title
-//            let description = newsInfo?.post_excerpt
-//            
-//            var previewImageData = NSData()
-//            if newsInfo?.thumbArr.count == 0 {
-//                let thumbImage = UIImage(named: "appLogo")
-//                previewImageData = UIImageJPEGRepresentation(thumbImage!, 0.5)!
-//            }else{
-//                
-//                let str = DomainName+"data/upload/"+(newsInfo?.thumbArr.first?.url)!
-//                let url = NSURL(string: str)
-//                let data = NSData(contentsOfURL: url!)
-//                let thumbImage = UIImage(data: data!)
-//                
-//                previewImageData = thumbImage!.compressImage(thumbImage!, maxLength: 32700)!
-//                
-//                //                let data2 = UIImageJPEGRepresentation(thumbImage!, 0.000001)!
-//                //                message.setThumbImage(thumbImage)
-//            }
-//            
-//            let newsObj = QQApiNewsObject(URL: newsUrl, title: title, description: description, previewImageData: previewImageData, targetContentType: QQApiURLTargetTypeNews)
-//            let req = SendMessageToQQReq(content: newsObj)
-//            
-//            if btn.tag == 3 {
-//                QQApiInterface.sendReq(req)
-//            }else if btn.tag == 4 {
-//                QQApiInterface.SendReqToQZone(req)
-//            }
+            let newsUrl = NSURL(string: NewsInfo_Header+(newsInfo?.object_id)!)
+            let title = newsInfo?.post_title
+            let description = newsInfo?.post_excerpt
+            
+            var previewImageData = NSData()
+            if newsInfo?.thumbArr.count == 0 {
+                let thumbImage = UIImage(named: "appLogo")
+                previewImageData = UIImageJPEGRepresentation(thumbImage!, 0.5)!
+            }else{
+                
+                let str = DomainName+"data/upload/"+(newsInfo?.thumbArr.first?.url)!
+                let url = NSURL(string: str)
+                let data = NSData(contentsOfURL: url!)
+                let thumbImage = UIImage(data: data!)
+                
+                previewImageData = thumbImage!.compressImage(thumbImage!, maxLength: 32700)!
+            }
+            
+            let newsObj = QQApiNewsObject(URL: newsUrl, title: title, description: description, previewImageData: previewImageData, targetContentType: QQApiURLTargetTypeNews)
+            let req = SendMessageToQQReq(content: newsObj)
+            
+            if btn.tag == 3 {
+                QQApiInterface.sendReq(req)
+            }else if btn.tag == 4 {
+                QQApiInterface.SendReqToQZone(req)
+            }
         }
         
         print(btn.tag)

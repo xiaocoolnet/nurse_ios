@@ -122,6 +122,12 @@
 		1F019CAF1D587286009A0818 /* MineRecruit_userViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F019CAE1D587286009A0818 /* MineRecruit_userViewController.swift */; };
 		1F0BE12A1D54A84300842B80 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F0BE1251D54A84300842B80 /* libWeChatSDK.a */; };
 		1F0BE12B1D54A84300842B80 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F0BE1261D54A84300842B80 /* README.txt */; };
+		1F0FDFE21D69384D005DDB80 /* ScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0FDFE11D69384D005DDB80 /* ScoreViewController.swift */; };
+		1F0FDFE61D6949F4005DDB80 /* ScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0FDFE51D6949F4005DDB80 /* ScoreTableViewCell.swift */; };
+		1F0FDFEB1D6955C7005DDB80 /* DownLoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0FDFE91D6955C7005DDB80 /* DownLoadViewController.swift */; };
+		1F0FDFEC1D6955C7005DDB80 /* DownLoadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F0FDFEA1D6955C7005DDB80 /* DownLoadViewController.xib */; };
+		1F0FDFEE1D697A1F005DDB80 /* RankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0FDFED1D697A1F005DDB80 /* RankViewController.swift */; };
+		1F0FDFF01D697C24005DDB80 /* RankTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0FDFEF1D697C24005DDB80 /* RankTableViewCell.swift */; };
 		1F1A33951D548D7A00F7C20A /* editResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */; };
 		1F1A33961D548D7A00F7C20A /* editResumeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */; };
 		1F1A33981D54952600F7C20A /* PostVacanciewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */; };
@@ -396,6 +402,12 @@
 		1F0BE1271D54A84300842B80 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
 		1F0BE1281D54A84300842B80 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		1F0BE1291D54A84300842B80 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		1F0FDFE11D69384D005DDB80 /* ScoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreViewController.swift; sourceTree = "<group>"; };
+		1F0FDFE51D6949F4005DDB80 /* ScoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreTableViewCell.swift; sourceTree = "<group>"; };
+		1F0FDFE91D6955C7005DDB80 /* DownLoadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownLoadViewController.swift; sourceTree = "<group>"; };
+		1F0FDFEA1D6955C7005DDB80 /* DownLoadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DownLoadViewController.xib; sourceTree = "<group>"; };
+		1F0FDFED1D697A1F005DDB80 /* RankViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankViewController.swift; sourceTree = "<group>"; };
+		1F0FDFEF1D697C24005DDB80 /* RankTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankTableViewCell.swift; sourceTree = "<group>"; };
 		1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editResumeViewController.swift; sourceTree = "<group>"; };
 		1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = editResumeViewController.xib; sourceTree = "<group>"; };
 		1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVacanciewViewController.swift; sourceTree = "<group>"; };
@@ -689,6 +701,10 @@
 				181E0D241CEBF83200E34A7F /* FansViewController.swift */,
 				0DB7E1911D38E468001D7B66 /* HSUserPageViewController.swift */,
 				0DB7E1921D38E468001D7B66 /* HSUserPageViewController.xib */,
+				1F0FDFE11D69384D005DDB80 /* ScoreViewController.swift */,
+				1F0FDFED1D697A1F005DDB80 /* RankViewController.swift */,
+				1F0FDFE91D6955C7005DDB80 /* DownLoadViewController.swift */,
+				1F0FDFEA1D6955C7005DDB80 /* DownLoadViewController.xib */,
 			);
 			name = Fines;
 			sourceTree = "<group>";
@@ -1052,6 +1068,8 @@
 				0DB082E41D49F14D004510B1 /* GHSExamTableViewCell.swift */,
 				0DB082E51D49F14D004510B1 /* GHSExamTableViewCell.xib */,
 				1FE6E4C31D536171009E036B /* GHSExamCollectTableViewCell.swift */,
+				1F0FDFE51D6949F4005DDB80 /* ScoreTableViewCell.swift */,
+				1F0FDFEF1D697C24005DDB80 /* RankTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1395,6 +1413,7 @@
 				F6342C691D38DD2800800D8E /* HSArticleCollectCell.xib in Resources */,
 				F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */,
 				F6E9E9541D362AF000E99FDD /* HSHotPostCell.xib in Resources */,
+				1F0FDFEC1D6955C7005DDB80 /* DownLoadViewController.xib in Resources */,
 				183B84FD1CE5BFDC00709235 /* Assets.xcassets in Resources */,
 				1FFD9EE51D51EBD700951098 /* DropDownCell.xib in Resources */,
 				0DB467C51D4CADFA009AE2AD /* CompanyAuthViewController.xib in Resources */,
@@ -1489,6 +1508,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DB467AC1D4C8600009AE2AD /* MJRefreshComponent.m in Sources */,
+				1F0FDFF01D697C24005DDB80 /* RankTableViewCell.swift in Sources */,
 				F605F0C11D2266B100769299 /* HSFindPersonDetailView.swift in Sources */,
 				F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */,
 				0D3780141D372390000D31E2 /* HSPostDetailViewController.swift in Sources */,
@@ -1498,7 +1518,9 @@
 				F6CFC7421D2A164700AC591C /* ForumlistModel.swift in Sources */,
 				0DB467BA1D4C8600009AE2AD /* NSBundle+MJRefresh.m in Sources */,
 				F632EF0E1D18E8890038AF9D /* HSSQCollectionViewCell.swift in Sources */,
+				1F0FDFEE1D697A1F005DDB80 /* RankViewController.swift in Sources */,
 				0DB467C41D4CADFA009AE2AD /* CompanyAuthViewController.swift in Sources */,
+				1F0FDFEB1D6955C7005DDB80 /* DownLoadViewController.swift in Sources */,
 				0BC3878E1D339C2C001460B8 /* AdressPickerView.swift in Sources */,
 				F64C9AC41D3B9C150041E360 /* MineRecDetailsViewController.swift in Sources */,
 				183B86741CE5CFA000709235 /* CornerRadiusViewController.swift in Sources */,
@@ -1546,6 +1568,7 @@
 				183B866F1CE5CF9500709235 /* Http.swift in Sources */,
 				185408791CE6C8B600DFBA7C /* NurseStationViewController.swift in Sources */,
 				F6B4083D1D1D212800BDFDBE /* HSNurseStationHelper.swift in Sources */,
+				1F0FDFE61D6949F4005DDB80 /* ScoreTableViewCell.swift in Sources */,
 				18ADDDEF1CE9995700557FFE /* PostTableViewCell.swift in Sources */,
 				181DE09B1CEAFFC00085ECB1 /* PostViewController.swift in Sources */,
 				1FE6E4C21D52EBE3009E036B /* AdressPickerView_2.swift in Sources */,
@@ -1654,6 +1677,7 @@
 				0BEA9CAA1D1390120012FC11 /* ForgetPasswordController.swift in Sources */,
 				1FFD9ECD1D519C4D00951098 /* GHSPostResumeView.swift in Sources */,
 				0BD429491D3DFAA20064B64C /* CollectDetailViewController.swift in Sources */,
+				1F0FDFE21D69384D005DDB80 /* ScoreViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
