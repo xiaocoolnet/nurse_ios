@@ -292,10 +292,10 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         bottomView.backgroundColor = UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
         bgView.addSubview(bottomView)
         
-        let shareBtnWidth:CGFloat = 80
-        let maxMargin:CGFloat = 40
-        let shareBtnCount:Int = Int((WIDTH - maxMargin)/(maxMargin+shareBtnWidth))+1
-        let margin = (WIDTH - shareBtnWidth*CGFloat(shareBtnCount))/(CGFloat(shareBtnCount)+1)
+        let shareBtnWidth:CGFloat = WIDTH/7.0
+//        let maxMargin:CGFloat = shareBtnWidth/3.0
+        let shareBtnCount:Int = 5 // 每行的按钮数
+        let margin = shareBtnWidth/3.0
         
         let labelHeight = margin/2.0
         
@@ -414,8 +414,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "获取关联文章失败"
-                    hud.detailsLabelText = status.errorData
+//                    hud.labelText = "获取关联文章失败"
+//                    hud.detailsLabelText = status.errorData
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)

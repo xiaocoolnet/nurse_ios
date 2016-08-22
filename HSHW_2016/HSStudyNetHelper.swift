@@ -18,7 +18,7 @@ class HSStudyNetHelper: NSObject {
         ]
         print(param)
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request?.mainDocumentURL)
+            print(request?.URLString)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{

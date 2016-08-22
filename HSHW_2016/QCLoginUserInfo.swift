@@ -17,6 +17,7 @@ class QCLoginUserInfo {
     var userName = ""
     var avatar = ""
     var city = ""
+    var address = ""
     var qqNumber = ""
     var weixinNumber = ""
     var time = ""

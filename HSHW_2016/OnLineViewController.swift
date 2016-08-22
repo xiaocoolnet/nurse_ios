@@ -74,7 +74,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         self.view.backgroundColor = UIColor.whiteColor()
         self.isSubmit  = false
         collection = false
-        self.timeDow()
+//        self.timeDow()
         // Do any additional setup after loading the view.
         
 //        self.submit()
@@ -92,6 +92,9 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
 
     
     override func viewWillDisappear(animated: Bool) {
+        if timeNow.valid {
+            timeNow.invalidate()
+        }
         if over == false {
             UIView.animateWithDuration(0.3, animations: {
                 self.questBack_uncommit.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
@@ -122,19 +125,13 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         Alamofire.request(.GET, url, parameters: param as? [String:String]).response { [unowned self] request, response, json, error in
             dispatch_async(dispatch_get_main_queue(), {
                 if(error != nil){
-                    
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = error?.localizedDescription
+                    hud.hide(true, afterDelay: 1)
                 }else{
                     let status = EveryDayModel(JSONDecoder(json!))
                     print("状态是")
                     print(status.status)
-                    if(status.status == "error"){
-//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = status.errorData
-//                        hud.margin = 10.0
-//                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
-                    }
                     if(status.status == "success"){
                         
                         print(status)
@@ -150,7 +147,16 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                         self.backBottomView()
                         self.questionCard_uncommit()
                         self.questionCard_commit()
+                        self.timeDow()
+
                         print(status.data)
+                    }else{
+                        //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = status.errorData
+                        //                        hud.margin = 10.0
+                        //                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
                     }
                 }
             })
@@ -159,19 +165,19 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     
     func timeDow()
     {
-        timeNow = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(WordViewController.updateTime), userInfo: nil, repeats: true)
+        timeNow = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(OnLineViewController.updateTime), userInfo: nil, repeats: true)
     }
     
     func updateTime()
     {
         //  print(self.scrollView.subviews)
-        let index :Int = self.pageControl.currentPage
-        var label = UILabel()
-        if self.scrollView.subviews.count==0 {
-            
-        }else{
-            label = self.view.viewWithTag(10+index) as! UILabel
-        }
+//        let index :Int = self.pageControl.currentPage
+//        var time = UILabel()
+//        if self.scrollView.subviews.count==0 {
+//            
+//        }else{
+//            time = self.view.viewWithTag(10+index) as! UILabel
+//        }
         count -= 1
         if minute>=0 {
             if (count <= 0)
@@ -180,27 +186,27 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 minute -= 1
                 
             }
-            print(label.text)
+            print(time.text)
             if minute == -1 {
                 minute = 2
                 count = 59
                 
-                label.text = "0"+"\(minute)"+":"+"\(count)"
-                self.timeText = label.text
+                time.text = "0"+"\(minute)"+":"+"\(count)"
+                self.timeText = time.text
                 timeNow.invalidate()
             }
-            label.text = "0"+"\(minute)"+":"+"\(count)"
+            time.text = "0"+"\(minute)"+":"+"\(count)"
             if minute<10 {
                 
                 if count<10 {
-                    label.text = "0"+"\(minute)"+":"+"0"+"\(count)"
-                    self.timeText = label.text
+                    time.text = "0"+"\(minute)"+":"+"0"+"\(count)"
+                    self.timeText = time.text
                     
                 }
             }else{
                 
-                label.text = "\(minute)"+":"+"\(count)"
-                self.timeText = label.text
+                time.text = "\(minute)"+":"+"\(count)"
+                self.timeText = time.text
                 
             }
         }
@@ -589,7 +595,58 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     }
     // MARK: 答题区
     func createScrollerView() {
-        scrollView.frame = CGRectMake(0, 1,WIDTH, HEIGHT-119)
+        
+        let bgView = UIView(frame: CGRectMake(0, 1,WIDTH, HEIGHT-119))
+        self.view.addSubview(bgView)
+
+        let backGound = UIView(frame: CGRectMake(0, 0, WIDTH,44))
+        
+        let dan = UIImageView(frame: CGRectMake(10, 16, 12, 12))
+        dan.image = UIImage(named: "ic_choice.png")
+        backGound.addSubview(dan)
+        let danxuan = UILabel(frame: CGRectMake(24, 12.5, 40, 17))
+        danxuan.font = UIFont.systemFontOfSize(18)
+        danxuan.text = "单选题"
+        danxuan.sizeToFit()
+        backGound.addSubview(danxuan)
+        let tit = UILabel(frame: CGRectMake(28+danxuan.bounds.size.width, 18.5, 40, 12))
+        tit.font = UIFont.systemFontOfSize(12)
+        tit.textColor = GREY
+        tit.text = "（A1，2分）"
+        tit.sizeToFit()
+        backGound.addSubview(tit)
+        time.frame = CGRectMake(WIDTH-50, 16, 50, 12)
+//        time.tag = 10+i
+        //time.backgroundColor = UIColor.redColor()
+        time.font = UIFont.systemFontOfSize(14)
+        //time.textAlignment = .Right
+        time.textColor = COLOR
+        time.text = "00:00"
+        //time.sizeToFit()
+        backGound.addSubview(time)
+        let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.origin.x-125, 15, 71, 12))
+        // let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.size.width-83, 15, 71, 12))
+        // timelab.backgroundColor = UIColor.greenColor()
+        timelab.font = UIFont.systemFontOfSize(12)
+        timelab.textColor = GREY
+        timelab.text = "剩余答题时间"
+        timelab.textAlignment = .Right
+        timelab.sizeToFit()
+        backGound.addSubview(timelab)
+        
+        bgView.addSubview(backGound)
+        
+        let backView = UIImageView()
+        backView.userInteractionEnabled = true
+        
+        backView.frame = CGRectMake(0, 45, WIDTH, HEIGHT-64-49-1-44)//背景
+        //            backView.backgroundColor = COLOR
+        
+        backView.image = UIImage.init(named: "ic_exam_backgroundImage")
+//        backView.tag = i+1
+        bgView.addSubview(backView)
+        
+        scrollView.frame = CGRectMake(0, 45,WIDTH, HEIGHT-64-49-1-44)
         scrollView.pagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
@@ -599,59 +656,16 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         for  i in 0 ..< self.dataSource.count {
             let examInfo = self.dataSource[i] as! ExamInfo
             let contentScrollView :UIScrollView = UIScrollView.init()
-            contentScrollView.frame = CGRectMake(CGFloat(i)*WIDTH+10, 54, WIDTH-20, HEIGHT-221)
+            contentScrollView.frame = CGRectMake(CGFloat(i)*WIDTH+10, 10, WIDTH-20, HEIGHT-64-49-1-44-10-50)
             contentScrollView.backgroundColor = UIColor.whiteColor()
             contentScrollView.layer.cornerRadius = 5
+ 
+//            let back = UIView(frame: CGRectMake(WIDTH+10, 54, WIDTH-20, HEIGHT-221))//白色答题区域
+//            back.backgroundColor = UIColor.whiteColor()
+//            back.layer.cornerRadius = 5
             
-            let backView = UIImageView()
-            backView.userInteractionEnabled = true
-            
-            backView.frame = CGRectMake(CGFloat(i)*WIDTH, 44, WIDTH, HEIGHT-163)//背景
-            //            backView.backgroundColor = COLOR
-            
-            backView.image = UIImage.init(named: "ic_exam_backgroundImage")
-            backView.tag = i+1
-            
-            let backGound = UIView(frame: CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH,44))
-            
-            let back = UIView(frame: CGRectMake(CGFloat(i)*WIDTH+10, 54, WIDTH-20, HEIGHT-221))//白色答题区域
-            back.backgroundColor = UIColor.whiteColor()
-            back.layer.cornerRadius = 5
-            
-            let dan = UIImageView(frame: CGRectMake(10, 16, 12, 12))
-            dan.image = UIImage(named: "ic_choice.png")
-            backGound.addSubview(dan)
-            let danxuan = UILabel(frame: CGRectMake(24, 12.5, 40, 17))
-            danxuan.font = UIFont.systemFontOfSize(18)
-            danxuan.text = "单选题"
-            danxuan.sizeToFit()
-            backGound.addSubview(danxuan)
-            let tit = UILabel(frame: CGRectMake(28+danxuan.bounds.size.width, 18.5, 40, 12))
-            tit.font = UIFont.systemFontOfSize(12)
-            tit.textColor = GREY
-            tit.text = "（A1，2分）"
-            tit.sizeToFit()
-            backGound.addSubview(tit)
-            let time = UILabel(frame: CGRectMake(WIDTH-50, 16, 50, 12))
-            time.tag = 10+i
-            //time.backgroundColor = UIColor.redColor()
-            time.font = UIFont.systemFontOfSize(14)
-            //time.textAlignment = .Right
-            time.textColor = COLOR
-            time.text = "00:00"
-            //time.sizeToFit()
-            backGound.addSubview(time)
-            let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.origin.x-125, 15, 71, 12))
-            // let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.size.width-83, 15, 71, 12))
-            // timelab.backgroundColor = UIColor.greenColor()
-            timelab.font = UIFont.systemFontOfSize(12)
-            timelab.textColor = GREY
-            timelab.text = "剩余答题时间"
-            timelab.textAlignment = .Right
-            timelab.sizeToFit()
-            backGound.addSubview(timelab)
             //问题
-            let question = UILabel(frame: CGRectMake(WIDTH*20/375, WIDTH*15/375, back.bounds.size.width-WIDTH*38/375, 40))
+            let question = UILabel(frame: CGRectMake(WIDTH*20/375, WIDTH*15/375, contentScrollView.bounds.size.width-WIDTH*38/375, 40))
             question.numberOfLines = 0
             question.textAlignment = .Natural
             question.font = UIFont.systemFontOfSize(14)
@@ -696,16 +710,16 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 btn.setTitle(string+"、"+answerInfo.answer_title, forState: .Normal)
                 var AllHeight = CGFloat()
                 AllHeight = CGFloat(heightArray.lastObject as! NSNumber)
-                contentScrollView.contentSize = CGSizeMake(WIDTH-20, AllHeight+10*CGFloat(examInfo.answerlist.count-1))
+                contentScrollView.contentSize = CGSizeMake(0, AllHeight+10*CGFloat(examInfo.answerlist.count-1))
             }
-            scrollView.addSubview(backGound)
-            scrollView.addSubview(backView)
+//            scrollView.addSubview(backGound)
+//            scrollView.addSubview(backView)
             scrollView.addSubview(contentScrollView)
         }
         
         scrollView.contentSize = CGSizeMake(CGFloat(self.dataSource.count)*self.view.frame.size.width, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
-        view.addSubview(scrollView)
+        bgView.addSubview(scrollView)
         let ques = UILabel(frame: CGRectMake(WIDTH/2-80, HEIGHT-146, 80, 12))
         ques.font = UIFont.systemFontOfSize(12)
         ques.textAlignment = .Right

@@ -23,6 +23,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     var newsList = Array<NewsInfo>()
     var imageArr = Array<NewsInfo>()
     
+    var noRead = true
     
     let titLabArr:[String] = ["每日一练","5万道题库","在线考试"]
     let titImgArr:[String] = ["ic_bi.png","ic_fuzhi.png","ic_phone.png"]
@@ -101,9 +102,9 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 //        }
         
         
-        var flag = 0
+//        var flag = 0
         
-        HSNurseStationHelper().getArticleListWithID("105") { (success, response) in
+        HSNurseStationHelper().getArticleListWithID("111") { (success, response) in
             
             if success {
                 print(response)
@@ -119,10 +120,10 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     self.myTableView.reloadData()
                 })
                 
-                flag += 1
-                if flag == 2 {
+//                flag += 1
+//                if flag == 2 {
                     self.myTableView.mj_header.endRefreshing()
-                }
+//                }
             }else{
                 self.myTableView.mj_header.endRefreshing()
                 
@@ -137,35 +138,35 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             }
         }
         
-        HSNurseStationHelper().getArticleListWithID("10") { (success, response) in
-            
-            if success {
-                print(response)
-                
-                self.newsList = response as! Array<NewsInfo>
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.updateSlideImage()
-                    self.myTableView.reloadData()
-                })
-                
-                flag += 1
-                if flag == 2 {
-                    self.myTableView.mj_header.endRefreshing()
-                }
-                
-            }else{
-                self.myTableView.mj_header.endRefreshing()
-                
-                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                hud.mode = MBProgressHUDMode.Text;
-                hud.labelText = "文章列表获取失败"
-                hud.detailsLabelText = String(response!)
-                hud.margin = 10.0
-                hud.removeFromSuperViewOnHide = true
-                hud.hide(true, afterDelay: 1)
-            }
-        }
+//        HSNurseStationHelper().getArticleListWithID("10") { (success, response) in
+//            
+//            if success {
+//                print(response)
+//                
+//                self.newsList = response as! Array<NewsInfo>
+//                
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    self.updateSlideImage()
+//                    self.myTableView.reloadData()
+//                })
+//                
+//                flag += 1
+//                if flag == 2 {
+//                    self.myTableView.mj_header.endRefreshing()
+//                }
+//                
+//            }else{
+//                self.myTableView.mj_header.endRefreshing()
+//                
+//                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                hud.mode = MBProgressHUDMode.Text;
+//                hud.labelText = "文章列表获取失败"
+//                hud.detailsLabelText = String(response!)
+//                hud.margin = 10.0
+//                hud.removeFromSuperViewOnHide = true
+//                hud.hide(true, afterDelay: 1)
+//            }
+//        }
     }
     
     func updateSlideImage(){
@@ -219,14 +220,16 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 4
+        return 5
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-         if section == 0 {
-            return 3
-        }else if section == 1 {
+        if section == 0 {
             return 1
+        }else if section == 1 {
+            return 3
         }else if section == 2 {
+            return 1
+        }else if section == 3 {
             return 3
         }else{
             return 1
@@ -248,6 +251,24 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         cell.accessoryType = .DisclosureIndicator
         
         if indexPath.section == 0 {
+            cell.titImage.setImage(UIImage(named: "ic_wirte"), forState: .Normal)
+            cell.titLab.text = "护士笔记"
+            
+//            if noRead {
+//                let numLab = UILabel()
+//                numLab.frame = CGRectMake(0, 0, 25, 25)
+//                numLab.backgroundColor = UIColor.redColor()
+//                numLab.layer.cornerRadius = 12.5
+//                numLab.clipsToBounds = true
+//                numLab.textAlignment = .Center
+//                numLab.textColor = UIColor.whiteColor()
+//                numLab.font = UIFont.systemFontOfSize(10)
+//                numLab.text = "99+"
+//                cell.accessoryView = numLab
+//            }else{
+//                cell.accessoryView = nil
+//            }
+        }else if indexPath.section == 1 {
             cell.titImage.setImage(UIImage(named: titImgArr[indexPath.row]), forState: .Normal)
             cell.titLab.text = titLabArr[indexPath.row]
             let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
@@ -258,10 +279,10 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             if indexPath.row == 2 {
                 line.removeFromSuperview()
             }
-        }else if indexPath.section == 1 {
+        }else if indexPath.section == 2 {
             cell.titImage.setImage(UIImage(named: "ic_plane.png"), forState: .Normal)
             cell.titLab.text = "出国考试"
-        }else if indexPath.section == 2 {
+        }else if indexPath.section == 3 {
             cell.titImage.setImage(UIImage(named: titImgArrTwo[indexPath.row]), forState: .Normal)
             cell.titLab.text = titLabArrTwo[indexPath.row]
             let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
@@ -282,6 +303,15 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if indexPath.section == 0 {
+            print("学习-护士笔记点击事件")
+            self.noRead = false
+            self.myTableView.reloadData()
+            
+            let noteVC = AllStudyViewController()
+            noteVC.articleID = "95"
+            noteVC.title = "护士笔记"
+            self.navigationController?.pushViewController(noteVC, animated: true)
+        }else if indexPath.section == 1 {
             if indexPath.row == 0 {
                 let next = OnlineTextViewController()
                 next.title = "每日一练"
@@ -302,13 +332,13 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 self.navigationController?.pushViewController(next, animated: true)
 //                
             }
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 2 {
 //            let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
             let goAboard = AllStudyViewController()
             goAboard.articleID = "12"
             goAboard.title = "出国考试"
             self.navigationController?.pushViewController(goAboard, animated: true)
-        } else if indexPath.section == 2 {
+        } else if indexPath.section == 3 {
             
             if indexPath.row == 0 {
 //                let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
@@ -329,7 +359,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 goAboard.title = "考试宝典"
                 self.navigationController?.pushViewController(goAboard, animated: true)
             }
-        }else if indexPath.section == 3 {
+        }else if indexPath.section == 4 {
             if indexPath.row == 0 {
 //                let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
                 let goAboard = AllStudyViewController()

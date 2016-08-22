@@ -28,13 +28,13 @@ class NewsViewController: UIViewController {
         self.view.backgroundColor = UIColor.whiteColor()
         oneView.title = "头条"
         oneView.newsId = "4"
-        oneView.slideImageId = "101"
+        oneView.slideImageId = "108"
         twoView.title = "护理界"
         twoView.newsId = "5"
-        twoView.slideImageId = "102"
+        twoView.slideImageId = "109"
         threeView.title = "健康"
         threeView.newsId = "6"
-        threeView.slideImageId = "103"
+        threeView.slideImageId = "110"
         fourView.title = "学术会议"
         fourView.articleID = "7"
         let viewControllers = [oneView,twoView,threeView,fourView]

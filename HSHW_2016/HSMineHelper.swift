@@ -38,7 +38,7 @@ class HSMineHelper: NSObject {
                     QCLoginUserInfo.currentInfo.weixinNumber = result.data?.user_weixin ?? ""
                     QCLoginUserInfo.currentInfo.time = result.data?.user_time ?? ""
                     QCLoginUserInfo.currentInfo.money = result.data?.user_money ?? "0"
-                    QCLoginUserInfo.currentInfo.city = result.data?.user_city ?? ""
+                    QCLoginUserInfo.currentInfo.address = result.data?.user_address ?? ""
                     QCLoginUserInfo.currentInfo.email = result.data?.user_email_2 ?? ""
                     QCLoginUserInfo.currentInfo.school = result.data?.user_school_2 ?? ""
                     QCLoginUserInfo.currentInfo.major = result.data?.user_major_2 ?? ""

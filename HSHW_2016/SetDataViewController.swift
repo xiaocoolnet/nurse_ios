@@ -23,7 +23,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var twoArr:[String] = ["姓名","出生日期","地址"]
     var twodeArr:[String] = [QCLoginUserInfo.currentInfo.realName,
                              QCLoginUserInfo.currentInfo.birthday,
-                             QCLoginUserInfo.currentInfo.city]
+                             QCLoginUserInfo.currentInfo.address]
     
     var threeArr:[String] = ["学校","专业","学历"]
     var threedeArr:[String] = [QCLoginUserInfo.currentInfo.school,
@@ -35,7 +35,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     var picker:DatePickerView?
     var pick:AdressPickerView?
-    var array = NSArray()
+    var array = Array<String>()
     
     
     override func viewWillAppear(animated: Bool) {
@@ -293,11 +293,12 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
             changeNameVC.title = "编辑地址"
             let pick = AdressPickerView.shareInstance
             pick.showTown=true
-            pick.pickArray=array
+            let tempArray = self.twodeArr[indexPath.row].componentsSeparatedByString("-")
+            pick.pickArray = tempArray.count==3 ? tempArray:array
             pick.show((UIApplication.sharedApplication().keyWindow)!)
             pick.selectAdress { (dressArray) in
-                self.array=dressArray
-                self.twodeArr[indexPath.row] = ("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])")
+                self.array=dressArray as! Array<String>
+                self.twodeArr[indexPath.row] = ("\(dressArray[0])-\(dressArray[1])-\(dressArray[2])")
                 let mineHelper = HSMineHelper()
                 mineHelper.changeAddress(self.twodeArr[indexPath.row], handle: { [unowned self] (success, response) in
                     dispatch_async(dispatch_get_main_queue(), {

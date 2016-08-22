@@ -167,7 +167,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
             })
             
-            HSNurseStationHelper().getArticleListWithID("104") { (success, response) in
+            HSNurseStationHelper().getArticleListWithID("121") { (success, response) in
                 
                 if success {
                     print(response)

@@ -116,7 +116,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
             }
         }
         
-        HSNurseStationHelper().getArticleListWithID(newsType == nil ? newsId : String(newsType!+17)) { (success, response) in
+        HSNurseStationHelper().getArticleListWithID(newsType == nil ? newsId : String(newsType!)) { (success, response) in
             
             if success {
                 print(response)

@@ -133,7 +133,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         
         var flag = 0
         
-        HSNurseStationHelper().getArticleListWithID("104") { (success, response) in
+        HSNurseStationHelper().getArticleListWithID("112") { (success, response) in
             
             if success {
                 print(response)
@@ -415,9 +415,36 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         channelid = btn.tag
         country = btn.tag
         let vc = TouTiaoViewController()
-        vc.newsType = btn.tag
-        // TODO:后期 后台加各个国家幻灯片分类，对应newsId为分类ID+1
-        vc.slideImageId = "104"
+        switch btn.tag {
+        case 0:
+            vc.newsType = 17
+            vc.slideImageId = "113"
+        case 1:
+            vc.newsType = 18
+            vc.slideImageId = "114"
+        case 2:
+            vc.newsType = 19
+            vc.slideImageId = "115"
+        case 3:
+            vc.newsType = 20
+            vc.slideImageId = "116"
+        case 4:
+            vc.newsType = 21
+            vc.slideImageId = "117"
+        case 5:
+            vc.newsType = 23
+            vc.slideImageId = "118"
+        case 6:
+            vc.newsType = 24
+            vc.slideImageId = "119"
+        case 7:
+            vc.newsType = 22
+            vc.slideImageId = "120"
+            
+        default:
+            return
+        }
+        
         vc.title = nameArr[btn.tag]
         navigationController?.pushViewController(vc, animated: true)
     }

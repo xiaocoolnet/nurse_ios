@@ -45,6 +45,7 @@ class LoginUserInfo: JSONJoy {
     var user_id:String
     var user_name:String
     var user_city:String
+    var user_address:String
     var user_qq:String
     var user_weixin:String
     var user_avatar:String
@@ -75,6 +76,7 @@ class LoginUserInfo: JSONJoy {
         user_devicestate = decoder["devicestate"].string ?? ""
         user_name = decoder["name"].string ?? ""
         user_city = decoder["city"].string ?? ""
+        user_address = decoder["address"].string ?? ""
         user_qq = decoder["qq"].string ?? ""
         user_weixin = decoder["weixin"].string ?? ""
         user_avatar = decoder["photo"].string ?? ""
