@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class RankViewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
     
@@ -93,8 +94,8 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
     
     // TableView delegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let scoreVC = ScoreViewController()
-        self.navigationController?.pushViewController(scoreVC, animated: true)
+//        let scoreVC = ScoreViewController()
+//        self.navigationController?.pushViewController(scoreVC, animated: true)
     }
     
     
@@ -102,8 +103,15 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
     func shareBtnClick() {
         print("点击 邀请朋友赚积分 按钮")
         
-        let downLoadVC = DownLoadViewController()
-        self.navigationController?.pushViewController(downLoadVC, animated: true)
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.mode = MBProgressHUDMode.Text
+        hud.labelText = "敬请期待"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        hud.hide(true, afterDelay: 1)
+        
+//        let downLoadVC = DownLoadViewController()
+//        self.navigationController?.pushViewController(downLoadVC, animated: true)
     }
     
     override func didReceiveMemoryWarning() {

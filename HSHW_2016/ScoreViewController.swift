@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class ScoreViewController: UIViewController,UITableViewDataSource {
 
@@ -25,6 +26,8 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
         
         self.title = "个人积分"
         self.view.backgroundColor = COLOR
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "score"), style: .Done, target: self, action: #selector(rankBtnClick))
                 
         scoreArray = [["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"]]
         
@@ -79,8 +82,28 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
     func shareBtnClick() {
         print("点击 邀请朋友赚积分 按钮")
         
-        let downLoadVC = DownLoadViewController()
-        self.navigationController?.pushViewController(downLoadVC, animated: true)
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.mode = MBProgressHUDMode.Text
+        hud.labelText = "敬请期待"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        hud.hide(true, afterDelay: 1)
+
+//        let downLoadVC = DownLoadViewController()
+//        self.navigationController?.pushViewController(downLoadVC, animated: true)
+    }
+    
+    // MARK:- 点击排行榜按钮
+    func rankBtnClick() {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.mode = MBProgressHUDMode.Text
+        hud.labelText = "敬请期待"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        hud.hide(true, afterDelay: 1)
+//        let rankVC = RankViewController()
+//        self.navigationController?.pushViewController(rankVC, animated: true)
+        
     }
 
     override func didReceiveMemoryWarning() {

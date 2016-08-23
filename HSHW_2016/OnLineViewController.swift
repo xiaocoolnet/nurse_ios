@@ -27,7 +27,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     var time = UILabel()
     let grayBack = UIView()
     var hear = Bool()
-    var timeNow:NSTimer!
+    var timeNow = NSTimer()
     var minute : Int = 1
     var dataSource = NSArray()
     var count:Int = 13

@@ -61,13 +61,13 @@
 		<string>sinaweibo</string>
 		<string>weixin</string>
 		<string>wechat</string>
-<string>mqqwpa</string>
-    <string>mqqopensdkapiV3</string>
-    <string>wtloginmqq2</string>
-    <string>mqzone</string>
-    <string>mqqopensdkapiV2</string>
-    <string>mqqapi</string>
-    <string>mqq</string>
+		<string>mqqwpa</string>
+		<string>mqqopensdkapiV3</string>
+		<string>wtloginmqq2</string>
+		<string>mqzone</string>
+		<string>mqqopensdkapiV2</string>
+		<string>mqqapi</string>
+		<string>mqq</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

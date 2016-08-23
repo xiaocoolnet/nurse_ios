@@ -447,14 +447,14 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             next.userType = 1
             self.navigationController?.pushViewController(next, animated: true)
         }else if btn.tag == 3 {
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "敬请期待"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 1)
-//            let next = RankViewController()
-//            self.navigationController?.pushViewController(next, animated: true)
+//            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//            hud.mode = MBProgressHUDMode.Text
+//            hud.labelText = "敬请期待"
+//            hud.margin = 10.0
+//            hud.removeFromSuperViewOnHide = true
+//            hud.hide(true, afterDelay: 1)
+            let next = ScoreViewController()
+            self.navigationController?.pushViewController(next, animated: true)
         }
     }
 
@@ -539,13 +539,17 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let dformatter = NSDateFormatter()
         dformatter.dateFormat = "yyyy年MM月dd日"
         print("当前日期时间：\(dformatter.stringFromDate(now))")
+        let today = dformatter.dateFromString(dformatter.stringFromDate(now))
+
         
         //当前时间的时间戳
-        let timeInterval:NSTimeInterval = now.timeIntervalSince1970
+        let timeInterval:NSTimeInterval = today!.timeIntervalSince1970
 //        let double = (timeInterval as NSString).doubleValue
 
-        self.timeStamp = Int(timeInterval/100)
-        print("当前时间的时间戳：\(timeStamp)")
+//        self.timeStamp = Int(timeInterval/100)
+        self.timeStamp = Int(timeInterval)
+        
+        print("当前时间的时间戳：\(Int(timeInterval))")
 
     }
 }

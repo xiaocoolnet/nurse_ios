@@ -212,7 +212,7 @@
                                                 <action selector="sexBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="R22-JK-VL9"/>
                                             </connections>
                                         </button>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_yuan" translatesAutoresizingMaskIntoConstraints="NO" id="F7I-bS-oO1">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_yuan_purple" translatesAutoresizingMaskIntoConstraints="NO" id="F7I-bS-oO1">
                                             <rect key="frame" x="105" y="18" width="9" height="9"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="9" id="24p-iJ-dX6"/>
@@ -457,14 +457,14 @@
                                                 <action selector="eduBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="D3h-PF-hHv"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="本科" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Mk-nS-jEc">
-                                            <rect key="frame" x="105" y="14" width="28" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择学历" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Mk-nS-jEc">
+                                            <rect key="frame" x="105" y="14" width="70" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="tTc-LA-4j2">
-                                            <rect key="frame" x="138" y="21" width="7" height="4"/>
+                                            <rect key="frame" x="180" y="21" width="7" height="4"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="7" id="prE-E7-J6i"/>
                                                 <constraint firstAttribute="height" constant="4" id="qc3-BQ-YFM"/>
@@ -735,14 +735,14 @@
                                                 <action selector="professionalBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="sxh-Sz-IJS"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="主管护师" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sWr-Zu-f51">
-                                            <rect key="frame" x="105" y="14" width="56" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择职称" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sWr-Zu-f51">
+                                            <rect key="frame" x="105" y="14" width="70" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="3cg-A7-bm9">
-                                            <rect key="frame" x="166" y="21" width="7" height="4"/>
+                                            <rect key="frame" x="180" y="21" width="7" height="4"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="4" id="4ZL-D1-00N"/>
                                                 <constraint firstAttribute="width" constant="7" id="PDu-4o-Me0"/>
@@ -909,7 +909,7 @@
                                                 <action selector="jobStatusBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="J5l-Hy-8yl"/>
                                             </connections>
                                         </button>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_yuan" translatesAutoresizingMaskIntoConstraints="NO" id="xQF-bN-kj0">
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_yuan_purple" translatesAutoresizingMaskIntoConstraints="NO" id="xQF-bN-kj0">
                                             <rect key="frame" x="105" y="18" width="9" height="9"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="9" id="iST-5O-qzd"/>
@@ -1237,14 +1237,8 @@
                                                 <action selector="jobTimeBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="Ntz-1H-gTs"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="立即到岗" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jsd-eV-nY1">
-                                            <rect key="frame" x="105" y="14" width="56" height="17"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="bsW-BT-cj3">
-                                            <rect key="frame" x="166" y="20" width="7" height="4"/>
+                                            <rect key="frame" x="208" y="20" width="7" height="4"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="7" id="aLe-JQ-bm4"/>
                                                 <constraint firstAttribute="height" constant="4" id="nAt-0b-v3W"/>
@@ -1257,6 +1251,12 @@
                                                 <constraint firstAttribute="height" constant="1" id="jcT-Gb-CAo"/>
                                             </constraints>
                                         </view>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择到岗时间" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jsd-eV-nY1">
+                                            <rect key="frame" x="105" y="14" width="98" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
@@ -1472,14 +1472,14 @@
                                                 <action selector="expectedPositionBtnClick:" destination="NiI-rQ-EdH" eventType="touchUpInside" id="VyT-g9-g98"/>
                                             </connections>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="护士长" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mou-Qp-Fe7">
-                                            <rect key="frame" x="105" y="14" width="42" height="17"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择期望职位" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mou-Qp-Fe7">
+                                            <rect key="frame" x="105" y="14" width="98" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.78039215689999997" green="0.78039215689999997" blue="0.80392156859999997" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_down" translatesAutoresizingMaskIntoConstraints="NO" id="NEo-Rd-OZ0">
-                                            <rect key="frame" x="152" y="20" width="7" height="4"/>
+                                            <rect key="frame" x="208" y="20" width="7" height="4"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="4" id="VjF-Ec-bSP"/>
                                                 <constraint firstAttribute="width" constant="7" id="x9Y-QE-xxu"/>
@@ -2913,6 +2913,7 @@
     <resources>
         <image name="ic_down" width="8" height="4"/>
         <image name="ic_yuan" width="9" height="9"/>
+        <image name="ic_yuan_purple" width="50" height="50"/>
         <image name="img_head_nor" width="294" height="295"/>
     </resources>
 </document>

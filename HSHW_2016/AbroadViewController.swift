@@ -154,16 +154,23 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
                     self.myTableView.mj_header.endRefreshing()
                 }
             }else{
-                self.myTableView.mj_header.endRefreshing()
-                
-                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                hud.mode = MBProgressHUDMode.Text;
-                hud.labelText = "轮播图获取失败"
-                hud.detailsLabelText = String(response!)
-                print(response!)
-                hud.margin = 10.0
-                hud.removeFromSuperViewOnHide = true
-                hud.hide(true, afterDelay: 1)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.myTableView.mj_header.endRefreshing()
+                    
+                    if response as? String == "no data" {
+                        self.imageArr = Array<NewsInfo>()
+                        self.updateSlideImage()
+                        self.myTableView.reloadData()
+                    }
+                    
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "轮播图获取失败"
+                    hud.detailsLabelText = String(response!)
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                })
             }
         }
         
@@ -185,15 +192,22 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
                 }
                 
             }else{
-                self.myTableView.mj_header.endRefreshing()
-                
-                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                hud.mode = MBProgressHUDMode.Text;
-                hud.labelText = "文章列表获取失败"
-                hud.detailsLabelText = String(response!)
-                hud.margin = 10.0
-                hud.removeFromSuperViewOnHide = true
-                hud.hide(true, afterDelay: 1)
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.myTableView.mj_header.endRefreshing()
+                    
+                    if response as? String == "no data" {
+                        self.dataSource = Array<NewsInfo>()
+                    }
+                    self.myTableView.reloadData()
+                    
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "文章列表获取失败"
+                    hud.detailsLabelText = String(response!)
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                })
             }
         }
         
