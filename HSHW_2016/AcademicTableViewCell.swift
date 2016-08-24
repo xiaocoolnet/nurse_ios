@@ -93,7 +93,7 @@ class AcademicTableViewCell: UITableViewCell {
             }
             titLab.text = newsInfo!.post_title
             //        cell.conNum.text = newsInfo.recommended
-            let time:Array = (newsInfo!.post_date?.componentsSeparatedByString(" "))!
+            let time:Array = (newsInfo!.post_modified!.componentsSeparatedByString(" "))
             timeLab.text = time[0]
 //            let hashValue = newsInfo.likes.count.hashValue
 //            print(hashValue)

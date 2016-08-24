@@ -109,6 +109,7 @@ class NewsInfo: JSONJoy{
     var post_content:String?
     var post_hits:String?
     var post_date:String?
+    var post_modified:String?
     var recommended:String?
     var thumb:String?
     var thumbArr = Array<thumbModel>()
@@ -123,6 +124,7 @@ class NewsInfo: JSONJoy{
         title = decoder["title"].string ?? ""
         post_excerpt = decoder["post_excerpt"].string ?? ""
         post_date = decoder["post_date"].string ?? ""
+        post_modified = decoder["post_modified"].string ?? ""
         tid = decoder["tid"].string ?? ""
         object_id = decoder["object_id"].string ?? ""
         post_source = decoder["post_source"].string ?? ""

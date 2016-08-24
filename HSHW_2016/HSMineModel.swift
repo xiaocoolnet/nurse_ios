@@ -384,3 +384,50 @@ class CompanyInfo:JSONJoy {
     }
 }
 
+// List 积分排行榜
+class RankList:JSONJoy {
+    
+    var status: String?
+    
+    var data = Array<RankModel>()
+    
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string ?? ""
+        
+        for childs:JSONDecoder in decoder["data"].array ?? [] {
+            data.append(RankModel(childs))
+        }
+    }
+}
+
+// Model 积分排行榜（data）
+class RankModel: JSONJoy {
+
+    var id: String
+
+    var score: String
+
+    var name: String
+
+    var photo: String
+
+    var time: String
+    
+    required init(_ decoder: JSONDecoder) {
+        id = decoder["id"].string ?? ""
+        score = decoder["score"].string ?? ""
+        name = decoder["name"].string ?? "NO NAME"
+        photo = decoder["photo"].string ?? ""
+        
+        let timeStr = NSString(string: decoder["time"].string ?? "")
+        let timeSta:NSTimeInterval = timeStr.doubleValue
+        let dfmatter = NSDateFormatter()
+        dfmatter.dateFormat="yyyy-MM-dd"
+        
+        let date = NSDate(timeIntervalSince1970: timeSta)
+        
+        time = dfmatter.stringFromDate(date)
+    }
+
+}
+

@@ -520,7 +520,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.source.text = "来源：\((newsInfo?.post_source)!)"
                 
                 cell.post_like.text = newsInfo?.post_hits
-                let time:Array = (newsInfo?.post_date?.componentsSeparatedByString(" "))!
+                let time:Array = (newsInfo?.post_modified!.componentsSeparatedByString(" "))!
                 cell.createTime.text = time[0]
 
             }else if indexPath.row == 2 {

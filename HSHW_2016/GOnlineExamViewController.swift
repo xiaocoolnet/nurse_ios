@@ -822,8 +822,8 @@ class GOnlineExamViewController: UIViewController,UIScrollViewDelegate {
             hasChooseIndex.addObject(pageControl.currentPage)
         }
         
-        let backView = scrollView.viewWithTag(pageControl.currentPage+110)
-        let rightBtn = backView?.viewWithTag(rightAnswer[pageControl.currentPage] as! Int)
+//        let backView = scrollView.viewWithTag(pageControl.currentPage+110)
+//        let rightBtn = backView?.viewWithTag(rightAnswer[pageControl.currentPage] as! Int)
 //        rightBtn?.backgroundColor = UIColor.greenColor()
 //        if btn.tag != rightBtn?.tag {
             btn.backgroundColor = UIColor.redColor()

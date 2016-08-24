@@ -747,8 +747,8 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
     //    选项
     func pleaseChooseOne(btn:UIButton) {
         
-        let backView = scrollView.viewWithTag(pageControl.currentPage+110)
-        let rightBtn = backView?.viewWithTag(rightAnswer[pageControl.currentPage] as! Int)
+//        let backView = scrollView.viewWithTag(pageControl.currentPage+110)
+//        let rightBtn = backView?.viewWithTag(rightAnswer[pageControl.currentPage] as! Int)
         //        rightBtn?.backgroundColor = UIColor.greenColor()
         //        if btn.tag != rightBtn?.tag {
         // MARK: 这里更改了选中答案的颜色

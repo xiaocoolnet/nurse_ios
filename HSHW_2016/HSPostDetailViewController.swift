@@ -583,14 +583,14 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         }
         alertController.addAction(wechatAction)
         
-        let weiboAction = UIAlertAction(title: "新浪微博", style: .Default) { (pengyouquanAction) in
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text;
-            hud.labelText = "新浪微博 敬请期待"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 2)
-        }
+//        let weiboAction = UIAlertAction(title: "新浪微博", style: .Default) { (pengyouquanAction) in
+//            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//            hud.mode = MBProgressHUDMode.Text;
+//            hud.labelText = "新浪微博 敬请期待"
+//            hud.margin = 10.0
+//            hud.removeFromSuperViewOnHide = true
+//            hud.hide(true, afterDelay: 2)
+//        }
 //        alertController.addAction(weiboAction)
         
         let pengyouquanAction = UIAlertAction(title: "朋友圈", style: .Default) { (pengyouquanAction) in

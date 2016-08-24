@@ -615,4 +615,24 @@ class HSMineHelper: NSObject {
             }
         }
     }
+    
+    // MARK: 获取积分排行榜
+    func getRankingList(handle:ResponseBlock){
+        
+        let url = PARK_URL_Header+"getRankingList"
+
+        Alamofire.request(.GET, url).response { (request, response, json, error) in
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = RankList(JSONDecoder(json!))
+                print(result.status)
+                if(result.status == "success"){
+                    handle(success: true, response: result.data)
+                }else{
+                    handle(success: false, response: "获取积分排行榜失败")
+                }
+            }
+        }
+    }
 }

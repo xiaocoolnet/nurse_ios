@@ -19,14 +19,14 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     var timer = NSTimer()
     var times = Int()
     //  请求认证id
-    var channelid = Int()
+//    var channelid = Int()
     //  初始化数据源
     var dataSource = Array<NewsInfo>()
     let countryArr:[String] = ["ic_eng.png","ic_canada.png","ic_germany.png","ic_australia.png","ic_meiguo.png","ic_guo.png","ic_guotwo.png","ic_flag_japan.png"]
     let nameArr:[String] = ["美国","加拿大","德国","芬兰","澳洲","新加坡","沙特","日本"]
 //    var titArr:[String] = Array<String>()
     var imageArr = Array<NewsInfo>()
-    var country = Int()
+//    var country = Int()
     var requestHelper = NewsPageHelper()
     
     let one = UIView()
@@ -52,8 +52,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         //  添加定时器
         timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(AbroadViewController.scroll), userInfo: nil, repeats: true)
         
-        channelid = 8
-//        self.GetDate()        
+//        channelid = 8
+//        self.GetDate()
         // Do any additional setup after loading the view.
     }
     
@@ -174,7 +174,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             }
         }
         
-        HSNurseStationHelper().getArticleListWithID(String(channelid)) { (success, response) in
+        HSNurseStationHelper().getArticleListWithID("8") { (success, response) in
             
             if success {
                 print(response)
@@ -426,8 +426,9 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     func selectorCountry(btn:UIButton) {
         print(btn.tag)
         //  执行国家图片的点击内容
-        channelid = btn.tag
-        country = btn.tag
+//        channelid = btn.tag
+//        country = btn.tag
+        
         let vc = TouTiaoViewController()
         switch btn.tag {
         case 0:

@@ -70,6 +70,7 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("scoreCell", forIndexPath: indexPath) as! ScoreTableViewCell
+        cell.selectionStyle = .None
         
         cell.nameLab.text = scoreArray[indexPath.row]["name"]
         cell.scoreLab.text = scoreArray[indexPath.row]["score"]
@@ -95,14 +96,8 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
     
     // MARK:- 点击排行榜按钮
     func rankBtnClick() {
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.mode = MBProgressHUDMode.Text
-        hud.labelText = "敬请期待"
-        hud.margin = 10.0
-        hud.removeFromSuperViewOnHide = true
-        hud.hide(true, afterDelay: 1)
-//        let rankVC = RankViewController()
-//        self.navigationController?.pushViewController(rankVC, animated: true)
+        let rankVC = RankViewController()
+        self.navigationController?.pushViewController(rankVC, animated: true)
         
     }
 

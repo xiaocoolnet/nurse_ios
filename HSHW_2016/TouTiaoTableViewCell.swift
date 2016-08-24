@@ -174,7 +174,7 @@ class TouTiaoTableViewCell: UITableViewCell {
         }
 
         self.conNum.text = conNumStr
-        let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
+        let time:Array = (newsInfo.post_modified?.componentsSeparatedByString(" "))!
         self.timeLab.text = time[0]
         self.contant.text = newsInfo.post_excerpt
         heal.setTitle(newsInfo.term_name, forState: .Normal)
@@ -306,7 +306,7 @@ class TouTiaoTableViewCell: UITableViewCell {
         timeBtn.frame = CGRectMake(CGRectGetMaxX(conNum.frame)+10, CGRectGetMaxY(titSubImg.frame)+14, 11, 11)
         timeLab.frame = CGRectMake(CGRectGetMaxX(timeBtn.frame)+5, CGRectGetMaxY(titSubImg.frame)+12, 80, 15)
         
-        let time:Array = (newsInfo.post_date?.componentsSeparatedByString(" "))!
+        let time:Array = (newsInfo.post_modified?.componentsSeparatedByString(" "))!
         let date:Array = time[0].componentsSeparatedByString("-")
         self.timeLab.text = "\(date[1])/\(date[2])"
         self.contant.text = newsInfo.post_excerpt

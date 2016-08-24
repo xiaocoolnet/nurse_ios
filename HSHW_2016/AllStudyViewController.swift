@@ -20,7 +20,11 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        listTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-60)
+        let line = UIView(frame: CGRectMake(0, 0, WIDTH, 1))
+        line.backgroundColor = COLOR
+        self.view.addSubview(line)
+        
+        listTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65)
         listTableView.backgroundColor = UIColor.clearColor()
         listTableView.delegate = self
         listTableView.dataSource = self

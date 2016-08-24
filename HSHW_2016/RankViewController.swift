@@ -11,7 +11,8 @@ import MBProgressHUD
 
 class RankViewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
     
-    var scoreArray = [[String:String]]()
+    let myTableView = UITableView()
+    var scoreArray = Array<RankModel>()
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
@@ -27,13 +28,13 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
         self.title = "积分排行榜"
         self.view.backgroundColor = COLOR
         
-        scoreArray = [["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"]]
+//        scoreArray = [["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"],["imageName":"img_head_nor","name":"陈小杰","score":"+2589","time":"2016-07-06"]]
         
         let cupImage = UIImageView(frame: CGRectMake(0, 0, WIDTH, WIDTH*476/750))
         cupImage.image = UIImage(named: "cup")
         self.view.addSubview(cupImage)
         
-        let myTableView = UITableView(frame: CGRectMake(20/750.0*WIDTH, 188/1380.0*HEIGHT, 71/75.0*WIDTH, 778/1380.0*HEIGHT), style: .Plain)
+        myTableView.frame = CGRectMake(20/750.0*WIDTH, 188/1380.0*HEIGHT, 71/75.0*WIDTH, 778/1380.0*HEIGHT)
         myTableView.registerClass(RankTableViewCell.self, forCellReuseIdentifier: "scoreCell")
         myTableView.rowHeight = 110/1380.0*HEIGHT
         myTableView.backgroundColor = UIColor.whiteColor()
@@ -60,6 +61,25 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
         self.view.addSubview(shareBtn)
         
         print(myTableView.frame,noteLab.frame,shareBtn.frame)
+        
+        loadData()
+    }
+    
+    // MARK:- 获取数据
+    func loadData() {
+        HSMineHelper().getRankingList { (success, response) in
+            if success {
+                self.scoreArray = response as! Array<RankModel>
+                self.myTableView.reloadData()
+            }else{
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.Text
+                hud.labelText = response as! String
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 1)
+            }
+        }
     }
     
     // MARK:- TableView datasource
@@ -84,10 +104,10 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
             cell.indexBtn.setImage(nil, forState: .Normal)
             cell.indexBtn.setTitle(String(indexPath.row+1), forState: .Normal)
         }
-        cell.scoreImg.image = UIImage(named: scoreArray[indexPath.row]["imageName"]!)
-        cell.nameLab.text = scoreArray[indexPath.row]["name"]
-        cell.scoreLab.text = scoreArray[indexPath.row]["score"]
-        cell.timeLab.text = scoreArray[indexPath.row]["time"]
+        cell.scoreImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+scoreArray[indexPath.row].photo), placeholderImage: UIImage.init(named: "img_head_nor"))
+        cell.nameLab.text = scoreArray[indexPath.row].name
+        cell.scoreLab.text = scoreArray[indexPath.row].score
+        cell.timeLab.text = scoreArray[indexPath.row].time
         
         return cell
     }

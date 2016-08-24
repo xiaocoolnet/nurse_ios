@@ -11,9 +11,9 @@ import PagingMenuController
 
 class GoABroadViewController: UIViewController {
 
-    let oneView = AbroadViewController()
-    let twoView = SuccessfulCaseViewController()
-    let threeView = TouTiaoViewController()
+    let goAbroadDynamicView = AbroadViewController()
+    let successfulCaseView = SuccessfulCaseViewController()
+    let nursesTrainingView = TouTiaoViewController()
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
@@ -24,13 +24,16 @@ class GoABroadViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        oneView.title = "出国动态"
-        twoView.title = "成功案例"
-        twoView.articleID = "9"
-        threeView.title = "护士培训"
-        threeView.newsId = "122"
-        threeView.slideImageId = "129"
-        let viewControllers = [oneView,twoView,threeView]
+        goAbroadDynamicView.title = "出国动态"
+        
+        nursesTrainingView.title = "护士培训"
+        nursesTrainingView.newsId = "122"
+        nursesTrainingView.slideImageId = "129"
+        
+        successfulCaseView.title = "成功案例"
+        successfulCaseView.articleID = "9"
+        
+        let viewControllers = [goAbroadDynamicView,nursesTrainingView,successfulCaseView]
         let options = PagingMenuOptions()
         options.menuItemMargin = 5
         options.menuHeight = 44

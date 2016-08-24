@@ -6,12 +6,13 @@
     },
     {
       "idiom" : "universal",
-      "filename" : "default_header.jpg",
+      "filename" : "default_header@2x.jpg",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "default_header@3x.png"
     }
   ],
   "info" : {
