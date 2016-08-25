@@ -72,6 +72,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func loadData() {
         
+        signBtn.enabled = false
+
         if myTableView.mj_header.isRefreshing() {
             myTableView.mj_header.endRefreshing()
         }
@@ -137,7 +139,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     
-                    self.signBtn.enabled = true
+//                    self.signBtn.enabled = true
                     self.hud?.hide(true)
                 })
                 
@@ -293,7 +295,6 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //                if self.isLike == false {
                     signBtn.addTarget(self, action: #selector(MineViewController.signInToday), forControlEvents: .TouchUpInside)
 //                }
-                signBtn.enabled = false
                 cell.addSubview(signBtn)
                 
                 for i in 0...2 {

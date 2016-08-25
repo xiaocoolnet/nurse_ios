@@ -41,6 +41,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = .Default
         self.navigationController?.navigationBar.hidden = false
+        self.tabBarController?.tabBar.hidden = true
     }
     
     override func viewDidLoad() {
@@ -53,7 +54,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-115)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-64-1)
         myTableView.backgroundColor = RGREY
         myTableView.delegate = self
         myTableView.dataSource = self
@@ -277,7 +278,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 let time = string.substringToIndex(range.endIndex)
                 self.twodeArr[indexPath.row] = time
                 let mineHelper = HSMineHelper()
-                mineHelper.changeBirthday(time, handle: { [unowned self] (success, response) in
+                mineHelper.changeBirthday(time, handle: { (success, response) in
                     dispatch_async(dispatch_get_main_queue(), {
                         if success {
                             QCLoginUserInfo.currentInfo.birthday = time

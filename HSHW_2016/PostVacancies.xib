@@ -1020,6 +1020,6 @@
         </view>
     </objects>
     <resources>
-        <image name="ic_down" width="8" height="4"/>
+        <image name="ic_down" width="294" height="295"/>
     </resources>
 </document>

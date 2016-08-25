@@ -188,7 +188,11 @@ class GToutiaoTableViewCell: UITableViewCell {
         
         let time:Array = (newsInfo.post_modified?.componentsSeparatedByString(" "))!
         let date:Array = time[0].componentsSeparatedByString("-")
-        self.timeLab.text = "\(date[1])/\(date[2])"
+        if date.count >= 3 {
+            self.timeLab.text = "\(date[1])/\(date[2])"
+        }else{
+            self.timeLab.text = "01/01"
+        }
         self.contant.text = newsInfo.post_excerpt
         
 //        if newsInfo.thumb == "/data/upload/" {

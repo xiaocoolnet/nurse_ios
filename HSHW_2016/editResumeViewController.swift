@@ -37,7 +37,7 @@ class editResumeViewController: UIViewController {
         resumeView.frame = CGRectMake(0, 1, WIDTH, height)
         self.view.addSubview(resumeView)
         
-//        getMyResume()
+        getMyResume()
     }
     
     func getMyResume() {

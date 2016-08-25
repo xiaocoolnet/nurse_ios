@@ -157,7 +157,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
                 dispatch_async(dispatch_get_main_queue(), {
                     self.myTableView.mj_header.endRefreshing()
                     
-                    if response as? String == "no data" {
+                    if String(response!) == "no data" {
                         self.imageArr = Array<NewsInfo>()
                         self.updateSlideImage()
                         self.myTableView.reloadData()
@@ -195,18 +195,20 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
                 dispatch_async(dispatch_get_main_queue(), {
                     self.myTableView.mj_header.endRefreshing()
                     
-                    if response as? String == "no data" {
+                    if String(response!) == "no data" {
                         self.dataSource = Array<NewsInfo>()
+                        self.myTableView.reloadData()
+                    }else{
+                        
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "文章列表获取失败"
+                        hud.detailsLabelText = String(response!)
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
                     }
-                    self.myTableView.reloadData()
                     
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "文章列表获取失败"
-                    hud.detailsLabelText = String(response!)
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
                 })
             }
         }

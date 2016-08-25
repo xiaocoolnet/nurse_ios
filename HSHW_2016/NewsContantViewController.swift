@@ -47,6 +47,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     var finishLoad = false
     var tagNum = 0
     
+    var mainFlag = 0
+    var mainHud = MBProgressHUD()
+    
     var webFlag = true// 防止多次加载网页
     
     override func viewWillAppear(animated: Bool) {
@@ -56,7 +59,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         
         
         if LOGIN_STATE {
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            mainHud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             //        MBProgressHUD().labelText = ""
             
             // MARK: 检查是否收藏
@@ -74,7 +77,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                     dispatch_async(dispatch_get_main_queue(), {
                         self.collectBtn.enabled = true
-                        hud.hide(true)
+//                        hud.hide(true)
+                        self.mainFlag += 1
+                        if self.mainFlag == 3 {
+                            self.mainHud.hide(true)
+                        }
                     })
                 })
             })
@@ -161,7 +168,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 dispatch_async(dispatch_get_main_queue(), {
                 
                     if(error != nil){
-                        
+                        self.collectHud.mode = MBProgressHUDMode.Text;
+                        self.collectHud.labelText = "取消收藏失败"
                     }else{
                         let status = Http(JSONDecoder(json!))
                         print("状态是")
@@ -412,13 +420,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 print("状态是")
                 print(status.status)
                 if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
+//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                    hud.mode = MBProgressHUDMode.Text;
 //                    hud.labelText = "获取关联文章失败"
 //                    hud.detailsLabelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+//                    hud.margin = 10.0
+//                    hud.removeFromSuperViewOnHide = true
+//                    hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
                     //self.createTableView()
@@ -427,6 +435,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     self.myTableView .reloadData()
                     print(status.data)
                 }
+            }
+            
+            self.mainFlag += 1
+            if self.mainFlag == 3 {
+                self.mainHud.hide(true)
             }
             
         }
@@ -646,14 +659,29 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
-        if (finishLoad) {
-            return
-        }
+//        if (finishLoad) {
+//            return
+//        }
+        print("webViewDidFinishLoad")
         webHeight = webView.scrollView.contentSize.height
         self.myTableView.reloadData()
         finishLoad = true
+        
+        self.mainFlag += 1
+        if self.mainFlag == 3 {
+            self.mainHud.hide(true)
+        }
 
     }
+    
+//    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
+//        if (finishLoad) {
+//            return
+//        }
+//        webHeight = webView.scrollView.contentSize.height
+//        self.myTableView.reloadData()
+//        finishLoad = true
+//    }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 {

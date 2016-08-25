@@ -12,7 +12,7 @@ import Alamofire
 
 class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
-    let myTableView = UITableView()
+    let myTableView = UITableView(frame: CGRectMake(0, 1, WIDTH, HEIGHT - 64-49), style: .Grouped)
     var type = 1 // 1 每日一练  2在线考试
     var dataSource = titleList()
     let picArr:[String] = ["ic_rn.png","ic_earth.png","ic_moon.png","ic_maozi_one.png","ic_maozi_two.png","ic_maozi_three.png"]
@@ -103,7 +103,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
     }
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if dataSource.objectlist[section].haschild == 0 {
-            return 0
+            return 0.0000000001
         }
         return 30
     }
@@ -121,6 +121,10 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         backview.addSubview(image)
         backview.addSubview(titleLabel)
         return backview
+    }
+    
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.0000000001
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

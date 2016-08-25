@@ -128,19 +128,21 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 dispatch_async(dispatch_get_main_queue(), {
                     self.myTableView.mj_header.endRefreshing()
                     
-                    if response as? String == "no data" {
+                    if String(response!) == "no data" {
                         self.imageArr = Array<NewsInfo>()
                         self.updateSlideImage()
                         self.myTableView.reloadData()
+                    }else{
+                        
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "轮播图获取失败"
+                        hud.detailsLabelText = String(response!)
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
                     }
                     
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "轮播图获取失败"
-                    hud.detailsLabelText = String(response!)
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
                 })
             }
         }

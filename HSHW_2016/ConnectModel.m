@@ -43,7 +43,7 @@
     [value appendFormat:@"Content-Disposition: form-data; name=\"upfile\"; filename=\"%@.png\"\r\n", name];
     //声明上传文件的格式
     [value appendFormat:@"Content-Type: image/*\r\n\r\n"];
-    NSLog(value);
+    NSLog(@"%@",value);
     NSMutableData *data = [NSMutableData dataWithData:[value dataUsingEncoding:NSUTF8StringEncoding]];
     [data appendData:imageData];
     [data appendData:[[NSString stringWithFormat:@"\r\n%@--", formLine] dataUsingEncoding:NSUTF8StringEncoding]];

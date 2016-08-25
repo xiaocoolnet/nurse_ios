@@ -124,25 +124,25 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="期望薪资:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AZi-hs-9Cc">
-                                    <rect key="frame" x="161" y="341" width="61" height="17"/>
+                                    <rect key="frame" x="180" y="341" width="61" height="17"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="目标职位：" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8St-9M-PKJ">
-                                    <rect key="frame" x="161" y="368" width="70" height="17"/>
+                                    <rect key="frame" x="175" y="368" width="70" height="17"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="8000元／月" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5L-Wo-oCo">
-                                    <rect key="frame" x="222" y="341" width="77" height="17"/>
+                                    <rect key="frame" x="241" y="341" width="77" height="17"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="护士" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XKh-mP-sm6">
-                                    <rect key="frame" x="231" y="368" width="28" height="17"/>
+                                    <rect key="frame" x="245" y="368" width="28" height="17"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -328,6 +328,7 @@
                                 <constraint firstItem="kew-OC-oai" firstAttribute="leading" secondItem="Ddv-9A-N8c" secondAttribute="leading" constant="15" id="NWU-v0-zXS"/>
                                 <constraint firstItem="J2k-Gd-PKm" firstAttribute="centerY" secondItem="hVm-kd-nLV" secondAttribute="centerY" id="NrK-fQ-mJK"/>
                                 <constraint firstItem="Gku-ry-vXK" firstAttribute="centerY" secondItem="qh2-40-uTF" secondAttribute="centerY" id="OpP-qP-qSv"/>
+                                <constraint firstItem="AZi-hs-9Cc" firstAttribute="centerX" secondItem="Ddv-9A-N8c" secondAttribute="centerX" constant="50" id="PQ0-qS-eEZ"/>
                                 <constraint firstItem="3i8-yd-fin" firstAttribute="centerY" secondItem="LKZ-ZZ-JmI" secondAttribute="centerY" id="PXz-1y-zbo"/>
                                 <constraint firstItem="hVm-kd-nLV" firstAttribute="leading" secondItem="5Wh-ua-IML" secondAttribute="leading" id="QHi-58-Q8U"/>
                                 <constraint firstItem="ph2-6I-KwK" firstAttribute="top" secondItem="KzC-Zc-bJk" secondAttribute="bottom" constant="10" id="QpH-NJ-cGi"/>
@@ -367,6 +368,7 @@
                                 <constraint firstItem="Gku-ry-vXK" firstAttribute="leading" secondItem="qh2-40-uTF" secondAttribute="trailing" constant="2" id="pC0-d4-P2R"/>
                                 <constraint firstItem="5Wh-ua-IML" firstAttribute="top" secondItem="9Xj-os-Bhk" secondAttribute="bottom" constant="11" id="pMB-CB-d6i"/>
                                 <constraint firstItem="ewG-2e-61i" firstAttribute="top" secondItem="Gku-ry-vXK" secondAttribute="bottom" constant="2" id="rLR-dt-LTn"/>
+                                <constraint firstItem="8St-9M-PKJ" firstAttribute="centerX" secondItem="Ddv-9A-N8c" secondAttribute="centerX" constant="50" id="rcp-dd-FpQ"/>
                                 <constraint firstItem="mhm-vn-qF7" firstAttribute="leading" secondItem="AQz-df-dEF" secondAttribute="leading" id="rrF-TK-W4o"/>
                                 <constraint firstItem="eVN-ik-lhd" firstAttribute="top" secondItem="nhQ-bc-3xw" secondAttribute="bottom" constant="20" id="s9x-My-017"/>
                                 <constraint firstItem="AQz-df-dEF" firstAttribute="leading" secondItem="Ddv-9A-N8c" secondAttribute="leading" constant="15" id="sxi-KO-WLv"/>
@@ -392,6 +394,8 @@
                                     <exclude reference="vn1-TC-hbm"/>
                                     <exclude reference="lqo-1J-yyn"/>
                                     <exclude reference="iDn-yM-ewb"/>
+                                    <exclude reference="Mdm-2l-2fJ"/>
+                                    <exclude reference="9ad-9d-qg0"/>
                                     <exclude reference="5e3-y5-bJ6"/>
                                 </mask>
                             </variation>

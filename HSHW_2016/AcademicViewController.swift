@@ -188,7 +188,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 "type":"1",
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
-            Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
                 if(error != nil){
                     
@@ -244,7 +244,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 "type":"1",
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
-            Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 print(request)
                 if(error != nil){
                     

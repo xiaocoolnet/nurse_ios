@@ -401,6 +401,8 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         eduDropDown.width = 200
         eduDropDown.direction = .Bottom
         
+        eduDropDown.dataSource = dropDownDic["edu"]!
+        
         // 下拉列表选中后的回调方法
         eduDropDown.selectionAction = { [unowned self] (index, item) in
             self.eduLab.text = item

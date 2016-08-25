@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import MBProgressHUD
+import MBProgressHUD
 import Alamofire
 
 enum HSEditUserInfo {
@@ -47,28 +47,33 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //nav
-        let navBtn = UIButton(type: .Custom)
-        navBtn.frame = CGRectMake(0, 0, 50, 30)
-        navBtn.setTitleColor(COLOR, forState: .Normal)
-        navBtn.setTitle("保存", forState: .Normal)
-        navBtn.addTarget(self, action: #selector(saveInfo), forControlEvents: .TouchUpInside)
-        if showType == .Education || showType == .Sex || showType == .Major {
-            
-        }else{
-            let navItem = UIBarButtonItem(customView: navBtn)
-            self.navigationItem.rightBarButtonItem = navItem
-        }
+        
+        let line = UIView(frame: CGRectMake(0, 0, WIDTH, 1))
+        line.backgroundColor = COLOR
+        self.view.addSubview(line)
+        
         //tableview
-        myTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-64-1)
         myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
         myTableView.tableFooterView = UIView()
         view.addSubview(myTableView)
+            
+        if showType == .Education || showType == .Sex || showType == .Major {
+            self.dataGet()
+        }else{
+            //nav
+            let navBtn = UIButton(type: .Custom)
+            navBtn.frame = CGRectMake(0, 0, 50, 30)
+            navBtn.setTitleColor(COLOR, forState: .Normal)
+            navBtn.setTitle("保存", forState: .Normal)
+            navBtn.addTarget(self, action: #selector(saveInfo), forControlEvents: .TouchUpInside)
+            let navItem = UIBarButtonItem(customView: navBtn)
+            self.navigationItem.rightBarButtonItem = navItem
+        }
         
-        self.dataGet()
         array = ["北京市","北京市","朝阳区"]
 
     }
@@ -239,28 +244,36 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func dataGet(){
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        
         let url = PARK_URL_Header+"getDictionaryList"
         let param = ["type":id]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
-                
+                hud.mode = MBProgressHUDMode.Text;
+                hud.labelText = "数据获取失败"
+                hud.hide(true, afterDelay: 1)
             }else{
                 let status = EduModel(JSONDecoder(json!))
                 print("状态是")
                 print(status.status)
                 if(status.status == "error"){
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "数据获取失败"
+                    hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
+
+                    hud.hide(true)
                     print(status)
                     self.dateSource = EduList(status.data!)
                     
                     self.myTableView .reloadData()
                 }
             }
-            
         }
-        
     }
-
-    
 }
