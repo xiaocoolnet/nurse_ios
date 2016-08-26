@@ -213,10 +213,10 @@ class TouTiaoTableViewCell: UITableViewCell {
         }
         
 //        self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
-        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 17, width: newsInfo.thumbArr.count == 0 ? WIDTH-20:WIDTH-140)
+        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title, size: 17, width: newsInfo.thumbArr.count == 0 ? WIDTH-20:WIDTH-140)
         titLab.frame.size.height = titleHeight
         
-        var height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
+        var height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-140)
         if height+27>100 {
             height = height+27
         }else{
@@ -231,7 +231,7 @@ class TouTiaoTableViewCell: UITableViewCell {
     }
     
     func setThreeImgCellWithNewsInfo(newsInfo:NewsInfo) {
-        let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-20)
+        let height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-20)
         self.titLab.frame = CGRectMake(10, 9, WIDTH-20, height)
         
         self.titLab.text = newsInfo.post_title

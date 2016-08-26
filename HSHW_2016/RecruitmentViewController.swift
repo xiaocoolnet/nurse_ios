@@ -342,13 +342,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     func makeCVMessage(model:CVModel){
         resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-64-49-0.5)
         resumeDetail.model = model
+        resumeDetail.headerImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.avatar), placeholderImage: UIImage(named: "img_head_nor"))
         resumeDetail.showFor(birthday)
         resumeDetail.showSex(sex)
         resumeDetail.showName(name)
         resumeDetail.education(education)
         resumeDetail.address(address)
         resumeDetail.experience(experience)
-        resumeDetail.jobName(tit)
+        resumeDetail.jobName(certificate)
         resumeDetail.comeTime(hiredate)
         resumeDetail.expectSalary(wantsalary)
         resumeDetail.targetLocation(wantcity)
@@ -581,7 +582,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             }else {
                 let model = self.CVDataSource![indexPath.row]
                 self.name = model.name
-                self.sex = model.sex
+                self.sex = model.sex == "0" ? "女":"男"
                 self.avatar = model.avatar
                 self.birthday = model.birthday
                 self.address = model.address

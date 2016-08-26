@@ -898,7 +898,6 @@
 				F6D02CDA1D07A46800353557 /* NewsSourceCell.xib */,
 				F6D02CDD1D07BB5300353557 /* contentCell.swift */,
 				F6D02CDE1D07BB5300353557 /* contentCell.xib */,
-				F605F0C01D2266B100769299 /* HSFindPersonDetailView.swift */,
 				0DBF54751D406EF500B4B5FB /* GCateTableViewCell.swift */,
 				1FFD9EC81D518F8500951098 /* contentTableViewCell.swift */,
 			);
@@ -995,6 +994,7 @@
 		1854086A1CE6C7F600DFBA7C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F605F0C01D2266B100769299 /* HSFindPersonDetailView.swift */,
 				F605F0BE1D22564300769299 /* HSFindPersonDetailView.xib */,
 				18ADDDEE1CE9995700557FFE /* PostTableViewCell.swift */,
 				F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */,

@@ -99,11 +99,11 @@ class GNewsCate: JSONJoy{
 
 
 class NewsInfo: JSONJoy{
-    var post_title:String?
+    var post_title:String
     var create_time:String?
     var post_excerpt:String?
     var tid:String?
-    var title:String?
+    var title:String
     var object_id : String
     var post_source :String?
     var post_content:String?
@@ -116,11 +116,13 @@ class NewsInfo: JSONJoy{
     var term_id :String
     var term_name:String
     var term_hits:String
+    var favorites = Array<LikeInfo>()
     var likes = Array<LikeInfo>()
     var smeta :JSONDecoder?
     
     required init(_ decoder: JSONDecoder){
         post_title = decoder["post_title"].string ?? ""
+        print("美国人  model == \(post_title)")
         title = decoder["title"].string ?? ""
         post_excerpt = decoder["post_excerpt"].string ?? ""
         post_date = decoder["post_date"].string ?? ""
@@ -142,6 +144,11 @@ class NewsInfo: JSONJoy{
         if decoder["likes"].array != nil {
             for childs: JSONDecoder in decoder["likes"].array!{
                 self.likes.append(LikeInfo(childs))
+            }
+        }
+        if decoder["favorites"].array != nil {
+            for childs: JSONDecoder in decoder["favorites"].array!{
+                self.favorites.append(LikeInfo(childs))
             }
         }
         if decoder["thumb"].array != nil {

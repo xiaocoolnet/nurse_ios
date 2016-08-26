@@ -80,6 +80,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //                        hud.hide(true)
                         self.mainFlag += 1
                         if self.mainFlag == 3 {
+                            self.mainFlag = 2
                             self.mainHud.hide(true)
                         }
                     })
@@ -439,6 +440,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             
             self.mainFlag += 1
             if self.mainFlag == 3 {
+                self.mainFlag = 2
                 self.mainHud.hide(true)
             }
             
@@ -484,13 +486,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             
             if newsInfo.thumbArr.count >= 3 {
                 
-                let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-20)
+                let height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-20)
                 
                 let margin:CGFloat = 15
                 return (WIDTH-20-margin*2)/3.0*2/3.0+19+height+27+4
             }else{
                 
-                let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
+                let height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-140)
                 
                 if height+27>100 {
                     return height+27+4
@@ -669,6 +671,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         
         self.mainFlag += 1
         if self.mainFlag == 3 {
+            self.mainFlag = 2
             self.mainHud.hide(true)
         }
 

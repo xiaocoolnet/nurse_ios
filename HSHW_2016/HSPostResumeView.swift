@@ -220,10 +220,10 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     var dropDownDic = [String:Array<String>]()
     var dropDownFinishDic = [String:String]()
     var headerImage = UIImage()
-    var sexFinishStr = String()
+    var sexFinishStr = "1"
     var birthFinishArr = Array<String>()
     var homeFinishArr = Array<String>()
-    var jobStatusStr = String()
+    var jobStatusStr = "在职"
     var targetCityFinishArr = Array<String>()
 
     
@@ -725,7 +725,8 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             //        delegate?.saveResumeBtnClicked()
             
             //        if delegate != nil {
-            if (headerBtn.selected && nameTF.text != "" && (manBtn.selected || womanBtn.selected) && birthBtn.selected && eduBtn.selected && homeBtn.selected && expBtn.selected && professionalBtn.selected && salaryBtn.selected && (onJobBtn.selected || leaveJobBtn.selected || undergraduateBtn.selected) && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected && targetCityBtn.selected && expectedSalaryBtn.selected && expectedPositionBtn.selected)||changeResume {
+//            if (headerBtn.selected && nameTF.text != "" && (manBtn.selected || womanBtn.selected) && birthBtn.selected && eduBtn.selected && homeBtn.selected && expBtn.selected && professionalBtn.selected && salaryBtn.selected && (onJobBtn.selected || leaveJobBtn.selected || undergraduateBtn.selected) && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected && targetCityBtn.selected && expectedSalaryBtn.selected && expectedPositionBtn.selected)||changeResume {
+            if (headerBtn.selected && nameTF.text != "" && birthBtn.selected && eduBtn.selected && homeBtn.selected && expBtn.selected && professionalBtn.selected && salaryBtn.selected && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected && targetCityBtn.selected && expectedSalaryBtn.selected && expectedPositionBtn.selected)||changeResume {
                 
                 let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
                 //                hud.mode = MBProgressHUDMode.Text;

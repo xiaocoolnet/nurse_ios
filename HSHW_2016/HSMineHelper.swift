@@ -635,4 +635,28 @@ class HSMineHelper: NSObject {
             }
         }
     }
+    
+    // MARK: 获取个人积分详情
+    func getRanking_User(handle:ResponseBlock){
+        
+        let url = PARK_URL_Header+"getRanking_User"
+        
+        let param = [
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            ];
+        
+        Alamofire.request(.GET, url, parameters: param).response { (request, response, json, error) in
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                let result = Ranking_User(JSONDecoder(json!))
+                print(result.status)
+                if(result.status == "success"){
+                    handle(success: true, response: result.data)
+                }else{
+                    handle(success: false, response: "获取个人积分详情失败")
+                }
+            }
+        }
+    }
 }

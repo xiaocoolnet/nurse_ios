@@ -112,7 +112,7 @@ class HSGTestModel:JSONJoy {
         
     required init(_ decoder: JSONDecoder) {
         status = decoder["status"].string ?? ""
-        errorData = decoder["errorData"].string ?? ""
+        errorData = decoder["data"].string ?? ""
         for childs:JSONDecoder in decoder["data"].array ?? [] {
             datas.append(GTestExamList(childs))
         }
@@ -127,7 +127,7 @@ class GHSErrorExamModel:JSONJoy {
     
     required init(_ decoder: JSONDecoder) {
         status = decoder["status"].string ?? ""
-        errorData = decoder["errorData"].string ?? ""
+        errorData = decoder["data"].string ?? ""
         for childs:JSONDecoder in decoder["data"].array ?? [] {
             datas.append(GExamInfo(childs))
         }
@@ -142,7 +142,7 @@ class HSErrorExamModel:JSONJoy {
     
     required init(_ decoder: JSONDecoder) {
         status = decoder["status"].string ?? ""
-        errorData = decoder["errorData"].string ?? ""
+        errorData = decoder["data"].string ?? ""
         for childs:JSONDecoder in decoder["data"].array ?? [] {
             datas.append(xamInfo(childs))
         }
@@ -275,7 +275,7 @@ class CollectModel:JSONJoy {
     
     required init(_ decoder: JSONDecoder) {
         status = decoder["status"].string ?? ""
-        errorData = decoder["errorData"].string ?? ""
+        errorData = decoder["data"].string ?? ""
         for childs:JSONDecoder in decoder["data"].array ?? [] {
             datas.append(NewsInfo(childs))
         }
@@ -431,3 +431,47 @@ class RankModel: JSONJoy {
 
 }
 
+// List 个人积分详情
+class Ranking_User:JSONJoy {
+    
+    var status: String?
+    
+    var data = Array<Ranking_UserModel>()
+    
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string ?? ""
+        
+        for childs:JSONDecoder in decoder["data"].array ?? [] {
+            data.append(Ranking_UserModel(childs))
+        }
+    }
+}
+
+// Model 积分排行榜（data）
+class Ranking_UserModel: JSONJoy {
+    
+    var userid: String
+    
+    var event: String
+    
+    var score: String
+    
+    var create_time: String
+    
+    required init(_ decoder: JSONDecoder) {
+        userid = decoder["userid"].string ?? ""
+        score = decoder["score"].string ?? ""
+        event = decoder["event"].string ?? "NO NAME"
+        create_time = decoder["create_time"].string ?? ""
+        
+        let timeStr = NSString(string: decoder["time"].string ?? "")
+        let timeSta:NSTimeInterval = timeStr.doubleValue
+        let dfmatter = NSDateFormatter()
+        dfmatter.dateFormat="yyyy-MM-dd"
+        
+        let date = NSDate(timeIntervalSince1970: timeSta)
+        
+        create_time = dfmatter.stringFromDate(date)
+    }
+    
+}

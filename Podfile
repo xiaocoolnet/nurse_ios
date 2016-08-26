@@ -1,5 +1,6 @@
 use_frameworks!
 
+pod 'SwiftyJSON'
 pod 'ReachabilitySwift'
 pod 'Alamofire', '~> 3.0'
 pod 'MBProgressHUD'

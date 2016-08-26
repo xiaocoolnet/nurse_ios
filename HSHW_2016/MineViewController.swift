@@ -139,7 +139,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     
-//                    self.signBtn.enabled = true
+                    self.signBtn.enabled = true
                     self.hud?.hide(true)
                 })
                 

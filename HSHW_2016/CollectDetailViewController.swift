@@ -67,8 +67,17 @@ class CollectDetailViewController: UIViewController, UITableViewDelegate,UITable
         
         let userid = QCLoginUserInfo.currentInfo.userid
         helper.GetCollectList(userid, type: "3") { (success, response) in
-            self.collectListArray = response as! Array<NewsInfo>
-            self.myTableView.reloadData()
+            
+            if success {
+                self.collectListArray = response as! Array<NewsInfo>
+                self.myTableView.reloadData()
+            }else{
+                if String(response!) == "no data" {
+                    self.collectListArray = response as! Array<NewsInfo>
+                    self.myTableView.reloadData()
+                }
+            }
+            
             hud.hide(true, afterDelay: 1)
         }
     }

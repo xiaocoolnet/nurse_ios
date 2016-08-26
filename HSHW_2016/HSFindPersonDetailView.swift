@@ -16,6 +16,8 @@ protocol HSFindPersonDetailViewDelegate:NSObjectProtocol {
 class HSFindPersonDetailView: UIView {
     
     var model:CVModel?
+    
+    @IBOutlet weak var headerImg: UIImageView!
     @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userSex: UILabel!
     @IBOutlet weak var birthday: UILabel!

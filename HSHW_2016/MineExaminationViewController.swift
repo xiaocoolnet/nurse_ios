@@ -67,8 +67,17 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
         hud.removeFromSuperViewOnHide = true
         
         helper.getCollectionInfoWith("2") { (success, response) in
-            self.fansListArray = response as! Array<xamInfo>
-            self.fansTableView.reloadData()
+            
+            if success {
+                self.fansListArray = response as! Array<xamInfo>
+                self.fansTableView.reloadData()
+            }else{
+                if String(response!) == "no data" {
+                    self.fansListArray = response as! Array<xamInfo>
+                    self.fansTableView.reloadData()
+                }
+            }
+            
             hud.hide(true, afterDelay: 1)
         }
         

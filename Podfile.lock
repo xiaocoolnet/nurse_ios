@@ -26,6 +26,7 @@ PODS:
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
+  - SwiftyJSON (2.3.2)
   - WeiboSDK (3.1.4)
 
 DEPENDENCIES:
@@ -38,6 +39,7 @@ DEPENDENCIES:
   - PagingMenuController (~> 0.9.1)
   - ReachabilitySwift
   - SDWebImage (~> 3.7.3)
+  - SwiftyJSON
   - WeiboSDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk.git`)
 
 EXTERNAL SOURCES:
@@ -59,6 +61,7 @@ SPEC CHECKSUMS:
   PagingMenuController: 95bab00761e1ba4f4f9fa6bf22ac71b065a675aa
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   WeiboSDK: bceab625ec59b7039ba721cc4ba9f5868804f63e
 
 COCOAPODS: 0.39.0

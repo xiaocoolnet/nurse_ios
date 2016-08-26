@@ -36,7 +36,7 @@ class NewsViewController: UIViewController {
         threeView.newsId = "6"
         threeView.slideImageId = "110"
         fourView.title = "学术会议"
-        fourView.articleID = "7"
+//        fourView.articleID = "7"
         let viewControllers = [oneView,twoView,threeView,fourView]
         let options = PagingMenuOptions()
         options.menuItemMargin = 5

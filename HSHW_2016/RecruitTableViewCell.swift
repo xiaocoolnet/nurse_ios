@@ -77,9 +77,9 @@ class RecruitTableViewCell: UITableViewCell {
         name.text = model.name
         location.text = model.address
         location.sizeToFit()
-        let contentStr = "性别:"+(model.sex == "0" ? "男" : "女")+"\n当前薪资:"+model.currentsalary+"\n工作状态:"
+        let contentStr = "性别:"+(model.sex == "1" ? "男" : "女")+"\n当前薪资:"+model.currentsalary+"\n工作状态:"+model.jobstate
         content.text = contentStr
-        let contStr = "学历:"+model.education+"\n生日:"+model.birthday+"\n相关证件:"+model.certificate
+        let contStr = "学历:"+model.education+"\n生日:"+model.birthday+"\n职务名称:"+model.certificate
         cont.text = contStr
         let titleHeight:CGFloat = calculateHeight(model.name, size: 16, width: WIDTH*300/375)
         title.frame.size.height = titleHeight

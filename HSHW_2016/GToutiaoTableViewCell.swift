@@ -135,10 +135,12 @@ class GToutiaoTableViewCell: UITableViewCell {
     
     func setCellWithNewsInfo(newsInfo:NewsInfo) {
         
-        let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
+        let height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-140)
         self.titLab.frame = CGRectMake(10, 9, WIDTH-140, height)
         
         self.titLab.text = newsInfo.post_title
+        print("美国人 ====  \(self.titLab.text)")
+
 //        if type == 1 {
 //            heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+22, 46, 15)
 //        }
@@ -250,7 +252,7 @@ class GToutiaoTableViewCell: UITableViewCell {
     
     func setThreeImgCellWithNewsInfo(newsInfo:NewsInfo) {
         
-        let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-20)
+        let height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-20)
         self.titLab.frame = CGRectMake(10, 9, WIDTH-20, height)
         
         self.titLab.text = newsInfo.post_title

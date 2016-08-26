@@ -15,6 +15,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var myTableView = UITableView()
     var dataSource = NewsList()
     var isLike:Bool = false
+    var isCollection = false
 //    var likeNum :Int!
     var currentIndexRow:Int?
 //    let likeNumDict = NSMutableDictionary()
@@ -23,7 +24,13 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var articleID:NSString?
     
     override func viewWillAppear(animated: Bool) {
-        self.tabBarController?.tabBar.hidden = false
+        
+        if articleID != nil {
+            self.tabBarController?.tabBar.hidden = true
+        }else{
+            self.tabBarController?.tabBar.hidden = false
+            
+        }
     }
     
     override func viewDidLoad() {
@@ -123,13 +130,13 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     
     func createTableView() {
         
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-114)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, articleID == nil ? HEIGHT-64-49-1:HEIGHT-20)
 //        myTableView.backgroundColor = UIColor.whiteColor()
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.registerClass(AcademicTableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(myTableView)
-        myTableView.rowHeight = (WIDTH-20)*0.5+63
+//        myTableView.rowHeight = (WIDTH-20)*0.5+63
 
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(GetData))
         myTableView.mj_header.beginRefreshing()
@@ -141,6 +148,13 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         return self.dataSource.count
     }
     
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        let newsInfo = self.dataSource.objectlist[indexPath.row]
+        let titleHeight = calculateHeight(newsInfo.post_title, size: 14, width: WIDTH-20)
+        return (WIDTH-20)*0.5+15+titleHeight+30
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!AcademicTableViewCell
         cell.selectionStyle = .None
@@ -148,6 +162,8 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
         cell.newsInfo = newsInfo
         cell.aca_zan.tag = indexPath.row
         cell.aca_zan.addTarget(self, action: #selector(click1(_:)), forControlEvents: .TouchUpInside)
+        cell.comBtn.tag = indexPath.row
+        cell.comBtn.addTarget(self, action: #selector(collectionBtnClick(_:)), forControlEvents: .TouchUpInside)
         
         return cell
         
@@ -391,6 +407,70 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //                    }
 //                }
 //            }
+        }
+    }
+    
+    func collectionBtnClick(collectionBtn:UIButton) {
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+            return
+        }
+        
+        let newsInfo = self.dataSource.objectlist[collectionBtn.tag]
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        //        hud.mode = MBProgressHUDMode.Text;
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        
+        if collectionBtn.selected {
+            
+            hud.labelText = "正在取消收藏"
+            
+            HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", handle: { (success, response) in
+                if success {
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "取消收藏成功"
+                    hud.hide(true, afterDelay: 0.5)
+                    
+                    for (i,obj) in (newsInfo.favorites).enumerate() {
+                        if obj.userid == QCLoginUserInfo.currentInfo.userid {
+                            newsInfo.favorites.removeAtIndex(i)
+                        }
+                    }
+                    
+                    self.dataSource.objectlist[collectionBtn.tag] = newsInfo
+                    
+                    self.myTableView.reloadData()
+                }else{
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = String(response!)
+                    hud.hide(true, afterDelay: 1)
+                }
+            })
+
+        }else {
+            
+            hud.labelText = "正在收藏"
+            
+            HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", handle: { (success, response) in
+                if success {
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "收藏成功"
+                    hud.hide(true, afterDelay: 0.5)
+                    
+                    let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
+                    let model:LikeInfo = LikeInfo.init(JSONDecoder(dic))
+                    newsInfo.favorites.append(model)
+                    self.dataSource.objectlist[collectionBtn.tag] = newsInfo
+                    
+                    self.myTableView.reloadData()
+                }else{
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = String(response!)
+                    hud.hide(true, afterDelay: 3)
+                }
+            })
         }
     }
     

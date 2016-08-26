@@ -167,13 +167,34 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
 func loadData_Exampaper() {
     
     helper.GetExampaper(QCLoginUserInfo.currentInfo.userid, type: "1") { (success, response) in
-        self.fansListArray = response as! Array<GTestExamList>
-        self.myTableView.reloadData()
+        
+        if success {
+            
+            self.fansListArray = response as! Array<GTestExamList>
+            self.myTableView.reloadData()
+        }else{
+            if String(response!) == "no data" {
+                self.fansListArray = Array<GTestExamList>()
+                self.myTableView.reloadData()
+            }else{
+                
+            }
+        }
     }
     
     helper.GetExampaper(QCLoginUserInfo.currentInfo.userid, type: "2") { (success, response) in
-        self.focusListArray = response as! Array<GTestExamList>
-        self.myTableView.reloadData()
+        if success {
+            
+            self.focusListArray = response as! Array<GTestExamList>
+            self.myTableView.reloadData()
+        }else{
+            if String(response!) == "no data" {
+                self.focusListArray = Array<GTestExamList>()
+                self.myTableView.reloadData()
+            }else{
+                
+            }
+        }
     }
 }
 }

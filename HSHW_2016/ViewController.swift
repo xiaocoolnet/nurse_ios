@@ -57,9 +57,9 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     weak var delegate:ViewControllerDelegate?
     
     override func viewWillAppear(animated: Bool) {
-//        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        //        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         //UIApplication.sharedApplication().backgroundRefreshStatus = true
-//        navigationController?.navigationBar.hidden = true
+        //        navigationController?.navigationBar.hidden = true
     }
     
     override func viewDidLoad() {
@@ -91,7 +91,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         // Do any additional setup after loading the view, typically from a nib.
         logVM = LoginModel()
         self.view.backgroundColor = UIColor.whiteColor()
-//        self.view.backgroundColor = COLOR
+        //        self.view.backgroundColor = COLOR
         
         if navigationController?.navigationBarHidden == true {
             scrollView.frame = CGRectMake(0, -20, WIDTH, HEIGHT-49+20)
@@ -155,7 +155,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     func loginTheView() {
         print("登录")
         
-       
+        
         
         btnOne.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         btnTwo.setTitleColor(GREY, forState: .Normal)
@@ -188,9 +188,9 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         let infoDic = info.userInfo
         let keyBoardRect = infoDic!["UIKeyboardFrameEndUserInfoKey"]?.CGRectValue()
         let keyBoardTranslate = CGFloat((keyBoardRect?.origin.y)!-HEIGHT)
-
+        
         var rect:CGRect = self.view.frame
-//        rect.origin.y = keyBoardTranslate
+        //        rect.origin.y = keyBoardTranslate
         
         if navigationController?.navigationBarHidden == true {
             rect.origin.y = keyBoardTranslate
@@ -198,7 +198,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
             rect.origin.y = keyBoardTranslate+64
         }
         
-        UIView.animateWithDuration(0.3) { 
+        UIView.animateWithDuration(0.3) {
             
             self.view.frame = rect
         }
@@ -215,6 +215,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         phoneNumber.placeholder = "手机号"
         phoneNumber.font = UIFont.systemFontOfSize(16)
         phoneNumber.keyboardType = .NumberPad
+        phoneNumber.clearButtonMode = .WhileEditing
         phoneNumber.returnKeyType = .Next
         login.addSubview(phoneNumber)
         phoneNumber.delegate = self
@@ -229,6 +230,16 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         passwordNumber.frame = CGRectMake(35, WIDTH*100/375, WIDTH-60, WIDTH*50/375)
         passwordNumber.placeholder = "密码"
         passwordNumber.font = UIFont.systemFontOfSize(16)
+        passwordNumber.secureTextEntry = true
+        let rightView = UIView(frame: CGRectMake(0, 0, 37, 20))
+        let rightBtn = UIButton(frame: CGRectMake(0, 2, 22, 16))
+        rightBtn.setImage(UIImage(named: "btn_eye_sel"), forState: .Selected)
+        rightBtn.setImage(UIImage(named: "btn_eye"), forState: .Normal)
+        rightBtn.tag = 101
+        rightBtn.addTarget(self, action: #selector(showOrHiddenPWD(_:)), forControlEvents: .TouchUpInside)
+        rightView.addSubview(rightBtn)
+        passwordNumber.rightView = rightView
+        passwordNumber.rightViewMode = .WhileEditing
         passwordNumber.returnKeyType = .Done
         login.addSubview(passwordNumber)
         passwordNumber.delegate = self
@@ -253,14 +264,23 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         forgetPwdBtn.addTarget(self, action: #selector(self.changePassWord), forControlEvents: .TouchUpInside)
         login.addSubview(forgetPwdBtn)
         
-//        scrollView.contentSize = CGSizeMake(WIDTH, CGRectGetMinY(login.frame)+CGRectGetMaxY(forgetPwdBtn.frame)+10-20)
+        //        scrollView.contentSize = CGSizeMake(WIDTH, CGRectGetMinY(login.frame)+CGRectGetMaxY(forgetPwdBtn.frame)+10-20)
         
+    }
+    
+    func showOrHiddenPWD(btn:UIButton) {
+        if btn.tag == 101 {
+            passwordNumber.secureTextEntry = !passwordNumber.secureTextEntry
+        }else{
+            password.secureTextEntry = !password.secureTextEntry
+        }
+        btn.selected = !btn.selected
     }
     
     //  修改密码
     func changePassWord(){
         print("修改密码")
-        //  跳转页面 
+        //  跳转页面
         let forGetVC = ForgetPasswordController()
         forGetVC.delegate = self
         forGetVC.flag = (navigationController?.navigationBar.hidden)!
@@ -281,6 +301,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         phoneNum.placeholder = "手机号"
         phoneNum.font = UIFont.systemFontOfSize(16)
         phoneNum.keyboardType = .NumberPad
+        phoneNum.clearButtonMode = .WhileEditing
         phoneNum.returnKeyType = .Next
         register.addSubview(phoneNum)
         phoneNum.delegate = self
@@ -302,6 +323,15 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         password.frame = CGRectMake(35, WIDTH*135/375, WIDTH-60, WIDTH*50/375)
         password.placeholder = "密码"
         password.font = UIFont.systemFontOfSize(16)
+        let rightView = UIView(frame: CGRectMake(0, 0, 37, 20))
+        let rightBtn = UIButton(frame: CGRectMake(0, 2, 22, 16))
+        rightBtn.setImage(UIImage(named: "btn_eye_sel"), forState: .Selected)
+        rightBtn.setImage(UIImage(named: "btn_eye"), forState: .Normal)
+        rightBtn.tag = 102
+        rightBtn.addTarget(self, action: #selector(showOrHiddenPWD(_:)), forControlEvents: .TouchUpInside)
+        rightView.addSubview(rightBtn)
+        password.rightView = rightView
+        password.rightViewMode = .WhileEditing
         password.returnKeyType = .Done
         register.addSubview(password)
         password.delegate = self
@@ -346,7 +376,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         gain.textColor = COLOR
         gain.textAlignment = .Center
         register.addSubview(gain)
-
+        
         //  获取验证码的button
         acquire.frame = CGRectMake(WIDTH-130, WIDTH*75/375+(WIDTH*50/375-30)/2, 95, 30)
         acquire.layer.cornerRadius = 13
@@ -354,7 +384,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         acquire.addTarget(self, action: #selector(self.gainTheCard), forControlEvents: .TouchUpInside)
         acquire.layer.borderWidth = 1.5
         register.addSubview(acquire)
-  
+        
         submit.frame = CGRectMake(25, WIDTH*212/375+btnHeight, WIDTH-50, WIDTH*50/375)
         submit.layer.cornerRadius = WIDTH*25/375
         submit.layer.borderWidth = 1.5
@@ -366,7 +396,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         submit.addTarget(self, action: #selector(self.submitTheUser), forControlEvents: .TouchUpInside)
         register.addSubview(submit)
         
-//        scrollView.contentSize = CGSizeMake(WIDTH, CGRectGetMinY(register.frame)+CGRectGetMaxY(submit.frame)+10-20)
+        //        scrollView.contentSize = CGSizeMake(WIDTH, CGRectGetMinY(register.frame)+CGRectGetMaxY(submit.frame)+10-20)
     }
     
     func personalOrBusinessBtnClick(button:UIButton) {
@@ -438,19 +468,19 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     
     // 验证手机号是否正确
     func validationEmailFormat(string:String) -> Bool {
-    
+        
         let mobileRegex = "^((13[0-9])|(147)|(170)|(15[^4,\\D])|(18[0-9]))\\d{8}$"
         let mobileTest:NSPredicate = NSPredicate(format: "SELF MATCHES %@",mobileRegex)
         return mobileTest.evaluateWithObject(string)
-   
+        
     }
     
     //  注册提交事件
     func submitTheUser() {
         print("提交")
-//        phoneNum.resignFirstResponder()
-//        yanzheng.resignFirstResponder()
-//        password.resignFirstResponder()
+        //        phoneNum.resignFirstResponder()
+        //        yanzheng.resignFirstResponder()
+        //        password.resignFirstResponder()
         if phoneNum.text!.isEmpty {
             let alert = UIAlertView(title: "提示信息",message: "请输入手机号",delegate: self,cancelButtonTitle: "确定")
             alert.show()
@@ -469,23 +499,23 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
             return
         }
         
-
+        
         logVM?.register(phoneNum.text!,password:password.text!,
                         code:yanzheng.text!,usertype:usertype,devicestate:"1", handle: { [unowned self] (success, response) in
-            dispatch_async(dispatch_get_main_queue(), {
-                if success {
-                    
-                    self.phoneNum.text = nil
-                    self.password.text = nil
-                    self.yanzheng.text = nil
-                    let alert = UIAlertView(title: "提示信息",message: "注册成功",delegate: self,cancelButtonTitle: "确定")
-                    alert.show()
-                    self.navigationController?.popViewControllerAnimated(true)
-                }else{
-                    let alert = UIAlertView(title: "提示信息",message: response as? String,delegate: self,cancelButtonTitle: "确定")
-                    alert.show()
-                }
-            })
+                            dispatch_async(dispatch_get_main_queue(), {
+                                if success {
+                                    
+                                    self.phoneNum.text = nil
+                                    self.password.text = nil
+                                    self.yanzheng.text = nil
+                                    let alert = UIAlertView(title: "提示信息",message: "注册成功",delegate: self,cancelButtonTitle: "确定")
+                                    alert.show()
+                                    self.navigationController?.popViewControllerAnimated(true)
+                                }else{
+                                    let alert = UIAlertView(title: "提示信息",message: response as? String,delegate: self,cancelButtonTitle: "确定")
+                                    alert.show()
+                                }
+                            })
             })
     }
     
@@ -557,9 +587,9 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         //  self.法方  和 方法的区别
         loginWithNum(phoneNumber.text!, pwd: passwordNumber.text!)
     }
-     // 通过手机号和密码进行登录操作
+    // 通过手机号和密码进行登录操作
     func loginWithNum(num:String,pwd:String){
-//   SVProgressHUD.show()
+        //   SVProgressHUD.show()
         
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         
@@ -585,7 +615,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
                     return
                 }else{
                     hud.hide(true)
-
+                    
                     let ud = NSUserDefaults.standardUserDefaults()
                     //  把得到的用户信息存入到沙盒
                     //  得到 useID
@@ -598,7 +628,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
                     self.loginSuccess()
                 }
             })
-        })
+            })
     }
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
@@ -610,20 +640,20 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     
     //  MARK:登录成功
     func loginSuccess(){
-//        self.navigationController?.popViewControllerAnimated(true)
+        //        self.navigationController?.popViewControllerAnimated(true)
         if previousViewcontroller.isKindOfClass(MineViewController) {
             self.navigationController?.pushViewController(MineViewController(), animated: true)
         }else{
             self.navigationController?.popViewControllerAnimated(true)
         }
         
-//        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        //        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         //  得到分栏控制器
-//            let vc : UITabBarController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UITabBarController
+        //            let vc : UITabBarController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UITabBarController
         //  选择被选中的界面
-//            vc.selectedIndex = 4
-//            print(vc)
-//            self.presentViewController(vc, animated: true, completion: nil)
+        //            vc.selectedIndex = 4
+        //            print(vc)
+        //            self.presentViewController(vc, animated: true, completion: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {

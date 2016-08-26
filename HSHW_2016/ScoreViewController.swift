@@ -11,7 +11,8 @@ import MBProgressHUD
 
 class ScoreViewController: UIViewController,UITableViewDataSource {
 
-    var scoreArray = [[String:String]]()
+    var scoreArray = Array<Ranking_UserModel>()
+    let myTableView = UITableView()
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
@@ -29,19 +30,21 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "score"), style: .Done, target: self, action: #selector(rankBtnClick))
                 
-        scoreArray = [["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"]]
+//        scoreArray = [["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"]]
         
         let cupImage = UIImageView(frame: CGRectMake(0, 0, WIDTH, WIDTH*476/750))
         cupImage.image = UIImage(named: "cup")
         self.view.addSubview(cupImage)
         
-        let myTableView = UITableView(frame: CGRectMake(20/750.0*WIDTH, 188/1380.0*HEIGHT, 71/75.0*WIDTH, 778/1380.0*HEIGHT), style: .Plain)
+        myTableView.frame = CGRectMake(20/750.0*WIDTH, 188/1380.0*HEIGHT, 71/75.0*WIDTH, 778/1380.0*HEIGHT)
         myTableView.registerClass(ScoreTableViewCell.self, forCellReuseIdentifier: "scoreCell")
         myTableView.rowHeight = 110/1380.0*HEIGHT
         myTableView.backgroundColor = UIColor.whiteColor()
         myTableView.layer.cornerRadius = 3
         myTableView.dataSource = self
         self.view.addSubview(myTableView)
+        
+        loadData()
         
         let noteLab = UILabel(frame: CGRectMake(20/750.0*WIDTH, CGRectGetMaxY(myTableView.frame), 71/75.0*WIDTH, 158/1380.0*HEIGHT))
         noteLab.numberOfLines = 0
@@ -63,6 +66,29 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
         print(myTableView.frame,noteLab.frame,shareBtn.frame)
     }
     
+    // MARK:- 获取数据
+    func loadData() {
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        
+        HSMineHelper().getRanking_User { (success, response) in
+            if success {
+                hud.hide(true)
+                self.scoreArray = response as! Array<Ranking_UserModel>
+                self.myTableView.reloadData()
+            }else{
+//                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.Text
+                hud.labelText = response as! String
+//                hud.margin = 10.0
+//                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 1)
+            }
+        }
+    }
+    
     // MARK:- TableView datasource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return scoreArray.count
@@ -72,9 +98,9 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("scoreCell", forIndexPath: indexPath) as! ScoreTableViewCell
         cell.selectionStyle = .None
         
-        cell.nameLab.text = scoreArray[indexPath.row]["name"]
-        cell.scoreLab.text = scoreArray[indexPath.row]["score"]
-        cell.timeLab.text = scoreArray[indexPath.row]["time"]
+        cell.nameLab.text = scoreArray[indexPath.row].event
+        cell.scoreLab.text = scoreArray[indexPath.row].score
+        cell.timeLab.text = scoreArray[indexPath.row].create_time
         
         return cell
     }

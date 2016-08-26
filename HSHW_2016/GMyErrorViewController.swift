@@ -153,8 +153,20 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         let userid = QCLoginUserInfo.currentInfo.userid
         helper.GetErrorExampaper(userid, type: "1") { (success, response) in
-            self.fansListArray = response as! Array<GExamInfo>
-            self.fansTableView.reloadData()
+            
+            if success {
+                
+                self.fansListArray = response as! Array<GExamInfo>
+                self.fansTableView.reloadData()
+            }else{
+                if String(response!) == "no data" {
+                    self.fansListArray = Array<GExamInfo>()
+                    self.fansTableView.reloadData()
+                }else{
+                    
+                }
+            }
+            
             flag += 1
             if flag == 2 {
                 hud.hide(true, afterDelay: 1)
@@ -162,8 +174,20 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
         
         helper.GetErrorExampaper(userid, type: "2") { (success, response) in
-            self.focusListArray = response as! Array<GExamInfo>
-            self.focusTableView.reloadData()
+
+            if success {
+                
+                self.focusListArray = response as! Array<GExamInfo>
+                self.focusTableView.reloadData()
+            }else{
+                if String(response!) == "no data" {
+                    self.focusListArray = Array<GExamInfo>()
+                    self.focusTableView.reloadData()
+                }else{
+                    
+                }
+            }
+            
             flag += 1
             if flag == 2 {
                 hud.hide(true, afterDelay: 1)
