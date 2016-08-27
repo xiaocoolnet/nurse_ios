@@ -97,6 +97,15 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                     }
                 })
             })
+        }else if showType == .PhoneNumber {
+            mineHelper.changePhoneNumber(textFeild.text!, handle: {[unowned self] (success, response) in
+                dispatch_async(dispatch_get_main_queue(), {
+                    if success {
+                        QCLoginUserInfo.currentInfo.phoneNumber = self.textFeild.text!
+                        self.navigationController?.popViewControllerAnimated(true)
+                    }
+                })
+                })
         }else if showType == .RealName {
             mineHelper.changeUserRealName(textFeild.text!, handle: {[unowned self] (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
@@ -172,7 +181,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if showType == .Education {
-        handle!(changeType: showType,value: self.dateSource.objectlist[indexPath.row].name)
+            handle!(changeType: showType,value: self.dateSource.objectlist[indexPath.row].name)
             mineHelper.changeEducation(self.dateSource.objectlist[indexPath.row].name, handle: {[unowned self] (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
@@ -237,7 +246,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
         pick.show((UIApplication.sharedApplication().keyWindow)!)
         pick.selectAdress { (dressArray) in
             self.array=dressArray
-            self.addressBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
+            self.addressBtn.setTitle("\(dressArray[0])-\(dressArray[1])-\(dressArray[2])", forState: .Normal)
             self.addressBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
             
         }

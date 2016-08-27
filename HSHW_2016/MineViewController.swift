@@ -311,7 +311,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     }else {
                         nurseCoins.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH*232/375+50, WIDTH/3, 20)
                         nurseCoins.titleLabel?.font = UIFont.systemFontOfSize(14)
-                        nurseCoins.setTitle(QCLoginUserInfo.currentInfo.money, forState: .Normal)
+                        nurseCoins.setTitle(QCLoginUserInfo.currentInfo.score, forState: .Normal)
                         cell.addSubview(nurseCoins)
                     }
                     
@@ -433,7 +433,6 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         print("设置")
         let next = SetDataViewController()
         self.navigationController?.pushViewController(next, animated: true)
-        next.title = "个人资料编辑"
     }
     
     // MARK: 粉丝与关注

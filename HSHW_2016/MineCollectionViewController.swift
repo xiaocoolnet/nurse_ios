@@ -37,6 +37,7 @@ class MineCollectionViewController: UIViewController {
         options.menuItemMargin = 5
         options.menuHeight = 40
         options.menuDisplayMode = .SegmentedControl
+        options.scrollEnabled = false
         options.backgroundColor = UIColor.clearColor()
         options.selectedBackgroundColor = UIColor.whiteColor()
         options.font = UIFont.systemFontOfSize(16)
