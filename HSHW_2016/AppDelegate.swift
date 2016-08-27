@@ -91,6 +91,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         }else if str.hasPrefix("wb"){
             return WeiboSDK.handleOpenURL(url, delegate: self)
         }else{
+            QQApiInterface.handleOpenURL(url, delegate: qqDelegate())
+
             return TencentOAuth.HandleOpenURL(url)
         }
     }
@@ -128,17 +130,117 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
 //            self.wbtoken = [(WBAuthorizeResponse *)response accessToken];
 //            self.wbCurrentUserID = [(WBAuthorizeResponse *)response userID];
 //            self.wbRefreshToken = [(WBAuthorizeResponse *)response refreshToken];
+            print("123  \(response.statusCode.rawValue)")
+            if response.statusCode.rawValue == 0 {
+                NewsPageHelper().addScore_fenxiang({ (success, response) in
+                    if success || String(response!) == "Exceed the upper limit value" {
+                        
+                        let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "分享成功 积分增加"
+                        print(hud.labelText)
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }else{
+                        let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "分享成功 积分不变"
+                        print(hud.labelText)
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                })
+            }else{
+                let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+                hud.mode = MBProgressHUDMode.Text;
+                hud.labelText = "分享失败"
+                print(hud.labelText)
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 1)
+            }
             
+        }else if response.isKindOfClass(WBSendMessageToWeiboResponse) {
+
+//            let authorizeResponse:WBSendMessageToWeiboResponse = response as! WBSendMessageToWeiboResponse
+//            self.wbtoken = authorizeResponse.authResponse.accessToken
+            
+//            print(authorizeResponse.debugDescription)
+            //            self.wbtoken = [(WBAuthorizeResponse *)response accessToken];
+            //            self.wbCurrentUserID = [(WBAuthorizeResponse *)response userID];
+            //            self.wbRefreshToken = [(WBAuthorizeResponse *)response refreshToken];
+            if response.statusCode.rawValue == 0 {
+                NewsPageHelper().addScore_fenxiang({ (success, response) in
+                    if success || String(response!) == "Exceed the upper limit value" {
+                        
+                        let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "分享成功 积分增加"
+                        print(hud.labelText)
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }else{
+                        let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "分享成功 积分不变"
+                        print(hud.labelText)
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
+                    }
+                })
+            }else{
+                let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+                hud.mode = MBProgressHUDMode.Text;
+                hud.labelText = "分享失败"
+                print(hud.labelText)
+                print(hud.labelText)
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 1)
+            }
+        }
+    }
+    // MARK:-
+    
+    
+    func onResp(resp: BaseResp!) {
+        
+        print(resp.errCode)
+        if resp.errCode == 0 {
+            NewsPageHelper().addScore_fenxiang({ (success, response) in
+                if success || String(response!) == "Exceed the upper limit value" {
+                    
+                    let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "分享成功 积分增加"
+                    print(hud.labelText)
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }else{
+                    let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "分享成功 积分不变"
+                    print(hud.labelText)
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+            })
+        }else{
             let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-            //            hud.mode = MBProgressHUDMode.Text;
-            hud.labelText = response.statusCode.rawValue == 0 ? "分享成功":"分享失败"
+            hud.mode = MBProgressHUDMode.Text;
+            hud.labelText = "分享失败"
+            print(hud.labelText)
             hud.margin = 10.0
             hud.removeFromSuperViewOnHide = true
             hud.hide(true, afterDelay: 1)
         }
     }
-    // MARK:-
-    
     
     
     func applicationWillResignActive(application: UIApplication) {
