@@ -543,10 +543,32 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let webCell = tableView.dequeueReusableCellWithIdentifier("webView") as! contentCell
                 if webFlag {
                     
-                    let url = NSURL(string:NewsInfo_Header+(newsInfo?.object_id)!)
-                    webCell.loadRequestUrl(url!)
-                    webCell.contentWebView.delegate = self
-                    webFlag = false
+                    helper.addScore_ReadingInformation({ (success, response) in
+                        if success || String(response!) == "lost param"{
+                            
+                            let url = NSURL(string:NewsInfo_Header+(self.newsInfo?.object_id)!)
+                            webCell.loadRequestUrl(url!)
+                            webCell.contentWebView.delegate = self
+                            self.webFlag = false
+                        }else{
+                            let alert = UIAlertController(title: nil, message: "获取新闻内容失败", preferredStyle: .Alert)
+                            self.presentViewController(alert, animated: true, completion: {
+                                
+                            })
+                            
+                            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (action) in
+                                
+                            })
+                            alert.addAction(cancelAction)
+                            
+                            let replyAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
+                                
+                                self.myTableView.reloadData()
+                            })
+                            alert.addAction(replyAction)
+                        }
+                    })
+                    
                 }
                 return webCell
                
@@ -650,6 +672,10 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //            return cell
         }
         return cell1
+        
+    }
+    
+    func loadURL() {
         
     }
     

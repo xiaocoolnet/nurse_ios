@@ -80,11 +80,26 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
                 self.myTableView.reloadData()
             }else{
 //                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                hud.mode = MBProgressHUDMode.Text
-                hud.labelText = response as! String
+//                hud.mode = MBProgressHUDMode.Text
+//                hud.labelText = response as! String
 //                hud.margin = 10.0
 //                hud.removeFromSuperViewOnHide = true
-                hud.hide(true, afterDelay: 1)
+                hud.hide(true)
+                
+                let alert = UIAlertController(title: nil, message: "获取个人积分详情失败", preferredStyle: .Alert)
+                self.presentViewController(alert, animated: true, completion: { 
+                    
+                })
+                
+                let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (action) in
+                    
+                })
+                alert.addAction(cancelAction)
+                
+                let replyAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
+                    self.loadData()
+                })
+                alert.addAction(replyAction)
             }
         }
     }
