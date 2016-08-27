@@ -114,7 +114,7 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
         cell.selectionStyle = .None
         
         cell.nameLab.text = scoreArray[indexPath.row].event
-        cell.scoreLab.text = scoreArray[indexPath.row].score
+        cell.scoreLab.text = "+"+scoreArray[indexPath.row].score
         cell.timeLab.text = scoreArray[indexPath.row].create_time
         
         return cell
@@ -124,12 +124,31 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
     func shareBtnClick_old() {
         print("点击 邀请朋友赚积分 按钮")
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.mode = MBProgressHUDMode.Text
-        hud.labelText = "敬请期待"
-        hud.margin = 10.0
-        hud.removeFromSuperViewOnHide = true
-        hud.hide(true, afterDelay: 1)
+//        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//        hud.mode = MBProgressHUDMode.Text
+//        hud.labelText = "敬请期待"
+//        hud.margin = 10.0
+//        hud.removeFromSuperViewOnHide = true
+//        hud.hide(true, afterDelay: 1)
+        
+        if QCLoginUserInfo.currentInfo.all_information == "1" {
+            collectionNews()
+        }else{
+            let alert = UIAlertController(title: nil, message: "请完善个人资料后重试", preferredStyle: .Alert)
+            self.presentViewController(alert, animated: true, completion: {
+                
+            })
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (action) in
+                
+            })
+            alert.addAction(cancelAction)
+            
+            let replyAction = UIAlertAction(title: "现在就去", style: .Default, handler: { (action) in
+                self.navigationController?.pushViewController(SetDataViewController(), animated: true)
+            })
+            alert.addAction(replyAction)
+        }
 
 //        let downLoadVC = DownLoadViewController()
 //        self.navigationController?.pushViewController(downLoadVC, animated: true)

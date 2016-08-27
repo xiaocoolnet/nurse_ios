@@ -44,6 +44,7 @@ class HSMineHelper: NSObject {
                     QCLoginUserInfo.currentInfo.major = result.data?.user_major_2 ?? ""
                     QCLoginUserInfo.currentInfo.education = result.data?.user_education_2 ?? ""
                     QCLoginUserInfo.currentInfo.usertype = result.data?.user_usertype ?? ""
+                    QCLoginUserInfo.currentInfo.all_information = result.data?.all_information ?? ""
                     print("=-=-=-=-=-=-"+String(QCLoginUserInfo.currentInfo.email))
                     handle(success: true, response: nil)
                 }else{

@@ -172,4 +172,26 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
         
         return 0
     }
+    
+//    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+//        return UITableViewCellEditingStyle.Delete
+//    }
+//    
+//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+//        if editingStyle == UITableViewCellEditingStyle.Delete {
+//            //        获取选中删除行索引值
+//            let row = indexPath.row
+//            //        通过获取的索引值删除数组中的值
+//            if collectionType == 1 {
+//                self.dataSource.removeObjectAtIndex(row)
+//            }else{
+//                self.fansListArray.removeAtIndex(row)
+//            }
+////            [self.listData removeObjectAtIndex:row];
+//            //        删除单元格的某一行时，在用动画效果实现删除过程
+//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+//        }
+//    }
+    
+//    tablerowatin
 }
