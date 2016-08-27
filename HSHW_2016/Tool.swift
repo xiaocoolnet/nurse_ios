@@ -32,6 +32,10 @@ let kRedirectURI = "http://app.chinanurse.cn"
 let APP_SHARE_URL = "https://www.pgyer.com/kUyM"
 let APP_SHARE_NAME = "中国护士网"
 
+let APP_INVITEFRIEND_TITLE = "中国护士网"
+let APP_INVITEFRIEND_DESCRIPTION = "服务于中国320万护士 白衣天使的网上家园"
+let APP_INVITEFRIEND_URL = "http://app.chinanurse.cn"
+
 var loadPictureOnlyWiFi = false
 
 //let ZAN_URL_Header = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a="

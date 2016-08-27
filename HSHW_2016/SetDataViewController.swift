@@ -47,6 +47,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "个人资料编辑"
         array = ["北京市","北京市","朝阳区"]
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR

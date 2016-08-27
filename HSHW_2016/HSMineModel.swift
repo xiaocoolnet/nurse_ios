@@ -447,7 +447,7 @@ class Ranking_User:JSONJoy {
     }
 }
 
-// Model 积分排行榜（data）
+// Model 个人积分详情（data）
 class Ranking_UserModel: JSONJoy {
     
     var userid: String
@@ -462,9 +462,9 @@ class Ranking_UserModel: JSONJoy {
         userid = decoder["userid"].string ?? ""
         score = decoder["score"].string ?? ""
         event = decoder["event"].string ?? "NO NAME"
-        create_time = decoder["create_time"].string ?? ""
+//        create_time = decoder["create_time"].string ?? ""
         
-        let timeStr = NSString(string: decoder["time"].string ?? "")
+        let timeStr = NSString(string: decoder["create_time"].string ?? "")
         let timeSta:NSTimeInterval = timeStr.doubleValue
         let dfmatter = NSDateFormatter()
         dfmatter.dateFormat="yyyy-MM-dd"

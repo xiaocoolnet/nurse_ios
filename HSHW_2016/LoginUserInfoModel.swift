@@ -65,6 +65,8 @@ class LoginUserInfo: JSONJoy {
     var user_major_2:String
     var user_education:String
     var user_education_2:String
+    var all_information:String
+    
 
     //  初始化方法
     required init(_ decoder:JSONDecoder){
@@ -96,6 +98,6 @@ class LoginUserInfo: JSONJoy {
         user_major_2 = decoder["major"].string ?? ""
         user_education = decoder["user_education"].string ?? ""
         user_education_2 = decoder["education"].string ?? ""
-
+        all_information = decoder["all_information"].string ?? ""
     }
 }

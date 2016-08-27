@@ -26,6 +26,7 @@ class RankTableViewCell: UITableViewCell {
        
         scoreImg.frame = CGRectMake(CGRectGetMaxX(indexBtn.frame)+22/750.0*WIDTH, 20/1380.0*HEIGHT, 70/1380.0*HEIGHT, 70/1380.0*HEIGHT)
         scoreImg.layer.cornerRadius = scoreImg.frame.size.width/2.0
+        scoreImg.clipsToBounds = true
         self.contentView.addSubview(scoreImg)
         
         nameLab.frame = CGRectMake(

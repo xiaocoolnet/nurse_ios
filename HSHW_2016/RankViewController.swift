@@ -144,12 +144,31 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
     func shareBtnClick_old() {
         print("点击 邀请朋友赚积分 按钮")
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.mode = MBProgressHUDMode.Text
-        hud.labelText = "敬请期待"
-        hud.margin = 10.0
-        hud.removeFromSuperViewOnHide = true
-        hud.hide(true, afterDelay: 1)
+//        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//        hud.mode = MBProgressHUDMode.Text
+//        hud.labelText = "敬请期待"
+//        hud.margin = 10.0
+//        hud.removeFromSuperViewOnHide = true
+//        hud.hide(true, afterDelay: 1)
+        
+        if QCLoginUserInfo.currentInfo.all_information == "1" {
+            collectionNews()
+        }else{
+            let alert = UIAlertController(title: nil, message: "请完善个人资料后重试", preferredStyle: .Alert)
+            self.presentViewController(alert, animated: true, completion: {
+                
+            })
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (action) in
+                
+            })
+            alert.addAction(cancelAction)
+            
+            let replyAction = UIAlertAction(title: "现在就去", style: .Default, handler: { (action) in
+                self.navigationController?.pushViewController(SetDataViewController(), animated: true)
+            })
+            alert.addAction(replyAction)
+        }
         
 //        let downLoadVC = DownLoadViewController()
 //        self.navigationController?.pushViewController(downLoadVC, animated: true)
@@ -261,14 +280,14 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
         if btn.tag == 0 || btn.tag == 1 {
             
             let message = WXMediaMessage()
-            message.title = "中国护士网"
-            message.description = "服务于中国320万护士 白衣天使的网上家园"
+            message.title = APP_INVITEFRIEND_TITLE
+            message.description = APP_INVITEFRIEND_DESCRIPTION
 
             let thumbImage = UIImage(named: "appLogo")
             message.setThumbImage(thumbImage)
             
             let webPageObject = WXWebpageObject()
-            webPageObject.webpageUrl = NewsInfo_Header
+            webPageObject.webpageUrl = APP_INVITEFRIEND_URL
             message.mediaObject = webPageObject
             
             let req = SendMessageToWXReq()
@@ -294,20 +313,20 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
             authRequest.scope = "all"
             
             let message = WBMessageObject.message() as! WBMessageObject
-            message.text = "中国护士网\n服务于中国320万护士 白衣天使的网上家园"
+            message.text = "\(APP_INVITEFRIEND_TITLE)\n\(APP_INVITEFRIEND_DESCRIPTION)"
             let webpage:WBWebpageObject = WBWebpageObject.object() as! WBWebpageObject
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyyMMddHHmmss"
             let dateStr = dateFormatter.stringFromDate(NSDate())
             webpage.objectID = "chinanurse\(kAppKey)\(dateStr)"
-            webpage.title = "中国护士网"
-            webpage.description = "服务于中国320万护士 白衣天使的网上家园"
+            webpage.title = APP_INVITEFRIEND_TITLE
+            webpage.description = APP_INVITEFRIEND_DESCRIPTION
             
             let thumbImage = UIImage(named: "appLogo")
             let data = UIImageJPEGRepresentation(thumbImage!, 0.5)!
             webpage.thumbnailData = data
             
-            webpage.webpageUrl = NewsInfo_Header
+            webpage.webpageUrl = APP_INVITEFRIEND_URL
             message.mediaObject = webpage
             print(message.mediaObject.debugDescription)
             
@@ -317,9 +336,9 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
             WeiboSDK.sendRequest(request)
         }else{
             
-            let newsUrl = NSURL(string: NewsInfo_Header)
-            let title = "中国护士网"
-            let description = "服务于中国320万护士 白衣天使的网上家园"
+            let newsUrl = NSURL(string: APP_INVITEFRIEND_URL)
+            let title = APP_INVITEFRIEND_TITLE
+            let description = APP_INVITEFRIEND_DESCRIPTION
             
             var previewImageData = NSData()
             
