@@ -15,3 +15,5 @@
 #import <TencentOpenAPI/sdkdef.h>
 #import <TencentOpenAPI/TencentmessageObject.h>
 #import <TencentOpenAPI/TencentOAuthObject.h>
+
+#import "SMPageControl.h"

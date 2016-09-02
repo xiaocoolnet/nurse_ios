@@ -14,7 +14,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     
     var myTableView = UITableView()
     let scrollView = UIScrollView()
-    let pageControl = UIPageControl()
+    let pageControl = SMPageControl()
 //    var picArr = Array<String>()
     var timer = NSTimer()
     var times = Int()
@@ -122,7 +122,8 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         scrollView.contentOffset = CGPointMake(0, 0)
         
         pageControl.numberOfPages = self.imageArr.count
-        pageControl.frame = CGRectMake(WIDTH-20*CGFloat(imageArr.count), WIDTH*190/375-25, 20*CGFloat(imageArr.count), 25)
+        pageControl.frame = CGRectMake(WIDTH-8-pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)-6*CGFloat(self.imageArr.count-1), WIDTH*190/375-25, pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)+6*CGFloat(self.imageArr.count-1), 25)
+        pageControl.indicatorMargin = 6
         pageControl.currentPage = 0
         
 
@@ -136,7 +137,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         HSNurseStationHelper().getArticleListWithID("112") { (success, response) in
             
             if success {
-                print(response)
+                print("AbroadViewController GetDate-轮播图 response == \(response)")
                 self.imageArr = response as! Array<NewsInfo>
                 //                for imageInfo in self.imageArr {
                 //                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
@@ -177,7 +178,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         HSNurseStationHelper().getArticleListWithID("8") { (success, response) in
             
             if success {
-                print(response)
+                print("AbroadViewController GetDate-文章列表 response == \(response)")
                 
                 self.dataSource = response as! Array<NewsInfo>
                 
@@ -408,7 +409,6 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     //  cell的点击事件
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
         if indexPath.section == 0 {
         }else{
             //  进入详情界面
@@ -426,7 +426,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     //    国家
     func selectorCountry(btn:UIButton) {
-        print(btn.tag)
+//        print(btn.tag)
         //  执行国家图片的点击内容
 //        channelid = btn.tag
 //        country = btn.tag
@@ -470,7 +470,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     func tapAction(tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
-        print("这是第\(Int(imageView.tag))张图片")
+//        print("这是第\(Int(imageView.tag))张图片")
         
         let next = NewsContantViewController()
         next.newsInfo = imageArr[imageView.tag-1]

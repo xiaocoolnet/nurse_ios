@@ -7,12 +7,13 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class HSCollectionListController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let myTableView: UITableView! = UITableView()
     var collectionType = 0
     var helper = HSMineHelper()
-    var dataSource = NSMutableArray()
+    var dataSource = Array<NewsInfo>()
     
     private var collectListArray:Array<CollectList> = []
     private var fansListArray:Array<xamInfo> = []
@@ -43,8 +44,8 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
             helper.getCollectionInfoWithType("1", handle: { (success, response) in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
-                        let list =  newsInfoModel(response as! JSONDecoder).data
-                        self.dataSource.addObjectsFromArray(list)
+//                        let list =  newsInfoModel(response as! JSONDecoder).data
+                        self.dataSource = newsInfoModel(response as! JSONDecoder).data
                         self.myTableView.reloadData()
                     })
                 }
@@ -64,24 +65,25 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
                     self.myTableView.mj_header.endRefreshing()
                 }
             }
-        } else if collectionType == 3 {
-            
-            myTableView.registerNib(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
-            
-            helper.getCollectionInfoWithType("4", handle: { (success, response) in
-                if success {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        let list = PostCollectListModel(response as! JSONDecoder)
-                        self.dataSource.addObjectsFromArray(list.datas)
-                        self.myTableView.reloadData()
-                    })
-                }
-                
-                if self.myTableView.mj_header.isRefreshing(){
-                    self.myTableView.mj_header.endRefreshing()
-                }
-            })
         }
+//        else if collectionType == 3 {
+//            
+//            myTableView.registerNib(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
+//            
+//            helper.getCollectionInfoWithType("4", handle: { (success, response) in
+//                if success {
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                        let list = PostCollectListModel(response as! JSONDecoder)
+//                        self.dataSource.addObjectsFromArray(list.datas)
+//                        self.myTableView.reloadData()
+//                    })
+//                }
+//                
+//                if self.myTableView.mj_header.isRefreshing(){
+//                    self.myTableView.mj_header.endRefreshing()
+//                }
+//            })
+//        }
     }
 
     // MARK: - Table view data source
@@ -105,7 +107,7 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
         if collectionType == 1 {
             let cell = tableView.dequeueReusableCellWithIdentifier("cell")
             cell?.selectionStyle = .None
-            (cell as! HSArticleCollectCell).showforModel(dataSource[indexPath.row] as! NewsInfo)
+            (cell as! HSArticleCollectCell).showforModel(dataSource[indexPath.row] )
             return cell!
 
         }else if collectionType == 2 {
@@ -121,32 +123,27 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
 //            cell.fanModel = model
             return cell
 
-        }else if collectionType == 3 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-
-            (cell as! HSComTableCell).showForForumModel(dataSource[indexPath.row] as! PostModel)
-            return cell!
         }else {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("cell")
             
             return cell!
         }
+//        else if collectionType == 3 {
+//            let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+//            
+//            (cell as! HSComTableCell).showForForumModel(dataSource[indexPath.row] as! PostModel)
+//            return cell!
+//        }
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if collectionType == 1{
             if dataSource.count > indexPath.row {
                 let next = NewsContantViewController()
-                next.newsInfo = dataSource[indexPath.row] as? NewsInfo
+                next.newsInfo = dataSource[indexPath.row]
 //                next.navTitle = dataSource[indexPath.row] as? NewsInfo)
                 navigationController!.pushViewController(next, animated: true)
             }
-        }else if collectionType == 3 {
-            let vc = HSPostDetailViewController(nibName: "HSPostDetailViewController",bundle: nil)
-            vc.postInfo = dataSource[indexPath.row] as? PostModel
-            print((dataSource[indexPath.row] as? PostModel)?.mid)
-            
-            navigationController?.pushViewController(vc, animated: true)
         }else if collectionType == 2 {
             let userPageVC = GMyExamViewController()
             userPageVC.type = 1
@@ -159,6 +156,13 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
             self.navigationController?.pushViewController(userPageVC, animated: true)
 
         }
+//        else if collectionType == 3 {
+//            let vc = HSPostDetailViewController(nibName: "HSPostDetailViewController",bundle: nil)
+//            vc.postInfo = dataSource[indexPath.row] as? PostModel
+//            print((dataSource[indexPath.row] as? PostModel)?.mid)
+//            
+//            navigationController?.pushViewController(vc, animated: true)
+//        }
         
     }
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -173,25 +177,65 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
         return 0
     }
     
-//    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-//        return UITableViewCellEditingStyle.Delete
-//    }
-//    
-//    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-//        if editingStyle == UITableViewCellEditingStyle.Delete {
-//            //        获取选中删除行索引值
-//            let row = indexPath.row
-//            //        通过获取的索引值删除数组中的值
-//            if collectionType == 1 {
-//                self.dataSource.removeObjectAtIndex(row)
-//            }else{
-//                self.fansListArray.removeAtIndex(row)
-//            }
-////            [self.listData removeObjectAtIndex:row];
-//            //        删除单元格的某一行时，在用动画效果实现删除过程
-//            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-//        }
-//    }
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.Delete
+    }
     
-//    tablerowatin
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            //        获取选中删除行索引值
+            let row = indexPath.row
+            //        通过获取的索引值删除数组中的值
+            if collectionType == 1 {
+                
+                let newsInfo = self.dataSource[row] 
+                
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                
+                HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", handle: { (success, response) in
+                    if success {
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "取消收藏成功"
+                        hud.hide(true, afterDelay: 0.5)
+                        
+                        self.dataSource.removeAtIndex(row)
+                        
+                        //        删除单元格的某一行时，在用动画效果实现删除过程
+                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                    }else{
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = String(response!)
+                        hud.hide(true, afterDelay: 1)
+                    }
+                })
+            }else{
+                
+                let newsInfo = self.fansListArray[row]
+                
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                
+                HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.questionid, type: "2", handle: { (success, response) in
+                    if success {
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "取消收藏成功"
+                        hud.hide(true, afterDelay: 0.5)
+                        
+                        self.fansListArray.removeAtIndex(row)
+                        
+                        //        删除单元格的某一行时，在用动画效果实现删除过程
+                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                    }else{
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = String(response!)
+                        hud.hide(true, afterDelay: 1)
+                    }
+                })
+            }
+        }
+    }
+    
 }

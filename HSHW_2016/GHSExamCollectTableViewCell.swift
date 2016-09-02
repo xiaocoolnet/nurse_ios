@@ -60,6 +60,21 @@ class GHSExamCollectTableViewCell: UITableViewCell {
 //        selfModel = model
     }
     
+    func showforNewsModel(model:NewsInfo){
+        print(model.title)
+        //        examTitle.text = "123456789"
+        examTitle.text = model.title
+        timeLabel.text = timeStampToString(model.create_time!)
+        
+        //        if (newsTitle != nil) {
+        //            newsTitle.text = model.title
+        //        }
+        //        if (timeLab != nil) {
+        //            timeLab.text = timeStampToString(model.createtime)
+        //        }
+        //        selfModel = model
+    }
+    
     // Linux时间戳转标准时间
     func timeStampToString(timeStamp:String)->String {
         

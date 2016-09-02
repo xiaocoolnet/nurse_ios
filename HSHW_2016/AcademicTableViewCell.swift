@@ -84,7 +84,7 @@ class AcademicTableViewCell: UITableViewCell {
             if (newsInfo?.thumbArr.count > 0) {
                 
                 let photoUrl:String = DomainName+"data/upload/"+(newsInfo!.thumbArr.first?.url)!
-                print(photoUrl)
+                print("AcademicTableViewCell photoUrl == \(photoUrl)")
                 if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
                     titImage.image = UIImage.init(named: "defaultImage.png")
                 }else{

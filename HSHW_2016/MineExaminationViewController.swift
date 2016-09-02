@@ -30,8 +30,6 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
         self.title = "收藏试题"
         loadData_Exampaper()
         
-
-        
         // 线
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
@@ -106,6 +104,20 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
         
+        let userPageVC = GMyExaminationViewController()
+        userPageVC.type = 3
+//        if tableView.tag == 410 {
+//            userPageVC.subType = 1
+            print(fansListArray[indexPath.row])
+            userPageVC.a = indexPath.row
+            userPageVC.dataSource = fansListArray
+//        }else{
+//            userPageVC.subType = 2
+//            userPageVC.a = indexPath.row
+//            userPageVC.dataSource = focusListArray
+//        }
+//
+        self.navigationController?.pushViewController(userPageVC, animated: true)
 //        let userPageVC = GMyExamViewController()
 //        userPageVC.type = 1
 //        userPageVC.subType = 1
@@ -114,6 +126,41 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
 //        userPageVC.dataSource = fansListArray
 //        
 //        self.navigationController?.pushViewController(userPageVC, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.Delete
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.Delete {
+            //        获取选中删除行索引值
+            let row = indexPath.row
+            //        通过获取的索引值删除数组中的值
+            
+            let newsInfo = self.fansListArray[row]
+            
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            
+            HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.questionid, type: "2", handle: { (success, response) in
+                if success {
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "取消收藏成功"
+                    hud.hide(true, afterDelay: 0.5)
+                    
+                    self.fansListArray.removeAtIndex(row)
+                    
+                    //        删除单元格的某一行时，在用动画效果实现删除过程
+                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                }else{
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = String(response!)
+                    hud.hide(true, afterDelay: 1)
+                }
+            })
+        }
     }
     
 }

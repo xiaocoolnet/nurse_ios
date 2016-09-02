@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 let WIDTH = UIScreen.mainScreen().bounds.size.width
 let HEIGHT = UIScreen.mainScreen().bounds.size.height
@@ -34,7 +35,9 @@ let APP_SHARE_NAME = "中国护士网"
 
 let APP_INVITEFRIEND_TITLE = "中国护士网"
 let APP_INVITEFRIEND_DESCRIPTION = "服务于中国320万护士 白衣天使的网上家园"
-let APP_INVITEFRIEND_URL = "http://app.chinanurse.cn"
+let APP_INVITEFRIEND_URL = "http://app.chinanurse.cn/index.php?g=Score&m=Score&a=scorepengyou&userid="
+//var myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+var myInviteFriendUrl = NSUserDefaults.standardUserDefaults().stringForKey("myInviteFriendUrl") ?? APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
 
 var loadPictureOnlyWiFi = false
 
@@ -191,4 +194,48 @@ func checkHadLike(id:String, type:String, handle:ResponseBlock){
 func alert(message:String,delegate:AnyObject){
     let alert = UIAlertView(title: "提示信息", message: message, delegate: delegate, cancelButtonTitle: "确定")
     alert.show()
+}
+
+func getInvitedUrl() {
+    
+    let url = "http://apis.baidu.com/3023/shorturl/shorten"
+    
+    Alamofire.request(.GET, url, parameters: ["url_long":APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid], encoding: .URLEncodedInURL, headers: ["apikey":"615ac7276ff0b752fc5f0b8cfa845544"]).response { (request, response, json, error) in
+        print(response,json,error)
+        if error != nil {
+            myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+        }else{
+            
+            let js = try?NSJSONSerialization.JSONObjectWithData(json!, options: .MutableLeaves)
+            print(JSON(js!)["urls"][0]["url_short"].string!)
+            if JSON(js!)["urls"][0]["result"].boolValue {
+                NSUserDefaults.standardUserDefaults().setValue(JSON(js!)["urls"][0]["url_short"].string!, forKey: "myInviteFriendUrl")
+                myInviteFriendUrl = JSON(js!)["urls"][0]["url_short"].string!
+            }else{
+                myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+            }
+        }
+    }
+}
+
+func getShareNewsUrl(originalUrlStr:String) {
+    
+    let url = "http://apis.baidu.com/3023/shorturl/shorten"
+    
+    Alamofire.request(.GET, url, parameters: ["url_long":APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid], encoding: .URLEncodedInURL, headers: ["apikey":"615ac7276ff0b752fc5f0b8cfa845544"]).response { (request, response, json, error) in
+        print(response,json,error)
+        if error != nil {
+            myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+        }else{
+            
+            let js = try?NSJSONSerialization.JSONObjectWithData(json!, options: .MutableLeaves)
+            print(JSON(js!)["urls"][0]["url_short"].string!)
+            if JSON(js!)["urls"][0]["result"].boolValue {
+                NSUserDefaults.standardUserDefaults().setValue(JSON(js!)["urls"][0]["url_short"].string!, forKey: "myInviteFriendUrl")
+                myInviteFriendUrl = JSON(js!)["urls"][0]["url_short"].string!
+            }else{
+                myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+            }
+        }
+    }
 }

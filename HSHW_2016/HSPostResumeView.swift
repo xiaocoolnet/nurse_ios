@@ -421,11 +421,6 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         expDropDown.dataSource = dropDownDic["exp"]!
         
-        self.expLab.text = dropDownDic["exp"]!.first
-        self.expLab.sizeToFit()
-        self.expImg.frame.origin.x = CGRectGetMaxX(self.expLab.frame)+5
-        self.expLab_year.frame.origin.x = CGRectGetMaxX(self.expImg.frame)+5
-        
         expDropDown.selectionAction = { [unowned self] (index, item) in
             self.expLab.text = item
             self.expLab.sizeToFit()
@@ -460,11 +455,6 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         salaryDropDown.direction = .Bottom
         
         salaryDropDown.dataSource = dropDownDic["salary"]!
-        
-        self.salaryLab.text = dropDownDic["salary"]!.first
-        self.salaryLab.sizeToFit()
-        self.salaryImg.frame.origin.x = CGRectGetMaxX(self.salaryLab.frame)+5
-        self.salaryLab_unit.frame.origin.x = CGRectGetMaxX(self.salaryImg.frame)+5
         
         salaryDropDown.selectionAction = { [unowned self] (index, item) in
             self.salaryLab.text = item
@@ -501,11 +491,6 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         expectedSalaryDropDown.dataSource = dropDownDic["expectedSalary"]!
         
-        self.expectedSalaryLab.text = dropDownDic["expectedSalary"]!.first
-        self.expectedSalaryLab.sizeToFit()
-        self.expectedSalaryImg.frame.origin.x = CGRectGetMaxX(self.expectedSalaryLab.frame)+5
-        self.expectedSalaryLab_unit.frame.origin.x = CGRectGetMaxX(self.expectedSalaryImg.frame)+5
-        
         expectedSalaryDropDown.selectionAction = { [unowned self] (index, item) in
             self.expectedSalaryLab.text = item
             self.expectedSalaryLab.sizeToFit()
@@ -530,6 +515,24 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             self.expectedPositionImg.frame.origin.x = CGRectGetMaxX(self.expectedPositionLab.frame)+5
             
             self.dropDownFinishDic["expectedPosition"] = item
+        }
+        
+        if !alreadyHasResume {
+            
+            self.expLab.text = dropDownDic["exp"]!.first
+            self.expLab.sizeToFit()
+            self.expImg.frame.origin.x = CGRectGetMaxX(self.expLab.frame)+5
+            self.expLab_year.frame.origin.x = CGRectGetMaxX(self.expImg.frame)+5
+            
+            self.salaryLab.text = dropDownDic["salary"]!.first
+            self.salaryLab.sizeToFit()
+            self.salaryImg.frame.origin.x = CGRectGetMaxX(self.salaryLab.frame)+5
+            self.salaryLab_unit.frame.origin.x = CGRectGetMaxX(self.salaryImg.frame)+5
+            
+            self.expectedSalaryLab.text = dropDownDic["expectedSalary"]!.first
+            self.expectedSalaryLab.sizeToFit()
+            self.expectedSalaryImg.frame.origin.x = CGRectGetMaxX(self.expectedSalaryLab.frame)+5
+            self.expectedSalaryLab_unit.frame.origin.x = CGRectGetMaxX(self.expectedSalaryImg.frame)+5
         }
     }
     

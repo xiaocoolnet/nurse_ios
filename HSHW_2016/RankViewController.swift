@@ -8,6 +8,8 @@
 
 import UIKit
 import MBProgressHUD
+import Alamofire
+import SwiftyJSON
 
 class RankViewController: UIViewController,UITableViewDataSource, UITableViewDelegate {
     
@@ -287,7 +289,7 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
             message.setThumbImage(thumbImage)
             
             let webPageObject = WXWebpageObject()
-            webPageObject.webpageUrl = APP_INVITEFRIEND_URL
+            webPageObject.webpageUrl = myInviteFriendUrl
             message.mediaObject = webPageObject
             
             let req = SendMessageToWXReq()
@@ -313,7 +315,11 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
             authRequest.scope = "all"
             
             let message = WBMessageObject.message() as! WBMessageObject
-            message.text = "\(APP_INVITEFRIEND_TITLE)\n\(APP_INVITEFRIEND_DESCRIPTION)"
+            if WeiboSDK.isCanShareInWeiboAPP() {
+                message.text = "\(APP_INVITEFRIEND_TITLE)\n\(APP_INVITEFRIEND_DESCRIPTION)"
+            }else{
+                message.text = "\(APP_INVITEFRIEND_TITLE)\n\(APP_INVITEFRIEND_DESCRIPTION) \(myInviteFriendUrl)"
+            }
             let webpage:WBWebpageObject = WBWebpageObject.object() as! WBWebpageObject
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyyMMddHHmmss"
@@ -326,7 +332,7 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
             let data = UIImageJPEGRepresentation(thumbImage!, 0.5)!
             webpage.thumbnailData = data
             
-            webpage.webpageUrl = APP_INVITEFRIEND_URL
+            webpage.webpageUrl = myInviteFriendUrl
             message.mediaObject = webpage
             print(message.mediaObject.debugDescription)
             
@@ -336,7 +342,7 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
             WeiboSDK.sendRequest(request)
         }else{
             
-            let newsUrl = NSURL(string: APP_INVITEFRIEND_URL)
+            let newsUrl = NSURL(string: myInviteFriendUrl)
             let title = APP_INVITEFRIEND_TITLE
             let description = APP_INVITEFRIEND_DESCRIPTION
             

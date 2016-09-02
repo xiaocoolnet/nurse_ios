@@ -46,7 +46,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     var hasChooseIndex = NSMutableArray()
     let touch = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT-54))
     
-    var type = "1"
+    var type = ""
     
     
     override func viewWillAppear(animated: Bool) {

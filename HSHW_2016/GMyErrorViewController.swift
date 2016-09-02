@@ -137,8 +137,8 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
         }
     }
     
-    private var fansListArray:Array<GExamInfo> = []
-    private var focusListArray:Array<GExamInfo> = []
+    private var fansListArray:Array<xamInfo> = []
+    private var focusListArray:Array<xamInfo> = []
     
     // 加载数据_做题记录
     func loadData_Exampaper() {
@@ -156,11 +156,11 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             if success {
                 
-                self.fansListArray = response as! Array<GExamInfo>
+                self.fansListArray = response as! Array<xamInfo>
                 self.fansTableView.reloadData()
             }else{
                 if String(response!) == "no data" {
-                    self.fansListArray = Array<GExamInfo>()
+                    self.fansListArray = Array<xamInfo>()
                     self.fansTableView.reloadData()
                 }else{
                     
@@ -177,11 +177,11 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
             if success {
                 
-                self.focusListArray = response as! Array<GExamInfo>
+                self.focusListArray = response as! Array<xamInfo>
                 self.focusTableView.reloadData()
             }else{
                 if String(response!) == "no data" {
-                    self.focusListArray = Array<GExamInfo>()
+                    self.focusListArray = Array<xamInfo>()
                     self.focusTableView.reloadData()
                 }else{
                     

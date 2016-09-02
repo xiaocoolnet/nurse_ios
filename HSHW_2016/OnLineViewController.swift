@@ -53,7 +53,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     var isSubmit:Bool = false
     var numb = Int()
     
-    var type = "1"
+    var type = ""
     
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true

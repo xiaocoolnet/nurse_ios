@@ -641,11 +641,15 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     //  MARK:登录成功
     func loginSuccess(){
         //        self.navigationController?.popViewControllerAnimated(true)
+        
+        getInvitedUrl()
+        
         if previousViewcontroller.isKindOfClass(MineViewController) {
             self.navigationController?.pushViewController(MineViewController(), animated: true)
         }else{
             self.navigationController?.popViewControllerAnimated(true)
         }
+
         
         //        let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         //  得到分栏控制器

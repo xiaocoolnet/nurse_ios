@@ -14,7 +14,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     let myTableView = UITableView()
     let employmentMessageTableView = UITableView()
     let scrollView = UIScrollView()
-    let pageControl = UIPageControl()
+    let pageControl = SMPageControl()
 //    var picArr = Array<String>()
 //    var titArr = Array<String>()
     var imageArr = Array<NewsInfo>()
@@ -131,8 +131,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         scrollView.contentOffset = CGPointMake(0, 0)
         
         pageControl.numberOfPages = self.imageArr.count
-        pageControl.frame = CGRectMake(WIDTH-20*CGFloat(imageArr.count), WIDTH*190/375-25, 20*CGFloat(imageArr.count), 25)
-        pageControl.currentPage = 0        
+        pageControl.frame = CGRectMake(WIDTH-8-pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)-6*CGFloat(self.imageArr.count-1), WIDTH*190/375-25, pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)+6*CGFloat(self.imageArr.count-1), 25)
+        pageControl.indicatorMargin = 6
+        pageControl.currentPage = 0
     }
     
     func makeDataSource(){

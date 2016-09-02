@@ -61,6 +61,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.registerClass(MineTableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.showsVerticalScrollIndicator = false
         self.view.addSubview(myTableView)
         myTableView.separatorStyle = .None
         
@@ -179,7 +180,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     // MARK:- TableView 代理
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 6
+        return 7
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -362,6 +363,9 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 swi.addTarget(self, action: #selector(switchValueChanged(_:)), forControlEvents: .ValueChanged)
                 cell.contentView.addSubview(swi)
                 cell.accessoryType = .None
+            }else if indexPath.section == 5 {
+                cell.titImage.setImage(UIImage(named: "ic_xie.png"), forState: .Normal)
+                cell.titLab.text = "清除缓存"
             }else {
                 
                 let signOutBtn = UIButton(type:.Custom)
@@ -412,6 +416,14 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.navigationController?.pushViewController(next, animated: true)
                 next.title = "我的招聘"
             }
+        }else if indexPath.section == 5 {
+            
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.mode = MBProgressHUDMode.Text
+            hud.labelText = "周一见"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 1)
         }
     }
     // MARK:-
@@ -525,10 +537,22 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     // MARK: 点击退出
     func signout(){
         print("退出")
-        let myTab  = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
-        myTab.selectedIndex = 0
-        LOGIN_STATE = false
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(LOGINFO_KEY)
+        
+        let alert = UIAlertController(title: "确认退出", message: "您确定要退出登录吗？", preferredStyle: .Alert)
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        let sureAction = UIAlertAction(title: "确认", style: .Default) { (sureAction) in
+            let myTab  = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
+            myTab.selectedIndex = 0
+            LOGIN_STATE = false
+            myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+            NSUserDefaults.standardUserDefaults().removeObjectForKey(LOGINFO_KEY)
+        }
+        alert.addAction(sureAction)
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
     }
     
     func timeNow(){

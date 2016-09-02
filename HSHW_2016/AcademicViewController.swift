@@ -453,7 +453,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             hud.labelText = "正在收藏"
             
-            HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", handle: { (success, response) in
+            HSMineHelper().addFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", title: newsInfo.post_title, description: newsInfo.post_excerpt, handle: { (success, response) in
                 if success {
                     hud.mode = MBProgressHUDMode.Text;
                     hud.labelText = "收藏成功"

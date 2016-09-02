@@ -122,14 +122,14 @@ class HSGTestModel:JSONJoy {
 // Model 错题集
 class GHSErrorExamModel:JSONJoy {
     var status:String
-    var datas = Array<GExamInfo>()
+    var datas = Array<xamInfo>()
     var errorData:String
     
     required init(_ decoder: JSONDecoder) {
         status = decoder["status"].string ?? ""
         errorData = decoder["data"].string ?? ""
         for childs:JSONDecoder in decoder["data"].array ?? [] {
-            datas.append(GExamInfo(childs))
+            datas.append(xamInfo(childs))
         }
     }
 }
@@ -159,7 +159,7 @@ class GTestExamList:JSONJoy {
     var type:String
     var count:String
     var rightcount:String
-    var question = Array<GExamInfo>()
+    var question = Array<xamInfo>()
     
     required init(_ decoder: JSONDecoder) {
         id = decoder["id"].string ?? ""
@@ -170,7 +170,7 @@ class GTestExamList:JSONJoy {
         count = decoder["count"].string ?? ""
         rightcount = decoder["rightcount"].string ?? ""
         for childs:JSONDecoder in decoder["question"].array ?? [] {
-            question.append(GExamInfo(childs))
+            question.append(xamInfo(childs))
         }
     }
 }
@@ -210,6 +210,7 @@ class xamInfo: JSONJoy{
     var post_description:String
     var post_difficulty:String
     var answer:String
+    var answers_2 = Array<AnswersInfo>()
     var answers = Array<AnswersInfo>()
     
     required init(_ decoder: JSONDecoder){
@@ -221,12 +222,18 @@ class xamInfo: JSONJoy{
         title = decoder["title"].string ?? ""
         createtime = decoder["createtime"].string ?? "0"
         for childs: JSONDecoder in decoder["answerslist"].array ?? []{
+            answers_2.append(AnswersInfo(childs))
+        }
+        for childs: JSONDecoder in decoder["answers"].array ?? []{
             answers.append(AnswersInfo(childs))
         }
     }
     func append(list: [AnswersInfo]){
+        self.answers_2 = list + self.answers_2
         self.answers = list + self.answers
     }
+//    func append(list: [AnswersInfo]){
+//    }
 }
 
 // Model 做题记录（data（question（answers）））

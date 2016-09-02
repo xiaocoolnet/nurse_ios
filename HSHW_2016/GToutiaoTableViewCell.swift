@@ -139,7 +139,6 @@ class GToutiaoTableViewCell: UITableViewCell {
         self.titLab.frame = CGRectMake(10, 9, WIDTH-140, height)
         
         self.titLab.text = newsInfo.post_title
-        print("美国人 ====  \(self.titLab.text)")
 
 //        if type == 1 {
 //            heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+22, 46, 15)

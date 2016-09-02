@@ -14,7 +14,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     
     var myTableView = UITableView()
     let scrollView = UIScrollView()
-    let pageControl = UIPageControl()
+    let pageControl = SMPageControl()
 //    var picArr = Array<String>()
 //    var titArr = Array<String>()
     var timer = NSTimer()
@@ -224,12 +224,13 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         scrollView.contentOffset = CGPointMake(0, 0)
         
         pageControl.numberOfPages = self.imageArr.count
-        pageControl.frame = CGRectMake(WIDTH-20*CGFloat(imageArr.count), WIDTH*188/375-25, 20*CGFloat(imageArr.count), 25)
+        pageControl.frame = CGRectMake(WIDTH-8-pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)-6*CGFloat(self.imageArr.count-1), WIDTH*190/375-25, pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)+6*CGFloat(self.imageArr.count-1), 25)
+        pageControl.indicatorMargin = 6
         pageControl.currentPage = 0
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 5
+        return 4
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
@@ -261,7 +262,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         if indexPath.section == 0 {
             cell.titImage.setImage(UIImage(named: "ic_wirte"), forState: .Normal)
-            cell.titLab.text = "护士笔记"
+            cell.titLab.text = "护理部"
             
 //            if noRead {
 //                let numLab = UILabel()
@@ -312,13 +313,13 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if indexPath.section == 0 {
-            print("学习-护士笔记点击事件")
+            print("学习-护理部点击事件")
             self.noRead = false
             self.myTableView.reloadData()
             
             let noteVC = AllStudyViewController()
             noteVC.articleID = "95"
-            noteVC.title = "护士笔记"
+            noteVC.title = "护理部"
             self.navigationController?.pushViewController(noteVC, animated: true)
         }else if indexPath.section == 1 {
             if indexPath.row == 0 {
@@ -343,8 +344,8 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             }
         } else if indexPath.section == 2 {
 //            let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
-            let goAboard = AllStudyViewController()
-            goAboard.articleID = "12"
+            let goAboard = GoAboardExamViewController()
+//            goAboard.articleID = "12"
             goAboard.title = "出国考试"
             self.navigationController?.pushViewController(goAboard, animated: true)
         } else if indexPath.section == 3 {

@@ -136,12 +136,13 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         var info:EveryDayInfo
         if dataSource.objectlist[indexPath.section].haschild == 0 {
             info = self.dataSource.objectlist[indexPath.section]
+            cell.titleImg.setImage(UIImage(named: picArr[indexPath.section]), forState: .Normal)
         }else {
             info = self.dataSource.objectlist[indexPath.section].childlist[indexPath.row]
+            cell.titleImg.setImage(nil, forState: .Normal)
         }
         cell.selectionStyle = .None
         cell.titleLable.text = info.name
-        cell.titleImg.setImage(UIImage(named: picArr[indexPath.section]), forState: .Normal)
         cell.startBtn.userInteractionEnabled = false
         let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
 //        line.backgroundColor = UIColor.grayColor()

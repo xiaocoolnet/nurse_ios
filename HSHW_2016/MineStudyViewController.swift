@@ -163,16 +163,16 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
 
 
-// 加载数据_做题记录
-func loadData_Exampaper() {
-    
-    helper.GetExampaper(QCLoginUserInfo.currentInfo.userid, type: "1") { (success, response) in
+    // 加载数据_做题记录
+    func loadData_Exampaper() {
         
-        if success {
+        helper.GetExampaper(QCLoginUserInfo.currentInfo.userid, type: "1") { (success, response) in
             
-            self.fansListArray = response as! Array<GTestExamList>
-            self.myTableView.reloadData()
-        }else{
+            if success {
+                
+                self.fansListArray = response as! Array<GTestExamList>
+                self.myTableView.reloadData()
+            }else{
             if String(response!) == "no data" {
                 self.fansListArray = Array<GTestExamList>()
                 self.myTableView.reloadData()

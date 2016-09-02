@@ -77,6 +77,11 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     
     let coverView = UIButton()
     
+    var getDicFlag = 0
+    var getDicCheckFlag = 0
+    
+    var mainHud = MBProgressHUD()
+    
     var alreadyCertify = true {
         didSet {
             if alreadyCertify {
@@ -234,7 +239,9 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        getCompanyStatus()
+//        getCompanyStatus()
+        // 设置下拉列表样式
+        customizeDropDown()
         
         sendBtn.layer.borderColor = COLOR.CGColor
         sendBtn.layer.borderWidth = 1
@@ -256,8 +263,19 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         mailboxField.delegate = self
         postNameField.delegate = self
         
-        dropDownDic = ["position":["职位1","职位2"],"condition":["条件1","条件2"],"treatment":["福利1","福利2"],"person":["人数1","人数2"],"money":["薪资1","薪资2"]]
-        setDropDownMenu()
+//        dropDownDic = ["position":["职位1","职位2"],"condition":["条件1","条件2"],"treatment":["福利1","福利2"],"person":["人数1","人数2"],"money":["薪资1","薪资2"]]
+//        setDropDownMenu()
+        
+        mainHud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+        mainHud.labelText = "正在获取招聘信息"
+        mainHud.removeFromSuperViewOnHide = true
+        
+        getDictionaryList("7", key: "position")
+        getDictionaryList("8", key: "condition")
+        getDictionaryList("9", key: "treatment")
+        getDictionaryList("10", key: "person")
+        getDictionaryList("11", key: "money")
+        
         
         firmNameField.borderStyle = .None
         resumeFeild.borderStyle = .None
@@ -273,6 +291,55 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
         
 
+    }
+    
+    func getDictionaryList(type:String, key:String) {
+        
+        dropDownDic[key] = Array<String>()
+        
+        let url = PARK_URL_Header+"getDictionaryList"
+        let param = ["type":type]
+        print(param)
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            self.getDicCheckFlag += 1
+            print("self.getDicCheckFlag  ===  ",self.getDicCheckFlag)
+            if(error != nil){
+                
+            }else{
+                let status = EduModel(JSONDecoder(json!))
+                print("状态是")
+                print(status.status)
+                if(status.status == "error"){
+                    
+                }
+                if(status.status == "success"){
+                    print(status)
+                    self.getDicFlag += 1
+                    for obj in EduList(status.data!).objectlist {
+                        self.dropDownDic[key]!.append(obj.name)
+                    }
+                    if self.getDicCheckFlag == 5 {
+                        print("self.getDicFlag  ===  ",self.getDicFlag)
+                        
+                        if self.getDicFlag == 5 {
+                            self.setDropDownMenu()
+                            self.getDicFlag = 0
+                            self.getDicCheckFlag = 0
+                        }else{
+                            self.getDicFlag = 0
+                            self.getDicCheckFlag = 0
+                            self.getDictionaryList("7", key: "position")
+                            self.getDictionaryList("8", key: "condition")
+                            self.getDictionaryList("9", key: "treatment")
+                            self.getDictionaryList("10", key: "person")
+                            self.getDictionaryList("11", key: "money")
+                        }
+                    }
+                }else{
+                }
+            }
+            
+        }
     }
     
     // MARK: 获取企业认证状态
@@ -319,9 +386,6 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     // MARK:设置下拉列表
     func setDropDownMenu() {
         
-        // 设置下拉列表样式
-        customizeDropDown()
-        
         // 职位
         positionDrop.anchorView = positionBtn
         
@@ -330,12 +394,17 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         positionDrop.direction = .Bottom
         
         positionDrop.dataSource = dropDownDic["position"]!
+        self.positionLab.text = dropDownDic["position"]?.first
+        self.positionLab.sizeToFit()
+        self.positionLab.center.y = self.positionBtn.center.y
+        self.positionImg.frame.origin.x = CGRectGetMaxX(self.positionLab.frame)+5
         
         // 下拉列表选中后的回调方法
         positionDrop.selectionAction = { [unowned self] (index, item) in
             
             self.positionLab.text = item
             self.positionLab.sizeToFit()
+            self.positionLab.center.y = self.positionBtn.center.y
             self.positionImg.frame.origin.x = CGRectGetMaxX(self.positionLab.frame)+5
             
 //            self.eduLab.text = item
@@ -353,6 +422,10 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         coditionDrop.direction = .Bottom
         
         coditionDrop.dataSource = dropDownDic["condition"]!
+        self.conditionLab.text = dropDownDic["condition"]?.first
+        self.conditionLab.sizeToFit()
+        self.conditionLab.center.y = self.conditionBtn.center.y
+        self.conditionImg.frame.origin.x = CGRectGetMaxX(self.conditionLab.frame)+5
         
         // 下拉列表选中后的回调方法
         coditionDrop.selectionAction = { [unowned self] (index, item) in
@@ -360,6 +433,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             self.conditionBtn.selected = true
             self.conditionLab.text = item
             self.conditionLab.sizeToFit()
+            self.conditionLab.center.y = self.conditionBtn.center.y
             self.conditionImg.frame.origin.x = CGRectGetMaxX(self.conditionLab.frame)+5
         }
 
@@ -371,6 +445,10 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         treatmentDrop.direction = .Bottom
         
         treatmentDrop.dataSource = dropDownDic["treatment"]!
+        self.treatmentLab.text = dropDownDic["treatment"]?.first
+        self.treatmentLab.sizeToFit()
+        self.treatmentLab.center.y = self.treatmentBtn.center.y
+        self.treatmentImg.frame.origin.x = CGRectGetMaxX(self.treatmentLab.frame)+5
         
         // 下拉列表选中后的回调方法
         treatmentDrop.selectionAction = { [unowned self] (index, item) in
@@ -379,6 +457,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             
             self.treatmentLab.text = item
             self.treatmentLab.sizeToFit()
+            self.treatmentLab.center.y = self.treatmentBtn.center.y
             self.treatmentImg.frame.origin.x = CGRectGetMaxX(self.treatmentLab.frame)+5
         }
         
@@ -390,7 +469,11 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         personDrop.direction = .Bottom
         
         personDrop.dataSource = dropDownDic["person"]!
-        
+        self.personLab.text = dropDownDic["person"]?.first
+        self.personLab.sizeToFit()
+        self.personLab.center.y = self.personBtn.center.y
+        self.personImg.frame.origin.x = CGRectGetMaxX(self.personLab.frame)+5
+
         // 下拉列表选中后的回调方法
         personDrop.selectionAction = { [unowned self] (index, item) in
             
@@ -398,6 +481,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             
             self.personLab.text = item
             self.personLab.sizeToFit()
+            self.personLab.center.y = self.personBtn.center.y
             self.personImg.frame.origin.x = CGRectGetMaxX(self.personLab.frame)+5
         }
         
@@ -409,7 +493,11 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         moneyDrop.direction = .Bottom
         
         moneyDrop.dataSource = dropDownDic["money"]!
-        
+        self.moneyLab.text = dropDownDic["money"]?.first
+        self.moneyLab.sizeToFit()
+        self.moneyLab.center.y = self.moneyBtn.center.y
+        self.moneyImg.frame.origin.x = CGRectGetMaxX(self.moneyLab.frame)+5
+
         // 下拉列表选中后的回调方法
         moneyDrop.selectionAction = { [unowned self] (index, item) in
             
@@ -417,8 +505,11 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             
             self.moneyLab.text = item
             self.moneyLab.sizeToFit()
+            self.moneyLab.center.y = self.moneyBtn.center.y
             self.moneyImg.frame.origin.x = CGRectGetMaxX(self.moneyLab.frame)+5
         }
+        
+        mainHud.hide(true)
     }
     
     // MARK:自定义下拉列表样式

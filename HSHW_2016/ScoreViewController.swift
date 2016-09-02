@@ -260,14 +260,14 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
         if btn.tag == 0 || btn.tag == 1 {
             
             let message = WXMediaMessage()
-            message.title = "中国护士网"
-            message.description = "服务于中国320万护士 白衣天使的网上家园"
+            message.title = APP_INVITEFRIEND_TITLE
+            message.description = APP_INVITEFRIEND_DESCRIPTION
             
             let thumbImage = UIImage(named: "appLogo")
             message.setThumbImage(thumbImage)
             
             let webPageObject = WXWebpageObject()
-            webPageObject.webpageUrl = NewsInfo_Header
+            webPageObject.webpageUrl = myInviteFriendUrl
             message.mediaObject = webPageObject
             
             let req = SendMessageToWXReq()
@@ -293,20 +293,24 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
             authRequest.scope = "all"
             
             let message = WBMessageObject.message() as! WBMessageObject
-            message.text = "中国护士网\n服务于中国320万护士 白衣天使的网上家园"
+            if WeiboSDK.isCanShareInWeiboAPP() {
+                message.text = "\(APP_INVITEFRIEND_TITLE)\n\(APP_INVITEFRIEND_DESCRIPTION)"
+            }else{
+                message.text = "\(APP_INVITEFRIEND_TITLE)\n\(APP_INVITEFRIEND_DESCRIPTION) \(myInviteFriendUrl)"
+            }
             let webpage:WBWebpageObject = WBWebpageObject.object() as! WBWebpageObject
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyyMMddHHmmss"
             let dateStr = dateFormatter.stringFromDate(NSDate())
             webpage.objectID = "chinanurse\(kAppKey)\(dateStr)"
-            webpage.title = "中国护士网"
-            webpage.description = "服务于中国320万护士 白衣天使的网上家园"
+            webpage.title = APP_INVITEFRIEND_TITLE
+            webpage.description = APP_INVITEFRIEND_DESCRIPTION
             
             let thumbImage = UIImage(named: "appLogo")
             let data = UIImageJPEGRepresentation(thumbImage!, 0.5)!
             webpage.thumbnailData = data
             
-            webpage.webpageUrl = NewsInfo_Header
+            webpage.webpageUrl = myInviteFriendUrl
             message.mediaObject = webpage
             print(message.mediaObject.debugDescription)
             
@@ -316,9 +320,9 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
             WeiboSDK.sendRequest(request)
         }else{
             
-            let newsUrl = NSURL(string: NewsInfo_Header)
-            let title = "中国护士网"
-            let description = "服务于中国320万护士 白衣天使的网上家园"
+            let newsUrl = NSURL(string: myInviteFriendUrl)
+            let title = APP_INVITEFRIEND_TITLE
+            let description = APP_INVITEFRIEND_DESCRIPTION
             
             var previewImageData = NSData()
             

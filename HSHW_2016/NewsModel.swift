@@ -101,7 +101,7 @@ class GNewsCate: JSONJoy{
 class NewsInfo: JSONJoy{
     var post_title:String
     var create_time:String?
-    var post_excerpt:String?
+    var post_excerpt:String
     var tid:String?
     var title:String
     var object_id : String
@@ -119,10 +119,11 @@ class NewsInfo: JSONJoy{
     var favorites = Array<LikeInfo>()
     var likes = Array<LikeInfo>()
     var smeta :JSONDecoder?
+    var comments = Array<NewsCommentsModel>()
+    
     
     required init(_ decoder: JSONDecoder){
         post_title = decoder["post_title"].string ?? ""
-        print("美国人  model == \(post_title)")
         title = decoder["title"].string ?? ""
         post_excerpt = decoder["post_excerpt"].string ?? ""
         post_date = decoder["post_date"].string ?? ""
@@ -156,11 +157,47 @@ class NewsInfo: JSONJoy{
                 self.thumbArr.append(thumbModel(childs))
             }
         }
+        if decoder["comments"].array != nil {
+            for childs: JSONDecoder in decoder["comments"].array!{
+                self.comments.append(NewsCommentsModel(childs))
+            }
+        }
     }
     func addpend(list: [LikeInfo]){
         self.likes = list + self.likes
     }
    
+}
+
+class NewsCommentsModel: JSONJoy {
+    
+    var userid: String
+
+    var content: String
+
+    var major: String
+
+    var userlevel: String
+
+    var username: String
+
+    var photo: String
+
+    var type: String
+
+    var add_time: String
+    
+    required init(_ decoder: JSONDecoder) {
+        userid = decoder["userid"].string ?? ""
+        content = decoder["content"].string ?? ""
+        major = decoder["major"].string ?? ""
+        userlevel = decoder["userlevel"].string ?? ""
+        username = decoder["username"].string ?? ""
+        photo = decoder["photo"].string ?? ""
+        type = decoder["type"].string ?? ""
+        add_time = decoder["add_time"].string ?? ""
+    }
+    
 }
 
 class thumbModel: JSONJoy {

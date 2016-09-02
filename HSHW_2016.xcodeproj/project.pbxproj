@@ -120,6 +120,8 @@
 		18C240601CEEB6340059BF48 /* TalentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2405F1CEEB6340059BF48 /* TalentViewController.swift */; };
 		18C240621CEF10150059BF48 /* OnlineExaminationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */; };
 		1F019CAF1D587286009A0818 /* MineRecruit_userViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F019CAE1D587286009A0818 /* MineRecruit_userViewController.swift */; };
+		1F09382E1D77F72700451948 /* HSNewsCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09382C1D77F72700451948 /* HSNewsCommentCell.swift */; };
+		1F09382F1D77F72700451948 /* HSNewsCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F09382D1D77F72700451948 /* HSNewsCommentCell.xib */; };
 		1F0BE12A1D54A84300842B80 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F0BE1251D54A84300842B80 /* libWeChatSDK.a */; };
 		1F0BE12B1D54A84300842B80 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F0BE1261D54A84300842B80 /* README.txt */; };
 		1F0FDFE21D69384D005DDB80 /* ScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0FDFE11D69384D005DDB80 /* ScoreViewController.swift */; };
@@ -133,10 +135,11 @@
 		1F1A33981D54952600F7C20A /* PostVacanciewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */; };
 		1F1B7F271D66DF2B009910DF /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1B7F261D66DF2B009910DF /* libiconv.tbd */; };
 		1F1B7F291D66E03C009910DF /* TencentOpenAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1B7F281D66E03C009910DF /* TencentOpenAPI.framework */; };
-		1F1B7F2B1D66E0EB009910DF /* TencentOpenApi_IOS_Bundle.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1F1B7F2A1D66E0EB009910DF /* TencentOpenApi_IOS_Bundle.bundle */; };
 		1F1B7F311D66F1CA009910DF /* qqDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B7F301D66F1CA009910DF /* qqDelegate.swift */; };
 		1F1B7F331D66F480009910DF /* wechatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B7F321D66F480009910DF /* wechatDelegate.swift */; };
 		1F1EA38A1D61AAB200151FA7 /* ReachabilitySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */; };
+		1F33D7761D752A360028444A /* GoAboardExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F33D7751D752A360028444A /* GoAboardExamViewController.swift */; };
+		1F33D7791D7554280028444A /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33D7781D7554280028444A /* SMPageControl.m */; };
 		1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */; };
 		1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */; };
 		1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */; };
@@ -398,6 +401,8 @@
 		18C2405F1CEEB6340059BF48 /* TalentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalentViewController.swift; sourceTree = "<group>"; };
 		18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineExaminationViewController.swift; sourceTree = "<group>"; };
 		1F019CAE1D587286009A0818 /* MineRecruit_userViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineRecruit_userViewController.swift; sourceTree = "<group>"; };
+		1F09382C1D77F72700451948 /* HSNewsCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSNewsCommentCell.swift; sourceTree = "<group>"; };
+		1F09382D1D77F72700451948 /* HSNewsCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSNewsCommentCell.xib; sourceTree = "<group>"; };
 		1F0BE1251D54A84300842B80 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		1F0BE1261D54A84300842B80 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		1F0BE1271D54A84300842B80 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
@@ -414,10 +419,12 @@
 		1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVacanciewViewController.swift; sourceTree = "<group>"; };
 		1F1B7F261D66DF2B009910DF /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		1F1B7F281D66E03C009910DF /* TencentOpenAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = TencentOpenAPI.framework; sourceTree = "<group>"; };
-		1F1B7F2A1D66E0EB009910DF /* TencentOpenApi_IOS_Bundle.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TencentOpenApi_IOS_Bundle.bundle; sourceTree = "<group>"; };
 		1F1B7F301D66F1CA009910DF /* qqDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = qqDelegate.swift; sourceTree = "<group>"; };
 		1F1B7F321D66F480009910DF /* wechatDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wechatDelegate.swift; sourceTree = "<group>"; };
 		1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReachabilitySwift.framework; path = "../../Library/Developer/Xcode/DerivedData/HSHW_2016-amsbvsmqvgzeibcteymcunjxavqg/Build/Products/Debug-iphonesimulator/ReachabilitySwift.framework"; sourceTree = "<group>"; };
+		1F33D7751D752A360028444A /* GoAboardExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoAboardExamViewController.swift; sourceTree = "<group>"; };
+		1F33D7771D7554280028444A /* SMPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageControl.h; sourceTree = "<group>"; };
+		1F33D7781D7554280028444A /* SMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageControl.m; sourceTree = "<group>"; };
 		1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayModel.swift; sourceTree = "<group>"; };
 		1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaliyExamModel.swift; sourceTree = "<group>"; };
 		1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTimeCell.swift; sourceTree = "<group>"; };
@@ -733,6 +740,7 @@
 			children = (
 				F6342C651D38DC3A00800D8E /* Cell */,
 				181E0D2C1CEBF8A900E34A7F /* MineCollectionViewController.swift */,
+				F6342C631D38DB4000800D8E /* HSCollectionListController.swift */,
 			);
 			name = Collection;
 			sourceTree = "<group>";
@@ -755,7 +763,6 @@
 		183B84E91CE5BFDC00709235 = {
 			isa = PBXGroup;
 			children = (
-				1F1B7F2A1D66E0EB009910DF /* TencentOpenApi_IOS_Bundle.bundle */,
 				183B84F41CE5BFDC00709235 /* HSHW_2016 */,
 				183B85091CE5BFDC00709235 /* HSHW_2016Tests */,
 				183B85141CE5BFDC00709235 /* HSHW_2016UITests */,
@@ -820,6 +827,8 @@
 		183B866B1CE5CF7900709235 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				1F33D7771D7554280028444A /* SMPageControl.h */,
+				1F33D7781D7554280028444A /* SMPageControl.m */,
 				1FFD49BA1D63068900AB1460 /* TPKeyboardAvoiding */,
 				1F0BE1241D54A84300842B80 /* openSDK1.7.2 */,
 				1FFD9ED41D51EBD700951098 /* DropDown */,
@@ -891,6 +900,8 @@
 		185408611CE6C79300DFBA7C /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1F09382C1D77F72700451948 /* HSNewsCommentCell.swift */,
+				1F09382D1D77F72700451948 /* HSNewsCommentCell.xib */,
 				189849B31CE812CB007B37B4 /* TouTiaoTableViewCell.swift */,
 				0DBF54771D40B5CC00B4B5FB /* GToutiaoTableViewCell.swift */,
 				189849B51CE815D3007B37B4 /* AcademicTableViewCell.swift */,
@@ -960,6 +971,7 @@
 				0DE829D61D3B21950047FB23 /* GOnlineExamViewController.swift */,
 				0B7392861D40C5AC00F785AF /* OnLineViewController.swift */,
 				0B94E7841D436B380008FD57 /* AllStudyViewController.swift */,
+				1F33D7751D752A360028444A /* GoAboardExamViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1140,7 +1152,6 @@
 				F632EF111D192F530038AF9D /* HSWorkPlaceController.xib */,
 				F63B3A6E1D2F953600C5B2CF /* HSStateEditResumeController.swift */,
 				0BAB74BE1D34B95200D2E365 /* HSEditResumeViewController.swift */,
-				F6342C631D38DB4000800D8E /* HSCollectionListController.swift */,
 				1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */,
 				1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */,
 				1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */,
@@ -1402,7 +1413,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F1B7F2B1D66E0EB009910DF /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				183B85001CE5BFDC00709235 /* LaunchScreen.storyboard in Resources */,
 				F6338B961D29105B00EE5CA2 /* HSStateCommentCell.xib in Resources */,
 				0DB467B81D4C8600009AE2AD /* MJRefresh.bundle in Resources */,
@@ -1428,6 +1438,7 @@
 				0B64EBE21D37A626001548EE /* ReleaseTimeCell.xib in Resources */,
 				F63147151D1A6D2E005103C9 /* HSComTableCell.xib in Resources */,
 				F6D02CDC1D07A46800353557 /* NewsSourceCell.xib in Resources */,
+				1F09382F1D77F72700451948 /* HSNewsCommentCell.xib in Resources */,
 				F6C265C61D24F08C0033D2A9 /* PostVacancies.xib in Resources */,
 				F63E19821D17C38A001BDE8A /* HSWCommunityHome.xib in Resources */,
 				F632EF0F1D18E8890038AF9D /* HSSQCollectionViewCell.xib in Resources */,
@@ -1539,6 +1550,7 @@
 				181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */,
 				1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */,
 				0DB467AF1D4C8600009AE2AD /* MJRefreshAutoGifFooter.m in Sources */,
+				1F09382E1D77F72700451948 /* HSNewsCommentCell.swift in Sources */,
 				0BD429471D3DD3500064B64C /* MineExamCollectTableViewCell.swift in Sources */,
 				0DE829DB1D3B52050047FB23 /* GMyExamListViewController.swift in Sources */,
 				1FE6E4C41D536171009E036B /* GHSExamCollectTableViewCell.swift in Sources */,
@@ -1580,6 +1592,7 @@
 				0DB467BB1D4C8600009AE2AD /* UIScrollView+MJExtension.m in Sources */,
 				1F1A33951D548D7A00F7C20A /* editResumeViewController.swift in Sources */,
 				F632EF121D192F530038AF9D /* HSWorkPlaceController.swift in Sources */,
+				1F33D7761D752A360028444A /* GoAboardExamViewController.swift in Sources */,
 				1FEF15A81D5047EE00FF343C /* MainCompanyAuthViewController.swift in Sources */,
 				F61228051D0558C4009E3D4D /* NewsModel.swift in Sources */,
 				0DB7E1901D38B7EC001D7B66 /* HSMineModel.swift in Sources */,
@@ -1642,6 +1655,7 @@
 				1FFD9EE11D51EBD700951098 /* DPDConstants.swift in Sources */,
 				0DB467B51D4C8600009AE2AD /* MJRefreshGifHeader.m in Sources */,
 				0BAF21BC1D1134790065146B /* LoginUserInfoModel.swift in Sources */,
+				1F33D7791D7554280028444A /* SMPageControl.m in Sources */,
 				1FC823D01D6C37D4005ED821 /* SuccessfulCaseViewController.swift in Sources */,
 				0DB467AE1D4C8600009AE2AD /* MJRefreshHeader.m in Sources */,
 				189849B61CE815D3007B37B4 /* AcademicTableViewCell.swift in Sources */,
@@ -1780,7 +1794,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a91ce7b2-a849-42bc-b9ad-1162edec0a65";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "/Users/zhang/Documents/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1822,7 +1836,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a91ce7b2-a849-42bc-b9ad-1162edec0a65";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "/Users/zhang/Documents/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
 				VALIDATE_PRODUCT = YES;
@@ -1834,8 +1848,8 @@
 			baseConfigurationReference = 0B26F5B17459B246981F92CE /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xu enjiang (5UKAG2PM43)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1845,10 +1859,7 @@
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/HSHW_2016/openSDK1.7.2",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../nurse_3rd\"";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1868,7 +1879,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a91ce7b2-a849-42bc-b9ad-1162edec0a65";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Debug;
@@ -1878,8 +1889,8 @@
 			baseConfigurationReference = ACDDECCAF15EF7167B841BC0 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xu enjiang (5UKAG2PM43)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1889,10 +1900,7 @@
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/HSHW_2016/openSDK1.7.2",
-				);
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../nurse_3rd\"";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1912,7 +1920,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.chinanurse.nurse;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "a91ce7b2-a849-42bc-b9ad-1162edec0a65";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/HSHW_2016/HSHW_2016-Bridging-Header.h";
 			};
 			name = Release;

@@ -351,7 +351,7 @@ class HSMineHelper: NSObject {
         
         let param = ["userid":userid,"refid":refid,"type":type];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            print(request?.URLString)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{

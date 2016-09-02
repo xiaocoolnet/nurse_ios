@@ -27,8 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         
         let _ = TencentOAuth(appId: "1105552541", andDelegate: nil)
         
-        
-        
 //        ShareSDK.registerApp("13be4c6c247e0", activePlatforms:
 //            
 //            [SSDKPlatformType.TypeQQ.rawValue,SSDKPlatformType.TypeWechat.rawValue], onImport: { (platform : SSDKPlatformType) -> Void in

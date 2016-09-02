@@ -46,7 +46,7 @@ class GMyErrorTableViewCell: UITableViewCell {
         
     }
     
-    var fansModel:GExamInfo?{
+    var fansModel:xamInfo?{
         didSet {
             //TODO:image 后期要改，从网上获取
 //            indexLab.text = "\(inde+1)."
@@ -86,7 +86,7 @@ class GMyErrorTableViewCell: UITableViewCell {
             
             titleLab.text = fanModel?.title
             titleLab.sizeToFit()
-            titleLab.frame = CGRectMake(CGRectGetMaxX(titImg.frame)+15, 15, CGRectGetWidth(titleLab.frame), 50)
+            titleLab.frame = CGRectMake(CGRectGetMaxX(titImg.frame)+15, 15, WIDTH-CGRectGetMaxX(titImg.frame)-30, 50)
             
         }
         

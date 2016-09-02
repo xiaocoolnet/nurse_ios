@@ -151,7 +151,7 @@
                 <outlet property="timeImg" destination="UdN-Yt-T8W" id="lie-cE-x3Y"/>
                 <outlet property="timeLab" destination="PNB-lX-uVX" id="dJo-vI-hht"/>
             </connections>
-            <point key="canvasLocation" x="330" y="318"/>
+            <point key="canvasLocation" x="278" y="314"/>
         </tableViewCell>
     </objects>
     <resources>
