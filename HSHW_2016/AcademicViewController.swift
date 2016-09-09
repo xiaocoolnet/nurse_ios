@@ -156,16 +156,32 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!AcademicTableViewCell
-        cell.selectionStyle = .None
-        let newsInfo = self.dataSource.objectlist[indexPath.row]
-        cell.newsInfo = newsInfo
-        cell.aca_zan.tag = indexPath.row
-        cell.aca_zan.addTarget(self, action: #selector(click1(_:)), forControlEvents: .TouchUpInside)
-        cell.comBtn.tag = indexPath.row
-        cell.comBtn.addTarget(self, action: #selector(collectionBtnClick(_:)), forControlEvents: .TouchUpInside)
         
-        return cell
+        if articleID == nil {
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!AcademicTableViewCell
+            cell.selectionStyle = .None
+            let newsInfo = self.dataSource.objectlist[indexPath.row]
+            cell.newsInfo = newsInfo
+            cell.aca_zan.tag = indexPath.row
+            cell.aca_zan.addTarget(self, action: #selector(click1(_:)), forControlEvents: .TouchUpInside)
+            cell.comBtn.tag = indexPath.row
+            cell.comBtn.addTarget(self, action: #selector(collectionBtnClick(_:)), forControlEvents: .TouchUpInside)
+            
+            return cell
+        }else{
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!AcademicTableViewCell
+            cell.selectionStyle = .None
+            let newsInfo = self.dataSource.objectlist[indexPath.row]
+            cell.academicNewsInfo = newsInfo
+            cell.aca_zan.tag = indexPath.row
+            cell.aca_zan.addTarget(self, action: #selector(click1(_:)), forControlEvents: .TouchUpInside)
+            cell.comBtn.tag = indexPath.row
+            cell.comBtn.addTarget(self, action: #selector(collectionBtnClick(_:)), forControlEvents: .TouchUpInside)
+            
+            return cell
+        }
         
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

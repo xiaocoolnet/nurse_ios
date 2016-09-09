@@ -28,20 +28,35 @@ class EveryDayModel: JSONJoy {
 }
 class ScoreModel: JSONJoy {
     var status:String
-    var data:String?
+    var data:ScoreDataModel?
     var errorData:String?
     
     required init(_ decoder:JSONDecoder){
         status = decoder["status"].string ?? ""
-        
         if status == "success"{
-            data = String(decoder["data"].integer ?? 0)
+            data = ScoreDataModel(decoder["data"])
         }else{
             errorData = decoder["data"].string
         }
-        
     }
 }
+
+class ScoreDataModel: JSONJoy {
+    
+    var allscore:Int
+    var score:String
+    var event:String
+    var create_time:Int
+    
+    required init(_ decoder:JSONDecoder){
+        
+        allscore = decoder["allscore"].integer ?? 0
+        score = decoder["score"].string ?? ""
+        event = decoder["event"].string ?? ""
+        create_time = decoder["create_time"].integer ?? 0
+    }
+}
+
 class titleList: JSONJoy {
     var status:String?
     var objectlist = Array<EveryDayInfo>()

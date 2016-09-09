@@ -21,6 +21,9 @@ class AcademicTableViewCell: UITableViewCell {
     let comBtn = UIButton()
     let timeBtn = UIButton()
     
+    let hitsLab = UILabel()
+    let hitsBtn = UIButton()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -54,7 +57,13 @@ class AcademicTableViewCell: UITableViewCell {
         
         timeBtn.frame = CGRectMake(10, (WIDTH-20)*0.5+42, 12, 12)
 //        timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
-        timeBtn.setBackgroundImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
+        
+        hitsLab.frame = CGRectMake(30, (WIDTH-20)*0.5+40, 100, 20)
+        hitsLab.font = UIFont.systemFontOfSize(12)
+        hitsLab.textColor = UIColor.grayColor()
+        
+        hitsBtn.frame = CGRectMake(10, (WIDTH-20)*0.5+40, 13, 9)
+        //        timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
         
         zanNum.frame = CGRectMake(WIDTH-30, (WIDTH-20)*0.5+38, 30, 20)
         zanNum.font = UIFont.systemFontOfSize(12)
@@ -75,6 +84,8 @@ class AcademicTableViewCell: UITableViewCell {
         self.addSubview(timeLab)
         self.addSubview(aca_zan)
         self.addSubview(zanNum)
+        self.addSubview(hitsLab)
+        self.addSubview(hitsBtn)
     }
     
     var newsInfo:NewsInfo?{
@@ -97,6 +108,9 @@ class AcademicTableViewCell: UITableViewCell {
             titLab.text = newsInfo!.post_title
             titLab.frame.size.height = calculateHeight(titLab.text!, size: 14, width: WIDTH-20)
             //        cell.conNum.text = newsInfo.recommended
+            
+            timeBtn.setBackgroundImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
+
             timeLab.frame.origin.y = CGRectGetMaxY(titLab.frame)+4
             let time:Array = (newsInfo!.post_modified!.componentsSeparatedByString(" "))
             timeLab.text = time[0]
@@ -123,6 +137,62 @@ class AcademicTableViewCell: UITableViewCell {
 //            self.likeNum = newsInfo.likes.count
             zanNum.text =  String(newsInfo!.likes.count)
             conNum.text = String(newsInfo!.favorites.count)
+            
+            timeBtn.center.y = timeLab.center.y
+            aca_zan.center.y = timeLab.center.y
+            zanNum.center.y = timeLab.center.y
+            comBtn.center.y = timeLab.center.y
+            conNum.center.y = timeLab.center.y
+        }
+    }
+    
+    var academicNewsInfo:NewsInfo?{
+        didSet {
+            aca_zan.selected = false
+            comBtn.selected = false
+            if (academicNewsInfo?.thumbArr.count > 0) {
+                
+                let photoUrl:String = DomainName+"data/upload/"+(academicNewsInfo!.thumbArr.first?.url)!
+                print("AcademicTableViewCell photoUrl == \(photoUrl)")
+                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                    titImage.image = UIImage.init(named: "defaultImage.png")
+                }else{
+                    titImage.sd_setImageWithURL(NSURL.init(string: photoUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
+                }
+                //            titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
+            }else{
+                titImage.image = UIImage.init(named: "defaultImage.png")
+            }
+            titLab.text = academicNewsInfo!.post_title
+            titLab.frame.size.height = calculateHeight(titLab.text!, size: 14, width: WIDTH-20)
+            //        cell.conNum.text = academicNewsInfo.recommended
+            hitsBtn.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
+            hitsLab.frame.origin.y = CGRectGetMaxY(titLab.frame)+4
+            hitsLab.text = "\((academicNewsInfo?.post_hits)!) 人看过"
+            hitsBtn.center.y = hitsLab.center.y
+            //            let hashValue = academicNewsInfo.likes.count.hashValue
+            //            print(hashValue)
+            //            if hashValue != 0 {
+            //                aca_zan.selected = true
+            //            }
+            
+            for obj in academicNewsInfo!.likes {
+                if obj.userid == QCLoginUserInfo.currentInfo.userid {
+                    aca_zan.selected = true
+                }
+            }
+            
+            for obj in academicNewsInfo!.favorites {
+                if obj.userid == QCLoginUserInfo.currentInfo.userid {
+                    comBtn.selected = true
+                }
+            }
+            
+            
+            //            print("\(hashValue)")
+            //            self.likeNum = academicNewsInfo.likes.count
+            zanNum.text =  String(academicNewsInfo!.likes.count)
+            conNum.text = String(academicNewsInfo!.favorites.count)
             
             timeBtn.center.y = timeLab.center.y
             aca_zan.center.y = timeLab.center.y

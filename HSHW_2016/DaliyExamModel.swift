@@ -60,7 +60,8 @@ class testExamList:JSONJoy {
 
 class DaliyExamList: JSONJoy {
     var status:String?
-    var objectlist: [ExamInfo]
+//    var objectlist: [ExamInfo]
+    var objectlist = Array<ExamInfo>()
     var count: Int{
         return self.objectlist.count
     }
@@ -73,9 +74,9 @@ class DaliyExamList: JSONJoy {
         }
     }
     
-    func append(list: [ExamInfo]){
-        self.objectlist = list + self.objectlist
-    }
+//    func append(list: [ExamInfo]){
+//        self.objectlist = list + self.objectlist
+//    }
     
 }
 

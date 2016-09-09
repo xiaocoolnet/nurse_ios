@@ -17,3 +17,4 @@
 #import <TencentOpenAPI/TencentOAuthObject.h>
 
 #import "SMPageControl.h"
+#import "UIPlaceHolderTextView.h"

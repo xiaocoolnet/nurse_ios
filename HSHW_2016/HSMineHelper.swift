@@ -66,6 +66,9 @@ class HSMineHelper: NSObject {
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
+                    self.getPersonalInfo({ (success, response) in
+                        
+                    })
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)
@@ -87,6 +90,9 @@ class HSMineHelper: NSObject {
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
+                    self.getPersonalInfo({ (success, response) in
+                        
+                    })
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)
@@ -106,6 +112,9 @@ class HSMineHelper: NSObject {
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
+                    self.getPersonalInfo({ (success, response) in
+                        
+                    })
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)
@@ -126,6 +135,9 @@ class HSMineHelper: NSObject {
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
+                    self.getPersonalInfo({ (success, response) in
+                        
+                    })
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)
@@ -146,6 +158,9 @@ class HSMineHelper: NSObject {
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
+                    self.getPersonalInfo({ (success, response) in
+                        
+                    })
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)
@@ -166,6 +181,9 @@ class HSMineHelper: NSObject {
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
+                    self.getPersonalInfo({ (success, response) in
+                        
+                    })
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)
@@ -186,6 +204,9 @@ class HSMineHelper: NSObject {
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
+                    self.getPersonalInfo({ (success, response) in
+                        
+                    })
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)
@@ -207,6 +228,9 @@ class HSMineHelper: NSObject {
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
+                    self.getPersonalInfo({ (success, response) in
+                        
+                    })
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)
@@ -227,6 +251,9 @@ class HSMineHelper: NSObject {
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
+                    self.getPersonalInfo({ (success, response) in
+                        
+                    })
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)
@@ -247,6 +274,9 @@ class HSMineHelper: NSObject {
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
+                    self.getPersonalInfo({ (success, response) in
+                        
+                    })
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)
@@ -267,6 +297,9 @@ class HSMineHelper: NSObject {
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
+                    self.getPersonalInfo({ (success, response) in
+                        
+                    })
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)
@@ -287,6 +320,9 @@ class HSMineHelper: NSObject {
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
+                    self.getPersonalInfo({ (success, response) in
+                        
+                    })
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)

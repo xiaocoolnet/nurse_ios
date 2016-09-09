@@ -31,7 +31,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.separatorStyle = .None
+//        myTableView.separatorStyle = .None
         myTableView.registerClass(QuestionTableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(myTableView)
         myTableView.rowHeight = 75
@@ -79,15 +79,20 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count
     }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let QuestionInfo = self.dataSource.objectlist[indexPath.row]
+        let height = calculateHeight((QuestionInfo.post_title), size: 14, width: WIDTH-45)
+        
+        return height+18+10+12+10
+    }
 
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!QuestionTableViewCell
         cell.selectionStyle = .None
         let QuestionInfo = self.dataSource.objectlist[indexPath.row]
-        cell.titLab.text = QuestionInfo.post_title
-        cell.titLeb.text = QuestionInfo.post_excerpt
-        cell.zanNum.text = String(QuestionInfo.likes.count)
-        cell.conNum.text = QuestionInfo.post_hits
+
+        cell.newsInfo = QuestionInfo
         
         return cell
         

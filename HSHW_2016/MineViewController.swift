@@ -17,7 +17,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     let numNameArr:[String] = ["粉丝","关注","护士币"]
     let userNameLabel = UILabel()
     let levelBtn = UIButton()
-//    let titLabArr:[String] = ["我的帖子","我的消息","我的收藏"]
+    //    let titLabArr:[String] = ["我的帖子","我的消息","我的收藏"]
     let titLabArr:[String] = ["我的消息","我的收藏"]
     let titImgArr:[String] = ["ic_liuyan.png","ic_message.png","ic_fangkuai.png"]
     let titImage = UIButton(type:.Custom)
@@ -35,8 +35,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     var hud:MBProgressHUD?
     
-//    var dateSource = data()
-
+    //    var dateSource = data()
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
@@ -56,7 +56,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.view.backgroundColor = COLOR
         
         myTableView.frame = CGRectMake(0, -20, WIDTH, HEIGHT+20)
-//        myTableView.bounces = false
+        //        myTableView.bounces = false
         myTableView.backgroundColor = RGREY
         myTableView.delegate = self
         myTableView.dataSource = self
@@ -74,7 +74,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func loadData() {
         
         signBtn.enabled = false
-
+        
         if myTableView.mj_header.isRefreshing() {
             myTableView.mj_header.endRefreshing()
         }
@@ -93,7 +93,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     }else{
                         self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
                     }
-//                    self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
+                    //                    self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
                     self.userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
                     self.levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, forState: .Normal)
                     self.fansCountBtn.setTitle(QCLoginUserInfo.currentInfo.fansCount, forState: .Normal)
@@ -156,7 +156,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.isLike = false
                     dispatch_async(dispatch_get_main_queue(), {
                         self.signLab.text = "每日签到"
-//                        print(status.errorData)
+                        //                        print(status.errorData)
                     })
                 }
                 if(status.status == "success"){
@@ -233,7 +233,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 gradientLayer.borderWidth = 0.0
                 // 添加图层
                 cell.layer.addSublayer(gradientLayer)
-
+                
                 let person = UILabel()
                 person.frame = CGRectMake(WIDTH*128/375, WIDTH*29/375, WIDTH*120/375, WIDTH*30/375)
                 person.textColor = UIColor.whiteColor()
@@ -254,7 +254,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }else{
                     self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
                 }
-//                self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
+                //                self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
                 titImage.addTarget(self, action: #selector(MineViewController.changeTitImage), forControlEvents: .TouchUpInside)
                 titImage.layer.cornerRadius = WIDTH*120/375/2
                 titImage.clipsToBounds = true
@@ -286,16 +286,16 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 signLab.frame = CGRectMake(WIDTH*169/375, WIDTH*200/375+40,WIDTH*120/375, WIDTH*22/375)
                 signLab.font = UIFont.systemFontOfSize(18)
                 signLab.textColor = UIColor.yellowColor()
-//                signLab.text = "请稍候"
+                //                signLab.text = "请稍候"
                 cell.addSubview(signLab)
                 
                 signBtn.frame = CGRectMake(WIDTH*68/375, WIDTH*190/375+40, WIDTH*240/375, WIDTH*42/375)
                 signBtn.layer.cornerRadius = WIDTH*42/375/2
                 signBtn.layer.borderColor = UIColor.yellowColor().CGColor
                 signBtn.layer.borderWidth = 2
-//                if self.isLike == false {
-                    signBtn.addTarget(self, action: #selector(MineViewController.signInToday), forControlEvents: .TouchUpInside)
-//                }
+                //                if self.isLike == false {
+                signBtn.addTarget(self, action: #selector(MineViewController.signInToday), forControlEvents: .TouchUpInside)
+                //                }
                 cell.addSubview(signBtn)
                 
                 for i in 0...2 {
@@ -356,9 +356,9 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }else if indexPath.section == 4{
                 cell.titImage.setImage(UIImage(named: "ic_singal.png"), forState: .Normal)
                 cell.titLab.text = "仅WiFi下载图片"
-
+                
                 let swi = UISwitch.init(frame: CGRectMake(WIDTH-51-10, 29/2.0, 51, 31))
-
+                
                 swi.on = NSUserDefaults.standardUserDefaults().boolForKey("loadPictureOnlyWiFi")
                 swi.addTarget(self, action: #selector(switchValueChanged(_:)), forControlEvents: .ValueChanged)
                 cell.contentView.addSubview(swi)
@@ -391,11 +391,11 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             self.navigationController?.pushViewController(next, animated: true)
             next.title = "我的学习"
         }else if indexPath.section == 2 {
-//            if indexPath.row == 0 {
-//                let next = MinePostViewController()
-//                self.navigationController?.pushViewController(next, animated: true)
-//                next.title = "我的帖子"
-//            }
+            //            if indexPath.row == 0 {
+            //                let next = MinePostViewController()
+            //                self.navigationController?.pushViewController(next, animated: true)
+            //                next.title = "我的帖子"
+            //            }
             if indexPath.row == 0 {
                 let next = MineMessageViewController()
                 self.navigationController?.pushViewController(next, animated: true)
@@ -418,15 +418,147 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }else if indexPath.section == 5 {
             
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text
-            hud.labelText = "周一见"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 1)
+//            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//            hud.mode = MBProgressHUDMode.Text
+//            hud.labelText = "周一见"
+//            hud.margin = 10.0
+//            hud.removeFromSuperViewOnHide = true
+//            hud.hide(true, afterDelay: 1)
+            clearDisk()
         }
     }
     // MARK:-
+    
+    func clearDisk() {
+        
+        // 图片缓存大小
+        let imageCacheSize = Double(SDImageCache.sharedImageCache().getSize())/1000.0/1000.0
+        let imageCache = String(format: "%.2f", imageCacheSize)
+        
+        // 网页缓存大小
+        let webCacheSize = Double(NSURLCache.sharedURLCache().currentDiskUsage)/1000.0/1000.0
+        let webCache = String(format: "%.2f", webCacheSize)
+        
+        // 其他缓存大小
+        let manager = NSFileManager.defaultManager()
+        let cachePath = NSSearchPathForDirectoriesInDomains(.CachesDirectory, .UserDomainMask, true).last
+        
+        let files = try?manager.subpathsOfDirectoryAtPath(cachePath!)
+        
+        var totalSize:Double = 0
+        
+        for filePath in files! {
+            let path = cachePath?.stringByAppendingString(filePath)
+            // 判断是否为文件
+            var isDir:ObjCBool = false
+            manager.fileExistsAtPath(path!, isDirectory: &isDir)
+            if !isDir {
+                do {
+                    let attrs = try manager.attributesOfItemAtPath(path!)
+                    totalSize += Double(attrs[NSFileSize]! as! NSNumber)
+                }catch {
+                    
+                }
+            }
+        }
+        let otherCacheSize = totalSize
+        let otherCache = String(format: "%.2f", webCacheSize/1000.0/1000.0)
+        
+        // alertController
+        let alert = UIAlertController(title: "请选择要清除的缓存类型", message: "图片缓存：\(imageCache)MB\n网页缓存: \(webCache)MB\n其他缓存：\(otherCache)MB", preferredStyle: .ActionSheet)
+        self.presentViewController(alert, animated: true, completion: nil)
+        
+        // 清理图片缓存
+        let pictureAction = UIAlertAction(title: "图片缓存", style: .Default) { (sureAction) in
+            
+            let alert = UIAlertController(title: "确认清除图片缓存？", message: "", preferredStyle: .Alert)
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            let sureAction = UIAlertAction(title: "确认", style: .Default) { (sureAction) in
+                
+                SDImageCache.sharedImageCache().clearMemory()
+                SDImageCache.sharedImageCache().clearDiskOnCompletion({
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text
+                    hud.labelText = "清除图片缓存成功"
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                })
+            }
+            alert.addAction(sureAction)
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+        }
+        alert.addAction(pictureAction)
+        
+        // 清理网页缓存
+        let webAction = UIAlertAction(title: "网页缓存", style: .Default) { (sureAction) in
+            
+            let alert = UIAlertController(title: "确认清除网页缓存？", message: "", preferredStyle: .Alert)
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            let sureAction = UIAlertAction(title: "确认", style: .Default) { (sureAction) in
+                
+                NSURLCache.sharedURLCache().removeAllCachedResponses()
+                
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.Text
+                hud.labelText = "清除网页缓存成功"
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 1)
+            }
+            alert.addAction(sureAction)
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+        }
+        alert.addAction(webAction)
+        
+        // 清理其他缓存
+        let otherAction = UIAlertAction(title: "其他缓存", style: .Default) { (sureAction) in
+            
+            let alert = UIAlertController(title: "确认清除其他缓存？", message: "", preferredStyle: .Alert)
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            let sureAction = UIAlertAction(title: "确认", style: .Default) { (sureAction) in
+                
+                for filePath in files! {
+                    let path = cachePath?.stringByAppendingString(filePath)
+                    // 判断是否为文件
+                    var isDir:ObjCBool = false
+                    manager.fileExistsAtPath(path!, isDirectory: &isDir)
+                    if !isDir {
+                        do {
+                            try manager.removeItemAtPath(path!)
+                            let attrs = try?manager.attributesOfItemAtPath(path!)
+                            totalSize -= Double(attrs![NSFileSize]! as! NSNumber)
+                        } catch  {
+                            // deal with not exist
+                        }
+                    }
+                }
+                
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = MBProgressHUDMode.Text
+                hud.labelText = "清除其他缓存成功"
+                hud.detailsLabelText = "清理了\(otherCacheSize-totalSize)MB 缓存"
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(true, afterDelay: 1)
+            }
+            alert.addAction(sureAction)
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+        }
+        alert.addAction(otherAction)
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+        alert.addAction(cancelAction)
+    }
     
     // MARK: switch valueChanged
     func switchValueChanged(swi:UISwitch) {
@@ -459,23 +591,23 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             next.userType = 1
             self.navigationController?.pushViewController(next, animated: true)
         }else if btn.tag == 3 {
-//            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//            hud.mode = MBProgressHUDMode.Text
-//            hud.labelText = "敬请期待"
-//            hud.margin = 10.0
-//            hud.removeFromSuperViewOnHide = true
-//            hud.hide(true, afterDelay: 1)
+            //            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            //            hud.mode = MBProgressHUDMode.Text
+            //            hud.labelText = "敬请期待"
+            //            hud.margin = 10.0
+            //            hud.removeFromSuperViewOnHide = true
+            //            hud.hide(true, afterDelay: 1)
             let next = ScoreViewController()
             self.navigationController?.pushViewController(next, animated: true)
         }
     }
-
+    
     // MARK: 点击签到
     func signInToday() {
         print("点击签到")
         if isLike == false {
             self.timeNow()
-        
+            
             self.zan()
         }else{
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -484,7 +616,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             hud.margin = 10.0
             hud.removeFromSuperViewOnHide = true
             hud.hide(true, afterDelay: 1)
-//            self.isLike = false
+            //            self.isLike = false
         }
     }
     
@@ -494,7 +626,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         let url = PARK_URL_Header+"SignDay"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,
-//                                "userid":"1",
+            //                                "userid":"1",
             "day":self.timeStamp
         ];
         print(QCLoginUserInfo.currentInfo.userid)
@@ -513,7 +645,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     hud.margin = 10.0
                     hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
-
+                    
                 }
                 if(status.status == "success"){
                     
@@ -533,7 +665,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }
     }
-
+    
     // MARK: 点击退出
     func signout(){
         print("退出")
@@ -564,16 +696,16 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         dformatter.dateFormat = "yyyy年MM月dd日"
         print("当前日期时间：\(dformatter.stringFromDate(now))")
         let today = dformatter.dateFromString(dformatter.stringFromDate(now))
-
+        
         
         //当前时间的时间戳
         let timeInterval:NSTimeInterval = today!.timeIntervalSince1970
-//        let double = (timeInterval as NSString).doubleValue
-
-//        self.timeStamp = Int(timeInterval/100)
+        //        let double = (timeInterval as NSString).doubleValue
+        
+        //        self.timeStamp = Int(timeInterval/100)
         self.timeStamp = Int(timeInterval)
         
         print("当前时间的时间戳：\(Int(timeInterval))")
-
+        
     }
 }

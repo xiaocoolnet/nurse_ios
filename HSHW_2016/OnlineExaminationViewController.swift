@@ -84,7 +84,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
     
     func timeDow()
     {
-        let time1 = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(WordViewController.updateTime), userInfo: nil, repeats: true)
+        let time1 = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(updateTime), userInfo: nil, repeats: true)
         timeNow = time1
     }
     

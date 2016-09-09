@@ -16,6 +16,7 @@ let HEIGHT = UIScreen.mainScreen().bounds.size.height
 let COLOR = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 1.0)
 let GREY = UIColor(red: 158/255.0, green: 158/255.0, blue: 158/255.0, alpha: 1.0)
 let RGREY = UIColor(red: 242/255.0, green: 242/255.0, blue: 242/255.0, alpha: 1.0)
+let slideImageListMaxNum = 5
 let DomainName = "http://app.chinanurse.cn/"
 //let DomainName = "http://nurse.xiaocool.net/"
 //let PARK_URL_Header = "http://app.chinanurse.cn/index.php?g=apps&m=index&a="
@@ -26,6 +27,9 @@ let SHOW_IMAGE_HEADER = "\(DomainName)uploads/microblog/"
 let LOGINFO_KEY = "login_info"
 let USER_NAME = "login_name"
 let USER_PWD = "login_password"
+let HULIBU_ORIGINALNEWSUPDATETIME = "hulibu_originalNewsUpdateTime\(QCLoginUserInfo.currentInfo.userid)"
+var hulibu_updateNum = 0
+var hulibu_alreadyRead = false
 var LOGIN_STATE = false
 let kAppKey = "3139633252"
 let kRedirectURI = "http://app.chinanurse.cn"

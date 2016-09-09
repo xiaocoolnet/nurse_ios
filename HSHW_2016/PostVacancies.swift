@@ -26,6 +26,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     @IBOutlet weak var firmNameView: UIView!
     @IBOutlet weak var firmNameField: UITextField!
     @IBOutlet weak var resumeFeild: UITextField!
+    @IBOutlet weak var linkmanField: UITextField!
     @IBOutlet weak var phoneField: UITextField!
     @IBOutlet weak var mailboxField: UITextField!
     @IBOutlet weak var workplaceBtn: UIButton!
@@ -109,7 +110,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     @IBAction func sendBtnClicked(sender: AnyObject) {
 //        if delegate != nil {
         
-            if postNameField.text != "" && firmNameField.text != "" && resumeFeild.text != "" && phoneField.text != "" && mailboxField.text != "" && workplaceBtn.selected && detailPlaceTF.text != "" && positionBtn.selected && conditionBtn.selected && treatmentBtn.selected && personBtn.selected && moneyBtn.selected && requestField.text != "" {
+            if postNameField.text != "" && firmNameField.text != "" && resumeFeild.text != "" && linkmanField.text != "" && phoneField.text != "" && mailboxField.text != "" && workplaceBtn.selected && detailPlaceTF.text != "" && positionBtn.selected && conditionBtn.selected && treatmentBtn.selected && personBtn.selected && moneyBtn.selected && requestField.text != "" {
                 
                 let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
 //                hud.mode = MBProgressHUDMode.Text;
@@ -118,7 +119,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
                 hud.removeFromSuperViewOnHide = true
                 hud.hide(true, afterDelay: 1)
                 
-                helper.publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionLab.text!, education: conditionLab.text!, welfare: treatmentLab.text!, address: placeLab_1.text!+placeLab_2.text!+placeLab_3.text!+detailPlaceTF.text!, count: personLab.text!, salary: moneyLab.text!, description: requestField.text) { (success, response) in
+                helper.publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, linkman: linkmanField.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionLab.text!, education: conditionLab.text!, welfare: treatmentLab.text!, address: placeLab_1.text!+placeLab_2.text!+placeLab_3.text!+detailPlaceTF.text!, count: personLab.text!, salary: moneyLab.text!, description: requestField.text) { (success, response) in
                     print(success)
                     
                     if success {
@@ -134,6 +135,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
                         //提交后还原表格样式
                         self.firmNameField.text = nil
                         self.resumeFeild.text = nil
+                        self.linkmanField.text = nil
                         self.phoneField.text = nil
                         self.mailboxField.text = nil
                         self.postNameField.text = nil
@@ -259,6 +261,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         
         firmNameField.delegate = self
         resumeFeild.delegate = self
+        linkmanField.delegate = self
         phoneField.delegate = self
         mailboxField.delegate = self
         postNameField.delegate = self
@@ -279,6 +282,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         
         firmNameField.borderStyle = .None
         resumeFeild.borderStyle = .None
+        linkmanField.borderStyle = .None
         phoneField.borderStyle = .None
         mailboxField.borderStyle = .None
         postNameField.borderStyle = .None
@@ -355,6 +359,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
                 case "1":
                     self.firmNameField.text = companyInfo.companyname
                     self.resumeFeild.text = companyInfo.companyinfo
+                    self.linkmanField.text = companyInfo.linkman
                     self.phoneField.text = companyInfo.phone
                     self.mailboxField.text = companyInfo.email
                     
@@ -535,6 +540,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         postNameField.resignFirstResponder()
         firmNameField.resignFirstResponder()
         resumeFeild.resignFirstResponder()
+        linkmanField.resignFirstResponder()
         phoneField.resignFirstResponder()
         mailboxField.resignFirstResponder()
         requestField.resignFirstResponder()
@@ -673,6 +679,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         postNameField.resignFirstResponder()
         firmNameField.resignFirstResponder()
         resumeFeild.resignFirstResponder()
+        linkmanField.resignFirstResponder()
         phoneField.resignFirstResponder()
         mailboxField.resignFirstResponder()
         requestField.resignFirstResponder()

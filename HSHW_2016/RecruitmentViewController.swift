@@ -180,7 +180,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 
                 if success {
                     print(response)
-                    self.imageArr = response as! Array<NewsInfo>
+                    let imageArr = response as! Array<NewsInfo>
+                    self.imageArr = imageArr.count>=5 ? Array(imageArr[0...slideImageListMaxNum-1]):imageArr
                     
                     dispatch_async(dispatch_get_main_queue(), {
                         self.updateSlideImage()

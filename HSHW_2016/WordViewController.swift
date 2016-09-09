@@ -28,9 +28,9 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     let grayBack = UIView()
     var hear = Bool()
     var timeNow = NSTimer()
-    var minute : Int = 1
-    var dataSource = NSArray()
-    var count:Int = 13
+//    var minute : Int = 1
+    var dataSource = Array<ExamInfo>()
+//    var count:Int = 13
     let questBack = UIView()//答题卡视图
     var over = Bool()
     var isSubmit = Bool()
@@ -61,11 +61,48 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         self.view.addSubview(line)
         let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: #selector(takeUpTheTest))
         navigationItem.rightBarButtonItem = rightBtn
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_back_big"), style: .Done, target: self, action: #selector(clickBackBarButton))
+        
         self.view.backgroundColor = UIColor.whiteColor()
          self.isSubmit  = false
         collection = false
 //        self.timeDow()
         // Do any additional setup after loading the view.
+    }
+    
+    func clickBackBarButton() {
+        
+        if myChoose.count < self.dataSource.count {
+            
+            let alertController = UIAlertController(title: "尚未答完", message: "是否退出？", preferredStyle: .Alert)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+            let cancelAction = UIAlertAction(title: "是", style: .Cancel) { (cancelAction) in
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+            alertController.addAction(cancelAction)
+            
+            let answerAction = UIAlertAction(title: "否", style: .Default){
+                (cancelAction) in
+                
+            }
+            alertController.addAction(answerAction)
+        }else{
+            let alertController = UIAlertController(title: "尚未提交", message: "是否提交？", preferredStyle: .Alert)
+            self.presentViewController(alertController, animated: true, completion: nil)
+            
+            let cancelAction = UIAlertAction(title: "退出", style: .Cancel) { (cancelAction) in
+                self.navigationController?.popViewControllerAnimated(true)
+            }
+            alertController.addAction(cancelAction)
+            
+            let answerAction = UIAlertAction(title: "提交", style: .Default){
+                (cancelAction) in
+                self.takeUpTheTest()
+            }
+            alertController.addAction(answerAction)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -119,7 +156,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                         
                         print(status)
                         self.dataSource = DaliyExamList(status.data!).objectlist
-                        print(self.dataSource)
                         print(self.dataSource.count)
                         print("-----")
                         
@@ -128,7 +164,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                         self.AnswerView()
                         self.backBottomView()
                         self.questionCard()
-                        self.timeDow()
 
                         print(status.data)
                     }else{
@@ -144,55 +179,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         }
     }
     
-    func timeDow()
-    {
-        timeNow = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(WordViewController.updateTime), userInfo: nil, repeats: true)
-    }
-    
-    func updateTime()
-    {
-//  print(self.scrollView.subviews)
-//        let index :Int = self.pageControl.currentPage
-//        var time = UILabel()
-//        if self.scrollView.subviews.count==0 {
-//            
-//        }else{
-//          time = self.view.viewWithTag(10+index) as! UILabel
-//        }
-        count -= 1
-        if minute>=0 {
-            if (count <= 0)
-            {
-                count = 59
-                minute -= 1
-                
-            }
-            print(time.text)
-            if minute == -1 {
-                minute = 2
-                count = 59
-                
-                time.text = "0"+"\(minute)"+":"+"\(count)"
-                self.timeText = time.text
-                timeNow.invalidate()
-            }
-            time.text = "0"+"\(minute)"+":"+"\(count)"
-            if minute<10 {
-                
-                if count<10 {
-                    time.text = "0"+"\(minute)"+":"+"0"+"\(count)"
-                    self.timeText = time.text
-                    
-                }
-            }else{
-                
-                time.text = "\(minute)"+":"+"\(count)"
-                self.timeText = time.text
-                
-            }
-        }
-    }
-
     // MARK: 答题卡视图
     func questionCard() {
         print(self.pageControl.currentPage)
@@ -292,7 +278,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     // MARK:   答案视图
     func AnswerView() {
         //将正确答案放在一个数组中
-        let examInfo = self.dataSource[self.pageControl.currentPage] as! ExamInfo
+        let examInfo = self.dataSource[self.pageControl.currentPage]
         
         if rightAnswer.count <= pageControl.currentPage {
             for _ in rightAnswer.count-1...pageControl.currentPage {
@@ -378,7 +364,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 answer.text = string
             }else{
                 var difficultyValue = Int()
-                let examInfo = self.dataSource[self.pageControl.currentPage] as! ExamInfo
+                let examInfo = self.dataSource[self.pageControl.currentPage]
                 print(examInfo)
                 difficultyValue = Int(examInfo.post_difficulty!)!
                 print(difficultyValue)
@@ -500,24 +486,6 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         tit.text = "（A1，2分）"
         tit.sizeToFit()
         backGound.addSubview(tit)
-        time.frame = CGRectMake(WIDTH-50, 16, 50, 12)
-        //        time.tag = 10+i
-        //time.backgroundColor = UIColor.redColor()
-        time.font = UIFont.systemFontOfSize(14)
-        //time.textAlignment = .Right
-        time.textColor = COLOR
-        time.text = "00:00"
-        //time.sizeToFit()
-        backGound.addSubview(time)
-        let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.origin.x-125, 15, 71, 12))
-        // let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.size.width-83, 15, 71, 12))
-        // timelab.backgroundColor = UIColor.greenColor()
-        timelab.font = UIFont.systemFontOfSize(12)
-        timelab.textColor = GREY
-        timelab.text = "剩余答题时间"
-        timelab.textAlignment = .Right
-        timelab.sizeToFit()
-        backGound.addSubview(timelab)
         
         bgView.addSubview(backGound)
         
@@ -539,7 +507,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         
         print(self.dataSource.count)
         for  i in 0 ..< self.dataSource.count {
-            let examInfo = self.dataSource[i] as! ExamInfo
+            let examInfo = self.dataSource[i]
             let contentScrollView :UIScrollView = UIScrollView.init()
             contentScrollView.frame = CGRectMake(CGFloat(i)*WIDTH+10, 10, WIDTH-20, HEIGHT-64-49-1-44-10-50)
             contentScrollView.backgroundColor = UIColor.whiteColor()
@@ -694,7 +662,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             }
             print(collection)
             print("收藏")
-            let examInfo = self.dataSource[self.pageControl.currentPage] as! ExamInfo
+            let examInfo = self.dataSource[self.pageControl.currentPage]
             let user = NSUserDefaults.standardUserDefaults()
             let uid = user.stringForKey("userid")
             print(uid)
@@ -825,7 +793,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             btn.backgroundColor = UIColor.init(red: 159/255.0, green: 43/255.0, blue: 136/255.0, alpha: 1)
             btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         }
-        let exam = dataSource[pageControl.currentPage] as!ExamInfo
+        let exam = dataSource[pageControl.currentPage]
         
         if self.pageControl.currentPage+1 > self.myChoose.count {
             if self.pageControl.currentPage>0{
@@ -855,7 +823,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         if myChoose.count > 0 {
             
             for i in 0...myChoose.count-1 {
-                let exer = dataSource[i] as! ExamInfo
+                let exer = dataSource[i]
                 idStr += (i==0 ? exer.id! : ","+exer.id!)
             }
             

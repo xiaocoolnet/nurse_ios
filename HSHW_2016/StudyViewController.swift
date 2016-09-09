@@ -23,23 +23,24 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     var newsList = Array<NewsInfo>()
     var imageArr = Array<NewsInfo>()
     
-    var noRead = true
-    
     let titLabArr:[String] = ["每日一练","5万道题库","在线考试"]
     let titImgArr:[String] = ["ic_bi.png","ic_fuzhi.png","ic_phone.png"]
     
     let titLabArrTwo:[String] = ["临床护理","50项护理操作","考试宝典"]
     let titImgArrTwo:[String] = ["ic_hushi.png","ic_zhen.png","ic_book.png"]
     
+
+    
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.tabBarController?.tabBar.hidden = false
+                
         myTableView.reloadData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = COLOR
-        
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(HULIBU_ORIGINALNEWSUPDATETIME)
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-60)
         myTableView.backgroundColor = RGREY
         myTableView.delegate = self
@@ -74,56 +75,51 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         myTableView.rowHeight = 60
         myTableView.tableHeaderView = one
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(hulibu_updateNumChanged), name: "hulibu_updateNumChanged", object: nil)
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func hulibu_updateNumChanged() {
+        myTableView.reloadData()
     }
     
     func loadData() {
         
-//        HSNurseStationHelper().getArticleListWithID("10") {[unowned self] (success, response) in
-//            if success {
-//                self.newsList = response as? Array<NewsInfo> ?? []
-//                
-//                self.requestHelper.getSlideImages("6") { [unowned self] (success, response) in
-//                    if success {
-//                        print(response)
-//                        self.imageArr = response as! Array<PhotoInfo>
-////                        for imageInfo in self.imageArr {
-////                            self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-////                            self.titArr.append(imageInfo.name)
-//                            dispatch_async(dispatch_get_main_queue(), {
-//                                self.updateSlideImage()
-//                                self.myTableView.reloadData()
-//                                self.myTableView.mj_header.endRefreshing()
-//                            })
-////                        }
-//                    }
-//                }
-//            }
-//        }
-        
-        
-//        var flag = 0
+        HSNurseStationHelper().getArticleListWithID("95") { (success, response) in
+            if success {
+                let hulibu_newsArray = response as! Array<NewsInfo>
+                let hulibu_originalNewsUpdateTime = NSUserDefaults.standardUserDefaults().stringForKey(HULIBU_ORIGINALNEWSUPDATETIME)
+                for (i,newsInfo) in hulibu_newsArray.enumerate() {
+                    if newsInfo.post_modified == hulibu_originalNewsUpdateTime {
+                        hulibu_updateNum = i
+                        self.myTableView.reloadData()
+                        break
+                    }
+                }
+                
+                if hulibu_alreadyRead {
+                    NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: "hulibu_originalNewsUpdateTime\(QCLoginUserInfo.currentInfo.userid)")
+                    hulibu_alreadyRead = false
+                }
+            }
+        }
+
         
         HSNurseStationHelper().getArticleListWithID("111") { (success, response) in
             
             if success {
                 print(response)
-                self.imageArr = response as! Array<NewsInfo>
-                //                for imageInfo in self.imageArr {
-                //                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-                //                    self.titArr.append(imageInfo.name)
-                //                    //                    self.titArr.append(imageInfo)
-                
-                //                }
+                let imageArr = response as! Array<NewsInfo>
+                self.imageArr = imageArr.count>=5 ? Array(imageArr[0...slideImageListMaxNum-1]):imageArr
+
                 dispatch_async(dispatch_get_main_queue(), {
                     self.updateSlideImage()
                     self.myTableView.reloadData()
                 })
                 
-//                flag += 1
-//                if flag == 2 {
-                    self.myTableView.mj_header.endRefreshing()
-//                }
+
+                self.myTableView.mj_header.endRefreshing()
             }else{
                 dispatch_async(dispatch_get_main_queue(), {
                     self.myTableView.mj_header.endRefreshing()
@@ -146,36 +142,6 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 })
             }
         }
-        
-//        HSNurseStationHelper().getArticleListWithID("10") { (success, response) in
-//            
-//            if success {
-//                print(response)
-//                
-//                self.newsList = response as! Array<NewsInfo>
-//                
-//                dispatch_async(dispatch_get_main_queue(), {
-//                    self.updateSlideImage()
-//                    self.myTableView.reloadData()
-//                })
-//                
-//                flag += 1
-//                if flag == 2 {
-//                    self.myTableView.mj_header.endRefreshing()
-//                }
-//                
-//            }else{
-//                self.myTableView.mj_header.endRefreshing()
-//                
-//                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                hud.mode = MBProgressHUDMode.Text;
-//                hud.labelText = "文章列表获取失败"
-//                hud.detailsLabelText = String(response!)
-//                hud.margin = 10.0
-//                hud.removeFromSuperViewOnHide = true
-//                hud.hide(true, afterDelay: 1)
-//            }
-//        }
     }
     
     func updateSlideImage(){
@@ -263,21 +229,27 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         if indexPath.section == 0 {
             cell.titImage.setImage(UIImage(named: "ic_wirte"), forState: .Normal)
             cell.titLab.text = "护理部"
-            
-//            if noRead {
-//                let numLab = UILabel()
-//                numLab.frame = CGRectMake(0, 0, 25, 25)
+
+            if hulibu_updateNum > 0 {
+                cell.accessoryType = .None
+                let numLab = UILabel()
+                numLab.frame = CGRectMake(0, 0, 25, 25)
 //                numLab.backgroundColor = UIColor.redColor()
-//                numLab.layer.cornerRadius = 12.5
-//                numLab.clipsToBounds = true
-//                numLab.textAlignment = .Center
-//                numLab.textColor = UIColor.whiteColor()
-//                numLab.font = UIFont.systemFontOfSize(10)
-//                numLab.text = "99+"
-//                cell.accessoryView = numLab
-//            }else{
-//                cell.accessoryView = nil
-//            }
+                numLab.layer.cornerRadius = 12.5
+                numLab.clipsToBounds = true
+                numLab.textAlignment = .Center
+                numLab.textColor = UIColor.redColor()
+                numLab.font = UIFont.systemFontOfSize(16)
+                if hulibu_updateNum > 99 {
+                    numLab.text = "99+"
+                }else{
+                    numLab.text = String(hulibu_updateNum)
+                }
+                numLab.adjustsFontSizeToFitWidth = true
+                cell.accessoryView = numLab
+            }else{
+                cell.accessoryView = nil
+            }
         }else if indexPath.section == 1 {
             cell.titImage.setImage(UIImage(named: titImgArr[indexPath.row]), forState: .Normal)
             cell.titLab.text = titLabArr[indexPath.row]
@@ -314,8 +286,9 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         if indexPath.section == 0 {
             print("学习-护理部点击事件")
-            self.noRead = false
-            self.myTableView.reloadData()
+            
+            hulibu_updateNum = 0
+            hulibu_alreadyRead = true
             
             let noteVC = AllStudyViewController()
             noteVC.articleID = "95"

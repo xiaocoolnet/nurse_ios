@@ -86,7 +86,9 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
             
             if success {
                 print(response)
-                self.imageArr = response as! Array<NewsInfo>
+                let imageArr = response as! Array<NewsInfo>
+                self.imageArr = imageArr.count>=5 ? Array(imageArr[0...slideImageListMaxNum-1]):imageArr
+
                 //                for imageInfo in self.imageArr {
                 //                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
                 //                    self.titArr.append(imageInfo.name)

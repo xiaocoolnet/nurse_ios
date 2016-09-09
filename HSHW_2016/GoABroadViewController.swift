@@ -24,7 +24,7 @@ class GoABroadViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        goAbroadDynamicView.title = "出国动态"
+        goAbroadDynamicView.title = "护士出国"
         
         nursesTrainingView.title = "护士培训"
         nursesTrainingView.newsId = "122"

@@ -14,7 +14,11 @@ class HSStudyNetHelper: NSObject {
     func sendtestAnswerByType(type:String,count:String,questionlist:String,answerlist:String,handle:ResponseBlock){
         let url = PARK_URL_Header+"SubmitAnswers"
         let param = [
-            "type":type,"count":count,"questionlist":questionlist,"answerlist":answerlist,"userid":QCLoginUserInfo.currentInfo.userid
+            "type":type,
+            "count":count,
+            "questionlist":questionlist,
+            "answerlist":answerlist,
+            "userid":QCLoginUserInfo.currentInfo.userid
         ]
         print(param)
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
@@ -24,7 +28,7 @@ class HSStudyNetHelper: NSObject {
             }else{
                 let model =  ScoreModel(JSONDecoder(json!))
                 if(model.status == "success"){
-                    let result = model.data
+                    let result = model.data!.allscore
                     handle(success: true, response: result)
                 }else{
                     handle(success: false, response: error)

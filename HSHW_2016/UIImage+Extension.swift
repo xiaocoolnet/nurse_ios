@@ -78,8 +78,11 @@ extension UIImage {
                 newHeight = imageLength;
             }
             
+            return CGSize(width: newWidth, height: newHeight)
+        }else{
+            return CGSize(width: width, height: height)
+
         }
-        return CGSize(width: newWidth, height: newHeight)
     }
     
     /**

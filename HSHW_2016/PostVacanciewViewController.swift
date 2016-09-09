@@ -60,6 +60,7 @@ class PostVacanciewViewController: UIViewController {
                     
                     self.postView.firmNameField.text = companyInfo.companyname
                     self.postView.resumeFeild.text = companyInfo.companyinfo
+                    self.postView.linkmanField.text = companyInfo.linkman
                     self.postView.phoneField.text = companyInfo.phone
                     self.postView.mailboxField.text = companyInfo.email
                 }else{

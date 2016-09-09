@@ -34,9 +34,23 @@ class HSNurseStationHelper: NSObject {
     }
     
     //发布招聘信息
-    func publishJob(companyname:String,companyinfo:String,phone:String,email:String,title:String,jobtype:String,education:String,welfare:String,address:String,count:String,salary:String,description:String, handle:ResponseBlock){
+    func publishJob(companyname:String,companyinfo:String,linkman:String,phone:String,email:String,title:String,jobtype:String,education:String,welfare:String,address:String,count:String,salary:String,description:String, handle:ResponseBlock){
         let url = PARK_URL_Header+"publishjob"
-        let param = ["userid":QCLoginUserInfo.currentInfo.userid,"companyname":companyname,"companyinfo":companyinfo,"phone":phone,"email":email,"title":title,"jobtype":jobtype,"education":education,"welfare":welfare,"address":address,"count":count,"salary":salary,"description":description]
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid,
+                     "photo":QCLoginUserInfo.currentInfo.avatar,
+                     "companyname":companyname,
+                     "companyinfo":companyinfo,
+                     "linkman":linkman,
+                     "phone":phone,
+                     "email":email,
+                     "title":title,
+                     "jobtype":jobtype,
+                     "education":education,
+                     "welfare":welfare,
+                     "address":address,
+                     "count":count,
+                     "salary":salary,
+                     "description":description]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 handle(success: false, response: error?.description)

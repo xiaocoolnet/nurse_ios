@@ -33,6 +33,35 @@ class HSTabBarController: UITabBarController,UITabBarControllerDelegate,ViewCont
     
     func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
         
+        if tabBarController.selectedIndex == 2 {
+
+            HSNurseStationHelper().getArticleListWithID("95") { (success, response) in
+                if success {
+                    let hulibu_newsArray = response as! Array<NewsInfo>
+                    let hulibu_originalNewsUpdateTime = NSUserDefaults.standardUserDefaults().stringForKey("hulibu_originalNewsUpdateTime\(QCLoginUserInfo.currentInfo.userid)")
+                    var flag = true
+                    for (i,newsInfo) in hulibu_newsArray.enumerate() {
+                        if newsInfo.post_modified == hulibu_originalNewsUpdateTime {
+                            hulibu_updateNum = i
+                            flag = false
+                            break
+                        }
+                    }
+                    if flag {
+                        hulibu_updateNum = hulibu_newsArray.count
+                    }
+                    
+                    if hulibu_alreadyRead {
+                        NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: "hulibu_originalNewsUpdateTime\(QCLoginUserInfo.currentInfo.userid)")
+                        hulibu_alreadyRead = false
+                    }
+                    
+                    NSNotificationCenter.defaultCenter().postNotificationName("hulibu_updateNumChanged", object: nil)
+
+                }
+            }
+        }
+
 //        if LOGIN_STATE == true {
 //            return true
 //        }

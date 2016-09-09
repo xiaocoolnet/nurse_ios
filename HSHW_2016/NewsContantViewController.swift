@@ -15,7 +15,7 @@ protocol changeModelDelegate {
     func changeModel(newInfo:NewsInfo, andIndex:Int)
 }
 
-class NewsContantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate,cateBtnClickedDelegate, UITextFieldDelegate{
+class NewsContantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate,cateBtnClickedDelegate, UITextViewDelegate{
 
     let myTableView = UITableView()
     var collectBtn = UIButton()
@@ -101,29 +101,29 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //
 //        self.navigationItem.rightBarButtonItems = [shareBtn,collectBtn]
         
-        //收藏按钮
-        collectBtn = UIButton(frame:CGRectMake(0, 0, 18, 18))
-        collectBtn.setImage(UIImage(named: "btn_collect_sel"), forState: .Normal)
-        collectBtn.setImage(UIImage(named: "ic_shoucang"), forState: .Highlighted)
-        collectBtn.setImage(UIImage(named: "ic_shoucang"), forState: .Selected)
-        collectBtn.addTarget(self, action: #selector(collectionBtnClick), forControlEvents: .TouchUpInside)
-        collectBtn.enabled = false
-        let barButton1 = UIBarButtonItem(customView: collectBtn)
-        
-       
-        
-        //分享按钮
-        let shareBtn = UIButton(frame:CGRectMake(0, 0, 18, 18))
-        shareBtn.setImage(UIImage(named: "ic_fenxiang"), forState: .Normal)
-        shareBtn.addTarget(self, action: #selector(collectionNews), forControlEvents: .TouchUpInside)
-        let barButton2 = UIBarButtonItem(customView: shareBtn)
-        
-        //按钮间的空隙
-        let gap = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil,action: nil)
-        gap.width = 15;
-        //设置按钮（注意顺序）
-        self.navigationItem.rightBarButtonItems = [barButton2,gap,barButton1]
-    
+//        //收藏按钮
+//        collectBtn = UIButton(frame:CGRectMake(0, 0, 18, 18))
+//        collectBtn.setImage(UIImage(named: "btn_collect_sel"), forState: .Normal)
+//        collectBtn.setImage(UIImage(named: "ic_shoucang"), forState: .Highlighted)
+//        collectBtn.setImage(UIImage(named: "ic_shoucang"), forState: .Selected)
+//        collectBtn.addTarget(self, action: #selector(collectionBtnClick), forControlEvents: .TouchUpInside)
+//        collectBtn.enabled = false
+//        let barButton1 = UIBarButtonItem(customView: collectBtn)
+//        
+//       
+//        
+//        //分享按钮
+//        let shareBtn = UIButton(frame:CGRectMake(0, 0, 18, 18))
+//        shareBtn.setImage(UIImage(named: "yuandian.png"), forState: .Normal)
+//        shareBtn.addTarget(self, action: #selector(collectionNews), forControlEvents: .TouchUpInside)
+//        let barButton2 = UIBarButtonItem(customView: shareBtn)
+//        
+//        //按钮间的空隙
+//        let gap = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil,action: nil)
+//        gap.width = 15;
+//        //设置按钮（注意顺序）
+//        self.navigationItem.rightBarButtonItems = [barButton2,gap,barButton1]
+        self.automaticallyAdjustsScrollViewInsets = false
         
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
@@ -153,8 +153,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     let replyView = UIView()
-    var collect_bottom_Btn:UIButton = UIButton() // 下方点赞按钮
-    let replyTextField = UITextField()
+    var comment_bottom_Btn:UIButton = UIButton() // 下方评论按钮
+    var commentIcon_bottom_Lab:UILabel = UILabel() // 下方评论角标
+    var collect_bottom_Btn:UIButton = UIButton() // 下方收藏按钮
+    var share_bottom_Btn:UIButton = UIButton() // 下方分享按钮
+    var send_bottom_Btn:UIButton = UIButton() // 下方发送按钮
+    let replyTextField = UIPlaceHolderTextView()
     var keyboardShowState = false
     
     // MARK: 设置回复视图
@@ -166,15 +170,37 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         let space:CGFloat = 15
         
         // 回复框
-        replyTextField.frame = CGRectMake(space, 8, WIDTH-60-space*4, 30)
-        replyTextField.borderStyle = UITextBorderStyle.RoundedRect
+        replyTextField.frame = CGRectMake(space, 8, WIDTH-90-space*5, 30)
+        replyTextField.layer.cornerRadius = 6
+//        replyTextField.borderStyle = UITextBorderStyle.RoundedRect
         replyTextField.placeholder = "写评论..."
-        replyTextField.returnKeyType = UIReturnKeyType.Send
+        replyTextField.font = UIFont.systemFontOfSize(16)
+//        replyTextField.returnKeyType = UIReturnKeyType.Send
         replyTextField.delegate = self
         replyView.addSubview(replyTextField)
         
+        // 评论
+        comment_bottom_Btn.frame = CGRectMake(CGRectGetMaxX(replyTextField.frame)+space, 8, 30, 30)
+        comment_bottom_Btn.setImage(UIImage(named: "ic_liuyan"), forState: .Normal)
+//        comment_bottom_Btn.setImage(UIImage(named: "ic_shoucang"), forState: .Highlighted)
+//        comment_bottom_Btn.setImage(UIImage(named: "ic_shoucang"), forState: .Selected)
+        comment_bottom_Btn.addTarget(self, action: #selector(commentBtnClick), forControlEvents: .TouchUpInside)
+        replyView.addSubview(comment_bottom_Btn)
+        
+        // 评论角标
+        let commentIcon_bottom_Lab_Width = calculateWidth(String((newsInfo?.comments.count)!), size: 12, height: 15)+10
+        commentIcon_bottom_Lab.frame = CGRectMake(CGRectGetWidth(comment_bottom_Btn.frame)-commentIcon_bottom_Lab_Width/2.0, -7.5, commentIcon_bottom_Lab_Width, 15)
+        commentIcon_bottom_Lab.backgroundColor = UIColor.redColor()
+        commentIcon_bottom_Lab.layer.cornerRadius = 7.5
+        commentIcon_bottom_Lab.clipsToBounds = true
+        commentIcon_bottom_Lab.textAlignment = .Center
+        commentIcon_bottom_Lab.textColor = UIColor.whiteColor()
+        commentIcon_bottom_Lab.font = UIFont.systemFontOfSize(12)
+        commentIcon_bottom_Lab.text = String((newsInfo?.comments.count)!)
+        comment_bottom_Btn.addSubview(commentIcon_bottom_Lab)
+        
         // 收藏
-        collect_bottom_Btn.frame = CGRectMake(CGRectGetMaxX(replyTextField.frame)+space, 8, 30, 30)
+        collect_bottom_Btn.frame = CGRectMake(CGRectGetMaxX(comment_bottom_Btn.frame)+space, 8, 30, 30)
         collect_bottom_Btn.setImage(UIImage(named: "btn_collect_sel"), forState: .Normal)
         collect_bottom_Btn.setImage(UIImage(named: "ic_shoucang"), forState: .Highlighted)
         collect_bottom_Btn.setImage(UIImage(named: "ic_shoucang"), forState: .Selected)
@@ -182,10 +208,20 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         replyView.addSubview(collect_bottom_Btn)
         
         // 分享
-        let shareBtn:UIButton = UIButton.init(frame: CGRectMake(CGRectGetMaxX(collect_bottom_Btn.frame)+space, 8, 30, 30))
-        shareBtn.setImage(UIImage.init(named: "ic_two_share"), forState: UIControlState.Normal)
-        shareBtn.addTarget(self, action: #selector(collectionNews), forControlEvents: .TouchUpInside)
-        replyView.addSubview(shareBtn)
+        share_bottom_Btn.frame = CGRectMake(CGRectGetMaxX(collect_bottom_Btn.frame)+space, 8, 30, 30)
+        share_bottom_Btn.setImage(UIImage.init(named: "ic_fenxiang"), forState: UIControlState.Normal)
+        share_bottom_Btn.addTarget(self, action: #selector(collectionNews), forControlEvents: .TouchUpInside)
+        replyView.addSubview(share_bottom_Btn)
+        
+        // 发送
+        send_bottom_Btn.frame = CGRectMake(CGRectGetMaxX(replyTextField.frame)-50, CGRectGetMaxY(replyTextField.frame)+8, 50, 25)
+        send_bottom_Btn.layer.cornerRadius = 6
+        send_bottom_Btn.backgroundColor = UIColor.grayColor()
+        send_bottom_Btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        send_bottom_Btn.titleLabel!.font = UIFont.systemFontOfSize(14)
+        send_bottom_Btn.setTitle("发送", forState: .Normal)
+        send_bottom_Btn.addTarget(self, action: #selector(sendComment), forControlEvents: .TouchUpInside)
+        replyView.addSubview(send_bottom_Btn)
         
         let line_topView:UIView = UIView.init(frame: CGRectMake(0, 0, WIDTH, 1))
         line_topView.backgroundColor = UIColor.lightGrayColor()
@@ -204,6 +240,15 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
     }
     
+    // MARK: 评论按钮点击事件
+    func commentBtnClick() {
+        if self.myTableView.rectForSection(2).size.height > self.myTableView.frame.size.height {
+            self.myTableView.contentOffset.y = self.myTableView.rectForSection(2).origin.y
+        }else{
+            self.myTableView.contentOffset.y = self.myTableView.contentSize.height-self.myTableView.frame.size.height
+        }
+    }
+    
     // MARK:- 获取键盘信息并改变视图
     func keyboardWillAppear(notification: NSNotification) {
         
@@ -213,7 +258,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
         
         UIView.animateWithDuration(0.3) {
-            self.replyView.frame.origin.y = HEIGHT-46-64-keyboardheight
+            self.replyView.frame.origin.y = HEIGHT-86-33-64-keyboardheight
 //            self.myTableView.frame.size.height = HEIGHT-64-1-46-keyboardheight
         }
         
@@ -228,22 +273,38 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func keyboardWillDisappear(notification:NSNotification){
         UIView.animateWithDuration(0.3) {
-            self.replyView.frame.origin.y = HEIGHT-46-64
+            self.replyView.frame = CGRectMake(0, HEIGHT-46-64, WIDTH, 46)
+            self.replyTextField.frame.size = CGSizeMake(WIDTH-90-75, 30)
+            self.comment_bottom_Btn.hidden = false
+            self.collect_bottom_Btn.hidden = false
+            self.share_bottom_Btn.hidden = false
 //            self.myTableView.frame.size.height = HEIGHT-64-1-46
         }
         print("键盘落下")
     }
     // MARK:-
     
-    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+//    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+//        
+//    }
+    
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
         // MARK:要求登录
         if requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+            
+            replyView.frame = CGRectMake(0, HEIGHT-86-33-64, WIDTH, 86+33)
+            textView.frame.size = CGSizeMake(WIDTH-30, 70)
+            send_bottom_Btn.frame = CGRectMake(CGRectGetMaxX(replyTextField.frame)-50, CGRectGetMaxY(replyTextField.frame)+8, 50, 25)
+            comment_bottom_Btn.hidden = true
+            collect_bottom_Btn.hidden = true
+            share_bottom_Btn.hidden = true
+            
             HSMineHelper().getPersonalInfo { (success, response) in
                 if success {
                     
                     
                 }else{
-
+                    
                 }
             }
             return true
@@ -252,17 +313,28 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
-    // MARK:点击回车  发表回复
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        print("textfield.text = ",textField.text)
+//    // MARK:点击回车  发表回复
+//    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        print("textfield.text = ",textField.text)
+//        
+//        sendComment()
+//        
+//        return true
+//    }
+    
+    
+    // 发表评论
+    func sendComment() {
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.labelText = "正在发表评论"
-        hud.margin = 10.0
-        hud.removeFromSuperViewOnHide = true
         
-        if textField.text != "" {
-            HSNurseStationHelper().setComment((newsInfo?.object_id)!, content: (textField.text)!, type: "1", photo: "", handle: { (success, response) in
+        if replyTextField.text != "" {
+            
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.labelText = "正在发表评论"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            
+            HSNurseStationHelper().setComment((newsInfo?.object_id)!, content: (replyTextField.text)!, type: "1", photo: "", handle: { (success, response) in
                 print("添加评论",success,response)
                 if success {
                     HSNurseStationHelper().getArticleListWithID((self.newsInfo?.term_id)!) { (success, response) in
@@ -276,12 +348,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                                 for news in dataSource {
                                     if news.object_id == (self.newsInfo?.object_id)! {
                                         
-//                                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                                        //                                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                                         hud.mode = MBProgressHUDMode.Text;
                                         hud.labelText = "评论成功"
-//                                        hud.detailsLabelText = String(response!)
-//                                        hud.margin = 10.0
-//                                        hud.removeFromSuperViewOnHide = true
+                                        //                                        hud.detailsLabelText = String(response!)
+                                        //                                        hud.margin = 10.0
+                                        //                                        hud.removeFromSuperViewOnHide = true
                                         hud.hide(true, afterDelay: 1)
                                         
                                         flag = false
@@ -289,59 +361,64 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                                         
                                         self.myTableView.reloadData()
                                         
-                                        if self.myTableView.rectForSection(2).size.height > self.myTableView.frame.size.height {
-                                            self.myTableView.contentOffset.y = self.myTableView.rectForSection(2).origin.y
-                                        }else{
+//                                        if self.myTableView.rectForSection(2).size.height > self.myTableView.frame.size.height {
+//                                            self.myTableView.contentOffset.y = self.myTableView.rectForSection(2).origin.y
+//                                        }else{
                                             self.myTableView.contentOffset.y = self.myTableView.contentSize.height-self.myTableView.frame.size.height
-                                        }
+//                                        }
                                     }
                                 }
                                 if flag {
                                     
-//                                    let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+                                    //                                    let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
                                     hud.mode = MBProgressHUDMode.Text;
                                     hud.labelText = "评论失败"
-//                                    hud.margin = 10.0
-//                                    hud.removeFromSuperViewOnHide = true
+                                    //                                    hud.margin = 10.0
+                                    //                                    hud.removeFromSuperViewOnHide = true
                                     hud.hide(true, afterDelay: 1)
                                     
-//                                    self.navigationController?.popViewControllerAnimated(true)
+                                    //                                    self.navigationController?.popViewControllerAnimated(true)
                                 }
                             }else{
                                 
-//                                let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+                                //                                let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
                                 hud.mode = MBProgressHUDMode.Text;
                                 hud.labelText = "评论失败"
-//                                hud.margin = 10.0
-//                                hud.removeFromSuperViewOnHide = true
+                                //                                hud.margin = 10.0
+                                //                                hud.removeFromSuperViewOnHide = true
                                 hud.hide(true, afterDelay: 1)
                                 
-//                                self.navigationController?.popViewControllerAnimated(true)
-                               
+                                //                                self.navigationController?.popViewControllerAnimated(true)
+                                
                             }
                         })
                     }
                     
-//                    let dic = ["userid":String(QCLoginUserInfo.currentInfo.userid),"username":String(QCLoginUserInfo.currentInfo.userName),"content":String(UTF8String: textField.text!)!,"photo":QCLoginUserInfo.currentInfo.avatar,"add_time":String(NSDate().timeIntervalSince1970),"type":"1","userlevel":QCLoginUserInfo.currentInfo.level,"major":QCLoginUserInfo.currentInfo.major]
-//                    let commentModel = NewsCommentsModel.init(JSONDecoder(dic))
-//                    self.newsInfo?.comments.append(commentModel)
-//                    
-//                    self.myTableView.reloadData()
-//                    self.contentTableView.reloadData()
+                    //                    let dic = ["userid":String(QCLoginUserInfo.currentInfo.userid),"username":String(QCLoginUserInfo.currentInfo.userName),"content":String(UTF8String: textField.text!)!,"photo":QCLoginUserInfo.currentInfo.avatar,"add_time":String(NSDate().timeIntervalSince1970),"type":"1","userlevel":QCLoginUserInfo.currentInfo.level,"major":QCLoginUserInfo.currentInfo.major]
+                    //                    let commentModel = NewsCommentsModel.init(JSONDecoder(dic))
+                    //                    self.newsInfo?.comments.append(commentModel)
+                    //
+                    //                    self.myTableView.reloadData()
+                    //                    self.contentTableView.reloadData()
                     
-
-//                    if self.myTableView.contentSize.height > self.myTableView.frame.size.height {
-//                        
-//                        self.myTableView.contentOffset = CGPoint(x: 0, y: self.myTableView.contentSize.height-self.myTableView.frame.size.height)
-//                    }
                     
-                    textField.text = nil
+                    //                    if self.myTableView.contentSize.height > self.myTableView.frame.size.height {
+                    //                        
+                    //                        self.myTableView.contentOffset = CGPoint(x: 0, y: self.myTableView.contentSize.height-self.myTableView.frame.size.height)
+                    //                    }
                     
+                    self.replyTextField.text = nil
+                    
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), {
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "评论失败"
+                        hud.hide(true, afterDelay: 1)
+                    })
                 }
             })
         }
-        textField.resignFirstResponder()
-        return true
+        replyTextField.resignFirstResponder()
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
@@ -638,7 +715,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             let tit = UILabel(frame: CGRectMake(10, 0, 100, 30))
             tit.textColor = COLOR
             tit.font = UIFont.systemFontOfSize(14)
-            tit.text = "全部评论"
+            tit.text = "热点评论"
             one.addSubview(tit)
             
             return one
@@ -649,43 +726,43 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     // MARK:获取关联文章列表
     func getDate() {
-        print(newsInfo?.object_id,newsInfo?.title)
-        let url = PARK_URL_Header+"getRelatedNewslist"
-        let param = [
-           "refid": newsInfo!.object_id
-        ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
-            if(error != nil){
-            }else{
-                let status = NewsModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                if(status.status == "error"){
-//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                    hud.mode = MBProgressHUDMode.Text;
-//                    hud.labelText = "获取关联文章失败"
-//                    hud.detailsLabelText = status.errorData
-//                    hud.margin = 10.0
-//                    hud.removeFromSuperViewOnHide = true
-//                    hud.hide(true, afterDelay: 1)
-                }
-                if(status.status == "success"){
-                    //self.createTableView()
-                    print(status)
-                    self.dataSource = NewsList(status.data!)
-                    self.myTableView .reloadData()
-                    print(status.data)
-                }
-            }
-            
-            self.mainFlag += 1
-            if self.mainFlag == 3 {
-                self.mainFlag = 2
-                self.mainHud.hide(true)
-            }
-            
+//        print(newsInfo?.object_id,newsInfo?.title)
+//        let url = PARK_URL_Header+"getRelatedNewslist"
+//        let param = [
+//           "refid": newsInfo!.object_id
+//        ];
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+//            print(request)
+//            if(error != nil){
+//            }else{
+//                let status = NewsModel(JSONDecoder(json!))
+//                print("状态是")
+//                print(status.status)
+//                if(status.status == "error"){
+////                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+////                    hud.mode = MBProgressHUDMode.Text;
+////                    hud.labelText = "获取关联文章失败"
+////                    hud.detailsLabelText = status.errorData
+////                    hud.margin = 10.0
+////                    hud.removeFromSuperViewOnHide = true
+////                    hud.hide(true, afterDelay: 1)
+//                }
+//                if(status.status == "success"){
+//                    //self.createTableView()
+//                    print(status)
+//                    self.dataSource = NewsList(status.data!)
+//                    self.myTableView .reloadData()
+//                    print(status.data)
+//                }
+//            }
+        
+        self.mainFlag += 1
+        if self.mainFlag == 3 {
+            self.mainFlag = 2
+            self.mainHud.hide(true)
         }
+            
+//        }
     }
     
     
@@ -1065,9 +1142,14 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let data = NSData(contentsOfURL: url!)
                 let thumbImage = UIImage(data: data!)
                 
-                let data2 = thumbImage!.compressImage(thumbImage!, maxLength: 32700)
-                
-                message.setThumbImage(UIImage(data: data2!))
+                if (thumbImage != nil) {
+                    
+                    let data2 = thumbImage!.compressImage(thumbImage!, maxLength: 32700)
+                    message.setThumbImage(UIImage(data: data2!))
+                }else{
+                    let thumbImage = UIImage(named: "appLogo")
+                    message.setThumbImage(thumbImage)
+                }
             }
             
             let webPageObject = WXWebpageObject()
