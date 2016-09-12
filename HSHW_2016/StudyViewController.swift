@@ -360,7 +360,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         
         let next = NewsContantViewController()
         next.newsInfo = imageArr[imageView.tag-1]
-        next.navTitle = imageArr[imageView.tag-1].term_name
+//        next.navTitle = imageArr[imageView.tag-1].term_name
         
         self.navigationController?.pushViewController(next, animated: true)
     }

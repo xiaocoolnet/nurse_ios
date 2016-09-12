@@ -108,7 +108,7 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.index = indexPath.row
-        next.navTitle = self.title!
+//        next.navTitle = self.title!
         next.delegate = self
         
         self.navigationController?.pushViewController(next, animated: true)

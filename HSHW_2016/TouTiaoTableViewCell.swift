@@ -18,13 +18,14 @@ class TouTiaoTableViewCell: UITableViewCell {
     var delegate:ToutiaoCateBtnClickedDelegate?
 
     let titLab = UILabel()
-    let contant = UILabel()
-    let titImage = UIImageView()
     let heal = UIButton()
-    let conNum = UILabel()
-    let timeLab = UILabel()
-    let comBtn = UIButton()
-    let timeBtn = UIButton()
+    let hitsNum = UILabel()
+    let hitsBtn = UIButton()
+    let zanBtn = UIButton()
+    let zanNum = UILabel()
+    let colBtn = UIButton()
+    let colNum = UILabel()
+    let titImage = UIImageView()
     let titSubImg = UIImageView()
     let titSubImg_1 = UIImageView()
     let titSubImg_2 = UIImageView()
@@ -41,12 +42,14 @@ class TouTiaoTableViewCell: UITableViewCell {
         for view in self.contentView.subviews {
             view.removeFromSuperview()
         }
-        self.addSubview(heal)
-        self.addSubview(conNum)
-        self.addSubview(timeLab)
-        self.addSubview(comBtn)
-        self.addSubview(timeBtn)
         self.addSubview(titLab)
+        self.addSubview(heal)
+        self.addSubview(hitsBtn)
+        self.addSubview(hitsNum)
+        self.addSubview(zanBtn)
+        self.addSubview(zanNum)
+        self.addSubview(colBtn)
+        self.addSubview(colNum)
         self.addSubview(titImage)
         self.addSubview(titSubImg)
 
@@ -58,34 +61,37 @@ class TouTiaoTableViewCell: UITableViewCell {
         heal.layer.borderColor = COLOR.CGColor
         heal.layer.borderWidth = 0.4
         heal.titleLabel?.font = UIFont.systemFontOfSize(11)
-        //        heal.setTitle("健康常识", forState: .Normal)
         heal.setTitleColor(COLOR, forState: .Normal)
         heal.addTarget(self, action: #selector(categoryBtnClick(_:)), forControlEvents: .TouchUpInside)
         
-        conNum.frame = CGRectMake(79, titLab.frame.size.height+titLab.frame.origin.y+22, 30, 15)
-        conNum.font = UIFont.systemFontOfSize(13)
-        conNum.textAlignment = .Left
-        conNum.textColor = GREY
-        timeLab.frame = CGRectMake(136, titLab.frame.size.height+titLab.frame.origin.y+22, 80, 15)
-        timeLab.font = UIFont.systemFontOfSize(13)
-        timeLab.textColor = GREY
-        comBtn.frame = CGRectMake(62, titLab.frame.size.height+titLab.frame.origin.y+23, 13, 9)
-        //        comBtn.setImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
-        comBtn.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
-        timeBtn.frame = CGRectMake(117, titLab.frame.size.height+titLab.frame.origin.y+23, 11, 11)
-        //        timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
-        timeBtn.setBackgroundImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
-        contant.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+38, WIDTH-140, 40)
-        contant.numberOfLines = 0
-        contant.font = UIFont.systemFontOfSize(14)
-        contant.textColor = UIColor.grayColor()
-        //        titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
+        hitsBtn.frame = CGRectMake(62, titLab.frame.size.height+titLab.frame.origin.y+23, 13, 9)
+        hitsBtn.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
+        
+        hitsNum.frame = CGRectMake(79, titLab.frame.size.height+titLab.frame.origin.y+22, 30, 15)
+        hitsNum.font = UIFont.systemFontOfSize(13)
+        hitsNum.textAlignment = .Left
+        hitsNum.textColor = GREY
+
+        zanBtn.frame = CGRectMake(WIDTH-50, (WIDTH-20)*0.5+42, 14, 14)
+        zanBtn.setImage(UIImage(named:"ic_like_gray"), forState: UIControlState.Normal)
+        zanBtn.setImage(UIImage(named:"ic_like_sel"), forState: UIControlState.Selected)
+
+        zanNum.frame = CGRectMake(WIDTH-30, (WIDTH-20)*0.5+38, 30, 20)
+        zanNum.font = UIFont.systemFontOfSize(12)
+        zanNum.textColor = UIColor.grayColor()
+        zanNum.textAlignment = .Left
+        
+        colBtn.frame = CGRectMake(WIDTH-50, (WIDTH-20)*0.5+42, 14, 14)
+        colBtn.setImage(UIImage(named:"ic_collect_nor"), forState: UIControlState.Normal)
+        colBtn.setImage(UIImage(named:"ic_collect_sel"), forState: UIControlState.Selected)
+        
+        colNum.frame = CGRectMake(WIDTH-30, (WIDTH-20)*0.5+38, 30, 20)
+        colNum.font = UIFont.systemFontOfSize(12)
+        colNum.textColor = UIColor.grayColor()
+        colNum.textAlignment = .Left
         
         titImage.contentMode = .ScaleAspectFill
         titImage.clipsToBounds = true
-        
-        
-        //        titSubImg.frame = CGRectMake(10, CGRectGetMaxY(titLab.frame)+10, WIDTH-20, (WIDTH-20-margin*2)/3.0*2/3.0)
         
         titSubImg_1.contentMode = .ScaleAspectFill
         titSubImg_1.clipsToBounds = true
@@ -106,79 +112,19 @@ class TouTiaoTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    override func layoutSubviews() {
-        super.layoutSubviews()
-//        titLab.frame = CGRectMake(10, 9, WIDTH-140, 40)
-//        titLab.font = UIFont.systemFontOfSize(17)
-//        titLab.numberOfLines = 0
-//        heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+22, 46, 15)
-//        heal.layer.cornerRadius = 3
-//        heal.layer.borderColor = COLOR.CGColor
-//        heal.layer.borderWidth = 0.4
-//        heal.titleLabel?.font = UIFont.systemFontOfSize(11)
-////        heal.setTitle("健康常识", forState: .Normal)
-//        heal.setTitleColor(COLOR, forState: .Normal)
-//        heal.addTarget(self, action: #selector(categoryBtnClick(_:)), forControlEvents: .TouchUpInside)
-//
-//        conNum.frame = CGRectMake(79, titLab.frame.size.height+titLab.frame.origin.y+22, 30, 15)
-//        conNum.font = UIFont.systemFontOfSize(13)
-//        conNum.textAlignment = .Left
-//        conNum.textColor = GREY
-//        timeLab.frame = CGRectMake(136, titLab.frame.size.height+titLab.frame.origin.y+22, 80, 15)
-//        timeLab.font = UIFont.systemFontOfSize(13)
-//        timeLab.textColor = GREY
-//        comBtn.frame = CGRectMake(62, titLab.frame.size.height+titLab.frame.origin.y+23, 13, 9)
-////        comBtn.setImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
-//        comBtn.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
-//        timeBtn.frame = CGRectMake(117, titLab.frame.size.height+titLab.frame.origin.y+23, 11, 11)
-////        timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
-//        timeBtn.setBackgroundImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
-//        contant.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+38, WIDTH-140, 40)
-//        contant.numberOfLines = 0
-//        contant.font = UIFont.systemFontOfSize(14)
-//        contant.textColor = UIColor.grayColor()
-////        titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
-    }
     
     func setCellWithNewsInfo(newsInfo:NewsInfo) {
         self.titLab.text = newsInfo.post_title
-        
-        var conNumStr = "0"
-        if Int(newsInfo.post_hits!) > 99999 {
-            conNumStr = "10W+"
-        }else if Int(newsInfo.post_hits!) > 199999 {
-            conNumStr = "20W+"
-        }else if Int(newsInfo.post_hits!) > 299999 {
-            conNumStr = "30W+"
-        }else if Int(newsInfo.post_hits!) > 399999 {
-            conNumStr = "40W+"
-        }else if Int(newsInfo.post_hits!) > 499999 {
-            conNumStr = "50W+"
-        }else if Int(newsInfo.post_hits!) > 599999 {
-            conNumStr = "60W+"
-        }else if Int(newsInfo.post_hits!) > 799999 {
-            conNumStr = "80W+"
-        }else if Int(newsInfo.post_hits!) > 899999 {
-            conNumStr = "90W+"
-        }else if Int(newsInfo.post_hits!) > 999999 {
-            conNumStr = "100W+"
-        }else if Int(newsInfo.post_hits!) > 9999999 {
-            conNumStr = "1000W+"
-        }else{
-            conNumStr = newsInfo.post_hits!
-        }
 
-        self.conNum.text = conNumStr
-        let time:Array = (newsInfo.post_modified?.componentsSeparatedByString(" "))!
-        self.timeLab.text = time[0]
-        self.contant.text = newsInfo.post_excerpt
         heal.setTitle(newsInfo.term_name, forState: .Normal)
         heal.tag = Int(newsInfo.term_id)!
+        self.hitsNum.text = setconNumStr(newsInfo.post_hits!)
+        self.hitsNum.sizeToFit()
+        self.zanNum.text = String(newsInfo.likes.count)
+        self.zanNum.sizeToFit()
+        self.colNum.text = String(newsInfo.favorites.count)
+        self.colNum.sizeToFit()
+        
         let photoUrl:String = DomainName+newsInfo.thumb!
         print(photoUrl)
         
@@ -212,7 +158,6 @@ class TouTiaoTableViewCell: UITableViewCell {
             }
         }
         
-//        self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
         let titleHeight:CGFloat = calculateHeight(newsInfo.post_title, size: 17, width: newsInfo.thumbArr.count == 0 ? WIDTH-20:WIDTH-140)
         titLab.frame.size.height = titleHeight
         
@@ -224,10 +169,19 @@ class TouTiaoTableViewCell: UITableViewCell {
         }
         
         heal.frame.origin.y = height-25
-        conNum.frame.origin.y = height-25
-        timeLab.frame.origin.y = height-25
-        comBtn.frame.origin.y = height-25
-        timeBtn.frame.origin.y = height-25
+        hitsBtn.center.y = heal.center.y
+        hitsNum.center.y = heal.center.y
+        zanBtn.center.y = heal.center.y
+        zanNum.center.y = heal.center.y
+        colBtn.center.y = heal.center.y
+        colNum.center.y = heal.center.y
+        
+        hitsBtn.frame.origin.x = CGRectGetMaxX(heal.frame)+10
+        hitsNum.frame.origin.x = CGRectGetMaxX(hitsBtn.frame)+5
+        zanBtn.frame.origin.x = CGRectGetMaxX(hitsNum.frame)+10
+        zanNum.frame.origin.x = CGRectGetMaxX(zanBtn.frame)+5
+        colBtn.frame.origin.x = CGRectGetMaxX(zanNum.frame)+10
+        colNum.frame.origin.x = CGRectGetMaxX(colBtn.frame)+5
     }
     
     func setThreeImgCellWithNewsInfo(newsInfo:NewsInfo) {
@@ -235,13 +189,6 @@ class TouTiaoTableViewCell: UITableViewCell {
         self.titLab.frame = CGRectMake(10, 9, WIDTH-20, height)
         
         self.titLab.text = newsInfo.post_title
-        
-//        let margin:CGFloat = 15
-//        
-//        titImage.frame = CGRectMake(10, CGRectGetMaxY(titLab.frame)+10, 60, (WIDTH-20-margin*2)/3.0*2/3.0)
-//        titImage.backgroundColor = UIColor.redColor()
-//        print(titImage.frame)
-        //        titImage.backgroundColor = UIColor.redColor()
         
         titSubImg.frame = CGRectMake(10, CGRectGetMaxY(titLab.frame)+10, WIDTH-20, (WIDTH-20-margin*2)/3.0*2/3.0)
         
@@ -269,56 +216,56 @@ class TouTiaoTableViewCell: UITableViewCell {
         heal.frame = CGRectMake(10, CGRectGetMaxY(titSubImg.frame)+12, healWidth, 15)
         heal.setTitle(newsInfo.term_name, forState: .Normal)
         heal.tag = Int(newsInfo.term_id)!
-//        heal.backgroundColor = UIColor.redColor()
-//        print(heal.frame)
         
-        comBtn.frame = CGRectMake(CGRectGetMaxX(heal.frame)+10, CGRectGetMaxY(titSubImg.frame)+15, 13, 9)
+        self.hitsNum.text = setconNumStr(newsInfo.post_hits!)
+        hitsNum.sizeToFit()
+        self.zanNum.text = String(newsInfo.likes.count)
+        self.zanNum.sizeToFit()
+        self.colNum.text = String(newsInfo.favorites.count)
+        self.colNum.sizeToFit()
 
+        hitsBtn.center.y = heal.center.y
+        hitsNum.center.y = heal.center.y
+        zanBtn.center.y = heal.center.y
+        zanNum.center.y = heal.center.y
+        colBtn.center.y = heal.center.y
+        colNum.center.y = heal.center.y
+        
+        hitsBtn.frame.origin.x = CGRectGetMaxX(heal.frame)+10
+        hitsNum.frame.origin.x = CGRectGetMaxX(hitsBtn.frame)+5
+        zanBtn.frame.origin.x = CGRectGetMaxX(hitsNum.frame)+10
+        zanNum.frame.origin.x = CGRectGetMaxX(zanBtn.frame)+5
+        colBtn.frame.origin.x = CGRectGetMaxX(zanNum.frame)+10
+        colNum.frame.origin.x = CGRectGetMaxX(colBtn.frame)+5
+    }
+    
+    func setconNumStr(string:String) -> String {
+        
         var conNumStr = "0"
-        if Int(newsInfo.post_hits!) > 99999 {
+        if Int(string) > 99999 {
             conNumStr = "10W+"
-        }else if Int(newsInfo.post_hits!) > 199999 {
+        }else if Int(string) > 199999 {
             conNumStr = "20W+"
-        }else if Int(newsInfo.post_hits!) > 299999 {
+        }else if Int(string) > 299999 {
             conNumStr = "30W+"
-        }else if Int(newsInfo.post_hits!) > 399999 {
+        }else if Int(string) > 399999 {
             conNumStr = "40W+"
-        }else if Int(newsInfo.post_hits!) > 499999 {
+        }else if Int(string) > 499999 {
             conNumStr = "50W+"
-        }else if Int(newsInfo.post_hits!) > 599999 {
+        }else if Int(string) > 599999 {
             conNumStr = "60W+"
-        }else if Int(newsInfo.post_hits!) > 799999 {
+        }else if Int(string) > 799999 {
             conNumStr = "80W+"
-        }else if Int(newsInfo.post_hits!) > 899999 {
+        }else if Int(string) > 899999 {
             conNumStr = "90W+"
-        }else if Int(newsInfo.post_hits!) > 999999 {
+        }else if Int(string) > 999999 {
             conNumStr = "100W+"
-        }else if Int(newsInfo.post_hits!) > 9999999 {
+        }else if Int(string) > 9999999 {
             conNumStr = "1000W+"
         }else{
-            conNumStr = newsInfo.post_hits!
+            conNumStr = string
         }
-        
-        self.conNum.text = conNumStr
-        conNum.sizeToFit()
-        conNum.frame = CGRectMake(CGRectGetMaxX(comBtn.frame)+5, CGRectGetMaxY(titSubImg.frame)+12, CGRectGetWidth(conNum.frame), 15)
-
-        timeBtn.frame = CGRectMake(CGRectGetMaxX(conNum.frame)+10, CGRectGetMaxY(titSubImg.frame)+14, 11, 11)
-        timeLab.frame = CGRectMake(CGRectGetMaxX(timeBtn.frame)+5, CGRectGetMaxY(titSubImg.frame)+12, 80, 15)
-        
-        let time:Array = (newsInfo.post_modified?.componentsSeparatedByString(" "))!
-        let date:Array = time[0].componentsSeparatedByString("-")
-        self.timeLab.text = "\(date[1])/\(date[2])"
-        self.contant.text = newsInfo.post_excerpt
-        
-        //        self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "1.png"))
-//        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: newsInfo.thumbArr.count == 0 ? WIDTH-20:WIDTH-140)
-//        titLab.frame.size.height = titleHeight
-//        heal.frame.origin.y = self.frame.size.height-25
-//        conNum.frame.origin.y = self.frame.size.height-25
-//        timeLab.frame.origin.y = self.frame.size.height-25
-//        comBtn.frame.origin.y = self.frame.size.height-25
-//        timeBtn.frame.origin.y = self.frame.size.height-25
+        return conNumStr
     }
 
     func categoryBtnClick(categoryBtn:UIButton) {

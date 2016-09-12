@@ -30,11 +30,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             self.getDate()
         }
     }
-    var navTitle:String = "新闻内容" {
-        didSet {
-//            self.title = navTitle
-        }
-    }
+//    var navTitle:String = "新闻内容" {
+//        didSet {
+////            self.title = navTitle
+//        }
+//    }
     var index = 0
     var delegate:changeModelDelegate?
     

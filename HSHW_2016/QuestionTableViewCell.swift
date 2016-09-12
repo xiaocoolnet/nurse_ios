@@ -47,7 +47,9 @@ class QuestionTableViewCell: UITableViewCell {
         
         likeImage.frame = CGRectMake(WIDTH-60, 43, 10, 10)
 //        conImage.setImage(UIImage(named: "ic_collect_sel.png"), forState: .Normal)
-        likeImage.setBackgroundImage(UIImage(named: "ic_like_sel.png"), forState: .Normal)
+        likeImage.setBackgroundImage(UIImage(named: "ic_like_sel.png"), forState: .Selected)
+        likeImage.setBackgroundImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
+        
         zanNum.frame = CGRectMake(WIDTH-40, 16, 35, 18)
         zanNum.font = UIFont.systemFontOfSize(12)
         zanNum.textColor = UIColor.grayColor()
@@ -75,6 +77,10 @@ class QuestionTableViewCell: UITableViewCell {
     
     var newsInfo:NewsInfo? {
         didSet {
+            
+            likeImage.selected = false
+            colBtn.selected = false
+            
             let height = calculateHeight((newsInfo?.post_title)!, size: 14, width: WIDTH-45)
             self.titLab.text = newsInfo?.post_title
             self.titLab.frame.size.height = height
@@ -86,7 +92,7 @@ class QuestionTableViewCell: UITableViewCell {
             self.hitsNum.frame.origin.x = CGRectGetMaxX(self.eyeImage.frame)+5
             self.hitsNum.center.y = self.eyeImage.center.y
             
-            self.colNum.text = "\((newsInfo?.comments.count)!)"
+            self.colNum.text = "\((newsInfo?.favorites.count)!)"
             self.colNum.sizeToFit()
             self.colNum.frame.origin.x = WIDTH-10-self.colNum.frame.size.width
             self.colNum.center.y = self.eyeImage.center.y
@@ -101,6 +107,19 @@ class QuestionTableViewCell: UITableViewCell {
             
             self.likeImage.frame.origin.x = CGRectGetMinX(zanNum.frame)-5-self.likeImage.frame.size.width
             self.likeImage.center.y = self.eyeImage.center.y
+            
+            
+            for obj in newsInfo!.likes {
+                if obj.userid == QCLoginUserInfo.currentInfo.userid {
+                    likeImage.selected = true
+                }
+            }
+            
+            for obj in newsInfo!.favorites {
+                if obj.userid == QCLoginUserInfo.currentInfo.userid {
+                    colBtn.selected = true
+                }
+            }
         }
     }
     

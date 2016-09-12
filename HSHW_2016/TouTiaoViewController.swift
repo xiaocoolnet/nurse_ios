@@ -340,7 +340,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let next = NewsContantViewController()
         next.newsInfo = imageArr[imageView.tag-1]
 //        next.index = imageView.tag-1
-        next.navTitle = imageArr[imageView.tag-1].term_name
+//        next.navTitle = imageArr[imageView.tag-1].term_name
 //        next.delegate = self
         
         self.navigationController?.pushViewController(next, animated: true)
@@ -437,7 +437,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.index = indexPath.row
-        next.navTitle = "新闻内容"
+//        next.navTitle = "新闻内容"
         next.delegate = self
         //        print(newsInfo.likes.count)
         //        let str = newsInfo.likes

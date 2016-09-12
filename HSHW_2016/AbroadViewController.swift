@@ -419,7 +419,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             //  传值操作
             next.newsInfo = newsInfo
             next.index = indexPath.row
-            next.navTitle = "出国动态"
+//            next.navTitle = "出国动态"
             next.delegate = self
             //  push一个界面
             self.navigationController?.pushViewController(next, animated: true)
@@ -475,7 +475,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         
         let next = NewsContantViewController()
         next.newsInfo = imageArr[imageView.tag-1]
-        next.navTitle = imageArr[imageView.tag-1].term_name
+//        next.navTitle = imageArr[imageView.tag-1].term_name
         
         self.navigationController?.pushViewController(next, animated: true)
     }

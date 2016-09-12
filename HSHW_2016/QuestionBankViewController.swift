@@ -27,7 +27,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         self.view.addSubview(line)
         self.view.backgroundColor = RGREY
         
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-115)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-44-64-1)
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.delegate = self
         myTableView.dataSource = self
@@ -93,6 +93,10 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         let QuestionInfo = self.dataSource.objectlist[indexPath.row]
 
         cell.newsInfo = QuestionInfo
+        cell.likeImage.tag = indexPath.row
+        cell.likeImage.addTarget(self, action: #selector(click1(_:)), forControlEvents: .TouchUpInside)
+        cell.colBtn.tag = indexPath.row
+        cell.colBtn.addTarget(self, action: #selector(collectionBtnClick(_:)), forControlEvents: .TouchUpInside)
         
         return cell
         
@@ -105,10 +109,180 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.index = indexPath.row
-        next.navTitle = "美国RN"
+//        next.navTitle = "美国RN"
         next.delegate = self
         
         self.navigationController?.pushViewController(next, animated: true)
+    }
+    
+    func click1(btn:UIButton){
+        
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+            return
+        }
+        
+        let newsInfo = self.dataSource.objectlist[btn.tag]
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        
+        if btn.selected {
+            
+            hud.labelText = "正在取消点赞"
+            
+            let url = PARK_URL_Header+"ResetLike"
+            let param = [
+                "id":newsInfo.object_id,
+                "type":"1",
+                "userid":QCLoginUserInfo.currentInfo.userid,
+                ];
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                print(request)
+                if(error != nil){
+                    
+                }else{
+                    let status = Http(JSONDecoder(json!))
+                    print("状态是")
+                    print(status.status)
+                    if(status.status == "error"){
+                        
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = status.errorData
+                        
+                        hud.hide(true, afterDelay: 1)
+                    }
+                    if(status.status == "success"){
+                        
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "取消点赞成功"
+                        
+                        hud.hide(true, afterDelay: 0.5)
+                        print(status.data)
+                        
+                        for (i,obj) in (newsInfo.likes).enumerate() {
+                            if obj.userid == QCLoginUserInfo.currentInfo.userid {
+                                newsInfo.likes.removeAtIndex(i)
+                            }
+                        }
+                        
+                        self.dataSource.objectlist[btn.tag] = newsInfo
+                        
+                        self.myTableView.reloadData()
+                        
+                    }
+                }
+            }
+        }else {
+            
+            hud.labelText = "正在点赞"
+            
+            let url = PARK_URL_Header+"SetLike"
+            let param = [
+                
+                "id":newsInfo.object_id,
+                "type":"1",
+                "userid":QCLoginUserInfo.currentInfo.userid,
+                ];
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                print(request)
+                if(error != nil){
+                    
+                }else{
+                    let status = Http(JSONDecoder(json!))
+                    print("状态是")
+                    print(status.status)
+                    if(status.status == "error"){
+                        
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = status.errorData
+                        
+                        hud.hide(true, afterDelay: 3)
+                    }
+                    if(status.status == "success"){
+                        
+                        hud.mode = MBProgressHUDMode.Text;
+                        hud.labelText = "点赞成功"
+                       
+                        hud.hide(true, afterDelay: 0.5)
+                        
+                        let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
+                        let model:LikeInfo = LikeInfo.init(JSONDecoder(dic))
+                        newsInfo.likes.append(model)
+                        self.dataSource.objectlist[btn.tag] = newsInfo
+                        
+                        self.myTableView.reloadData()
+          
+                        print(status.data)
+                    }
+                }
+            }
+        }
+    }
+    
+    func collectionBtnClick(collectionBtn:UIButton) {
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+            return
+        }
+        
+        let newsInfo = self.dataSource.objectlist[collectionBtn.tag]
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        //        hud.mode = MBProgressHUDMode.Text;
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        
+        if collectionBtn.selected {
+            
+            hud.labelText = "正在取消收藏"
+            
+            HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", handle: { (success, response) in
+                if success {
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "取消收藏成功"
+                    hud.hide(true, afterDelay: 0.5)
+                    
+                    for (i,obj) in (newsInfo.favorites).enumerate() {
+                        if obj.userid == QCLoginUserInfo.currentInfo.userid {
+                            newsInfo.favorites.removeAtIndex(i)
+                        }
+                    }
+                    
+                    self.dataSource.objectlist[collectionBtn.tag] = newsInfo
+                    
+                    self.myTableView.reloadData()
+                }else{
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = String(response!)
+                    hud.hide(true, afterDelay: 1)
+                }
+            })
+            
+        }else {
+            
+            hud.labelText = "正在收藏"
+            
+            HSMineHelper().addFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", title: newsInfo.post_title, description: newsInfo.post_excerpt, handle: { (success, response) in
+                if success {
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "收藏成功"
+                    hud.hide(true, afterDelay: 0.5)
+                    
+                    let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
+                    let model:LikeInfo = LikeInfo.init(JSONDecoder(dic))
+                    newsInfo.favorites.append(model)
+                    self.dataSource.objectlist[collectionBtn.tag] = newsInfo
+                    
+                    self.myTableView.reloadData()
+                }else{
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = String(response!)
+                    hud.hide(true, afterDelay: 3)
+                }
+            })
+        }
     }
     
     // MARK:更新模型

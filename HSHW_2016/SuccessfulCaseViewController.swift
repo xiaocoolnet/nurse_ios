@@ -160,7 +160,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.index = indexPath.row
-        next.navTitle = self.title == nil ? self.title!:"新闻内容"
+//        next.navTitle = self.title == nil ? self.title!:"新闻内容"
         next.delegate = self
         
         self.navigationController?.pushViewController(next, animated: true)
