@@ -188,7 +188,7 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
         print("点击了提交简历")
         
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
             return
         }
         

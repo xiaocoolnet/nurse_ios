@@ -53,7 +53,7 @@ class HSMineHelper: NSObject {
             }
         }
     }
-    //修改姓名
+    //修改昵称
     func changeUserName(niceName:String,handle:ResponseBlock){
         let url = PARK_URL_Header+"UpdateUserName"
         let param = [
@@ -64,12 +64,12 @@ class HSMineHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: nil)
+                    handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: result.errorData)
                 }
@@ -77,7 +77,7 @@ class HSMineHelper: NSObject {
         }
 
     }
-    //修改姓名
+    //修改真实姓名
     func changeUserRealName(realName:String,handle:ResponseBlock){
         let url = PARK_URL_Header+"UpdateUserRealName"
         let param = [
@@ -88,12 +88,12 @@ class HSMineHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: nil)
+                    handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: result.errorData)
                 }
@@ -156,12 +156,12 @@ class HSMineHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: nil)
+                    handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: result.errorData)
                 }
@@ -179,12 +179,12 @@ class HSMineHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: nil)
+                    handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: result.errorData)
                 }
@@ -202,12 +202,12 @@ class HSMineHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: nil)
+                    handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: result.errorData)
                 }
@@ -226,12 +226,12 @@ class HSMineHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: nil)
+                    handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: result.errorData)
                 }
@@ -249,12 +249,12 @@ class HSMineHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: nil)
+                    handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: result.errorData)
                 }
@@ -272,12 +272,12 @@ class HSMineHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: nil)
+                    handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: result.errorData)
                 }
@@ -295,12 +295,12 @@ class HSMineHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: nil)
+                    handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: result.errorData)
                 }
@@ -318,12 +318,12 @@ class HSMineHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: nil)
+                    handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: result.errorData)
                 }
@@ -692,6 +692,30 @@ class HSMineHelper: NSObject {
                     handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: "获取个人积分详情失败")
+                }
+            }
+        }
+    }
+    
+    // 获取得分数据
+    func GetMyExamData(handle:ResponseBlock){
+        
+        let url = PARK_URL_Header+"GetMyExamData"
+        
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                
+                let result = examData(JSONDecoder(json!))
+                print("状态是")
+                print(result.status)
+                if(result.status == "success"){
+                    handle(success: true, response: result.datas)
+                }else{
+                    handle(success: false, response: result.errorData)
                 }
             }
         }

@@ -482,3 +482,46 @@ class Ranking_UserModel: JSONJoy {
     }
     
 }
+
+// Model 得分数据
+class examData:JSONJoy {
+    var status:String
+    var datas = Array<examDataModel>()
+    var errorData:String
+    
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string ?? ""
+        errorData = decoder["data"].string ?? ""
+        for childs:JSONDecoder in decoder["data"].array ?? [] {
+            datas.append(examDataModel(childs))
+        }
+    }
+}
+
+class examDataModel:JSONJoy {
+
+    var rate: Int = 0
+
+    var id: String
+
+    var post_title: String
+
+    var count: String
+
+    var rightcount: String
+
+    var create_time: String
+
+    var type: String
+    
+    
+    required init(_ decoder: JSONDecoder) {
+        rate = decoder["rate"].integer ?? 0
+        id = decoder["id"].string ?? ""
+        post_title = decoder["post_title"].string ?? ""
+        count = decoder["count"].string ?? ""
+        rightcount = decoder["rightcount"].string ?? ""
+        create_time = decoder["create_time"].string ?? ""
+        type = decoder["type"].string ?? ""
+    }
+}

@@ -105,10 +105,10 @@ class LoginModel: NSObject {
                 //  请求错误的传值
                 handle(success: false,response: "网络错误")
             }else{
-                let result = Http(JSONDecoder(response!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(response!))
                 let responseStr = result.status == "success" ? nil : result.errorData
                 //  闭包传值
-                handle(success: result.status == "success",response: responseStr)
+                handle(success: result.status == "success",response: result.status == "success" ? result.data : responseStr)
             }
         }
         

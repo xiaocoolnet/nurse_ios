@@ -54,10 +54,11 @@ class RecruitTableViewCell: UITableViewCell {
         content.frame.origin.y = title.frame.size.height + title.frame.origin.y
         cont.frame.origin.y = title.frame.size.height + title.frame.origin.y
         time.font = UIFont.systemFontOfSize(10)
+        
         time.frame.origin.y = content.frame.size.height+content.frame.origin.y
         location.center.y = time.center.y
-        loca.frame.origin.y = content.frame.size.height+content.frame.origin.y
-        timeImg.frame.origin.y = content.frame.size.height+content.frame.origin.y
+        loca.center.y = time.center.y
+        timeImg.center.y = time.center.y
         titImg.frame.origin.y = title.frame.size.height + 5
         delivery.frame.origin.y = content.frame.size.height+content.frame.origin.y
         delivery.center.y = location.center.y

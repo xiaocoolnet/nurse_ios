@@ -135,7 +135,7 @@ class NewsPageHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: "网络错误")
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 print("状态是")
                 print(result.status)
                 if(result.status == "error"){
@@ -160,7 +160,7 @@ class NewsPageHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: "网络错误")
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 print("状态是")
                 print(result.status)
                 if(result.status == "error"){

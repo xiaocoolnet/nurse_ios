@@ -43,6 +43,8 @@ static CGFloat allW;    // 整个图表宽度
 
 - (void)doWithCalculate{
     if (!self.xValues || !self.xValues.count || !self.yValues || !self.yValues.count) {
+        count = (int)self.xValues.count;
+
         return;
     }
     // 移除多余的值，计算点个数
@@ -88,16 +90,16 @@ static CGFloat allW;    // 整个图表宽度
     [path moveToPoint:CGPointMake(kMargin, kMargin / 2.0 - 5)];
     
     [path addLineToPoint:CGPointMake(kMargin, CGRectGetHeight(myFrame) - kMargin)];
-    [path addLineToPoint:CGPointMake(CGRectGetWidth(myFrame)+kMargin , CGRectGetHeight(myFrame) - kMargin)];
+    [path addLineToPoint:CGPointMake(CGRectGetWidth(myFrame)-kMargin+kMargin/2.0 , CGRectGetHeight(myFrame) - kMargin)];
     
     // 加箭头
     [path moveToPoint:CGPointMake(kMargin - 5, kMargin/ 2.0 + 4)];
     [path addLineToPoint:CGPointMake(kMargin, kMargin / 2.0 - 4)];
     [path addLineToPoint:CGPointMake(kMargin + 5, kMargin/ 2.0 + 4)];
     
-    [path moveToPoint:CGPointMake(CGRectGetWidth(myFrame)+kMargin - 9, CGRectGetHeight(myFrame) - kMargin - 5)];
-    [path addLineToPoint:CGPointMake(CGRectGetWidth(myFrame)+kMargin, CGRectGetHeight(myFrame) - kMargin)];
-    [path addLineToPoint:CGPointMake(CGRectGetWidth(myFrame)+kMargin - 9, CGRectGetHeight(myFrame) - kMargin + 5)];
+    [path moveToPoint:CGPointMake(CGRectGetWidth(myFrame)-kMargin+kMargin/2.0 - 9, CGRectGetHeight(myFrame) - kMargin - 5)];
+    [path addLineToPoint:CGPointMake(CGRectGetWidth(myFrame)-kMargin+kMargin/2.0, CGRectGetHeight(myFrame) - kMargin)];
+    [path addLineToPoint:CGPointMake(CGRectGetWidth(myFrame)-kMargin+kMargin/2.0 - 9, CGRectGetHeight(myFrame) - kMargin + 5)];
     
     CAShapeLayer *layer = [[CAShapeLayer alloc] init];
     layer.path = path.CGPath;
@@ -144,12 +146,12 @@ static CGFloat allW;    // 整个图表宽度
     // 横线
     for (int i = 0; i < yCount; i ++) {
         [path moveToPoint:CGPointMake(kMargin , kMargin + everyY * i)];
-        [path addLineToPoint:CGPointMake(kMargin + allW ,  kMargin + everyY * i)];
+        [path addLineToPoint:CGPointMake(kMargin + allW - kMargin ,  kMargin + everyY * i)];
     }
     // 竖线
 //    for (int i = 1; i <= count; i ++) {
-        [path moveToPoint:CGPointMake(kMargin-5 + everyX * (count+1), kMargin)];
-        [path addLineToPoint:CGPointMake( kMargin-5 + everyX * (count+1),  kMargin + allH)];
+//        [path moveToPoint:CGPointMake(kMargin-5 + everyX * (count+1), kMargin)];
+//        [path addLineToPoint:CGPointMake( kMargin-5 + everyX * (count+1),  kMargin + allH)];
 //    }
     CAShapeLayer *layer = [[CAShapeLayer alloc] init];
     layer.path = path.CGPath;

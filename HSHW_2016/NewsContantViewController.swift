@@ -110,19 +110,19 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //        collectBtn.enabled = false
 //        let barButton1 = UIBarButtonItem(customView: collectBtn)
 //        
-//       
-//        
-//        //分享按钮
-//        let shareBtn = UIButton(frame:CGRectMake(0, 0, 18, 18))
-//        shareBtn.setImage(UIImage(named: "yuandian.png"), forState: .Normal)
-//        shareBtn.addTarget(self, action: #selector(collectionNews), forControlEvents: .TouchUpInside)
-//        let barButton2 = UIBarButtonItem(customView: shareBtn)
-//        
+       
+        
+        //分享按钮
+        let shareBtn = UIButton(frame:CGRectMake(0, 0, 18, 18))
+        shareBtn.setImage(UIImage(named: "yuandian.png"), forState: .Normal)
+        shareBtn.addTarget(self, action: #selector(collectionNews), forControlEvents: .TouchUpInside)
+        let barButton2 = UIBarButtonItem(customView: shareBtn)
+        
 //        //按钮间的空隙
 //        let gap = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil,action: nil)
 //        gap.width = 15;
 //        //设置按钮（注意顺序）
-//        self.navigationItem.rightBarButtonItems = [barButton2,gap,barButton1]
+        self.navigationItem.rightBarButtonItems = [barButton2]
         self.automaticallyAdjustsScrollViewInsets = false
         
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
@@ -253,9 +253,16 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     func keyboardWillAppear(notification: NSNotification) {
         
         // 获取键盘信息
-        let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
+        let keyboardinfo = notification.userInfo![UIKeyboardFrameEndUserInfoKey]
         
         let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
+        
+        replyView.frame = CGRectMake(0, HEIGHT-86-33-64, WIDTH, 86+33)
+        replyTextField.frame.size = CGSizeMake(WIDTH-30, 70)
+        send_bottom_Btn.frame = CGRectMake(CGRectGetMaxX(replyTextField.frame)-50, CGRectGetMaxY(replyTextField.frame)+8, 50, 25)
+        comment_bottom_Btn.hidden = true
+        collect_bottom_Btn.hidden = true
+        share_bottom_Btn.hidden = true
         
         UIView.animateWithDuration(0.3) {
             self.replyView.frame.origin.y = HEIGHT-86-33-64-keyboardheight
@@ -290,14 +297,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
         // MARK:要求登录
-        if requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+        if requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
             
-            replyView.frame = CGRectMake(0, HEIGHT-86-33-64, WIDTH, 86+33)
-            textView.frame.size = CGSizeMake(WIDTH-30, 70)
-            send_bottom_Btn.frame = CGRectMake(CGRectGetMaxX(replyTextField.frame)-50, CGRectGetMaxY(replyTextField.frame)+8, 50, 25)
-            comment_bottom_Btn.hidden = true
-            collect_bottom_Btn.hidden = true
-            share_bottom_Btn.hidden = true
+            
             
             HSMineHelper().getPersonalInfo { (success, response) in
                 if success {
@@ -336,6 +338,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             
             HSNurseStationHelper().setComment((newsInfo?.object_id)!, content: (replyTextField.text)!, type: "1", photo: "", handle: { (success, response) in
                 print("添加评论",success,response)
+                let result = response as! addScore_ReadingInformationDataModel
                 if success {
                     HSNurseStationHelper().getArticleListWithID((self.newsInfo?.term_id)!) { (success, response) in
                         
@@ -358,8 +361,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                                         
                                         flag = false
                                         self.newsInfo = news
-                                        
+                                        self.commentIcon_bottom_Lab.text = String((self.newsInfo?.comments.count)!)
+
                                         self.myTableView.reloadData()
+                                        
+                                        if ((result.event) == "") {
+                                            self.showScoreTips((result.event), score: (result.score))
+                                        }
                                         
 //                                        if self.myTableView.rectForSection(2).size.height > self.myTableView.frame.size.height {
 //                                            self.myTableView.contentOffset.y = self.myTableView.rectForSection(2).origin.y
@@ -433,7 +441,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     func collectionBtnClick(){
         
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
             return
         }
         
@@ -840,6 +848,10 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
+    var addScore_ReadingInformation = false
+    var addScore_ReadingInformationName = ""
+    var addScore_ReadingInformationScore = ""
+
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             
@@ -891,6 +903,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             webCell.loadRequestUrl(url!)
                             webCell.contentWebView.delegate = self
                             self.webFlag = false
+                            
+                            if success {
+                                self.addScore_ReadingInformation = true
+                                self.addScore_ReadingInformationName = (response as! addScore_ReadingInformationDataModel).event
+                                self.addScore_ReadingInformationScore = (response as! addScore_ReadingInformationDataModel).score
+                            }
+                           
                         }else{
                             let alert = UIAlertController(title: nil, message: "获取新闻内容失败", preferredStyle: .Alert)
                             self.presentViewController(alert, animated: true, completion: {
@@ -1081,8 +1100,60 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if self.mainFlag == 3 {
             self.mainFlag = 2
             self.mainHud.hide(true)
+            if addScore_ReadingInformation {
+                
+                showScoreTips(addScore_ReadingInformationName, score: addScore_ReadingInformationScore)
+            }
         }
 
+    }
+    
+    // MARK: 显示积分提示
+    func showScoreTips(name:String, score:String) {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.opacity = 0.5
+        hud.mode = .CustomView
+        let customView = UIImageView(frame: CGRectMake(0, 0, WIDTH*0.8, WIDTH*0.8*238/537))
+        customView.image = UIImage(named: "scorePopImg.png")
+        let titLab = UILabel(frame: CGRectMake(
+            CGRectGetWidth(customView.frame)*351/537,
+            CGRectGetHeight(customView.frame)*30/238,
+            CGRectGetWidth(customView.frame)*174/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        titLab.textColor = UIColor(red: 251/255.0, green: 148/255.0, blue: 0, alpha: 1)
+        titLab.textAlignment = .Left
+        titLab.font = UIFont.systemFontOfSize(24)
+        titLab.text = name
+        customView.addSubview(titLab)
+        
+        let scoreLab = UILabel(frame: CGRectMake(
+            CGRectGetWidth(customView.frame)*351/537,
+            CGRectGetHeight(customView.frame)*100/238,
+            CGRectGetWidth(customView.frame)*174/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        scoreLab.textColor = UIColor(red: 253/255.0, green: 82/255.0, blue: 49/255.0, alpha: 1)
+        scoreLab.textAlignment = .Left
+        scoreLab.font = UIFont.systemFontOfSize(36)
+        scoreLab.adjustsFontSizeToFitWidth = true
+        scoreLab.text = "+\(score)"
+        scoreLab.sizeToFit()
+        customView.addSubview(scoreLab)
+        
+        let jifenLab = UILabel(frame: CGRectMake(
+            CGRectGetMaxX(scoreLab.frame),
+            CGRectGetHeight(customView.frame)*100/238,
+            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-CGRectGetWidth(customView.frame)*13/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
+        jifenLab.textAlignment = .Center
+        jifenLab.font = UIFont.systemFontOfSize(26)
+        jifenLab.adjustsFontSizeToFitWidth = true
+        jifenLab.text = "积分"
+        jifenLab.center.y = scoreLab.center.y
+        customView.addSubview(jifenLab)
+        
+        hud.customView = customView
+        hud.hide(true, afterDelay: 3)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -1265,7 +1336,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         print("赞")
         self.zan.enabled = false
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
             return
         }
         
@@ -1345,7 +1416,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     hud.labelText = "点赞失败"
                     hud.hide(true, afterDelay: 1)
                 }else{
-                    let status = Http(JSONDecoder(json!))
+                    let status = addScore_ReadingInformationModel(JSONDecoder(json!))
                     print("状态是")
                     print(status.status)
                     if(status.status == "error"){
@@ -1365,6 +1436,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //                        hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                         self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"1"], waitUntilDone:true)
+                        if ((status.data?.event) != "") {
+                            self.showScoreTips((status.data?.event)!, score: (status.data?.score)!)
+                        }
                         
 //                        user.setObject("true", forKey: "isLike")
                         //                            user.setObject("true", forKey: (self.newsInfo?.object_id)!)

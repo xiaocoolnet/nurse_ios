@@ -84,6 +84,7 @@ class EveryDayInfo: JSONJoy {
     var term_id:String
     var name:String
     var count:String
+    var exam_time:String
     var haschild:Int
     var childlist = Array<EveryDayInfo>()
 
@@ -91,6 +92,7 @@ class EveryDayInfo: JSONJoy {
         term_id = decoder["term_id"].string ?? ""
         name = decoder["name"].string ?? ""
         count = decoder["count"].string ?? ""
+        exam_time = decoder["exam_time"].string ?? ""
         haschild = decoder["haschild"].integer ?? 0
         if decoder["childlist"].array != nil {
             for child in decoder["childlist"].array! {

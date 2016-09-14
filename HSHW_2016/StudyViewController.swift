@@ -234,11 +234,11 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 cell.accessoryType = .None
                 let numLab = UILabel()
                 numLab.frame = CGRectMake(0, 0, 25, 25)
-//                numLab.backgroundColor = UIColor.redColor()
+                numLab.backgroundColor = UIColor.redColor()
                 numLab.layer.cornerRadius = 12.5
                 numLab.clipsToBounds = true
                 numLab.textAlignment = .Center
-                numLab.textColor = UIColor.redColor()
+                numLab.textColor = UIColor.whiteColor()
                 numLab.font = UIFont.systemFontOfSize(16)
                 if hulibu_updateNum > 99 {
                     numLab.text = "99+"

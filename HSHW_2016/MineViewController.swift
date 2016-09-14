@@ -44,7 +44,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.tabBarController?.tabBar.hidden = false
         
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: true) {
             return
         }
         
@@ -635,7 +635,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if(error != nil){
                 
             }else{
-                let status = Http(JSONDecoder(json!))
+                let status = addScore_ReadingInformationModel(JSONDecoder(json!))
                 print("状态是")
                 print(status.status)
                 if(status.status == "error"){
@@ -649,21 +649,77 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
                 if(status.status == "success"){
                     
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "签到成功"
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//                    hud.mode = MBProgressHUDMode.Text;
+//                    hud.labelText = "签到成功"
+//                    hud.margin = 10.0
+//                    hud.removeFromSuperViewOnHide = true
+//                    hud.hide(true, afterDelay: 1)
+                    
+                    if (status.data?.event)! != "" && (status.data?.score)! != "" {
+                        
+                        self.showScoreTips((status.data?.event)!, score: (status.data?.score)!)
+                    }
+                    
                     self.isLike = true
                     
                     dispatch_async(dispatch_get_main_queue(), {
                         self.signLab.text = "已签到"
                     })
                     
+                    
+                    
                 }
             }
         }
+    }
+    
+    // MARK: 显示积分提示
+    func showScoreTips(name:String, score:String) {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.opacity = 0.5
+        hud.mode = .CustomView
+        let customView = UIImageView(frame: CGRectMake(0, 0, WIDTH*0.8, WIDTH*0.8*238/537))
+        customView.image = UIImage(named: "scorePopImg.png")
+        let titLab = UILabel(frame: CGRectMake(
+            CGRectGetWidth(customView.frame)*351/537,
+            CGRectGetHeight(customView.frame)*30/238,
+            CGRectGetWidth(customView.frame)*174/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        titLab.textColor = UIColor(red: 251/255.0, green: 148/255.0, blue: 0, alpha: 1)
+        titLab.textAlignment = .Left
+        titLab.font = UIFont.systemFontOfSize(24)
+        titLab.text = name
+        customView.addSubview(titLab)
+        
+        let scoreLab = UILabel(frame: CGRectMake(
+            CGRectGetWidth(customView.frame)*351/537,
+            CGRectGetHeight(customView.frame)*100/238,
+            CGRectGetWidth(customView.frame)*174/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        scoreLab.textColor = UIColor(red: 253/255.0, green: 82/255.0, blue: 49/255.0, alpha: 1)
+        scoreLab.textAlignment = .Left
+        scoreLab.font = UIFont.systemFontOfSize(36)
+        scoreLab.adjustsFontSizeToFitWidth = true
+        scoreLab.text = "+\(score)"
+        scoreLab.sizeToFit()
+        customView.addSubview(scoreLab)
+        
+        let jifenLab = UILabel(frame: CGRectMake(
+            CGRectGetMaxX(scoreLab.frame),
+            CGRectGetHeight(customView.frame)*100/238,
+            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-CGRectGetWidth(customView.frame)*13/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
+        jifenLab.textAlignment = .Center
+        jifenLab.font = UIFont.systemFontOfSize(26)
+        jifenLab.adjustsFontSizeToFitWidth = true
+        jifenLab.text = "积分"
+        jifenLab.center.y = scoreLab.center.y
+        customView.addSubview(jifenLab)
+        
+        hud.customView = customView
+        hud.hide(true, afterDelay: 3)
     }
     
     // MARK: 点击退出
@@ -677,6 +733,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             let myTab  = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
             myTab.selectedIndex = 0
             LOGIN_STATE = false
+            canLookTel = false
             myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
             NSUserDefaults.standardUserDefaults().removeObjectForKey(LOGINFO_KEY)
         }

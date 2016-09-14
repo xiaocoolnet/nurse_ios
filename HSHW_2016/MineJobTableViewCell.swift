@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Alamofire
+import SDWebImage
 
 class MineJobTableViewCell: UITableViewCell {
 
@@ -37,10 +39,16 @@ class MineJobTableViewCell: UITableViewCell {
     }
     
     func showforJobModel(model:MineJobInfo){
-        titImg.image = UIImage(named: "2")
+
+        if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+            self.titImg.image = UIImage.init(named: "img_head_nor")
+        }else{
+            self.titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))
+        }
         title.text = model.title
         name.text = model.companyname
-        location.text = model.address
+        location.text = model.address.componentsSeparatedByString(" ").first
+        location.sizeToFit()
         let contentStr = "薪资待遇:"+model.salary+"\n福利待遇:"+model.welfare+"\n招聘职位:"+model.title
         content.text = contentStr
         let contStr = "学历要求:"+model.education+"\n工作年限:"+"\n相关证件:"+model.certificate
@@ -50,10 +58,11 @@ class MineJobTableViewCell: UITableViewCell {
         content.frame.origin.y = title.frame.size.height + title.frame.origin.y
         cont.frame.origin.y = title.frame.size.height + title.frame.origin.y
         time.font = UIFont.systemFontOfSize(10)
+        
         time.frame.origin.y = content.frame.size.height+content.frame.origin.y
         location.center.y = time.center.y
-        loca.frame.origin.y = content.frame.size.height+content.frame.origin.y
-        timeImg.frame.origin.y = content.frame.size.height+content.frame.origin.y
+        loca.center.y = time.center.y
+        timeImg.center.y = time.center.y
         titImg.frame.origin.y = title.frame.size.height + 5
         delivery.frame.origin.y = content.frame.size.height+content.frame.origin.y
         delivery.center.y = location.center.y

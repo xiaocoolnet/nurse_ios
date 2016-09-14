@@ -51,8 +51,8 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
 
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MineJobTableViewCell
-            cell.selectionStyle = .None
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MineJobTableViewCell
+        cell.selectionStyle = .None
         let model = self.dataSource.objectlist[indexPath.row]
         cell.showforJobModel(model)
         return cell

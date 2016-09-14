@@ -28,8 +28,8 @@ class HSStudyNetHelper: NSObject {
             }else{
                 let model =  ScoreModel(JSONDecoder(json!))
                 if(model.status == "success"){
-                    let result = model.data!.allscore
-                    handle(success: true, response: result)
+//                    let result = model.data!.allscore
+                    handle(success: true, response: model.data)
                 }else{
                     handle(success: false, response: error)
                 }

@@ -62,9 +62,10 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
-            let chartCell = tableView.dequeueReusableCellWithIdentifier("chartcell")
-            chartCell!.selectionStyle = .None
-            return chartCell!
+            let chartCell = tableView.dequeueReusableCellWithIdentifier("chartcell") as! HSChartCell
+            chartCell.selectionStyle = .None
+            chartCell.examDataArray = self.examDataArray
+            return chartCell
         }
             
         else if indexPath.row == 1 {
@@ -162,7 +163,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
         
     }
 
-
+    var examDataArray = Array<examDataModel>()
     // 加载数据_做题记录
     func loadData_Exampaper() {
         
@@ -173,28 +174,44 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
                 self.fansListArray = response as! Array<GTestExamList>
                 self.myTableView.reloadData()
             }else{
-            if String(response!) == "no data" {
-                self.fansListArray = Array<GTestExamList>()
+                if String(response!) == "no data" {
+                    self.fansListArray = Array<GTestExamList>()
+                    self.myTableView.reloadData()
+                }else{
+                    
+                }
+            }
+        }
+        
+        helper.GetExampaper(QCLoginUserInfo.currentInfo.userid, type: "2") { (success, response) in
+            if success {
+                
+                self.focusListArray = response as! Array<GTestExamList>
                 self.myTableView.reloadData()
             }else{
+                if String(response!) == "no data" {
+                    self.focusListArray = Array<GTestExamList>()
+                    self.myTableView.reloadData()
+                }else{
+                    
+                }
+            }
+        }
+        
+        helper.GetMyExamData { (success, response) in
+            if success {
                 
+                self.examDataArray = response as! Array<examDataModel>
+                self.myTableView.reloadData()
+            }else{
+                if String(response!) == "no data" {
+                    self.examDataArray = Array<examDataModel>()
+                    self.myTableView.reloadData()
+                }else{
+                    
+                }
             }
         }
     }
-    
-    helper.GetExampaper(QCLoginUserInfo.currentInfo.userid, type: "2") { (success, response) in
-        if success {
-            
-            self.focusListArray = response as! Array<GTestExamList>
-            self.myTableView.reloadData()
-        }else{
-            if String(response!) == "no data" {
-                self.focusListArray = Array<GTestExamList>()
-                self.myTableView.reloadData()
-            }else{
-                
-            }
-        }
-    }
-}
+
 }

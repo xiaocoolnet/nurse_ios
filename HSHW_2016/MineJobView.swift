@@ -76,6 +76,7 @@ class MineJobInfo: JSONJoy {
         certificate = decoder["certificate"].string ?? ""
         address = decoder["address"].string ?? ""
         salary = decoder["salary"].string ?? ""
+        salary =  salary.stringByReplacingOccurrencesOfString("&lt;", withString: "<")
         welfare = decoder["welfare"].string ?? ""
         count = decoder["count"].string ?? ""
         description = decoder["description"].string ?? ""

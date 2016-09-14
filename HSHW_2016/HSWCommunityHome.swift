@@ -74,7 +74,7 @@ class HSWCommunityHome: UIViewController,UICollectionViewDelegate,UICollectionVi
     func postedTheView() {
         
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
             return
         }
 

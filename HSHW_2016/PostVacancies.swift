@@ -108,115 +108,115 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     }
    
     @IBAction func sendBtnClicked(sender: AnyObject) {
-//        if delegate != nil {
+        //        if delegate != nil {
         
-            if postNameField.text != "" && firmNameField.text != "" && resumeFeild.text != "" && linkmanField.text != "" && phoneField.text != "" && mailboxField.text != "" && workplaceBtn.selected && detailPlaceTF.text != "" && positionBtn.selected && conditionBtn.selected && treatmentBtn.selected && personBtn.selected && moneyBtn.selected && requestField.text != "" {
+        if postNameField.text != "" && firmNameField.text != "" && resumeFeild.text != "" && linkmanField.text != "" && phoneField.text != "" && mailboxField.text != "" && workplaceBtn.selected && detailPlaceTF.text != "" && positionBtn.selected && conditionBtn.selected && treatmentBtn.selected && personBtn.selected && moneyBtn.selected && requestField.text != "" {
+            
+            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
+            //                hud.mode = MBProgressHUDMode.Text;
+            hud.labelText = "正在提交"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(true, afterDelay: 1)
+            
+            helper.publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, linkman: linkmanField.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionLab.text!, education: conditionLab.text!, welfare: treatmentLab.text!, address: placeLab_1.text!+"-"+placeLab_2.text!+"-"+placeLab_3.text!+" "+detailPlaceTF.text!, count: personLab.text!, salary: moneyLab.text!, description: requestField.text) { (success, response) in
+                print(success)
                 
-                let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
-//                hud.mode = MBProgressHUDMode.Text;
-                hud.labelText = "正在提交"
-                hud.margin = 10.0
-                hud.removeFromSuperViewOnHide = true
-                hud.hide(true, afterDelay: 1)
-                
-                helper.publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, linkman: linkmanField.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionLab.text!, education: conditionLab.text!, welfare: treatmentLab.text!, address: placeLab_1.text!+placeLab_2.text!+placeLab_3.text!+detailPlaceTF.text!, count: personLab.text!, salary: moneyLab.text!, description: requestField.text) { (success, response) in
-                    print(success)
+                if success {
                     
-                    if success {
-                        
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "提交成功"
-                        hud.hide(true, afterDelay: 1)
-                        
-                        self.selfNav?.popViewControllerAnimated(true)
-//                        self.delegate?.clickedSendBtn()
-                        
-                        
-                        //提交后还原表格样式
-                        self.firmNameField.text = nil
-                        self.resumeFeild.text = nil
-                        self.linkmanField.text = nil
-                        self.phoneField.text = nil
-                        self.mailboxField.text = nil
-                        self.postNameField.text = nil
-                        
-                        //        positionBtn.setTitle("请选择工作地点", forState: .Normal)
-                        //        conditionBtn.setTitle("请选择招聘职位", forState: .Normal)
-                        //        treatmentBtn.setTitle("请选择招聘条件", forState: .Normal)
-                        //        workplaceBtn.setTitle("请选择福利待遇", forState: .Normal)
-                        //        personBtn.setTitle("请选择招聘人数", forState: .Normal)
-                        //        moneyBtn.setTitle("请选择薪资待遇", forState: .Normal)
-                        
-                        self.positionLab.text = "主管护士"
-                        self.conditionLab.text = "研究生"
-                        self.treatmentLab.text = "五险一金"
-                        self.placeLab_1.text = "北京市"
-                        self.placeLab_2.text = "北京市"
-                        self.placeLab_3.text = "朝阳区"
-                        self.personLab.text = "10人以上"
-                        self.moneyLab.text = "面议"
-                        self.requestField.text = nil
-                        self.requestLabel.text = "职位要求"
-                    }else {
-                        hud.hide(true)
-                        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .Alert)
-                        let doneAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
-                            self.sendBtnClicked(sender)
-                        })
-                        alertController.addAction(doneAction)
-                        
-                        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
-                        alertController.addAction(cancelAction)
-                        
-                        let vc = self.responderVC()
-                        vc!.presentViewController(alertController, animated: true, completion: nil)
-                    }
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "提交成功"
+                    hud.hide(true, afterDelay: 1)
                     
+                    self.selfNav?.popViewControllerAnimated(true)
+                    //                        self.delegate?.clickedSendBtn()
+                    
+                    
+                    //提交后还原表格样式
+                    self.firmNameField.text = nil
+                    self.resumeFeild.text = nil
+                    self.linkmanField.text = nil
+                    self.phoneField.text = nil
+                    self.mailboxField.text = nil
+                    self.postNameField.text = nil
+                    
+                    //        positionBtn.setTitle("请选择工作地点", forState: .Normal)
+                    //        conditionBtn.setTitle("请选择招聘职位", forState: .Normal)
+                    //        treatmentBtn.setTitle("请选择招聘条件", forState: .Normal)
+                    //        workplaceBtn.setTitle("请选择福利待遇", forState: .Normal)
+                    //        personBtn.setTitle("请选择招聘人数", forState: .Normal)
+                    //        moneyBtn.setTitle("请选择薪资待遇", forState: .Normal)
+                    
+                    self.positionLab.text = "主管护士"
+                    self.conditionLab.text = "研究生"
+                    self.treatmentLab.text = "五险一金"
+                    self.placeLab_1.text = "北京市"
+                    self.placeLab_2.text = "北京市"
+                    self.placeLab_3.text = "朝阳区"
+                    self.personLab.text = "10人以上"
+                    self.moneyLab.text = "面议"
+                    self.requestField.text = nil
+                    self.requestLabel.text = "职位要求"
+                }else {
+                    hud.hide(true)
+                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .Alert)
+                    let doneAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
+                        self.sendBtnClicked(sender)
+                    })
+                    alertController.addAction(doneAction)
+                    
+                    let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+                    alertController.addAction(cancelAction)
+                    
+                    let vc = self.responderVC()
+                    vc!.presentViewController(alertController, animated: true, completion: nil)
                 }
-
                 
-            }else{
-                
-//                if postNameField.text == "" {
-//                    postNameField.layer.borderColor = UIColor.redColor().CGColor
-//                    postNameField.layer.masksToBounds = true
-//                    postNameField.layer.borderWidth = 1.0
-//                    postNameField.layer.cornerRadius = 2
-//                }
-//                if firmNameField.text == "" {
-//                    firmNameField.layer.borderColor = UIColor.redColor().CGColor
-//                    firmNameField.layer.masksToBounds = true
-//                    firmNameField.layer.borderWidth = 1.0
-//                    firmNameField.layer.cornerRadius = 2
-//                    
-//                }
-//                if resumeFeild.text == "" {
-//                    resumeFeild.layer.borderColor = UIColor.redColor().CGColor
-//                    resumeFeild.layer.masksToBounds = true
-//                    resumeFeild.layer.borderWidth = 1.0
-//                    resumeFeild.layer.cornerRadius = 2
-//                }
-//                if phoneField.text == "" {
-//                    phoneField.layer.borderColor = UIColor.redColor().CGColor
-//                    phoneField.layer.masksToBounds = true
-//                    phoneField.layer.borderWidth = 1.0
-//                    phoneField.layer.cornerRadius = 2
-//                }
-//                if mailboxField.text == "" {
-//                    mailboxField.layer.borderColor = UIColor.redColor().CGColor
-//                    mailboxField.layer.masksToBounds = true
-//                    mailboxField.layer.borderWidth = 1.0
-//                    mailboxField.layer.cornerRadius = 2
-//                }
-                
-                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善招聘信息", comment: "empty message"), preferredStyle: .Alert)
-                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
-                alertController.addAction(doneAction)
-                
-                let vc = responderVC()
-                vc!.presentViewController(alertController, animated: true, completion: nil)
             }
-//        }
+            
+            
+        }else{
+            
+            //                if postNameField.text == "" {
+            //                    postNameField.layer.borderColor = UIColor.redColor().CGColor
+            //                    postNameField.layer.masksToBounds = true
+            //                    postNameField.layer.borderWidth = 1.0
+            //                    postNameField.layer.cornerRadius = 2
+            //                }
+            //                if firmNameField.text == "" {
+            //                    firmNameField.layer.borderColor = UIColor.redColor().CGColor
+            //                    firmNameField.layer.masksToBounds = true
+            //                    firmNameField.layer.borderWidth = 1.0
+            //                    firmNameField.layer.cornerRadius = 2
+            //
+            //                }
+            //                if resumeFeild.text == "" {
+            //                    resumeFeild.layer.borderColor = UIColor.redColor().CGColor
+            //                    resumeFeild.layer.masksToBounds = true
+            //                    resumeFeild.layer.borderWidth = 1.0
+            //                    resumeFeild.layer.cornerRadius = 2
+            //                }
+            //                if phoneField.text == "" {
+            //                    phoneField.layer.borderColor = UIColor.redColor().CGColor
+            //                    phoneField.layer.masksToBounds = true
+            //                    phoneField.layer.borderWidth = 1.0
+            //                    phoneField.layer.cornerRadius = 2
+            //                }
+            //                if mailboxField.text == "" {
+            //                    mailboxField.layer.borderColor = UIColor.redColor().CGColor
+            //                    mailboxField.layer.masksToBounds = true
+            //                    mailboxField.layer.borderWidth = 1.0
+            //                    mailboxField.layer.cornerRadius = 2
+            //                }
+            
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善招聘信息", comment: "empty message"), preferredStyle: .Alert)
+            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            alertController.addAction(doneAction)
+            
+            let vc = responderVC()
+            vc!.presentViewController(alertController, animated: true, completion: nil)
+        }
+        //        }
         
 //        print(firmNameField.text!,resumeFeild.text!,phoneField.text!,mailboxField.text!,postNameField.text!,"1",conditionBtn.currentTitle!,treatmentBtn.currentTitle!,workplaceBtn.currentTitle!,personBtn.currentTitle!,moneyBtn.currentTitle!,requestField.text)
         
@@ -238,10 +238,9 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         return temp as? UIViewController
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-//        getCompanyStatus()
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        //        getCompanyStatus()
         // 设置下拉列表样式
         customizeDropDown()
         
@@ -252,11 +251,9 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         bordView.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
         bordView.layer.borderWidth = 1
         
-        let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
-        selfNav = tabBar.selectedViewController as? UINavigationController
         
         array = ["北京市","北京市","朝阳区"]
-
+        
         requestField.delegate = self
         
         firmNameField.delegate = self
@@ -266,12 +263,18 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         mailboxField.delegate = self
         postNameField.delegate = self
         
-//        dropDownDic = ["position":["职位1","职位2"],"condition":["条件1","条件2"],"treatment":["福利1","福利2"],"person":["人数1","人数2"],"money":["薪资1","薪资2"]]
-//        setDropDownMenu()
+        //        dropDownDic = ["position":["职位1","职位2"],"condition":["条件1","条件2"],"treatment":["福利1","福利2"],"person":["人数1","人数2"],"money":["薪资1","薪资2"]]
+        //        setDropDownMenu()
         
-        mainHud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-        mainHud.labelText = "正在获取招聘信息"
-        mainHud.removeFromSuperViewOnHide = true
+        if (UIApplication.sharedApplication().keyWindow != nil) {
+            
+            let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
+            selfNav = tabBar.selectedViewController as? UINavigationController
+            
+            mainHud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+            mainHud.labelText = "正在获取招聘信息"
+            mainHud.removeFromSuperViewOnHide = true
+        }
         
         getDictionaryList("7", key: "position")
         getDictionaryList("8", key: "condition")
@@ -290,9 +293,13 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         detailPlaceTF.borderStyle = .None
         
         
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
-//        
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        //
+        //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        
+    }
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
 
     }

@@ -73,35 +73,40 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     
     func clickBackBarButton() {
         
-        if myChoose.count < self.dataSource.count {
+        if !isSubmit {
             
-            let alertController = UIAlertController(title: "尚未答完", message: "是否退出？", preferredStyle: .Alert)
-            self.presentViewController(alertController, animated: true, completion: nil)
-            
-            let cancelAction = UIAlertAction(title: "是", style: .Cancel) { (cancelAction) in
-                self.navigationController?.popViewControllerAnimated(true)
-            }
-            alertController.addAction(cancelAction)
-            
-            let answerAction = UIAlertAction(title: "否", style: .Default){
-                (cancelAction) in
+            if myChoose.count < self.dataSource.count {
                 
+                let alertController = UIAlertController(title: "尚未答完", message: "是否退出？", preferredStyle: .Alert)
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+                let cancelAction = UIAlertAction(title: "是", style: .Cancel) { (cancelAction) in
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+                alertController.addAction(cancelAction)
+                
+                let answerAction = UIAlertAction(title: "否", style: .Default){
+                    (cancelAction) in
+                    
+                }
+                alertController.addAction(answerAction)
+            }else{
+                let alertController = UIAlertController(title: "尚未提交", message: "是否提交？", preferredStyle: .Alert)
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+                let cancelAction = UIAlertAction(title: "退出", style: .Cancel) { (cancelAction) in
+                    self.navigationController?.popViewControllerAnimated(true)
+                }
+                alertController.addAction(cancelAction)
+                
+                let answerAction = UIAlertAction(title: "提交", style: .Default){
+                    (cancelAction) in
+                    self.takeUpTheTest()
+                }
+                alertController.addAction(answerAction)
             }
-            alertController.addAction(answerAction)
         }else{
-            let alertController = UIAlertController(title: "尚未提交", message: "是否提交？", preferredStyle: .Alert)
-            self.presentViewController(alertController, animated: true, completion: nil)
-            
-            let cancelAction = UIAlertAction(title: "退出", style: .Cancel) { (cancelAction) in
-                self.navigationController?.popViewControllerAnimated(true)
-            }
-            alertController.addAction(cancelAction)
-            
-            let answerAction = UIAlertAction(title: "提交", style: .Default){
-                (cancelAction) in
-                self.takeUpTheTest()
-            }
-            alertController.addAction(answerAction)
+            self.navigationController?.popViewControllerAnimated(true)
         }
     }
     
@@ -159,11 +164,20 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                         print(self.dataSource.count)
                         print("-----")
                         
-                        hud.hide(true, afterDelay: 1)
-                        self.createScrollerView()
-                        self.AnswerView()
-                        self.backBottomView()
-                        self.questionCard()
+                        
+                        if self.dataSource.count == 0 {
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "尚无试题"
+                            hud.hide(true, afterDelay: 1)
+
+                        }else{
+                            hud.hide(true, afterDelay: 1)
+
+                            self.createScrollerView()
+                            self.AnswerView()
+                            self.backBottomView()
+                            self.questionCard()
+                        }
 
                         print(status.data)
                     }else{
@@ -275,6 +289,8 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             }
         }
     }
+    
+    let backeView = UIView()
     // MARK:   答案视图
     func AnswerView() {
         //将正确答案放在一个数组中
@@ -307,7 +323,10 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         touch.addTarget(self, action: #selector(self.touchUp), forControlEvents: .TouchUpInside)
         grayBack.addSubview(touch)
         
-        let backeView = UIView(frame: CGRectMake(0, HEIGHT-54-WIDTH*260/375, WIDTH, WIDTH*260/375))
+        for view in backeView.subviews {
+            view.removeFromSuperview()
+        }
+        backeView.frame = CGRectMake(0, HEIGHT-54-WIDTH*260/375, WIDTH, WIDTH*260/375)
         backeView.backgroundColor = UIColor.whiteColor()
         grayBack.addSubview(backeView)
         
@@ -657,7 +676,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         }else if btn.tag == 5 {
             
             // MARK:要求登录
-            if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+            if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
                 return
             }
             print(collection)
@@ -853,33 +872,45 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                     hud.hide(true)
                     self.navigationItem.rightBarButtonItem = nil
                     
-                    let alertController = UIAlertController(title: "提交成功", message: "得分\(response!)", preferredStyle: .Alert)
-                    self.presentViewController(alertController, animated: true, completion: nil)
+                    let result = response as! ScoreDataModel
                     
-                    let cancelAction = UIAlertAction(title: "退出", style: .Cancel) { (cancelAction) in
-                        self.navigationController?.popViewControllerAnimated(true)
+                    var time: NSTimeInterval = 0.0
+                    if result.event != "" {
+                        self.showScoreTips(result.event, score: result.score)
+                        time = 3.0
                     }
-                    alertController.addAction(cancelAction)
+                   
+                    let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(time * Double(NSEC_PER_SEC)))
                     
-                    let answerAction = UIAlertAction(title: "答案解析", style: .Default){
-                        (cancelAction) in
+                    dispatch_after(delay, dispatch_get_main_queue()) {
                         
-                        dispatch_async(dispatch_get_main_queue(), { 
+                        let alertController = UIAlertController(title: "提交成功", message: "得分\(result.allscore)", preferredStyle: .Alert)
+                        self.presentViewController(alertController, animated: true, completion: nil)
+                        
+                        let cancelAction = UIAlertAction(title: "退出", style: .Cancel) { (cancelAction) in
+                            self.navigationController?.popViewControllerAnimated(true)
+                        }
+                        alertController.addAction(cancelAction)
+                        
+                        let answerAction = UIAlertAction(title: "答案解析", style: .Default){
+                            (cancelAction) in
                             
-//                            let btn = UIButton()
-//                            btn.tag = 4
-                            self.bottomBtnClick(self.btnTwo)
-                            
-                            let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-                            hud.mode = MBProgressHUDMode.Text
-                            hud.labelText = "点击 < 答案 > 按钮即可查看答案"
-                            hud.margin = 10.0
-                            hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 1.5)
-                        })
+                            dispatch_async(dispatch_get_main_queue(), {
+                                
+                                //                            let btn = UIButton()
+                                //                            btn.tag = 4
+                                self.bottomBtnClick(self.btnTwo)
+                                
+                                let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+                                hud.mode = MBProgressHUDMode.Text
+                                hud.labelText = "点击 < 答案 > 按钮即可查看答案"
+                                hud.margin = 10.0
+                                hud.removeFromSuperViewOnHide = true
+                                hud.hide(true, afterDelay: 1.5)
+                            })
+                        }
+                        alertController.addAction(answerAction)
                     }
-                    alertController.addAction(answerAction)
-                    
                 })
             }else{
                 dispatch_async(dispatch_get_main_queue(), {
@@ -896,6 +927,54 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             }
             print(response)
         }
+    }
+    
+    // MARK: 显示积分提示
+    func showScoreTips(name:String, score:String) {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.opacity = 0.5
+        hud.mode = .CustomView
+        let customView = UIImageView(frame: CGRectMake(0, 0, WIDTH*0.8, WIDTH*0.8*238/537))
+        customView.image = UIImage(named: "scorePopImg.png")
+        let titLab = UILabel(frame: CGRectMake(
+            CGRectGetWidth(customView.frame)*351/537,
+            CGRectGetHeight(customView.frame)*30/238,
+            CGRectGetWidth(customView.frame)*174/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        titLab.textColor = UIColor(red: 251/255.0, green: 148/255.0, blue: 0, alpha: 1)
+        titLab.textAlignment = .Left
+        titLab.font = UIFont.systemFontOfSize(24)
+        titLab.text = name
+        customView.addSubview(titLab)
+        
+        let scoreLab = UILabel(frame: CGRectMake(
+            CGRectGetWidth(customView.frame)*351/537,
+            CGRectGetHeight(customView.frame)*100/238,
+            CGRectGetWidth(customView.frame)*174/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        scoreLab.textColor = UIColor(red: 253/255.0, green: 82/255.0, blue: 49/255.0, alpha: 1)
+        scoreLab.textAlignment = .Left
+        scoreLab.font = UIFont.systemFontOfSize(36)
+        scoreLab.adjustsFontSizeToFitWidth = true
+        scoreLab.text = "+\(score)"
+        scoreLab.sizeToFit()
+        customView.addSubview(scoreLab)
+        
+        let jifenLab = UILabel(frame: CGRectMake(
+            CGRectGetMaxX(scoreLab.frame),
+            CGRectGetHeight(customView.frame)*100/238,
+            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-CGRectGetWidth(customView.frame)*13/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
+        jifenLab.textAlignment = .Center
+        jifenLab.font = UIFont.systemFontOfSize(26)
+        jifenLab.adjustsFontSizeToFitWidth = true
+        jifenLab.text = "积分"
+        jifenLab.center.y = scoreLab.center.y
+        customView.addSubview(jifenLab)
+        
+        hud.customView = customView
+        hud.hide(true, afterDelay: 3)
     }
     
     func answerBtnClicked(btn:UIButton) {

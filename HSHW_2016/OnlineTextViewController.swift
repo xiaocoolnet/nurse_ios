@@ -177,7 +177,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
             return
         }
         
@@ -198,6 +198,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
             let nextVC = OnLineViewController()
             nextVC.title = "在线考试·\(info.name)"
             nextVC.questionCount = info.count
+            nextVC.exam_time = Int(info.exam_time)!
             nextVC.type = info.term_id
             self.navigationController?.pushViewController(nextVC, animated: true)
         }

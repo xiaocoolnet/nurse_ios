@@ -259,9 +259,9 @@ class HSNurseStationHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
-                    handle(success: true, response: nil)
+                    handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: nil)
                 }
@@ -379,16 +379,33 @@ class HSNurseStationHelper: NSObject {
                      "wantsalary":wantsalary,
                      "wantposition":wantposition,
                      "description":description,]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request?.URLString)
-            if(error != nil){
-                handle(success: false, response: error?.description)
-            }else{
-                let result = Http(JSONDecoder(json!))
-                if(result.status == "success"){
-                    handle(success: true, response: nil)
+        if type == 1 {
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                print(request?.URLString)
+                if(error != nil){
+                    handle(success: false, response: error?.description)
                 }else{
-                    handle(success: false, response: nil)
+                    let result = addScore_ReadingInformationModel(JSONDecoder(json!))
+                    if(result.status == "success"){
+                        handle(success: true, response: result.data)
+                    }else{
+                        handle(success: false, response: result.errorData)
+                    }
+                }
+            }
+        }else{
+            
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                print(request?.URLString)
+                if(error != nil){
+                    handle(success: false, response: error?.description)
+                }else{
+                    let result = Http(JSONDecoder(json!))
+                    if(result.status == "success"){
+                        handle(success: true, response: nil)
+                    }else{
+                        handle(success: false, response: nil)
+                    }
                 }
             }
         }

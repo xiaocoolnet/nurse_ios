@@ -118,14 +118,16 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
         ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "\(PARK_URL_Header)uploadavatar") { [unowned self] (data) in
             dispatch_async(dispatch_get_main_queue(), {
                 
-                let result = Http(JSONDecoder(data))
-                if result.status != nil {
-                    dispatch_async(dispatch_get_main_queue(), {
-                    if result.status! == "success"{
+                let result = addScore_ReadingInformationModel(JSONDecoder(data))
+                dispatch_async(dispatch_get_main_queue(), {
+                    if result.status == "success"{
                         self.avatarView.setImage(image, forState: .Normal)
-                        self.mainHelper.changeUserAvatar(result.data!, handle: { (success, response) in
+                        self.mainHelper.changeUserAvatar((result.data?.avatar)!, handle: { (success, response) in
                             if success {
-                                QCLoginUserInfo.currentInfo.avatar = result.data!
+                                QCLoginUserInfo.currentInfo.avatar = (result.data?.avatar)!
+                                if result.data?.event != "" {
+                                    self.showScoreTips((result.data?.event)!, score: (result.data?.score)!)
+                                }
                             }
                         })
                     }else{
@@ -136,13 +138,61 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                     }
-                    })
-                }
+                })
+
             })
         }
 
         myTableView.reloadData()
         picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // MARK: 显示积分提示
+    func showScoreTips(name:String, score:String) {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.opacity = 0.5
+        hud.mode = .CustomView
+        let customView = UIImageView(frame: CGRectMake(0, 0, WIDTH*0.8, WIDTH*0.8*238/537))
+        customView.image = UIImage(named: "scorePopImg.png")
+        let titLab = UILabel(frame: CGRectMake(
+            CGRectGetWidth(customView.frame)*351/537,
+            CGRectGetHeight(customView.frame)*30/238,
+            CGRectGetWidth(customView.frame)*174/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        titLab.textColor = UIColor(red: 251/255.0, green: 148/255.0, blue: 0, alpha: 1)
+        titLab.textAlignment = .Left
+        titLab.font = UIFont.systemFontOfSize(24)
+        titLab.text = name
+        customView.addSubview(titLab)
+        
+        let scoreLab = UILabel(frame: CGRectMake(
+            CGRectGetWidth(customView.frame)*351/537,
+            CGRectGetHeight(customView.frame)*100/238,
+            CGRectGetWidth(customView.frame)*174/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        scoreLab.textColor = UIColor(red: 253/255.0, green: 82/255.0, blue: 49/255.0, alpha: 1)
+        scoreLab.textAlignment = .Left
+        scoreLab.font = UIFont.systemFontOfSize(36)
+        scoreLab.adjustsFontSizeToFitWidth = true
+        scoreLab.text = "+\(score)"
+        scoreLab.sizeToFit()
+        customView.addSubview(scoreLab)
+        
+        let jifenLab = UILabel(frame: CGRectMake(
+            CGRectGetMaxX(scoreLab.frame),
+            CGRectGetHeight(customView.frame)*100/238,
+            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-CGRectGetWidth(customView.frame)*13/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
+        jifenLab.textAlignment = .Center
+        jifenLab.font = UIFont.systemFontOfSize(26)
+        jifenLab.adjustsFontSizeToFitWidth = true
+        jifenLab.text = "积分"
+        jifenLab.center.y = scoreLab.center.y
+        customView.addSubview(jifenLab)
+        
+        hud.customView = customView
+        hud.hide(true, afterDelay: 3)
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

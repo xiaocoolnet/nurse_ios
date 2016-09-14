@@ -44,6 +44,7 @@ let APP_INVITEFRIEND_URL = "http://app.chinanurse.cn/index.php?g=Score&m=Score&a
 var myInviteFriendUrl = NSUserDefaults.standardUserDefaults().stringForKey("myInviteFriendUrl") ?? APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
 
 var loadPictureOnlyWiFi = false
+var canLookTel = false
 
 //let ZAN_URL_Header = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a="
 
@@ -132,7 +133,7 @@ class TimeTask :NSObject{
 
 }
 
-func requiredLogin(nav:UINavigationController, previousViewController:UIViewController, hasBackItem:Bool) -> Bool{
+func requiredLogin(nav:UINavigationController, previousViewController:UIViewController, hiddenNavigationBar:Bool) -> Bool{
     
     print(LOGIN_STATE)
     
@@ -141,7 +142,8 @@ func requiredLogin(nav:UINavigationController, previousViewController:UIViewCont
     }
     
     let controller = ViewController()
-    controller.navigationController?.navigationBar.hidden = hasBackItem
+    controller.hasBackBarButtonItem = hiddenNavigationBar
+//    controller.navigationController?.navigationBar.hidden = hasBackItem
     controller.title = "登录"
     controller.previousViewcontroller = previousViewController
     nav.pushViewController(controller, animated: true)

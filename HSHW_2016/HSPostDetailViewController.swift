@@ -393,7 +393,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     // MARK:点击收藏按钮
     func collectIconClick() {
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
             return
         }
         
@@ -457,7 +457,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     func likeBtnClicked() {
         
         // MARK:要求登录
-        if !requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true) {
+        if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
             return
         }
         
@@ -520,7 +520,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
                 if(error != nil){
                     
                 }else{
-                    let status = Http(JSONDecoder(json!))
+                    let status = addScore_ReadingInformationModel(JSONDecoder(json!))
                     print("状态是")
                     print(status.status)
                     if(status.status == "error"){
@@ -550,10 +550,62 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
 //                            self.likeLabel.text = String(Int(self.likeLabel.text!)!+1)
                             self.contentTableView.reloadData()
                         })
+                        
+                        if ((status.data?.event) != "") {
+                            self.showScoreTips((status.data?.event)!, score: (status.data?.score)!)
+                        }
                     }
                 }
             }
         }
+    }
+    
+    // MARK: 显示积分提示
+    func showScoreTips(name:String, score:String) {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.opacity = 0.5
+        hud.mode = .CustomView
+        let customView = UIImageView(frame: CGRectMake(0, 0, WIDTH*0.8, WIDTH*0.8*238/537))
+        customView.image = UIImage(named: "scorePopImg.png")
+        let titLab = UILabel(frame: CGRectMake(
+            CGRectGetWidth(customView.frame)*351/537,
+            CGRectGetHeight(customView.frame)*30/238,
+            CGRectGetWidth(customView.frame)*174/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        titLab.textColor = UIColor(red: 251/255.0, green: 148/255.0, blue: 0, alpha: 1)
+        titLab.textAlignment = .Left
+        titLab.font = UIFont.systemFontOfSize(24)
+        titLab.text = name
+        customView.addSubview(titLab)
+        
+        let scoreLab = UILabel(frame: CGRectMake(
+            CGRectGetWidth(customView.frame)*351/537,
+            CGRectGetHeight(customView.frame)*100/238,
+            CGRectGetWidth(customView.frame)*174/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        scoreLab.textColor = UIColor(red: 253/255.0, green: 82/255.0, blue: 49/255.0, alpha: 1)
+        scoreLab.textAlignment = .Left
+        scoreLab.font = UIFont.systemFontOfSize(36)
+        scoreLab.adjustsFontSizeToFitWidth = true
+        scoreLab.text = "+\(score)"
+        scoreLab.sizeToFit()
+        customView.addSubview(scoreLab)
+        
+        let jifenLab = UILabel(frame: CGRectMake(
+            CGRectGetMaxX(scoreLab.frame),
+            CGRectGetHeight(customView.frame)*100/238,
+            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-CGRectGetWidth(customView.frame)*13/537,
+            CGRectGetHeight(customView.frame)*50/238))
+        jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
+        jifenLab.textAlignment = .Center
+        jifenLab.font = UIFont.systemFontOfSize(26)
+        jifenLab.adjustsFontSizeToFitWidth = true
+        jifenLab.text = "积分"
+        jifenLab.center.y = scoreLab.center.y
+        customView.addSubview(jifenLab)
+        
+        hud.customView = customView
+        hud.hide(true, afterDelay: 3)
     }
 
     // MARK:点击评论按钮
@@ -677,7 +729,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
         // MARK:要求登录
-        return requiredLogin(self.navigationController!, previousViewController: self, hasBackItem: true)
+        return requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false)
         
     }
     

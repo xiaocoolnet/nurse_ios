@@ -99,6 +99,7 @@ class HSFindPersonDetailView: UIView {
     }
     func targetLocation(targetLocation:NSString){
         self.targetLocation.text = targetLocation as String
+        self.targetLocation.adjustsFontSizeToFitWidth = true
     }
     func targetPosition(targetPosition:NSString){
         self.targetPosition.text = targetPosition as String

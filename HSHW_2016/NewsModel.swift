@@ -243,4 +243,47 @@ class LikeInfo: JSONJoy {
     }
 }
 
+class addScore_ReadingInformationModel: JSONJoy{
+    
+    var status:String
+    var data:addScore_ReadingInformationDataModel?
+    var errorData:String?
+
+    required init(_ decoder:JSONDecoder){
+        
+        status = decoder["status"].string ?? ""
+        
+        if status == "success"{
+            data = addScore_ReadingInformationDataModel(decoder["data"])
+        }else{
+            errorData = decoder["data"].string
+        }
+        
+        
+    }
+}
+
+class addScore_ReadingInformationDataModel: JSONJoy{
+    
+    var userid: String
+
+    var score: String
+
+    var create_time: Int
+
+    var event: String
+    
+    var avatar: String
+    
+    
+    required init(_ decoder:JSONDecoder){
+
+        userid = decoder["userid"].string ?? ""
+        score = decoder["score"].string ?? ""
+        create_time = decoder["create_time"].integer ?? 0
+        event = decoder["event"].string ?? ""
+        avatar = decoder["avatar"].string ?? ""
+    }
+}
+
 
