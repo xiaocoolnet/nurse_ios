@@ -120,7 +120,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             hud.hide(true, afterDelay: 1)
             
             helper.publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, linkman: linkmanField.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionLab.text!, education: conditionLab.text!, welfare: treatmentLab.text!, address: placeLab_1.text!+"-"+placeLab_2.text!+"-"+placeLab_3.text!+" "+detailPlaceTF.text!, count: personLab.text!, salary: moneyLab.text!, description: requestField.text) { (success, response) in
-                print(success)
+                // print(success)
                 
                 if success {
                     
@@ -218,12 +218,12 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         }
         //        }
         
-//        print(firmNameField.text!,resumeFeild.text!,phoneField.text!,mailboxField.text!,postNameField.text!,"1",conditionBtn.currentTitle!,treatmentBtn.currentTitle!,workplaceBtn.currentTitle!,personBtn.currentTitle!,moneyBtn.currentTitle!,requestField.text)
+//        // print(firmNameField.text!,resumeFeild.text!,phoneField.text!,mailboxField.text!,postNameField.text!,"1",conditionBtn.currentTitle!,treatmentBtn.currentTitle!,workplaceBtn.currentTitle!,personBtn.currentTitle!,moneyBtn.currentTitle!,requestField.text)
         
 //        if firmNameField.text != "" && resumeFeild.text != "" && phoneField.text != "" && postNameField.text != "" && conditionBtn.currentTitle != "" && treatmentBtn.currentTitle != "" && workplaceBtn.currentTitle != "" && personBtn.currentTitle != "" && moneyBtn.currentTitle != "" {
 //
 //            helper.publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionLab.text!, education: conditionLab.text!, welfare: treatmentLab.text!, address: placeLab_1.text!+placeLab_2.text!+placeLab_3.text!, count: personLab.text!, salary: moneyLab.text!, description: requestField.text) { (success, response) in
-//                print(success)
+//                // print(success)
 //           }
 //        }
 
@@ -310,27 +310,27 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         
         let url = PARK_URL_Header+"getDictionaryList"
         let param = ["type":type]
-        print(param)
+        // print(param)
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             self.getDicCheckFlag += 1
-            print("self.getDicCheckFlag  ===  ",self.getDicCheckFlag)
+            // print("self.getDicCheckFlag  ===  ",self.getDicCheckFlag)
             if(error != nil){
                 
             }else{
                 let status = EduModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
+                // print("状态是")
+                // print(status.status)
                 if(status.status == "error"){
                     
                 }
                 if(status.status == "success"){
-                    print(status)
+                    // print(status)
                     self.getDicFlag += 1
                     for obj in EduList(status.data!).objectlist {
                         self.dropDownDic[key]!.append(obj.name)
                     }
                     if self.getDicCheckFlag == 5 {
-                        print("self.getDicFlag  ===  ",self.getDicFlag)
+                        // print("self.getDicFlag  ===  ",self.getDicFlag)
                         
                         if self.getDicFlag == 5 {
                             self.setDropDownMenu()
@@ -356,7 +356,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     // MARK: 获取企业认证状态
     func getCompanyStatus() {
         HSMineHelper().getCompanyCertify { (success, response) in
-            print("1234567890====== \(String(response!))")
+            // print("1234567890====== \(String(response!))")
             if success {
 //                hud.mode = MBProgressHUDMode.Text
 //                hud.labelText = "获取企业认证状态成功"
@@ -406,10 +406,10 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         positionDrop.direction = .Bottom
         
         positionDrop.dataSource = dropDownDic["position"]!
-        self.positionLab.text = dropDownDic["position"]?.first
-        self.positionLab.sizeToFit()
-        self.positionLab.center.y = self.positionBtn.center.y
-        self.positionImg.frame.origin.x = CGRectGetMaxX(self.positionLab.frame)+5
+//        self.positionLab.text = dropDownDic["position"]?.first
+//        self.positionLab.sizeToFit()
+//        self.positionLab.center.y = self.positionBtn.center.y
+//        self.positionImg.frame.origin.x = CGRectGetMaxX(self.positionLab.frame)+5
         
         // 下拉列表选中后的回调方法
         positionDrop.selectionAction = { [unowned self] (index, item) in
@@ -434,10 +434,10 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         coditionDrop.direction = .Bottom
         
         coditionDrop.dataSource = dropDownDic["condition"]!
-        self.conditionLab.text = dropDownDic["condition"]?.first
-        self.conditionLab.sizeToFit()
-        self.conditionLab.center.y = self.conditionBtn.center.y
-        self.conditionImg.frame.origin.x = CGRectGetMaxX(self.conditionLab.frame)+5
+//        self.conditionLab.text = dropDownDic["condition"]?.first
+//        self.conditionLab.sizeToFit()
+//        self.conditionLab.center.y = self.conditionBtn.center.y
+//        self.conditionImg.frame.origin.x = CGRectGetMaxX(self.conditionLab.frame)+5
         
         // 下拉列表选中后的回调方法
         coditionDrop.selectionAction = { [unowned self] (index, item) in
@@ -457,10 +457,10 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         treatmentDrop.direction = .Bottom
         
         treatmentDrop.dataSource = dropDownDic["treatment"]!
-        self.treatmentLab.text = dropDownDic["treatment"]?.first
-        self.treatmentLab.sizeToFit()
-        self.treatmentLab.center.y = self.treatmentBtn.center.y
-        self.treatmentImg.frame.origin.x = CGRectGetMaxX(self.treatmentLab.frame)+5
+//        self.treatmentLab.text = dropDownDic["treatment"]?.first
+//        self.treatmentLab.sizeToFit()
+//        self.treatmentLab.center.y = self.treatmentBtn.center.y
+//        self.treatmentImg.frame.origin.x = CGRectGetMaxX(self.treatmentLab.frame)+5
         
         // 下拉列表选中后的回调方法
         treatmentDrop.selectionAction = { [unowned self] (index, item) in
@@ -481,10 +481,10 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         personDrop.direction = .Bottom
         
         personDrop.dataSource = dropDownDic["person"]!
-        self.personLab.text = dropDownDic["person"]?.first
-        self.personLab.sizeToFit()
-        self.personLab.center.y = self.personBtn.center.y
-        self.personImg.frame.origin.x = CGRectGetMaxX(self.personLab.frame)+5
+//        self.personLab.text = dropDownDic["person"]?.first
+//        self.personLab.sizeToFit()
+//        self.personLab.center.y = self.personBtn.center.y
+//        self.personImg.frame.origin.x = CGRectGetMaxX(self.personLab.frame)+5
 
         // 下拉列表选中后的回调方法
         personDrop.selectionAction = { [unowned self] (index, item) in
@@ -505,10 +505,10 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         moneyDrop.direction = .Bottom
         
         moneyDrop.dataSource = dropDownDic["money"]!
-        self.moneyLab.text = dropDownDic["money"]?.first
-        self.moneyLab.sizeToFit()
-        self.moneyLab.center.y = self.moneyBtn.center.y
-        self.moneyImg.frame.origin.x = CGRectGetMaxX(self.moneyLab.frame)+5
+//        self.moneyLab.text = dropDownDic["money"]?.first
+//        self.moneyLab.sizeToFit()
+//        self.moneyLab.center.y = self.moneyBtn.center.y
+//        self.moneyImg.frame.origin.x = CGRectGetMaxX(self.moneyLab.frame)+5
 
         // 下拉列表选中后的回调方法
         moneyDrop.selectionAction = { [unowned self] (index, item) in
@@ -565,7 +565,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         pick.selectAdress { (dressArray) in
             
             self.array=dressArray
-            print("选择的地区是: \(dressArray)")
+            // print("选择的地区是: \(dressArray)")
 
             self.placeLab_1.text =  (dressArray[0] as! String)
             self.placeLab_2.text =  (dressArray[1] as! String)
@@ -626,7 +626,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
 //                moneyLab.sizeToFit()
 //                moneyImg.frame = CGRectMake(CGRectGetMaxX(moneyLab.frame), moneyImg.frame.origin.y, 12, 12)
 //            default:
-//                print("defaut")
+//                // print("defaut")
 //        }
 //    }
 
@@ -731,10 +731,10 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
 //    }
 //    
 //    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        print(1111)
+//        // print(1111)
 //        let eduInfo = self.chooseList.objectlist[indexPath.row]
 //        QCLoginUserInfo.currentInfo.education = eduInfo.name
-//        print(eduInfo.name)
+//        // print(eduInfo.name)
 //        chooseTableView.removeFromSuperview()
 //        bgView.removeFromSuperview()
 //        
@@ -767,7 +767,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
 //            moneyLab.sizeToFit()
 //            moneyImg.frame = CGRectMake(CGRectGetMaxX(moneyLab.frame), moneyImg.frame.origin.y, 12, 12)
 //        default:
-//            print("defaut")
+//            // print("defaut")
 //        }
 //    }
     
@@ -787,18 +787,18 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             param = ["type":"10"]
         case .money:
             param = ["type":"11"]
-        default:
-            print("defaut")
+        default: break
+            // print("defaut")
         }
-        print(param)
+        // print(param)
         
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 
             }else{
                 let status = EduModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
+                // print("状态是")
+                // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
@@ -807,7 +807,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    print(status)
+                    // print(status)
                     self.chooseList = EduList(status.data!)
                     
 //                    self.chooseTableView .reloadData()
@@ -842,8 +842,8 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             }
         }
         
-        print("键盘弹起")
-        print(keyboardheight)
+        // print("键盘弹起")
+        // print(keyboardheight)
         
     }
     
@@ -858,7 +858,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
                 self.flag = true
             }
         }
-        print("键盘落下")
+        // print("键盘落下")
     }
 
     

@@ -96,7 +96,7 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+//        print(indexPath.row)
         let newsInfo = newsList![indexPath.row]
 //        let next = NewsContantViewController()
 //        next.newsInfo = newsInfo

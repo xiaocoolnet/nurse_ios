@@ -16,13 +16,13 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 let result = LoginUserInfoModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     QCLoginUserInfo.currentInfo.avatar = result.data?.user_avatar ?? ""
                     QCLoginUserInfo.currentInfo.userName = result.data?.user_name ?? ""
@@ -45,7 +45,7 @@ class HSMineHelper: NSObject {
                     QCLoginUserInfo.currentInfo.education = result.data?.user_education_2 ?? ""
                     QCLoginUserInfo.currentInfo.usertype = result.data?.user_usertype ?? ""
                     QCLoginUserInfo.currentInfo.all_information = result.data?.all_information ?? ""
-                    print("=-=-=-=-=-=-"+String(QCLoginUserInfo.currentInfo.email))
+                    // print("=-=-=-=-=-=-"+String(QCLoginUserInfo.currentInfo.email))
                     handle(success: true, response: nil)
                 }else{
                     handle(success: false, response: result.errorData)
@@ -60,7 +60,7 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,"nicename":niceName
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -84,7 +84,7 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,"realname":realName
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -106,7 +106,7 @@ class HSMineHelper: NSObject {
         let url = PARK_URL_Header+"uploadavatar"
         let param = ["POST":imageData]
         Alamofire.request(.POST, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -129,16 +129,16 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,"avatar":avatar
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                let result = Http(JSONDecoder(json!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: nil)
+                    handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: result.errorData)
                 }
@@ -152,7 +152,7 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,"sex":sex
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -175,7 +175,7 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,"phone":phoneNumber
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -198,7 +198,7 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,"email":email
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -222,7 +222,7 @@ class HSMineHelper: NSObject {
             "birthday":birthday
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -245,7 +245,7 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,"address":address
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -268,7 +268,7 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,"school":school
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -291,7 +291,7 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,"major":major
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -314,7 +314,7 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,"education":education
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -345,7 +345,7 @@ class HSMineHelper: NSObject {
         
         let param = ["userid":QCLoginUserInfo.currentInfo.userid];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -366,7 +366,7 @@ class HSMineHelper: NSObject {
         
         let param = ["userid":userid,"refid":refid,"type":type,"title":title,"description":description];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -387,7 +387,7 @@ class HSMineHelper: NSObject {
         
         let param = ["userid":userid,"refid":refid,"type":type];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request?.URLString)
+            // print(request?.URLString)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -407,13 +407,13 @@ class HSMineHelper: NSObject {
             "userid":userid
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 let result = HSMineList(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
@@ -431,7 +431,7 @@ class HSMineHelper: NSObject {
             "type":type
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -453,14 +453,14 @@ class HSMineHelper: NSObject {
         
         let param = ["userid":userid,"type":type];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 
                 let result = HSGTestModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
@@ -478,14 +478,14 @@ class HSMineHelper: NSObject {
         
         let param = ["userid":userid,"type":type];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 
                 let result = GHSErrorExamModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
@@ -502,14 +502,14 @@ class HSMineHelper: NSObject {
         
         let param = ["userid":userid,"type":type];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 
                 let result = CollectModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
@@ -527,13 +527,13 @@ class HSMineHelper: NSObject {
             "userid":userid
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 let result = HSUserInfoModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
@@ -551,14 +551,14 @@ class HSMineHelper: NSObject {
             "type":type
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 
                 let result = HSErrorExamModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
@@ -584,15 +584,15 @@ class HSMineHelper: NSObject {
             
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 do {
                     
                     let result = try NSJSONSerialization.JSONObjectWithData(json!, options: NSJSONReadingOptions.MutableLeaves) as! NSDictionary
-                    print("状态是")
-                    print(result["status"])
+                    // print("状态是")
+                    // print(result["status"])
                     if(String(result["status"]!) == "success"){
                         handle(success: true, response: String(result["data"]!))
                     }else{
@@ -604,8 +604,8 @@ class HSMineHelper: NSObject {
                 }
 
 //                let result = Http(JSONDecoder(json!))
-//                print("状态是")
-//                print(result.status)
+//                // print("状态是")
+//                // print(result.status)
 //                if(result.status == "success"){
 //                    handle(success: true, response: result.data)
 //                }else{
@@ -623,12 +623,12 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 let result = CompanyInfoStatus(JSONDecoder(json!))
-                print(result.status)
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.data)
                 }else{
@@ -638,8 +638,8 @@ class HSMineHelper: NSObject {
 //                do {
 //                    
 //                    let result = try NSJSONSerialization.JSONObjectWithData(json!, options: NSJSONReadingOptions.MutableLeaves) as! NSDictionary
-//                    print("状态是")
-//                    print(result["status"])
+//                    // print("状态是")
+//                    // print(result["status"])
 //                    if(String(result["status"]!) == "success"){
 //                        handle(success: true, response: String((result["data"]!["status"]!)!))
 //                    }else{
@@ -663,7 +663,7 @@ class HSMineHelper: NSObject {
                 handle(success: false, response: error?.description)
             }else{
                 let result = RankList(JSONDecoder(json!))
-                print(result.status)
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.data)
                 }else{
@@ -687,7 +687,7 @@ class HSMineHelper: NSObject {
                 handle(success: false, response: error?.description)
             }else{
                 let result = Ranking_User(JSONDecoder(json!))
-                print(result.status)
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.data)
                 }else{
@@ -704,14 +704,14 @@ class HSMineHelper: NSObject {
         
         let param = ["userid":QCLoginUserInfo.currentInfo.userid];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 
                 let result = examData(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{

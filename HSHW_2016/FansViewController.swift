@@ -184,7 +184,7 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+//        print(indexPath.row)
         
         let userPageVC = HSUserPageViewController()
         if tableView.tag == 410 {

@@ -52,7 +52,7 @@ func calculateHeight(string:String,size:CGFloat,width:  CGFloat) -> CGFloat {
     let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
     //let screenBounds:CGRect = UIScreen.mainScreen().bounds
     let boundingRect = String(string).boundingRectWithSize(CGSizeMake(width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(size)], context: nil)
-    print(boundingRect.height)
+//    print(boundingRect.height)
     return boundingRect.height
 }
 

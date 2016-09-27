@@ -44,8 +44,9 @@ class RecruitTableViewCell: UITableViewCell {
         }
         title.text = model.title
         name.text = model.companyname
-        location.text = model.address
-        let contentStr = "薪资待遇:"+model.salary+"\n福利待遇:"+model.welfare+"\n招聘职位:"+model.title
+        location.text = model.address.componentsSeparatedByString(" ").first
+        location.sizeToFit()
+        let contentStr = "薪资待遇:"+model.salary+"\n福利待遇:"+model.welfare+"\n招聘职位:"+model.jobtype
         content.text = contentStr
         let contStr = "学历要求:"+model.education+"\n工作年限:"+"\n相关证件:"+model.certificate
         cont.text = contStr
@@ -76,7 +77,7 @@ class RecruitTableViewCell: UITableViewCell {
 //        titImg.sd_setImageWithURL(NSURL(string:SHOW_IMAGE_HEADER + model.avatar),placeholderImage: UIImage(named: "1"))
         title.text = model.name
         name.text = model.name
-        location.text = model.address
+        location.text = model.address.componentsSeparatedByString(" ").first
         location.sizeToFit()
         let contentStr = "性别:"+(model.sex == "1" ? "男" : "女")+"\n当前薪资:"+model.currentsalary+"\n工作状态:"+model.jobstate
         content.text = contentStr

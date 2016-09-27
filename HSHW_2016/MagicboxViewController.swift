@@ -83,7 +83,7 @@ class MagicboxViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+//        print(indexPath.row)
         if indexPath.section == 1 {
             
         }
@@ -93,7 +93,7 @@ class MagicboxViewController: UIViewController,UITableViewDelegate,UITableViewDa
 
     //  功能
     func selectorCountry(btn:UIButton) {
-        print(btn.tag)
+//        print(btn.tag)
         let vc = HSWebViewDetailController(nibName: "HSWebViewDetailController", bundle: nil)
         vc.navigationController?.navigationBar.hidden = false
         if btn.tag == 0 {

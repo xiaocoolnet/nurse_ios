@@ -20,6 +20,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        // 向苹果注册推送，获取deviceToken并上报
+        self.registerAPNS(application)
+        // 初始化SDK
+        self.initCloudPush()
+        // 监听推送通道打开动作
+        self.listenerOnChannelOpened()
+        // 监听推送消息到来
+        self.registerMessageReceive()
+        // 点击通知将App从关闭状态启动时，将通知打开回执上报
+        CloudPushSDK.handleLaunching(launchOptions)
+        
         WXApi.registerApp("wxdd50558e711439e8")
         
         WeiboSDK.enableDebugMode(true)
@@ -52,6 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
 //                break
 //            }
 //        }
+        
         NSThread.sleepForTimeInterval(2.0)
         UITabBar.appearance().tintColor = COLOR
         UITabBar.appearance().backgroundColor = UIColor.whiteColor()
@@ -124,11 +136,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
             self.wbCurrentUserID = authorizeResponse.userID
             self.wbRefreshToken = authorizeResponse.refreshToken
             
-            print(authorizeResponse.debugDescription)
+//            print(authorizeResponse.debugDescription)
 //            self.wbtoken = [(WBAuthorizeResponse *)response accessToken];
 //            self.wbCurrentUserID = [(WBAuthorizeResponse *)response userID];
 //            self.wbRefreshToken = [(WBAuthorizeResponse *)response refreshToken];
-            print("123  \(response.statusCode.rawValue)")
+//            print("123  \(response.statusCode.rawValue)")
             if response.statusCode.rawValue == 0 {
                 NewsPageHelper().addScore_fenxiang({ (success, response) in
                     if success {
@@ -204,7 +216,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
                 let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
                 hud.mode = MBProgressHUDMode.Text;
                 hud.labelText = "分享失败"
-                print(hud.labelText)
                 print(hud.labelText)
                 hud.margin = 10.0
                 hud.removeFromSuperViewOnHide = true
@@ -302,6 +313,136 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         hud.customView = customView
         hud.hide(true, afterDelay: 3)
     }
+    
+    // MARK:- 阿里云推送
+    func initCloudPush() {
+        CloudPushSDK.asyncInit("23442294", appSecret: "0f9e9e29d7e6c6d6792183658370b55b") { (res) in
+            if res.success {
+                print("Push SDK init success, deviceId: %@.", CloudPushSDK.getDeviceId())
+            }else{
+                print("Push SDK init failed, error: %@", res.error)
+            }
+        }
+    }
+    /**
+     *    注册苹果推送，获取deviceToken用于推送
+     *
+     *    @param     application
+     */
+    func registerAPNS(application:UIApplication) {
+        
+        // iOS 8 Notifications
+        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound,UIUserNotificationType.Alert,UIUserNotificationType.Badge], categories: nil))
+        application.registerForRemoteNotifications()
+        
+    }
+    /*
+     *  苹果推送注册成功回调，将苹果返回的deviceToken上传到CloudPush服务器
+     */
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        CloudPushSDK.registerDevice(deviceToken) { (res) in
+            if res.success {
+                print("Register deviceToken success.")
+            }else{
+                print("Register deviceToken failed, error: %@", res.error)
+            }
+        }
+    }
+    /*
+     *  苹果推送注册失败回调
+     */
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("didFailToRegisterForRemoteNotificationsWithError %@", error)
+    }
+    /**
+     *	注册推送通道打开监听
+     */
+    func listenerOnChannelOpened() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onChannelOpened), name: "CCPDidChannelConnectedSuccess", object: nil)
+    }
+    
+    
+    /**
+     *    注册推送消息到来监听
+     */
+    func registerMessageReceive() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onMessageReceived(_:)), name: "CCPDidReceiveMessageNotification", object: nil)
+    }
+    /**
+     *	推送通道打开回调
+     *
+     *	@param 	notification
+     */
+    func onChannelOpened(notification:NSNotification) {
+        print("温馨提示:消息通道建立成功")
+    }
+    /**
+     *    处理到来推送消息
+     *
+     *    @param     notification
+     */
+    func onMessageReceived(notification:NSNotification) {
+        let message = notification.object as! CCPSysMessage
+        let title = NSString(data: message.title, encoding: NSUTF8StringEncoding)
+        let body = NSString(data: message.body, encoding: NSUTF8StringEncoding)
+        
+        print("Receive message title: %@, content: %@.", title, body);
+    }
+    /*
+     *  App处于启动状态时，通知打开回调
+     */
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print("App处于启动状态时，通知打开回调")
+        
+        // 取得APNS通知内容
+        let aps = userInfo["aps"] as? NSDictionary
+        // 内容
+        let content = aps!["alert"] as? NSString
+        // badge数量
+        let badge = aps!["badge"] as? NSInteger
+        // 播放声音
+        let sound = aps!.valueForKey("sound") as? NSString
+        // 取得Extras字段内容
+        let Extras = userInfo["Extras"] as? NSString //服务端中Extras字段，key是自己定义的
+        print("content = [%@], badge = [%ld], sound = [%@], Extras = [%@]", content, badge, sound, Extras)
+        // iOS badge 清0
+        application.applicationIconBadgeNumber = 0;
+        
+        let alert = UIAlertController(title: "新通知", message: String(content!), preferredStyle: .Alert)
+        self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+        alert.addAction(cancelAction)
+        
+        let viewAction = UIAlertAction(title: "查看", style: .Default) { (viewAction) in
+            
+            if (userInfo["news"] != nil) {
+                
+                //                [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil
+                //                let data = try?NSJSONSerialization.dataWithJSONObject(userInfo, options: NSJSONWritingOptions.PrettyPrinted)
+                var data2 = NSData()
+                if userInfo["news"]!.isKindOfClass(NSString) {
+                    data2 = (userInfo["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)!
+                }else if userInfo["news"]!.isKindOfClass(NSDictionary) {
+                    data2 = try!NSJSONSerialization.dataWithJSONObject(userInfo["news"] as! NSDictionary, options: NSJSONWritingOptions.PrettyPrinted)
+                }
+//                let data = (userInfo["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                
+                let newsInfo =  NewsInfo(JSONDecoder(data2))
+                let next = NewsContantViewController()
+                next.newsInfo = newsInfo
+                
+                let tabBarController = self.window?.rootViewController as! UITabBarController
+                let nav = tabBarController.selectedViewController as! UINavigationController
+                
+                nav.pushViewController(next, animated: true)
+            }
+            // 通知打开回执上报
+            CloudPushSDK.handleReceiveRemoteNotification(userInfo)
+        }
+        alert.addAction(viewAction)
+    }
+    // MARK:-
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

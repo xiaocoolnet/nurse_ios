@@ -343,27 +343,27 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         let url = PARK_URL_Header+"getDictionaryList"
         let param = ["type":type]
-        print(param)
+        // print(param)
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             self.getDicCheckFlag += 1
-            print("self.getDicCheckFlag  ===  ",self.getDicCheckFlag)
+            // print("self.getDicCheckFlag  ===  ",self.getDicCheckFlag)
             if(error != nil){
                 
             }else{
                 let status = EduModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
+                // print("状态是")
+                // print(status.status)
                 if(status.status == "error"){
                     
                 }
                 if(status.status == "success"){
-                    print(status)
+                    // print(status)
                     self.getDicFlag += 1
                     for obj in EduList(status.data!).objectlist {
                         self.dropDownDic[key]!.append(obj.name)
                     }
                     if self.getDicCheckFlag == 7 {
-                        print("self.getDicFlag  ===  ",self.getDicFlag)
+                        // print("self.getDicFlag  ===  ",self.getDicFlag)
                         
                         if self.getDicFlag == 7 {
                             self.setDropDownMenu()
@@ -601,7 +601,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
 //        delegate?.uploadAvatar()
         resignTextFieldFirstResponder()
         
-        print("头像点击事件")
+        // print("头像点击事件")
         
         myActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         myActionSheet?.addAction(UIAlertAction(title: "拍照", style: .Default, handler: {[unowned self] (UIAlertAction) in
@@ -736,7 +736,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             
             //        if delegate != nil {
 //            if (headerBtn.selected && nameTF.text != "" && (manBtn.selected || womanBtn.selected) && birthBtn.selected && eduBtn.selected && homeBtn.selected && expBtn.selected && professionalBtn.selected && salaryBtn.selected && (onJobBtn.selected || leaveJobBtn.selected || undergraduateBtn.selected) && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected && targetCityBtn.selected && expectedSalaryBtn.selected && expectedPositionBtn.selected)||changeResume {
-            if (headerBtn.selected && nameTF.text != "" && eduBtn.selected &&  professionalBtn.selected && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected &&   expectedPositionBtn.selected)||changeResume {
+            if (nameTF.text != "" && eduBtn.selected &&  professionalBtn.selected && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected &&   expectedPositionBtn.selected)||changeResume {
                 
                 let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
                 //                hud.mode = MBProgressHUDMode.Text;
@@ -744,11 +744,16 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                 hud.margin = 10.0
                 hud.removeFromSuperViewOnHide = true
                 
-                if headerBtn.selected {
-                    uploadHeader(hud)
-                }else{
+                if changeResume {
                     changeResume(hud, type: 2)
+                }else{
+                    changeResume(hud, type: 1)
                 }
+//                if headerBtn.selected {
+//                    uploadHeader(hud)
+//                }else{
+//                    changeResume(hud, type: 2)
+//                }
                 
             }else{
                 let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善简历信息", comment: "empty message"), preferredStyle: .Alert)
@@ -772,7 +777,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             //                        hud.margin = 10.0
             //                        hud.removeFromSuperViewOnHide = true
             //                        hud.hide(true, afterDelay: 1)
-            //                        print(success)
+            //                        // print(success)
             //                    })
             //                }
             //            })
@@ -829,7 +834,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                     //                            hud.margin = 10.0
                     //                            hud.removeFromSuperViewOnHide = true
                     hud.hide(true, afterDelay: 1)
-                    print(success)
+                    // print(success)
                     
 //                    self.delegate?.saveResumeBtnClicked()
                     let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
@@ -840,7 +845,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                 hud.hide(true)
                 let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .Alert)
                 let doneAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
-                    self.uploadHeader(hud)
+                    self.uploadResume(hud)
                 })
                 alertController.addAction(doneAction)
                 
@@ -855,7 +860,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     
     // MARK: 修改/发布 简历
     func changeResume(hud:MBProgressHUD, type:Int) {
-        HSNurseStationHelper().changeForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName+".png", name: nameTF.text!, experience: dropDownFinishDic["exp"]!, sex: sexFinishStr, birthday:"\(birthFinishArr[0])-\(birthFinishArr[1])-\(birthFinishArr[2])", certificate:dropDownFinishDic["professional"]!, education:dropDownFinishDic["edu"]! , address:"\(homeFinishArr[0])-\(homeFinishArr[1])-\(homeFinishArr[2])", jobstate:jobStatusStr, currentsalary:dropDownFinishDic["salary"]!, phone:telTF.text!, email:mailTF.text!, hiredate:dropDownFinishDic["jobTime"]!, wantcity:"\(targetCityFinishArr[0])-\(targetCityFinishArr[1])", wantsalary:dropDownFinishDic["expectedSalary"]!, wantposition:dropDownFinishDic["expectedPosition"]!, description:selfEvaluate.text!, type:type, handle: { (success, response) in
+        HSNurseStationHelper().changeForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName == "" ? "":imageName+".png", name: nameTF.text!, experience: dropDownFinishDic["exp"]!, sex: sexFinishStr, birthday:"\(birthFinishArr[0])-\(birthFinishArr[1])-\(birthFinishArr[2])", certificate:dropDownFinishDic["professional"]!, education:dropDownFinishDic["edu"]! , address:"\(homeFinishArr[0])-\(homeFinishArr[1])-\(homeFinishArr[2])", jobstate:jobStatusStr, currentsalary:dropDownFinishDic["salary"]!, phone:telTF.text!, email:mailTF.text!, hiredate:dropDownFinishDic["jobTime"]!, wantcity:"\(targetCityFinishArr[0])-\(targetCityFinishArr[1])", wantsalary:dropDownFinishDic["expectedSalary"]!, wantposition:dropDownFinishDic["expectedPosition"]!, description:selfEvaluate.text!, type:type, handle: { (success, response) in
             if success {
                 dispatch_async(dispatch_get_main_queue(), {
                     //                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
@@ -873,7 +878,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                     }
                     //                            hud.margin = 10.0
                     //                            hud.removeFromSuperViewOnHide = true
-                    print(success)
+                    // print(success)
                     
                     //                    self.delegate?.saveResumeBtnClicked()
                     let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
@@ -884,7 +889,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                 hud.hide(true)
                 let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .Alert)
                 let doneAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
-                    self.uploadHeader(hud)
+                    self.changeResume(hud,type: type)
                 })
                 alertController.addAction(doneAction)
                 
@@ -996,7 +1001,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     // MARK:选择居住地
     @IBAction func homeBtnClick(sender: AnyObject) {
         
-        print("点击居住地")
+        // print("点击居住地")
         // 初始化
         let pick = AdressPickerView.shareInstance
         
@@ -1009,7 +1014,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         pick.selectAdress { (dressArray) in
             
             self.homeArray=dressArray as! Array<String>
-            print("选择的地区是: \(dressArray)")
+            // print("选择的地区是: \(dressArray)")
             //            self.workplaceBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
             
             self.homeLab_1.text =  (dressArray[0] as! String)
@@ -1039,7 +1044,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     // MARK:选择目标城市
     @IBAction func targetCityBtnClick(sender: AnyObject) {
     
-        print("点击目标城市")
+        // print("点击目标城市")
         // 初始化
         let pick = AdressPickerView_2.shareInstance
         
@@ -1052,7 +1057,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         pick.selectAdress { (dressArray) in
             
             self.targetCityArray = dressArray as! Array<String>
-            print("选择的地区是: \(dressArray)")
+            // print("选择的地区是: \(dressArray)")
             //            self.workplaceBtn.setTitle("\(dressArray[0])  \(dressArray[1])  \(dressArray[2])", forState: .Normal)
             
             self.targetCityLab_1.text =  (dressArray[0] as! String)
@@ -1103,7 +1108,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
 //                        hud.margin = 10.0
 //                        hud.removeFromSuperViewOnHide = true
 //                        hud.hide(true, afterDelay: 1)
-//                        print(success)
+//                        // print(success)
 //                    })
 //                }
 //            })
@@ -1142,7 +1147,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             let vc = responderVC()
             vc!.presentViewController(picker, animated: true, completion: nil)
         }else{
-            print("无法打开相机")
+            // print("无法打开相机")
         }
     }
 
@@ -1185,7 +1190,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
         
         let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
-        print(selfEvaluate.isFirstResponder(),flag)
+        // print(selfEvaluate.isFirstResponder(),flag)
 //        if selfEvaluate.isFirstResponder() {
         
             UIView.animateWithDuration(0.3) {
@@ -1202,8 +1207,8 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             }
 //        }
         
-        print("键盘弹起")
-        print(keyboardheight)
+        // print("键盘弹起")
+        // print(keyboardheight)
         
     }
     
@@ -1219,7 +1224,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                 self.flag = true
             }
 //        }
-        print("键盘落下")
+        // print("键盘落下")
     }
 
     //MARK:UITextViewDelegate

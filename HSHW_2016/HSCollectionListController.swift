@@ -95,7 +95,7 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if collectionType == 2 {
-            print(fansListArray.count)
+            // print(fansListArray.count)
             return fansListArray.count
         }else{
             
@@ -148,7 +148,7 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
             let userPageVC = GMyExamViewController()
             userPageVC.type = 1
             userPageVC.subType = 1
-            print(fansListArray[indexPath.row])
+            // print(fansListArray[indexPath.row])
             // TODO:接口数据，收藏的试题 examInfo.post_difficulty 有时为空
             userPageVC.currentIndex = indexPath.row
             userPageVC.dataSource = fansListArray
@@ -159,7 +159,7 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
 //        else if collectionType == 3 {
 //            let vc = HSPostDetailViewController(nibName: "HSPostDetailViewController",bundle: nil)
 //            vc.postInfo = dataSource[indexPath.row] as? PostModel
-//            print((dataSource[indexPath.row] as? PostModel)?.mid)
+//            // print((dataSource[indexPath.row] as? PostModel)?.mid)
 //            
 //            navigationController?.pushViewController(vc, animated: true)
 //        }

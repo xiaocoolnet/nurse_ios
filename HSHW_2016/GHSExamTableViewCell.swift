@@ -28,7 +28,7 @@ class GHSExamTableViewCell: UITableViewCell {
     }
     
     func showforModel(model:xamInfo){
-        print(model.title)
+//        print(model.title)
         newsTitle.text = "123456789"
         newsTitle.text = model.title
         timeLabel.text = timeStampToString(model.createtime)
@@ -46,7 +46,7 @@ class GHSExamTableViewCell: UITableViewCell {
         
         let date = NSDate(timeIntervalSince1970: timeSta)
         
-        print(dfmatter.stringFromDate(date))
+//        print(dfmatter.stringFromDate(date))
         return dfmatter.stringFromDate(date)
     }
     

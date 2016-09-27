@@ -12,7 +12,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
     
     let myTableView = UITableView()
     let downNum = UILabel()
-    let collNum = UILabel()
+    var collNum = UILabel()
     let picArr:[String] = ["ic_pen.png","ic_yuan_purple.png","ic_lifang.png","ic_folder.png"]
     let picName:[String] = ["做题记录","错题集","收藏试题","其它收藏"]
     
@@ -87,7 +87,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
             collNum.font = UIFont.systemFontOfSize(22)
             collNum.textAlignment = .Center
             collNum.textColor = UIColor.whiteColor()
-            collNum.text = "876"
+//            collNum.text = "876"
             cell.addSubview(collNum)
             for i in 0...1 {
                 let tit = UILabel(frame: CGRectMake(WIDTH/2*CGFloat(i), WIDTH*34/375, WIDTH/2, 15))
@@ -130,12 +130,12 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+//        print(indexPath.row)
         
     }
 
     func studyTheKind(btn:UIButton) {
-        print(btn.tag)
+//        print(btn.tag)
         switch btn.tag {
         case 1:
             let examVC = GMyExamListViewController()
@@ -196,6 +196,17 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
                     
                 }
             }
+        }
+        
+        helper.getCollectionInfoWith("2") { (success, response) in
+            
+            if success {
+                let array = response as! Array<xamInfo>
+                self.collNum.text = "\(array.count)"
+            }else{
+                
+            }
+            
         }
         
         helper.GetMyExamData { (success, response) in

@@ -224,7 +224,7 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableView
                 helper.cancelFavorite((userInfo?.userid)!, refid: (userInfo?.object_id)!, type: "6", handle: { (success, response) in
                     
                     dispatch_async(dispatch_get_main_queue(), {
-                        print("--===   ",success)
+//                        print("--===   ",success)
                     let alert = UIAlertView.init(title: "已成功取消关注", message: "已成功取消关注 \((self.userInfo?.name)!)", delegate: nil, cancelButtonTitle: "确定")
                     alert.show()
                     self.focusBtn.selected = false

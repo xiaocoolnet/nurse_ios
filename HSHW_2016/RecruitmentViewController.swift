@@ -187,7 +187,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             HSNurseStationHelper().getArticleListWithID("121") { (success, response) in
                 
                 if success {
-                    print(response)
+                    // print(response)
                     let imageArr = response as! Array<NewsInfo>
                     self.imageArr = imageArr.count>=5 ? Array(imageArr[0...slideImageListMaxNum-1]):imageArr
                     
@@ -373,9 +373,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        print("---")
-        print(jobDataSource)
-        print("---")
+        // print("---")
+        // print(jobDataSource)
+        // print("---")
         if tableView.tag == 0 {
             return 170
         }else {
@@ -443,17 +443,17 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             return cell
         }else{
             let cell1 = UITableViewCell()
-//            print(employmentdataSource)
+//            // print(employmentdataSource)
 //            let jobModel = employmentdataSource[0]as! JobModel
             let jobModel = currentJobModel
             
-            print(jobModel!.title)
+            // print(jobModel!.title)
             cell1.selectionStyle = .None
             cell1.textLabel?.numberOfLines = 0
             strId = jobModel!.id
-            print(jobModel!.id)
+            // print(jobModel!.id)
             if showType == 1 {
-                print(indexPath.row)
+                // print(indexPath.row)
                 if indexPath.row==0 {
                     let title = UILabel()
                     let height = calculateHeight(jobModel!.title, size: 18, width: WIDTH-20)
@@ -582,15 +582,15 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+        // print(indexPath.row)
         if tableView.tag == 0 {
             if showType == 1 {
 //                let model = self.jobDataSource![indexPath.row]
 //                self.employmentdataSource.addObject(model)
                 self.currentJobModel = self.jobDataSource![indexPath.row]
-                print(jobDataSource)
-                print(self.jobDataSource![indexPath.row].title)
-//                print(self.employmentdataSource)
+                // print(jobDataSource)
+                // print(self.jobDataSource![indexPath.row].title)
+//                // print(self.employmentdataSource)
 //                superViewController?.showRightBtn()
                 self.makeEmploymentMessage()
             }else {
@@ -627,7 +627,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func inviteJob(model:CVModel) {
-        print("邀请面试")
+        // print("邀请面试")
         
         // MARK:要求登录
         if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
@@ -651,8 +651,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                 }else{
                     let status = MineJobModel(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+                    // print("状态是")
+                    // print(status.status)
                     if(status.status == "error"){
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
@@ -661,7 +661,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                     }else if(status.status == "success"){
-                        print(status)
+                        // print(status)
                         self.inviteJob_1(model, status: status)
                         
                     }
@@ -714,7 +714,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                     "companyid":QCLoginUserInfo.currentInfo.userid
                                 ]
                                 Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                                    print(request)
+                                    // print(request)
                                     if(error != nil){
                                         sendInviteHud.mode = MBProgressHUDMode.Text;
                                         sendInviteHud.labelText = "发送邀请失败 \(error?.domain)"
@@ -729,7 +729,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                             //                                    hud.margin = 10.0
                                             //                                    hud.removeFromSuperViewOnHide = true
                                             sendInviteHud.hide(true, afterDelay: 1)
-                                            print(111111)
+                                            // print(111111)
                                         }else{
                                             //  菊花加载
                                             //                                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -738,7 +738,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                             //                                    hud.margin = 10.0
                                             //                                    hud.removeFromSuperViewOnHide = true
                                             sendInviteHud.hide(true, afterDelay: 1)
-                                            print(2222222)
+                                            // print(2222222)
                                         }
                                     }
                                 }
@@ -809,7 +809,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                 alertController.addAction(doneAction)
                             }else{
                                 
-                                print("投递简历")
+                                // print("投递简历")
                                 let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
                                 self.presentViewController(alertController, animated: true, completion: nil)
                                 
@@ -827,7 +827,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                         "companyid":self.jobDataSource![btn.tag].companyid
                                     ]
                                     Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                                        print(request)
+                                        // print(request)
                                         if(error != nil){
                                             
                                         }else{
@@ -840,7 +840,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                                 //                                            hud.margin = 10.0
                                                 //                                            hud.removeFromSuperViewOnHide = true
                                                 applyJobHud.hide(true, afterDelay: 1)
-                                                print(111111)
+                                                // print(111111)
                                             }else{
                                                 //  菊花加载
                                                 //                                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -849,7 +849,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                                 //                                            hud.margin = 10.0
                                                 //                                            hud.removeFromSuperViewOnHide = true
                                                 applyJobHud.hide(true, afterDelay: 1)
-                                                print(2222222)
+                                                // print(2222222)
                                             }
                                         }
                                     }
@@ -900,7 +900,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func postedTheView() {
-        print("招聘")
+        // print("招聘")
         
         // MARK:要求登录
         if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
@@ -968,14 +968,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func takeThePost() {
-        print("提交招聘信息")
+        // print("提交招聘信息")
         UIView.animateWithDuration(0.3) {
             self.employment.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-154.5)
         }
     }
     
     func takeTheResume() {
-        print("提交简历")
+        // print("提交简历")
 //        UIView.animateWithDuration(5) {
 //            self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
 //        }
@@ -985,7 +985,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
 
-//        print(self.employmentdataSource.count)
+//        // print(self.employmentdataSource.count)
 //            let model = self.employmentdataSource[0] as! JobModel
         let model = self.currentJobModel
             let url = PARK_URL_Header+"ApplyJob"
@@ -995,7 +995,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 "companyid" :model!.companyid
             ]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                print(request)
+                // print(request)
                 if(error != nil){
                     //  菊花加载
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -1014,7 +1014,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         hud.margin = 10.0
                         hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
-                        print(111111)
+                        // print(111111)
                     }else{
                         //  菊花加载
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -1023,7 +1023,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         hud.margin = 10.0
                         hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
-                        print(2222222)
+                        // print(2222222)
                     }
                 }
             }
@@ -1075,7 +1075,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     func tapAction(tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
-        print("这是第\(Int(imageView.tag))张图片")
+        // print("这是第\(Int(imageView.tag))张图片")
         
         let next = NewsContantViewController()
         next.newsInfo = imageArr[imageView.tag-1]
@@ -1132,7 +1132,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
 //        scrollView.setContentOffset(CGPointMake(WIDTH*CGFloat(times), 0), animated: true)
 //        times += 1
 //        //MARK:注释掉两条输出信息
-////        print("招聘1")
+////        // print("招聘1")
 //    }
 //    
 //    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
@@ -1140,7 +1140,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
 //            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
 //            times = 1
 //        }
-////        print("招聘2")
+////        // print("招聘2")
 //    }
 //    
 //    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {

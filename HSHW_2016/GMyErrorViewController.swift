@@ -225,13 +225,13 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+//        print(indexPath.row)
         
         let userPageVC = GMyExaminationViewController()
         userPageVC.type = 1
         if tableView.tag == 410 {
             userPageVC.subType = 1
-            print(fansListArray[indexPath.row])
+//            print(fansListArray[indexPath.row])
             userPageVC.a = indexPath.row
             userPageVC.dataSource = fansListArray
         }else{

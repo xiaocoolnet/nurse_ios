@@ -82,8 +82,8 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
                     
                 }else{
                     let status = MineJobModel(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+                    // print("状态是")
+                    // print(status.status)
                     if(status.status == "error"){
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
@@ -93,10 +93,10 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
                         hud.hide(true, afterDelay: 1)
                     }
                     if(status.status == "success"){
-                        print(status)
+                        // print(status)
                         self.dataSource = MineJobList(status.data!)
                         self.myTableView .reloadData()
-                        print(status.data)
+                        // print(status.data)
                     }
                 }
                 

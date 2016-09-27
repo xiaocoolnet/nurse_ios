@@ -39,9 +39,9 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
         hotTableView.scrollEnabled = false
         hotTableView.tableFooterView = UIView()
         
-        print(hotTableView.frame)
+        // print(hotTableView.frame)
         hotTableView.translatesAutoresizingMaskIntoConstraints = true
-        print(hotTableView.frame)
+        // print(hotTableView.frame)
         
     }
     
@@ -56,10 +56,10 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
             // TODO: 0 需要改为 typeid
             helper.getForumList("0", isHot: true) { (success, response) in
                 self.hotData = response as? Array<PostModel> ?? []
-                print("热门数据总共有\(self.hotData.count)条")
-                for obj in self.hotData {
-                    print("------------",obj.title)
-                }
+                // print("热门数据总共有\(self.hotData.count)条")
+//                for obj in self.hotData {
+//                    // print("------------",obj.title)
+//                }
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     // TODO:这个地方刷新次数有点问题
@@ -95,7 +95,7 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
             hotcell.selectionStyle = .None
 //            hotcell.backgroundColor = UIColor.init(red: CGFloat(arc4random_uniform(255))/255.0, green: CGFloat(arc4random_uniform(255))/255.0, blue: CGFloat(arc4random_uniform(255))/255.0, alpha: 1)
             hotTableView.frame = CGRectMake(hotTableView.frame.origin.x, hotTableView.frame.origin.y, hotTableView.frame.size.width, hotcell.frame.size.height*CGFloat(hotData.count))
-            print("hotTableView.frame == ",hotTableView.frame,"hotcell.height == ",hotcell.frame.size.height)
+            // print("hotTableView.frame == ",hotTableView.frame,"hotcell.height == ",hotcell.frame.size.height)
             
             return hotcell
         }
@@ -123,7 +123,7 @@ class HSSQCollectionViewCell: UICollectionViewCell,UITableViewDelegate,UITableVi
             helper.showPostInfo(model.mid) { (success, response) in
                 let postM:PostModel = (response as? PostModel ?? nil)!
                 vc.postDetailWithModel_1(postM)
-                print(response)
+                // print(response)
             }
         }
         

@@ -40,8 +40,8 @@ class SmetaInfo: JSONJoy{
     required init(_ decoder: JSONDecoder){
 //        photo = decoder["photo"]
         thumb = decoder["thumb"].string
-        //print("--------------")
-        //print(thumb)
+        //// print("--------------")
+        //// print(thumb)
     }
     
 }

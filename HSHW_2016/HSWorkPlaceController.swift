@@ -84,7 +84,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
         cell.selectionStyle = .None
         cell.delegate = self
         let newsInfo = self.newsList![indexPath.row]
-        print(newsInfo.thumbArr.count)
+//        print(newsInfo.thumbArr.count)
         if newsInfo.thumbArr.count >= 3 {
             cell.setThreeImgCellWithNewsInfo(newsInfo)
         }else{
@@ -94,13 +94,13 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+//        print(indexPath.row)
         let newsInfo = newsList![indexPath.row]
         let next = NewsContantViewController()
         next.delegate = self
         next.newsInfo = newsInfo
         next.likeNum = newsInfo.likes.count
-        print(newsInfo.likes.count)
+//        print(newsInfo.likes.count)
         self.navigationController?.pushViewController(next, animated: true)
     }
     

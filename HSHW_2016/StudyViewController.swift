@@ -40,7 +40,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = COLOR
-        NSUserDefaults.standardUserDefaults().removeObjectForKey(HULIBU_ORIGINALNEWSUPDATETIME)
+//        NSUserDefaults.standardUserDefaults().removeObjectForKey(HULIBU_ORIGINALNEWSUPDATETIME)
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-60)
         myTableView.backgroundColor = RGREY
         myTableView.delegate = self
@@ -90,16 +90,22 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             if success {
                 let hulibu_newsArray = response as! Array<NewsInfo>
                 let hulibu_originalNewsUpdateTime = NSUserDefaults.standardUserDefaults().stringForKey(HULIBU_ORIGINALNEWSUPDATETIME)
-                for (i,newsInfo) in hulibu_newsArray.enumerate() {
-                    if newsInfo.post_modified == hulibu_originalNewsUpdateTime {
-                        hulibu_updateNum = i
-                        self.myTableView.reloadData()
-                        break
+                if hulibu_originalNewsUpdateTime == nil {
+                    NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
+                    hulibu_updateNum = hulibu_newsArray.count
+                }else{
+                    
+                    for (i,newsInfo) in hulibu_newsArray.enumerate() {
+                        if newsInfo.post_modified == hulibu_originalNewsUpdateTime {
+                            hulibu_updateNum = i
+                            self.myTableView.reloadData()
+                            break
+                        }
                     }
                 }
                 
                 if hulibu_alreadyRead {
-                    NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: "hulibu_originalNewsUpdateTime\(QCLoginUserInfo.currentInfo.userid)")
+                    NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
                     hulibu_alreadyRead = false
                 }
             }
@@ -109,7 +115,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         HSNurseStationHelper().getArticleListWithID("111") { (success, response) in
             
             if success {
-                print(response)
+//                print(response)
                 let imageArr = response as! Array<NewsInfo>
                 self.imageArr = imageArr.count>=5 ? Array(imageArr[0...slideImageListMaxNum-1]):imageArr
 
@@ -239,7 +245,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 numLab.clipsToBounds = true
                 numLab.textAlignment = .Center
                 numLab.textColor = UIColor.whiteColor()
-                numLab.font = UIFont.systemFontOfSize(16)
+                numLab.font = UIFont.systemFontOfSize(15)
                 if hulibu_updateNum > 99 {
                     numLab.text = "99+"
                 }else{

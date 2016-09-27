@@ -63,7 +63,7 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
         shareBtn.addTarget(self, action: #selector(shareBtnClick_old), forControlEvents: .TouchUpInside)
         self.view.addSubview(shareBtn)
         
-        print(myTableView.frame,noteLab.frame,shareBtn.frame)
+//        print(myTableView.frame,noteLab.frame,shareBtn.frame)
     }
     
     // MARK:- 获取数据
@@ -187,7 +187,7 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
             shareBtn_1.tag = 1000+i
             shareBtn_1.addTarget(self, action: #selector(shareBtnClick(_:)), forControlEvents: .TouchUpInside)
             bottomView.addSubview(shareBtn_1)
-            print(shareBtn_1.frame)
+//            print(shareBtn_1.frame)
             
             let shareLab_1 = UILabel(frame: CGRectMake(CGRectGetMinX(shareBtn_1.frame)-margin/2.0, CGRectGetMaxY(shareBtn_1.frame)+margin/2.0, shareBtnWidth+margin, labelHeight))
             shareLab_1.textColor = UIColor.grayColor()
@@ -312,7 +312,7 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
             
             webpage.webpageUrl = myInviteFriendUrl
             message.mediaObject = webpage
-            print(message.mediaObject.debugDescription)
+//            print(message.mediaObject.debugDescription)
             
             let request = WBSendMessageToWeiboRequest.requestWithMessage(message, authInfo: authRequest, access_token: AppDelegate().wbtoken) as! WBSendMessageToWeiboRequest
             request.userInfo = ["ShareMessageFrom":"NewsContantViewController"]
@@ -339,7 +339,7 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
             }
         }
         
-        print(btn.tag)
+//        print(btn.tag)
     }
     
     // MARK:- 点击排行榜按钮

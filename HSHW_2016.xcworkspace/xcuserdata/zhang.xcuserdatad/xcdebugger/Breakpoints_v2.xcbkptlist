@@ -26,7 +26,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/HSPostResumeView.swift"
-            timestampString = "495538042.327971"
+            timestampString = "496218451.174508"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "1200"
+            endingLineNumber = "1200"
+            landmarkName = "keyboardWillAppear(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HSHW_2016/HSPostResumeView.swift"
+            timestampString = "496218451.174508"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1195"
@@ -42,27 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/HSPostResumeView.swift"
-            timestampString = "495538042.327971"
+            timestampString = "496218451.174508"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1190"
-            endingLineNumber = "1190"
-            landmarkName = "keyboardWillAppear(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/HSPostResumeView.swift"
-            timestampString = "495538042.327971"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1214"
-            endingLineNumber = "1214"
+            startingLineNumber = "1219"
+            endingLineNumber = "1219"
             landmarkName = "keyboardWillDisappear(_:)"
             landmarkType = "5">
             <Locations>
@@ -74,11 +74,11 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/nurse_ios/HSHW_2016/HSPostResumeView.swift"
-                  timestampString = "495538044.54127"
+                  timestampString = "496575872.365553"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1215"
-                  endingLineNumber = "1215"
+                  startingLineNumber = "1219"
+                  endingLineNumber = "1219"
                   offsetFromSymbolStart = "19">
                </Location>
                <Location
@@ -89,11 +89,11 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/nurse_ios/HSHW_2016/HSPostResumeView.swift"
-                  timestampString = "495538044.541479"
+                  timestampString = "496575872.365759"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1219"
-                  endingLineNumber = "1219"
+                  startingLineNumber = "1223"
+                  endingLineNumber = "1223"
                   offsetFromSymbolStart = "22">
                </Location>
             </Locations>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/HSPostResumeView.swift"
-            timestampString = "495538042.327971"
+            timestampString = "496218451.174508"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1213"
-            endingLineNumber = "1213"
+            startingLineNumber = "1218"
+            endingLineNumber = "1218"
             landmarkName = "keyboardWillDisappear(_:)"
             landmarkType = "5">
             <Locations>
@@ -122,11 +122,11 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/nurse_ios/HSHW_2016/HSPostResumeView.swift"
-                  timestampString = "495538044.562781"
+                  timestampString = "496575872.366911"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1215"
-                  endingLineNumber = "1215"
+                  startingLineNumber = "1219"
+                  endingLineNumber = "1219"
                   offsetFromSymbolStart = "19">
                </Location>
                <Location
@@ -137,11 +137,11 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/nurse_ios/HSHW_2016/HSPostResumeView.swift"
-                  timestampString = "495538044.563675"
+                  timestampString = "496575872.36715"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "1219"
-                  endingLineNumber = "1219"
+                  startingLineNumber = "1223"
+                  endingLineNumber = "1223"
                   offsetFromSymbolStart = "22">
                </Location>
             </Locations>
@@ -154,7 +154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/TouTiaoViewController.swift"
-            timestampString = "494825314.356165"
+            timestampString = "496293280.827616"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "204"
@@ -170,7 +170,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/TouTiaoViewController.swift"
-            timestampString = "494825314.356165"
+            timestampString = "496293280.827616"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "227"
@@ -191,38 +191,6 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "117"
             endingLineNumber = "117"
-            landmarkName = "init(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/HSPostResumeView.swift"
-            timestampString = "495538042.327971"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "343"
-            endingLineNumber = "343"
-            landmarkName = "getDictionaryList(_:key:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/NewsModel.swift"
-            timestampString = "494480160.340313"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
             landmarkName = "init(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -266,7 +234,7 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/nurse_ios/HSHW_2016/ChangeName.swift"
-                  timestampString = "495538044.583671"
+                  timestampString = "496575872.368937"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "209"
@@ -281,7 +249,7 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/nurse_ios/HSHW_2016/ChangeName.swift"
-                  timestampString = "495538044.583879"
+                  timestampString = "496575872.369107"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "209"
@@ -296,7 +264,7 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/nurse_ios/HSHW_2016/ChangeName.swift"
-                  timestampString = "495538044.584062"
+                  timestampString = "496575872.369232"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "209"
@@ -335,6 +303,70 @@
             startingLineNumber = "522"
             endingLineNumber = "522"
             landmarkName = "questionCard_uncommit()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HSHW_2016/HSPostResumeView.swift"
+            timestampString = "496218639.094193"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "863"
+            endingLineNumber = "863"
+            landmarkName = "changeResume(_:type:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.HSPostResumeView.changeResume (__ObjC.MBProgressHUD, type : Swift.Int) -&gt; ()"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/nurse_ios/HSHW_2016/HSPostResumeView.swift"
+                  timestampString = "496575872.371824"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "863"
+                  endingLineNumber = "863"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.HSPostResumeView.(changeResume (__ObjC.MBProgressHUD, type : Swift.Int) -&gt; ()).(closure #1)"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/nurse_ios/HSHW_2016/HSPostResumeView.swift"
+                  timestampString = "496575872.371982"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "864"
+                  endingLineNumber = "864"
+                  offsetFromSymbolStart = "75">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HSHW_2016/CompanyAuthViewController.swift"
+            timestampString = "496311001.91309"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "281"
+            endingLineNumber = "281"
+            landmarkName = "uploadLicense()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

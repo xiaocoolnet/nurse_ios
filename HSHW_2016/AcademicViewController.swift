@@ -57,13 +57,13 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
             "channelid":articleID == nil ? "7":articleID!
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+//            print(request)
             if(error != nil){
                 
             }else{
                 let status = NewsModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
+//                print("状态是")
+//                print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
@@ -75,10 +75,10 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 if(status.status == "success"){
                     
 //                    self.createTableView()
-                    print(status)
+//                    print(status)
                     self.dataSource = NewsList(status.data!)
                     self.myTableView .reloadData()
-                    print(status.data)
+//                    print(status.data)
                 }
             }
             dispatch_async(dispatch_get_main_queue(), { 
@@ -221,13 +221,13 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                print(request)
+//                print(request)
                 if(error != nil){
                     
                 }else{
                     let status = Http(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+//                    print("状态是")
+//                    print(status.status)
                     if(status.status == "error"){
 //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
@@ -244,7 +244,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //                        hud.margin = 10.0
 //                        hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 0.5)
-                        print(status.data)
+//                        print(status.data)
                         
                         for (i,obj) in (newsInfo.likes).enumerate() {
                             if obj.userid == QCLoginUserInfo.currentInfo.userid {
@@ -277,13 +277,13 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                print(request)
+//                print(request)
                 if(error != nil){
                     
                 }else{
                     let status = addScore_ReadingInformationModel(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+//                    print("状态是")
+//                    print(status.status)
                     if(status.status == "error"){
 //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
@@ -312,7 +312,7 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                         //                            user.setObject("true", forKey: "isLike")
                         //                            user.setObject("true", forKey: (newsInfo.object_id)!)
                         //                            user.setObject("true", forKey: String(btn.tag))
-                        print(status.data)
+//                        print(status.data)
                         
                         if ((status.data?.event) != "") {
                             self.showScoreTips((status.data?.event)!, score: (status.data?.score)!)
@@ -543,8 +543,8 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func upDateUI(status:NSArray){
-        print("更新UI")
-        print(status)
+//        print("更新UI")
+//        print(status)
 //        if num == 2 {
 //            self.GetData1()
 //        }else{

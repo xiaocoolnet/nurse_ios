@@ -267,8 +267,8 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 hud.hide(true, afterDelay: 1)
             }else{
                 let status = EduModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
+                // print("状态是")
+                // print(status.status)
                 if(status.status == "error"){
                     hud.mode = MBProgressHUDMode.Text;
                     hud.labelText = "数据获取失败"
@@ -277,7 +277,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 if(status.status == "success"){
 
                     hud.hide(true)
-                    print(status)
+                    // print(status)
                     self.dateSource = EduList(status.data!)
                     
                     self.myTableView .reloadData()

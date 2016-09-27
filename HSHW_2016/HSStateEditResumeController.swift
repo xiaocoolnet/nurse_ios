@@ -69,12 +69,12 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(1111)
+        // print(1111)
         let eduInfo = self.dateSource.objectlist[indexPath.row]
         QCLoginUserInfo.currentInfo.education = eduInfo.name
         delegate?.changeWord(self, string: eduInfo.name)
         self.navigationController?.popViewControllerAnimated(true)
-        print(eduInfo.name)
+        // print(eduInfo.name)
     }
     
     func dataGet(portType:PortType){
@@ -99,17 +99,17 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
                 param = ["type":"11"]
                 self.title = "薪资待遇"
             default:
-                print("defaut")
+                 print("HSStateEditResumeController dataGet defaut")
         }
-        print(param)
+        // print(param)
         
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 
             }else{
                 let status = EduModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
+                // print("状态是")
+                // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
@@ -118,7 +118,7 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    print(status)
+                    // print(status)
                     self.dateSource = EduList(status.data!)
                 
                     self.myTableView .reloadData()

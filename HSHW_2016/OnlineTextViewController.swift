@@ -61,14 +61,14 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
             "type":type == 1 ? "1":"11"
         ];
         Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 
             }else{
                 let status = EveryDayModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
-                //print(status.array)
+                // print("状态是")
+                // print(status.status)
+                //// print(status.array)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
@@ -78,14 +78,14 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    print(status)
+                    // print(status)
                     self.dataSource = titleList(status.data!)
                     
-                    print(self.dataSource)
-                    print("-----")
-                    print(titleList(status.data!).objectlist)
+                    // print(self.dataSource)
+                    // print("-----")
+                    // print(titleList(status.data!).objectlist)
                     self.myTableView .reloadData()
-                    print(status.data)
+                    // print(status.data)
                 }
             }
             self.myTableView.mj_header.endRefreshing()

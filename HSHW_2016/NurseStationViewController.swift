@@ -62,7 +62,7 @@ class NurseStationViewController: UIViewController {
     }
     
     @IBAction func selectorSegment(sender: UISegmentedControl) {
-        print(sender.selectedSegmentIndex)
+//        print(sender.selectedSegmentIndex)
         if sender.selectedSegmentIndex == 0 {
             if currentVCIndex == 0 {
                 return

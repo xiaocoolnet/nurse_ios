@@ -48,13 +48,13 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
             "channelid":term_id
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 
             }else{
                 let status = NewsModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
+                // print("状态是")
+                // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
@@ -64,11 +64,11 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    print(status)
+                    // print(status)
                     self.dataSource = NewsList(status.data!)
-                    print(LikeList(status.data!).objectlist)
+                    // print(LikeList(status.data!).objectlist)
                     self.myTableView .reloadData()
-                    print(status.data)
+                    // print(status.data)
                 }
             }
             self.myTableView.mj_header.endRefreshing()
@@ -103,7 +103,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+//        // print(indexPath.row)
         
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         let next = NewsContantViewController()
@@ -139,13 +139,13 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                print(request)
+                // print(request)
                 if(error != nil){
                     
                 }else{
                     let status = Http(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+                    // print("状态是")
+                    // print(status.status)
                     if(status.status == "error"){
                         
                         hud.mode = MBProgressHUDMode.Text;
@@ -159,7 +159,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                         hud.labelText = "取消点赞成功"
                         
                         hud.hide(true, afterDelay: 0.5)
-                        print(status.data)
+                        // print(status.data)
                         
                         for (i,obj) in (newsInfo.likes).enumerate() {
                             if obj.userid == QCLoginUserInfo.currentInfo.userid {
@@ -186,13 +186,13 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                print(request)
+                // print(request)
                 if(error != nil){
                     
                 }else{
                     let status = addScore_ReadingInformationModel(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+                    // print("状态是")
+                    // print(status.status)
                     if(status.status == "error"){
                         
                         hud.mode = MBProgressHUDMode.Text;
@@ -214,7 +214,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                         
                         self.myTableView.reloadData()
           
-                        print(status.data)
+                        // print(status.data)
                         if ((status.data?.event) != "") {
                             self.showScoreTips((status.data?.event)!, score: (status.data?.score)!)
                         }

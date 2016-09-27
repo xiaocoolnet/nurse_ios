@@ -140,8 +140,8 @@ class NewsInfo: JSONJoy{
         smeta = decoder["smeta"]
         term_name = decoder["term_name"].string ?? ""
         term_hits = decoder["term_hits"].string ?? ""
-        print(post_excerpt)
-        print(decoder["likes"].array)
+        // print(post_excerpt)
+        // print(decoder["likes"].array)
         if decoder["likes"].array != nil {
             for childs: JSONDecoder in decoder["likes"].array!{
                 self.likes.append(LikeInfo(childs))
@@ -286,4 +286,109 @@ class addScore_ReadingInformationDataModel: JSONJoy{
     }
 }
 
+class commentModel: JSONJoy {
+    var status: String
+    
+    var data = [commentDataModel]()
+    
+    var errorData = ""
+    
+    required init(_ decoder:JSONDecoder){
+        
+        status = decoder["status"].string ?? ""
+        if status == "success"{
+            for childs: JSONDecoder in decoder["data"].array! {
+                data.append(commentDataModel(childs))
+            }
+        }else{
+            errorData = decoder["data"].string ?? ""
+        }
+    }
+}
+
+class commentDataModel: NSObject {
+
+    var userid: String
+
+    var content: String
+
+    var major: String
+
+    var cid: String
+
+    var child_comments = [Child_CommentsModel]()
+
+    var userlevel: String
+
+    var username: String
+
+    var photo: String
+
+    var refid: String
+
+    var type: String
+
+    var add_time: String
+    
+    required init(_ decoder:JSONDecoder){
+        
+        userid = decoder["userid"].string ?? ""
+        content = decoder["content"].string ?? ""
+        major = decoder["major"].string ?? ""
+        cid = decoder["cid"].string ?? ""
+        userlevel = decoder["userlevel"].string ?? ""
+        username = decoder["username"].string ?? ""
+        photo = decoder["photo"].string ?? ""
+        refid = decoder["refid"].string ?? ""
+        type = decoder["type"].string ?? ""
+        add_time = decoder["add_time"].string ?? ""
+
+        if decoder["child_comments"].array?.count == 0{
+            child_comments = []
+        }else{
+            for childs: JSONDecoder in decoder["child_comments"].array!{
+                child_comments.append(Child_CommentsModel(childs))
+            }
+        }
+    }
+
+}
+
+class Child_CommentsModel: NSObject {
+
+    var userid: String
+
+    var content: String
+
+    var add_time: String
+
+    var major: String
+
+    var userlevel: String
+
+    var username: String
+
+    var photo: String
+
+    var type: String
+
+    var pid: String
+    
+    var cid: String
+    
+    required init(_ decoder:JSONDecoder){
+        
+        userid = decoder["userid"].string ?? ""
+        content = decoder["content"].string ?? ""
+        add_time = decoder["add_time"].string ?? ""
+        major = decoder["major"].string ?? ""
+        userlevel = decoder["userlevel"].string ?? ""
+        username = decoder["username"].string ?? ""
+        photo = decoder["photo"].string ?? ""
+        type = decoder["type"].string ?? ""
+        pid = decoder["pid"].string ?? ""
+        cid = decoder["cid"].string ?? ""
+    }
+
+}
 

@@ -118,25 +118,28 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
         ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "\(PARK_URL_Header)uploadavatar") { [unowned self] (data) in
             dispatch_async(dispatch_get_main_queue(), {
                 
-                let result = addScore_ReadingInformationModel(JSONDecoder(data))
+                let result = Http(JSONDecoder(data))
                 dispatch_async(dispatch_get_main_queue(), {
-                    if result.status == "success"{
-                        self.avatarView.setImage(image, forState: .Normal)
-                        self.mainHelper.changeUserAvatar((result.data?.avatar)!, handle: { (success, response) in
-                            if success {
-                                QCLoginUserInfo.currentInfo.avatar = (result.data?.avatar)!
-                                if result.data?.event != "" {
-                                    self.showScoreTips((result.data?.event)!, score: (result.data?.score)!)
+                    if result.status != nil {
+                        if result.status == "success"{
+                            self.avatarView.setImage(image, forState: .Normal)
+                            self.mainHelper.changeUserAvatar(imageName+".png", handle: { (success, response) in
+                                if success {
+                                    let respo = response as! addScore_ReadingInformationDataModel
+                                    QCLoginUserInfo.currentInfo.avatar = imageName+".png"
+                                    if respo.event != "" {
+                                        self.showScoreTips((respo.event), score: (respo.score))
+                                    }
                                 }
-                            }
-                        })
-                    }else{
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "图片上传失败"
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                            })
+                        }else{
+                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "图片上传失败"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                        }
                     }
                 })
 
@@ -261,7 +264,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
             cell.textLabel?.text = threeArr[indexPath.row]
             cell.detailTextLabel?.text = threedeArr[indexPath.row]
         }
-        print("text == \((cell.textLabel?.text)!)   detailTextLabel == \((cell.detailTextLabel?.text)!)")
+//        print("text == \((cell.textLabel?.text)!)   detailTextLabel == \((cell.detailTextLabel?.text)!)")
         return cell
     }
     

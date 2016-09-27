@@ -105,7 +105,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         scrollView.showsVerticalScrollIndicator = false
         scrollView.bounces = false
         self.view.addSubview(scrollView)
-        print(HEIGHT)
+        // print(HEIGHT)
         
         backView.frame = CGRectMake(0, 0, WIDTH, WIDTH*333/375)
         backView.backgroundColor = COLOR
@@ -154,7 +154,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     }
     //  登录界面
     func loginTheView() {
-        print("登录")
+        // print("登录")
         
         
         
@@ -172,7 +172,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     
     //  注册界面
     func registerTheView() {
-        print("注册")
+        // print("注册")
         btnOne.setTitleColor(GREY, forState: .Normal)
         btnTwo.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         UIView.animateWithDuration(0.2) {
@@ -280,7 +280,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     
     //  修改密码
     func changePassWord(){
-        print("修改密码")
+        // print("修改密码")
         //  跳转页面
         let forGetVC = ForgetPasswordController()
         forGetVC.delegate = self
@@ -424,7 +424,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     
     //  点击短信获取验证码
     func gainTheCard() {
-        print("获取验证码")
+        // print("获取验证码")
         phoneNum.resignFirstResponder()
         yanzheng.resignFirstResponder()
         password.resignFirstResponder()
@@ -464,7 +464,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
             })
             
             })
-        print("get identify")
+        // print("get identify")
     }
     
     // 验证手机号是否正确
@@ -478,7 +478,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     
     //  注册提交事件
     func submitTheUser() {
-        print("提交")
+        // print("提交")
         //        phoneNum.resignFirstResponder()
         //        yanzheng.resignFirstResponder()
         //        password.resignFirstResponder()
@@ -577,7 +577,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         password.resignFirstResponder()
         passwordNumber.resignFirstResponder()
         phoneNumber.resignFirstResponder()
-        print("触摸")
+        // print("触摸")
     }
     //  键盘完成编辑
     func textFieldDidBeginEditing(textField: UITextField) {
@@ -619,7 +619,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     }
     //  点击事件的登录
     func goToMain() {
-        print("登录")
+        // print("登录")
         if phoneNumber.text!.isEmpty {
             //  弹出请输入手机号
             let alert = UIAlertView(title: "提示信息", message: "请输入手机号！", delegate: self, cancelButtonTitle: "确定")
@@ -658,7 +658,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
                             alert.tag = 100
                             alert.show()
                         }
-                        print(response as! String)
+                        // print(response as! String)
                     }else{
                         let alert = UIAlertView(title:"提示信息",message: "登录失败",delegate: self,cancelButtonTitle: "确定")
                         alert.show()
@@ -674,7 +674,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
                     ud.setObject(QCLoginUserInfo.currentInfo.userid, forKey: "userid")
                     //登录成功
                     LOGIN_STATE = true
-                    print(LoginUserInfo)
+                    // print(LoginUserInfo)
                     //登录成功
                     self.loginSuccess()
                 }
@@ -695,6 +695,18 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         
         getInvitedUrl()
         
+        CloudPushSDK.bindAccount(QCLoginUserInfo.currentInfo.usertype) { (result) in
+            
+        }
+        
+        CloudPushSDK.bindTag(1, withTags: [QCLoginUserInfo.currentInfo.userid], withAlias: "") { (result) in
+            
+        }
+        
+        CloudPushSDK.addAlias(QCLoginUserInfo.currentInfo.phoneNumber) { (result) in
+            
+        }
+        
         if previousViewcontroller.isKindOfClass(MineViewController) {
             self.navigationController?.pushViewController(MineViewController(), animated: true)
         }else{
@@ -707,11 +719,14 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         //            let vc : UITabBarController = mainStoryboard.instantiateViewControllerWithIdentifier("MainView") as! UITabBarController
         //  选择被选中的界面
         //            vc.selectedIndex = 4
-        //            print(vc)
+        //            // print(vc)
         //            self.presentViewController(vc, animated: true, completion: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
+        TimeManager.shareManager.taskDic["register"]?.FHandle = nil
+        TimeManager.shareManager.taskDic["register"]?.PHandle = nil
+        
         phoneNum.resignFirstResponder()
         yanzheng.resignFirstResponder()
         password.resignFirstResponder()

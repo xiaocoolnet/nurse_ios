@@ -31,37 +31,43 @@ class HSTabBarController: UITabBarController,UITabBarControllerDelegate,ViewCont
         }
     }
     
-    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
         
-        if tabBarController.selectedIndex == 2 {
-
+        print("=-=-=-=-=-=-=-=-=-=    \(tabBarController.selectedIndex)")
+        if tabBarController.selectedIndex == 1 {
+            
             HSNurseStationHelper().getArticleListWithID("95") { (success, response) in
                 if success {
                     let hulibu_newsArray = response as! Array<NewsInfo>
-                    let hulibu_originalNewsUpdateTime = NSUserDefaults.standardUserDefaults().stringForKey("hulibu_originalNewsUpdateTime\(QCLoginUserInfo.currentInfo.userid)")
-                    var flag = true
-                    for (i,newsInfo) in hulibu_newsArray.enumerate() {
-                        if newsInfo.post_modified == hulibu_originalNewsUpdateTime {
-                            hulibu_updateNum = i
-                            flag = false
-                            break
-                        }
-                    }
-                    if flag {
+                    let hulibu_originalNewsUpdateTime = NSUserDefaults.standardUserDefaults().stringForKey(HULIBU_ORIGINALNEWSUPDATETIME)
+                    if hulibu_originalNewsUpdateTime == nil {
+                        NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
                         hulibu_updateNum = hulibu_newsArray.count
+                    }else{
+                        
+                        for (i,newsInfo) in hulibu_newsArray.enumerate() {
+                            if newsInfo.post_modified == hulibu_originalNewsUpdateTime {
+                                hulibu_updateNum = i
+                                break
+                            }
+                        }
                     }
                     
                     if hulibu_alreadyRead {
-                        NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: "hulibu_originalNewsUpdateTime\(QCLoginUserInfo.currentInfo.userid)")
+                        NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
                         hulibu_alreadyRead = false
                     }
                     
                     NSNotificationCenter.defaultCenter().postNotificationName("hulibu_updateNumChanged", object: nil)
-
+                    
                 }
             }
         }
 
+    }
+    
+    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+       
 //        if LOGIN_STATE == true {
 //            return true
 //        }

@@ -127,7 +127,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
         ];
         Alamofire.request(.GET, url, parameters: param as? [String : AnyObject] ).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 dispatch_async(dispatch_get_main_queue(), {
                     self.hud?.mode = .Text
@@ -144,8 +144,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.hud?.hide(true)
                 })
                 
-                print("状态是")
-                print(status.status)
+                // print("状态是")
+                // print(status.status)
                 if(status.status == "error"){
                     //                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     //                            hud.mode = MBProgressHUDMode.Text
@@ -156,7 +156,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.isLike = false
                     dispatch_async(dispatch_get_main_queue(), {
                         self.signLab.text = "每日签到"
-                        //                        print(status.errorData)
+                        //                        // print(status.errorData)
                     })
                 }
                 if(status.status == "success"){
@@ -385,7 +385,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+        // print(indexPath.row)
         if indexPath.section == 1 {
             let next = MineStudyViewController()
             self.navigationController?.pushViewController(next, animated: true)
@@ -564,24 +564,24 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func switchValueChanged(swi:UISwitch) {
         NSUserDefaults.standardUserDefaults().setBool(swi.on, forKey: "loadPictureOnlyWiFi")
         loadPictureOnlyWiFi = swi.on
-        print("switch value changed , and swi.on = \(swi.on)")
+        // print("switch value changed , and swi.on = \(swi.on)")
     }
     
     // MARK: 点击头像
     func changeTitImage() {
-        print("头像")
+        // print("头像")
         setUpData()
     }
     // MARK: 个人资料编辑
     func setUpData() {
-        print("设置")
+        // print("设置")
         let next = SetDataViewController()
         self.navigationController?.pushViewController(next, animated: true)
     }
     
     // MARK: 粉丝与关注
     func fineAndContact(btn:UIButton) {
-        print("粉丝与管理")
+        // print("粉丝与管理")
         if btn.tag == 1 {
             let next = FansViewController()
             next.userType = 0
@@ -604,7 +604,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     // MARK: 点击签到
     func signInToday() {
-        print("点击签到")
+        // print("点击签到")
         if isLike == false {
             self.timeNow()
             
@@ -629,15 +629,15 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             //                                "userid":"1",
             "day":self.timeStamp
         ];
-        print(QCLoginUserInfo.currentInfo.userid)
+        // print(QCLoginUserInfo.currentInfo.userid)
         Alamofire.request(.GET, url, parameters: param as? [String : AnyObject] ).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 
             }else{
                 let status = addScore_ReadingInformationModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
+                // print("状态是")
+                // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text
@@ -724,7 +724,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     // MARK: 点击退出
     func signout(){
-        print("退出")
+        // print("退出")
         
         let alert = UIAlertController(title: "确认退出", message: "您确定要退出登录吗？", preferredStyle: .Alert)
         self.presentViewController(alert, animated: true, completion: nil)
@@ -751,7 +751,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         // 创建一个日期格式器
         let dformatter = NSDateFormatter()
         dformatter.dateFormat = "yyyy年MM月dd日"
-        print("当前日期时间：\(dformatter.stringFromDate(now))")
+        // print("当前日期时间：\(dformatter.stringFromDate(now))")
         let today = dformatter.dateFromString(dformatter.stringFromDate(now))
         
         
@@ -762,7 +762,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         //        self.timeStamp = Int(timeInterval/100)
         self.timeStamp = Int(timeInterval)
         
-        print("当前时间的时间戳：\(Int(timeInterval))")
+        // print("当前时间的时间戳：\(Int(timeInterval))")
         
     }
 }

@@ -118,7 +118,7 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
         
         cell1.selectionStyle = .None
         cell1.textLabel?.numberOfLines = 0
-        print(indexPath.row)
+        // print(indexPath.row)
         if indexPath.row==0 {
             cell1.title.text = self.tit as String
         }else if indexPath.row == 1 {
@@ -185,7 +185,7 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
     }
     
     func takeTheResume() {
-        print("点击了提交简历")
+        // print("点击了提交简历")
         
         // MARK:要求登录
         if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
@@ -208,17 +208,17 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
             "companyid" :QCLoginUserInfo.currentInfo.userid
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 //                    handle(success: false, response: error?.description)
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
                     //                        handle(success: true, response: nil)
-                    print(111111)
+                    // print(111111)
                 }else{
                     //                        handle(success: false, response: nil)
-                    print(2222222)
+                    // print(2222222)
                 }
             }
         }

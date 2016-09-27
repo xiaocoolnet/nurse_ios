@@ -63,10 +63,10 @@ class HSEditResumeViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(1111)
+        // print(1111)
         let eduInfo = self.dateSource.objectlist[indexPath.row].name
         id = num
-        print(eduInfo)
+        // print(eduInfo)
 //        if((delegate) != nil){
             delegate?.change(self, string: eduInfo, idStr: id)
 
@@ -79,14 +79,14 @@ class HSEditResumeViewController: UIViewController, UITableViewDelegate, UITable
         
         let url = PARK_URL_Header+"getDictionaryList"
         let param = ["type":num]
-        print(param)
+        // print(param)
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 
             }else{
                 let status = EduModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
+                // print("状态是")
+                // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
@@ -95,7 +95,7 @@ class HSEditResumeViewController: UIViewController, UITableViewDelegate, UITable
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    print(status)
+                    // print(status)
                     self.dateSource = EduList(status.data!)
                     
                     self.myTableView .reloadData()

@@ -51,7 +51,7 @@ class PostVacanciewViewController: UIViewController {
                 hud.labelText = "获取企业信息成功"
                 let companyInfo = response as! CompanyInfo
                 
-                print(companyInfo.status)
+//                print(companyInfo.status)
                 if companyInfo.status == "1" {
                     
                     hud.hide(true, afterDelay: 0.5)

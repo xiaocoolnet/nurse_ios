@@ -18,3 +18,5 @@
 
 #import "SMPageControl.h"
 #import "UIPlaceHolderTextView.h"
+
+#import <CloudPushSDK/CloudPushSDK.h>

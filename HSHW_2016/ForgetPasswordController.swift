@@ -229,7 +229,7 @@ class ForgetPasswordController: UIViewController {
             return
         }
         //  2.通过上传url获取验证码（检测手机是否已经注册）
-        print(phoneNumFiled.text!)
+//        print(phoneNumFiled.text!)
         
         //  [unowned self]什么意思   dispatch_async(dispatch_get_main_queue() 这里为什么需要加一个主线程
         changeVM?.comfirmPhoneHasRegister(phoneNumFiled.text!, handle: {[unowned self](success, response) in

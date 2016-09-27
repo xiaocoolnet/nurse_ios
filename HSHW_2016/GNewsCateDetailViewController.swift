@@ -70,15 +70,15 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     
     func GetDate(){
         let url = PARK_URL_Header+"getNewslist"
-        print(newsType)
+        // print(newsType)
         let param = ["channelid":String(newsType!)]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 
             }else{
                 let status = NewsModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
+                // print("状态是")
+                // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
@@ -88,9 +88,9 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    print(status)
+                    // print(status)
                     self.dataSource = NewsList(status.data!)
-                    print(LikeList(status.data!).objectlist)
+                    // print(LikeList(status.data!).objectlist)
 //                    self.likedataSource = LikeList(status.data!)
                     switch self.newsType!{
                         case 4:
@@ -104,7 +104,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
                     }
                     self.myTableView.reloadData()
                     self.myTableView.mj_header.endRefreshing()
-                    print(status.data)
+                    // print(status.data)
                 }
             }
             
@@ -157,7 +157,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         next.newsInfo = newsInfo
         next.likeNum = newsInfo.likes.count
         next.delegate = self
-        print(newsInfo.likes.count)
+        // print(newsInfo.likes.count)
         self.navigationController?.pushViewController(next, animated: true)
     }
     

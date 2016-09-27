@@ -20,7 +20,7 @@ class MainCompanyAuthViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        print("type is \(type)")
+//        print("type is \(type)")
         if type == 1 {
             self.presentViewController(CompanyAuthViewController(), animated: false, completion: nil)
         }

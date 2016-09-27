@@ -73,7 +73,7 @@ class LoginModel: NSObject {
     //  MARK - 发送验证码
     func sendMobileCodeWithPhoneNumber(phoneNumber:String){
         let paramDic = ["a":"SendMobileCode","phone":phoneNumber]
-        print(phoneNumber)
+//        print(phoneNumber)
         
         Alamofire.request(.GET, PARK_URL_Header, parameters: paramDic).response { (request, response, json, error) in
             if error != nil {
@@ -105,7 +105,7 @@ class LoginModel: NSObject {
                 //  请求错误的传值
                 handle(success: false,response: "网络错误")
             }else{
-                let result = addScore_ReadingInformationModel(JSONDecoder(response!))
+                let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 let responseStr = result.status == "success" ? nil : result.errorData
                 //  闭包传值
                 handle(success: result.status == "success",response: result.status == "success" ? result.data : responseStr)

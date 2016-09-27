@@ -85,7 +85,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         HSNurseStationHelper().getArticleListWithID(slideImageId) { (success, response) in
             
             if success {
-                print(response)
+//                print(response)
                 let imageArr = response as! Array<NewsInfo>
                 self.imageArr = imageArr.count>=5 ? Array(imageArr[0...slideImageListMaxNum-1]):imageArr
 
@@ -131,7 +131,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         HSNurseStationHelper().getArticleListWithID(newsType == nil ? newsId : String(newsType!)) { (success, response) in
             
             if success {
-                print(response)
+//                print(response)
                 
                 self.dataSource = response as! Array<NewsInfo>
                 dispatch_async(dispatch_get_main_queue(), {

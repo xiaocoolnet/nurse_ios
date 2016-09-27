@@ -28,7 +28,6 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = "收藏试题"
-        loadData_Exampaper()
         
         // 线
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
@@ -48,6 +47,7 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
         fansTableView.dataSource = self
         self.view.addSubview(fansTableView)
         
+        loadData_Exampaper()
 
         // Do any additional setup after loading the view.
     }
@@ -102,13 +102,13 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+//        print(indexPath.row)
         
         let userPageVC = GMyExaminationViewController()
         userPageVC.type = 3
 //        if tableView.tag == 410 {
 //            userPageVC.subType = 1
-            print(fansListArray[indexPath.row])
+//            print(fansListArray[indexPath.row])
             userPageVC.a = indexPath.row
             userPageVC.dataSource = fansListArray
 //        }else{

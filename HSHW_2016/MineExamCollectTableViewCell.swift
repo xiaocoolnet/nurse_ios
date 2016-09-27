@@ -80,7 +80,7 @@ class MineExamCollectTableViewCell: UITableViewCell {
         
         let date = NSDate(timeIntervalSince1970: timeSta)
         
-        print(dfmatter.stringFromDate(date))
+//        print(dfmatter.stringFromDate(date))
         return dfmatter.stringFromDate(date)
     }
     

@@ -49,13 +49,13 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
             "channelid":articleID == nil ? "7":articleID!
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 
             }else{
                 let status = NewsModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
+                // print("状态是")
+                // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
@@ -67,10 +67,10 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                 if(status.status == "success"){
                     
                     //                    self.createTableView()
-                    print(status)
+                    // print(status)
                     self.dataSource = NewsList(status.data!)
                     self.myTableView .reloadData()
-                    print(status.data)
+                    // print(status.data)
                 }
             }
             dispatch_async(dispatch_get_main_queue(), {
@@ -156,7 +156,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let newsInfo = self.dataSource.objectlist[indexPath.row]
-        //        print(newsInfo.title,newsInfo.term_id)
+        //        // print(newsInfo.title,newsInfo.term_id)
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.index = indexPath.row
@@ -191,13 +191,13 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                print(request)
+                // print(request)
                 if(error != nil){
                     
                 }else{
                     let status = Http(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+                    // print("状态是")
+                    // print(status.status)
                     if(status.status == "error"){
 
                         hud.mode = MBProgressHUDMode.Text;
@@ -209,7 +209,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                         hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = "取消点赞成功"
                         hud.hide(true, afterDelay: 0.5)
-                        print(status.data)
+                        // print(status.data)
                         
                         for (i,obj) in (newsInfo.likes).enumerate() {
                             if obj.userid == QCLoginUserInfo.currentInfo.userid {
@@ -235,13 +235,13 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                print(request)
+                // print(request)
                 if(error != nil){
                     
                 }else{
                     let status = addScore_ReadingInformationModel(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+                    // print("状态是")
+                    // print(status.status)
                     if(status.status == "error"){
 
                         hud.mode = MBProgressHUDMode.Text;
@@ -261,7 +261,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                         
                         self.myTableView.reloadData()
              
-                        print(status.data)
+                        // print(status.data)
                         
                         if ((status.data?.event) != "") {
                             self.showScoreTips((status.data?.event)!, score: (status.data?.score)!)
@@ -321,8 +321,8 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     func upDateUI(status:NSArray){
-        print("更新UI")
-        print(status)
+        // print("更新UI")
+        // print(status)
         //        if num == 2 {
         //            self.GetData1()
         //        }else{
@@ -341,7 +341,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
     
     //  MARK:- 点击出国百宝箱 功能
     func selectorCountry(btn:UIButton) {
-        print(btn.tag)
+        // print(btn.tag)
         let vc = HSWebViewDetailController(nibName: "HSWebViewDetailController", bundle: nil)
         vc.navigationController?.navigationBar.hidden = false
         if btn.tag == 0 {

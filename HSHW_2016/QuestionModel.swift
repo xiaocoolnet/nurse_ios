@@ -81,8 +81,8 @@ class QuestionInfo: JSONJoy{
         thumb = decoder["decoder"].string
         likes = Array<LikeInfo>()
         smeta = decoder["smeta"]
-        print(post_excerpt)
-        print(decoder["likes"].array)
+//        print(post_excerpt)
+//        print(decoder["likes"].array)
         if decoder["likes"].array != nil {
             for childs: JSONDecoder in decoder["likes"].array!{
                 self.likes.append(LikeInfo(childs))

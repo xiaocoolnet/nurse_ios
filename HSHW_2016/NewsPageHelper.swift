@@ -18,13 +18,13 @@ class NewsPageHelper: NSObject {
             "typeid":typeid
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 let result = PhotoList(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
@@ -42,13 +42,13 @@ class NewsPageHelper: NSObject {
             "channelid":channelid
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 
             }else{
                 let result = NewsModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "error"){
                     handle(success: false, response: result.errorData)
                 }
@@ -72,13 +72,13 @@ class NewsPageHelper: NSObject {
             "description":description
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 
             }else{
                 let result = Http(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "error"){
                     handle(success: false, response: result.errorData)
                 }
@@ -104,13 +104,13 @@ class NewsPageHelper: NSObject {
         }
         
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 
             }else{
                 let result = GNewsCateModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "error"){
                     handle(success: false, response: result.errorData)
                 }
@@ -131,13 +131,13 @@ class NewsPageHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: "网络错误")
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "error"){
                     handle(success: false, response: result.errorData)
                 }
@@ -156,13 +156,13 @@ class NewsPageHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: "网络错误")
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "error"){
                     handle(success: false, response: result.errorData)
                 }

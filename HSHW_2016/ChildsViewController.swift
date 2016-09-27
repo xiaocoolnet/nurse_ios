@@ -93,7 +93,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
     }
     
     func inviteJob(model:CVModel) {
-        print("邀请面试")
+        // print("邀请面试")
         
         // MARK:要求登录
         if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
@@ -117,8 +117,8 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                     
                 }else{
                     let status = MineJobModel(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+                    // print("状态是")
+                    // print(status.status)
                     if(status.status == "error"){
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
@@ -127,7 +127,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                         hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                     }else if(status.status == "success"){
-                        print(status)
+                        // print(status)
                         self.inviteJob_1(model, status: status)
                         
                     }
@@ -180,7 +180,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                                     "companyid":QCLoginUserInfo.currentInfo.userid
                                 ]
                                 Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                                    print(request)
+                                    // print(request)
                                     if(error != nil){
                                         sendInviteHud.mode = MBProgressHUDMode.Text;
                                         sendInviteHud.labelText = "发送邀请失败 \(error?.domain)"
@@ -195,7 +195,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                                             //                                    hud.margin = 10.0
                                             //                                    hud.removeFromSuperViewOnHide = true
                                             sendInviteHud.hide(true, afterDelay: 1)
-                                            print(111111)
+                                            // print(111111)
                                         }else{
                                             //  菊花加载
                                             //                                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -204,7 +204,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                                             //                                    hud.margin = 10.0
                                             //                                    hud.removeFromSuperViewOnHide = true
                                             sendInviteHud.hide(true, afterDelay: 1)
-                                            print(2222222)
+                                            // print(2222222)
                                         }
                                     }
                                 }
@@ -279,7 +279,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
         }else{
             
             if type == 1 {
-                print(self.myInvitedList.data.count)
+                // print(self.myInvitedList.data.count)
                 return self.myInvitedList.data.count
             }else{
                 return self.dataSource.count
@@ -291,16 +291,16 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
         
         if tableView.tag == 1 {
             let cell1 = UITableViewCell()
-            //            print(employmentdataSource)
+            //            // print(employmentdataSource)
             //            let jobModel = employmentdataSource[0]as! JobModel
             let jobModel = currentJobModel
             
-            print(jobModel!.title)
+            // print(jobModel!.title)
             cell1.selectionStyle = .None
             cell1.textLabel?.numberOfLines = 0
 //            strId = jobModel!.id
-//            print(jobModel.id)
-            print(indexPath.row)
+//            // print(jobModel.id)
+            // print(indexPath.row)
             if indexPath.row==0 {
                 let title = UILabel()
                 let height = calculateHeight(jobModel!.title, size: 18, width: WIDTH-20)
@@ -459,21 +459,26 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                     
                 }else{
                     let status = InvitedModel(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+                    // print("状态是")
+                    // print(status.status)
                     if(status.status == "error"){
 //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = status.errorData
-//                        hud.margin = 10.0
-//                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                        if status.errorData == nil {
+                            hud.hide(true)
+                        }else{
+                            
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = status.errorData
+                            //                        hud.margin = 10.0
+                            //                        hud.removeFromSuperViewOnHide = true
+                            hud.hide(true, afterDelay: 1)
+                        }
                     }
                     if(status.status == "success"){
-                        print(status)
+                        // print(status)
                         self.myInvitedList = InvitedList(status.data!)
                         self.myTableView.reloadData()
-                        print(status.data)
+                        // print(status.data)
                         hud.hide(true, afterDelay: 1)
                     }
                 }
@@ -489,8 +494,8 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                     
                 }else{
                     let status = HSCVListModel(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+                    // print("状态是")
+                    // print(status.status)
                     if(status.status == "error"){
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
@@ -500,10 +505,10 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                         hud.hide(true, afterDelay: 1)
                     }
                     if(status.status == "success"){
-                        print(status)
+                        // print(status)
                         self.dataSource = status.datas
                         self.myTableView .reloadData()
-                        print(status.datas)
+                        // print(status.datas)
                     }
                 }
                 self.myTableView.mj_header.endRefreshing()
@@ -540,7 +545,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
             makeEmploymentMessage()
         }else {
             
-            print(indexPath.row)
+            // print(indexPath.row)
             let model = self.dataSource[indexPath.row]
             self.name = model.name
             self.sex = model.sex
@@ -623,7 +628,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
         
 //        jobHelper.getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
 //            if success {
-//                print("投递简历")
+//                // print("投递简历")
 //                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
 //                self.presentViewController(alertController, animated: true, completion: nil)
 //                
@@ -635,7 +640,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
 //                        "companyid":self.jobDataSource![btn.tag].companyid
 //                    ]
 //                    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-//                        print(request)
+//                        // print(request)
 //                        if(error != nil){
 //                            
 //                        }else{
@@ -648,7 +653,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
 //                                hud.margin = 10.0
 //                                hud.removeFromSuperViewOnHide = true
 //                                hud.hide(true, afterDelay: 1)
-//                                print(111111)
+//                                // print(111111)
 //                            }else{
 //                                //  菊花加载
 //                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -657,7 +662,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
 //                                hud.margin = 10.0
 //                                hud.removeFromSuperViewOnHide = true
 //                                hud.hide(true, afterDelay: 1)
-//                                print(2222222)
+//                                // print(2222222)
 //                            }
 //                        }
 //                    }

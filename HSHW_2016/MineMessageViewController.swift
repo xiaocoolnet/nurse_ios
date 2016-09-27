@@ -115,7 +115,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         
         let date = NSDate(timeIntervalSince1970: timeSta)
         
-        print(dfmatter.stringFromDate(date))
+        // print(dfmatter.stringFromDate(date))
         return dfmatter.stringFromDate(date)
     }
 
@@ -129,8 +129,8 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
                 
             }else{
                 let status = MessageModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
+                // print("状态是")
+                // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
@@ -140,12 +140,12 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
                     hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    print(status)
+                    // print(status)
                     self.dataSource = MessageList(status.data!)
-//                    print(LikeList(status.data!).objectlist)
+//                    // print(LikeList(status.data!).objectlist)
 //                    self.likedataSource = LikeList(status.data!)
                     self.myTableView .reloadData()
-                    print(status.data)
+                    // print(status.data)
                 }
             }
             

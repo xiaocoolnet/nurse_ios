@@ -15,7 +15,7 @@ protocol changeModelDelegate {
     func changeModel(newInfo:NewsInfo, andIndex:Int)
 }
 
-class NewsContantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate,cateBtnClickedDelegate, UITextViewDelegate{
+class NewsContantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate,cateBtnClickedDelegate, UITextViewDelegate {
 
     let myTableView = UITableView()
     var collectBtn = UIButton()
@@ -28,6 +28,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             self.likeNum = (newsInfo?.likes.count)!
             newsInfo?.post_hits = String(Int((newsInfo?.post_hits)!)!+1)
             self.getDate()
+            self.getComment()
         }
     }
 //    var navTitle:String = "新闻内容" {
@@ -43,6 +44,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //    var isLike:Bool = false
 //    var isCollect:Bool = false
     var dataSource = NewsList()
+    var commentArray = [commentDataModel]()
     var helper = NewsPageHelper()
     let zan = UIButton(frame: CGRectMake(WIDTH*148/375, WIDTH*80/375, WIDTH*80/375, WIDTH*80/375))
     var finishLoad = false
@@ -83,8 +85,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.collectBtn.enabled = true
 //                        hud.hide(true)
                         self.mainFlag += 1
-                        if self.mainFlag == 3 {
-                            self.mainFlag = 2
+                        if self.mainFlag == 4 {
+                            self.mainFlag = 3
                             self.mainHud.hide(true)
                         }
                     })
@@ -188,7 +190,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         replyView.addSubview(comment_bottom_Btn)
         
         // 评论角标
-        let commentIcon_bottom_Lab_Width = calculateWidth(String((newsInfo?.comments.count)!), size: 12, height: 15)+10
+        let commentIcon_bottom_Lab_Width = calculateWidth(String((self.commentArray.count)), size: 12, height: 15)+10
         commentIcon_bottom_Lab.frame = CGRectMake(CGRectGetWidth(comment_bottom_Btn.frame)-commentIcon_bottom_Lab_Width/2.0, -7.5, commentIcon_bottom_Lab_Width, 15)
         commentIcon_bottom_Lab.backgroundColor = UIColor.redColor()
         commentIcon_bottom_Lab.layer.cornerRadius = 7.5
@@ -196,7 +198,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         commentIcon_bottom_Lab.textAlignment = .Center
         commentIcon_bottom_Lab.textColor = UIColor.whiteColor()
         commentIcon_bottom_Lab.font = UIFont.systemFontOfSize(12)
-        commentIcon_bottom_Lab.text = String((newsInfo?.comments.count)!)
+        commentIcon_bottom_Lab.text = String((self.commentArray.count))
         comment_bottom_Btn.addSubview(commentIcon_bottom_Lab)
         
         // 收藏
@@ -220,6 +222,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         send_bottom_Btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         send_bottom_Btn.titleLabel!.font = UIFont.systemFontOfSize(14)
         send_bottom_Btn.setTitle("发送", forState: .Normal)
+        send_bottom_Btn.tag = NSString(string: (newsInfo?.object_id)!).integerValue
+        send_bottom_Btn.selected = false
         send_bottom_Btn.addTarget(self, action: #selector(sendComment), forControlEvents: .TouchUpInside)
         replyView.addSubview(send_bottom_Btn)
         
@@ -269,8 +273,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //            self.myTableView.frame.size.height = HEIGHT-64-1-46-keyboardheight
         }
         
-        print("键盘弹起")
-        print(keyboardheight)
+        // print("键盘弹起")
+        // print(keyboardheight)
         
     }
     
@@ -287,7 +291,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             self.share_bottom_Btn.hidden = false
 //            self.myTableView.frame.size.height = HEIGHT-64-1-46
         }
-        print("键盘落下")
+        // print("键盘落下")
     }
     // MARK:-
     
@@ -298,8 +302,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
         // MARK:要求登录
         if requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
-            
-            
             
             HSMineHelper().getPersonalInfo { (success, response) in
                 if success {
@@ -315,105 +317,94 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
+    func textViewDidEndEditing(textView: UITextView) {
+        self.send_bottom_Btn.selected = false
+        self.send_bottom_Btn.tag = NSString(string: (self.newsInfo?.object_id)!).integerValue
+        self.replyTextField.placeholder = "写评论..."
+    }
+    
 //    // MARK:点击回车  发表回复
 //    func textFieldShouldReturn(textField: UITextField) -> Bool {
-//        print("textfield.text = ",textField.text)
+//        // print("textfield.text = ",textField.text)
 //        
 //        sendComment()
 //        
 //        return true
 //    }
     
-    
+    //去除空格和回车
+    func trimLineString(str:String)->String{
+        let nowStr = str.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        return nowStr
+    }
     // 发表评论
     func sendComment() {
         
         
-        if replyTextField.text != "" {
+        if replyTextField.text != "" && trimLineString(replyTextField.text) != ""{
+            
+            
             
             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             hud.labelText = "正在发表评论"
             hud.margin = 10.0
             hud.removeFromSuperViewOnHide = true
             
-            HSNurseStationHelper().setComment((newsInfo?.object_id)!, content: (replyTextField.text)!, type: "1", photo: "", handle: { (success, response) in
-                print("添加评论",success,response)
+            HSNurseStationHelper().setComment(
+                String(self.send_bottom_Btn.tag),
+                content: (replyTextField.text)!,
+                type: self.send_bottom_Btn.selected ? "3":"1",
+                photo: "",
+                handle: { (success, response) in
+                // print("添加评论",success,response)
                 let result = response as! addScore_ReadingInformationDataModel
                 if success {
-                    HSNurseStationHelper().getArticleListWithID((self.newsInfo?.term_id)!) { (success, response) in
+                    
+                    let url = PARK_URL_Header+"getRefComments"
+                    let param = [
+                        "refid": self.newsInfo!.object_id
+                    ];
+                    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                         
-                        dispatch_async(dispatch_get_main_queue(), {
-                            if success {
-                                print(response)
+                        if(error != nil){
+                            
+                            hud.mode = MBProgressHUDMode.Text;
+                            hud.labelText = "评论失败"
+                          
+                            hud.hide(true, afterDelay: 1)
+                        }else{
+                            let status = commentModel(JSONDecoder(json!))
+                            
+                            if(status.status == "error"){
                                 
-                                var flag = true
-                                let dataSource = response as! Array<NewsInfo>
-                                for news in dataSource {
-                                    if news.object_id == (self.newsInfo?.object_id)! {
-                                        
-                                        //                                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                        hud.mode = MBProgressHUDMode.Text;
-                                        hud.labelText = "评论成功"
-                                        //                                        hud.detailsLabelText = String(response!)
-                                        //                                        hud.margin = 10.0
-                                        //                                        hud.removeFromSuperViewOnHide = true
-                                        hud.hide(true, afterDelay: 1)
-                                        
-                                        flag = false
-                                        self.newsInfo = news
-                                        self.commentIcon_bottom_Lab.text = String((self.newsInfo?.comments.count)!)
-
-                                        self.myTableView.reloadData()
-                                        
-                                        if ((result.event) == "") {
-                                            self.showScoreTips((result.event), score: (result.score))
-                                        }
-                                        
-//                                        if self.myTableView.rectForSection(2).size.height > self.myTableView.frame.size.height {
-//                                            self.myTableView.contentOffset.y = self.myTableView.rectForSection(2).origin.y
-//                                        }else{
-                                            self.myTableView.contentOffset.y = self.myTableView.contentSize.height-self.myTableView.frame.size.height
-//                                        }
-                                    }
-                                }
-                                if flag {
-                                    
-                                    //                                    let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-                                    hud.mode = MBProgressHUDMode.Text;
-                                    hud.labelText = "评论失败"
-                                    //                                    hud.margin = 10.0
-                                    //                                    hud.removeFromSuperViewOnHide = true
-                                    hud.hide(true, afterDelay: 1)
-                                    
-                                    //                                    self.navigationController?.popViewControllerAnimated(true)
-                                }
-                            }else{
-                                
-                                //                                let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
                                 hud.mode = MBProgressHUDMode.Text;
                                 hud.labelText = "评论失败"
-                                //                                hud.margin = 10.0
-                                //                                hud.removeFromSuperViewOnHide = true
+                                
+                                hud.hide(true, afterDelay: 1)
+                            }
+                            if(status.status == "success"){
+                                
+                                hud.mode = MBProgressHUDMode.Text;
+                                hud.labelText = "评论成功"
                                 hud.hide(true, afterDelay: 1)
                                 
-                                //                                self.navigationController?.popViewControllerAnimated(true)
+                                self.replyTextField.placeholder = "写评论..."
+                                self.send_bottom_Btn.tag = NSString(string: (self.newsInfo?.object_id)!).integerValue
+                                self.send_bottom_Btn.selected = false
+                                
+                                self.commentArray = status.data
+                                self.commentIcon_bottom_Lab.text = String((self.commentArray.count))
+                                self.myTableView.reloadData()
+                                
+                                if ((result.event) != "") {
+                                    self.showScoreTips((result.event), score: (result.score))
+                                }
+                                
+                                self.myTableView.contentOffset.y = self.myTableView.contentSize.height-self.myTableView.frame.size.height
                                 
                             }
-                        })
+                        }
                     }
-                    
-                    //                    let dic = ["userid":String(QCLoginUserInfo.currentInfo.userid),"username":String(QCLoginUserInfo.currentInfo.userName),"content":String(UTF8String: textField.text!)!,"photo":QCLoginUserInfo.currentInfo.avatar,"add_time":String(NSDate().timeIntervalSince1970),"type":"1","userlevel":QCLoginUserInfo.currentInfo.level,"major":QCLoginUserInfo.currentInfo.major]
-                    //                    let commentModel = NewsCommentsModel.init(JSONDecoder(dic))
-                    //                    self.newsInfo?.comments.append(commentModel)
-                    //
-                    //                    self.myTableView.reloadData()
-                    //                    self.contentTableView.reloadData()
-                    
-                    
-                    //                    if self.myTableView.contentSize.height > self.myTableView.frame.size.height {
-                    //                        
-                    //                        self.myTableView.contentOffset = CGPoint(x: 0, y: self.myTableView.contentSize.height-self.myTableView.frame.size.height)
-                    //                    }
                     
                     self.replyTextField.text = nil
                     
@@ -425,8 +416,15 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     })
                 }
             })
+            replyTextField.resignFirstResponder()
+        }else{
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = MBProgressHUDMode.Text;
+            hud.labelText = "请输入内容"
+            hud.hide(true, afterDelay: 1)
         }
-        replyTextField.resignFirstResponder()
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
@@ -467,7 +465,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 "userid":QCLoginUserInfo.currentInfo.userid
             ];
             Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
-                print(request)
+                // print(request)
                 
                 dispatch_async(dispatch_get_main_queue(), {
                 
@@ -476,8 +474,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.collectHud.labelText = "取消收藏失败"
                     }else{
                         let status = Http(JSONDecoder(json!))
-                        print("状态是")
-                        print(status.status)
+                        // print("状态是")
+                        // print(status.status)
                         if(status.status == "error"){
     //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                             self.collectHud.mode = MBProgressHUDMode.Text;
@@ -498,7 +496,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //                            hud.removeFromSuperViewOnHide = true
 //                            hud.hide(true, afterDelay: 1)
                             //self.myTableView .reloadData()
-                            print(status.data)
+                            // print(status.data)
     //                        self.isCollect=false
                         }
                     }
@@ -536,7 +534,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //        let user = NSUserDefaults.standardUserDefaults()
 //        let uid = user.stringForKey("userid")//登录用户 id
 //        let userID = user.stringForKey((self.newsInfo?.object_id)!)
-//        print(userID)
+//        // print(userID)
 //        
 //        
 //        
@@ -626,7 +624,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             shareBtn_1.tag = 1000+i
             shareBtn_1.addTarget(self, action: #selector(shareBtnClick(_:)), forControlEvents: .TouchUpInside)
             bottomView.addSubview(shareBtn_1)
-            print(shareBtn_1.frame)
+            // print(shareBtn_1.frame)
             
             let shareLab_1 = UILabel(frame: CGRectMake(CGRectGetMinX(shareBtn_1.frame)-margin/2.0, CGRectGetMaxY(shareBtn_1.frame)+margin/2.0, shareBtnWidth+margin, labelHeight))
             shareLab_1.textColor = UIColor.grayColor()
@@ -734,18 +732,18 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     // MARK:获取关联文章列表
     func getDate() {
-//        print(newsInfo?.object_id,newsInfo?.title)
+//        // print(newsInfo?.object_id,newsInfo?.title)
 //        let url = PARK_URL_Header+"getRelatedNewslist"
 //        let param = [
 //           "refid": newsInfo!.object_id
 //        ];
 //        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-//            print(request)
+//            // print(request)
 //            if(error != nil){
 //            }else{
 //                let status = NewsModel(JSONDecoder(json!))
-//                print("状态是")
-//                print(status.status)
+//                // print("状态是")
+//                // print(status.status)
 //                if(status.status == "error"){
 ////                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
 ////                    hud.mode = MBProgressHUDMode.Text;
@@ -757,20 +755,63 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //                }
 //                if(status.status == "success"){
 //                    //self.createTableView()
-//                    print(status)
+//                    // print(status)
 //                    self.dataSource = NewsList(status.data!)
 //                    self.myTableView .reloadData()
-//                    print(status.data)
+//                    // print(status.data)
 //                }
 //            }
         
         self.mainFlag += 1
-        if self.mainFlag == 3 {
-            self.mainFlag = 2
+        if self.mainFlag == 4 {
+            self.mainFlag = 3
             self.mainHud.hide(true)
         }
             
 //        }
+    }
+    
+    // MARK:获取评论列表
+    func getComment() {
+        // print(newsInfo?.object_id,newsInfo?.title)
+        let url = PARK_URL_Header+"getRefComments"
+        let param = [
+            "refid": newsInfo!.object_id
+        ];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+
+            if(error != nil){
+            }else{
+                let status = commentModel(JSONDecoder(json!))
+                
+                if(status.status == "error") && status.errorData != ""{
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "获取评论列表失败"
+                    hud.detailsLabelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
+                }
+                if(status.status == "success"){
+                    //self.createTableView()
+                    // print(status)
+                    
+                    self.commentArray = status.data
+                    self.commentIcon_bottom_Lab.text = String((self.commentArray.count))
+                    
+                    self.myTableView .reloadData()
+                    // print(status.data)
+                }
+            }
+        
+            self.mainFlag += 1
+            if self.mainFlag == 4 {
+                self.mainFlag = 3
+                self.mainHud.hide(true)
+            }
+        
+        }
     }
     
     
@@ -791,11 +832,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         }else if section == 1 {
              return self.dataSource.count;
         }else{
-            if newsInfo?.comments.count == 0 {
+            if self.commentArray.count == 0 {
                 return 1
             }else{
                 
-                return (self.newsInfo?.comments.count)!
+                return (self.commentArray.count)
             }
         }
     }
@@ -805,8 +846,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             if indexPath.row==0 {
                 
                 let height = calculateHeight(newsInfo?.post_title ?? "", size: 21, width: WIDTH-30)
-                print(newsInfo?.post_title)
-                print(height)
+                // print(newsInfo?.post_title)
+                // print(height)
                 return height+30
             }else if indexPath.row==1{
                 return 20
@@ -838,12 +879,30 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
             }
         }else{
-            if newsInfo?.comments.count == 0 {
+            if self.commentArray.count == 0 {
                 return 100
             }else{
                 
-                let height = calculateHeight((newsInfo?.comments[indexPath.row].content)!, size: 14, width: WIDTH-62)
-                return height+8+40+8+8+14+8+1+8
+                let height = calculateHeight((self.commentArray[indexPath.row].content), size: 14, width: WIDTH-62)
+                
+                var child_commentBtnY = height+8+40+8+8+14+8
+                for child_comment in (self.commentArray[indexPath.row].child_comments) {
+                    
+                    let str = child_comment.username+"："+child_comment.content
+                    let nsStr = NSString(string: str)
+                    let attStr = NSMutableAttributedString(string: str)
+                    
+                    attStr.addAttributes([NSForegroundColorAttributeName: UIColor.blackColor(),NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, nsStr.length))
+                    attStr.addAttributes([NSForegroundColorAttributeName: COLOR,NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, nsStr.rangeOfString("：").location))
+                    
+                    
+                    let child_commentBtnHeight = attStr.boundingRectWithSize(CGSizeMake(WIDTH-62-10, 0), options: .UsesLineFragmentOrigin, context: nil).size.height+10
+                    
+                    child_commentBtnY += child_commentBtnHeight
+                    
+                }
+
+                return child_commentBtnY+8+1
             }
         }
     }
@@ -856,7 +915,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if indexPath.section == 0 {
             
             var cell1:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cellIntenfer")!
-            print(indexPath.section,indexPath.row)
+            // print(indexPath.section,indexPath.row)
             //let cell = tableView.dequeueReusableCellWithIdentifier("cellIntenfer", forIndexPath: indexPath)
             cell1.selectionStyle = .None
             
@@ -876,7 +935,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 title.font = UIFont.systemFontOfSize(21)
                 cell1.addSubview(title)
                 tableView.rowHeight=height+30
-                print(tableView.rowHeight)
+                // print(tableView.rowHeight)
                 
                 return cell1
 
@@ -961,7 +1020,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 //let zan = UIButton(frame: CGRectMake(WIDTH*148/375, WIDTH*80/375, WIDTH*80/375, WIDTH*80/375))
 //                let userid = NSUserDefaults.standardUserDefaults()
 //                let uid = userid.stringForKey("userid")
-//                print(uid)
+//                // print(uid)
 //                if uid==nil {
 //                    zan.setImage(UIImage(named: "img_like.png"), forState: .Normal)
 //                }else{
@@ -1019,8 +1078,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //            let newsInfo = self.dataSource.objectlist[indexPath.row]
 //            cell.setCellWithNewsInfo(newsInfo)
 //            let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 14, width: WIDTH-140)
-//            print(newsInfo.post_title)
-//            print(titleHeight)
+//            // print(newsInfo.post_title)
+//            // print(titleHeight)
 //            cell.titLab.frame.size.height = titleHeight
 //            cell.heal.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
 //            cell.conNum.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
@@ -1028,7 +1087,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //            cell.comBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
 //            cell.timeBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
 //            cell.contant.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+20
-//            print(newsInfo.thumb)
+//            // print(newsInfo.thumb)
 //            return cell
         }else{
             
@@ -1041,7 +1100,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //            }else{
 //                cell.louzhuLab.hidden = true
 //            }
-            if newsInfo?.comments.count == 0 {
+            if self.commentArray.count == 0 {
                 cell.textLabel?.text = "暂无评论"
                 cell.textLabel?.textColor = UIColor.grayColor()
                 cell.textLabel?.textAlignment = .Center
@@ -1050,17 +1109,18 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.contentLab.text = nil
                 cell.timeLab.text = nil
                 cell.headerBtn.setImage(nil, forState: .Normal)
-                cell.line.hidden = true
+//                cell.line.hidden = true
             }else{
                 cell.textLabel?.text = nil
-                cell.line.hidden = false
+//                cell.line.hidden = false
                 cell.floorLab.text = "\(indexPath.row+1)楼"
-                cell.commentModel = newsInfo?.comments[indexPath.row]
+                cell.commentModel = self.commentArray[indexPath.row]
             }
             return cell
         }
         
     }
+    
     
     func loadURL() {
         
@@ -1089,16 +1149,16 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         let frame:CGSize = webView.sizeThatFits(webView.frame.size)
         //再次设置WebView高度（点）
         webView.frame = CGRectMake(0, 0, self.view.frame.size.width, frame.height);
-        print("webViewDidFinishLoad")
-        print(webView.frame.size.height)
+//        // print("webViewDidFinishLoad")
+//        // print(webView.frame.size.height)
         webHeight = webView.frame.size.height
 //        webHeight = webView.scrollView.contentSize.height
         self.myTableView.reloadData()
 //        finishLoad = true
         
         self.mainFlag += 1
-        if self.mainFlag == 3 {
-            self.mainFlag = 2
+        if self.mainFlag == 4 {
+            self.mainFlag = 3
             self.mainHud.hide(true)
             if addScore_ReadingInformation {
                 
@@ -1163,6 +1223,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             let next = NewsContantViewController()
             next.newsInfo = newsInfo
             self.navigationController?.pushViewController(next, animated: true)
+        }else if indexPath.section == 2 {
+            self.replyTextField.placeholder = "回复 \(self.commentArray[indexPath.row].username)"
+            self.send_bottom_Btn.tag = NSString(string: self.commentArray[indexPath.row].cid).integerValue
+            self.send_bottom_Btn.selected = true
+            self.replyTextField.becomeFirstResponder()
         }
     }
 
@@ -1173,13 +1238,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         let url = "http://apis.baidu.com/3023/shorturl/shorten"
         
         Alamofire.request(.GET, url, parameters: ["url_long":NewsInfo_Header+(newsInfo?.object_id)!], encoding: .URLEncodedInURL, headers: ["apikey":"615ac7276ff0b752fc5f0b8cfa845544"]).response { (request, response, json, error) in
-            print(response,json,error)
+//            // print(response,json,error)
             if error != nil {
                 self.shareNewsUrl = NewsInfo_Header+(self.newsInfo?.object_id)!
             }else{
                 
                 let js = try?NSJSONSerialization.JSONObjectWithData(json!, options: .MutableLeaves)
-                print(JSON(js!)["urls"][0]["url_short"].string!)
+//                // print(JSON(js!)["urls"][0]["url_short"].string!)
                 if JSON(js!)["urls"][0]["result"].boolValue {
 
                     self.shareNewsUrl = JSON(js!)["urls"][0]["url_short"].string!
@@ -1291,7 +1356,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             //            webpage.thumbnailData = NSDa
             webpage.webpageUrl = shareNewsUrl
             message.mediaObject = webpage
-            print(message.mediaObject.debugDescription)
+//            // print(message.mediaObject.debugDescription)
             
             let request = WBSendMessageToWeiboRequest.requestWithMessage(message, authInfo: authRequest, access_token: AppDelegate().wbtoken) as! WBSendMessageToWeiboRequest
             request.userInfo = ["ShareMessageFrom":"NewsContantViewController"]
@@ -1327,13 +1392,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         }
         
-        print(btn.tag)
+//        // print(btn.tag)
 
     }
     
     func zanAddNum(btn:UIButton) {
         
-        print("赞")
+//        // print("赞")
         self.zan.enabled = false
         // MARK:要求登录
         if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
@@ -1354,15 +1419,15 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 "userid":QCLoginUserInfo.currentInfo.userid
             ];
             Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
-                print(request)
+//                // print(request)
                 if(error != nil){
                     hud.mode = MBProgressHUDMode.Text
                     hud.labelText = "取消点赞失败"
                     hud.hide(true, afterDelay: 1)
                 }else{
                     let status = Http(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+//                    // print("状态是")
+//                    // print(status.status)
                     if(status.status == "error"){
 //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
@@ -1381,7 +1446,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //                        hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                         //self.myTableView .reloadData()
-                        print(status.data)
+//                        // print(status.data)
 //                        self.isLike=false
 //                        user.setObject("false", forKey: "isLike")
                         self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"0"], waitUntilDone:true)
@@ -1410,15 +1475,15 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
             Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
-                print(request)
+                // print(request)
                 if(error != nil){
                     hud.mode = MBProgressHUDMode.Text
                     hud.labelText = "点赞失败"
                     hud.hide(true, afterDelay: 1)
                 }else{
                     let status = addScore_ReadingInformationModel(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+                    // print("状态是")
+                    // print(status.status)
                     if(status.status == "error"){
 //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text
@@ -1442,7 +1507,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                         
 //                        user.setObject("true", forKey: "isLike")
                         //                            user.setObject("true", forKey: (self.newsInfo?.object_id)!)
-                        print(status.data)
+                        // print(status.data)
 //                        self.isLike=true
                         
                         let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
@@ -1462,7 +1527,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         
 //        let user = NSUserDefaults.standardUserDefaults()
 //        let uid = user.stringForKey("userid")
-//        print(uid)
+//        // print(uid)
 //        if uid==nil {
 //            zan.setImage(UIImage(named: "img_like.png"), forState: .Normal)
 //            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
@@ -1473,7 +1538,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //        }else{
 //
 //            let userID = user.stringForKey((self.newsInfo?.object_id)!)
-//            print(userID)
+//            // print(userID)
 //            let str = newsInfo!.likes
 //            var answerInfo = NSString()
 //            
@@ -1522,12 +1587,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //            "type":"1"
 //        ];
 //        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-//            print(request)
+//            // print(request)
 //            if(error != nil){
 //            }else{
 //                let status = Http(JSONDecoder(json!))
-//                print("状态是")
-//                print(status.status)
+//                // print("状态是")
+//                // print(status.status)
 //                if(status.status == "error"){
 //                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
 //                    hud.mode = MBProgressHUDMode.Text;
@@ -1537,7 +1602,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //                    hud.hide(true, afterDelay: 1)
 //                }
 //                if(status.status == "success"){
-//                    print(status.data)
+//                    // print(status.data)
 //                }
 //            }
 //        }

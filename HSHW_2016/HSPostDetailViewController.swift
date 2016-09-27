@@ -737,24 +737,24 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         print("textfield.text = ",textField.text)
         if textField.text != "" {
-            helper.setComment((postInfo?.mid)!, content: (textField.text)!, type: "2", photo: "", handle: { (success, response) in
-                print("添加评论",success,response)
-                if success {
-                    
-                    let dic = ["userid":String(QCLoginUserInfo.currentInfo.userid),"name":String(QCLoginUserInfo.currentInfo.userName),"content":String(UTF8String: textField.text!)!]
-                    let commentModel = CommentModel.init(JSONDecoder(dic))
-                    self.postInfo?.comment.append(commentModel)
-                    
-                    self.contentTableView.reloadData()
-                    if self.contentTableView.contentSize.height > self.contentTableView.frame.size.height {
-                        
-                        self.contentTableView.contentOffset = CGPoint(x: 0, y: self.contentTableView.contentSize.height-self.contentTableView.frame.size.height)
-                    }
-                    
-                    textField.text = nil
-                    
-                }
-            })
+//            helper.setComment((postInfo?.mid)!, content: (textField.text)!, type: "2", photo: "", handle: { (success, response) in
+//                print("添加评论",success,response)
+//                if success {
+//                    
+//                    let dic = ["userid":String(QCLoginUserInfo.currentInfo.userid),"name":String(QCLoginUserInfo.currentInfo.userName),"content":String(UTF8String: textField.text!)!]
+//                    let commentModel = CommentModel.init(JSONDecoder(dic))
+//                    self.postInfo?.comment.append(commentModel)
+//                    
+//                    self.contentTableView.reloadData()
+//                    if self.contentTableView.contentSize.height > self.contentTableView.frame.size.height {
+//                        
+//                        self.contentTableView.contentOffset = CGPoint(x: 0, y: self.contentTableView.contentSize.height-self.contentTableView.frame.size.height)
+//                    }
+//                    
+//                    textField.text = nil
+//                    
+//                }
+//            })
         }
         textField.resignFirstResponder()
         return true

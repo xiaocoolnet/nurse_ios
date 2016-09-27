@@ -222,7 +222,7 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+//        print(indexPath.row)
         
         let userPageVC = GMyExaminationViewController()
         userPageVC.type = 1

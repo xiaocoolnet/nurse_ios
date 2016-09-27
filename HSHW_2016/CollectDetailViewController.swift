@@ -53,7 +53,7 @@ class CollectDetailViewController: UIViewController, UITableViewDelegate,UITable
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+//        print(indexPath.row)
         let next = NewsContantViewController()
         next.newsInfo = collectListArray[indexPath.row]
         navigationController!.pushViewController(next, animated: true)

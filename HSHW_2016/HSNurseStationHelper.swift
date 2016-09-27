@@ -17,13 +17,13 @@ class HSNurseStationHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 let result = HSJobListModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
@@ -55,7 +55,7 @@ class HSNurseStationHelper: NSObject {
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                print(request?.URLString)
+                // print(request?.URLString)
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
                     handle(success: true, response: nil)
@@ -71,17 +71,15 @@ class HSNurseStationHelper: NSObject {
     //获取简历列表
     func getCVList(handle:ResponseBlock){
         let url = PARK_URL_Header+"getResumeList"
-        let param = [
-            "userid":QCLoginUserInfo.currentInfo.userid
-        ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+        
+        Alamofire.request(.GET, url).response { request, response, json, error in
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 let result = HSCVListModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
@@ -98,13 +96,13 @@ class HSNurseStationHelper: NSObject {
             "userid":userid
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 let result = GCVModel(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
@@ -123,13 +121,13 @@ class HSNurseStationHelper: NSObject {
             "jobid":jobid
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 let result = Http(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.data)
                 }else{
@@ -148,13 +146,13 @@ class HSNurseStationHelper: NSObject {
             "jobid":jobid
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 let result = Http(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.data)
                 }else{
@@ -177,8 +175,8 @@ class HSNurseStationHelper: NSObject {
                 let model =  NewsModel(JSONDecoder(json!))
                 if(model.status == "success"){
                     let result = NewsList(model.data!)
-                    print("状态是")
-                    print(result.status)
+                    // print("状态是")
+                    // print(result.status)
                     handle(success: true, response: result.objectlist)
                 }else{
                     handle(success: false, response: model.errorData)
@@ -216,7 +214,7 @@ class HSNurseStationHelper: NSObject {
                 handle(success: false, response: error?.description)
             }else{
                 let result = PostlistModel(JSONDecoder(json!))
-                print(result.datas)
+                // print(result.datas)
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
@@ -229,15 +227,15 @@ class HSNurseStationHelper: NSObject {
     func postForumCard(typid:String,title:String,content:String,picurl:String, handle:ResponseBlock){
         let url = PARK_URL_Header+"addbbsposts"
         let param = ["userid":QCLoginUserInfo.currentInfo.userid,"typeid":typid,"title":title,"content":content,"picurl":picurl]
-        print(param)
+        // print(param)
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             
-            print(response)
+            // print(response)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
                 let result = Http(JSONDecoder(json!))
-                print(result)
+                // print(result)
                 if(result.status == "success"){
                     handle(success: true, response: nil)
                 }else{
@@ -255,7 +253,7 @@ class HSNurseStationHelper: NSObject {
         let param = ["userid":QCLoginUserInfo.currentInfo.userid,"id":id,"content":content,"type":type,"photo":photo]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             
-            print(request?.URLString)
+            // print(request?.URLString)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -325,7 +323,7 @@ class HSNurseStationHelper: NSObject {
                      "wantposition":wantposition,
                      "description":description,]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            print(request?.URLString)
+            // print(request?.URLString)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -381,7 +379,7 @@ class HSNurseStationHelper: NSObject {
                      "description":description,]
         if type == 1 {
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                print(request?.URLString)
+                // print(request?.URLString)
                 if(error != nil){
                     handle(success: false, response: error?.description)
                 }else{
@@ -396,7 +394,7 @@ class HSNurseStationHelper: NSObject {
         }else{
             
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                print(request?.URLString)
+                // print(request?.URLString)
                 if(error != nil){
                     handle(success: false, response: error?.description)
                 }else{
@@ -447,8 +445,8 @@ class HSNurseStationHelper: NSObject {
             if(error != nil){
             }else{
                 let result = Http(JSONDecoder(json!))
-                print("状态是")
-                print(result.status)
+                // print("状态是")
+                // print(result.status)
                 if(result.status == "error"){
                     handle(success: false, response: result.errorData)
                 }

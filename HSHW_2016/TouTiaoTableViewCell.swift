@@ -125,8 +125,8 @@ class TouTiaoTableViewCell: UITableViewCell {
         self.colNum.text = String(newsInfo.favorites.count)
         self.colNum.sizeToFit()
         
-        let photoUrl:String = DomainName+newsInfo.thumb!
-        print(photoUrl)
+//        let photoUrl:String = DomainName+newsInfo.thumb!
+//        print(photoUrl)
         
         if newsInfo.thumbArr.count == 0 {
             
@@ -146,7 +146,7 @@ class TouTiaoTableViewCell: UITableViewCell {
                 titSubImg.hidden = true
             }else{
                 let photoUrl:String = DomainName+"data/upload/"+(newsInfo.thumbArr.first?.url)!
-                print("=-=-=-=-=-=-=   ",photoUrl)
+//                print("TouTiaoTableViewCell   =-=-=-=-=-=-=   ",photoUrl)
                 
                 titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
                 self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
@@ -269,7 +269,7 @@ class TouTiaoTableViewCell: UITableViewCell {
     }
 
     func categoryBtnClick(categoryBtn:UIButton) {
-        print(categoryBtn.tag)
+//        print(categoryBtn.tag)
         
         self.delegate!.cateBtnClicked(categoryBtn)
     }

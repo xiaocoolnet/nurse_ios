@@ -83,7 +83,7 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
+//        print(indexPath.row)
 
         helper.showPostInfo(self.dataSource[indexPath.row].mid) { (success, response) in
             let data = (response as? PostModel ?? nil)!
@@ -91,7 +91,7 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
             vc.postInfo = data
             self.navigationController?.pushViewController(vc, animated: true)
             
-            print(response)
+//            print(response)
         }
 
     }
@@ -107,7 +107,7 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
         
         let date = NSDate(timeIntervalSince1970: timeSta)
         
-        print(dfmatter.stringFromDate(date))
+//        print(dfmatter.stringFromDate(date))
         return dfmatter.stringFromDate(date)
     }
 

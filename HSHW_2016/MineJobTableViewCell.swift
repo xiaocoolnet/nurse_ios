@@ -49,7 +49,7 @@ class MineJobTableViewCell: UITableViewCell {
         name.text = model.companyname
         location.text = model.address.componentsSeparatedByString(" ").first
         location.sizeToFit()
-        let contentStr = "薪资待遇:"+model.salary+"\n福利待遇:"+model.welfare+"\n招聘职位:"+model.title
+        let contentStr = "薪资待遇:"+model.salary+"\n福利待遇:"+model.welfare+"\n招聘职位:"+model.jobtype
         content.text = contentStr
         let contStr = "学历要求:"+model.education+"\n工作年限:"+"\n相关证件:"+model.certificate
         cont.text = contStr

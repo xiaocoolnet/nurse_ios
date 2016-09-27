@@ -90,11 +90,11 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
     
     func updateTime()
     {
-        //print(self.scrollView.subviews)
+        //// print(self.scrollView.subviews)
         let index :Int = self.pageControl.currentPage
-        print( self.pageControl.currentPage)
-        print(self.scrollView.subviews[index])
-        print(self.scrollView.subviews[index].subviews)
+        // print( self.pageControl.currentPage)
+        // print(self.scrollView.subviews[index])
+        // print(self.scrollView.subviews[index].subviews)
         //let label = self.scrollView.subviews[2].viewWithTag(10) as! UILabel
         var label = UILabel()
         if self.scrollView.subviews.count==0 {
@@ -112,7 +112,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                 
             }
 
-            print(label.text)
+            // print(label.text)
             if minute == -1 {
                 minute = 2
                 count = 59
@@ -150,13 +150,13 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
             "count":questionCount
         ];
         Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
-            print(request)
+            // print(request)
             if(error != nil){
                 
             }else{
                 let status = EveryDayModel(JSONDecoder(json!))
-                print("状态是")
-                print(status.status)
+                // print("状态是")
+                // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
@@ -166,27 +166,27 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                 }
                 if(status.status == "success"){
                     
-                    print(status)
+                    // print(status)
                     self.dataSource = DaliyExamList(status.data!).objectlist
-                    print(self.dataSource)
-                    print(self.dataSource.count)
-                    print("-----")
+                    // print(self.dataSource)
+                    // print(self.dataSource.count)
+                    // print("-----")
                     
                     self.createScrollerView()
                     self.timeDow()
                     self.AnswerView()
                     self.backBottomView()
                     self.questionCard()
-                    print(status.data)
+                    // print(status.data)
                 }
             }
         }
     }
     // MARK:    答题卡视图
     func questionCard() {
-        print(self.pageControl.currentPage)
-        print(self.myChoose)
-        print(self.rightAnswer)
+        // print(self.pageControl.currentPage)
+        // print(self.myChoose)
+        // print(self.rightAnswer)
         
         let labelArray = ["答对","答错","未答","当前题"]
         questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
@@ -228,8 +228,8 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
         let smartWidth = smart.frame.size.width
         let margin:CGFloat = (smartWidth - CGFloat(self.totalloc) * smartWidth/CGFloat(self.totalloc))/(CGFloat(self.totalloc)+1);
         for j in 0 ..< self.dataSource.count {
-            print(self.myChoose)
-            print(self.rightAnswer)
+            // print(self.myChoose)
+            // print(self.rightAnswer)
             let row:Int = j / totalloc;//行号
             let loc:Int = j % totalloc;//列号
             let appviewx:CGFloat = margin+(margin+smartWidth/CGFloat(self.totalloc))*CGFloat(loc)
@@ -291,8 +291,8 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
             let answerInfo = examInfo.answerlist[i]
             if answerInfo.isanswer == "1" {
                 rightAnswer[pageControl.currentPage] = i+1
-                print(answerInfo.answer_title)
-                print(answerInfo.isanswer)
+                // print(answerInfo.answer_title)
+                // print(answerInfo.isanswer)
                 break
             }
         }
@@ -340,9 +340,9 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
             label.textColor = UIColor.grayColor()
             label.text = labelArray[i]
             if i==0 {
-                print(self.myChoose)
-                print(self.myChoose.count)
-                print(self.pageControl.currentPage)
+                // print(self.myChoose)
+                // print(self.myChoose.count)
+                // print(self.pageControl.currentPage)
                 
                 if self.myChoose.count == 0 || self.pageControl.currentPage+1>self.myChoose.count{
                     answer.text = " "
@@ -356,10 +356,10 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                     //answer.text =  String(self.myChoose[self.pageControl.currentPage])
                 }
             }else if i==1{
-                print(self.rightAnswer)
-                print(self.pageControl.currentPage)
+                // print(self.rightAnswer)
+                // print(self.pageControl.currentPage)
                 
-                print(self.rightAnswer[self.pageControl.currentPage])
+                // print(self.rightAnswer[self.pageControl.currentPage])
                 let isanswer = 65 + (self.rightAnswer[self.pageControl.currentPage] as! Int)
                 let asc:UniChar = UInt16(isanswer)
                 let chara:Character = Character(UnicodeScalar(asc))
@@ -369,9 +369,9 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
             }else{
                 var difficultyValue = Int()
                 let examInfo = self.dataSource[self.pageControl.currentPage] as! ExamInfo
-                print(examInfo)
+                // print(examInfo)
                 difficultyValue = Int(examInfo.post_difficulty!)!
-                print(difficultyValue)
+                // print(difficultyValue)
                 let imageArray = NSMutableArray()
                 // let imageView = UIImageView()
                 for i in 0..<3 {
@@ -409,7 +409,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
         analysisContent.numberOfLines = 0
         analysisContent.font = UIFont.systemFontOfSize(15)
         let height: CGFloat = calculateHeight(examInfo.post_description!, size: 15, width:backeView.frame.size.width-20)
-        print(height)
+        // print(height)
         analysisContent.frame = CGRectMake(10, analysis.frame.size.height+analysis.frame.origin.y, backeView.frame.size.width-20, height)
         backeView.addSubview(analysisContent)
     }
@@ -534,8 +534,8 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                 let answerInfo = examInfo.answerlist[j]
                 let height:CGFloat = calculateHeight(string+"、"+answerInfo.answer_title, size: 18, width: WIDTH*314/375-10)
                 if j>0 {
-                    print(j)
-                    print(heightArray)
+                    // print(j)
+                    // print(heightArray)
                     btn.frame =  CGRectMake(WIDTH*21/375, 10+(CGFloat(heightArray[j-1] as! NSNumber))*CGFloat(1), WIDTH*314/375, height+10)
                     heightArray.addObject(btn.frame.size.height+btn.frame.origin.y)
                 }else{
@@ -602,7 +602,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
     }
     // MARK:   底部按钮
     func bottomBtnClick(btn:UIButton) {
-        print(btn.tag)
+        // print(btn.tag)
         if numb == 1 {
             if btn.tag == 1 {
                 btn.userInteractionEnabled = false
@@ -631,7 +631,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
             number.sizeToFit()
         }else if btn.tag == 3 {
 //            if isSubmit==false {
-//                print("请提交答案")
+//                // print("请提交答案")
 //            }else{
                 if over == true {
                     UIView.animateWithDuration(0.3, animations: {
@@ -686,12 +686,12 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                 return
             }
             
-            print(collection)
-            print("收藏")
+            // print(collection)
+            // print("收藏")
             let examInfo = self.dataSource[self.pageControl.currentPage] as! ExamInfo
             let user = NSUserDefaults.standardUserDefaults()
             let uid = user.stringForKey("userid")
-            print(uid)
+            // print(uid)
             if uid==nil {
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                 let vc  = mainStoryboard.instantiateViewControllerWithIdentifier("Login")
@@ -712,13 +712,13 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                     "description":examInfo.post_description
                 ];
                 Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
-                    print(request)
+                    // print(request)
                     if(error != nil){
                         
                     }else{
                         let status = Http(JSONDecoder(json!))
-                        print("状态是")
-                        print(status.status)
+                        // print("状态是")
+                        // print(status.status)
                         if(status.status == "error"){
                             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                             hud.mode = MBProgressHUDMode.Text;
@@ -738,7 +738,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                             btn.setImage(UIImage(named: "btn_collect_sel.png"), forState: .Normal)
                             self.TitCol.textColor = COLOR
                             self.collection = true
-                            print(status.data)
+                            // print(status.data)
                         }
                     }
                 }
@@ -751,13 +751,13 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                     "userid":uid
                 ];
                 Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
-                    print(request)
+                    // print(request)
                     if(error != nil){
                         
                     }else{
                         let status = Http(JSONDecoder(json!))
-                        print("状态是")
-                        print(status.status)
+                        // print("状态是")
+                        // print(status.status)
                         if(status.status == "error"){
                             let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                             hud.mode = MBProgressHUDMode.Text;
@@ -777,7 +777,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                             btn.setImage(UIImage(named: self.picArr[4]), forState: .Normal)
                             self.TitCol.textColor = GREY
                             self.collection = false
-                            print(status.data)
+                            // print(status.data)
                             
                         }
                     }
@@ -794,7 +794,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
     }
     
     func touchUp() {
-        print("触摸")
+        // print("触摸")
         self.bottomBtnClick(btnTwo)
     }
     //    选项
@@ -840,7 +840,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
     }
 
     func takeUpTheTest() {
-        print("提交")
+        // print("提交")
         self.isSubmit = true
         var idStr = ""
         var answerStr = ""

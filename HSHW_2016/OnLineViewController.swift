@@ -37,7 +37,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             hour = exam_time/60/60
             minute = exam_time/60%60
             second = exam_time%60
-//            print("考试时间   ===   \(hour):\(minute):\(second)")
+//            // print("考试时间   ===   \(hour):\(minute):\(second)")
         }
     }
     var dataSource = Array<ExamInfo>()
@@ -177,13 +177,13 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                     hud.hide(true, afterDelay: 1)
                 }else{
                     let status = EveryDayModel(JSONDecoder(json!))
-                    print("状态是")
-                    print(status.status)
+                    // print("状态是")
+                    // print(status.status)
                     if(status.status == "success"){
                         
-                        print(status)
+                        // print(status)
                         self.dataSource = DaliyExamList(status.data!).objectlist
-                        print(self.dataSource.count)
+                        // print(self.dataSource.count)
                         
                         hud.hide(true, afterDelay: 1)
 
@@ -224,7 +224,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     
     func updateTime()
     {
-        //  print(self.scrollView.subviews)
+        //  // print(self.scrollView.subviews)
 //        let index :Int = self.pageControl.currentPage
 //        var time = UILabel()
 //        if self.scrollView.subviews.count==0 {
@@ -268,7 +268,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
 //                hour -= 1
 //                
 //            }
-//            print(time.text)
+//            // print(time.text)
 //            if hour == -1 {
 //                hour = 2
 //                minute = 59
@@ -295,7 +295,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     }
     
     func timeOver() {
-        print("提交")
+        // print("提交")
         self.isSubmit = true
         var idStr = ""
         var answerStr = ""
@@ -417,7 +417,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                     hud2.hide(true, afterDelay: 2)
                 })
             }
-            print(response)
+            // print(response)
         }
     }
     
@@ -474,9 +474,9 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
 
     // MARK: 答题卡视图
     func questionCard_uncommit() {
-        print(self.pageControl.currentPage)
-        print(self.myChoose)
-        print(self.rightAnswer)
+        // print(self.pageControl.currentPage)
+        // print(self.myChoose)
+        // print(self.rightAnswer)
         
         let labelArray = ["已答","未答","当前题"]
         questBack_uncommit.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
@@ -517,8 +517,8 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         let smartWidth = smart.frame.size.width
         let margin:CGFloat = (smartWidth - CGFloat(self.totalloc) * smartWidth/CGFloat(self.totalloc))/(CGFloat(self.totalloc)+1);
         for j in 0 ..< self.dataSource.count {
-            print(self.myChoose)
-            print(self.rightAnswer)
+            // print(self.myChoose)
+            // print(self.rightAnswer)
             let row:Int = j / totalloc;//行号
             let loc:Int = j % totalloc;//列号
             let appviewx:CGFloat = margin+(margin+smartWidth/CGFloat(self.totalloc))*CGFloat(loc)
@@ -569,9 +569,9 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         
     }
     func questionCard_commit() {
-        print(self.pageControl.currentPage)
-        print(self.myChoose)
-        print(self.rightAnswer)
+        // print(self.pageControl.currentPage)
+        // print(self.myChoose)
+        // print(self.rightAnswer)
         
         let labelArray = ["答对","答错","未答","当前题"]
         questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
@@ -613,8 +613,8 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         let smartWidth = smart.frame.size.width
         let margin:CGFloat = (smartWidth - CGFloat(self.totalloc) * smartWidth/CGFloat(self.totalloc))/(CGFloat(self.totalloc)+1);
         for j in 0 ..< self.dataSource.count {
-            print(self.myChoose)
-            print(self.rightAnswer)
+            // print(self.myChoose)
+            // print(self.rightAnswer)
             let row:Int = j / totalloc;//行号
             let loc:Int = j % totalloc;//列号
             let appviewx:CGFloat = margin+(margin+smartWidth/CGFloat(self.totalloc))*CGFloat(loc)
@@ -680,8 +680,8 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             let answerInfo = examInfo.answerlist[i]
             if answerInfo.isanswer == "1" {
                 rightAnswer[pageControl.currentPage] = i+1
-                print(answerInfo.answer_title)
-                print(answerInfo.isanswer)
+                // print(answerInfo.answer_title)
+                // print(answerInfo.isanswer)
                 break
             }
         }
@@ -730,9 +730,9 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             label.textColor = UIColor.grayColor()
             label.text = labelArray[i]
             if i==0 {
-                print(self.myChoose)
-                print(self.myChoose.count)
-                print(self.pageControl.currentPage)
+                // print(self.myChoose)
+                // print(self.myChoose.count)
+                // print(self.pageControl.currentPage)
                 
                 if self.myChoose.count == 0 || self.pageControl.currentPage+1>self.myChoose.count{
                     answer.text = " "
@@ -746,9 +746,9 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 }
                 //answer.text = self.myChoose[self.pageControl.currentPage] as! String
             }else if i==1{
-                print(self.rightAnswer)
-                print(self.pageControl.currentPage)
-                print(self.rightAnswer[self.pageControl.currentPage])
+                // print(self.rightAnswer)
+                // print(self.pageControl.currentPage)
+                // print(self.rightAnswer[self.pageControl.currentPage])
                 let isanswer = 64 + (self.rightAnswer[self.pageControl.currentPage] as! Int)
                 let asc:UniChar = UInt16(isanswer)
                 let chara:Character = Character(UnicodeScalar(asc))
@@ -758,9 +758,9 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             }else{
                 var difficultyValue = Int()
                 let examInfo = self.dataSource[self.pageControl.currentPage]
-                print(examInfo)
+                // print(examInfo)
                 difficultyValue = Int(examInfo.post_difficulty!)!
-                print(difficultyValue)
+                // print(difficultyValue)
                 let imageArray = NSMutableArray()
                 // let imageView = UIImageView()
                 for i in 0..<3 {
@@ -800,7 +800,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         analysisContent.font = UIFont.systemFontOfSize(15)
         //      analysisContent.backgroundColor = UIColor.greenColor()
         let height: CGFloat = calculateHeight(examInfo.post_description!, size: 15, width:backeView.frame.size.width-20)
-        print(height)
+        // print(height)
         analysisContent.frame = CGRectMake(10, analysis.frame.size.height+analysis.frame.origin.y, backeView.frame.size.width-20, height)
         if height > WIDTH*20/375 {
             backeView.frame = CGRectMake(0, HEIGHT-54-WIDTH*260/375-(height-WIDTH*20/375), WIDTH, WIDTH*260/375+(height-WIDTH*20/375))
@@ -874,12 +874,12 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         danxuan.text = "单选题"
         danxuan.sizeToFit()
         backGound.addSubview(danxuan)
-        let tit = UILabel(frame: CGRectMake(28+danxuan.bounds.size.width, 18.5, 40, 12))
-        tit.font = UIFont.systemFontOfSize(12)
-        tit.textColor = GREY
-        tit.text = "（A1，2分）"
-        tit.sizeToFit()
-        backGound.addSubview(tit)
+//        let tit = UILabel(frame: CGRectMake(28+danxuan.bounds.size.width, 18.5, 40, 12))
+//        tit.font = UIFont.systemFontOfSize(12)
+//        tit.textColor = GREY
+//        tit.text = "（A1，2分）"
+//        tit.sizeToFit()
+//        backGound.addSubview(tit)
         time.frame = CGRectMake(WIDTH-75, 16, 75, 12)
 //        time.tag = 10+i
         //time.backgroundColor = UIColor.redColor()
@@ -919,7 +919,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.delegate = self
         
-        print(self.dataSource.count)
+        // print(self.dataSource.count)
         for  i in 0 ..< self.dataSource.count {
             let examInfo = self.dataSource[i]
             let contentScrollView :UIScrollView = UIScrollView.init()
@@ -948,8 +948,8 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 let answerInfo = examInfo.answerlist[j]
                 let height:CGFloat = calculateHeight(string+"、"+answerInfo.answer_title, size: 18, width: WIDTH*314/375-10)
                 if j>0 {
-                    print(j)
-                    print(heightArray)
+                    // print(j)
+                    // print(heightArray)
                     btn.frame =  CGRectMake(WIDTH*21/375, 10+(CGFloat(heightArray[j-1] as! NSNumber))*CGFloat(1), WIDTH*314/375, height+10)
                     heightArray.addObject(btn.frame.size.height+btn.frame.origin.y)
                 }else{
@@ -958,7 +958,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 }
                 //选项按钮
                 btn.tag = j+1
-                btn.layer.cornerRadius = (height+10)/2
+                btn.layer.cornerRadius = 10
                 btn.layer.borderColor = COLOR.CGColor
                 btn.layer.borderWidth = 1
                 btn.addTarget(self, action: #selector(self.pleaseChooseOne(_:)), forControlEvents: .TouchUpInside)
@@ -1060,7 +1060,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     }
 //     MARK:   底部按钮  
     func bottomBtnClick(btn:UIButton) {
-        print(btn.tag)
+        // print(btn.tag)
         if btn.tag == 1 {
             self.pageControl.currentPage -= 1
             let offSetX:CGFloat = CGFloat(self.pageControl.currentPage) * WIDTH
@@ -1143,12 +1143,12 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 return
             }
             
-            print(collection)
-            print("收藏")
+            // print(collection)
+            // print("收藏")
             let examInfo = self.dataSource[self.pageControl.currentPage]
             let user = NSUserDefaults.standardUserDefaults()
             let uid = user.stringForKey("userid")
-            print(uid)
+            // print(uid)
             if uid==nil {
                 let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
                 let vc  = mainStoryboard.instantiateViewControllerWithIdentifier("Login")
@@ -1174,15 +1174,15 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                     "description":examInfo.post_description
                 ];
                 Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
-                    print(request)
+                    // print(request)
                     if(error != nil){
                         hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = "收藏失败"
                         hud.hide(true, afterDelay: 0.5)
                     }else{
                         let status = Http(JSONDecoder(json!))
-                        print("状态是")
-                        print(status.status)
+                        // print("状态是")
+                        // print(status.status)
                         dispatch_async(dispatch_get_main_queue(), {
                             if(status.status == "error"){
 //                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -1202,7 +1202,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                                 btn.setImage(UIImage(named: "btn_collect_sel.png"), forState: .Normal)
                                 self.TitCol.textColor = COLOR
                                 self.collection = true
-                                print(status.data)
+                                // print(status.data)
                             }
                         })
                     }
@@ -1218,15 +1218,15 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                     "userid":uid
                 ];
                 Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
-                    print(request)
+                    // print(request)
                     if(error != nil){
                         hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = "取消收藏失败"
                         hud.hide(true, afterDelay: 0.5)
                     }else{
                         let status = Http(JSONDecoder(json!))
-                        print("状态是")
-                        print(status.status)
+                        // print("状态是")
+                        // print(status.status)
                         dispatch_async(dispatch_get_main_queue(), {
                             if(status.status == "error"){
 //                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -1246,7 +1246,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                                 btn.setImage(UIImage(named: self.picArr[4]), forState: .Normal)
                                 self.TitCol.textColor = GREY
                                 self.collection = false
-                                print(status.data)
+                                // print(status.data)
                             }
                         })
                     }
@@ -1256,7 +1256,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     }
     
     func touchUp() {
-        print("触摸")
+        // print("触摸")
         self.bottomBtnClick(btnTwo)
     }
     // 选项
@@ -1303,7 +1303,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     }
     
     func takeUpTheTest() {
-        print("提交")
+        // print("提交")
         self.isSubmit = true
         var idStr = ""
         var answerStr = ""
@@ -1396,7 +1396,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                     hud2.hide(true, afterDelay: 2)
                 })
             }
-            print(response)
+            // print(response)
         }
     }
     
