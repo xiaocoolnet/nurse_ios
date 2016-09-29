@@ -15,7 +15,7 @@ protocol refreshSmallImageDelegate {
 class MineMessDetailViewController: UIViewController,UITableViewDelegate, UITableViewDataSource {
 
     let myTableView = UITableView()
-    var info = MessageInfo?()
+    var messageInfo = MessageInfo?()
     
     var indexPath:NSIndexPath = NSIndexPath()
     var delegate:refreshSmallImageDelegate?
@@ -41,7 +41,7 @@ class MineMessDetailViewController: UIViewController,UITableViewDelegate, UITabl
         myTableView.separatorStyle = .None
         self.view.addSubview(myTableView)
         
-        self.title = info?.title
+        self.title = messageInfo?.title
         
         let lineView = UIView.init(frame: CGRectMake(0, 0, WIDTH, 1))
         lineView.backgroundColor = COLOR
@@ -55,14 +55,14 @@ class MineMessDetailViewController: UIViewController,UITableViewDelegate, UITabl
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let height = calculateHeight(info?.content ?? "", size: 17, width: WIDTH-20)
+        let height = calculateHeight(messageInfo?.content ?? "", size: 17, width: WIDTH-20)
         return height+40
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
         cell.selectionStyle = .None
-        cell.textLabel?.text = info?.content
+        cell.textLabel?.text = messageInfo?.content
         cell.textLabel?.numberOfLines = 0
         cell.textLabel?.sizeToFit()
         return cell

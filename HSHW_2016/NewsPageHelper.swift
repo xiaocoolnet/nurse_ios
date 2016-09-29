@@ -124,11 +124,12 @@ class NewsPageHelper: NSObject {
     }
     
     // 添加积分——阅读资讯
-    func addScore_ReadingInformation(handle:ResponseBlock){
+    func addScore_ReadingInformation(remarks:String, handle:ResponseBlock){
         
         let url = PARK_URL_Header+"addScore_ReadingInformation"
         let param = [
-            "userid":QCLoginUserInfo.currentInfo.userid
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "remarks":remarks
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             // print(request)

@@ -55,10 +55,10 @@ public class Manager {
 
         // User-Agent Header; see https://tools.ietf.org/html/rfc7231#section-5.5.3
         let userAgent: String = {
-            if let info = NSBundle.mainBundle().infoDictionary {
-                let executable = info[kCFBundleExecutableKey as String] as? String ?? "Unknown"
-                let bundle = info[kCFBundleIdentifierKey as String] as? String ?? "Unknown"
-                let version = info[kCFBundleVersionKey as String] as? String ?? "Unknown"
+            if let infoDic = NSBundle.mainBundle().infoDictionary {
+                let executable = infoDic[kCFBundleExecutableKey as String] as? String ?? "Unknown"
+                let bundle = infoDic[kCFBundleIdentifierKey as String] as? String ?? "Unknown"
+                let version = infoDic[kCFBundleVersionKey as String] as? String ?? "Unknown"
                 let os = NSProcessInfo.processInfo().operatingSystemVersionString
 
                 var mutableUserAgent = NSMutableString(string: "\(executable)/\(bundle) (\(version); OS \(os))") as CFMutableString

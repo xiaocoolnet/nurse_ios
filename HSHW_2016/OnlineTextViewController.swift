@@ -133,16 +133,16 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("onlineCell", forIndexPath: indexPath)as!OnlineTextTableViewCell
-        var info:EveryDayInfo
+        var everyDayInfo:EveryDayInfo
         if dataSource.objectlist[indexPath.section].haschild == 0 {
-            info = self.dataSource.objectlist[indexPath.section]
+            everyDayInfo = self.dataSource.objectlist[indexPath.section]
             cell.titleImg.setImage(UIImage(named: picArr[indexPath.section]), forState: .Normal)
         }else {
-            info = self.dataSource.objectlist[indexPath.section].childlist[indexPath.row]
+            everyDayInfo = self.dataSource.objectlist[indexPath.section].childlist[indexPath.row]
             cell.titleImg.setImage(nil, forState: .Normal)
         }
         cell.selectionStyle = .None
-        cell.titleLable.text = info.name
+        cell.titleLable.text = everyDayInfo.name
         cell.startBtn.userInteractionEnabled = false
         let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
 //        line.backgroundColor = UIColor.grayColor()
@@ -171,7 +171,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         }else{
             cell.startBtn.setTitle("开始考试", forState: .Normal)
         }
-        cell.numLable.text = info.count
+        cell.numLable.text = everyDayInfo.count
         return cell
     }
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -181,25 +181,25 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
             return
         }
         
-        var info:EveryDayInfo
+        var everyDayInfo:EveryDayInfo
         if dataSource.objectlist[indexPath.section].haschild == 0 {
-            info = dataSource.objectlist[indexPath.section]
+            everyDayInfo = dataSource.objectlist[indexPath.section]
         }else {
-            info = dataSource.objectlist[indexPath.section].childlist[indexPath.row]
+            everyDayInfo = dataSource.objectlist[indexPath.section].childlist[indexPath.row]
         }
 
         if type == 1 {
             let nextVC = WordViewController()
-            nextVC.title = "每日一练·\(info.name)"
-            nextVC.questionCount = info.count
-            nextVC.type = info.term_id
+            nextVC.title = "每日一练·\(everyDayInfo.name)"
+            nextVC.questionCount = everyDayInfo.count
+            nextVC.type = everyDayInfo.term_id
             self.navigationController?.pushViewController(nextVC, animated: true)
         }else{
             let nextVC = OnLineViewController()
-            nextVC.title = "在线考试·\(info.name)"
-            nextVC.questionCount = info.count
-            nextVC.exam_time = Int(info.exam_time)!
-            nextVC.type = info.term_id
+            nextVC.title = "在线考试·\(everyDayInfo.name)"
+            nextVC.questionCount = everyDayInfo.count
+            nextVC.exam_time = Int(everyDayInfo.exam_time)!
+            nextVC.type = everyDayInfo.term_id
             self.navigationController?.pushViewController(nextVC, animated: true)
         }
     }

@@ -75,9 +75,24 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
             }
             dispatch_async(dispatch_get_main_queue(), {
                 self.myTableView.mj_header.endRefreshing()
+                
             })
             
         }
+        
+//        LoginModel().comfirmPhoneHasRegister("") { (success, response) in
+//            if !success {
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    self.myTableView.mj_header.endRefreshing()
+//                    if self.myTableView.tableHeaderView == nil {
+//                        if self.myTableView.tableHeaderView == nil {
+//                            
+//                            self.setheaderView()
+//                        }
+//                    }
+//                })
+//            }
+//        }
         
         
     }
@@ -89,7 +104,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.registerClass(AcademicTableViewCell.self, forCellReuseIdentifier: "successfulCasecell")
-        setheaderView()
+//        setheaderView()
         self.view.addSubview(myTableView)
         myTableView.rowHeight = (WIDTH-20)*0.5+63
         

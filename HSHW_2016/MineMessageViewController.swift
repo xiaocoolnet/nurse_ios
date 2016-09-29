@@ -97,7 +97,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         NSUserDefaults.standardUserDefaults().setValue(markReadMessageIDArray, forKey: "markReadMessageID")
         
         let vc = MineMessDetailViewController()
-        vc.info = self.dataSource.objectlist[indexPath.row]
+        vc.messageInfo = self.dataSource.objectlist[indexPath.row]
         vc.indexPath = indexPath
         vc.delegate = self
         self.navigationController?.pushViewController(vc, animated: true)

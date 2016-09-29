@@ -720,13 +720,13 @@ extension DropDown {
     public func objc_show() -> NSDictionary {
         let (canBeDisplayed, offScreenHeight) = show()
         
-        var info = [NSObject : AnyObject]()
-        info["canBeDisplayed"] = canBeDisplayed
+        var infoo = [NSObject : AnyObject]()
+        infoo["canBeDisplayed"] = canBeDisplayed
         if let offScreenHeight = offScreenHeight {
-            info["offScreenHeight"] = offScreenHeight
+            infoo["offScreenHeight"] = offScreenHeight
         }
         
-        return NSDictionary(dictionary: info)
+        return NSDictionary(dictionary: infoo)
     }
 	
 	/**

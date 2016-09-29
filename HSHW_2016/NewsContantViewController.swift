@@ -955,7 +955,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let webCell = tableView.dequeueReusableCellWithIdentifier("webView") as! contentCell
                 if webFlag {
                     
-                    helper.addScore_ReadingInformation({ (success, response) in
+                    helper.addScore_ReadingInformation((newsInfo?.object_id)!, handle: { (success, response) in
                         if success || String(response!) == "lost param"{
                             
                             let url = NSURL(string:NewsInfo_Header+(self.newsInfo?.object_id)!)
