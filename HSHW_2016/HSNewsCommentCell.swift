@@ -36,33 +36,11 @@ class HSNewsCommentCell: UITableViewCell {
         // Initialization code
     }
     
-//    var commentModel = 1 {
-//        didSet {
-//            nameLab.text = "用户\(commentModel)"
-//            contentLab.text = "假数据，测试专用，\n真实数据内容敬请期待，\n测试内容\(commentModel)"
-//            timeLab.text = self.timeStampToString(String(NSDate().timeIntervalSince1970))
-//            
-////            HSMineHelper().getUserInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
-////                let model = response as! HSFansAndFollowModel
-////                dispatch_async(dispatch_get_main_queue(), {
-////                    if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-////                        self.headerBtn.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
-////                    }else{
-////                        self.headerBtn.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(model.photo)), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
-////                    }
-//////                    self.headerBtn.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+model.photo), forState: .Normal)
-//////                    self.positionLab.text = model.major
-//////                    self.levelLab.text = String(format: "Lv.%02d", Int(model.level)!)
-////                })
-////            }
-//        }
-//    }
-    
     var commentModel:commentDataModel? {
         didSet {
             nameLab.text = commentModel?.username
             contentLab.text = commentModel?.content
-            timeLab.text = self.timeStampToString((commentModel?.add_time)!)
+            timeLab.text = self.timeStampToString((commentModel?.add_time)!)+"    回复"
             if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
                 self.headerBtn.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
             }else{
@@ -78,23 +56,31 @@ class HSNewsCommentCell: UITableViewCell {
             var child_commentBtnY = CGRectGetMaxY(timeLab.frame)+8
             for (_,child_comment) in (commentModel?.child_comments)!.enumerate() {
                 
-                let str = child_comment.username+"："+child_comment.content
-                let nsStr = NSString(string: str)
-                let attStr = NSMutableAttributedString(string: str)
+//                let str = child_comment.username+"：\n"+child_comment.content
+//                let nsStr = NSString(string: str)
+//                let attStr = NSMutableAttributedString(string: str)
+//                
+//                attStr.addAttributes([NSForegroundColorAttributeName: UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1),NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, nsStr.length))
+//                attStr.addAttributes([NSForegroundColorAttributeName: COLOR,NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, nsStr.rangeOfString("：").location))
                 
-                attStr.addAttributes([NSForegroundColorAttributeName: UIColor.blackColor(),NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, nsStr.length))
-                attStr.addAttributes([NSForegroundColorAttributeName: COLOR,NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, nsStr.rangeOfString("：").location))
+//                let child_commentBtnHeight = child_comment.content.boundingRectWithSize(CGSizeMake(WIDTH-self
+//                    .contentLab.frame.origin.x-8-10, 0), options: .UsesLineFragmentOrigin, context: nil).size.height+10
                 
-                let child_commentBtnHeight = attStr.boundingRectWithSize(CGSizeMake(WIDTH-62-10, 0), options: .UsesLineFragmentOrigin, context: nil).size.height+10
-                
+                let child_commentBtnHeight = child_comment.content.boundingRectWithSize(
+                    CGSizeMake(WIDTH-self.contentLab.frame.origin.x-8-10, 0),
+                    options: .UsesLineFragmentOrigin,
+                    attributes: [NSFontAttributeName:UIFont.systemFontOfSize(14)],
+                    context: nil).size.height+10
+
                 let bgView = UIView(frame: CGRectMake(
                     self
-                        .contentLab.frame.origin.x,
+                        .contentLab.frame.origin.x+30,
                     child_commentBtnY,
-                    WIDTH-62,
-                    child_commentBtnHeight))
+                    WIDTH-self
+                        .contentLab.frame.origin.x-8-30,
+                    child_commentBtnHeight+5+25))
                 bgView.tag = 1000
-                bgView.backgroundColor = UIColor.lightGrayColor()
+                bgView.backgroundColor = UIColor(red: 249/255.0, green: 242/255.0, blue: 247/255.0, alpha: 1)
                 self.contentView.addSubview(bgView)
                 
 //                let child_commentBtn = UIButton(frame: CGRectMake(
@@ -109,18 +95,41 @@ class HSNewsCommentCell: UITableViewCell {
 //                child_commentBtn.tag = i
 ////                child_commentBtn.addTarget(self, action: #selector(child_commentBtnClick(_:)), forControlEvents: .TouchUpInside)
 //                bgView.addSubview(child_commentBtn)
+                
+                // 用户名
+                let child_comment_userNameLab = UILabel(frame: CGRectMake(
+                    5,
+                    5,
+                    WIDTH-self
+                        .contentLab.frame.origin.x-8-10-30,
+                    25))
+                child_comment_userNameLab.textAlignment = .Left
+                child_comment_userNameLab.numberOfLines = 1
+                
+                child_comment_userNameLab.textColor = COLOR
+                child_comment_userNameLab.font = UIFont.systemFontOfSize(14)
+                child_comment_userNameLab.text = child_comment.username+"："
+                bgView.addSubview(child_comment_userNameLab)
+                
+                // 子评论内容
                 let child_commentLab = UILabel(frame: CGRectMake(
                     5,
-                    0,
-                    WIDTH-62-10,
+                    CGRectGetMaxY(child_comment_userNameLab.frame),
+                    WIDTH-self
+                        .contentLab.frame.origin.x-8-10-30,
                     child_commentBtnHeight))
                 child_commentLab.textAlignment = .Left
                 child_commentLab.numberOfLines = 0
                 
-                child_commentLab.attributedText = attStr
+                child_commentLab.textColor = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1)
+                child_commentLab.font = UIFont.systemFontOfSize(14)
+                child_commentLab.text = child_comment.content
 //                child_commentLab.tag = i
                 //                child_commentBtn.addTarget(self, action: #selector(child_commentBtnClick(_:)), forControlEvents: .TouchUpInside)
                 bgView.addSubview(child_commentLab)
+                
+//                child_commentLab.backgroundColor = UIColor.blueColor()
+//                child_comment_userNameLab.backgroundColor = UIColor.brownColor()
                 
                 child_commentBtnY = CGRectGetMaxY(bgView.frame)
                 

@@ -888,17 +888,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 var child_commentBtnY = height+8+40+8+8+14+8
                 for child_comment in (self.commentArray[indexPath.row].child_comments) {
                     
-                    let str = child_comment.username+"："+child_comment.content
-                    let nsStr = NSString(string: str)
-                    let attStr = NSMutableAttributedString(string: str)
+                    let child_commentBtnHeight = child_comment.content.boundingRectWithSize(
+                        CGSizeMake(WIDTH-60-8-10, 0),
+                        options: .UsesLineFragmentOrigin,
+                        attributes: [NSFontAttributeName:UIFont.systemFontOfSize(14)],
+                        context: nil).size.height+10
                     
-                    attStr.addAttributes([NSForegroundColorAttributeName: UIColor.blackColor(),NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, nsStr.length))
-                    attStr.addAttributes([NSForegroundColorAttributeName: COLOR,NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, nsStr.rangeOfString("：").location))
-                    
-                    
-                    let child_commentBtnHeight = attStr.boundingRectWithSize(CGSizeMake(WIDTH-62-10, 0), options: .UsesLineFragmentOrigin, context: nil).size.height+10
-                    
-                    child_commentBtnY += child_commentBtnHeight
+                    child_commentBtnY += child_commentBtnHeight+25+5
                     
                 }
 
@@ -1113,7 +1109,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }else{
                 cell.textLabel?.text = nil
 //                cell.line.hidden = false
-                cell.floorLab.text = "\(indexPath.row+1)楼"
+                cell.floorLab.text = "\(self.commentArray.count-indexPath.row)楼"
                 cell.commentModel = self.commentArray[indexPath.row]
             }
             return cell

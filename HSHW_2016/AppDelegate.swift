@@ -20,6 +20,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        if ((launchOptions) != nil) {
+//            NSString *pushString =  [NSString stringWithFormat:@"%@", launchOptions];
+//            let pushString = String(launchOptions)
+//            NSString *url= [[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"url"];
+            
+            let remoteNotificationDic = launchOptions!["UIApplicationLaunchOptionsRemoteNotificationKey"]
+            
+//            if remoteNotificationDic != nil {
+//                
+//            }
+            
+            let userInfo = [
+                "news":
+                    [
+                        "object_id": "689",
+                        "term_id": "30",
+                        "term_name": "护士心声",
+                        "post_title": "你真的懂“护士”吗？",
+                        "post_excerpt": "你真的懂“护士”吗？",
+                        "post_date": "2016-09-28 15:10:00",
+                        "post_modified": "2016-09-28 15:06:56",
+                        "post_source": "沈阳日报",
+                        "post_like": "0",
+                        "post_hits": "694",
+                        "recommended": "0",
+                        "smeta": "[\"thumb\":\"\",\"photo\":[[\"url\":\"20160928\\/57eb6c9a97194.jpg\",\"alt\":\"4\"],[\"url\":\"20160928\\/57eb6c9fb50b5.jpg\",\"alt\":\"3_\\u526f\\u672c_\\u526f\\u672c\"],[\"url\":\"20160928\\/57eb6ca48ad5c.jpg\",\"alt\":\"3_\\u526f\\u672c\"]]]",
+                        "istop": "0",
+                        "thumb": [
+                            [
+                                "url": "20160928/57eb6c9a97194.jpg",
+                                "alt": "4"
+                            ],
+                            [
+                                "url": "20160928/57eb6c9fb50b5.jpg",
+                                "alt": "3_副本_副本"
+                            ],
+                            [
+                                "url": "20160928/57eb6ca48ad5c.jpg",
+                                "alt": "3_副本"
+                            ]
+                        ],
+                        "likes": [],
+                        "favorites": [],
+                        "comments": []
+                ]]
+            
+            NSUserDefaults.standardUserDefaults().setValue(remoteNotificationDic, forKey: "recivePushNotification")
+        }
         // 向苹果注册推送，获取deviceToken并上报
         self.registerAPNS(application)
         // 初始化SDK
@@ -408,13 +456,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         // iOS badge 清0
         application.applicationIconBadgeNumber = 0;
         
-        let alert = UIAlertController(title: "新通知", message: String(content!), preferredStyle: .Alert)
-        self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
-        
-        let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
-        alert.addAction(cancelAction)
-        
-        let viewAction = UIAlertAction(title: "查看", style: .Default) { (viewAction) in
+        if application.applicationState == .Inactive {
             
             if (userInfo["news"] != nil) {
                 
@@ -426,7 +468,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
                 }else if userInfo["news"]!.isKindOfClass(NSDictionary) {
                     data2 = try!NSJSONSerialization.dataWithJSONObject(userInfo["news"] as! NSDictionary, options: NSJSONWritingOptions.PrettyPrinted)
                 }
-//                let data = (userInfo["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                //                let data = (userInfo["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)
                 
                 let newsInfo =  NewsInfo(JSONDecoder(data2))
                 let next = NewsContantViewController()
@@ -439,8 +481,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
             }
             // 通知打开回执上报
             CloudPushSDK.handleReceiveRemoteNotification(userInfo)
+        }else{
+            
+            
+            let alert = UIAlertController(title: "新通知", message: String(content!), preferredStyle: .Alert)
+            self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+            alert.addAction(cancelAction)
+            
+            let viewAction = UIAlertAction(title: "查看", style: .Default) { (viewAction) in
+                
+                if (userInfo["news"] != nil) {
+                    
+                    //                [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil
+                    //                let data = try?NSJSONSerialization.dataWithJSONObject(userInfo, options: NSJSONWritingOptions.PrettyPrinted)
+                    var data2 = NSData()
+                    if userInfo["news"]!.isKindOfClass(NSString) {
+                        data2 = (userInfo["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)!
+                    }else if userInfo["news"]!.isKindOfClass(NSDictionary) {
+                        data2 = try!NSJSONSerialization.dataWithJSONObject(userInfo["news"] as! NSDictionary, options: NSJSONWritingOptions.PrettyPrinted)
+                    }
+                    //                let data = (userInfo["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                    
+                    let newsInfo =  NewsInfo(JSONDecoder(data2))
+                    let next = NewsContantViewController()
+                    next.newsInfo = newsInfo
+                    
+                    let tabBarController = self.window?.rootViewController as! UITabBarController
+                    let nav = tabBarController.selectedViewController as! UINavigationController
+                    
+                    nav.pushViewController(next, animated: true)
+                }
+                // 通知打开回执上报
+                CloudPushSDK.handleReceiveRemoteNotification(userInfo)
+            }
+            alert.addAction(viewAction)
         }
-        alert.addAction(viewAction)
     }
     // MARK:-
     

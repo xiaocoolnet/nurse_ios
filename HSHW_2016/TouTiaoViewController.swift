@@ -13,6 +13,7 @@ import MBProgressHUD
 
 class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,cateBtnClickedDelegate,changeModelDelegate {
 
+//    var userInfo:[NSObject : AnyObject]?
     var myTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = SMPageControl()
@@ -51,6 +52,57 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         rightItem.addSubview(rightLab)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightItem)
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        recivePush()
+    }
+    
+    func recivePush() {
+        
+        let userInfo = NSUserDefaults.standardUserDefaults().valueForKey("recivePushNotification") as? [NSObject : AnyObject]
+        
+        if (userInfo != nil) {
+            
+            // 取得APNS通知内容
+            let aps = userInfo!["aps"] as? NSDictionary
+            // 内容
+            let content = aps!["alert"] as? NSString
+            // badge数量
+            let badge = aps!["badge"] as? NSInteger
+            // 播放声音
+            let sound = aps!.valueForKey("sound") as? NSString
+            // 取得Extras字段内容
+            let Extras = userInfo!["Extras"] as? NSString //服务端中Extras字段，key是自己定义的
+            print("content = [%@], badge = [%ld], sound = [%@], Extras = [%@]", content, badge, sound, Extras)
+//             iOS badge 清0
+            UIApplication.sharedApplication().applicationIconBadgeNumber = 0;
+
+            if (userInfo!["news"] != nil) {
+                
+                //                [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil
+                //                let data = try?NSJSONSerialization.dataWithJSONObject(userInfo, options: NSJSONWritingOptions.PrettyPrinted)
+                var data2 = NSData()
+                if userInfo!["news"]!.isKindOfClass(NSString) {
+                    data2 = (userInfo!["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)!
+                }else if userInfo!["news"]!.isKindOfClass(NSDictionary) {
+                    data2 = try!NSJSONSerialization.dataWithJSONObject(userInfo!["news"] as! NSDictionary, options: NSJSONWritingOptions.PrettyPrinted)
+                }
+                //                let data = (userInfo["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)
+                
+                let newsInfo =  NewsInfo(JSONDecoder(data2))
+                let next = NewsContantViewController()
+                next.newsInfo = newsInfo
+                
+                self.navigationController!.pushViewController(next, animated: true)
+            }
+            // 通知打开回执上报
+            CloudPushSDK.handleReceiveRemoteNotification(userInfo)
+            
+            NSUserDefaults.standardUserDefaults().removeObjectForKey("recivePushNotification")
+        }
     }
     
     func rightItemClick() {
