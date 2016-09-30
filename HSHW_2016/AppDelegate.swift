@@ -21,50 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         // Override point for customization after application launch.
         
         if ((launchOptions) != nil) {
-//            NSString *pushString =  [NSString stringWithFormat:@"%@", launchOptions];
-//            let pushString = String(launchOptions)
-//            NSString *url= [[launchOptions objectForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"] objectForKey:@"url"];
             
             let remoteNotificationDic = launchOptions!["UIApplicationLaunchOptionsRemoteNotificationKey"]
-            
-//            if remoteNotificationDic != nil {
-//                
-//            }
-            
-            let userInfo = [
-                "news":
-                    [
-                        "object_id": "689",
-                        "term_id": "30",
-                        "term_name": "护士心声",
-                        "post_title": "你真的懂“护士”吗？",
-                        "post_excerpt": "你真的懂“护士”吗？",
-                        "post_date": "2016-09-28 15:10:00",
-                        "post_modified": "2016-09-28 15:06:56",
-                        "post_source": "沈阳日报",
-                        "post_like": "0",
-                        "post_hits": "694",
-                        "recommended": "0",
-                        "smeta": "[\"thumb\":\"\",\"photo\":[[\"url\":\"20160928\\/57eb6c9a97194.jpg\",\"alt\":\"4\"],[\"url\":\"20160928\\/57eb6c9fb50b5.jpg\",\"alt\":\"3_\\u526f\\u672c_\\u526f\\u672c\"],[\"url\":\"20160928\\/57eb6ca48ad5c.jpg\",\"alt\":\"3_\\u526f\\u672c\"]]]",
-                        "istop": "0",
-                        "thumb": [
-                            [
-                                "url": "20160928/57eb6c9a97194.jpg",
-                                "alt": "4"
-                            ],
-                            [
-                                "url": "20160928/57eb6c9fb50b5.jpg",
-                                "alt": "3_副本_副本"
-                            ],
-                            [
-                                "url": "20160928/57eb6ca48ad5c.jpg",
-                                "alt": "3_副本"
-                            ]
-                        ],
-                        "likes": [],
-                        "favorites": [],
-                        "comments": []
-                ]]
             
             NSUserDefaults.standardUserDefaults().setValue(remoteNotificationDic, forKey: "recivePushNotification")
         }
