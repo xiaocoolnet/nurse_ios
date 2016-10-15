@@ -323,6 +323,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         self.replyTextField.placeholder = "写评论..."
     }
     
+    func textViewDidChange(textView: UITextView) {
+        if textView.text.characters.count > 0 {
+            send_bottom_Btn.backgroundColor = COLOR
+        }else{
+            send_bottom_Btn.backgroundColor = UIColor.whiteColor()
+        }
+    }
 //    // MARK:点击回车  发表回复
 //    func textFieldShouldReturn(textField: UITextField) -> Bool {
 //        // print("textfield.text = ",textField.text)
@@ -1233,7 +1240,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let url = "http://apis.baidu.com/3023/shorturl/shorten"
         
-        Alamofire.request(.GET, url, parameters: ["url_long":NewsInfo_Header+(newsInfo?.object_id)!], encoding: .URLEncodedInURL, headers: ["apikey":"615ac7276ff0b752fc5f0b8cfa845544"]).response { (request, response, json, error) in
+        Alamofire.request(.GET, url, parameters: ["url_long":NewsInfo_Header+(newsInfo?.object_id)!+"&type=1"], encoding: .URLEncodedInURL, headers: ["apikey":"615ac7276ff0b752fc5f0b8cfa845544"]).response { (request, response, json, error) in
 //            // print(response,json,error)
             if error != nil {
                 self.shareNewsUrl = NewsInfo_Header+(self.newsInfo?.object_id)!

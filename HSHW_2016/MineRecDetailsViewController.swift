@@ -16,6 +16,7 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
     let employmentMessage = UIView()
     
     var tit = NSString()
+    var companyDescription = NSString()
     var name = NSString()
     var criteriaLabel = NSString()
     var criteriLabel = NSString()
@@ -25,6 +26,8 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
     var strId = NSString()
     var phone = NSString()
     var num = 1
+    
+    var currentJobModel:MineJobInfo?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,28 +87,57 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.row == 0 {
-//            let height = calculateHeight(self.tit as String, size: 18, width: WIDTH-20)
-            return 20+20
-            }else if indexPath.row == 1 {
-                return 20
-            }else if indexPath.row == 2 {
-                return 35
-            }else if indexPath.row == 3 {
-                return 50
-            }else if indexPath.row == 4 {
-                return 35
-            }else if indexPath.row == 5 {
-                return 35
-            }else if indexPath.row == 6 {
+            let height = calculateHeight(currentJobModel!.title, size: 18, width: WIDTH-20)
+            return 20+height
+        }else if indexPath.row == 1 {
+            return 20
+        }else if indexPath.row == 2 {
+            return 35
+        }else if indexPath.row == 3 {
             
-                let height = calculateHeight(self.descripDetail as String, size: 14, width: WIDTH-20)
-                return height+40
-            }else if indexPath.row == 7 {
-                return 35
-            }
-            else{
-                return 100
-            }
+            let descripTagLab = UILabel(frame: CGRectMake(10,10,WIDTH-20,0))
+            descripTagLab.font = UIFont.boldSystemFontOfSize(15)
+            descripTagLab.textColor = UIColor.blackColor()
+            descripTagLab.text = "企业简介:"
+            descripTagLab.sizeToFit()
+            
+            let jobModel = currentJobModel
+            
+            let descripStr = jobModel!.companyinfo
+            let attrStr = NSMutableAttributedString(string: descripStr)
+            //                    attrStr.addAttributes([NSFontAttributeName:UIFont.boldSystemFontOfSize(15)], range: NSMakeRange(0, 5))
+            attrStr.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, attrStr.length))
+            attrStr.addAttributes([NSForegroundColorAttributeName:UIColor.lightGrayColor()], range: NSMakeRange(0, attrStr.length))
+            
+            return attrStr.boundingRectWithSize(CGSizeMake(WIDTH-CGRectGetMaxX(descripTagLab.frame)-10, 0), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil).size.height+10
+        }else if indexPath.row == 4 {
+            return calculateHeight(currentJobModel!.address.stringByReplacingOccurrencesOfString(" ", withString: "\n"), size: 14, width: WIDTH-240)
+        }else if indexPath.row == 5 {
+            return 35
+        }else if indexPath.row == 6 {
+//            let jobModel = jobDataSource![0]
+            let height = calculateHeight(currentJobModel!.description, size: 14, width: WIDTH-20)+10
+            return 40+height
+        }else if indexPath.row == 7 {
+            let name = UIButton(type: UIButtonType.Custom)
+            name.frame = CGRectMake(100, 10, 10, 25)
+            name.setTitleColor(COLOR, forState: .Normal)
+            name.titleLabel!.font = UIFont.systemFontOfSize(14)
+//            if !canLookTel {
+//                name.setTitle("查看联系方式", forState: .Normal)
+//                name.sizeToFit()
+//                return name.frame.size.height + 10
+//            }else {
+                name.setTitle((currentJobModel?.linkman)! + "\n" + currentJobModel!.phone, forState: .Normal)
+                name.titleLabel?.numberOfLines = 0
+                name.sizeToFit()
+                return name.frame.size.height + 10
+//            }
+            
+        }
+        else{
+            return 100
+        }
         
     }
     
@@ -118,56 +150,148 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
         
         cell1.selectionStyle = .None
         cell1.textLabel?.numberOfLines = 0
+        
+        let jobModel = currentJobModel
         // print(indexPath.row)
         if indexPath.row==0 {
-            cell1.title.text = self.tit as String
+            let title = UILabel()
+            let height = calculateHeight(jobModel!.title, size: 18, width: WIDTH-20)
+            title.frame = CGRectMake(10, 10, WIDTH-20, height)
+            title.text = jobModel!.title
+            title.font = UIFont.systemFontOfSize(20)
+            title.textColor = COLOR
+            title.numberOfLines = 0
+            cell1.addSubview(title)
         }else if indexPath.row == 1 {
-            cell1.eyeImage.image = UIImage(named: "ic_eye_purple.png")
-            cell1.lookCount.text = "3346"
-            cell1.timeImage.image = UIImage(named: "ic_time_purple.png")
-            cell1.timeLabel.text = "2016/03/16"
-            return cell1
+            let eyeImage = UIImageView(image: UIImage(named: "ic_eye_purple.png"))
+            eyeImage.frame = CGRectMake(10,10,8,8)
+            let lookCount = UILabel(frame: CGRectMake(20,10,30,10))
+            lookCount.font = UIFont.systemFontOfSize(10)
+            lookCount.text = "3346"
+            let timeImage = UIImageView(image: UIImage(named: "ic_time_purple.png"))
+            timeImage.frame = CGRectMake(55, 10, 8, 8)
+            let timeLabel = UILabel(frame: CGRectMake(65,10,100,10))
+            timeLabel.font = UIFont.systemFontOfSize(10)
+            timeLabel.text = self.timeStampToString((jobModel?.create_time)!)
+            
+            cell1.addSubview(eyeImage)
+            cell1.addSubview(lookCount)
+            cell1.addSubview(timeImage)
+            cell1.addSubview(timeLabel)
+            
         }else if indexPath.row == 2 {
-            cell1.nameLabel.text = "企业名称:"
-            cell1.name.text = self.name as String
-             return cell1
+            let nameLabel = UILabel(frame: CGRectMake(10,10,100,25))
+            nameLabel.font = UIFont.boldSystemFontOfSize(15)
+            nameLabel.text = "企业名称:"
+            let name = UILabel(frame: CGRectMake(120,10,200,25))
+            name.font = UIFont.systemFontOfSize(14)
+            name.text = jobModel!.companyname
+            cell1.addSubview(nameLabel)
+            cell1.addSubview(name)
         }else if indexPath.row == 3 {
-            let descripStr = "企业简介:" + (self.tit as String)
+            let descripTagLab = UILabel(frame: CGRectMake(10,10,WIDTH-20,0))
+            descripTagLab.font = UIFont.boldSystemFontOfSize(15)
+            descripTagLab.textColor = UIColor.blackColor()
+            descripTagLab.text = "企业简介:"
+            descripTagLab.sizeToFit()
+            cell1.addSubview(descripTagLab)
+            
+            let descripStr = jobModel!.companyinfo
             let attrStr = NSMutableAttributedString(string: descripStr)
-                    attrStr.addAttributes([NSFontAttributeName:UIFont.boldSystemFontOfSize(15)], range: NSMakeRange(0, 5))
-             attrStr.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(5, attrStr.length-5))
-            attrStr.addAttributes([NSForegroundColorAttributeName:UIColor.lightGrayColor()], range: NSMakeRange(5, attrStr.length-5))
-            cell1.descript.attributedText = attrStr
-            return cell1
+            //                    attrStr.addAttributes([NSFontAttributeName:UIFont.boldSystemFontOfSize(15)], range: NSMakeRange(0, 5))
+            attrStr.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, attrStr.length))
+            attrStr.addAttributes([NSForegroundColorAttributeName:UIColor.lightGrayColor()], range: NSMakeRange(0, attrStr.length))
+            
+            let descript = UILabel(frame: CGRectMake(
+                CGRectGetMaxX(descripTagLab.frame),
+                10,
+                WIDTH-CGRectGetMaxX(descripTagLab.frame)-10,
+                attrStr.boundingRectWithSize(CGSizeMake(WIDTH-CGRectGetMaxX(descripTagLab.frame)-10, 0), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil).size.height))
+            descript.font = UIFont.boldSystemFontOfSize(15)
+            descript.numberOfLines = 0
+            
+            
+            //                    let paragraphStyle1 = NSMutableParagraphStyle()
+            //                    paragraphStyle1.lineSpacing = 8
+            //                    attrStr.addAttributes([NSParagraphStyleAttributeName:paragraphStyle1], range: NSMakeRange(0, descripStr.characters.count))
+            
+            descript.numberOfLines = 0
+            descript.attributedText = attrStr
+            cell1.addSubview(descript)
         }else if indexPath.row == 4 {
-        
-            cell1.criteria.text = "招聘条件:"
-            cell1.criteriaLabel.text = self.criteriaLabel as String
-            cell1.address.text = "工作地点:"
-                    
-            cell1.addressLabel.text = self.addressLabel as String
-            return cell1
+            let criteria = UILabel(frame: CGRectMake(10,10,70,25))
+            criteria.font = UIFont.boldSystemFontOfSize(15)
+            criteria.text = "招聘条件:"
+            criteria.sizeToFit()
+            let criteriaLabel = UILabel(frame: CGRectMake(80,10,75,25))
+            criteriaLabel.font = UIFont.systemFontOfSize(14)
+            criteriaLabel.textColor = UIColor.lightGrayColor()
+            criteriaLabel.text = jobModel!.education
+            criteriaLabel.sizeToFit()
+            let address = UILabel(frame: CGRectMake(170,10,70,25))
+            address.font = UIFont.boldSystemFontOfSize(15)
+            address.text = "工作地点:"
+            address.sizeToFit()
+            let addressLabel = UILabel(frame: CGRectMake(240,10,WIDTH-240,calculateHeight(currentJobModel!.address.stringByReplacingOccurrencesOfString(" ", withString: "\n"), size: 14, width: WIDTH-240)))
+            addressLabel.font = UIFont.systemFontOfSize(14)
+            addressLabel.textColor = UIColor.lightGrayColor()
+            addressLabel.text = currentJobModel!.address.stringByReplacingOccurrencesOfString(" ", withString: "\n")
+            addressLabel.numberOfLines = 0
+            cell1.addSubview(criteria)
+            cell1.addSubview(criteriaLabel)
+            cell1.addSubview(address)
+            cell1.addSubview(addressLabel)
         }else if indexPath.row == 5{
-            cell1.criteri.text = "招聘人数:"
-            cell1.criteriLabel.text = self.criteriLabel as String
-            cell1.addres.text = "福利待遇:"
-            cell1.addresLabel.text = self.addresLabel as String
-            return cell1
+            let criteria = UILabel(frame: CGRectMake(10,10,70,25))
+            criteria.font = UIFont.boldSystemFontOfSize(15)
+            criteria.text = "招聘人数:"
+            let criteriaLabel = UILabel(frame: CGRectMake(80,10,75,25))
+            criteriaLabel.font = UIFont.systemFontOfSize(14)
+            criteriaLabel.textColor = UIColor.lightGrayColor()
+            criteriaLabel.text = jobModel!.count
+            let address = UILabel(frame: CGRectMake(170,10,70,25))
+            address.font = UIFont.boldSystemFontOfSize(15)
+            address.text = "福利待遇:"
+            let addressLabel = UILabel(frame: CGRectMake(240,10,WIDTH-240,25))
+            addressLabel.font = UIFont.systemFontOfSize(14)
+            addressLabel.textColor = UIColor.lightGrayColor()
+            addressLabel.text = jobModel!.welfare
+            cell1.addSubview(criteria)
+            cell1.addSubview(criteriaLabel)
+            cell1.addSubview(address)
+            cell1.addSubview(addressLabel)
         }else if indexPath.row == 6 {
-            cell1.positionDescript.text = "职位描述:"
-            cell1.descripDetail.text = self.descripDetail as String
-            let height = calculateHeight(self.descripDetail as String, size: 14, width: WIDTH-20)
-            cell1.descripDetail.frame = CGRectMake(10, 40, WIDTH-20, height)
-            return cell1
+            let positionDescript = UILabel(frame: CGRectMake(10,10,100,25))
+            positionDescript.font = UIFont.boldSystemFontOfSize(15)
+            positionDescript.text = "职位描述:"
+            let descripDetail = UILabel(frame: CGRectMake(10,40,WIDTH-20,200))
+            descripDetail.font = UIFont.systemFontOfSize(14)
+            descripDetail.textColor = UIColor.lightGrayColor()
+            descripDetail.numberOfLines = 0
+            descripDetail.text = jobModel!.description
+            descripDetail.frame.size.height = calculateHeight((jobModel?.description)!, size: 14, width: WIDTH-20)
+            cell1.addSubview(positionDescript)
+            cell1.addSubview(descripDetail)
         }else if indexPath.row == 7 {
-            cell1.namLabel.text = "联系方式:"
-            if num == 1 {
-                cell1.nam.setTitle("查看联系方式", forState: .Normal)
-                cell1.nam.addTarget(self, action: #selector(contactClick), forControlEvents: .TouchUpInside)
-            }else if num == 2{
-                cell1.nam.setTitle(self.phone as String, forState: .Normal)
-            }
-            return cell1
+            let nameLabel = UILabel(frame: CGRectMake(10,10,80,25))
+            nameLabel.font = UIFont.boldSystemFontOfSize(15)
+            nameLabel.text = "联系方式:"
+            
+            let name = UIButton(type: UIButtonType.Custom)
+            name.frame = CGRectMake(100, 10, 10, 25)
+            name.setTitleColor(COLOR, forState: .Normal)
+            name.titleLabel!.font = UIFont.systemFontOfSize(14)
+//            if !canLookTel {
+//                name.setTitle("查看联系方式", forState: .Normal)
+//                name.sizeToFit()
+//                name.addTarget(self, action: #selector(contactClick), forControlEvents: .TouchUpInside)
+//            }else {
+                name.setTitle((jobModel?.linkman)! + "\n" + jobModel!.phone, forState: .Normal)
+                name.titleLabel?.numberOfLines = 0
+                name.sizeToFit()
+//            }
+            cell1.addSubview(nameLabel)
+            cell1.addSubview(name)
         }
         return cell1
     }
@@ -226,8 +350,22 @@ class MineRecDetailsViewController: UIViewController, UITableViewDelegate, UITab
         self.navigationController?.popViewControllerAnimated(true)
     }
 
+    // Linux时间戳转标准时间
+    func timeStampToString(timeStamp:String)->String {
+        
+        let string = NSString(string: timeStamp)
+        
+        let timeSta:NSTimeInterval = string.doubleValue
+        let dfmatter = NSDateFormatter()
+        dfmatter.dateFormat="yyyy-MM-dd"
+        
+        let date = NSDate(timeIntervalSince1970: timeSta)
+        
+        //        print(dfmatter.stringFromDate(date))
+        return dfmatter.stringFromDate(date)
+    }
 
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

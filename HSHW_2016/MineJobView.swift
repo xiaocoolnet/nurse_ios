@@ -67,6 +67,8 @@ class MineJobInfo: JSONJoy {
     var linkman:String
     var phone:String
     var jobtype:String
+    var companyinfo:String
+    var create_time:String
     
     required init(_ decoder:JSONDecoder){
         id = decoder["id"].string ?? ""
@@ -84,5 +86,7 @@ class MineJobInfo: JSONJoy {
         linkman = decoder["linkman"].string ?? ""
         phone = decoder["phone"].string ?? ""
         jobtype = decoder["jobtype"].string ?? ""
+        companyinfo = decoder["companyinfo"].string ?? ""
+        create_time = decoder["create_time"].string ?? ""
     }
 }

@@ -340,7 +340,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                 let descript = UILabel(frame: CGRectMake(10,10,WIDTH-20,50))
                 descript.font = UIFont.boldSystemFontOfSize(15)
                 descript.numberOfLines = 0
-                let descripStr = "企业简介:" + jobModel!.title
+                let descripStr = "企业简介:" + jobModel!.companyinfo
                 let attrStr = NSMutableAttributedString(string: descripStr)
                 attrStr.addAttributes([NSFontAttributeName:UIFont.boldSystemFontOfSize(15)], range: NSMakeRange(0, 5))
                 attrStr.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(5, attrStr.length-5))
@@ -399,15 +399,16 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                 nameLabel.text = "联系方式:"
                 
                 let name = UIButton(type: UIButtonType.Custom)
-                name.frame = CGRectMake(100, 10, 100, 25)
+                name.frame = CGRectMake(100, 10, WIDTH-80-10-10, 25)
                 name.setTitleColor(COLOR, forState: .Normal)
                 name.titleLabel!.font = UIFont.systemFontOfSize(14)
                 if num == 1 {
                     name.setTitle("查看联系方式", forState: .Normal)
+                    name.sizeToFit()
                     name.addTarget(self, action: #selector(contactClick), forControlEvents: .TouchUpInside)
                 }else if num == 2{
                     name.setTitle(jobModel!.phone, forState: .Normal)
-                    
+                    name.sizeToFit()
                 }
                 cell1.addSubview(nameLabel)
                 cell1.addSubview(name)

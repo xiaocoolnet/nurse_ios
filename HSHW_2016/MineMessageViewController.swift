@@ -18,6 +18,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.hidden = false
+        self.tabBarController?.tabBar.hidden = true
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,14 +28,16 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        myTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
-        myTableView.bounces = false
+        myTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-20)
+//        myTableView.bounces = false
         myTableView.backgroundColor = RGREY
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.registerClass(MineMessageTableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(myTableView)
         myTableView.rowHeight = 80
+        
+        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(getDate))
 
         self.getDate()
         
@@ -53,13 +56,19 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! MineMessageTableViewCell
         cell.selectionStyle = .None
         let model = self.dataSource.objectlist[indexPath.row]
+        
+        cell.timeLable.text = timeStampToString(model.create_time)
+        cell.timeLable.sizeToFit()
+        cell.timeLable.frame.origin.x = WIDTH - cell.timeLable.frame.size.width-10
         cell.titleLable.text = model.title
+        cell.titleLable.frame.size.width = WIDTH - cell.timeLable.frame.size.width-10-10-85
         cell.nameLable.text = model.content
+        cell.timeLable.center.y = cell.titleLable.center.y
 //        cell.imgBtn.setBackgroundImage(UIImage(named: model.photo), forState: .Normal)
         if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
             cell.imgBtn.image = UIImage.init(named: "ic_lan.png")
         }else{
-            cell.imgBtn.sd_setImageWithURL(NSURL(string:DomainName+model.photo), placeholderImage: UIImage.init(named: "ic_lan.png"))
+            cell.imgBtn.sd_setImageWithURL(NSURL(string:DomainName+"data/upload/"+model.photo), placeholderImage: UIImage.init(named: "ic_lan.png"))
         }
 //        cell.imgBtn.sd_setImageWithURL(NSURL(string:DomainName+model.photo), placeholderImage: UIImage(named: "ic_lan.png"))
         
@@ -77,7 +86,6 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
             cell.small.setBackgroundImage(UIImage(named: "ic_xin.png"), forState: .Normal)
         }
 //        cell.timeLable.text = "2016-07-04"
-        cell.timeLable.text = timeStampToString(model.create_time)
         
         
         return cell
@@ -125,6 +133,11 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         let url = PARK_URL_Header+"getsystemmessage"
         let param = ["userid":QCLoginUserInfo.currentInfo.userid]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            
+            if self.myTableView.mj_header.isRefreshing() {
+                self.myTableView.mj_header.endRefreshing()
+            }
+            
             if(error != nil){
                 
             }else{
@@ -146,9 +159,9 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
 //                    self.likedataSource = LikeList(status.data!)
                     self.myTableView .reloadData()
                     // print(status.data)
+                    
                 }
             }
-            
         }
 
     }

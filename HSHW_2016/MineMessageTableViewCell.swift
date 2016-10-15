@@ -29,7 +29,7 @@ class MineMessageTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        titleLable.frame = CGRectMake(85, 10, 120, 30)
+        titleLable.frame = CGRectMake(85, 10, WIDTH-130-10-85, 30)
         titleLable.font = UIFont.systemFontOfSize(18)
         titleLable.textColor = UIColor.blackColor()
         
@@ -38,6 +38,8 @@ class MineMessageTableViewCell: UITableViewCell {
         nameLable.textColor = GREY
 
         imgBtn.frame = CGRectMake(10, 10, 60, 60)
+        imgBtn.layer.cornerRadius = 6
+        imgBtn.clipsToBounds = true
         
         small.frame = CGRectMake(65, 5, 10, 10)
         

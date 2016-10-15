@@ -21,12 +21,12 @@ class RecruitTableViewCell: UITableViewCell {
     //时间
     let time = UILabel()
     //位置信息
-    let location = UILabel()
+    let locationLab = UILabel()
     //左侧要求
     let content = UILabel()
     //右侧要求
     let cont = UILabel()
-    var loca = UIImageView()
+    var locationImg = UIImageView()
     var timeImg = UIImageView()
     let btnTit = UILabel()
     var img = UIImageView()
@@ -37,6 +37,7 @@ class RecruitTableViewCell: UITableViewCell {
     }
     
     func showforJobModel(model:JobModel){
+        
         if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || model.photo == "" {
             titImg.image = UIImage.init(named: "img_head_nor")
         }else{
@@ -44,28 +45,58 @@ class RecruitTableViewCell: UITableViewCell {
         }
         title.text = model.title
         name.text = model.companyname
-        location.text = model.address.componentsSeparatedByString(" ").first
-        location.sizeToFit()
-        let contentStr = "薪资待遇:"+model.salary+"\n福利待遇:"+model.welfare+"\n招聘职位:"+model.jobtype
-        content.text = contentStr
-        let contStr = "学历要求:"+model.education+"\n工作年限:"+"\n相关证件:"+model.certificate
-        cont.text = contStr
+        
+        let contentStr = "招聘职位:"+model.jobtype+"\n薪资待遇:"+model.salary+"\n福利待遇:"+model.welfare
+        let attrStr = NSMutableAttributedString(string: contentStr)
+        let paragraphStyle1 = NSMutableParagraphStyle()
+        paragraphStyle1.lineSpacing = 8
+        attrStr.addAttributes([NSParagraphStyleAttributeName:paragraphStyle1], range: NSMakeRange(0, contentStr.characters.count))
+        content.attributedText = attrStr
+        
+        let contStr = "学历要求:"+model.education+"\n工作年限:"+"\n招聘人数:"+model.count
+        let attrcontStr = NSMutableAttributedString(string: contStr)
+        let contParagraphStyle1 = NSMutableParagraphStyle()
+        contParagraphStyle1.lineSpacing = 8
+        attrcontStr.addAttributes([NSParagraphStyleAttributeName:contParagraphStyle1], range: NSMakeRange(0, contStr.characters.count))
+        cont.attributedText = attrcontStr
+        
+        time.font = UIFont.systemFontOfSize(10)
+        time.text = timeStampToString(model.create_time)
+        time.sizeToFit()
+        
+        
+        locationLab.text = (model.address.componentsSeparatedByString(" ").first?.componentsSeparatedByString("-")[1])!+"-"+(model.address.componentsSeparatedByString(" ").first?.componentsSeparatedByString("-")[2])!
+        locationLab.sizeToFit()
+        
+        delivery.setTitle("投递简历", forState: .Normal)
+        delivery.sizeToFit()
+        delivery.frame = CGRectMake(
+            WIDTH-15-delivery.frame.size.width-delivery.frame.size.height-5,
+            0,
+            delivery.frame.size.width+delivery.frame.size.height+5,
+            delivery.frame.size.height+5)
+        delivery.layer.cornerRadius = delivery.frame.size.height/2.0
+        delivery.layer.borderWidth = 1
+        delivery.layer.borderColor = COLOR.CGColor
+        
         let titleHeight:CGFloat = calculateHeight(model.title, size: 16, width: WIDTH*300/375)
         title.frame.size.height = titleHeight
         content.frame.origin.y = title.frame.size.height + title.frame.origin.y
         cont.frame.origin.y = title.frame.size.height + title.frame.origin.y
-        time.font = UIFont.systemFontOfSize(10)
-        
         time.frame.origin.y = content.frame.size.height+content.frame.origin.y
-        location.center.y = time.center.y
-        loca.center.y = time.center.y
+        locationLab.center.y = time.center.y
+        locationImg.center.y = time.center.y
         timeImg.center.y = time.center.y
         titImg.frame.origin.y = title.frame.size.height + 5
         delivery.frame.origin.y = content.frame.size.height+content.frame.origin.y
-        delivery.center.y = location.center.y
-        btnTit.center.y = location.center.y
-        btnTit.text = "投递简历"
-        img.center.y = location.center.y
+        delivery.center.y = locationLab.center.y
+        btnTit.center.y = locationLab.center.y
+//        btnTit.text = "投递简历"
+//        btnTit.adjustsFontSizeToFitWidth = true
+        img.center.y = locationLab.center.y
+        
+        locationImg.frame.origin.x = CGRectGetMaxX(time.frame)+5
+        locationLab.frame.origin.x = CGRectGetMaxX(locationImg.frame)
     }
     
     func showforCVModel(model:CVModel){
@@ -77,26 +108,38 @@ class RecruitTableViewCell: UITableViewCell {
 //        titImg.sd_setImageWithURL(NSURL(string:SHOW_IMAGE_HEADER + model.avatar),placeholderImage: UIImage(named: "1"))
         title.text = model.name
         name.text = model.name
-        location.text = model.address.componentsSeparatedByString(" ").first
-        location.sizeToFit()
+        locationLab.text = model.address.componentsSeparatedByString(" ").first
+        locationLab.sizeToFit()
         let contentStr = "性别:"+(model.sex == "1" ? "男" : "女")+"\n当前薪资:"+model.currentsalary+"\n工作状态:"+model.jobstate
         content.text = contentStr
         let contStr = "学历:"+model.education+"\n生日:"+model.birthday+"\n职务名称:"+model.certificate
         cont.text = contStr
+        
+        delivery.setTitle("邀请面试", forState: .Normal)
+        delivery.sizeToFit()
+        delivery.frame = CGRectMake(
+            WIDTH-15-delivery.frame.size.width-delivery.frame.size.height-5,
+            0,
+            delivery.frame.size.width+delivery.frame.size.height+5,
+            delivery.frame.size.height+5)
+        delivery.layer.cornerRadius = delivery.frame.size.height/2.0
+        delivery.layer.borderWidth = 1
+        delivery.layer.borderColor = COLOR.CGColor
+        
         let titleHeight:CGFloat = calculateHeight(model.name, size: 16, width: WIDTH*300/375)
         title.frame.size.height = titleHeight
         content.frame.origin.y = title.frame.size.height + title.frame.origin.y
         cont.frame.origin.y = title.frame.size.height + title.frame.origin.y
         time.font = UIFont.systemFontOfSize(10)
         time.frame.origin.y = content.frame.size.height+content.frame.origin.y
-        location.center.y = time.center.y
-        loca.frame.origin.y = content.frame.size.height+content.frame.origin.y
+        locationLab.center.y = time.center.y
+        locationImg.frame.origin.y = content.frame.size.height+content.frame.origin.y
         timeImg.frame.origin.y = content.frame.size.height+content.frame.origin.y
         delivery.frame.origin.y = content.frame.size.height+content.frame.origin.y
-        delivery.center.y = location.center.y
-        btnTit.center.y = location.center.y
-        btnTit.text = "邀请面试"
-        img.center.y = location.center.y
+        delivery.center.y = locationLab.center.y
+        btnTit.center.y = locationLab.center.y
+//        btnTit.text = "邀请面试"
+        img.center.y = locationLab.center.y
         titImg.frame.origin.y = title.frame.size.height + 5
     }
 
@@ -130,9 +173,9 @@ class RecruitTableViewCell: UITableViewCell {
         
 //        delivery.frame = CGRectMake(WIDTH-WIDTH*15/375-80, 142-WIDTH*20/375-24, 80, 24)
         delivery.frame = CGRectMake(WIDTH-WIDTH*15/375-80, content.frame.size.height+content.frame.origin.y-5, 80, 24)
-        delivery.layer.cornerRadius = 12
-        delivery.layer.borderWidth = 1
-        delivery.layer.borderColor = COLOR.CGColor
+        
+        delivery.setTitleColor(COLOR, forState: .Normal)
+        delivery.setImage(UIImage(named: "ic_note.png"), forState: .Normal)
         
 //        let img = UIImageView(frame: CGRectMake(WIDTH-WIDTH*15/375-71, 142-WIDTH*20/375-18, 11, 13))
         img.frame = CGRectMake(WIDTH-WIDTH*15/375-71, content.frame.size.height+content.frame.origin.y, 11, 13)
@@ -153,18 +196,18 @@ class RecruitTableViewCell: UITableViewCell {
         time.frame = CGRectMake(WIDTH*95/375+10, content.frame.size.height+content.frame.origin.y, 50, 10)
         time.font = UIFont.systemFontOfSize(10)
         time.textColor = GREY
-        time.text = "2016/05/24"
+        time.text = "05/24"
         time.sizeToFit()
         
         //let loca = UIImageView(frame: CGRectMake(WIDTH*95/375+20+time.bounds.size.width, 142-WIDTH*20/375-16.5, 6, 9))
-        loca = UIImageView(frame: CGRectMake(WIDTH*95/375+20+time.bounds.size.width, content.frame.size.height+content.frame.origin.y, 6, 9))
-        loca.image = UIImage(named: "ic_location.png")
+        locationImg = UIImageView(frame: CGRectMake(CGRectGetMaxX(time.frame)+10, content.frame.size.height+content.frame.origin.y, 6, 9))
+        locationImg.image = UIImage(named: "ic_location.png")
 //        location.frame = CGRectMake(WIDTH*95/375+28+time.bounds.size.width, 142-WIDTH*20/375-17, 50, 10)
-         location.frame = CGRectMake(WIDTH*95/375+28+time.bounds.size.width, content.frame.size.height+content.frame.origin.y, 50, 10)
-        location.textColor = GREY
-        location.font = UIFont.systemFontOfSize(10)
-        location.text = "北京市朝阳区"
-        location.sizeToFit()
+         locationLab.frame = CGRectMake(CGRectGetMaxX(locationImg.frame)+5, content.frame.size.height+content.frame.origin.y, 50, 10)
+        locationLab.textColor = GREY
+        locationLab.font = UIFont.systemFontOfSize(10)
+        locationLab.text = "北京市朝阳区"
+        locationLab.sizeToFit()
         
         cont.frame = CGRectMake(WIDTH*95/375+WIDTH*162/375, title.frame.size.height+title.frame.origin.y, WIDTH*100/375, 142-WIDTH*20/375+20-WIDTH*20/375-30)
         cont.font = UIFont.systemFontOfSize(12)
@@ -175,14 +218,30 @@ class RecruitTableViewCell: UITableViewCell {
         self.addSubview(content)
         self.addSubview(timeImg)
         self.addSubview(time)
-        self.addSubview(loca)
-        self.addSubview(location)
-        self.addSubview(img)
-        self.addSubview(btnTit)
+        self.addSubview(locationImg)
+        self.addSubview(locationLab)
+//        self.addSubview(img)
+//        self.addSubview(btnTit)
         self.addSubview(delivery)
         self.addSubview(titImg)
         self.addSubview(title)
-//        self.addSubview(name)
+        self.addSubview(name)
+    }
+    
+    
+    // Linux时间戳转标准时间
+    func timeStampToString(timeStamp:String)->String {
+        
+        let string = NSString(string: timeStamp)
+        
+        let timeSta:NSTimeInterval = string.doubleValue
+        let dfmatter = NSDateFormatter()
+        dfmatter.dateFormat="MM/dd"
+        
+        let date = NSDate(timeIntervalSince1970: timeSta)
+        
+        //        print(dfmatter.stringFromDate(date))
+        return dfmatter.stringFromDate(date)
     }
     
     required init?(coder aDecoder: NSCoder) {

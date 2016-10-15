@@ -44,6 +44,8 @@ class JobModel: JSONJoy {
     var linkman:String
     var phone:String
     var jobtype:String
+    var create_time:String
+    var companyinfo:String
     
     required init(_ decoder:JSONDecoder){
         id = decoder["id"].string ?? ""
@@ -61,5 +63,7 @@ class JobModel: JSONJoy {
         linkman = decoder["linkman"].string ?? ""
         phone = decoder["phone"].string ?? ""
         jobtype = decoder["jobtype"].string ?? ""
+        create_time = decoder["create_time"].string ?? ""
+        companyinfo = decoder["companyinfo"].string ?? ""
     }
 }

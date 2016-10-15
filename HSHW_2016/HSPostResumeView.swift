@@ -744,10 +744,15 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                 hud.margin = 10.0
                 hud.removeFromSuperViewOnHide = true
                 
-                if changeResume {
-                    changeResume(hud, type: 2)
+                if headerBtn.selected {
+                    uploadHeader(hud)
                 }else{
-                    changeResume(hud, type: 1)
+                    
+                    if changeResume {
+                        changeResume(hud, type: 2)
+                    }else{
+                        changeResume(hud, type: 1)
+                    }
                 }
 //                if headerBtn.selected {
 //                    uploadHeader(hud)
@@ -860,14 +865,34 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     
     // MARK: 修改/发布 简历
     func changeResume(hud:MBProgressHUD, type:Int) {
-        HSNurseStationHelper().changeForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName == "" ? "":imageName+".png", name: nameTF.text!, experience: dropDownFinishDic["exp"]!, sex: sexFinishStr, birthday:"\(birthFinishArr[0])-\(birthFinishArr[1])-\(birthFinishArr[2])", certificate:dropDownFinishDic["professional"]!, education:dropDownFinishDic["edu"]! , address:"\(homeFinishArr[0])-\(homeFinishArr[1])-\(homeFinishArr[2])", jobstate:jobStatusStr, currentsalary:dropDownFinishDic["salary"]!, phone:telTF.text!, email:mailTF.text!, hiredate:dropDownFinishDic["jobTime"]!, wantcity:"\(targetCityFinishArr[0])-\(targetCityFinishArr[1])", wantsalary:dropDownFinishDic["expectedSalary"]!, wantposition:dropDownFinishDic["expectedPosition"]!, description:selfEvaluate.text!, type:type, handle: { (success, response) in
+        HSNurseStationHelper().changeForum(
+            QCLoginUserInfo.currentInfo.userid,
+            avatar:imageName == "" ? "":imageName+".png",
+            name: nameTF.text!,
+            experience: dropDownFinishDic["exp"]!,
+            sex: sexFinishStr,
+            birthday:"\(birthFinishArr[0])-\(birthFinishArr[1])-\(birthFinishArr[2])",
+            certificate:dropDownFinishDic["professional"]!,
+            education:dropDownFinishDic["edu"]! ,
+            address:"\(homeFinishArr[0])-\(homeFinishArr[1])-\(homeFinishArr[2])",
+            jobstate:jobStatusStr,
+            currentsalary:dropDownFinishDic["salary"]!,
+            phone:telTF.text!, email:mailTF.text!,
+            hiredate:dropDownFinishDic["jobTime"]!,
+            wantcity:"\(targetCityFinishArr[0])-\(targetCityFinishArr[1])",
+            wantsalary:dropDownFinishDic["expectedSalary"]!,
+            wantposition:dropDownFinishDic["expectedPosition"]!,
+            description:selfEvaluate.text!,
+            type:type,
+            handle: { (success, response) in
             if success {
                 dispatch_async(dispatch_get_main_queue(), {
                     //                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
                     if type == 1 {
                         
                         hud.mode = MBProgressHUDMode.Text;
-                        hud.hide(true)
+                        hud.labelText = "发布成功"
+                        hud.hide(true, afterDelay: 1)
 
                         let result = response as! addScore_ReadingInformationDataModel
                         self.showScoreTips(result.event, score: result.score)
