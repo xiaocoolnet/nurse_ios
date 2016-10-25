@@ -16,7 +16,6 @@
 		0B6FED521D33999700A4488E /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B6FED511D33999700A4488E /* area.plist */; };
 		0B7392871D40C5AC00F785AF /* OnLineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7392861D40C5AC00F785AF /* OnLineViewController.swift */; };
 		0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */; };
-		0B94E7771D4309070008FD57 /* MineMessDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B94E7761D4309070008FD57 /* MineMessDetailViewController.swift */; };
 		0B94E7791D4312E60008FD57 /* MineFinesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B94E7781D4312E60008FD57 /* MineFinesView.swift */; };
 		0B94E7851D436B380008FD57 /* AllStudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B94E7841D436B380008FD57 /* AllStudyViewController.swift */; };
 		0B9C64071D41B89F008B7F6C /* GMyExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B9C64061D41B89F008B7F6C /* GMyExamViewController.swift */; };
@@ -140,8 +139,11 @@
 		1F1EA38A1D61AAB200151FA7 /* ReachabilitySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */; };
 		1F33D7761D752A360028444A /* GoAboardExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F33D7751D752A360028444A /* GoAboardExamViewController.swift */; };
 		1F33D7791D7554280028444A /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33D7781D7554280028444A /* SMPageControl.m */; };
+		1F3674CF1DBDE734007D55E6 /* MyUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3674CE1DBDE734007D55E6 /* MyUtil.m */; };
 		1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */; };
 		1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */; };
+		1F54B60C1DB706E400AAA5A6 /* NSRecruitmentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54B60B1DB706E300AAA5A6 /* NSRecruitmentDetailViewController.swift */; };
+		1F54B60E1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54B60D1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift */; };
 		1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */; };
 		1FC823D01D6C37D4005ED821 /* SuccessfulCaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */; };
 		1FE3A6341D5AFC2D0039D94D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */; };
@@ -160,6 +162,7 @@
 		1FEC64D71D910EAE0045038C /* UTDID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FEC64D31D910EAD0045038C /* UTDID.framework */; };
 		1FEC64D81D910EAE0045038C /* UTMini.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FEC64D41D910EAD0045038C /* UTMini.framework */; };
 		1FEF15A81D5047EE00FF343C /* MainCompanyAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEF15A71D5047EE00FF343C /* MainCompanyAuthViewController.swift */; };
+		1FEFF3FA1DBDD6FF00E82F98 /* MiFeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FEFF3F91DBDD6FF00E82F98 /* MiFeedbackViewController.swift */; };
 		1FF06CB01D7D07C60032943B /* UIPlaceHolderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FF06CAF1D7D07C60032943B /* UIPlaceHolderTextView.m */; };
 		1FFD49C31D63068900AB1460 /* TPKeyboardAvoidingCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD49BC1D63068900AB1460 /* TPKeyboardAvoidingCollectionView.m */; };
 		1FFD49C41D63068900AB1460 /* TPKeyboardAvoidingScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD49BE1D63068900AB1460 /* TPKeyboardAvoidingScrollView.m */; };
@@ -177,7 +180,7 @@
 		1FFD9EE61D51EBD700951098 /* DropDown+Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD9EDE1D51EBD700951098 /* DropDown+Appearance.swift */; };
 		1FFD9EE71D51EBD700951098 /* DropDown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD9EDF1D51EBD700951098 /* DropDown.swift */; };
 		1FFD9EE81D51EBD700951098 /* DropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFD9EE01D51EBD700951098 /* DropDownCell.swift */; };
-		D1FC268C65F633C38728A1DB /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */; };
+		2ED3898564DC452DE9AE5E12 /* Pods_HSHW_2016.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 20C8E7F8AC2E6686DADE69C8 /* Pods_HSHW_2016.framework */; };
 		F604A4DC1D0E79F7008A4888 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4DB1D0E79F7008A4888 /* libicucore.tbd */; };
 		F604A4DE1D0E7A03008A4888 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4DD1D0E7A03008A4888 /* libz.tbd */; };
 		F604A4E01D0E7A16008A4888 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F604A4DF1D0E7A16008A4888 /* libstdc++.tbd */; };
@@ -267,7 +270,6 @@
 /* Begin PBXFileReference section */
 		0B1911C01D11222700CDE18D /* LoginModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
 		0B1937731D421CCE00D87F42 /* GMyErrorTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyErrorTableViewCell.swift; sourceTree = "<group>"; };
-		0B26F5B17459B246981F92CE /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		0B64EBDF1D37A60F001548EE /* HSForumDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSForumDetailCell.xib; sourceTree = "<group>"; };
 		0B64EBE11D37A626001548EE /* ReleaseTimeCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReleaseTimeCell.xib; sourceTree = "<group>"; };
 		0B6FED4D1D3373FC00A4488E /* DataPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPickerView.swift; sourceTree = "<group>"; };
@@ -275,7 +277,6 @@
 		0B6FED511D33999700A4488E /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
 		0B7392861D40C5AC00F785AF /* OnLineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnLineViewController.swift; sourceTree = "<group>"; };
 		0B8DD4DD1D128E0200F5E9FF /* ChangeName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChangeName.swift; sourceTree = "<group>"; };
-		0B94E7761D4309070008FD57 /* MineMessDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineMessDetailViewController.swift; sourceTree = "<group>"; };
 		0B94E7781D4312E60008FD57 /* MineFinesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineFinesView.swift; sourceTree = "<group>"; };
 		0B94E7841D436B380008FD57 /* AllStudyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllStudyViewController.swift; sourceTree = "<group>"; };
 		0B9C64061D41B89F008B7F6C /* GMyExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyExamViewController.swift; sourceTree = "<group>"; };
@@ -431,8 +432,12 @@
 		1F33D7751D752A360028444A /* GoAboardExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoAboardExamViewController.swift; sourceTree = "<group>"; };
 		1F33D7771D7554280028444A /* SMPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageControl.h; sourceTree = "<group>"; };
 		1F33D7781D7554280028444A /* SMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageControl.m; sourceTree = "<group>"; };
+		1F3674CD1DBDE734007D55E6 /* MyUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyUtil.h; sourceTree = "<group>"; };
+		1F3674CE1DBDE734007D55E6 /* MyUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUtil.m; sourceTree = "<group>"; };
 		1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayModel.swift; sourceTree = "<group>"; };
 		1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaliyExamModel.swift; sourceTree = "<group>"; };
+		1F54B60B1DB706E300AAA5A6 /* NSRecruitmentDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSRecruitmentDetailViewController.swift; sourceTree = "<group>"; };
+		1F54B60D1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPersonalInfoDetailViewController.swift; sourceTree = "<group>"; };
 		1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTimeCell.swift; sourceTree = "<group>"; };
 		1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessfulCaseViewController.swift; sourceTree = "<group>"; };
 		1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -451,6 +456,7 @@
 		1FEC64D31D910EAD0045038C /* UTDID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UTDID.framework; sourceTree = "<group>"; };
 		1FEC64D41D910EAD0045038C /* UTMini.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UTMini.framework; sourceTree = "<group>"; };
 		1FEF15A71D5047EE00FF343C /* MainCompanyAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainCompanyAuthViewController.swift; sourceTree = "<group>"; };
+		1FEFF3F91DBDD6FF00E82F98 /* MiFeedbackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiFeedbackViewController.swift; sourceTree = "<group>"; };
 		1FF06CAE1D7D07C60032943B /* UIPlaceHolderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIPlaceHolderTextView.h; sourceTree = "<group>"; };
 		1FF06CAF1D7D07C60032943B /* UIPlaceHolderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIPlaceHolderTextView.m; sourceTree = "<group>"; };
 		1FFD49BB1D63068900AB1460 /* TPKeyboardAvoidingCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TPKeyboardAvoidingCollectionView.h; sourceTree = "<group>"; };
@@ -474,7 +480,9 @@
 		1FFD9EDE1D51EBD700951098 /* DropDown+Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DropDown+Appearance.swift"; sourceTree = "<group>"; };
 		1FFD9EDF1D51EBD700951098 /* DropDown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDown.swift; sourceTree = "<group>"; };
 		1FFD9EE01D51EBD700951098 /* DropDownCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropDownCell.swift; sourceTree = "<group>"; };
-		ACDDECCAF15EF7167B841BC0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		20C8E7F8AC2E6686DADE69C8 /* Pods_HSHW_2016.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HSHW_2016.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		93E8AE0F418C86C93D0AF6F6 /* Pods-HSHW_2016.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HSHW_2016.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HSHW_2016/Pods-HSHW_2016.debug.xcconfig"; sourceTree = "<group>"; };
+		C5D24AB857F88F8D1DC70DC4 /* Pods-HSHW_2016.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HSHW_2016.release.xcconfig"; path = "Pods/Target Support Files/Pods-HSHW_2016/Pods-HSHW_2016.release.xcconfig"; sourceTree = "<group>"; };
 		F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F604A4DB1D0E79F7008A4888 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		F604A4DD1D0E7A03008A4888 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -576,7 +584,7 @@
 				F604A4DE1D0E7A03008A4888 /* libz.tbd in Frameworks */,
 				F604A4DC1D0E79F7008A4888 /* libicucore.tbd in Frameworks */,
 				F6B75F901D090728009DE2E6 /* ImageIO.framework in Frameworks */,
-				D1FC268C65F633C38728A1DB /* Pods.framework in Frameworks */,
+				2ED3898564DC452DE9AE5E12 /* Pods_HSHW_2016.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -748,7 +756,6 @@
 			isa = PBXGroup;
 			children = (
 				181E0D2A1CEBF87D00E34A7F /* MineMessageViewController.swift */,
-				0B94E7761D4309070008FD57 /* MineMessDetailViewController.swift */,
 			);
 			name = Message;
 			sourceTree = "<group>";
@@ -785,8 +792,8 @@
 				183B85091CE5BFDC00709235 /* HSHW_2016Tests */,
 				183B85141CE5BFDC00709235 /* HSHW_2016UITests */,
 				183B84F31CE5BFDC00709235 /* Products */,
-				9017E3C6646186CDCA600C85 /* Pods */,
 				F1AF83881B75F01938A9D1A2 /* Frameworks */,
+				1AD23D579BAA4C07612F9863 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -863,6 +870,8 @@
 				1FFD49C71D631F9F00AB1460 /* UIImage+Extension.swift */,
 				1F1B7F301D66F1CA009910DF /* qqDelegate.swift */,
 				1F1B7F321D66F480009910DF /* wechatDelegate.swift */,
+				1F3674CD1DBDE734007D55E6 /* MyUtil.h */,
+				1F3674CE1DBDE734007D55E6 /* MyUtil.m */,
 			);
 			name = Tool;
 			sourceTree = "<group>";
@@ -1175,6 +1184,8 @@
 				1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */,
 				1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */,
 				1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */,
+				1F54B60B1DB706E300AAA5A6 /* NSRecruitmentDetailViewController.swift */,
+				1F54B60D1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift */,
 			);
 			name = Recruitment;
 			sourceTree = "<group>";
@@ -1201,8 +1212,18 @@
 				181E0D3A1CEC429900E34A7F /* Message */,
 				181E0D3B1CEC429C00E34A7F /* Collection */,
 				181E0D3C1CEC429F00E34A7F /* Recruit */,
+				1FEFF3F91DBDD6FF00E82F98 /* MiFeedbackViewController.swift */,
 			);
 			name = Controller;
+			sourceTree = "<group>";
+		};
+		1AD23D579BAA4C07612F9863 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				93E8AE0F418C86C93D0AF6F6 /* Pods-HSHW_2016.debug.xcconfig */,
+				C5D24AB857F88F8D1DC70DC4 /* Pods-HSHW_2016.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		1F0BE1241D54A84300842B80 /* openSDK1.7.2 */ = {
@@ -1292,15 +1313,6 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		9017E3C6646186CDCA600C85 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				0B26F5B17459B246981F92CE /* Pods.debug.xcconfig */,
-				ACDDECCAF15EF7167B841BC0 /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		F1AF83881B75F01938A9D1A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1323,6 +1335,7 @@
 				F604A4DB1D0E79F7008A4888 /* libicucore.tbd */,
 				F6B75F8F1D090728009DE2E6 /* ImageIO.framework */,
 				F45AEDD1914B4E9F6B4D0EDA /* Pods.framework */,
+				20C8E7F8AC2E6686DADE69C8 /* Pods_HSHW_2016.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1353,12 +1366,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 183B851A1CE5BFDC00709235 /* Build configuration list for PBXNativeTarget "HSHW_2016" */;
 			buildPhases = (
-				62912E34BA57D2CC2BFEFC18 /* Check Pods Manifest.lock */,
+				29748462319664A2CF41B336 /* [CP] Check Pods Manifest.lock */,
 				183B84EE1CE5BFDC00709235 /* Sources */,
 				183B84EF1CE5BFDC00709235 /* Frameworks */,
 				183B84F01CE5BFDC00709235 /* Resources */,
-				84941422821A121F735C52FA /* Embed Pods Frameworks */,
-				02FF33FCADFD4936D43B486D /* Copy Pods Resources */,
+				4E23B7EE2B57F7B54D0641B3 /* [CP] Embed Pods Frameworks */,
+				6287A40C159D35352A4EA41E /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -1510,29 +1523,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		02FF33FCADFD4936D43B486D /* Copy Pods Resources */ = {
+		29748462319664A2CF41B336 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		62912E34BA57D2CC2BFEFC18 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1540,19 +1538,34 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		84941422821A121F735C52FA /* Embed Pods Frameworks */ = {
+		4E23B7EE2B57F7B54D0641B3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HSHW_2016/Pods-HSHW_2016-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6287A40C159D35352A4EA41E /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HSHW_2016/Pods-HSHW_2016-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1608,6 +1621,8 @@
 				0BC1B4281D38EE03008A6F3D /* MineMessageTableViewCell.swift in Sources */,
 				0BB378571D2B504A00E4A84D /* OnlineTextTableViewCell.swift in Sources */,
 				F63981081D373945002EE95B /* CFLineChartView.m in Sources */,
+				1F54B60E1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift in Sources */,
+				1FEFF3FA1DBDD6FF00E82F98 /* MiFeedbackViewController.swift in Sources */,
 				0DB082E21D49D726004510B1 /* GHSSQCollectionViewCell.swift in Sources */,
 				1FFD9EE31D51EBD700951098 /* DPDUIView+Extension.swift in Sources */,
 				0DB467AB1D4C8600009AE2AD /* MJRefreshBackFooter.m in Sources */,
@@ -1655,6 +1670,7 @@
 				F6338B951D29105B00EE5CA2 /* HSStateCommentCell.swift in Sources */,
 				0DB467AD1D4C8600009AE2AD /* MJRefreshFooter.m in Sources */,
 				0DE829DD1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift in Sources */,
+				1F54B60C1DB706E400AAA5A6 /* NSRecruitmentDetailViewController.swift in Sources */,
 				181E0D291CEBF86900E34A7F /* MinePostViewController.swift in Sources */,
 				F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */,
 				F63B3A6F1D2F953600C5B2CF /* HSStateEditResumeController.swift in Sources */,
@@ -1703,7 +1719,6 @@
 				189849B61CE815D3007B37B4 /* AcademicTableViewCell.swift in Sources */,
 				185408891CE70D8A00DFBA7C /* AcademicViewController.swift in Sources */,
 				181E0D231CEBF80B00E34A7F /* SetDataViewController.swift in Sources */,
-				0B94E7771D4309070008FD57 /* MineMessDetailViewController.swift in Sources */,
 				0BD429451D3DCDF70064B64C /* MineExaminationViewController.swift in Sources */,
 				0B9C64071D41B89F008B7F6C /* GMyExamViewController.swift in Sources */,
 				0B6FED501D3382B800A4488E /* EducationModel.swift in Sources */,
@@ -1738,6 +1753,7 @@
 				1FFD9ECD1D519C4D00951098 /* GHSPostResumeView.swift in Sources */,
 				0BD429491D3DFAA20064B64C /* CollectDetailViewController.swift in Sources */,
 				1F0FDFE21D69384D005DDB80 /* ScoreViewController.swift in Sources */,
+				1F3674CF1DBDE734007D55E6 /* MyUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1887,7 +1903,7 @@
 		};
 		183B851B1CE5BFDC00709235 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0B26F5B17459B246981F92CE /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 93E8AE0F418C86C93D0AF6F6 /* Pods-HSHW_2016.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";
@@ -1931,7 +1947,7 @@
 		};
 		183B851C1CE5BFDC00709235 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ACDDECCAF15EF7167B841BC0 /* Pods.release.xcconfig */;
+			baseConfigurationReference = C5D24AB857F88F8D1DC70DC4 /* Pods-HSHW_2016.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";

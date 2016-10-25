@@ -80,8 +80,8 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 //            let Extras = userInfo!["Extras"] as? NSString //服务端中Extras字段，key是自己定义的
                 print("content = [%@], badge = [%ld], sound = [%@], Extras = [%@]", content, badge, sound)
                 //             iOS badge 清0
-                UIApplication.sharedApplication().applicationIconBadgeNumber = 0;
-                
+                UIApplication.sharedApplication().applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber - (badge ?? 0)!
+
                 if (userInfo!["news"] != nil) {
                     
                     //                [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil
@@ -115,6 +115,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.automaticallyAdjustsScrollViewInsets = false
         
         let back = UIBarButtonItem()
         back.title = "返回";
@@ -126,12 +127,43 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         myTableView.mj_header.beginRefreshing()
         
+        myTableView.mj_footer = MJRefreshBackNormalFooter.init(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
+        
         self.view.backgroundColor = COLOR
 
 
         // Do any additional setup after loading the view.
     }
     
+    var pager = 2
+    func loadData_pullUp() {
+        
+        HSNurseStationHelper().getArticleListWithID(newsType == nil ? newsId : String(newsType!), pager: String(pager)) { (success, response) in
+            
+            if success {
+                //                print(response)
+                
+                for element in response as! Array<NewsInfo> {
+                    self.dataSource.append(element)
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.myTableView.reloadData()
+                    self.pager += 1
+                })
+                
+                    self.myTableView.mj_footer.endRefreshing()
+                
+            }else{
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    self.myTableView.mj_footer.endRefreshingWithNoMoreData()
+                    
+                })
+            }
+        }
+    }
     
     func loadData() {
         
@@ -164,7 +196,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 dispatch_async(dispatch_get_main_queue(), {
                     self.myTableView.mj_header.endRefreshing()
                     
-                    if String(response!) == "no data" {
+                    if String((response ?? "")!)  == "no data" {
                         self.imageArr = Array<NewsInfo>()
                         self.updateSlideImage()
                         self.myTableView.reloadData()
@@ -173,7 +205,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = "轮播图获取失败"
-                        hud.detailsLabelText = String(response!)
+                        hud.detailsLabelText = String((response ?? "")!)
                         hud.margin = 10.0
                         hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
@@ -183,7 +215,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
             }
         }
         
-        HSNurseStationHelper().getArticleListWithID(newsType == nil ? newsId : String(newsType!)) { (success, response) in
+        HSNurseStationHelper().getArticleListWithID(newsType == nil ? newsId : String(newsType!), pager: "1") { (success, response) in
             
             if success {
 //                print(response)
@@ -197,6 +229,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 flag += 1
                 if flag == 2 {
                     self.myTableView.mj_header.endRefreshing()
+                    self.pager += 1
                 }
 
             }else{

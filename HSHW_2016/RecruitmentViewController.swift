@@ -9,14 +9,11 @@ import UIKit
 import Alamofire
 import MBProgressHUD
 
-class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,HSFindPersonDetailViewDelegate,PostVacanciesDelegate,HSPostResumeViewDelegate {
+class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,PostVacanciesDelegate,HSPostResumeViewDelegate {
 
     let myTableView = UITableView()
-    let employmentMessageTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = SMPageControl()
-//    var picArr = Array<String>()
-//    var titArr = Array<String>()
     var imageArr = Array<NewsInfo>()
     var timer = NSTimer()
     var times = Int()
@@ -25,7 +22,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     let resumeDetail = NSBundle.mainBundle().loadNibNamed("HSFindPersonDetailView", owner: nil, options: nil).first as! HSFindPersonDetailView
     let sendPostion = NSBundle.mainBundle().loadNibNamed("PostVacancies", owner: nil, options: nil).first as! PostVacancies
     let sendResume = NSBundle.mainBundle().loadNibNamed("HSPostResumeView", owner: nil, options: nil).first as! HSPostResumeView
-//    var employmentdataSource=NSMutableArray()
     let jobHelper = HSNurseStationHelper()
     var jobDataSource:Array<JobModel>?
     var currentJobModel:JobModel?
@@ -40,38 +36,16 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var selfNav:UINavigationController?
     var btnTag = 1
     
-    var name = NSString()
-    var sex = NSString()
-    var avatar = NSString()
-    var birthday = NSString()
-    var address = NSString()
-    var education = NSString()
-    var certificate = NSString()
-    var currentsalary = NSString()
-    var count = NSString()
-    var descrip = NSString()
-    var linkman = NSString()
-    var phone = NSString()
-    var experience = NSString()
-    var wantposition = NSString()
     var tit = NSString()
-    var jobstate = NSString()
-    var wantsalary = NSString()
-    var ema = NSString()
-    var pho = NSString()
-    var hiredate = NSString()
-    var wantcity = NSString()
-    
+    var count = NSString()
+    var linkman = NSString()
+
     
     weak var superViewController:NurseStationViewController?
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if (self.jobDataSource != nil) {
-            
-            self.employmentMessageTableView.reloadData()
-        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,9 +57,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         makeDataSource()
         sendPostion.delegate = self
         sendResume.delegate = self
-        employmentMessageTableView.separatorStyle = .None
-        resumeDetail.delegate = self
-        
 
         self.makeEmployment()
         self.view.backgroundColor = COLOR
@@ -254,10 +225,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
         myTableView.mj_header.beginRefreshing()
         
-        employmentMessageTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "employmentMessage")
-        employmentMessageTableView.delegate = self
-        employmentMessageTableView.dataSource = self
-        employmentMessageTableView.tag = 1
         self.view.addSubview(myTableView)
         
 
@@ -317,364 +284,55 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
         self.view.addSubview(resumeDetail)
     }
-//  招聘信息详情
-    func makeEmploymentMessage() {
-        employmentMessage.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-64-49-0.5)
-        employmentMessage.backgroundColor = UIColor.whiteColor()
-        
-        self.view.addSubview(employmentMessage)
-        self.employmentMessageTableView.frame = CGRectMake(0, 0, employmentMessage.frame.size.width,employmentMessage.frame.size.height - WIDTH*65/375)
-//        employmentMessageTableView.tag = 1
-//        employmentMessageTableView.backgroundColor = UIColor.redColor()
-        let tackBtn = UIButton(frame: CGRectMake(WIDTH-WIDTH*130/375-WIDTH*15/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*130/375, WIDTH*45/375))
-        tackBtn.layer.cornerRadius = WIDTH*22.5/375
-        tackBtn.layer.borderColor = COLOR.CGColor
-        tackBtn.layer.borderWidth = 1
-        tackBtn.setTitle("返回", forState: .Normal)
-        tackBtn.setTitleColor(COLOR, forState: .Normal)
-        tackBtn.addTarget(self, action: #selector(self.takeResume), forControlEvents: .TouchUpInside)
-        employmentMessage.addSubview(tackBtn)
-        
-        let tack = UIButton(frame: CGRectMake(WIDTH*15/375, self.employmentMessageTableView.frame.origin.y+self.employmentMessageTableView.frame.size.height+10, WIDTH*130/375, WIDTH*45/375))
-        tack.layer.cornerRadius = WIDTH*22.5/375
-        tack.layer.borderColor = COLOR.CGColor
-        tack.layer.borderWidth = 1
-        tack.setTitle("投递简历", forState: .Normal)
-        tack.setTitleColor(COLOR, forState: .Normal)
-        tack.addTarget(self, action: #selector(self.resumeOnline(_:)), forControlEvents: .TouchUpInside)
-        employmentMessage.addSubview(tack)
-       
-        employmentMessage.addSubview(employmentMessageTableView)
-        
-        
-    }
-    
-    func makeCVMessage(model:CVModel){
-        resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-64-49-0.5)
-        resumeDetail.model = model
-        resumeDetail.headerImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.avatar), placeholderImage: UIImage(named: "img_head_nor"))
-        resumeDetail.showFor(birthday)
-        resumeDetail.showSex(sex)
-        resumeDetail.showName(name)
-        resumeDetail.education(education)
-        resumeDetail.address(address)
-        resumeDetail.experience(experience)
-        resumeDetail.jobName(certificate)
-        resumeDetail.comeTime(hiredate)
-        resumeDetail.expectSalary(wantsalary)
-        resumeDetail.targetLocation(wantcity)
-        resumeDetail.targetPosition(wantposition)
-        resumeDetail.selfEvaluation(descrip)
-        resumeDetail.phoneNumber(phone)
-        resumeDetail.email(ema)
-        resumeDetail.currentSalary(currentsalary)
-        resumeDetail.jobState(jobstate)
-        self.view.addSubview(resumeDetail)
-    }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        // print("---")
-        // print(jobDataSource)
-        // print("---")
-        if tableView.tag == 0 {
-            return 170
-        }else {
-            if indexPath.row == 0 {
-                let jobModel = jobDataSource![indexPath.row]
-                let height = calculateHeight(jobModel.title, size: 18, width: WIDTH-20)
-                return 20+height
-            }else if indexPath.row == 1 {
-                return 20
-            }else if indexPath.row == 2 {
-                return 35
-            }else if indexPath.row == 3 {
-                
-                let descripTagLab = UILabel(frame: CGRectMake(10,10,WIDTH-20,0))
-                descripTagLab.font = UIFont.boldSystemFontOfSize(15)
-                descripTagLab.textColor = UIColor.blackColor()
-                descripTagLab.text = "企业简介:"
-                descripTagLab.sizeToFit()
-                
-                let jobModel = currentJobModel
-
-                let descripStr = jobModel?.companyinfo
-                let attrStr = NSMutableAttributedString(string: descripStr ?? "")
-                //                    attrStr.addAttributes([NSFontAttributeName:UIFont.boldSystemFontOfSize(15)], range: NSMakeRange(0, 5))
-                attrStr.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, attrStr.length))
-                attrStr.addAttributes([NSForegroundColorAttributeName:UIColor.lightGrayColor()], range: NSMakeRange(0, attrStr.length))
-                
-                return attrStr.boundingRectWithSize(CGSizeMake(WIDTH-CGRectGetMaxX(descripTagLab.frame)-10, 0), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil).size.height+10
-            }else if indexPath.row == 4 {
-                return calculateHeight(currentJobModel!.address.stringByReplacingOccurrencesOfString(" ", withString: "\n"), size: 14, width: WIDTH-240)
-            }else if indexPath.row == 5 {
-                return 35
-            }else if indexPath.row == 6 {
-                let jobModel = jobDataSource![0]
-                let height = calculateHeight(jobModel.description, size: 14, width: WIDTH-20)+10
-                return 40+height
-            }else if indexPath.row == 7 {
-                let name = UIButton(type: UIButtonType.Custom)
-                name.frame = CGRectMake(100, 10, 10, 25)
-                name.setTitleColor(COLOR, forState: .Normal)
-                name.titleLabel!.font = UIFont.systemFontOfSize(14)
-                if !canLookTel {
-                    name.setTitle("查看联系方式", forState: .Normal)
-                    name.sizeToFit()
-                    return name.frame.size.height + 10
-                }else {
-                    name.setTitle((currentJobModel?.linkman)! + "\n" + currentJobModel!.phone, forState: .Normal)
-                    name.titleLabel?.numberOfLines = 0
-                    name.sizeToFit()
-                    return name.frame.size.height + 10
-                }
-                
-            }
-            else{
-                return 100
-            }
-        }
-     
+        return 160
     }
     
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView.tag == 0{
-            if showType == 1 {
-                return jobDataSource?.count ?? 0
-            }else{
-                return CVDataSource?.count ?? 0
-            }
-        }else {
-            return self.currentJobModel == nil ? 0:8
-        }
-  
-    }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        //let mycell = tableView.dequeueReusableCellWithIdentifier("identifier", forIndexPath: indexPath)
-        
-        if tableView.tag == 0 {
-        
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!RecruitTableViewCell
-            cell.selectionStyle = .None
-            if showType == 1 {
-                cell.showforJobModel(jobDataSource![indexPath.row])
-                cell.delivery.tag = indexPath.row
-                btnTag = cell.delivery.tag
-                cell.delivery.addTarget(self, action: #selector(self.resumeOnline(_:)), forControlEvents: .TouchUpInside)
-            }else{
-                cell.showforCVModel(CVDataSource![indexPath.row])
-                cell.delivery.tag = indexPath.row
-                btnTag = cell.delivery.tag
-                cell.delivery.addTarget(self, action: #selector(self.invited(_:)), forControlEvents: .TouchUpInside)
-            }
-            
-            return cell
+        if showType == 1 {
+            return jobDataSource?.count ?? 0
         }else{
-            let cell1 = UITableViewCell()
-//            // print(employmentdataSource)
-//            let jobModel = employmentdataSource[0]as! JobModel
-            let jobModel = currentJobModel
-            
-            // print(jobModel!.title)
-            cell1.selectionStyle = .None
-            cell1.textLabel?.numberOfLines = 0
-            strId = jobModel!.id
-            // print(jobModel!.id)
-            if showType == 1 {
-                // print(indexPath.row)
-                if indexPath.row==0 {
-                    let title = UILabel()
-                    let height = calculateHeight(jobModel!.title, size: 18, width: WIDTH-20)
-                    title.frame = CGRectMake(10, 10, WIDTH-20, height)
-                    title.text = jobModel!.title
-                    title.font = UIFont.systemFontOfSize(20)
-                    title.textColor = COLOR
-                    title.numberOfLines = 0
-                    cell1.addSubview(title)
-                }else if indexPath.row == 1 {
-                    let eyeImage = UIImageView(image: UIImage(named: "ic_eye_purple.png"))
-                    eyeImage.frame = CGRectMake(10,10,8,8)
-                    let lookCount = UILabel(frame: CGRectMake(20,10,30,10))
-                    lookCount.font = UIFont.systemFontOfSize(10)
-                    lookCount.text = "3346"
-                    let timeImage = UIImageView(image: UIImage(named: "ic_time_purple.png"))
-                    timeImage.frame = CGRectMake(55, 10, 8, 8)
-                    let timeLabel = UILabel(frame: CGRectMake(65,10,100,10))
-                    timeLabel.font = UIFont.systemFontOfSize(10)
-                    timeLabel.text = self.timeStampToString((jobModel?.create_time)!)
-                    
-                    cell1.addSubview(eyeImage)
-                    cell1.addSubview(lookCount)
-                    cell1.addSubview(timeImage)
-                    cell1.addSubview(timeLabel)
-                    
-                }else if indexPath.row == 2 {
-                    let nameLabel = UILabel(frame: CGRectMake(10,10,100,25))
-                    nameLabel.font = UIFont.boldSystemFontOfSize(15)
-                    nameLabel.text = "企业名称:"
-                    let name = UILabel(frame: CGRectMake(120,10,200,25))
-                    name.font = UIFont.systemFontOfSize(14)
-                    name.text = jobModel!.companyname
-                    cell1.addSubview(nameLabel)
-                    cell1.addSubview(name)
-                }else if indexPath.row == 3 {
-                    let descripTagLab = UILabel(frame: CGRectMake(10,10,WIDTH-20,0))
-                    descripTagLab.font = UIFont.boldSystemFontOfSize(15)
-                    descripTagLab.textColor = UIColor.blackColor()
-                    descripTagLab.text = "企业简介:"
-                    descripTagLab.sizeToFit()
-                    cell1.addSubview(descripTagLab)
-                    
-                    let descripStr = jobModel!.companyinfo
-                    let attrStr = NSMutableAttributedString(string: descripStr)
-//                    attrStr.addAttributes([NSFontAttributeName:UIFont.boldSystemFontOfSize(15)], range: NSMakeRange(0, 5))
-                    attrStr.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, attrStr.length))
-                    attrStr.addAttributes([NSForegroundColorAttributeName:UIColor.lightGrayColor()], range: NSMakeRange(0, attrStr.length))
-                    
-                    let descript = UILabel(frame: CGRectMake(
-                        CGRectGetMaxX(descripTagLab.frame),
-                        10,
-                        WIDTH-CGRectGetMaxX(descripTagLab.frame)-10,
-                        attrStr.boundingRectWithSize(CGSizeMake(WIDTH-CGRectGetMaxX(descripTagLab.frame)-10, 0), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil).size.height))
-                    descript.font = UIFont.boldSystemFontOfSize(15)
-                    descript.numberOfLines = 0
-                    
-                    
-//                    let paragraphStyle1 = NSMutableParagraphStyle()
-//                    paragraphStyle1.lineSpacing = 8
-//                    attrStr.addAttributes([NSParagraphStyleAttributeName:paragraphStyle1], range: NSMakeRange(0, descripStr.characters.count))
-
-                    descript.numberOfLines = 0
-                    descript.attributedText = attrStr
-                    cell1.addSubview(descript)
-                }else if indexPath.row == 4 {
-                    let criteria = UILabel(frame: CGRectMake(10,10,70,25))
-                    criteria.font = UIFont.boldSystemFontOfSize(15)
-                    criteria.text = "招聘条件:"
-                    criteria.sizeToFit()
-                    let criteriaLabel = UILabel(frame: CGRectMake(80,10,75,25))
-                    criteriaLabel.font = UIFont.systemFontOfSize(14)
-                    criteriaLabel.textColor = UIColor.lightGrayColor()
-                    criteriaLabel.text = jobModel!.education
-                    criteriaLabel.sizeToFit()
-                    let address = UILabel(frame: CGRectMake(170,10,70,25))
-                    address.font = UIFont.boldSystemFontOfSize(15)
-                    address.text = "工作地点:"
-                    address.sizeToFit()
-                    let addressLabel = UILabel(frame: CGRectMake(240,10,WIDTH-240,calculateHeight(currentJobModel!.address.stringByReplacingOccurrencesOfString(" ", withString: "\n"), size: 14, width: WIDTH-240)))
-                    addressLabel.font = UIFont.systemFontOfSize(14)
-                    addressLabel.textColor = UIColor.lightGrayColor()
-                    addressLabel.text = currentJobModel!.address.stringByReplacingOccurrencesOfString(" ", withString: "\n")
-                    addressLabel.numberOfLines = 0
-                    cell1.addSubview(criteria)
-                    cell1.addSubview(criteriaLabel)
-                    cell1.addSubview(address)
-                    cell1.addSubview(addressLabel)
-                }else if indexPath.row == 5{
-                    let criteria = UILabel(frame: CGRectMake(10,10,70,25))
-                    criteria.font = UIFont.boldSystemFontOfSize(15)
-                    criteria.text = "招聘人数:"
-                    let criteriaLabel = UILabel(frame: CGRectMake(80,10,75,25))
-                    criteriaLabel.font = UIFont.systemFontOfSize(14)
-                    criteriaLabel.textColor = UIColor.lightGrayColor()
-                    criteriaLabel.text = jobModel!.count
-                    let address = UILabel(frame: CGRectMake(170,10,70,25))
-                    address.font = UIFont.boldSystemFontOfSize(15)
-                    address.text = "福利待遇:"
-                    let addressLabel = UILabel(frame: CGRectMake(240,10,WIDTH-240,25))
-                    addressLabel.font = UIFont.systemFontOfSize(14)
-                    addressLabel.textColor = UIColor.lightGrayColor()
-                    addressLabel.text = jobModel!.welfare
-                    cell1.addSubview(criteria)
-                    cell1.addSubview(criteriaLabel)
-                    cell1.addSubview(address)
-                    cell1.addSubview(addressLabel)
-                }else if indexPath.row == 6 {
-                    let positionDescript = UILabel(frame: CGRectMake(10,10,100,25))
-                    positionDescript.font = UIFont.boldSystemFontOfSize(15)
-                    positionDescript.text = "职位描述:"
-                    let descripDetail = UILabel(frame: CGRectMake(10,40,WIDTH-20,200))
-                    descripDetail.font = UIFont.systemFontOfSize(14)
-                    descripDetail.textColor = UIColor.lightGrayColor()
-                    descripDetail.numberOfLines = 0
-                    descripDetail.text = jobModel!.description
-                    descripDetail.frame.size.height = calculateHeight((jobModel?.description)!, size: 14, width: WIDTH-20)
-                    cell1.addSubview(positionDescript)
-                    cell1.addSubview(descripDetail)
-                }else if indexPath.row == 7 {
-                    let nameLabel = UILabel(frame: CGRectMake(10,10,80,25))
-                    nameLabel.font = UIFont.boldSystemFontOfSize(15)
-                    nameLabel.text = "联系方式:"
-                    
-                    let name = UIButton(type: UIButtonType.Custom)
-                    name.frame = CGRectMake(100, 10, 10, 25)
-                    name.setTitleColor(COLOR, forState: .Normal)
-                    name.titleLabel!.font = UIFont.systemFontOfSize(14)
-                    if !canLookTel {
-                        name.setTitle("查看联系方式", forState: .Normal)
-                        name.sizeToFit()
-                        name.addTarget(self, action: #selector(contactClick), forControlEvents: .TouchUpInside)
-                    }else {
-                        name.setTitle((jobModel?.linkman)! + "\n" + jobModel!.phone, forState: .Normal)
-                        name.titleLabel?.numberOfLines = 0
-                        name.sizeToFit()
-                    }
-                    cell1.addSubview(nameLabel)
-                    cell1.addSubview(name)
-                }
-                return cell1
-            }
-            return cell1
+            return CVDataSource?.count ?? 0
         }
     }
     
-    func contactClick() {
-        // MARK:要求登录
-        if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
-            return
-        }
-        canLookTel = true
-        self.employmentMessageTableView.reloadData()
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!RecruitTableViewCell
+        cell.selectionStyle = .None
+        if showType == 1 {
+            cell.showforJobModel(jobDataSource![indexPath.row])
+            cell.delivery.tag = indexPath.row
+            btnTag = cell.delivery.tag
+            cell.delivery.addTarget(self, action: #selector(self.resumeOnline(_:)), forControlEvents: .TouchUpInside)
+        }else{
+            cell.showforCVModel(CVDataSource![indexPath.row])
+            cell.delivery.tag = indexPath.row
+            btnTag = cell.delivery.tag
+            cell.delivery.addTarget(self, action: #selector(self.invited(_:)), forControlEvents: .TouchUpInside)
+        }
+        
+        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         // print(indexPath.row)
         if tableView.tag == 0 {
             if showType == 1 {
-//                let model = self.jobDataSource![indexPath.row]
-//                self.employmentdataSource.addObject(model)
                 self.currentJobModel = self.jobDataSource![indexPath.row]
-                // print(jobDataSource)
-                // print(self.jobDataSource![indexPath.row].title)
-//                // print(self.employmentdataSource)
-//                superViewController?.showRightBtn()
-                self.makeEmploymentMessage()
+                
+                let RecruitmentDetailVC = NSRecruitmentDetailViewController()
+                RecruitmentDetailVC.currentJobModel = self.jobDataSource![indexPath.row]
+                RecruitmentDetailVC.jobDataSource = self.jobDataSource
+                self.navigationController?.pushViewController(RecruitmentDetailVC, animated: true)
             }else {
-                let model = self.CVDataSource![indexPath.row]
-                self.name = model.name
-                self.sex = model.sex == "0" ? "女":"男"
-                self.avatar = model.avatar
-                self.birthday = model.birthday
-                self.address = model.address
-                self.education = model.education
-                self.certificate = model.certificate
-                self.currentsalary = model.currentsalary
-                self.count = model.count
-                self.descrip = model.description
-                self.linkman = model.linkman
-                self.phone = model.phone
-                self.experience = model.experience
-                self.wantposition = model.wantposition
-                self.tit = model.title
-                self.jobstate = model.jobstate
-                self.ema = model.email
-                self.hiredate = model.hiredate
-                self.wantcity = model.wantcity.componentsSeparatedByString("-").last!
-                self.wantsalary = model.wantsalary
-//                superViewController?.showRightBtn()
-                self.makeCVMessage(model)
+                
+                let cvVC = NSPersonalInfoDetailViewController()
+                cvVC.cvModel = self.CVDataSource![indexPath.row]
+                self.navigationController?.pushViewController(cvVC, animated: true)
             }
         }
     }
@@ -1026,25 +684,18 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func takeThePost() {
-        // print("提交招聘信息")
         UIView.animateWithDuration(0.3) {
             self.employment.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-154.5)
         }
     }
     
     func takeTheResume() {
-        // print("提交简历")
-//        UIView.animateWithDuration(5) {
-//            self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
-//        }
         
         let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
         self.presentViewController(alertController, animated: true, completion: nil)
         
         let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
 
-//        // print(self.employmentdataSource.count)
-//            let model = self.employmentdataSource[0] as! JobModel
         let model = self.currentJobModel
             let url = PARK_URL_Header+"ApplyJob"
             let param = [
@@ -1085,11 +736,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                 }
             }
-            
-//            self.employmentdataSource.removeAllObjects()
-            self.employmentMessageTableView.reloadData()
-//            self.employmentMessage.removeFromSuperview()
-//            self.superViewController?.hiddenBtn()
         })
         alertController.addAction(doneAction)
         
@@ -1098,18 +744,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         })
         alertController.addAction(cancelAction)
     }
-    
-    func takeResume(){
-        UIView.animateWithDuration(0.2) {
-            self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
-        }
-//        self.employmentdataSource.removeAllObjects()
-        self.employmentMessageTableView.reloadData()
-        self.employmentMessage.removeFromSuperview()
-        superViewController?.hiddenBtn()
-    }
-    
-    
     
     //MARK:delegate-find
     func sendInvite(model:CVModel){
@@ -1180,56 +814,4 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             timer.invalidate()
         }
     }
-    
-    // Linux时间戳转标准时间
-    func timeStampToString(timeStamp:String)->String {
-        
-        let string = NSString(string: timeStamp)
-        
-        let timeSta:NSTimeInterval = string.doubleValue
-        let dfmatter = NSDateFormatter()
-        dfmatter.dateFormat="yyyy-MM-dd"
-        
-        let date = NSDate(timeIntervalSince1970: timeSta)
-        
-        //        print(dfmatter.stringFromDate(date))
-        return dfmatter.stringFromDate(date)
-    }
-    
-//    func scroll(){
-//        if times == 4 {
-//            pageControl.currentPage = 0
-//        }else{
-//            pageControl.currentPage = times
-//        }
-//        scrollView.setContentOffset(CGPointMake(WIDTH*CGFloat(times), 0), animated: true)
-//        times += 1
-//        //MARK:注释掉两条输出信息
-////        // print("招聘1")
-//    }
-//    
-//    func scrollViewDidEndScrollingAnimation(scrollView: UIScrollView) {
-//        if times >= 5 {
-//            scrollView.setContentOffset(CGPointMake(0, 0), animated: false)
-//            times = 1
-//        }
-////        // print("招聘2")
-//    }
-//    
-//    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-//        var number = Int(scrollView.contentOffset.x/WIDTH)
-//        if number == 4 {
-//            number = 0
-//            pageControl.currentPage = number
-//        }else{
-//            pageControl.currentPage = number
-//        }
-//        timer = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(scroll), userInfo: nil, repeats: true)
-//
-//    }
-//    
-//    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-//        //            timer.fireDate = NSDate.distantFuture()
-//        timer.invalidate()
-//    }
 }

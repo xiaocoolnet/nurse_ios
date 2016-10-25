@@ -107,13 +107,23 @@ class RecruitTableViewCell: UITableViewCell {
         }
 //        titImg.sd_setImageWithURL(NSURL(string:SHOW_IMAGE_HEADER + model.avatar),placeholderImage: UIImage(named: "1"))
         title.text = model.name
-        name.text = model.name
+//        name.text = model.name
         locationLab.text = model.address.componentsSeparatedByString(" ").first
         locationLab.sizeToFit()
         let contentStr = "性别:"+(model.sex == "1" ? "男" : "女")+"\n当前薪资:"+model.currentsalary+"\n工作状态:"+model.jobstate
-        content.text = contentStr
-        let contStr = "学历:"+model.education+"\n生日:"+model.birthday+"\n职务名称:"+model.certificate
-        cont.text = contStr
+        
+        let attrStr = NSMutableAttributedString(string: contentStr)
+        let paragraphStyle1 = NSMutableParagraphStyle()
+        paragraphStyle1.lineSpacing = 8
+        attrStr.addAttributes([NSParagraphStyleAttributeName:paragraphStyle1], range: NSMakeRange(0, contentStr.characters.count))
+        content.attributedText = attrStr
+        
+        let contStr = "学历:"+model.education+"\n生日:"+model.birthday+"\n职称:"+model.certificate
+        let attrcontStr = NSMutableAttributedString(string: contStr)
+        let contParagraphStyle1 = NSMutableParagraphStyle()
+        contParagraphStyle1.lineSpacing = 8
+        attrcontStr.addAttributes([NSParagraphStyleAttributeName:contParagraphStyle1], range: NSMakeRange(0, contStr.characters.count))
+        cont.attributedText = attrcontStr
         
         delivery.setTitle("邀请面试", forState: .Normal)
         delivery.sizeToFit()
@@ -126,15 +136,23 @@ class RecruitTableViewCell: UITableViewCell {
         delivery.layer.borderWidth = 1
         delivery.layer.borderColor = COLOR.CGColor
         
+        time.font = UIFont.systemFontOfSize(10)
+        time.text = timeStampToString(model.create_time)
+        time.sizeToFit()
+        
+        
+        locationLab.text = (model.address.componentsSeparatedByString(" ").first?.componentsSeparatedByString("-")[1])!+"-"+(model.address.componentsSeparatedByString(" ").first?.componentsSeparatedByString("-")[2])!
+        locationLab.sizeToFit()
+        
         let titleHeight:CGFloat = calculateHeight(model.name, size: 16, width: WIDTH*300/375)
         title.frame.size.height = titleHeight
         content.frame.origin.y = title.frame.size.height + title.frame.origin.y
         cont.frame.origin.y = title.frame.size.height + title.frame.origin.y
-        time.font = UIFont.systemFontOfSize(10)
         time.frame.origin.y = content.frame.size.height+content.frame.origin.y
         locationLab.center.y = time.center.y
         locationImg.frame.origin.y = content.frame.size.height+content.frame.origin.y
         timeImg.frame.origin.y = content.frame.size.height+content.frame.origin.y
+        
         delivery.frame.origin.y = content.frame.size.height+content.frame.origin.y
         delivery.center.y = locationLab.center.y
         btnTit.center.y = locationLab.center.y
@@ -175,6 +193,7 @@ class RecruitTableViewCell: UITableViewCell {
         delivery.frame = CGRectMake(WIDTH-WIDTH*15/375-80, content.frame.size.height+content.frame.origin.y-5, 80, 24)
         
         delivery.setTitleColor(COLOR, forState: .Normal)
+        delivery.titleLabel?.font = UIFont.systemFontOfSize(15)
         delivery.setImage(UIImage(named: "ic_note.png"), forState: .Normal)
         
 //        let img = UIImageView(frame: CGRectMake(WIDTH-WIDTH*15/375-71, 142-WIDTH*20/375-18, 11, 13))

@@ -49,6 +49,9 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(GetDate))
         myTableView.mj_header.beginRefreshing()
         
+        myTableView.mj_footer = MJRefreshBackNormalFooter.init(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
+
+        
         //  添加定时器
         timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(AbroadViewController.scroll), userInfo: nil, repeats: true)
         
@@ -176,7 +179,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             }
         }
         
-        HSNurseStationHelper().getArticleListWithID("8") { (success, response) in
+        HSNurseStationHelper().getArticleListWithID("8", pager: "1") { (success, response) in
             
             if success {
                 print("AbroadViewController GetDate-文章列表 response == \(response)")
@@ -215,6 +218,36 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             }
         }
         
+    }
+    
+    var pager = 2
+    func loadData_pullUp() {
+        
+        HSNurseStationHelper().getArticleListWithID("8", pager: String(pager)) { (success, response) in
+            
+            if success {
+                //                print(response)
+                
+                for element in response as! Array<NewsInfo> {
+                    self.dataSource.append(element)
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.myTableView.reloadData()
+                    self.pager += 1
+                })
+                
+                self.myTableView.mj_footer.endRefreshing()
+                
+            }else{
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    self.myTableView.mj_footer.endRefreshingWithNoMoreData()
+                    
+                })
+            }
+        }
     }
     
     func createTableView1(){

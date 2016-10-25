@@ -2,7 +2,7 @@
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
-#import "MBProgressHUD/MBProgressHUD.h"
+//#import "MBProgressHUD.h"
 #import "WXApi.h"
 #import "ConnectModel.h"
 #import "CFLineChartView.h"
@@ -20,3 +20,7 @@
 #import "UIPlaceHolderTextView.h"
 
 #import <CloudPushSDK/CloudPushSDK.h>
+
+#import <BmobSDK/Bmob.h>
+
+#import "MyUtil.h"

@@ -17,6 +17,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
     var dataSource = NewsList()
 
     var term_id = "11"
+    // 5万道题库
     
     
     override func viewDidLoad() {
@@ -39,13 +40,49 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(GetData))
         myTableView.mj_header.beginRefreshing()
         
+        myTableView.mj_footer = MJRefreshBackNormalFooter.init(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
+
+        
 //        self.GetData()
+    }
+    
+    var pager = 2
+    func loadData_pullUp(){
+        let url = PARK_URL_Header+"getNewslist"
+        let param = [
+            "channelid":term_id,
+            "pager":String(pager)
+        ];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            // print(request)
+            if(error != nil){
+                self.myTableView.mj_footer.endRefreshingWithNoMoreData()
+            }else{
+                let status = NewsModel(JSONDecoder(json!))
+                // print("状态是")
+                // print(status.status)
+                
+                if(status.status == "success"){
+                    // print(status)
+                    self.pager += 1
+                    self.dataSource.append(NewsList(status.data!).objectlist)
+
+                    // print(LikeList(status.data!).objectlist)
+                    self.myTableView .reloadData()
+                    self.myTableView.mj_header.endRefreshing()
+                    // print(status.data)
+                }else{
+                    self.myTableView.mj_footer.endRefreshingWithNoMoreData()
+                }
+            }
+        }
     }
     
     func GetData(){
         let url = PARK_URL_Header+"getNewslist"
         let param = [
-            "channelid":term_id
+            "channelid":term_id,
+            "pager":"1"
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             // print(request)

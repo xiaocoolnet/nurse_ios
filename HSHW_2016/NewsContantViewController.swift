@@ -1292,7 +1292,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }
             
             let webPageObject = WXWebpageObject()
-            webPageObject.webpageUrl = shareNewsUrl
+//            webPageObject.webpageUrl = shareNewsUrl
+            webPageObject.webpageUrl = NewsInfo_Header+(newsInfo?.object_id)!+"&type=1"
             message.mediaObject = webPageObject
             
             let req = SendMessageToWXReq()

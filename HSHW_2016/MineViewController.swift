@@ -181,7 +181,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     // MARK:- TableView 代理
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 7
+        return 8
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -202,6 +202,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }else if section == 3 {
             return 1
         }else if section == 4{
+            return 1
+        }else if section == 5{
             return 1
         }else {
             return 1
@@ -367,6 +369,9 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }else if indexPath.section == 5 {
                 cell.titImage.setImage(UIImage(named: "ic_xie.png"), forState: .Normal)
                 cell.titLab.text = "清除缓存"
+            }else if indexPath.section == 6 {
+                cell.titImage.setImage(UIImage(named: "ic_bi"), forState: .Normal)
+                cell.titLab.text = "意见反馈"
             }else {
                 
                 let signOutBtn = UIButton(type:.Custom)
@@ -418,14 +423,11 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 next.title = "我的招聘"
             }
         }else if indexPath.section == 5 {
-            
-//            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//            hud.mode = MBProgressHUDMode.Text
-//            hud.labelText = "周一见"
-//            hud.margin = 10.0
-//            hud.removeFromSuperViewOnHide = true
-//            hud.hide(true, afterDelay: 1)
             clearDisk()
+        }else if indexPath.section == 6 {
+            
+            self.navigationController?.pushViewController(MiFeedbackViewController(), animated: true)
+
         }
     }
     // MARK:-

@@ -80,6 +80,46 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
             
         }
         
+    }
+    
+    var pager = 2
+    func loadData_pullUp(){
+        
+        let url = PARK_URL_Header+"getNewslist"
+        
+        let param = [
+            "channelid":articleID == nil ? "7":articleID!,
+            "pager":String(pager)
+        ];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            // print(request)
+            if(error != nil){
+                self.myTableView.mj_footer.endRefreshingWithNoMoreData()
+            }else{
+                let status = NewsModel(JSONDecoder(json!))
+                // print("状态是")
+                // print(status.status)
+                if(status.status == "success"){
+                    
+                    //                    self.createTableView()
+                    // print(status)
+                    self.pager += 1
+                    self.dataSource.append(NewsList(status.data!).objectlist)
+                    self.myTableView .reloadData()
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.myTableView.mj_header.endRefreshing()
+                        
+                    })
+                    // print(status.data)
+                }else{
+                    self.myTableView.mj_footer.endRefreshingWithNoMoreData()
+                }
+            }
+           
+            
+        }
+        
 //        LoginModel().comfirmPhoneHasRegister("") { (success, response) in
 //            if !success {
 //                dispatch_async(dispatch_get_main_queue(), {
@@ -111,6 +151,8 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(GetData))
         myTableView.mj_header.beginRefreshing()
         
+        myTableView.mj_footer = MJRefreshBackNormalFooter.init(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
+
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

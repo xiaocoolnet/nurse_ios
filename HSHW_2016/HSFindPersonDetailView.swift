@@ -9,7 +9,8 @@
 import UIKit
 protocol HSFindPersonDetailViewDelegate:NSObjectProtocol {
     func sendInvite(model:CVModel)
-    func hiddenResumeDetail()
+//    func hiddenResumeDetail()
+    func lookContectBtnClick(lookContectBtn:UIButton, phoneNumber: UILabel, email: UILabel)
 }
 
 
@@ -37,20 +38,21 @@ class HSFindPersonDetailView: UIView {
     @IBOutlet weak var inviteInterView: UIButton!
     weak var delegate:HSFindPersonDetailViewDelegate?
     
-    @IBOutlet weak var backBtn: UIButton!
+    
+    @IBOutlet weak var lookContectBtn: UIButton!
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         inviteInterView.layer.borderColor = COLOR.CGColor
         inviteInterView.layer.borderWidth = 1
         inviteInterView.cornerRadius = 22
         
-        backBtn.layer.borderColor = COLOR.CGColor
-        backBtn.layer.borderWidth = 1
-        backBtn.cornerRadius = 17
-        
-        headerImg.backgroundColor = UIColor(white: 0.8, alpha: 0.5)
+//        headerImg.backgroundColor = UIColor(white: 0.8, alpha: 0.5)
         headerImg.contentMode = .ScaleAspectFit
         headerImg.clipsToBounds = true
+        
+        self.phoneNumber.hidden = true
+        self.email.hidden = true
     }
     @IBAction func sendInvite(sender: AnyObject) {
         if delegate != nil {
@@ -58,10 +60,13 @@ class HSFindPersonDetailView: UIView {
         }
     }
     
-    @IBAction func backBtnClick(sender: AnyObject) {
+    
+    @IBAction func lookContectBtnClick(sender: AnyObject) {
+        
         if delegate != nil {
-            delegate!.hiddenResumeDetail()
+            delegate!.lookContectBtnClick(lookContectBtn, phoneNumber: phoneNumber, email: email)
         }
+        
     }
     
     func showFor(birthday:NSString){
@@ -113,4 +118,48 @@ class HSFindPersonDetailView: UIView {
     func email(email:NSString){
         self.email.text = email as String
     }
+    
+    var cvModel: CVModel? {
+        didSet {
+//            self.count = model.count
+//            self.linkman = model.linkman
+//            self.tit = model.title
+            
+            self.headerImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+cvModel!.avatar), placeholderImage: UIImage(named: "img_head_nor"))
+
+            self.birthday.text = cvModel!.birthday
+            
+            self.userName.text = cvModel!.name
+            
+            self.userSex.text = cvModel!.sex == "0" ? "女":"男"
+            
+            self.education.text = cvModel!.education
+            
+            self.address.text = cvModel!.address
+            
+            self.experience.text = cvModel!.experience
+            
+            self.jobName.text = cvModel!.certificate
+            
+            self.currentSalary.text = cvModel!.currentsalary
+            
+            self.jobState.text = cvModel!.jobstate
+            
+            self.comeTime.text = cvModel!.hiredate
+            
+            self.expectSalary.text = cvModel!.wantsalary.stringByReplacingOccurrencesOfString("&lt;", withString: "<")
+            
+            self.targetLocation.text = cvModel!.wantcity.componentsSeparatedByString("-").last!
+            self.targetLocation.adjustsFontSizeToFitWidth = true
+            
+            self.targetPosition.text = cvModel!.wantposition
+            
+            self.selfEvaluation.text = cvModel!.description
+            
+            self.phoneNumber.text = cvModel!.phone
+            
+            self.email.text = cvModel!.email
+        }
+    }
+    
 }

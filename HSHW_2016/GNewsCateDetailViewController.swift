@@ -66,6 +66,9 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(GetDate))
         myTableView.mj_header.beginRefreshing()
+        
+        myTableView.mj_footer = MJRefreshBackNormalFooter.init(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
+
     }
     
     func GetDate(){
@@ -91,20 +94,52 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
                     // print(status)
                     self.dataSource = NewsList(status.data!)
                     // print(LikeList(status.data!).objectlist)
-//                    self.likedataSource = LikeList(status.data!)
+                    //                    self.likedataSource = LikeList(status.data!)
                     switch self.newsType!{
-                        case 4:
-                            self.title = "头条资讯"
-                        case 5:
-                            self.title = "护理园地"
-                        case 6:
-                            self.title = "健康知识"
-                        default:
-                            self.title = self.dataSource.objectlist.first?.term_name
+                    case 4:
+                        self.title = "头条资讯"
+                    case 5:
+                        self.title = "护理园地"
+                    case 6:
+                        self.title = "健康知识"
+                    default:
+                        self.title = self.dataSource.objectlist.first?.term_name
                     }
                     self.myTableView.reloadData()
                     self.myTableView.mj_header.endRefreshing()
                     // print(status.data)
+                }
+            }
+            
+        }
+    }
+    
+    var pager = 2
+    func loadData_pullUp(){
+        let url = PARK_URL_Header+"getNewslist"
+        // print(newsType)
+        let param = ["channelid":String(newsType!),"pager":String(pager)]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            if(error != nil){
+                self.myTableView.mj_footer.endRefreshingWithNoMoreData()
+            }else{
+                let status = NewsModel(JSONDecoder(json!))
+                // print("状态是")
+                // print(status.status)
+                
+                if(status.status == "success"){
+                    // print(status)
+                    
+                    self.pager += 1
+                    self.dataSource.append(NewsList(status.data!).objectlist)
+                    // print(LikeList(status.data!).objectlist)
+//                    self.likedataSource = LikeList(status.data!)
+                    
+                    self.myTableView.reloadData()
+                    self.myTableView.mj_header.endRefreshing()
+                    // print(status.data)
+                }else{
+                    self.myTableView.mj_footer.endRefreshingWithNoMoreData()
                 }
             }
             

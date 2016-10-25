@@ -163,10 +163,11 @@ class HSNurseStationHelper: NSObject {
     }
     
     //获取资讯文章列表
-    func getArticleListWithID(articleid:String,handle:ResponseBlock){
+    func getArticleListWithID(articleid:String, pager:String = "", handle:ResponseBlock){
         let url = PARK_URL_Header+"getNewslist"
         let param = [
-            "channelid":articleid
+            "channelid":articleid,
+            "pager":pager
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){

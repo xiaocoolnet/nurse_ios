@@ -24,7 +24,11 @@ class HSChartCell: UITableViewCell {
             let min = examDataArray.count>7 ? (examDataArray.count-7):0
             for examData in examDataArray[min ..< examDataArray.count] {
                 xValues.append(timeStampToString(examData.create_time))
-                yValues.append((examData.rightcount as NSString).integerValue*100/(examData.count as NSString).integerValue)
+                if (examData.count as NSString).integerValue == 0 {
+                    yValues.append(0)
+                }else{
+                    yValues.append((examData.rightcount as NSString).integerValue*100/(examData.count as NSString).integerValue)
+                }
             }
             var rate = 0.0
             for examData in examDataArray {

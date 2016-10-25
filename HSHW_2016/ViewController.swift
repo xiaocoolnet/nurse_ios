@@ -513,7 +513,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
                                     alert.show()
                                     let result = response as! addScore_ReadingInformationDataModel
                                     self.showScoreTips(result.event, score: result.score)
-                                    self.navigationController?.popViewControllerAnimated(true)
+//                                    self.navigationController?.popViewControllerAnimated(true)
                                 }else{
                                     let alert = UIAlertView(title: "提示信息",message: response as? String,delegate: self,cancelButtonTitle: "确定")
                                     alert.show()

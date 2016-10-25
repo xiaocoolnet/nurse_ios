@@ -120,6 +120,7 @@ class NewsInfo: JSONJoy{
     var likes = Array<LikeInfo>()
     var smeta :JSONDecoder?
     var comments = Array<NewsCommentsModel>()
+    var message_id: String
     
     
     required init(_ decoder: JSONDecoder){
@@ -140,6 +141,7 @@ class NewsInfo: JSONJoy{
         smeta = decoder["smeta"]
         term_name = decoder["term_name"].string ?? ""
         term_hits = decoder["term_hits"].string ?? ""
+        message_id = decoder["message_id"].string ?? ""
         // print(post_excerpt)
         // print(decoder["likes"].array)
         if decoder["likes"].array != nil {

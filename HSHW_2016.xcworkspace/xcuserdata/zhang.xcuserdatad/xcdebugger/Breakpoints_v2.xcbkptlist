@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/AppDelegate.swift"
-            timestampString = "496908778.189986"
+            timestampString = "498983133.1331"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "459"
-            endingLineNumber = "459"
+            startingLineNumber = "461"
+            endingLineNumber = "461"
             landmarkName = "application(_:didReceiveRemoteNotification:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,7 +42,7 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/%E9%A1%B9%E7%9B%AE/nurse_ios/HSHW_2016/CompanyAuthViewController.swift"
-                  timestampString = "498202699.006117"
+                  timestampString = "498985389.291316"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "280"
@@ -57,7 +57,7 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/%E9%A1%B9%E7%9B%AE/nurse_ios/HSHW_2016/CompanyAuthViewController.swift"
-                  timestampString = "498202699.00647"
+                  timestampString = "498985389.291569"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "280"
@@ -153,13 +153,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/RecruitmentViewController.swift"
-            timestampString = "498202840.068264"
+            filePath = "HSHW_2016/AppDelegate.swift"
+            timestampString = "498983133.1331"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "viewWillAppear(_:)"
+            startingLineNumber = "406"
+            endingLineNumber = "406"
+            landmarkName = "application(_:didReceiveRemoteNotification:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HSHW_2016/MineMessageViewController.swift"
+            timestampString = "498562991.21454"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "197"
+            endingLineNumber = "197"
+            landmarkName = "getDate()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HSHW_2016/GNewsCateDetailViewController.swift"
+            timestampString = "498972848.671021"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "loadData_pullUp()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

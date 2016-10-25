@@ -72,3 +72,54 @@ class MessageInfo: JSONJoy{
     }
     
 }
+
+class ReadMessageList: JSONJoy {
+    
+    var status: String?
+    
+    var data = [ReadMessageData]()
+    
+    
+    var errorData:String?
+        
+    required init(_ decoder: JSONDecoder) {
+        
+        status = decoder["status"].string ?? ""
+
+        if status == "success" {
+            if decoder["data"].array != nil {
+                for childs: JSONDecoder in decoder["data"].array!{
+                    self.data.append(ReadMessageData(childs))
+                }
+            }
+        }
+        else{
+            errorData = decoder["data"].string
+        }
+        
+    }
+}
+
+class ReadMessageData: JSONJoy {
+
+    var status: String
+
+    var id: String
+
+    var userid: String
+
+    var create_time: String
+
+    var refid: String
+    
+    required init(_ decoder: JSONDecoder) {
+        
+        status = decoder["status"].string ?? ""
+        id = decoder["id"].string ?? ""
+        userid = decoder["userid"].string ?? ""
+        create_time = decoder["create_time"].string ?? ""
+        refid = decoder["refid"].string ?? ""
+    }
+
+}
+

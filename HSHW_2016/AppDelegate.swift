@@ -37,6 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         // 点击通知将App从关闭状态启动时，将通知打开回执上报
         CloudPushSDK.handleLaunching(launchOptions)
         
+        Bmob.registerWithAppKey("41294c11c5f9bec7b6a7192142439427")
+        
         WXApi.registerApp("wxdd50558e711439e8")
         
         WeiboSDK.enableDebugMode(true)
@@ -412,7 +414,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         let Extras = userInfo["Extras"] as? NSString //服务端中Extras字段，key是自己定义的
         print("content = [%@], badge = [%ld], sound = [%@], Extras = [%@]", content, badge, sound, Extras)
         // iOS badge 清0
-        application.applicationIconBadgeNumber = 0;
+        application.applicationIconBadgeNumber = application.applicationIconBadgeNumber - (badge ?? 0)!
         
         if application.applicationState == .Inactive {
             

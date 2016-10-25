@@ -64,6 +64,7 @@ class CVModel: JSONJoy {
     var hiredate:String
     var wantcity:String
     var wantsalary:String
+    var create_time:String
     
     required init(_ decoder:JSONDecoder){
         id = decoder["id"].string ?? ""
@@ -94,6 +95,7 @@ class CVModel: JSONJoy {
         phone = decoder["phone"].string ?? ""
         hiredate = decoder["hiredate"].string ?? ""
         wantcity = decoder["wantcity"].string ?? ""
+        create_time = decoder["create_time"].string ?? ""
         
         wantsalary = decoder["wantsalary"].string ?? ""
         wantsalary = wantsalary.stringByReplacingOccurrencesOfString("&lt;", withString: "<")

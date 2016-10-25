@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -113,6 +112,11 @@
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="NqN-e2-luF"/>
+                                        </mask>
+                                    </variation>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="一周以内" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gV0-s8-Z8A">
                                     <rect key="frame" x="85" y="341" width="56" height="17"/>
@@ -121,7 +125,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="北京" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vBe-TH-q6f">
-                                    <rect key="frame" x="85" y="368" width="65" height="17"/>
+                                    <rect key="frame" x="85" y="368" width="28" height="17"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
@@ -261,19 +265,6 @@
                                         <action selector="sendInvite:" destination="iN0-l3-epB" eventType="touchUpInside" id="AnN-cg-PIC"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kew-OC-oai">
-                                    <rect key="frame" x="15" y="614" width="290" height="34"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="34" id="NMV-Sc-44M"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                    <state key="normal" title="返回">
-                                        <color key="titleColor" red="0.47450980390000003" green="0.0" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="backBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="oA9-nl-F0e"/>
-                                    </connections>
-                                </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="目前薪资:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ph2-6I-KwK">
                                     <rect key="frame" x="15" y="242" width="61" height="17"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -286,6 +277,16 @@
                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FCQ-QX-Doo">
+                                    <rect key="frame" x="81" y="496" width="112" height="29"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <state key="normal" title="点击查看联系方式">
+                                        <color key="titleColor" red="0.55489909648895264" green="0.096873991191387177" blue="0.41896724700927734" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="lookContectBtnClick:" destination="iN0-l3-epB" eventType="touchUpInside" id="Koq-Vd-4cI"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -297,8 +298,6 @@
                                 <constraint firstAttribute="trailing" secondItem="Uwd-sr-mq6" secondAttribute="trailing" constant="15" id="40Q-fO-Mhy"/>
                                 <constraint firstItem="Uwd-sr-mq6" firstAttribute="leading" secondItem="Ddv-9A-N8c" secondAttribute="leading" constant="15" id="5AN-X7-ABH"/>
                                 <constraint firstAttribute="height" constant="658" id="5Hz-a9-xOb"/>
-                                <constraint firstItem="kew-OC-oai" firstAttribute="trailing" secondItem="Ddv-9A-N8c" secondAttribute="trailingMargin" constant="15" id="5e3-y5-bJ6"/>
-                                <constraint firstAttribute="trailing" secondItem="kew-OC-oai" secondAttribute="trailing" constant="15" id="5fR-r9-XKX"/>
                                 <constraint firstItem="KzC-Zc-bJk" firstAttribute="top" secondItem="LKZ-ZZ-JmI" secondAttribute="bottom" constant="10" id="63L-vD-Aro"/>
                                 <constraint firstItem="QId-7m-rFe" firstAttribute="top" secondItem="t3T-uW-7DN" secondAttribute="bottom" constant="5" id="7f2-E9-DZR"/>
                                 <constraint firstAttribute="trailing" secondItem="eVN-ik-lhd" secondAttribute="trailing" constant="15" id="7sL-oJ-B1l"/>
@@ -328,7 +327,6 @@
                                 <constraint firstAttribute="trailing" secondItem="t3T-uW-7DN" secondAttribute="trailing" constant="15" id="LQU-KU-uXl"/>
                                 <constraint firstItem="ph2-6I-KwK" firstAttribute="leading" secondItem="5Wh-ua-IML" secondAttribute="leading" id="MdT-d0-HlX"/>
                                 <constraint firstItem="AZi-hs-9Cc" firstAttribute="leading" secondItem="gV0-s8-Z8A" secondAttribute="trailing" constant="20" id="Mdm-2l-2fJ"/>
-                                <constraint firstItem="kew-OC-oai" firstAttribute="leading" secondItem="Ddv-9A-N8c" secondAttribute="leading" constant="15" id="NWU-v0-zXS"/>
                                 <constraint firstItem="J2k-Gd-PKm" firstAttribute="centerY" secondItem="hVm-kd-nLV" secondAttribute="centerY" id="NrK-fQ-mJK"/>
                                 <constraint firstItem="Gku-ry-vXK" firstAttribute="centerY" secondItem="qh2-40-uTF" secondAttribute="centerY" id="OpP-qP-qSv"/>
                                 <constraint firstItem="AZi-hs-9Cc" firstAttribute="centerX" secondItem="Ddv-9A-N8c" secondAttribute="centerX" constant="30" id="PQ0-qS-eEZ"/>
@@ -340,7 +338,6 @@
                                 <constraint firstAttribute="trailing" secondItem="9T0-WU-YU4" secondAttribute="trailing" constant="15" id="Sa8-pp-52u"/>
                                 <constraint firstItem="ewG-2e-61i" firstAttribute="leading" secondItem="5Wh-ua-IML" secondAttribute="leading" id="Slh-AB-ABF"/>
                                 <constraint firstItem="7Sw-mc-9Al" firstAttribute="leading" secondItem="Ddv-9A-N8c" secondAttribute="leading" constant="15" id="WDg-ZX-UD2"/>
-                                <constraint firstItem="kew-OC-oai" firstAttribute="top" secondItem="eVN-ik-lhd" secondAttribute="bottom" constant="10" id="XDk-9g-XlB"/>
                                 <constraint firstItem="AZi-hs-9Cc" firstAttribute="centerY" secondItem="AQz-df-dEF" secondAttribute="centerY" id="aFY-lp-Wzv"/>
                                 <constraint firstItem="8St-9M-PKJ" firstAttribute="centerY" secondItem="mhm-vn-qF7" secondAttribute="centerY" id="aWo-s3-jMD"/>
                                 <constraint firstItem="mqX-m8-yZ4" firstAttribute="top" secondItem="J2k-Gd-PKm" secondAttribute="bottom" constant="10" id="bR0-vm-jps"/>
@@ -386,8 +383,10 @@
                                 <constraint firstItem="Q5L-Wo-oCo" firstAttribute="centerY" secondItem="AQz-df-dEF" secondAttribute="centerY" id="x4x-Qr-3zk"/>
                                 <constraint firstItem="nhQ-bc-3xw" firstAttribute="leading" secondItem="yXk-L8-oLB" secondAttribute="leading" id="xvX-mM-HoZ"/>
                                 <constraint firstItem="qh2-40-uTF" firstAttribute="top" secondItem="mqX-m8-yZ4" secondAttribute="bottom" constant="10" id="yK3-dO-ChT"/>
+                                <constraint firstItem="FCQ-QX-Doo" firstAttribute="leading" secondItem="QId-7m-rFe" secondAttribute="trailing" constant="5" id="ydw-gP-Fd2"/>
                                 <constraint firstItem="vBe-TH-q6f" firstAttribute="leading" secondItem="mhm-vn-qF7" secondAttribute="trailing" id="yst-eP-ibM"/>
                                 <constraint firstItem="qh2-40-uTF" firstAttribute="leading" secondItem="5Wh-ua-IML" secondAttribute="leading" id="zVe-hj-976"/>
+                                <constraint firstItem="FCQ-QX-Doo" firstAttribute="centerY" secondItem="QId-7m-rFe" secondAttribute="centerY" id="zkm-kv-MaS"/>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
@@ -399,8 +398,7 @@
                                     <exclude reference="lqo-1J-yyn"/>
                                     <exclude reference="iDn-yM-ewb"/>
                                     <exclude reference="Mdm-2l-2fJ"/>
-                                    <exclude reference="9ad-9d-qg0"/>
-                                    <exclude reference="5e3-y5-bJ6"/>
+                                    <exclude reference="tPI-4e-fw9"/>
                                 </mask>
                             </variation>
                         </view>
@@ -425,7 +423,6 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="address" destination="nv7-Dt-NYy" id="U6O-U5-4vs"/>
-                <outlet property="backBtn" destination="kew-OC-oai" id="WaK-q9-ro0"/>
                 <outlet property="birthday" destination="L47-mP-0iJ" id="1p2-lk-5BY"/>
                 <outlet property="comeTime" destination="gV0-s8-Z8A" id="13M-mu-ByC"/>
                 <outlet property="currentSalary" destination="a4Q-da-DdB" id="iax-EV-PpT"/>
@@ -437,6 +434,7 @@
                 <outlet property="inviteInterView" destination="eVN-ik-lhd" id="yB7-DE-iCT"/>
                 <outlet property="jobName" destination="E6w-3p-wjs" id="rmW-fJ-Kja"/>
                 <outlet property="jobState" destination="kR1-QT-ofy" id="aXM-s2-2wd"/>
+                <outlet property="lookContectBtn" destination="FCQ-QX-Doo" id="yCe-7l-p8t"/>
                 <outlet property="phoneNumber" destination="yXk-L8-oLB" id="jUs-FW-No7"/>
                 <outlet property="selfEvaluation" destination="9T0-WU-YU4" id="ZO5-F7-p4b"/>
                 <outlet property="targetLocation" destination="vBe-TH-q6f" id="hFI-0Q-0fE"/>

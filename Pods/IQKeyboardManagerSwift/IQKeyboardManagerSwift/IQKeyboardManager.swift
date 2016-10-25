@@ -1309,12 +1309,12 @@ public class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
 
         let oldKBSize = _kbSize
 
-        if let userInfo = notification?.userInfo {
+        if let info = notification?.userInfo {
             
             if shouldAdoptDefaultKeyboardAnimation {
 
                 //  Getting keyboard animation.
-                if let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey]?.unsignedLongValue {
+                if let curve = info[UIKeyboardAnimationCurveUserInfoKey]?.unsignedLongValue {
                     _animationCurve = UIViewAnimationOptions(rawValue: curve)
                 }
             } else {
@@ -1322,7 +1322,7 @@ public class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
             }
             
             //  Getting keyboard animation duration
-            if let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
+            if let duration = info[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
                 
                 //Saving animation duration
                 if duration != 0.0 {
@@ -1331,7 +1331,7 @@ public class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
             }
             
             //  Getting UIKeyboardSize.
-            if let kbFrame = userInfo[UIKeyboardFrameEndUserInfoKey]?.CGRectValue {
+            if let kbFrame = info[UIKeyboardFrameEndUserInfoKey]?.CGRectValue {
                 
                 let screenSize = UIScreen.mainScreen().bounds
                 
@@ -1396,10 +1396,10 @@ public class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
         //  Boolean to know keyboard is showing/hiding
         _keyboardManagerFlags.isKeyboardShowing = false
         
-        let userInfo : [NSObject : AnyObject]? = notification?.userInfo
+        let info : [NSObject : AnyObject]? = notification?.userInfo
         
         //  Getting keyboard animation duration
-        if let duration =  userInfo?[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
+        if let duration =  info?[UIKeyboardAnimationDurationUserInfoKey]?.doubleValue {
             if duration != 0 {
                 //  Setitng keyboard animation duration
                 _animationDuration = duration

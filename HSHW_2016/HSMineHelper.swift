@@ -720,4 +720,28 @@ class HSMineHelper: NSObject {
             }
         }
     }
+    
+//    // 获取折线图数据
+//    func GetMyExamData(handle:ResponseBlock){
+//        
+//        let url = PARK_URL_Header+"GetMyExamData"
+//        
+//        let param = ["userid":QCLoginUserInfo.currentInfo.userid];
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+//            // print(request)
+//            if(error != nil){
+//                handle(success: false, response: error?.description)
+//            }else{
+//                
+//                let result = examData(JSONDecoder(json!))
+//                // print("状态是")
+//                // print(result.status)
+//                if(result.status == "success"){
+//                    handle(success: true, response: result.datas)
+//                }else{
+//                    handle(success: false, response: result.errorData)
+//                }
+//            }
+//        }
+//    }
 }

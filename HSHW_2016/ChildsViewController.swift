@@ -88,6 +88,10 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
         // Do any additional setup after loading the view.
     }
     
+    func lookContectBtnClick(lookContectBtn: UIButton, phoneNumber: UILabel, email: UILabel) {
+        
+    }
+    
     func sendInvite(model:CVModel){
         inviteJob(model)
     }

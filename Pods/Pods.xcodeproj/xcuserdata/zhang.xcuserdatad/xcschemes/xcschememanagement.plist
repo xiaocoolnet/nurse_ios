@@ -44,7 +44,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods.xcscheme</key>
+		<key>Pods-HSHW_2016.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -82,7 +82,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>494A15A8966E2FE5920B4DC83408B715</key>
+		<key>25A2F843F938B272707C5078E5346444</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3509609872B4F663FF33E54EB14985F6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,12 +102,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B14818B88D6F74842FE04D50379EF5CA</key>
+		<key>7BA2A7BBC7E015AABCA519437CFD54DD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DEC60B4EDFF5C340D8526F5EBB229764</key>
+		<key>7DD7AC1AD79AE3EDA33A80CCE631D4E1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>B14818B88D6F74842FE04D50379EF5CA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -113,16 +123,6 @@
 			<true/>
 		</dict>
 		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E6C8D152813A9F6E1FA6C1FC154230EB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>EE758C422667271621CB62B10093AC28</key>
 		<dict>
 			<key>primary</key>
 			<true/>

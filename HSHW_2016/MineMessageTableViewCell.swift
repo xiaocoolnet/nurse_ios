@@ -40,6 +40,7 @@ class MineMessageTableViewCell: UITableViewCell {
         imgBtn.frame = CGRectMake(10, 10, 60, 60)
         imgBtn.layer.cornerRadius = 6
         imgBtn.clipsToBounds = true
+        imgBtn.contentMode = .ScaleAspectFill
         
         small.frame = CGRectMake(65, 5, 10, 10)
         
