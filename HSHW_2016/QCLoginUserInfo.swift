@@ -12,7 +12,7 @@ class QCLoginUserInfo {
     
     var phoneNumber = ""
     var devicestate = ""
-    var usertype = ""
+    var usertype = ""// 1 个人 2 企业
     var userid = ""
     var userName = ""
     var avatar = ""

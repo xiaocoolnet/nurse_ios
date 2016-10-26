@@ -10,7 +10,7 @@ import Alamofire
 import MBProgressHUD
 
 class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,PostVacanciesDelegate,HSPostResumeViewDelegate {
-
+    
     let myTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = SMPageControl()
@@ -39,7 +39,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var tit = NSString()
     var count = NSString()
     var linkman = NSString()
-
+    
     
     weak var superViewController:NurseStationViewController?
     
@@ -52,15 +52,15 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         self.configureUI()
         if showType == 1 {
             self.setSlideView()
-
+            
         }
         makeDataSource()
         sendPostion.delegate = self
         sendResume.delegate = self
-
+        
         self.makeEmployment()
         self.view.backgroundColor = COLOR
-
+        
     }
     
     
@@ -153,7 +153,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                     })
                 }
-            })
+                })
             
             HSNurseStationHelper().getArticleListWithID("121") { (success, response) in
                 
@@ -201,10 +201,10 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     }
                     self.CVDataSource = response as? Array<CVModel> ?? []
                     self.myTableView.reloadData()
-//                    self.configureUI()
+                    //                    self.configureUI()
                 })
                 self.myTableView.mj_header.endRefreshing()
-            })
+                })
         }
     }
     
@@ -214,7 +214,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         self.view.addSubview(line)
         
         self.view.backgroundColor = UIColor.whiteColor()
-//        myTableView.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+        //        myTableView.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
         myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
         myTableView.backgroundColor = UIColor.whiteColor()
         myTableView.tag = 0
@@ -227,7 +227,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         self.view.addSubview(myTableView)
         
-
+        
         myTableView.rowHeight = 142
         
         let posted = UIButton()
@@ -264,7 +264,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         myTableView.tableHeaderView = one
     }
     
-//    发布招聘信息
+    //    发布招聘信息
     func makeEmployment() {
         employment.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-154.5)
         employment.backgroundColor = UIColor.whiteColor()
@@ -279,7 +279,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         tackBtn.addTarget(self, action: #selector(self.takeThePost), forControlEvents: .TouchUpInside)
         employment.addSubview(tackBtn)
     }
-//  简历详情
+    //  简历详情
     func lookResumeDetail(){
         resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
         self.view.addSubview(resumeDetail)
@@ -426,7 +426,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                 let url = PARK_URL_Header+"InviteJob"
                                 let param = [
                                     "userid":model.userid,
-                                    "jobid":model.id,
+                                    "jobid":job.id,
                                     "companyid":QCLoginUserInfo.currentInfo.userid
                                 ]
                                 Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
@@ -624,9 +624,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         
         if showType == 2 {
-//            sendPostion.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-113)
-//            self.view.addSubview(sendPostion)
-//            superViewController?.showRightBtn()
+            //            sendPostion.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-113)
+            //            self.view.addSubview(sendPostion)
+            //            superViewController?.showRightBtn()
             
             if QCLoginUserInfo.currentInfo.usertype == "1" {
                 
@@ -641,10 +641,10 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.navigationController?.pushViewController(PostVacanciewViewController(), animated: true)
             }
         } else if showType == 1 {
-//            sendResume.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-113)
-//            self.view.addSubview(sendResume)
-//            
-//            superViewController?.showRightBtn()
+            //            sendResume.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-113)
+            //            self.view.addSubview(sendResume)
+            //
+            //            superViewController?.showRightBtn()
             
             if QCLoginUserInfo.currentInfo.usertype == "2" {
                 
@@ -695,8 +695,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         self.presentViewController(alertController, animated: true, completion: nil)
         
         let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
-
-        let model = self.currentJobModel
+            
+            let model = self.currentJobModel
             let url = PARK_URL_Header+"ApplyJob"
             let param = [
                 "userid":QCLoginUserInfo.currentInfo.userid,
@@ -762,7 +762,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     func saveResumeBtnClicked(){
         rightBarButtonClicked()
     }
-
+    
     // MARK:图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
         var imageView = UIImageView()
@@ -771,14 +771,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let next = NewsContantViewController()
         next.newsInfo = imageArr[imageView.tag-1]
-//        next.navTitle = imageArr[imageView.tag-1].term_name
+        //        next.navTitle = imageArr[imageView.tag-1].term_name
         
         self.navigationController?.pushViewController(next, animated: true)
     }
     
-//    func pageNext() {
-//        scrollView.contentOffset = CGPointMake(WIDTH*CGFloat(pageControl.currentPage), 0)
-//    }
+    //    func pageNext() {
+    //        scrollView.contentOffset = CGPointMake(WIDTH*CGFloat(pageControl.currentPage), 0)
+    //    }
     
     func scroll(){
         

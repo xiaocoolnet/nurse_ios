@@ -738,6 +738,25 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
 //            if (headerBtn.selected && nameTF.text != "" && (manBtn.selected || womanBtn.selected) && birthBtn.selected && eduBtn.selected && homeBtn.selected && expBtn.selected && professionalBtn.selected && salaryBtn.selected && (onJobBtn.selected || leaveJobBtn.selected || undergraduateBtn.selected) && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected && targetCityBtn.selected && expectedSalaryBtn.selected && expectedPositionBtn.selected)||changeResume {
             if (nameTF.text != "" && eduBtn.selected &&  professionalBtn.selected && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected &&   expectedPositionBtn.selected)||changeResume {
                 
+                if !PhoneNumberIsValidated(telTF.text!) {
+                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的手机号", comment: "empty message"), preferredStyle: .Alert)
+                    let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                    alertController.addAction(doneAction)
+                    
+                    let vc = responderVC()
+                    vc!.presentViewController(alertController, animated: true, completion: nil)
+                    return
+                }
+                if !EmailIsValidated(mailTF.text!) {
+                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的邮箱地址", comment: "empty message"), preferredStyle: .Alert)
+                    let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                    alertController.addAction(doneAction)
+                    
+                    let vc = responderVC()
+                    vc!.presentViewController(alertController, animated: true, completion: nil)
+                    return
+                }
+                
                 let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
                 //                hud.mode = MBProgressHUDMode.Text;
                 hud.labelText = changeResume ? "正在修改":"正在发布"

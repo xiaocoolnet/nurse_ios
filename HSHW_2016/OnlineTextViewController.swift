@@ -143,6 +143,8 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
         }
         cell.selectionStyle = .None
         cell.titleLable.text = everyDayInfo.name
+        cell.titleLable.sizeToFit()
+        cell.titleLable.center.y = cell.titleImg.center.y
         cell.startBtn.userInteractionEnabled = false
         let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
 //        line.backgroundColor = UIColor.grayColor()

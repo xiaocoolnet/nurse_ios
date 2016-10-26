@@ -29,35 +29,36 @@ class MineMessageTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        titleLable.frame = CGRectMake(85, 10, WIDTH-130-10-85, 30)
-        titleLable.font = UIFont.systemFontOfSize(18)
-        titleLable.textColor = UIColor.blackColor()
-        
-        nameLable.frame = CGRectMake(85, 40, WIDTH*(WIDTH - 105)/375, 30)
-        nameLable.font = UIFont.systemFontOfSize(16)
-        nameLable.textColor = GREY
-
-        imgBtn.frame = CGRectMake(10, 10, 60, 60)
+//        imgBtn.frame = CGRectMake(10, 10, 60, 60)
         imgBtn.layer.cornerRadius = 6
         imgBtn.clipsToBounds = true
         imgBtn.contentMode = .ScaleAspectFill
         
-        small.frame = CGRectMake(65, 5, 10, 10)
+//        small.frame = CGRectMake(CGRectGetMaxX(imgBtn.frame)-5, CGRectGetMinY(imgBtn.frame)-5, 10, 10)
         
-        timeLable.frame = CGRectMake(WIDTH - 130, 10, 120, 30)
+//        titleLable.frame = CGRectMake(85, 10, WIDTH-10-85, 30)
+        titleLable.font = UIFont.systemFontOfSize(17)
+        titleLable.numberOfLines = 0
+        titleLable.textColor = UIColor.blackColor()
+        
+//        nameLable.frame = CGRectMake(85, 40, WIDTH*(WIDTH - 105)/375, 30)
+        nameLable.font = UIFont.systemFontOfSize(16)
+        nameLable.textColor = GREY
+        
+//        timeLable.frame = CGRectMake(WIDTH - 130, 10, 120, 30)
         timeLable.font = UIFont.systemFontOfSize(16)
         timeLable.textColor = GREY
         timeLable.textAlignment = NSTextAlignment.Right
 
-        let line = UILabel(frame: CGRectMake(0, 80, WIDTH, 0.5))
-        line.backgroundColor = GREY
+//        let line = UILabel(frame: CGRectMake(0, 80, WIDTH, 0.5))
+//        line.backgroundColor = GREY
         
         self.addSubview(titleLable)
         self.addSubview(nameLable)
         self.addSubview(imgBtn)
         self.addSubview(small)
         self.addSubview(timeLable)
-        self.addSubview(line)
+//        self.addSubview(line)
         
     }
     

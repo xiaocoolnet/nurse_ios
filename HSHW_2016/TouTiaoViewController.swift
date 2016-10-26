@@ -12,15 +12,15 @@ import Alamofire
 import MBProgressHUD
 
 class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,cateBtnClickedDelegate,changeModelDelegate {
-
-//    var userInfo:[NSObject : AnyObject]?
+    
+    //    var userInfo:[NSObject : AnyObject]?
     var myTableView = UITableView()
     let scrollView = UIScrollView()
     let pageControl = SMPageControl()
-//    var picArr = Array<String>()
+    //    var picArr = Array<String>()
     var timer = NSTimer()
     var dataSource = Array<NewsInfo>()
-//    var likedataSource = LikeList()
+    //    var likedataSource = LikeList()
     var requestHelper = NewsPageHelper()
     
     internal var newsId = String()
@@ -30,7 +30,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var post_excerpt = String()
     var requestManager:AFHTTPSessionManager?
     var newsType:Int?
-//    var titArr:[String] = Array<String>()
+    //    var titArr:[String] = Array<String>()
     var imageArr = Array<NewsInfo>()
     
     override func viewWillAppear(animated: Bool) {
@@ -52,7 +52,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         rightItem.addSubview(rightLab)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightItem)
-
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -81,7 +81,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 print("content = [%@], badge = [%ld], sound = [%@], Extras = [%@]", content, badge, sound)
                 //             iOS badge 清0
                 UIApplication.sharedApplication().applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber - (badge ?? 0)!
-
+                
                 if (userInfo!["news"] != nil) {
                     
                     //                [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil
@@ -122,7 +122,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.navigationItem.backBarButtonItem = back;
         
         self.createTableView()
-//        self.GetDate()
+        //        self.GetDate()
         myTableView.tableFooterView = UIView()
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         myTableView.mj_header.beginRefreshing()
@@ -130,8 +130,8 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         myTableView.mj_footer = MJRefreshBackNormalFooter.init(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
         
         self.view.backgroundColor = COLOR
-
-
+        
+        
         // Do any additional setup after loading the view.
     }
     
@@ -152,7 +152,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     self.pager += 1
                 })
                 
-                    self.myTableView.mj_footer.endRefreshing()
+                self.myTableView.mj_footer.endRefreshing()
                 
             }else{
                 
@@ -172,15 +172,15 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         HSNurseStationHelper().getArticleListWithID(slideImageId) { (success, response) in
             
             if success {
-//                print(response)
+                //                print(response)
                 let imageArr = response as! Array<NewsInfo>
                 self.imageArr = imageArr.count>=5 ? Array(imageArr[0...slideImageListMaxNum-1]):imageArr
-
+                
                 //                for imageInfo in self.imageArr {
                 //                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
                 //                    self.titArr.append(imageInfo.name)
                 //                    //                    self.titArr.append(imageInfo)
-
+                
                 //                }
                 dispatch_async(dispatch_get_main_queue(), {
                     self.updateSlideImage()
@@ -218,7 +218,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         HSNurseStationHelper().getArticleListWithID(newsType == nil ? newsId : String(newsType!), pager: "1") { (success, response) in
             
             if success {
-//                print(response)
+                //                print(response)
                 
                 self.dataSource = response as! Array<NewsInfo>
                 dispatch_async(dispatch_get_main_queue(), {
@@ -231,13 +231,13 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     self.myTableView.mj_header.endRefreshing()
                     self.pager += 1
                 }
-
+                
             }else{
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     self.myTableView.mj_header.endRefreshing()
-
-                    if String(response!) == "no data" {
+                    
+                    if String((response ?? "")!) == "no data" {
                         self.dataSource = Array<NewsInfo>()
                         self.myTableView.reloadData()
                     }else{
@@ -245,7 +245,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = "文章列表获取失败"
-                        hud.detailsLabelText = String(response!)
+                        hud.detailsLabelText = String((response ?? "")!)
                         hud.margin = 10.0
                         hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
@@ -255,32 +255,32 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
             }
         }
         
-//        let slideTypeId = Int(newsId)!-1
-//        requestHelper.getSlideImages(String(slideTypeId)) { [unowned self] (success, response) in
-//            if success {
-//                print(response)
-//                self.imageArr = response as! Array<PhotoInfo>
-////                for imageInfo in self.imageArr {
-////                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-////                    self.titArr.append(imageInfo.name)
-////                    //                    self.titArr.append(imageInfo)
-//                    dispatch_async(dispatch_get_main_queue(), {
-//                        self.updateSlideImage()
-//                        self.myTableView.reloadData()
-//                    })
-////                }
-//                self.GetDate()
-//            }else{
-//                self.myTableView.mj_header.endRefreshing()
-//                
-//                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                hud.mode = MBProgressHUDMode.Text;
-//                hud.labelText = String(response!)
-//                hud.margin = 10.0
-//                hud.removeFromSuperViewOnHide = true
-//                hud.hide(true, afterDelay: 1)
-//            }
-//        }
+        //        let slideTypeId = Int(newsId)!-1
+        //        requestHelper.getSlideImages(String(slideTypeId)) { [unowned self] (success, response) in
+        //            if success {
+        //                print(response)
+        //                self.imageArr = response as! Array<PhotoInfo>
+        ////                for imageInfo in self.imageArr {
+        ////                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
+        ////                    self.titArr.append(imageInfo.name)
+        ////                    //                    self.titArr.append(imageInfo)
+        //                    dispatch_async(dispatch_get_main_queue(), {
+        //                        self.updateSlideImage()
+        //                        self.myTableView.reloadData()
+        //                    })
+        ////                }
+        //                self.GetDate()
+        //            }else{
+        //                self.myTableView.mj_header.endRefreshing()
+        //
+        //                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        //                hud.mode = MBProgressHUDMode.Text;
+        //                hud.labelText = String(response!)
+        //                hud.margin = 10.0
+        //                hud.removeFromSuperViewOnHide = true
+        //                hud.hide(true, afterDelay: 1)
+        //            }
+        //        }
         
     }
     
@@ -336,22 +336,22 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         pageControl.currentPage = 0
         
         
-//        for (i,slideImage) in self.imageArr.enumerate() {
-//            let imgView = scrollView.viewWithTag(i) as! UIImageView
-//            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-//                imgView.image = UIImage.init(named: "defaultImage.png")
-//            }else{
-//                imgView.sd_setImageWithURL(NSURL(string: slideImage.picUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
-//            }
-////            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
-////            print(picArr)
-//            for lab in imgView.subviews {
-//                if lab.tag == imgView.tag {
-//                    let titLab = lab.viewWithTag(i) as? UILabel
-//                    titLab!.text = slideImage.name
-//                }
-//            }
-//        }
+        //        for (i,slideImage) in self.imageArr.enumerate() {
+        //            let imgView = scrollView.viewWithTag(i) as! UIImageView
+        //            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+        //                imgView.image = UIImage.init(named: "defaultImage.png")
+        //            }else{
+        //                imgView.sd_setImageWithURL(NSURL(string: slideImage.picUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
+        //            }
+        ////            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
+        ////            print(picArr)
+        //            for lab in imgView.subviews {
+        //                if lab.tag == imgView.tag {
+        //                    let titLab = lab.viewWithTag(i) as? UILabel
+        //                    titLab!.text = slideImage.name
+        //                }
+        //            }
+        //        }
     }
     
     func createTableView() {
@@ -370,7 +370,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.pagingEnabled = true
         scrollView.delegate = self
-
+        
         scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         one.addSubview(scrollView)
@@ -381,44 +381,44 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         pageControl.numberOfPages = self.imageArr.count
         pageControl.currentPage = 0
         one.addSubview(pageControl)
-
+        
         myTableView.rowHeight = 100
         myTableView.tableHeaderView = one
     }
     
-//    func GetDate(){
-//        let url = PARK_URL_Header+"getNewslist"
-//        let param = ["channelid":newsType == nil ? newsId : String(newsType!+17)]
-//        
-//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-//            if(error != nil){
-//                
-//            }else{
-//                let status = NewsModel(JSONDecoder(json!))
-//                print("状态是")
-//                print(status.status)
-//                if(status.status == "error"){
-//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                    hud.mode = MBProgressHUDMode.Text;
-//                    //hud.labelText = status.errorData
-//                    hud.margin = 10.0
-//                    hud.removeFromSuperViewOnHide = true
-//                    hud.hide(true, afterDelay: 1)
-//                }
-//                if(status.status == "success"){
-//                    print(status)
-//                    self.dataSource = NewsList(status.data!)
-//                    print(LikeList(status.data!).objectlist)
-//                    self.likedataSource = LikeList(status.data!)
-//                    self.myTableView .reloadData()
-//                    print(status.data)
-//                }
-//            }
-//            dispatch_async(dispatch_get_main_queue(), { 
-//                self.myTableView.mj_header.endRefreshing()
-//            })
-//       }
-//    }
+    //    func GetDate(){
+    //        let url = PARK_URL_Header+"getNewslist"
+    //        let param = ["channelid":newsType == nil ? newsId : String(newsType!+17)]
+    //
+    //        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+    //            if(error != nil){
+    //
+    //            }else{
+    //                let status = NewsModel(JSONDecoder(json!))
+    //                print("状态是")
+    //                print(status.status)
+    //                if(status.status == "error"){
+    //                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+    //                    hud.mode = MBProgressHUDMode.Text;
+    //                    //hud.labelText = status.errorData
+    //                    hud.margin = 10.0
+    //                    hud.removeFromSuperViewOnHide = true
+    //                    hud.hide(true, afterDelay: 1)
+    //                }
+    //                if(status.status == "success"){
+    //                    print(status)
+    //                    self.dataSource = NewsList(status.data!)
+    //                    print(LikeList(status.data!).objectlist)
+    //                    self.likedataSource = LikeList(status.data!)
+    //                    self.myTableView .reloadData()
+    //                    print(status.data)
+    //                }
+    //            }
+    //            dispatch_async(dispatch_get_main_queue(), {
+    //                self.myTableView.mj_header.endRefreshing()
+    //            })
+    //       }
+    //    }
     // MARK: 图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
         var imageView = UIImageView()
@@ -427,17 +427,17 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         
         let next = NewsContantViewController()
         next.newsInfo = imageArr[imageView.tag-1]
-//        next.index = imageView.tag-1
-//        next.navTitle = imageArr[imageView.tag-1].term_name
-//        next.delegate = self
+        //        next.index = imageView.tag-1
+        //        next.navTitle = imageArr[imageView.tag-1].term_name
+        //        next.delegate = self
         
         self.navigationController?.pushViewController(next, animated: true)
-//        for (i,newsInfo) in self.dataSource.objectlist.enumerate() {
-//            print(imageArr[imageView.tag-1].thumbArr.first?.url)
-//            if newsInfo.object_id == imageArr[imageView.tag-1].thumbArr.first?.url {
-//
-//            }
-//        }
+        //        for (i,newsInfo) in self.dataSource.objectlist.enumerate() {
+        //            print(imageArr[imageView.tag-1].thumbArr.first?.url)
+        //            if newsInfo.object_id == imageArr[imageView.tag-1].thumbArr.first?.url {
+        //
+        //            }
+        //        }
     }
     
     func scroll(){
@@ -452,7 +452,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
-//        timer.fireDate = NSDate.distantPast()
+        //        timer.fireDate = NSDate.distantPast()
         timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
     }
     
@@ -464,32 +464,32 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     //开始拖拽时
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-//            timer.fireDate = NSDate.distantFuture()
+        //            timer.fireDate = NSDate.distantFuture()
         timer.invalidate()
     }
     //结束拖拽时
-//    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-//            timer.fireDate = NSDate.distantPast()
-//    }
+    //    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    //            timer.fireDate = NSDate.distantPast()
+    //    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         return self.dataSource.count;
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let newsInfo = self.dataSource[indexPath.row]
         
-//        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
-//        let screenBounds:CGRect = UIScreen.mainScreen().bounds
-//        let boundingRect = String(newsInfo.post_title).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
-//        let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
-//        print(boundingRect.height)
+        //        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+        //        let screenBounds:CGRect = UIScreen.mainScreen().bounds
+        //        let boundingRect = String(newsInfo.post_title).boundingRectWithSize(CGSizeMake(screenBounds.width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(17)], context: nil)
+        //        let height = calculateHeight((newsInfo.post_title)!, size: 17, width: WIDTH-140)
+        //        print(boundingRect.height)
         
         if newsInfo.thumbArr.count >= 3 {
             
             let height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-20)
-
+            
             let margin:CGFloat = 15
             return (WIDTH-20-margin*2)/3.0*2/3.0+19+height+27+4
         }else{
@@ -506,11 +506,11 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!GToutiaoTableViewCell
-//        cell.type = 1
+        //        cell.type = 1
         cell.delegate = self
         cell.selectionStyle = .None
         let newsInfo = self.dataSource[indexPath.row]
-                
+        
         if newsInfo.thumbArr.count >= 3 {
             cell.setThreeImgCellWithNewsInfo(newsInfo)
         }else{
@@ -525,7 +525,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.index = indexPath.row
-//        next.navTitle = "新闻内容"
+        //        next.navTitle = "新闻内容"
         next.delegate = self
         //        print(newsInfo.likes.count)
         //        let str = newsInfo.likes
@@ -558,5 +558,5 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         self.dataSource[andIndex] = newInfo
         self.myTableView.reloadData()
     }
-
+    
 }

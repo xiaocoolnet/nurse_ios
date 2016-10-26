@@ -35,6 +35,10 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     var hud:MBProgressHUD?
     
+    var recuit_user_Array = [InvitedInfo]()
+    var recuit_company_Array = [MineJobInfo]()
+
+    
     //    var dateSource = data()
     
     override func viewWillAppear(animated: Bool) {
@@ -49,18 +53,79 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         
         myTableView.reloadData()
+        
+        if QCLoginUserInfo.currentInfo.usertype == "1" {
+            
+            let url = PARK_URL_Header+"UserGetInvite"
+            let param = ["userid":QCLoginUserInfo.currentInfo.userid]
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                if(error != nil){
+                    
+                }else{
+                    let status = InvitedModel(JSONDecoder(json!))
+                    
+                    if(status.status == "success"){
+                        
+                        self.recuit_user_Array = InvitedList(status.data!).data
+                        let recuit_user_OriginalCreatetime = NSUserDefaults.standardUserDefaults().stringForKey(RECRUIT_USER_ORIGINALCREATETIME)
+                        if recuit_user_OriginalCreatetime == nil {
+                            recruit_user_updateNum = self.recuit_user_Array.count
+                        }else{
+                            
+                            for (i,newsInfo) in self.recuit_user_Array.enumerate() {
+                                if newsInfo.create_time == recuit_user_OriginalCreatetime {
+                                    recruit_user_updateNum = i
+                                    break
+                                }
+                            }
+                        }
+                        self.myTableView.reloadData()
+                    }
+                }
+            }
+        }else{
+            
+            let url = PARK_URL_Header+"getMyReciveResumeList"
+            // TODO: userid 待更新
+            let param = ["userid":QCLoginUserInfo.currentInfo.userid]
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                if(error != nil){
+                    
+                }else{
+                    let status = MineJobModel(JSONDecoder(json!))
+                    
+                    if(status.status == "success"){
+                        
+                        self.recuit_company_Array = MineJobList(status.data!).objectlist
+                        let recuit_company_OriginalCreatetime = NSUserDefaults.standardUserDefaults().stringForKey(RECRUIT_COMPANY_ORIGINALCREATETIME)
+                        if recuit_company_OriginalCreatetime == nil {
+                            recruit_company_updateNum = self.recuit_company_Array.count
+                        }else{
+                            
+                            for (i,newsInfo) in self.recuit_company_Array.enumerate() {
+                                if newsInfo.create_time == recuit_company_OriginalCreatetime {
+                                    recruit_company_updateNum = i
+                                    break
+                                }
+                            }
+                        }
+                        self.myTableView.reloadData()
+                    }
+                }
+            }
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = COLOR
-        
+
         myTableView.frame = CGRectMake(0, -20, WIDTH, HEIGHT+20)
         //        myTableView.bounces = false
         myTableView.backgroundColor = RGREY
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.registerClass(MineTableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.registerClass(MineTableViewCell.self, forCellReuseIdentifier: "MineCell")
         myTableView.showsVerticalScrollIndicator = false
         self.view.addSubview(myTableView)
         myTableView.separatorStyle = .None
@@ -220,10 +285,15 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        cell.selectionStyle = .None
-        if indexPath.section == 0 {
-            if indexPath.row == 0 {
+//        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
+        var cell = tableView.dequeueReusableCellWithIdentifier("MineCell_default")
+        
+        if cell == nil {
+            cell = UITableViewCell(style: .Default, reuseIdentifier: "MineCell_default")
+            
+            cell!.selectionStyle = .None
+
+            if indexPath.section == 0 && indexPath.row == 0 {
                 // 创建渐变色图层
                 let gradientLayer = CAGradientLayer.init()
                 gradientLayer.frame = CGRectMake(0, 0, WIDTH, WIDTH*232/375+100)
@@ -235,7 +305,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 gradientLayer.locations = [ (0.15), (0.98)]
                 gradientLayer.borderWidth = 0.0
                 // 添加图层
-                cell.layer.addSublayer(gradientLayer)
+                cell!.layer.addSublayer(gradientLayer)
                 
                 let person = UILabel()
                 person.frame = CGRectMake(WIDTH*128/375, WIDTH*29/375, WIDTH*120/375, WIDTH*30/375)
@@ -243,54 +313,44 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 person.textAlignment = .Center
                 person.text = "个人中心"
                 person.font = UIFont.systemFontOfSize(20)
-                cell.addSubview(person)
+                cell!.addSubview(person)
                 
                 let setBtn = UIButton()
                 setBtn.frame = CGRectMake(WIDTH-50,WIDTH*29/375, 50, WIDTH*30/375)
                 setBtn.setImage(UIImage(named: "ic_bg_set.png"), forState: .Normal)
                 setBtn.addTarget(self, action: #selector(self.setUpData), forControlEvents: .TouchUpInside)
-                cell.addSubview(setBtn)
+                cell!.addSubview(setBtn)
                 
                 titImage.frame = CGRectMake(WIDTH*128/375, WIDTH*69/375, WIDTH*120/375, WIDTH*120/375)
-                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-                    self.titImage.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
-                }else{
-                    self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
-                }
-                //                self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
+    
                 titImage.addTarget(self, action: #selector(MineViewController.changeTitImage), forControlEvents: .TouchUpInside)
                 titImage.layer.cornerRadius = WIDTH*120/375/2
                 titImage.clipsToBounds = true
                 titImage.layer.borderWidth = 3
                 titImage.layer.borderColor = UIColor.whiteColor().CGColor
-                cell.addSubview(titImage)
+                cell!.addSubview(titImage)
                 
                 userNameLabel.frame = CGRectMake(WIDTH*160/375, WIDTH*200/375, WIDTH*55/375, 19)
                 userNameLabel.textAlignment = .Center
                 userNameLabel.font = UIFont.systemFontOfSize(18)
                 userNameLabel.textColor = UIColor.whiteColor()
-                userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
-                userNameLabel.sizeToFit()
-                
-                userNameLabel.frame = CGRectMake(WIDTH/2-userNameLabel.bounds.size.width/2, WIDTH*200/375, userNameLabel.bounds.size.width, userNameLabel.bounds.size.height)
-                cell.addSubview(userNameLabel)
+                cell!.addSubview(userNameLabel)
                 
                 levelBtn.frame = CGRectMake(userNameLabel.bounds.size.width/2+5+WIDTH/2, WIDTH*200/375, 20, 19)
                 levelBtn.setBackgroundImage(UIImage(named: "ic_shield_yellow.png"), forState: .Normal)
                 levelBtn.setTitleColor(UIColor.yellowColor(), forState: .Normal)
                 levelBtn.titleLabel?.font = UIFont.systemFontOfSize(9)
-                levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, forState: .Normal)
-                cell.addSubview(levelBtn)
+                cell!.addSubview(levelBtn)
                 
                 let signImg = UIImageView(frame: CGRectMake(WIDTH*137/375, WIDTH*200/375+40, WIDTH*22/375, WIDTH*22/375))
                 signImg.image = UIImage(named: "ic_lalendar.png")
-                cell.addSubview(signImg)
+                cell!.addSubview(signImg)
                 
                 signLab.frame = CGRectMake(WIDTH*169/375, WIDTH*200/375+40,WIDTH*120/375, WIDTH*22/375)
                 signLab.font = UIFont.systemFontOfSize(18)
                 signLab.textColor = UIColor.yellowColor()
                 //                signLab.text = "请稍候"
-                cell.addSubview(signLab)
+                cell!.addSubview(signLab)
                 
                 signBtn.frame = CGRectMake(WIDTH*68/375, WIDTH*190/375+40, WIDTH*240/375, WIDTH*42/375)
                 signBtn.layer.cornerRadius = WIDTH*42/375/2
@@ -299,24 +359,21 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 //                if self.isLike == false {
                 signBtn.addTarget(self, action: #selector(MineViewController.signInToday), forControlEvents: .TouchUpInside)
                 //                }
-                cell.addSubview(signBtn)
+                cell!.addSubview(signBtn)
                 
                 for i in 0...2 {
                     if i == 0 {
                         fansCountBtn.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH*232/375+50, WIDTH/3, 20)
                         fansCountBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
-                        fansCountBtn.setTitle(QCLoginUserInfo.currentInfo.fansCount, forState: .Normal)
-                        cell.addSubview(fansCountBtn)
+                        cell!.addSubview(fansCountBtn)
                     }else if i == 1 {
                         attentionBtn.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH*232/375+50, WIDTH/3, 20)
                         attentionBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
-                        attentionBtn.setTitle(QCLoginUserInfo.currentInfo.attentionCount, forState: .Normal)
-                        cell.addSubview(attentionBtn)
+                        cell!.addSubview(attentionBtn)
                     }else {
                         nurseCoins.frame = CGRectMake(WIDTH/3*CGFloat(i), WIDTH*232/375+50, WIDTH/3, 20)
                         nurseCoins.titleLabel?.font = UIFont.systemFontOfSize(14)
-                        nurseCoins.setTitle(QCLoginUserInfo.currentInfo.score, forState: .Normal)
-                        cell.addSubview(nurseCoins)
+                        cell!.addSubview(nurseCoins)
                     }
                     
                     let numName = UILabel(frame: CGRectMake(WIDTH/3*CGFloat(i), WIDTH*232/375+70, WIDTH/3, 20))
@@ -324,20 +381,53 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     numName.textAlignment = .Center
                     numName.font = UIFont.systemFontOfSize(12)
                     numName.text = numNameArr[i]
-                    cell.addSubview(numName)
+                    cell!.addSubview(numName)
                     let line = UILabel(frame: CGRectMake(WIDTH/3*CGFloat(i)-0.5, WIDTH*232/375+60, 0.5, 25))
                     line.backgroundColor = UIColor(red: 250/255.0, green: 118/255.0, blue: 210/255.0, alpha: 1.0)
-                    cell.addSubview(line)
+                    cell!.addSubview(line)
                     let btn = UIButton(frame: CGRectMake(WIDTH/3*CGFloat(i), WIDTH*232/375+50, WIDTH/3, 50))
                     btn.addTarget(self, action: #selector(self.fineAndContact(_:)), forControlEvents: .TouchUpInside)
                     btn.tag = i+1
-                    cell.addSubview(btn)
+                    cell!.addSubview(btn)
                 }
                 
                 
             }
+
+        }
+        
+        if indexPath.section == 0 && indexPath.row == 0 {
+            
+            
+            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                self.titImage.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
+            }else{
+                self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
+            }
+            
+            userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
+            userNameLabel.sizeToFit()
+            
+            userNameLabel.frame = CGRectMake(WIDTH/2-userNameLabel.bounds.size.width/2, WIDTH*200/375, userNameLabel.bounds.size.width, userNameLabel.bounds.size.height)
+            
+            levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, forState: .Normal)
+            
+            
+            for i in 0...2 {
+                if i == 0 {
+                    fansCountBtn.setTitle(QCLoginUserInfo.currentInfo.fansCount, forState: .Normal)
+                }else if i == 1 {
+                    attentionBtn.setTitle(QCLoginUserInfo.currentInfo.attentionCount, forState: .Normal)
+                }else {
+                    nurseCoins.setTitle(QCLoginUserInfo.currentInfo.score, forState: .Normal)
+                }
+                
+            }
+            
+            return cell!
         }else{
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MineTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("MineCell") as! MineTableViewCell
+//            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! MineTableViewCell
             cell.selectionStyle = .None
             cell.accessoryType = .DisclosureIndicator
             if indexPath.section == 1 {
@@ -354,8 +444,41 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     line.removeFromSuperview()
                 }
             }else if indexPath.section == 3 {
+
                 cell.titImage.setImage(UIImage(named: "ic_xie.png"), forState: .Normal)
                 cell.titLab.text = "我的招聘"
+                
+                if QCLoginUserInfo.currentInfo.usertype == "1" {
+                    
+                    if recruit_user_updateNum > 0 {
+                        cell.accessoryType = .None
+                        
+                        if recruit_user_updateNum > 99 {
+                            cell.numLab.text = "99+"
+                        }else{
+                            cell.numLab.text = String(recruit_user_updateNum)
+                        }
+                        cell.numLab.adjustsFontSizeToFitWidth = true
+                        cell.numLab.hidden = false
+                    }else{
+                        cell.numLab.hidden = true
+                    }
+                }else{
+                    if recruit_company_updateNum > 0 {
+                        cell.accessoryType = .None
+                        
+                        if recruit_company_updateNum > 99 {
+                            cell.numLab.text = "99+"
+                        }else{
+                            cell.numLab.text = String(recruit_company_updateNum)
+                        }
+                        cell.numLab.adjustsFontSizeToFitWidth = true
+                        cell.numLab.hidden = false
+                    }else{
+                        cell.numLab.hidden = true
+                    }
+                }
+
             }else if indexPath.section == 4{
                 cell.titImage.setImage(UIImage(named: "ic_singal.png"), forState: .Normal)
                 cell.titLab.text = "仅WiFi下载图片"
@@ -385,9 +508,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 cell.addSubview(signOutBtn)
                 cell.accessoryType = .None
             }
+            return cell
         }
-        
-        return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -414,10 +536,20 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }else if indexPath.section == 3 {
             if QCLoginUserInfo.currentInfo.usertype == "1" {
+                
+                recruit_user_updateNum = 0
+                recruit_user_alreadyRead = true
+                NSUserDefaults.standardUserDefaults().setValue(recuit_user_Array.first?.create_time, forKey: RECRUIT_USER_ORIGINALCREATETIME)
+
+                
                 let next = MineRecruit_userViewController()
                 self.navigationController?.pushViewController(next, animated: true)
                 next.title = "我的招聘"
             }else{
+                recruit_company_updateNum = 0
+                recruit_company_alreadyRead = true
+                NSUserDefaults.standardUserDefaults().setValue(recuit_company_Array.first?.create_time, forKey: RECRUIT_COMPANY_ORIGINALCREATETIME)
+                
                 let next = MineRecruitViewController()
                 self.navigationController?.pushViewController(next, animated: true)
                 next.title = "我的招聘"

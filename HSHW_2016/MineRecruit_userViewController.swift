@@ -9,7 +9,7 @@
 import UIKit
 import PagingMenuController
 
-class MineRecruit_userViewController: UIViewController {
+class MineRecruit_userViewController: UIViewController,PagingMenuControllerDelegate {
 
     let oneView = ChildsViewController()
     let twoView = editResumeViewController()
@@ -30,6 +30,7 @@ class MineRecruit_userViewController: UIViewController {
         oneView.title = "面试邀请"
         oneView.type = 1
         twoView.title = "我的简历"
+        twoView.flag = false
         twoView.height = HEIGHT-64-44
         let viewControllers = [oneView,twoView]
         let options = PagingMenuOptions()
@@ -43,7 +44,8 @@ class MineRecruit_userViewController: UIViewController {
         options.selectedTextColor = COLOR
         options.menuItemMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
         let pagingMenuController = PagingMenuController(viewControllers: viewControllers, options: options)
-                
+        
+        pagingMenuController.delegate = self
         pagingMenuController.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
         pagingMenuController.view.frame.origin.y += 0
         pagingMenuController.view.frame.size.height -= 0
@@ -51,6 +53,13 @@ class MineRecruit_userViewController: UIViewController {
         view.addSubview(pagingMenuController.view)
         pagingMenuController.didMoveToParentViewController(self)
         
+    }
+    
+    func willMoveToPageMenuController(menuController: UIViewController, previousMenuController: UIViewController) {
+        if menuController == twoView {
+            
+            NSNotificationCenter.defaultCenter().postNotificationName("willMoveToEditResumeViewController", object: nil)
+        }
     }
 
     override func didReceiveMemoryWarning() {

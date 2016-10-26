@@ -16,6 +16,9 @@ class editResumeViewController: UIViewController {
     
     var resumeView = HSPostResumeView()
     
+    var flag = true
+    
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -37,7 +40,11 @@ class editResumeViewController: UIViewController {
         resumeView.frame = CGRectMake(0, 1, WIDTH, height)
         self.view.addSubview(resumeView)
         
-        getMyResume()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(getMyResume), name: "willMoveToEditResumeViewController", object: nil)
+        if flag {
+            
+            getMyResume()
+        }
     }
     
     func getMyResume() {

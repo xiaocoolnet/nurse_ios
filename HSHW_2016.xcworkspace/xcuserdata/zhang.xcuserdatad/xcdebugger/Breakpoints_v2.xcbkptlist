@@ -42,7 +42,7 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/%E9%A1%B9%E7%9B%AE/nurse_ios/HSHW_2016/CompanyAuthViewController.swift"
-                  timestampString = "498985389.291316"
+                  timestampString = "499160770.81315"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "280"
@@ -57,7 +57,7 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/%E9%A1%B9%E7%9B%AE/nurse_ios/HSHW_2016/CompanyAuthViewController.swift"
-                  timestampString = "498985389.291569"
+                  timestampString = "499160770.813401"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "280"
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/HSPostResumeView.swift"
-            timestampString = "498202692.376186"
+            timestampString = "499160207.366751"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "796"
-            endingLineNumber = "796"
+            startingLineNumber = "815"
+            endingLineNumber = "815"
             landmarkName = "uploadHeader(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/HSPostResumeView.swift"
-            timestampString = "498202739.703435"
+            timestampString = "499160207.366751"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "803"
-            endingLineNumber = "803"
+            startingLineNumber = "822"
+            endingLineNumber = "822"
             landmarkName = "uploadHeader(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,44 +106,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/HSPostResumeView.swift"
-            timestampString = "498202755.121958"
+            timestampString = "499160207.366751"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "805"
-            endingLineNumber = "805"
+            startingLineNumber = "824"
+            endingLineNumber = "824"
             landmarkName = "uploadHeader(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/HSPostResumeView.swift"
-            timestampString = "498202768.718783"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "888"
-            endingLineNumber = "888"
-            landmarkName = "changeResume(_:type:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HSHW_2016/HSPostResumeView.swift"
-            timestampString = "498202777.099573"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "891"
-            endingLineNumber = "891"
-            landmarkName = "changeResume(_:type:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -170,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/MineMessageViewController.swift"
-            timestampString = "498562991.21454"
+            timestampString = "499141954.232865"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "197"
-            endingLineNumber = "197"
+            startingLineNumber = "245"
+            endingLineNumber = "245"
             landmarkName = "getDate()"
             landmarkType = "5">
          </BreakpointContent>

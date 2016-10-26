@@ -61,31 +61,44 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         cell.selectionStyle = .None
         let model = self.dataSource[indexPath.row]
         
+        
+        cell.imgBtn.frame = CGRectMake(10, 10, 60, 60)
+        
+        cell.titleLable.frame = CGRectMake(85, 10, WIDTH-10-85, 30)
+        
+        cell.nameLable.frame = CGRectMake(85, 40, WIDTH*(WIDTH - 105)/375, 30)
+        
+        cell.timeLable.frame = CGRectMake(WIDTH - 130, 10, 120, 30)
+        
+        cell.titleLable.text = model.post_title
+        cell.titleLable.sizeToFit()
+//        cell.titleLable.frame.size.width = WIDTH - cell.timeLable.frame.size.width-10-10-85
+        
         cell.timeLable.text = model.post_modified?.componentsSeparatedByString(" ").first
         cell.timeLable.sizeToFit()
         cell.timeLable.frame.origin.x = WIDTH - cell.timeLable.frame.size.width-10
-        cell.titleLable.text = model.post_title
-        cell.titleLable.frame.size.width = WIDTH - cell.timeLable.frame.size.width-10-10-85
-        cell.nameLable.text = model.post_excerpt
-        cell.timeLable.center.y = cell.titleLable.center.y
-//        cell.imgBtn.setBackgroundImage(UIImage(named: model.photo), forState: .Normal)
+        cell.timeLable.frame.origin.y = CGRectGetMaxY(cell.titleLable.frame)+8
+//        cell.timeLable.center.y = cell.titleLable.center.y
+        
+//        cell.nameLable.text = model.post_excerpt
+
         if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
             cell.imgBtn.image = UIImage.init(named: "ic_lan.png")
         }else{
             cell.imgBtn.sd_setImageWithURL(NSURL(string:DomainName+"data/upload/"+(model.thumbArr.first?.url ?? "")!), placeholderImage: UIImage.init(named: "ic_lan.png"))
         }
-//        cell.imgBtn.sd_setImageWithURL(NSURL(string:DomainName+model.photo), placeholderImage: UIImage(named: "ic_lan.png"))
+        
+        if CGRectGetMaxY(cell.timeLable.frame)-8 >= cell.imgBtn.frame.size.height {
+            cell.imgBtn.frame.origin.y = (CGRectGetMaxY(cell.timeLable.frame)+8 - cell.imgBtn.frame.size.height)/2.0
+            cell.small.frame = CGRectMake(CGRectGetMaxX(cell.imgBtn.frame)-5, CGRectGetMinY(cell.imgBtn.frame)-5, 10, 10)
+
+        }else{
+            cell.imgBtn.frame.origin.y = 8
+            cell.small.frame = CGRectMake(CGRectGetMaxX(cell.imgBtn.frame)-5, CGRectGetMinY(cell.imgBtn.frame)-5, 10, 10)
+
+        }
         
         var flag = true
-//        if (NSUserDefaults.standardUserDefaults().valueForKey("markReadMessageID") != nil) {
-//
-//            let markReadMessageIDArray = NSUserDefaults.standardUserDefaults().valueForKey("markReadMessageID") as? Array<String>
-//            for markReadMessageID in markReadMessageIDArray! {
-//                if markReadMessageID == model.object_id {
-//                    flag = false
-//                }
-//            }
-//        }
         
         for readMessage in self.readMessageArray {
             if readMessage.refid == model.message_id {
@@ -105,15 +118,6 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         
         let model = self.dataSource[indexPath.row]
         
-//        var markReadMessageIDArray = Array<String>()
-//        if (NSUserDefaults.standardUserDefaults().valueForKey("markReadMessageID") != nil) {
-//            
-//            markReadMessageIDArray = NSUserDefaults.standardUserDefaults().valueForKey("markReadMessageID") as! Array<String>
-//        }
-//        markReadMessageIDArray.append(model.object_id)
-//        
-//        NSUserDefaults.standardUserDefaults().setValue(markReadMessageIDArray, forKey: "markReadMessageID")
-        
         let url = PARK_URL_Header+"setMessageread"
         let param = ["userid":QCLoginUserInfo.currentInfo.userid,"refid":model.message_id]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
@@ -124,11 +128,55 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
         next.index = indexPath.row
-//        next.delegate = self
         
         self.navigationController?.pushViewController(next, animated: true)
+    }
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return .Delete
+    }
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+//        if editingStyle == .Delete {
+//            print("删除")
+//        }
+    }
+    
+    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
         
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! MineMessageTableViewCell
         
+        // 设置删除按钮
+        let deleteRowAction = UITableViewRowAction(style: .Default, title: "删除") { (action, indexPath) in
+            print("删除")
+        }
+        
+        // 设置已读按钮
+        let readRowAction = UITableViewRowAction(style: .Normal, title: "标为已读") { (action, indexPath) in
+            print("标为已读")
+            
+            let model = self.dataSource[indexPath.row]
+            
+            let url = PARK_URL_Header+"setMessageread"
+            let param = ["userid":QCLoginUserInfo.currentInfo.userid,"refid":model.message_id]
+            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                UIApplication.sharedApplication().applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber > 1 ? UIApplication.sharedApplication().applicationIconBadgeNumber - 1:0
+                
+                let cell = tableView.cellForRowAtIndexPath(indexPath) as! MineMessageTableViewCell
+                cell.small.setBackgroundImage(nil, forState: .Normal)
+                
+                tableView.setEditing(false, animated: true)
+                
+            }
+        }
+        
+        if cell.small.currentBackgroundImage == nil {
+            return [deleteRowAction]
+        }else{
+            
+            return [deleteRowAction,readRowAction]
+        }
     }
     
     // Linux时间戳转标准时间

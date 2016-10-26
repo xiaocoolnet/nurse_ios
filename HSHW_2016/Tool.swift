@@ -30,6 +30,14 @@ let USER_PWD = "login_password"
 let HULIBU_ORIGINALNEWSUPDATETIME = "hulibu_originalNewsUpdateTime\(QCLoginUserInfo.currentInfo.userid)"
 var hulibu_updateNum = 0
 var hulibu_alreadyRead = false
+var recruit_user_updateNum = 0
+var recruit_user_alreadyRead = false
+let RECRUIT_USER_ORIGINALCREATETIME = "RECRUIT_USER_ORIGINALNEWSCREATETIME\(QCLoginUserInfo.currentInfo.userid)"
+
+var recruit_company_updateNum = 0
+var recruit_company_alreadyRead = false
+let RECRUIT_COMPANY_ORIGINALCREATETIME = "RECRUIT_USER_ORIGINALNEWSCREATETIME\(QCLoginUserInfo.currentInfo.userid)"
+
 var LOGIN_STATE = false
 let kAppKey = "3139633252"
 let kRedirectURI = "http://app.chinanurse.cn"
@@ -244,4 +252,33 @@ func getShareNewsUrl(originalUrlStr:String) {
             }
         }
     }
+}
+
+enum ValidatedType {
+    case Email
+    case PhoneNumber
+}
+func ValidateText(validatedType type: ValidatedType, validateString: String) -> Bool {
+    do {
+        let pattern: String
+        if type == ValidatedType.Email {
+            pattern = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$"
+        }
+        else {
+            pattern = "^(13[0-9]|15[0-9]|18[0-9]|17[0-9]|147)\\d{8}$"
+        }
+        
+        let regex: NSRegularExpression = try NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
+        let matches = regex.matchesInString(validateString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, validateString.characters.count))
+        return matches.count > 0
+    }
+    catch {
+        return false
+    }
+}
+func EmailIsValidated(vStr: String) -> Bool {
+    return ValidateText(validatedType: ValidatedType.Email, validateString: vStr)
+}
+func PhoneNumberIsValidated(vStr: String) -> Bool {
+    return ValidateText(validatedType: ValidatedType.PhoneNumber, validateString: vStr)
 }

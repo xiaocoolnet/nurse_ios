@@ -62,16 +62,16 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
         let model = self.dataSource.objectlist[indexPath.row]
         let vc = MineRecDetailsViewController()
         vc.currentJobModel = model
-        vc.tit = model.title
-        vc.companyDescription = model.companyinfo
-        vc.name = model.companyname
-        vc.criteriaLabel = model.education
-        vc.criteriLabel = model.count
-        vc.addressLabel = model.address
-        vc.addresLabel = model.welfare
-        vc.descripDetail = model.description
-        vc.strId = model.id
-        vc.phone = model.phone
+//        vc.tit = model.title
+//        vc.companyDescription = model.companyinfo
+//        vc.name = model.companyname
+//        vc.criteriaLabel = model.education
+//        vc.criteriLabel = model.count
+//        vc.addressLabel = model.address
+//        vc.addresLabel = model.welfare
+//        vc.descripDetail = model.description
+//        vc.strId = model.id
+//        vc.phone = model.phone
         self.navigationController?.pushViewController(vc, animated: true)
         
     }
