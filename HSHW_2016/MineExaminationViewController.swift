@@ -70,7 +70,7 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
                 self.fansListArray = response as! Array<xamInfo>
                 self.fansTableView.reloadData()
             }else{
-                if String(response!) == "no data" {
+                if String((response ?? "")!) == "no data" {
                     self.fansListArray = response as! Array<xamInfo>
                     self.fansTableView.reloadData()
                 }
@@ -156,7 +156,7 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
                     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 }else{
                     hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = String(response!)
+                    hud.labelText = String((response ?? "")!)
                     hud.hide(true, afterDelay: 1)
                 }
             })

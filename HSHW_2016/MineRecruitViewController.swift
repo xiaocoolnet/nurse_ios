@@ -81,7 +81,7 @@ class MineRecruitViewController: UIViewController, PagingMenuControllerDelegate 
             // MARK: 获取企业认证状态
             HSMineHelper().getCompanyCertify({ (success, response) in
                 
-                print("1234567890====== \(String(response!))")
+                print("1234567890====== \(String((response ?? "")!))")
                 if success {
                     hud.mode = MBProgressHUDMode.Text
                     hud.labelText = "获取企业认证状态成功"

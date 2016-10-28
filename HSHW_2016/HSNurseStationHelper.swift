@@ -12,7 +12,7 @@ import Alamofire
 class HSNurseStationHelper: NSObject {
     //获取职位列表
     func getJobList(handle:ResponseBlock){
-        let url = PARK_URL_Header+"getjoblist"
+        let url = PARK_URL_Header+"getjoblist_android"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid
         ]
@@ -27,7 +27,7 @@ class HSNurseStationHelper: NSObject {
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(success: true, response: result.errorData)
                 }
             }
         }
@@ -70,7 +70,7 @@ class HSNurseStationHelper: NSObject {
     
     //获取简历列表
     func getCVList(handle:ResponseBlock){
-        let url = PARK_URL_Header+"getResumeList"
+        let url = PARK_URL_Header+"getResumeList_android"
         
         Alamofire.request(.GET, url).response { request, response, json, error in
             // print(request)
@@ -450,6 +450,33 @@ class HSNurseStationHelper: NSObject {
                 // print(result.status)
                 if(result.status == "error"){
                     handle(success: false, response: result.errorData)
+                }
+                if(result.status == "success"){
+                    handle(success: true, response:result.data)
+                }
+            }
+            
+        }
+    }
+    
+    // 设置点击量
+    // userid，object_id（推送消息的id）,type(1简历，2招聘)
+    func setHits(object_id:String, type:String, handle:ResponseBlock){
+        let url = PARK_URL_Header+"setHits"
+        let param = [
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "object_id":object_id,
+            "type":type
+        ];
+        
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            
+            if(error != nil){
+                handle(success: false, response: nil)
+            }else{
+                let result = Http(JSONDecoder(json!))
+                if(result.status == "error"){
+                    handle(success: false, response: nil)
                 }
                 if(result.status == "success"){
                     handle(success: true, response:result.data)

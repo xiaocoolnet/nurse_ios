@@ -29,10 +29,10 @@ let USER_NAME = "login_name"
 let USER_PWD = "login_password"
 let HULIBU_ORIGINALNEWSUPDATETIME = "hulibu_originalNewsUpdateTime\(QCLoginUserInfo.currentInfo.userid)"
 var hulibu_updateNum = 0
-var hulibu_alreadyRead = false
 var recruit_user_updateNum = 0
-var recruit_user_alreadyRead = false
 let RECRUIT_USER_ORIGINALCREATETIME = "RECRUIT_USER_ORIGINALNEWSCREATETIME\(QCLoginUserInfo.currentInfo.userid)"
+var unreadNum = 0
+
 
 var recruit_company_updateNum = 0
 var recruit_company_alreadyRead = false

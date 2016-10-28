@@ -34,6 +34,8 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
         myTableView.registerClass(MineJobTableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(myTableView)
         
+        myTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(getDate))
+        
         self.view.backgroundColor = UIColor.whiteColor()
         self.getDate()
 
@@ -77,31 +79,42 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func getDate(){
-            let url = PARK_URL_Header+"getMyPublishJobList"
+            let url = PARK_URL_Header+"getMyPublishJobList_android"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 if(error != nil){
-                    
+                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                    hud.mode = MBProgressHUDMode.Text;
+                   
+                    hud.labelText = "网络错误，请稍后再试"
+                    //hud.labelText = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(true, afterDelay: 1)
                 }else{
                     let status = MineJobModel(JSONDecoder(json!))
-                    // print("状态是")
-                    // print(status.status)
-                    if(status.status == "error"){
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        //hud.labelText = status.errorData
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
-                    }
+                    
                     if(status.status == "success"){
                         // print(status)
                         self.dataSource = MineJobList(status.data!)
                         self.myTableView .reloadData()
                         // print(status.data)
+                    }else if(status.status == "error"){
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = MBProgressHUDMode.Text;
+                        if status.data == nil {
+                            hud.labelText = "您还没有发布职位，请先发布职位"
+                        }
+                        //hud.labelText = status.errorData
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(true, afterDelay: 1)
                     }
                 }
-                
+                if self.myTableView.mj_header.isRefreshing() {
+                    
+                    self.myTableView.mj_header.endRefreshing()
+                }
             }
 
     }

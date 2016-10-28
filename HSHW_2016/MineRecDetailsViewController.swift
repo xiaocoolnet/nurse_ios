@@ -79,21 +79,21 @@ class MineRecDetailsViewController: UIViewController {
         title.sizeToFit()
         rootScrollView.addSubview(title)
         
-        //        let eyeImage = UIImageView(image: UIImage(named: "ic_eye_purple.png"))
-        //        eyeImage.frame = CGRectMake(10,CGRectGetMaxY(title.frame)+10,8,8)
-        //        eyeImage.contentMode = .ScaleAspectFit
-        //        rootScrollView.addSubview(eyeImage)
-        //
-        //        let lookCount = UILabel(frame: CGRectMake(CGRectGetMaxX(eyeImage.frame)+5,CGRectGetMaxY(title.frame)+10,30,10))
-        //        lookCount.font = UIFont.systemFontOfSize(10)
-        //        lookCount.text = "3346"
-        //        lookCount.sizeToFit()
-        //        lookCount.center.y = eyeImage.center.y
-        //        rootScrollView.addSubview(lookCount)
+        let eyeImage = UIImageView(image: UIImage(named: "ic_eye_purple.png"))
+        eyeImage.frame = CGRectMake(10,CGRectGetMaxY(title.frame)+10,8,8)
+        eyeImage.contentMode = .ScaleAspectFit
+        rootScrollView.addSubview(eyeImage)
+
+        let lookCount = UILabel(frame: CGRectMake(CGRectGetMaxX(eyeImage.frame)+5,CGRectGetMaxY(title.frame)+10,30,10))
+        lookCount.font = UIFont.systemFontOfSize(10)
+        lookCount.text = (jobModel?.hits ?? "0")!
+        lookCount.sizeToFit()
+        lookCount.center.y = eyeImage.center.y
+        rootScrollView.addSubview(lookCount)
         
         let timeImage = UIImageView(image: UIImage(named: "ic_time_purple.png"))
-        //        timeImage.frame = CGRectMake(CGRectGetMaxX(lookCount.frame)+18, CGRectGetMaxY(title.frame)+10, 8, 8)
-        timeImage.frame = CGRectMake(10, CGRectGetMaxY(title.frame)+10, 8, 8)
+                timeImage.frame = CGRectMake(CGRectGetMaxX(lookCount.frame)+18, CGRectGetMaxY(title.frame)+10, 8, 8)
+//        timeImage.frame = CGRectMake(10, CGRectGetMaxY(title.frame)+10, 8, 8)
         timeImage.contentMode = .ScaleAspectFit
         rootScrollView.addSubview(timeImage)
         
@@ -172,7 +172,6 @@ class MineRecDetailsViewController: UIViewController {
         salaryLab.text = currentJobModel!.salary
         salaryLab.sizeToFit()
         rootScrollView.addSubview(salaryLab)
-        
         
         
         let personalNumTagLab = UILabel(frame: CGRectMake(10,CGRectGetMaxY(salaryLab.frame)+10,70,25))

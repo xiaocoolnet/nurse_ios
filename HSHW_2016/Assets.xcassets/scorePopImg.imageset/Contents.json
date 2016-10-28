@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "积分奖励弹窗1.png",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "scorePopImg.png"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "scorePopImg@2x.png"
     },
     {
       "idiom" : "universal",
+      "filename" : "scorePopImg@3x.png",
       "scale" : "3x"
     }
   ],

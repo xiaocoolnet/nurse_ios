@@ -959,7 +959,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 if webFlag {
                     
                     helper.addScore_ReadingInformation((newsInfo?.object_id)!, handle: { (success, response) in
-                        if success || String(response!) == "lost param"{
+                        if success || String((response ?? "")!) == "lost param"{
                             
                             let url = NSURL(string:NewsInfo_Header+(self.newsInfo?.object_id)!)
                             webCell.loadRequestUrl(url!)
@@ -1136,6 +1136,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         self.navigationController!.pushViewController(cateDetail, animated: true)
     }
     
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        
+        NTESJSCrashReporter.sharedInstance().initJSCrashReporterWithWebView(webView, injectScript: true)
+        return true
+    }
+    
     func webViewDidFinishLoad(webView: UIWebView) {
 //        if (finishLoad) {
 //            return
@@ -1174,7 +1180,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     // MARK: 显示积分提示
     func showScoreTips(name:String, score:String) {
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.opacity = 0.5
+        hud.opacity = 0.3
+        hud.margin = 10
+        hud.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
         hud.mode = .CustomView
         let customView = UIImageView(frame: CGRectMake(0, 0, WIDTH*0.8, WIDTH*0.8*238/537))
         customView.image = UIImage(named: "scorePopImg.png")
@@ -1183,10 +1191,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             CGRectGetHeight(customView.frame)*30/238,
             CGRectGetWidth(customView.frame)*174/537,
             CGRectGetHeight(customView.frame)*50/238))
-        titLab.textColor = UIColor(red: 251/255.0, green: 148/255.0, blue: 0, alpha: 1)
+        titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
         titLab.textAlignment = .Left
-        titLab.font = UIFont.systemFontOfSize(24)
+        titLab.font = UIFont.systemFontOfSize(16)
         titLab.text = name
+        titLab.adjustsFontSizeToFitWidth = true
         customView.addSubview(titLab)
         
         let scoreLab = UILabel(frame: CGRectMake(
@@ -1194,24 +1203,25 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             CGRectGetHeight(customView.frame)*100/238,
             CGRectGetWidth(customView.frame)*174/537,
             CGRectGetHeight(customView.frame)*50/238))
-        scoreLab.textColor = UIColor(red: 253/255.0, green: 82/255.0, blue: 49/255.0, alpha: 1)
+        scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
+
         scoreLab.textAlignment = .Left
-        scoreLab.font = UIFont.systemFontOfSize(36)
-        scoreLab.adjustsFontSizeToFitWidth = true
+        scoreLab.font = UIFont.systemFontOfSize(24)
         scoreLab.text = "+\(score)"
+        scoreLab.adjustsFontSizeToFitWidth = true
         scoreLab.sizeToFit()
         customView.addSubview(scoreLab)
         
         let jifenLab = UILabel(frame: CGRectMake(
-            CGRectGetMaxX(scoreLab.frame),
+            CGRectGetMaxX(scoreLab.frame)+5,
             CGRectGetHeight(customView.frame)*100/238,
-            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-CGRectGetWidth(customView.frame)*13/537,
+            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-5-CGRectGetWidth(customView.frame)*13/537,
             CGRectGetHeight(customView.frame)*50/238))
         jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
         jifenLab.textAlignment = .Center
-        jifenLab.font = UIFont.systemFontOfSize(26)
+        jifenLab.font = UIFont.systemFontOfSize(16)
+        jifenLab.text = "护士币"
         jifenLab.adjustsFontSizeToFitWidth = true
-        jifenLab.text = "积分"
         jifenLab.center.y = scoreLab.center.y
         customView.addSubview(jifenLab)
         

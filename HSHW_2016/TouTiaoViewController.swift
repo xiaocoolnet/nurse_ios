@@ -275,7 +275,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         //
         //                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         //                hud.mode = MBProgressHUDMode.Text;
-        //                hud.labelText = String(response!)
+        //                hud.labelText = String((response ?? "")!)
         //                hud.margin = 10.0
         //                hud.removeFromSuperViewOnHide = true
         //                hud.hide(true, afterDelay: 1)

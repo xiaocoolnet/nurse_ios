@@ -87,7 +87,7 @@ class CollectDetailViewController: UIViewController, UITableViewDelegate,UITable
                     tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                 }else{
                     hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = String(response!)
+                    hud.labelText = String((response ?? "")!)
                     hud.hide(true, afterDelay: 1)
                 }
             })
@@ -108,7 +108,7 @@ class CollectDetailViewController: UIViewController, UITableViewDelegate,UITable
                 self.collectListArray = response as! Array<NewsInfo>
                 self.myTableView.reloadData()
             }else{
-                if String(response!) == "no data" {
+                if String((response ?? "")!) == "no data" {
                     self.collectListArray = response as! Array<NewsInfo>
                     self.myTableView.reloadData()
                 }

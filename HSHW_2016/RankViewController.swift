@@ -289,7 +289,7 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
             message.setThumbImage(thumbImage)
             
             let webPageObject = WXWebpageObject()
-            webPageObject.webpageUrl = myInviteFriendUrl
+            webPageObject.webpageUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
             message.mediaObject = webPageObject
             
             let req = SendMessageToWXReq()

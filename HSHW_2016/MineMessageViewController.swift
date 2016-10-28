@@ -122,6 +122,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         let param = ["userid":QCLoginUserInfo.currentInfo.userid,"refid":model.message_id]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             UIApplication.sharedApplication().applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber > 1 ? UIApplication.sharedApplication().applicationIconBadgeNumber - 1:0
+            unreadNum -= 1
         }
         
         let newsInfo = self.dataSource[indexPath.row]
@@ -150,6 +151,40 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         // 设置删除按钮
         let deleteRowAction = UITableViewRowAction(style: .Default, title: "删除") { (action, indexPath) in
             print("删除")
+            
+            let alert = UIAlertController(title: "", message: "确定删除该消息？", preferredStyle: .Alert)
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            let sureAction = UIAlertAction(title: "确定", style: .Default, handler: { (action) in
+                
+                let model = self.dataSource[indexPath.row]
+                
+                let url = PARK_URL_Header+"delMySystemMessag"
+                let param = ["userid":QCLoginUserInfo.currentInfo.userid,"refid":model.message_id]
+                Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                    
+                    let status = HSStatusModel(JSONDecoder(json!))
+                    if status.status == "success" {
+                        
+                        UIApplication.sharedApplication().applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber > 1 ? UIApplication.sharedApplication().applicationIconBadgeNumber - 1:0
+                        
+                        //                    let cell = tableView.cellForRowAtIndexPath(indexPath) as! MineMessageTableViewCell
+                        //                    cell.small.setBackgroundImage(nil, forState: .Normal)
+                        
+                        self.dataSource.removeAtIndex(indexPath.row)
+                        self.myTableView.reloadData()
+                    }else{
+                        
+                    }
+                    
+                }
+            })
+            alert.addAction(sureAction)
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (action) in
+                tableView.setEditing(false, animated: true)
+            })
+            alert.addAction(cancelAction)
         }
         
         // 设置已读按钮
@@ -162,6 +197,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
             let param = ["userid":QCLoginUserInfo.currentInfo.userid,"refid":model.message_id]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 UIApplication.sharedApplication().applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber > 1 ? UIApplication.sharedApplication().applicationIconBadgeNumber - 1:0
+                unreadNum -= 1
                 
                 let cell = tableView.cellForRowAtIndexPath(indexPath) as! MineMessageTableViewCell
                 cell.small.setBackgroundImage(nil, forState: .Normal)
@@ -202,6 +238,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
             
             UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            unreadNum = 0
 
             let url = PARK_URL_Header+"setMessageread"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
@@ -294,43 +331,6 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         }
         
     }
-    
-//    func getDate_old(){
-//        let url = PARK_URL_Header+"getsystemmessage"
-//        let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-//            
-//            if self.myTableView.mj_header.isRefreshing() {
-//                self.myTableView.mj_header.endRefreshing()
-//            }
-//            
-//            if(error != nil){
-//                
-//            }else{
-//                let status = MessageModel(JSONDecoder(json!))
-//                // print("状态是")
-//                // print(status.status)
-//                if(status.status == "error"){
-//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                    hud.mode = MBProgressHUDMode.Text;
-//                    //hud.labelText = status.errorData
-//                    hud.margin = 10.0
-//                    hud.removeFromSuperViewOnHide = true
-//                    hud.hide(true, afterDelay: 1)
-//                }
-//                if(status.status == "success"){
-//                    // print(status)
-//                    self.dataSource = MessageList(status.data!)
-////                    // print(LikeList(status.data!).objectlist)
-////                    self.likedataSource = LikeList(status.data!)
-//                    self.myTableView .reloadData()
-//                    // print(status.data)
-//                    
-//                }
-//            }
-//        }
-//
-//    }
     
     // MARK:MineMessDetailViewController delegate
     func refreshSmallImagte(indexPath: NSIndexPath) {

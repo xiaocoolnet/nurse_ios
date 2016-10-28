@@ -132,7 +132,7 @@ class editResumeViewController: UIViewController {
                 self.resumeView.selfEvaluateLab.text = ""
                 
             }else{
-                if String(response!) == "no data" {
+                if String((response ?? "")!) == "no data" {
                     // 没有简历
                     self.resumeView.alreadyHasResume = false
                 }else{

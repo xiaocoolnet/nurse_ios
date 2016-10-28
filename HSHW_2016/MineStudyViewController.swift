@@ -64,7 +64,9 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
         if indexPath.row == 0 {
             let chartCell = tableView.dequeueReusableCellWithIdentifier("chartcell") as! HSChartCell
             chartCell.selectionStyle = .None
-            chartCell.examDataArray = self.examDataArray
+//            chartCell.examDataArray = self.examDataArray
+            chartCell.lineChartData = self.lineChartData
+            chartCell.synAccuracy = self.synAccuracy
             return chartCell
         }
             
@@ -114,7 +116,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
                 btn.addTarget(self, action: #selector(self.studyTheKind(_:)), forControlEvents: .TouchUpInside)
                 btn.setImage(UIImage(named: picArr[i]), forState: .Normal)
                 cell.addSubview(btn)
-                let name = UILabel(frame: CGRectMake(WIDTH/2*CGFloat(i%2), WIDTH*90/375+WIDTH*155/375*CGFloat(i/2), WIDTH/2, 16))
+                let name = UILabel(frame: CGRectMake(WIDTH/2*CGFloat(i%2), WIDTH*100/375+WIDTH*155/375*CGFloat(i/2), WIDTH/2, 16))
                 name.font = UIFont.systemFontOfSize(12)
                 name.textColor = UIColor.grayColor()
                 name.textAlignment = .Center
@@ -163,7 +165,9 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
         
     }
 
-    var examDataArray = Array<examDataModel>()
+//    var examDataArray = Array<examDataModel>()
+    var lineChartData:LineChartDataModel?
+    var synAccuracy:Double = 0
     // 加载数据_做题记录
     func loadData_Exampaper() {
         
@@ -174,7 +178,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
                 self.fansListArray = response as! Array<GTestExamList>
                 self.myTableView.reloadData()
             }else{
-                if String(response!) == "no data" {
+                if String((response ?? "")!) == "no data" {
                     self.fansListArray = Array<GTestExamList>()
                     self.myTableView.reloadData()
                 }else{
@@ -189,7 +193,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
                 self.focusListArray = response as! Array<GTestExamList>
                 self.myTableView.reloadData()
             }else{
-                if String(response!) == "no data" {
+                if String((response ?? "")!) == "no data" {
                     self.focusListArray = Array<GTestExamList>()
                     self.myTableView.reloadData()
                 }else{
@@ -209,18 +213,32 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
             
         }
         
-        helper.GetMyExamData { (success, response) in
+//        helper.GetMyExamData { (success, response) in
+//            if success {
+//                
+//                self.examDataArray = response as! Array<examDataModel>
+//                self.myTableView.reloadData()
+//            }else{
+//                if String((response ?? "")!) == "no data" {
+//                    self.examDataArray = Array<examDataModel>()
+//                    self.myTableView.reloadData()
+//                }else{
+//                    
+//                }
+//            }
+//        }
+        
+        helper.GetLineChartData { (success, response) in
             if success {
-                
-                self.examDataArray = response as! Array<examDataModel>
+                self.lineChartData = response as? LineChartDataModel
                 self.myTableView.reloadData()
-            }else{
-                if String(response!) == "no data" {
-                    self.examDataArray = Array<examDataModel>()
-                    self.myTableView.reloadData()
-                }else{
-                    
-                }
+            }
+        }
+        
+        helper.getSynAccuracy { (success, response) in
+            if success {
+                self.synAccuracy = (response as! SynAccuracyModel).rates_average
+                self.myTableView.reloadData()
             }
         }
     }

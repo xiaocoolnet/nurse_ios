@@ -46,6 +46,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         
         let _ = TencentOAuth(appId: "1105552541", andDelegate: nil)
         
+//        [[NTESCrashReporter sharedInstance] initWithAppId:@"此处替换为你的AppId"];
+
+        NTESCrashReporter.sharedInstance().initWithAppId("I005769740")
+        
 //        ShareSDK.registerApp("13be4c6c247e0", activePlatforms:
 //            
 //            [SSDKPlatformType.TypeQQ.rawValue,SSDKPlatformType.TypeWechat.rawValue], onImport: { (platform : SSDKPlatformType) -> Void in
@@ -72,7 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
 //            }
 //        }
         
-        NSThread.sleepForTimeInterval(2.0)
+        NSThread.sleepForTimeInterval(1.0)
         UITabBar.appearance().tintColor = COLOR
         UITabBar.appearance().backgroundColor = UIColor.whiteColor()
         UINavigationBar.appearance().barTintColor = UIColor.whiteColor()
@@ -277,7 +281,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
     // MARK: 显示积分提示
     func showScoreTips(name:String, score:String) {
         let hud = MBProgressHUD.showHUDAddedTo(self.window, animated: true)
-        hud.opacity = 0.5
+        hud.opacity = 0.3
+        hud.margin = 10
+        hud.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
         hud.mode = .CustomView
         let customView = UIImageView(frame: CGRectMake(0, 0, WIDTH*0.8, WIDTH*0.8*238/537))
         customView.image = UIImage(named: "scorePopImg.png")
@@ -286,10 +292,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
             CGRectGetHeight(customView.frame)*30/238,
             CGRectGetWidth(customView.frame)*174/537,
             CGRectGetHeight(customView.frame)*50/238))
-        titLab.textColor = UIColor(red: 251/255.0, green: 148/255.0, blue: 0, alpha: 1)
+        titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
         titLab.textAlignment = .Left
-        titLab.font = UIFont.systemFontOfSize(24)
+        titLab.font = UIFont.systemFontOfSize(16)
         titLab.text = name
+        titLab.adjustsFontSizeToFitWidth = true
         customView.addSubview(titLab)
         
         let scoreLab = UILabel(frame: CGRectMake(
@@ -297,24 +304,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
             CGRectGetHeight(customView.frame)*100/238,
             CGRectGetWidth(customView.frame)*174/537,
             CGRectGetHeight(customView.frame)*50/238))
-        scoreLab.textColor = UIColor(red: 253/255.0, green: 82/255.0, blue: 49/255.0, alpha: 1)
+        scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
+        
         scoreLab.textAlignment = .Left
-        scoreLab.font = UIFont.systemFontOfSize(36)
-        scoreLab.adjustsFontSizeToFitWidth = true
+        scoreLab.font = UIFont.systemFontOfSize(24)
         scoreLab.text = "+\(score)"
+        scoreLab.adjustsFontSizeToFitWidth = true
         scoreLab.sizeToFit()
         customView.addSubview(scoreLab)
         
         let jifenLab = UILabel(frame: CGRectMake(
-            CGRectGetMaxX(scoreLab.frame),
+            CGRectGetMaxX(scoreLab.frame)+5,
             CGRectGetHeight(customView.frame)*100/238,
-            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-CGRectGetWidth(customView.frame)*13/537,
+            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-5-CGRectGetWidth(customView.frame)*13/537,
             CGRectGetHeight(customView.frame)*50/238))
         jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
         jifenLab.textAlignment = .Center
-        jifenLab.font = UIFont.systemFontOfSize(26)
+        jifenLab.font = UIFont.systemFontOfSize(16)
+        jifenLab.text = "护士币"
         jifenLab.adjustsFontSizeToFitWidth = true
-        jifenLab.text = "积分"
         jifenLab.center.y = scoreLab.center.y
         customView.addSubview(jifenLab)
         

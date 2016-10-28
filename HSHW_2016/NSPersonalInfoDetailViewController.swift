@@ -170,7 +170,7 @@ class NSPersonalInfoDetailViewController: UIViewController, HSFindPersonDetailVi
             })
             alertController.addAction(cancelAction)
         }else{
-            let url = PARK_URL_Header+"getMyPublishJobList"
+            let url = PARK_URL_Header+"getMyPublishJobList_android"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 if(error != nil){
@@ -182,7 +182,7 @@ class NSPersonalInfoDetailViewController: UIViewController, HSFindPersonDetailVi
                     if(status.status == "error"){
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
-                        if status.errorData == "no data" {
+                        if status.data == nil {
                             hud.labelText = "您还没有发布职位，请先发布职位"
                         }
                         //hud.labelText = status.errorData
@@ -218,7 +218,7 @@ class NSPersonalInfoDetailViewController: UIViewController, HSFindPersonDetailVi
                     
                     if success {
                         inviteHud.hide(true)
-                        if String(response!) == "1" {
+                        if String((response ?? "")!) == "1" {
                             
                             let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已邀请过 \(model.name) 面试该职位，无需再次邀请", comment: "empty message"), preferredStyle: .Alert)
                             self.presentViewController(alertController, animated: true, completion: nil)

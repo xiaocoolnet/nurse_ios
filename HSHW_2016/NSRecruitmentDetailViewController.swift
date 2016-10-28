@@ -79,21 +79,21 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
         title.sizeToFit()
         rootScrollView.addSubview(title)
         
-//        let eyeImage = UIImageView(image: UIImage(named: "ic_eye_purple.png"))
-//        eyeImage.frame = CGRectMake(10,CGRectGetMaxY(title.frame)+10,8,8)
-//        eyeImage.contentMode = .ScaleAspectFit
-//        rootScrollView.addSubview(eyeImage)
-//        
-//        let lookCount = UILabel(frame: CGRectMake(CGRectGetMaxX(eyeImage.frame)+5,CGRectGetMaxY(title.frame)+10,30,10))
-//        lookCount.font = UIFont.systemFontOfSize(10)
-//        lookCount.text = "3346"
-//        lookCount.sizeToFit()
-//        lookCount.center.y = eyeImage.center.y
-//        rootScrollView.addSubview(lookCount)
+        let eyeImage = UIImageView(image: UIImage(named: "ic_eye_purple.png"))
+        eyeImage.frame = CGRectMake(10,CGRectGetMaxY(title.frame)+10,8,8)
+        eyeImage.contentMode = .ScaleAspectFit
+        rootScrollView.addSubview(eyeImage)
+        
+        let lookCount = UILabel(frame: CGRectMake(CGRectGetMaxX(eyeImage.frame)+5,CGRectGetMaxY(title.frame)+10,30,10))
+        lookCount.font = UIFont.systemFontOfSize(10)
+        lookCount.text = (jobModel?.hits ?? "0")!
+        lookCount.sizeToFit()
+        lookCount.center.y = eyeImage.center.y
+        rootScrollView.addSubview(lookCount)
         
         let timeImage = UIImageView(image: UIImage(named: "ic_time_purple.png"))
-//        timeImage.frame = CGRectMake(CGRectGetMaxX(lookCount.frame)+18, CGRectGetMaxY(title.frame)+10, 8, 8)
-        timeImage.frame = CGRectMake(10, CGRectGetMaxY(title.frame)+10, 8, 8)
+        timeImage.frame = CGRectMake(CGRectGetMaxX(lookCount.frame)+18, CGRectGetMaxY(title.frame)+10, 8, 8)
+//        timeImage.frame = CGRectMake(10, CGRectGetMaxY(title.frame)+10, 8, 8)
         timeImage.contentMode = .ScaleAspectFit
         rootScrollView.addSubview(timeImage)
         
@@ -338,7 +338,7 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
                     self.jobHelper.ApplyJob_judge(QCLoginUserInfo.currentInfo.userid, companyid: self.jobDataSource![btn.tag].companyid, jobid: self.jobDataSource![btn.tag].id, handle: { (success, response) in
                         if success {
                             resumeHud.hide(true)
-                            if String(response!) == "1" {
+                            if String((response ?? "")!) == "1" {
                                 let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已投递过该职位，无需再次投递", comment: "empty message"), preferredStyle: .Alert)
                                 self.presentViewController(alertController, animated: true, completion: nil)
                                 let doneAction = UIAlertAction(title: "好的", style: .Default, handler: nil)
@@ -408,7 +408,7 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
                     
                     
                 }else{
-                    if String(response!) == "no data" {
+                    if String((response ?? "")!) == "no data" {
                         
                         dispatch_async(dispatch_get_main_queue(), {
                             resumeHud.hide(true)

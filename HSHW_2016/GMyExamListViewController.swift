@@ -158,7 +158,7 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.fansListArray = response as! Array<GTestExamList>
                 self.fansTableView.reloadData()
             }else{
-                if String(response!) == "no data" {
+                if String((response ?? "")!) == "no data" {
                     self.fansListArray = Array<GTestExamList>()
                     self.fansTableView.reloadData()
                 }else{
@@ -179,7 +179,7 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.focusListArray = response as! Array<GTestExamList>
                 self.focusTableView.reloadData()
             }else{
-                if String(response!) == "no data" {
+                if String((response ?? "")!) == "no data" {
                     self.focusListArray = Array<GTestExamList>()
                     self.focusTableView.reloadData()
                 }else{

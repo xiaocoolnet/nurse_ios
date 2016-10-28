@@ -54,9 +54,42 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         myTableView.reloadData()
         
-        if QCLoginUserInfo.currentInfo.usertype == "1" {
+        // 设置我的消息提醒数
+        let url = PARK_URL_Header+"getsystemmessage_new"
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid]
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+           
+            if(error != nil){
+                
+            }else{
+                let status = newsInfoModel(JSONDecoder(json!))
+                
+                if(status.status == "success"){
+                    let tempArray = status.data
+                    
+                    let url_read = PARK_URL_Header+"getMessagereadlist"
+                    let param_read = ["userid":QCLoginUserInfo.currentInfo.userid]
+                    Alamofire.request(.GET, url_read, parameters: param_read).response { request, response, json, error in
+                        
+                        if(error != nil){
+                            
+                        }else{
+                            let status = ReadMessageList(JSONDecoder(json!))
+                            
+                            unreadNum = tempArray.count-(status.data ?? [ReadMessageData]())!.count
+                            self.myTableView.reloadData()
+                            
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+        // 设置我的招聘提醒数
+        if QCLoginUserInfo.currentInfo.usertype == "1" {// 个人用户
             
-            let url = PARK_URL_Header+"UserGetInvite"
+            let url = PARK_URL_Header+"UserGetInvite_android"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 if(error != nil){
@@ -83,10 +116,9 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     }
                 }
             }
-        }else{
+        }else{// 企业用户
             
-            let url = PARK_URL_Header+"getMyReciveResumeList"
-            // TODO: userid 待更新
+            let url = PARK_URL_Header+"getMyReciveResumeList_ios"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 if(error != nil){
@@ -128,7 +160,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         myTableView.registerClass(MineTableViewCell.self, forCellReuseIdentifier: "MineCell")
         myTableView.showsVerticalScrollIndicator = false
         self.view.addSubview(myTableView)
-        myTableView.separatorStyle = .None
+        myTableView.separatorStyle = .SingleLine
         
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         loadData()
@@ -336,7 +368,6 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 userNameLabel.textColor = UIColor.whiteColor()
                 cell!.addSubview(userNameLabel)
                 
-                levelBtn.frame = CGRectMake(userNameLabel.bounds.size.width/2+5+WIDTH/2, WIDTH*200/375, 20, 19)
                 levelBtn.setBackgroundImage(UIImage(named: "ic_shield_yellow.png"), forState: .Normal)
                 levelBtn.setTitleColor(UIColor.yellowColor(), forState: .Normal)
                 levelBtn.titleLabel?.font = UIFont.systemFontOfSize(9)
@@ -410,8 +441,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
             userNameLabel.frame = CGRectMake(WIDTH/2-userNameLabel.bounds.size.width/2, WIDTH*200/375, userNameLabel.bounds.size.width, userNameLabel.bounds.size.height)
             
+            levelBtn.frame = CGRectMake(userNameLabel.bounds.size.width/2+5+WIDTH/2, WIDTH*200/375, 20, 19)
             levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, forState: .Normal)
-            
             
             for i in 0...2 {
                 if i == 0 {
@@ -427,22 +458,39 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             return cell!
         }else{
             let cell = tableView.dequeueReusableCellWithIdentifier("MineCell") as! MineTableViewCell
-//            let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! MineTableViewCell
             cell.selectionStyle = .None
             cell.accessoryType = .DisclosureIndicator
             if indexPath.section == 1 {
                 cell.titImage.setImage(UIImage(named: "ic_maozi.png"), forState: .Normal)
                 cell.titLab.text = "我的学习"
+                
+                
             }else if indexPath.section == 2 {
                 cell.titImage.setImage(UIImage(named: titImgArr[indexPath.row]), forState: .Normal)
                 cell.titLab.text = titLabArr[indexPath.row]
-                let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
-                line.backgroundColor = UIColor.grayColor()
                 
-                cell.addSubview(line)
-                if indexPath.row == 1 {
-                    line.removeFromSuperview()
+                if indexPath.row == 0 {
+                    if unreadNum > 0 {
+                        cell.accessoryType = .None
+                        
+                        if unreadNum > 99 {
+                            cell.numLab.text = "99+"
+                        }else{
+                            cell.numLab.text = String(unreadNum)
+                        }
+                        cell.numLab.adjustsFontSizeToFitWidth = true
+                        cell.numLab.hidden = false
+                    }else{
+                        cell.numLab.hidden = true
+                    }
                 }
+//                let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
+//                line.backgroundColor = UIColor.grayColor()
+//                
+//                cell.addSubview(line)
+//                if indexPath.row == 1 {
+//                    line.removeFromSuperview()
+//                }
             }else if indexPath.section == 3 {
 
                 cell.titImage.setImage(UIImage(named: "ic_xie.png"), forState: .Normal)
@@ -487,7 +535,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 swi.on = NSUserDefaults.standardUserDefaults().boolForKey("loadPictureOnlyWiFi")
                 swi.addTarget(self, action: #selector(switchValueChanged(_:)), forControlEvents: .ValueChanged)
-                cell.contentView.addSubview(swi)
+                cell.accessoryView = swi
                 cell.accessoryType = .None
             }else if indexPath.section == 5 {
                 cell.titImage.setImage(UIImage(named: "ic_xie.png"), forState: .Normal)
@@ -538,7 +586,6 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if QCLoginUserInfo.currentInfo.usertype == "1" {
                 
                 recruit_user_updateNum = 0
-                recruit_user_alreadyRead = true
                 NSUserDefaults.standardUserDefaults().setValue(recuit_user_Array.first?.create_time, forKey: RECRUIT_USER_ORIGINALCREATETIME)
 
                 
@@ -812,7 +859,9 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     // MARK: 显示积分提示
     func showScoreTips(name:String, score:String) {
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.opacity = 0.5
+        hud.opacity = 0.3
+        hud.margin = 10
+        hud.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
         hud.mode = .CustomView
         let customView = UIImageView(frame: CGRectMake(0, 0, WIDTH*0.8, WIDTH*0.8*238/537))
         customView.image = UIImage(named: "scorePopImg.png")
@@ -821,10 +870,11 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             CGRectGetHeight(customView.frame)*30/238,
             CGRectGetWidth(customView.frame)*174/537,
             CGRectGetHeight(customView.frame)*50/238))
-        titLab.textColor = UIColor(red: 251/255.0, green: 148/255.0, blue: 0, alpha: 1)
+        titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
         titLab.textAlignment = .Left
-        titLab.font = UIFont.systemFontOfSize(24)
+        titLab.font = UIFont.systemFontOfSize(16)
         titLab.text = name
+        titLab.adjustsFontSizeToFitWidth = true
         customView.addSubview(titLab)
         
         let scoreLab = UILabel(frame: CGRectMake(
@@ -832,24 +882,25 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             CGRectGetHeight(customView.frame)*100/238,
             CGRectGetWidth(customView.frame)*174/537,
             CGRectGetHeight(customView.frame)*50/238))
-        scoreLab.textColor = UIColor(red: 253/255.0, green: 82/255.0, blue: 49/255.0, alpha: 1)
+        scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
+        
         scoreLab.textAlignment = .Left
-        scoreLab.font = UIFont.systemFontOfSize(36)
-        scoreLab.adjustsFontSizeToFitWidth = true
+        scoreLab.font = UIFont.systemFontOfSize(24)
         scoreLab.text = "+\(score)"
+        scoreLab.adjustsFontSizeToFitWidth = true
         scoreLab.sizeToFit()
         customView.addSubview(scoreLab)
         
         let jifenLab = UILabel(frame: CGRectMake(
-            CGRectGetMaxX(scoreLab.frame),
+            CGRectGetMaxX(scoreLab.frame)+5,
             CGRectGetHeight(customView.frame)*100/238,
-            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-CGRectGetWidth(customView.frame)*13/537,
+            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-5-CGRectGetWidth(customView.frame)*13/537,
             CGRectGetHeight(customView.frame)*50/238))
         jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
         jifenLab.textAlignment = .Center
-        jifenLab.font = UIFont.systemFontOfSize(26)
+        jifenLab.font = UIFont.systemFontOfSize(16)
+        jifenLab.text = "护士币"
         jifenLab.adjustsFontSizeToFitWidth = true
-        jifenLab.text = "积分"
         jifenLab.center.y = scoreLab.center.y
         customView.addSubview(jifenLab)
         

@@ -25,7 +25,7 @@ class MiFeedbackViewController: UIViewController {
         self.view.backgroundColor = UIColor.whiteColor()
         
         self.title = "意见反馈"
-        
+                
         feedbackTv.frame = CGRectMake(10, 10, WIDTH-20, 100)
         feedbackTv.layer.cornerRadius = 8
         feedbackTv.layer.borderWidth = 1

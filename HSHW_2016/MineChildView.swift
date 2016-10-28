@@ -166,6 +166,7 @@ class InvitedInfo: JSONJoy {
     var listorder:String
     var create_time:String
     var state:String
+    var hits:String
     
     required init(_ decoder:JSONDecoder){
         id = decoder["id"].string ?? ""
@@ -189,5 +190,6 @@ class InvitedInfo: JSONJoy {
         listorder = decoder["listorder"].string ?? ""
         create_time = decoder["create_time"].string ?? ""
         state = decoder["state"].string ?? ""
+        hits = decoder["hits"].string ?? "0"
     }
 }

@@ -206,7 +206,7 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
                         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                     }else{
                         hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = String(response!)
+                        hud.labelText = String((response ?? "")!)
                         hud.hide(true, afterDelay: 1)
                     }
                 })
@@ -230,7 +230,7 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
                         tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                     }else{
                         hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = String(response!)
+                        hud.labelText = String((response ?? "")!)
                         hud.hide(true, afterDelay: 1)
                     }
                 })

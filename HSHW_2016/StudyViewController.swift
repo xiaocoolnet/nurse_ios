@@ -36,6 +36,38 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         self.tabBarController?.tabBar.hidden = false
                 
         myTableView.reloadData()
+        
+//        if tabBarController.selectedIndex == 1 {
+        
+            HSNurseStationHelper().getArticleListWithID("95") { (success, response) in
+                if success {
+                    self.hulibu_newsArray = response as! Array<NewsInfo>
+                    let hulibu_originalNewsUpdateTime = NSUserDefaults.standardUserDefaults().stringForKey(HULIBU_ORIGINALNEWSUPDATETIME)
+                    if hulibu_originalNewsUpdateTime == nil {
+//                        NSUserDefaults.standardUserDefaults().setValue(self.hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
+                        hulibu_updateNum = self.hulibu_newsArray.count
+                    }else{
+                        
+                        for (i,newsInfo) in self.hulibu_newsArray.enumerate() {
+                            if newsInfo.post_modified == hulibu_originalNewsUpdateTime {
+                                hulibu_updateNum = i
+                                break
+                            }
+                        }
+                    }
+                    
+                    self.myTableView.reloadData()
+                    
+//                    if hulibu_alreadyRead {
+//                        NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
+//                        hulibu_alreadyRead = false
+//                    }
+                    
+//                    NSNotificationCenter.defaultCenter().postNotificationName("hulibu_updateNumChanged", object: nil)
+                    
+                }
+            }
+//        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,27 +107,27 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         myTableView.rowHeight = 60
         myTableView.tableHeaderView = one
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(hulibu_updateNumChanged), name: "hulibu_updateNumChanged", object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(hulibu_updateNumChanged), name: "hulibu_updateNumChanged", object: nil)
         
         // Do any additional setup after loading the view.
     }
     
-    func hulibu_updateNumChanged() {
-        myTableView.reloadData()
-    }
-    
+//    func hulibu_updateNumChanged() {
+//        myTableView.reloadData()
+//    }
+    var hulibu_newsArray = [NewsInfo]()
     func loadData() {
         
         HSNurseStationHelper().getArticleListWithID("95") { (success, response) in
             if success {
-                let hulibu_newsArray = response as! Array<NewsInfo>
+                self.hulibu_newsArray = response as! Array<NewsInfo>
                 let hulibu_originalNewsUpdateTime = NSUserDefaults.standardUserDefaults().stringForKey(HULIBU_ORIGINALNEWSUPDATETIME)
                 if hulibu_originalNewsUpdateTime == nil {
-                    NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
-                    hulibu_updateNum = hulibu_newsArray.count
+//                    NSUserDefaults.standardUserDefaults().setValue(self.hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
+                    hulibu_updateNum = self.hulibu_newsArray.count
                 }else{
                     
-                    for (i,newsInfo) in hulibu_newsArray.enumerate() {
+                    for (i,newsInfo) in self.hulibu_newsArray.enumerate() {
                         if newsInfo.post_modified == hulibu_originalNewsUpdateTime {
                             hulibu_updateNum = i
                             self.myTableView.reloadData()
@@ -104,10 +136,10 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                     }
                 }
                 
-                if hulibu_alreadyRead {
-                    NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
-                    hulibu_alreadyRead = false
-                }
+//                if hulibu_alreadyRead {
+//                    NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
+//                    hulibu_alreadyRead = false
+//                }
             }
         }
 
@@ -130,7 +162,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 dispatch_async(dispatch_get_main_queue(), {
                     self.myTableView.mj_header.endRefreshing()
                     
-                    if String(response!) == "no data" {
+                    if String((response ?? "")!) == "no data" {
                         self.imageArr = Array<NewsInfo>()
                         self.updateSlideImage()
                         self.myTableView.reloadData()
@@ -139,7 +171,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = "轮播图获取失败"
-                        hud.detailsLabelText = String(response!)
+                        hud.detailsLabelText = String((response ?? "")!)
                         hud.margin = 10.0
                         hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
@@ -294,7 +326,10 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             print("学习-护理部点击事件")
             
             hulibu_updateNum = 0
-            hulibu_alreadyRead = true
+//            hulibu_alreadyRead = true
+            
+            NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
+
             
             let noteVC = AllStudyViewController()
             noteVC.articleID = "95"

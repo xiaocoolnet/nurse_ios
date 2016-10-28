@@ -159,7 +159,7 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 self.fansListArray = response as! Array<xamInfo>
                 self.fansTableView.reloadData()
             }else{
-                if String(response!) == "no data" {
+                if String((response ?? "")!) == "no data" {
                     self.fansListArray = Array<xamInfo>()
                     self.fansTableView.reloadData()
                 }else{
@@ -180,7 +180,7 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 self.focusListArray = response as! Array<xamInfo>
                 self.focusTableView.reloadData()
             }else{
-                if String(response!) == "no data" {
+                if String((response ?? "")!) == "no data" {
                     self.focusListArray = Array<xamInfo>()
                     self.focusTableView.reloadData()
                 }else{

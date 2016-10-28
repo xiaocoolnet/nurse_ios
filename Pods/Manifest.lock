@@ -16,6 +16,7 @@ PODS:
     - AFNetworking/NSURLSession
   - Alamofire (3.3.1)
   - BmobSDK (1.7.2)
+  - Bugrpt (1.1.7.2)
   - ImageSlideshow (0.2.3):
     - ImageSlideshow/Core (= 0.2.3)
   - ImageSlideshow/Core (0.2.3)
@@ -34,6 +35,7 @@ DEPENDENCIES:
   - AFNetworking (~> 3.0.1)
   - Alamofire (~> 3.0)
   - BmobSDK
+  - Bugrpt
   - ImageSlideshow (~> 0.2.2)
   - IQKeyboardManagerSwift
   - MBProgressHUD
@@ -57,6 +59,7 @@ SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
   Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
   BmobSDK: e188cb31d6a8417ab668aee821da227d7512b865
+  Bugrpt: 73f1cf6c820e202650c208e64d4a7f739544285e
   ImageSlideshow: 2895e62777c2ea36f56d948723b3586a12a89756
   IQKeyboardManagerSwift: 2f2c19c509f67c4c0df2826db54033d3e090ce65
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
@@ -67,6 +70,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   WeiboSDK: bceab625ec59b7039ba721cc4ba9f5868804f63e
 
-PODFILE CHECKSUM: 0c65316abb25bd2233ad4fc77a2c0be23e25fb5c
+PODFILE CHECKSUM: 551d202c692dae1c3e38bbcc6689e79f1f234831
 
 COCOAPODS: 1.0.1

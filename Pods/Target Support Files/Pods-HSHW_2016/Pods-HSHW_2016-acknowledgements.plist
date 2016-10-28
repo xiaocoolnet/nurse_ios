@@ -750,6 +750,14 @@ Public License instead of this License.  But first, please read
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>&#169;2016 crash.163.com</string>
+			<key>Title</key>
+			<string>Bugrpt</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>IQKeyboardManager license
 =========================
 

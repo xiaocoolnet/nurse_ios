@@ -697,31 +697,7 @@ class HSMineHelper: NSObject {
         }
     }
     
-    // 获取得分数据
-    func GetMyExamData(handle:ResponseBlock){
-        
-        let url = PARK_URL_Header+"GetMyExamData"
-        
-        let param = ["userid":QCLoginUserInfo.currentInfo.userid];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            // print(request)
-            if(error != nil){
-                handle(success: false, response: error?.description)
-            }else{
-                
-                let result = examData(JSONDecoder(json!))
-                // print("状态是")
-                // print(result.status)
-                if(result.status == "success"){
-                    handle(success: true, response: result.datas)
-                }else{
-                    handle(success: false, response: result.errorData)
-                }
-            }
-        }
-    }
-    
-//    // 获取折线图数据
+//    // 获取得分数据
 //    func GetMyExamData(handle:ResponseBlock){
 //        
 //        let url = PARK_URL_Header+"GetMyExamData"
@@ -744,4 +720,50 @@ class HSMineHelper: NSObject {
 //            }
 //        }
 //    }
+    
+    // 获取折线图数据
+    func GetLineChartData(handle:ResponseBlock){
+        
+        let url = PARK_URL_Header+"GetLineChartData"
+        
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            // print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                
+                let result = LineChartData(JSONDecoder(json!))
+                
+                if(result.status == "success"){
+                    handle(success: true, response: result.data)
+                }else{
+                    handle(success: false, response: nil)
+                }
+            }
+        }
+    }
+    
+    // 获取综合正确率
+    func getSynAccuracy(handle:ResponseBlock){
+        
+        let url = PARK_URL_Header+"getSynAccuracy"
+        
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            // print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                
+                let result = SynAccuracy(JSONDecoder(json!))
+                
+                if(result.status == "success"){
+                    handle(success: true, response: result.data)
+                }else{
+                    handle(success: false, response: nil)
+                }
+            }
+        }
+    }
 }

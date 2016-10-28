@@ -525,3 +525,109 @@ class examDataModel:JSONJoy {
         type = decoder["type"].string ?? ""
     }
 }
+
+// Model 折线图数据
+class LineChartData:JSONJoy {
+    var status:String
+    var data:LineChartDataModel?
+    
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string ?? ""
+        data = (LineChartDataModel(decoder["data"]))
+    }
+}
+
+class LineChartDataModel:JSONJoy {
+    
+    
+    var create_time_6: Float = 0
+
+    var rate_7: Float = 0
+
+    var rate_6: Float = 0
+
+    var create_time_2: Float = 0
+
+    var create_time_7: Float = 0
+
+    var rate_5: Float = 0
+
+    var create_time_3: Float = 0
+
+    var rate_4: Float = 0
+
+    var create_time_4: Float = 0
+
+    var rate_3: Float = 0
+
+    var rate_2: Float = 0
+
+    var create_time_5: Float = 0
+
+    var create_time_1: Float = 0
+
+    var rate_1: Float = 0
+    
+    required init(_ decoder: JSONDecoder) {
+        
+        rate_1 = decoder["rate_1"].float ?? 0
+        create_time_1 = decoder["create_time_1"].float ?? 0
+        
+        rate_2 = decoder["rate_2"].float ?? 0
+        create_time_2 = decoder["create_time_2"].float ?? 0
+        
+        rate_3 = decoder["rate_3"].float ?? 0
+        create_time_3 = decoder["create_time_3"].float ?? 0
+        
+        rate_4 = decoder["rate_4"].float ?? 0
+        create_time_4 = decoder["create_time_4"].float ?? 0
+        
+        rate_5 = decoder["rate_5"].float ?? 0
+        create_time_5 = decoder["create_time_5"].float ?? 0
+        
+        rate_6 = decoder["rate_6"].float ?? 0
+        create_time_6 = decoder["create_time_6"].float ?? 0
+        
+        rate_7 = decoder["rate_7"].float ?? 0
+        create_time_7 = decoder["create_time_7"].float ?? 0
+        
+    }
+}
+
+// Model 综合正确率
+class SynAccuracy:JSONJoy {
+    var status:String
+    var data:SynAccuracyModel?
+    
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string ?? ""
+        data = (SynAccuracyModel(decoder["data"]))
+    }
+}
+
+class SynAccuracyModel:JSONJoy {
+    
+    
+    
+    var userid: String?
+
+    var rates_average: Double = 0
+    
+    
+    required init(_ decoder: JSONDecoder) {
+        
+        userid = decoder["userid"].string ?? ""
+        rates_average = decoder["rates_average"].double ?? 0
+        
+    }
+}
+
+// Model 状态
+class HSStatusModel:JSONJoy {
+    var status:String
+    
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string ?? ""
+        
+    }
+}

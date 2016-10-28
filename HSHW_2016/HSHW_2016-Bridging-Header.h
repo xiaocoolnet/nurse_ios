@@ -24,3 +24,7 @@
 #import <BmobSDK/Bmob.h>
 
 #import "MyUtil.h"
+
+#import <Bugrpt/NTESCrashReporter.h>
+
+#import "Bugrpt/NTESJSCrashReporter.h"
