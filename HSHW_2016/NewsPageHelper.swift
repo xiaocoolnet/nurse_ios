@@ -140,7 +140,7 @@ class NewsPageHelper: NSObject {
                 // print("状态是")
                 // print(result.status)
                 if(result.status == "error"){
-                    handle(success: false, response: result.errorData)
+                    handle(success: false, response: "阅读资讯加积分到上限值")
                 }
                 if(result.status == "success"){
                     handle(success: true, response:result.data)

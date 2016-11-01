@@ -959,7 +959,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 if webFlag {
                     
                     helper.addScore_ReadingInformation((newsInfo?.object_id)!, handle: { (success, response) in
-                        if success || String((response ?? "")!) == "lost param"{
+                        if success || String((response ?? "")!) == "阅读资讯加积分到上限值"{
                             
                             let url = NSURL(string:NewsInfo_Header+(self.newsInfo?.object_id)!)
                             webCell.loadRequestUrl(url!)
@@ -1020,15 +1020,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     shareBtn.addTarget(self, action: #selector(self.shareTheNews(_:)), forControlEvents: .TouchUpInside)
                     cell3.addSubview(shareBtn)
                 }
-                //let zan = UIButton(frame: CGRectMake(WIDTH*148/375, WIDTH*80/375, WIDTH*80/375, WIDTH*80/375))
-//                let userid = NSUserDefaults.standardUserDefaults()
-//                let uid = userid.stringForKey("userid")
-//                // print(uid)
-//                if uid==nil {
-//                    zan.setImage(UIImage(named: "img_like.png"), forState: .Normal)
-//                }else{
-//                    zan.setImage(UIImage(named: "img_like.png"), forState: .Normal)
-//                }
+                
                 zan.setImage(UIImage(named: "img_like.png"), forState: .Normal)
                 zan.setImage(UIImage(named: "img_like_sel.png"), forState: .Selected)
                 zan.tag = indexPath.row
@@ -1075,34 +1067,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }else{
                 cell.setCellWithNewsInfo(newsInfo)
             }
-            return cell
             
-//            let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!TouTiaoTableViewCell
-//            let newsInfo = self.dataSource.objectlist[indexPath.row]
-//            cell.setCellWithNewsInfo(newsInfo)
-//            let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 14, width: WIDTH-140)
-//            // print(newsInfo.post_title)
-//            // print(titleHeight)
-//            cell.titLab.frame.size.height = titleHeight
-//            cell.heal.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-//            cell.conNum.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-//            cell.timeLab.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-//            cell.comBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-//            cell.timeBtn.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+5
-//            cell.contant.frame.origin.y = cell.titLab.frame.size.height + cell.titLab.frame.origin.y+20
-//            // print(newsInfo.thumb)
-//            return cell
+            return cell
         }else{
             
             let cell = tableView.dequeueReusableCellWithIdentifier("newsCommentCell") as! HSNewsCommentCell
             cell.selectionStyle = UITableViewCellSelectionStyle.None
             
-//            cell.textLabel?.text = "评论"
-//            if postInfo?.userid == postInfo?.comment[indexPath.row].userid {
-//                cell.louzhuLab.hidden = false
-//            }else{
-//                cell.louzhuLab.hidden = true
-//            }
             if self.commentArray.count == 0 {
                 cell.textLabel?.text = "暂无评论"
                 cell.textLabel?.textColor = UIColor.grayColor()
@@ -1112,10 +1083,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.contentLab.text = nil
                 cell.timeLab.text = nil
                 cell.headerBtn.setImage(nil, forState: .Normal)
-//                cell.line.hidden = true
             }else{
                 cell.textLabel?.text = nil
-//                cell.line.hidden = false
                 cell.floorLab.text = "\(self.commentArray.count-indexPath.row)楼"
                 cell.commentModel = self.commentArray[indexPath.row]
             }

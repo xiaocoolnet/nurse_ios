@@ -169,7 +169,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
             }
         }
         if type == 1 {
-            cell.startBtn.setTitle("开始作答", forState: .Normal)
+            cell.startBtn.setTitle("开始考试", forState: .Normal)
         }else{
             cell.startBtn.setTitle("开始考试", forState: .Normal)
         }

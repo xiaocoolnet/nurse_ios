@@ -24,7 +24,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     var imageArr = Array<NewsInfo>()
     
     let titLabArr:[String] = ["每日一练","5万道题库","在线考试"]
-    let titImgArr:[String] = ["ic_bi.png","ic_fuzhi.png","ic_phone.png"]
+    let titImgArr:[String] = ["ic_bi.png","ic_fuzhi.png","在线考试"]
     
     let titLabArrTwo:[String] = ["临床护理","50项护理操作","考试宝典"]
     let titImgArrTwo:[String] = ["ic_hushi.png","ic_zhen.png","ic_book.png"]
@@ -37,37 +37,25 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 
         myTableView.reloadData()
         
-//        if tabBarController.selectedIndex == 1 {
-        
-            HSNurseStationHelper().getArticleListWithID("95") { (success, response) in
-                if success {
-                    self.hulibu_newsArray = response as! Array<NewsInfo>
-                    let hulibu_originalNewsUpdateTime = NSUserDefaults.standardUserDefaults().stringForKey(HULIBU_ORIGINALNEWSUPDATETIME)
-                    if hulibu_originalNewsUpdateTime == nil {
-//                        NSUserDefaults.standardUserDefaults().setValue(self.hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
-                        hulibu_updateNum = self.hulibu_newsArray.count
-                    }else{
-                        
-                        for (i,newsInfo) in self.hulibu_newsArray.enumerate() {
-                            if newsInfo.post_modified == hulibu_originalNewsUpdateTime {
-                                hulibu_updateNum = i
-                                break
-                            }
+        HSNurseStationHelper().getArticleListWithID("95") { (success, response) in
+            if success {
+                self.hulibu_newsArray = response as! Array<NewsInfo>
+                let hulibu_originalNewsUpdateTime = NSUserDefaults.standardUserDefaults().stringForKey(HULIBU_ORIGINALNEWSUPDATETIME)
+                if hulibu_originalNewsUpdateTime == nil {
+                    hulibu_updateNum = self.hulibu_newsArray.count
+                }else{
+                    
+                    for (i,newsInfo) in self.hulibu_newsArray.enumerate() {
+                        if newsInfo.post_modified == hulibu_originalNewsUpdateTime {
+                            hulibu_updateNum = i
+                            break
                         }
                     }
-                    
-                    self.myTableView.reloadData()
-                    
-//                    if hulibu_alreadyRead {
-//                        NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
-//                        hulibu_alreadyRead = false
-//                    }
-                    
-//                    NSNotificationCenter.defaultCenter().postNotificationName("hulibu_updateNumChanged", object: nil)
-                    
                 }
+                
+                self.myTableView.reloadData()
             }
-//        }
+        }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -334,6 +322,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             let noteVC = AllStudyViewController()
             noteVC.articleID = "95"
             noteVC.title = "护理部"
+            noteVC.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(noteVC, animated: true)
         }else if indexPath.section == 1 {
             if indexPath.row == 0 {
@@ -341,18 +330,21 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 next.title = "每日一练"
                 next.type = 1
 //                let nextVC = DayPracticeViewController()
+                next.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(next, animated: true)
                 
             }
             if indexPath.row == 1 {
                 let next = QuestionViewController()
+                next.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(next, animated: true)
                 
             }
             if indexPath.row == 2 {
                 let next = OnlineTextViewController()
-                next.title = "在线考试"
+                next.title = "模拟考场"
                 next.type = 2
+                next.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(next, animated: true)
 //                
             }
@@ -361,6 +353,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             let goAboard = GoAboardExamViewController()
 //            goAboard.articleID = "12"
             goAboard.title = "出国考试"
+            goAboard.hidesBottomBarWhenPushed = true
             self.navigationController?.pushViewController(goAboard, animated: true)
         } else if indexPath.section == 3 {
             
@@ -369,18 +362,21 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 let goAboard = AllStudyViewController()
                 goAboard.articleID = "13"
                 goAboard.title = "临床护理"
+                goAboard.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(goAboard, animated: true)
             }else if indexPath.row == 1{
                 let goAboard = AcademicViewController()
                 goAboard.articleID = "14"
                 goAboard.num = 2
                 goAboard.title = "50项护理操作"
+                goAboard.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(goAboard, animated: true)
             }else if indexPath.row == 2 {
 //                let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
                 let goAboard = AllStudyViewController()
                 goAboard.articleID = "15"
                 goAboard.title = "考试宝典"
+                goAboard.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(goAboard, animated: true)
             }
         }else if indexPath.section == 4 {
@@ -389,6 +385,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 let goAboard = AllStudyViewController()
                 goAboard.articleID = "16"
                 goAboard.title = "护理论文"
+                goAboard.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(goAboard, animated: true)
             }
         }

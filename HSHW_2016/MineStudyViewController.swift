@@ -15,7 +15,8 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
     var collNum = UILabel()
     let picArr:[String] = ["ic_pen.png","ic_yuan_purple.png","ic_lifang.png","ic_folder.png"]
     let picName:[String] = ["做题记录","错题集","收藏试题","其它收藏"]
-    
+//    let picName:[String] = ["做 题 记 录","错 题 集","收 藏 试 题","其 它 收 藏"]
+
     var helper = HSMineHelper()
     private var fansListArray:Array<GTestExamList> = []
     private var focusListArray:Array<GTestExamList> = []
@@ -115,7 +116,18 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
                 btn.tag = i+1
                 btn.addTarget(self, action: #selector(self.studyTheKind(_:)), forControlEvents: .TouchUpInside)
                 btn.setImage(UIImage(named: picArr[i]), forState: .Normal)
+                
+            
                 cell.addSubview(btn)
+                
+//                let iconImg = UIImageView(frame: CGRectMake(WIDTH/2*CGFloat(i%2), WIDTH*100/375+WIDTH*155/375*CGFloat(i/2), WIDTH/2, 16))
+////                iconImg.font = UIFont.systemFontOfSize(12)
+////                iconImg.textColor = UIColor.grayColor()
+////                iconImg.textAlignment = .Center
+////                iconImg.text = picArr[i]
+//                iconImg.image = UIImage(named: picArr[i])
+//                cell.addSubview(iconImg)
+//                
                 let name = UILabel(frame: CGRectMake(WIDTH/2*CGFloat(i%2), WIDTH*100/375+WIDTH*155/375*CGFloat(i/2), WIDTH/2, 16))
                 name.font = UIFont.systemFontOfSize(12)
                 name.textColor = UIColor.grayColor()
@@ -129,6 +141,12 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
             cell.addSubview(lineLl)
             return cell
         }
+    }
+    func changeButton(btn: UIButton) {
+        
+        btn.contentHorizontalAlignment = .Center//使图片和文字水平居中显示
+        btn.titleEdgeInsets = UIEdgeInsetsMake(btn.imageView!.frame.size.height ,-btn.imageView!.frame.size.width, 0.0,0.0)//文字距离上边框的距离增加imageView的高度，距离左边框减少imageView的宽度，距离下边框和右边框距离不变
+        btn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0,0.0, -btn.titleLabel!.bounds.size.width)//图片距离右边框距离减少图片的宽度，其它不边
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
