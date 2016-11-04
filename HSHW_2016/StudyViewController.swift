@@ -178,6 +178,16 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             }
         }
         
+        let margin:CGFloat = 4
+        pageControl.numberOfPages = self.imageArr.count
+        pageControl.frame = CGRectMake(
+            WIDTH-margin-pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)-margin*CGFloat(self.imageArr.count-1),
+            WIDTH*188/375-25,
+            pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)+margin*CGFloat(self.imageArr.count-1),
+            25)
+        pageControl.indicatorMargin = margin
+        pageControl.currentPage = 0
+        
         for (i,slideImage) in self.imageArr.enumerate() {
             
             let  imageView = UIImageView()
@@ -194,9 +204,10 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             bottom.alpha = 0.5
             imageView.addSubview(bottom)
             
-            let titLab = UILabel(frame: CGRectMake(10, WIDTH*188/375-25, WIDTH-100, 25))
-            titLab.font = UIFont.systemFontOfSize(14)
+            let titLab = UILabel(frame: CGRectMake(10, WIDTH*188/375-25, CGRectGetMinX(pageControl.frame)-10, 25))
+            titLab.font = UIFont.systemFontOfSize(13)
             titLab.textColor = UIColor.whiteColor()
+            titLab.adjustsFontSizeToFitWidth = true
             titLab.text = slideImage.post_title
             titLab.tag = i+1
             imageView.addSubview(titLab)
@@ -215,10 +226,6 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         scrollView.contentSize = CGSizeMake(CGFloat(self.imageArr.count)*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         
-        pageControl.numberOfPages = self.imageArr.count
-        pageControl.frame = CGRectMake(WIDTH-8-pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)-6*CGFloat(self.imageArr.count-1), WIDTH*190/375-25, pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)+6*CGFloat(self.imageArr.count-1), 25)
-        pageControl.indicatorMargin = 6
-        pageControl.currentPage = 0
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {

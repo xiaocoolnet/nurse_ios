@@ -293,6 +293,16 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
             }
         }
         
+        let margin:CGFloat = 4
+        pageControl.numberOfPages = self.imageArr.count
+        pageControl.frame = CGRectMake(
+            WIDTH-margin-pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)-margin*CGFloat(self.imageArr.count-1),
+            WIDTH*190/375-25,
+            pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)+margin*CGFloat(self.imageArr.count-1),
+            25)
+        pageControl.indicatorMargin = margin
+        pageControl.currentPage = 0
+        
         for (i,slideImage) in self.imageArr.enumerate() {
             
             let  imageView = UIImageView()
@@ -309,9 +319,10 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
             bottom.alpha = 0.5
             imageView.addSubview(bottom)
             
-            let titLab = UILabel(frame: CGRectMake(10, WIDTH*190/375-25, WIDTH-100, 25))
-            titLab.font = UIFont.systemFontOfSize(14)
+            let titLab = UILabel(frame: CGRectMake(10, WIDTH*190/375-25, CGRectGetMinX(pageControl.frame)-10, 25))
+            titLab.font = UIFont.systemFontOfSize(13)
             titLab.textColor = UIColor.whiteColor()
+            titLab.adjustsFontSizeToFitWidth = true
             titLab.text = slideImage.post_title
             titLab.tag = i+1
             imageView.addSubview(titLab)
@@ -330,28 +341,6 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         scrollView.contentSize = CGSizeMake(CGFloat(self.imageArr.count)*WIDTH, 0)
         scrollView.contentOffset = CGPointMake(0, 0)
         
-        pageControl.numberOfPages = self.imageArr.count
-        pageControl.frame = CGRectMake(WIDTH-8-pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)-6*CGFloat(self.imageArr.count-1), WIDTH*190/375-25, pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)+6*CGFloat(self.imageArr.count-1), 25)
-        pageControl.indicatorMargin = 6
-        pageControl.currentPage = 0
-        
-        
-        //        for (i,slideImage) in self.imageArr.enumerate() {
-        //            let imgView = scrollView.viewWithTag(i) as! UIImageView
-        //            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-        //                imgView.image = UIImage.init(named: "defaultImage.png")
-        //            }else{
-        //                imgView.sd_setImageWithURL(NSURL(string: slideImage.picUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
-        //            }
-        ////            imgView.sd_setImageWithURL(NSURL(string: picArr[i-1]))
-        ////            print(picArr)
-        //            for lab in imgView.subviews {
-        //                if lab.tag == imgView.tag {
-        //                    let titLab = lab.viewWithTag(i) as? UILabel
-        //                    titLab!.text = slideImage.name
-        //                }
-        //            }
-        //        }
     }
     
     func createTableView() {
