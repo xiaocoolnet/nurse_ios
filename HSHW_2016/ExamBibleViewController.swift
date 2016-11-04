@@ -1,21 +1,21 @@
 //
-//  QuestionViewController.swift
+//  ExamBibleViewController.swift
 //  HSHW_2016
 //
-//  Created by JQ on 16/7/4.
+//  Created by 高扬 on 2016/11/4.
 //  Copyright © 2016年 校酷网络科技公司. All rights reserved.
 //
 
 import UIKit
 import PagingMenuController
 
-class QuestionViewController: UIViewController {
+class ExamBibleViewController: UIViewController {
     
-    let oneView = FiftyThousandExamViewController()
-    let twoView = FiftyThousandExamViewController()
-    let threeView = FiftyThousandExamViewController()
-//    let threeView = QuestionBankViewController()
-
+    let oneView = ExamBibleSubViewController()
+    let twoView = ExamBibleSubViewController()
+    let threeView = ExamBibleSubViewController()
+    //    let threeView = QuestionBankViewController()
+    
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
@@ -26,12 +26,12 @@ class QuestionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "5万道题库"
+        self.title = "考试宝典"
         
-//        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
-//        line.backgroundColor = COLOR
-//        self.view.addSubview(line)
-//        self.view.backgroundColor = UIColor.whiteColor()
+        //        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        //        line.backgroundColor = COLOR
+        //        self.view.addSubview(line)
+        //        self.view.backgroundColor = UIColor.whiteColor()
         
         let line2 = UILabel(frame: CGRectMake(0, 40, WIDTH, 1))
         line2.backgroundColor = COLOR
@@ -39,12 +39,13 @@ class QuestionViewController: UIViewController {
         self.view.backgroundColor = UIColor.whiteColor()
         
         self.view.backgroundColor = UIColor.whiteColor()
+        
         oneView.title = "护士资格"
-        oneView.term_id = "130"
+        oneView.term_id = "149"
         twoView.title = "初级护师"
-        twoView.term_id = "131"
+        twoView.term_id = "150"
         threeView.title = "主管护师"
-        threeView.term_id = "132"
+        threeView.term_id = "151"
         let viewControllers = [oneView,twoView,threeView]
         let options = PagingMenuOptions()
         options.scrollEnabled = false
@@ -53,8 +54,8 @@ class QuestionViewController: UIViewController {
         options.menuDisplayMode = .SegmentedControl
         options.backgroundColor = UIColor.clearColor()
         options.selectedBackgroundColor = UIColor.clearColor()
-        options.font = UIFont.systemFontOfSize(18)
-        options.selectedFont = UIFont.systemFontOfSize(18)
+        options.font = UIFont.systemFontOfSize(16)
+        options.selectedFont = UIFont.systemFontOfSize(16)
         options.selectedTextColor = COLOR
         options.menuItemMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
         let pagingMenuController = PagingMenuController(viewControllers: viewControllers, options: options)
@@ -74,14 +75,14 @@ class QuestionViewController: UIViewController {
 //    }
 
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+/*
+ // MARK: - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+ // Get the new view controller using segue.destinationViewController.
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 //}

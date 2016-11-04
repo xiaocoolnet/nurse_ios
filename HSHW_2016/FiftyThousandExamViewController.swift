@@ -37,7 +37,7 @@ class FiftyThousandExamViewController: UIViewController {
 //        self.view.addSubview(line)
 //        self.view.backgroundColor = UIColor.whiteColor()
         
-        let rootScrollView = UIScrollView(frame: CGRectMake(0, 1, WIDTH, HEIGHT-64-44-1))
+        let rootScrollView = UIScrollView(frame: CGRectMake(0, 1, WIDTH, HEIGHT-64-40-1))
         self.view.addSubview(rootScrollView)
         
         let sideMargin:CGFloat = 30

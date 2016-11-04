@@ -148,6 +148,8 @@
 		1FC823D01D6C37D4005ED821 /* SuccessfulCaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */; };
 		1FCCA9561DCC18CA001112AC /* FiftyThousandExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA9551DCC18CA001112AC /* FiftyThousandExamViewController.swift */; };
 		1FCCA9581DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA9571DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift */; };
+		1FCCA95A1DCC52A6001112AC /* ExamBibleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA9591DCC52A6001112AC /* ExamBibleViewController.swift */; };
+		1FCCA95C1DCC5334001112AC /* ExamBibleSubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA95B1DCC5334001112AC /* ExamBibleSubViewController.swift */; };
 		1FE3A6341D5AFC2D0039D94D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */; };
 		1FE3A6361D5AFC370039D94D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */; };
 		1FE3A6381D5AFC430039D94D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6371D5AFC430039D94D /* Security.framework */; };
@@ -444,6 +446,8 @@
 		1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessfulCaseViewController.swift; sourceTree = "<group>"; };
 		1FCCA9551DCC18CA001112AC /* FiftyThousandExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiftyThousandExamViewController.swift; sourceTree = "<group>"; };
 		1FCCA9571DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiftyThousandExamSubCateViewController.swift; sourceTree = "<group>"; };
+		1FCCA9591DCC52A6001112AC /* ExamBibleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamBibleViewController.swift; sourceTree = "<group>"; };
+		1FCCA95B1DCC5334001112AC /* ExamBibleSubViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamBibleSubViewController.swift; sourceTree = "<group>"; };
 		1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1FE3A6371D5AFC430039D94D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1007,6 +1011,8 @@
 				1F33D7751D752A360028444A /* GoAboardExamViewController.swift */,
 				1FCCA9551DCC18CA001112AC /* FiftyThousandExamViewController.swift */,
 				1FCCA9571DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift */,
+				1FCCA9591DCC52A6001112AC /* ExamBibleViewController.swift */,
+				1FCCA95B1DCC5334001112AC /* ExamBibleSubViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1613,6 +1619,7 @@
 				F64C9AC41D3B9C150041E360 /* MineRecDetailsViewController.swift in Sources */,
 				183B86741CE5CFA000709235 /* CornerRadiusViewController.swift in Sources */,
 				1F1A33981D54952600F7C20A /* PostVacanciewViewController.swift in Sources */,
+				1FCCA95C1DCC5334001112AC /* ExamBibleSubViewController.swift in Sources */,
 				F6E86AF61D34DF7E001536B6 /* HSForumDetailCell.swift in Sources */,
 				1FF06CB01D7D07C60032943B /* UIPlaceHolderTextView.m in Sources */,
 				F6D02CDF1D07BB5300353557 /* contentCell.swift in Sources */,
@@ -1687,6 +1694,7 @@
 				0BC1B42A1D390BAA008A6F3D /* MineMessageView.swift in Sources */,
 				183B84F81CE5BFDC00709235 /* ViewController.swift in Sources */,
 				0DB467B01D4C8600009AE2AD /* MJRefreshAutoNormalFooter.m in Sources */,
+				1FCCA95A1DCC52A6001112AC /* ExamBibleViewController.swift in Sources */,
 				F631DFAC1D069C6200E52FDB /* SmetaModel.swift in Sources */,
 				F6338B951D29105B00EE5CA2 /* HSStateCommentCell.swift in Sources */,
 				0DB467AD1D4C8600009AE2AD /* MJRefreshFooter.m in Sources */,

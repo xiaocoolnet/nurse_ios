@@ -23,7 +23,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     var newsList = Array<NewsInfo>()
     var imageArr = Array<NewsInfo>()
     
-    let titLabArr:[String] = ["每日一练","5万道题库","在线考试"]
+    let titLabArr:[String] = ["每日一练","5万道题库","模拟考场"]
     let titImgArr:[String] = ["ic_bi.png","ic_fuzhi.png","在线考试"]
     
     let titLabArrTwo:[String] = ["临床护理","50项护理操作","考试宝典"]
@@ -258,7 +258,8 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MineTableViewCell
         cell.selectionStyle = .None
         cell.accessoryType = .DisclosureIndicator
-        
+        cell.accessoryView = nil
+
         if indexPath.section == 0 {
             cell.titImage.setImage(UIImage(named: "ic_wirte"), forState: .Normal)
             cell.titLab.text = "护理部"
@@ -380,11 +381,17 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 self.navigationController?.pushViewController(goAboard, animated: true)
             }else if indexPath.row == 2 {
 //                let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
-                let goAboard = AllStudyViewController()
-                goAboard.articleID = "15"
+                let goAboard = ExamBibleViewController()
+//                goAboard.articleID = "15"
                 goAboard.title = "考试宝典"
                 goAboard.hidesBottomBarWhenPushed = true
                 self.navigationController?.pushViewController(goAboard, animated: true)
+                
+//                let goAboard = AllStudyViewController()
+//                goAboard.articleID = "15"
+//                goAboard.title = "考试宝典"
+//                goAboard.hidesBottomBarWhenPushed = true
+//                self.navigationController?.pushViewController(goAboard, animated: true)
             }
         }else if indexPath.section == 4 {
             if indexPath.row == 0 {

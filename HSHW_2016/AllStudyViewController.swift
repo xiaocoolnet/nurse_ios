@@ -16,15 +16,27 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
     var newsList:Array<NewsInfo>?
     var articleID:String?
     
+    var showLineView = true
+    
     override func viewDidLoad() {
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        let line = UIView(frame: CGRectMake(0, 0, WIDTH, 1))
-        line.backgroundColor = COLOR
-        self.view.addSubview(line)
+        if showLineView {
+            
+            let line = UIView(frame: CGRectMake(0, 0, WIDTH, 1))
+            line.backgroundColor = COLOR
+            line.tag = 10001
+            self.view.addSubview(line)
+            
+            listTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65)
+        }else{
+            
+            self.view.viewWithTag(10001)?.removeFromSuperview()
+            listTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-64)
+
+        }
         
-        listTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65)
         listTableView.backgroundColor = UIColor.clearColor()
         listTableView.delegate = self
         listTableView.dataSource = self

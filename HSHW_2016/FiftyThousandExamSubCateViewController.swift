@@ -36,6 +36,7 @@ class FiftyThousandExamSubCateViewController: UIViewController, UITableViewDeleg
                 self.rootTableView.reloadData()
             }else{
                 let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = .Text
                 hud.margin = 10
                 hud.labelText = "网络错误，请稍后再试"
                 hud.removeFromSuperViewOnHide = true

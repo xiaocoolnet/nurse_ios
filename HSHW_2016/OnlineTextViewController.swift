@@ -37,7 +37,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     func createTableView(){
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT - 64-49)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT - 64)
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.delegate = self
         myTableView.dataSource = self
@@ -169,7 +169,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
             }
         }
         if type == 1 {
-            cell.startBtn.setTitle("开始考试", forState: .Normal)
+            cell.startBtn.setTitle("开始练习", forState: .Normal)
         }else{
             cell.startBtn.setTitle("开始考试", forState: .Normal)
         }
