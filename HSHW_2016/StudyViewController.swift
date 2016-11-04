@@ -381,17 +381,18 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 self.navigationController?.pushViewController(goAboard, animated: true)
             }else if indexPath.row == 2 {
 //                let goAboard = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
-                let goAboard = ExamBibleViewController()
-//                goAboard.articleID = "15"
-                goAboard.title = "考试宝典"
-                goAboard.hidesBottomBarWhenPushed = true
-                self.navigationController?.pushViewController(goAboard, animated: true)
                 
-//                let goAboard = AllStudyViewController()
-//                goAboard.articleID = "15"
+//                let goAboard = ExamBibleViewController()
 //                goAboard.title = "考试宝典"
 //                goAboard.hidesBottomBarWhenPushed = true
 //                self.navigationController?.pushViewController(goAboard, animated: true)
+                
+                // TODO: 需要子类时  放开上边  注释下边
+                let goAboard = AllStudyViewController()
+                goAboard.articleID = "15"
+                goAboard.title = "考试宝典"
+                goAboard.hidesBottomBarWhenPushed = true
+                self.navigationController?.pushViewController(goAboard, animated: true)
             }
         }else if indexPath.section == 4 {
             if indexPath.row == 0 {

@@ -11,11 +11,14 @@ import PagingMenuController
 
 class ExamBibleViewController: UIViewController {
     
-    let oneView = ExamBibleSubViewController()
-    let twoView = ExamBibleSubViewController()
-    let threeView = ExamBibleSubViewController()
-    //    let threeView = QuestionBankViewController()
+//    let oneView = ExamBibleSubViewController()
+//    let twoView = ExamBibleSubViewController()
+//    let threeView = ExamBibleSubViewController()
     
+    // TODO: 需要子类时  放开上边  注释下边
+    let oneView = AllStudyViewController()
+    let twoView = AllStudyViewController()
+    let threeView = AllStudyViewController()
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
@@ -40,12 +43,24 @@ class ExamBibleViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.whiteColor()
         
+//        oneView.title = "护士资格"
+//        oneView.term_id = "149"
+//        twoView.title = "初级护师"
+//        twoView.term_id = "150"
+//        threeView.title = "主管护师"
+//        threeView.term_id = "151"
+        
+        // TODO: 需要子类时  放开上边  注释下边
         oneView.title = "护士资格"
-        oneView.term_id = "149"
+        oneView.articleID = "149"
+        oneView.showLineView = false
         twoView.title = "初级护师"
-        twoView.term_id = "150"
+        twoView.articleID = "150"
+        twoView.showLineView = false
         threeView.title = "主管护师"
-        threeView.term_id = "151"
+        threeView.articleID = "151"
+        threeView.showLineView = false
+        
         let viewControllers = [oneView,twoView,threeView]
         let options = PagingMenuOptions()
         options.scrollEnabled = false
