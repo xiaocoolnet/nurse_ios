@@ -23,6 +23,18 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     var num = 1
     var articleID:NSString?
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewStartWithName(self.title)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewEndWithName(self.title)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         
         if articleID != nil {

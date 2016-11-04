@@ -17,8 +17,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
     var wbCurrentUserID: String?
     var wbRefreshToken: String?
 
+    // 启动百度移动统计
+    func startBaiduMobileStat() {
+        /*若应用是基于iOS 9系统开发，需要在程序的info.plist文件中添加一项参数配置，确保日志正常发送，配置如下：
+         NSAppTransportSecurity(NSDictionary):
+         NSAllowsArbitraryLoads(Boolen):YES
+         详情参考本Demo的BaiduMobStatSample-Info.plist文件中的配置
+         */
+        let statTracker = BaiduMobStat.defaultStat()
+
+        // 此处(startWithAppId之前)可以设置初始化的可选参数，具体有哪些参数，可详见BaiduMobStat.h文件，例如：
+        statTracker.shortAppVersion = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
+        statTracker.enableDebugOn = true
+        
+        // TODO
+        statTracker.channelId = "debug"
+
+        
+        statTracker.startWithAppId("07237c02a4") // 设置您在mtj网站上添加的app的appkey,此处AppId即为应用的appKey
+    }
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        self.startBaiduMobileStat()
         
         if ((launchOptions) != nil) {
             
@@ -45,10 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         WeiboSDK.registerApp(kAppKey)
         
         let _ = TencentOAuth(appId: "1105552541", andDelegate: nil)
-        
-//        [[NTESCrashReporter sharedInstance] initWithAppId:@"此处替换为你的AppId"];
-
-        NTESCrashReporter.sharedInstance().initWithAppId("I005769740")
         
 //        ShareSDK.registerApp("13be4c6c247e0", activePlatforms:
 //            

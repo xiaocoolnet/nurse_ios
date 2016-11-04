@@ -21,6 +21,18 @@ class GoABroadViewController: UIViewController {
         self.tabBarController?.tabBar.hidden = false
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewStartWithName("出国")
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewEndWithName("出国")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         

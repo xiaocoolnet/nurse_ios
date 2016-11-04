@@ -16,6 +16,18 @@ class NewsViewController: UIViewController {
     let threeView = TouTiaoViewController()
     let fourView = AcademicViewController()
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewStartWithName("新闻")
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewEndWithName("新闻")
+    }
+    
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.hidden = true

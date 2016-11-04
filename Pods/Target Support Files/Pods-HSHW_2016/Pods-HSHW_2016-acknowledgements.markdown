@@ -725,10 +725,6 @@ Public License instead of this License.  But first, please read
 <http://www.gnu.org/philosophy/why-not-lgpl.html>.
 
 
-## Bugrpt
-
-©2016 crash.163.com
-
 ## IQKeyboardManagerSwift
 
 IQKeyboardManager license

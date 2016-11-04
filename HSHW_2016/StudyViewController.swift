@@ -29,7 +29,17 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     let titLabArrTwo:[String] = ["临床护理","50项护理操作","考试宝典"]
     let titImgArrTwo:[String] = ["ic_hushi.png","ic_zhen.png","ic_book.png"]
     
-
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewStartWithName("学习")
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewEndWithName("学习")
+    }
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default

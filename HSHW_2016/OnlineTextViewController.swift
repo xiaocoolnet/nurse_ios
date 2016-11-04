@@ -17,6 +17,18 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
     var dataSource = titleList()
     let picArr:[String] = ["ic_rn.png","ic_earth.png","ic_moon.png","ic_maozi_one.png","ic_maozi_two.png","ic_maozi_three.png"]
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewStartWithName("学习 "+(self.title ?? "")!)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewEndWithName("学习 "+(self.title ?? "")!)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = false
     }

@@ -65,6 +65,18 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     
     var type = ""
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewStartWithName("学习 "+(self.title ?? "")!)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewEndWithName("学习 "+(self.title ?? "")!)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         self.tabBarController?.tabBar.hidden = true
         self.getData()

@@ -16,6 +16,18 @@ class NurseStationViewController: UIViewController {
     let ComVC = HSWCommunityHome(nibName: "HSWCommunityHome", bundle: nil)
     let RecVC = HSZRecruitmentHome()
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewStartWithName("护士站")
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewEndWithName("护士站")
+    }
+    
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.tabBarController?.tabBar.hidden = false

@@ -13,7 +13,6 @@ target 'HSHW_2016' do
     pod 'AFNetworking' ,'~> 3.0.1'
     pod 'PagingMenuController','~> 0.9.1'
     pod 'BmobSDK'
-    pod 'Bugrpt'
     pod "WeiboSDK", :git => "https://github.com/sinaweibosdk/weibo_ios_sdk.git"
     post_install do |installer|
       installer.pods_project.targets.each do |target|

@@ -152,6 +152,10 @@
 		1FCCA95C1DCC5334001112AC /* ExamBibleSubViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA95B1DCC5334001112AC /* ExamBibleSubViewController.swift */; };
 		1FCCA9601DCC6483001112AC /* LFLUISegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA95F1DCC6483001112AC /* LFLUISegmentedControl.m */; };
 		1FCCA9621DCC64FA001112AC /* ExamBibleSubCateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA9611DCC64FA001112AC /* ExamBibleSubCateViewController.swift */; };
+		1FCCA9661DCC7683001112AC /* libBaiduMobStat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA9651DCC7683001112AC /* libBaiduMobStat.a */; };
+		1FCCA9681DCC7866001112AC /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA9671DCC7866001112AC /* libz.1.2.5.tbd */; };
+		1FCCA96A1DCC787C001112AC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA9691DCC787C001112AC /* CoreLocation.framework */; };
+		1FCCA96C1DCC78E3001112AC /* libBaiduMobStat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */; };
 		1FE3A6341D5AFC2D0039D94D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */; };
 		1FE3A6361D5AFC370039D94D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */; };
 		1FE3A6381D5AFC430039D94D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6371D5AFC430039D94D /* Security.framework */; };
@@ -453,6 +457,11 @@
 		1FCCA95E1DCC6483001112AC /* LFLUISegmentedControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LFLUISegmentedControl.h; sourceTree = "<group>"; };
 		1FCCA95F1DCC6483001112AC /* LFLUISegmentedControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LFLUISegmentedControl.m; sourceTree = "<group>"; };
 		1FCCA9611DCC64FA001112AC /* ExamBibleSubCateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamBibleSubCateViewController.swift; sourceTree = "<group>"; };
+		1FCCA9641DCC7683001112AC /* BaiduMobStat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduMobStat.h; sourceTree = "<group>"; };
+		1FCCA9651DCC7683001112AC /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduMobStat.a; sourceTree = "<group>"; };
+		1FCCA9671DCC7866001112AC /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		1FCCA9691DCC787C001112AC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBaiduMobStat.a; path = ../../../../Downloads/BaiduMTJ_iOS_App_Crash_V4.3.0/ios_api/libBaiduMobStat.a; sourceTree = "<group>"; };
 		1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1FE3A6371D5AFC430039D94D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -574,24 +583,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1FEC64CF1D910E680045038C /* libresolv.tbd in Frameworks */,
+				1FCCA96C1DCC78E3001112AC /* libBaiduMobStat.a in Frameworks */,
+				1FE3A6401D5AFC720039D94D /* Foundation.framework in Frameworks */,
+				1FE3A63E1D5AFC650039D94D /* UIKit.framework in Frameworks */,
 				1FE3A6421D5AFC7A0039D94D /* CoreGraphics.framework in Frameworks */,
+				1FE3A63A1D5AFC4F0039D94D /* CoreTelephony.framework in Frameworks */,
+				1FE3A6361D5AFC370039D94D /* SystemConfiguration.framework in Frameworks */,
+				1FCCA96A1DCC787C001112AC /* CoreLocation.framework in Frameworks */,
+				1FE3A6381D5AFC430039D94D /* Security.framework in Frameworks */,
+				1FCCA9681DCC7866001112AC /* libz.1.2.5.tbd in Frameworks */,
+				F604A4E21D0E7A1D008A4888 /* JavaScriptCore.framework in Frameworks */,
+				1FEC64CF1D910E680045038C /* libresolv.tbd in Frameworks */,
 				1FEC64D81D910EAE0045038C /* UTMini.framework in Frameworks */,
 				1FEC64D51D910EAE0045038C /* AlicloudUtils.framework in Frameworks */,
 				1F1B7F271D66DF2B009910DF /* libiconv.tbd in Frameworks */,
 				1F1EA38A1D61AAB200151FA7 /* ReachabilitySwift.framework in Frameworks */,
-				1FE3A6401D5AFC720039D94D /* Foundation.framework in Frameworks */,
-				1FE3A63E1D5AFC650039D94D /* UIKit.framework in Frameworks */,
 				1FE3A63C1D5AFC570039D94D /* CoreText.framework in Frameworks */,
-				1FE3A63A1D5AFC4F0039D94D /* CoreTelephony.framework in Frameworks */,
-				1FE3A6381D5AFC430039D94D /* Security.framework in Frameworks */,
+				1FCCA9661DCC7683001112AC /* libBaiduMobStat.a in Frameworks */,
 				1F1B7F291D66E03C009910DF /* TencentOpenAPI.framework in Frameworks */,
 				1FEC64D61D910EAE0045038C /* CloudPushSDK.framework in Frameworks */,
-				1FE3A6361D5AFC370039D94D /* SystemConfiguration.framework in Frameworks */,
 				1FEC64D71D910EAE0045038C /* UTDID.framework in Frameworks */,
 				1FE3A6341D5AFC2D0039D94D /* QuartzCore.framework in Frameworks */,
 				F604A4E41D0E7A2E008A4888 /* libsqlite3.tbd in Frameworks */,
-				F604A4E21D0E7A1D008A4888 /* JavaScriptCore.framework in Frameworks */,
 				1F0BE12A1D54A84300842B80 /* libWeChatSDK.a in Frameworks */,
 				F604A4E01D0E7A16008A4888 /* libstdc++.tbd in Frameworks */,
 				F604A4DE1D0E7A03008A4888 /* libz.tbd in Frameworks */,
@@ -865,6 +878,7 @@
 		183B866B1CE5CF7900709235 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				1FCCA9631DCC7683001112AC /* ios_api */,
 				1FCCA95D1DCC6483001112AC /* LFLUISegmentedControl */,
 				1FEC64D01D910EAD0045038C /* OneSDK */,
 				1FF06CAD1D7D07C60032943B /* UIPlaceHolderTextView */,
@@ -1266,6 +1280,15 @@
 			path = LFLUISegmentedControl;
 			sourceTree = "<group>";
 		};
+		1FCCA9631DCC7683001112AC /* ios_api */ = {
+			isa = PBXGroup;
+			children = (
+				1FCCA9641DCC7683001112AC /* BaiduMobStat.h */,
+				1FCCA9651DCC7683001112AC /* libBaiduMobStat.a */,
+			);
+			path = ios_api;
+			sourceTree = "<group>";
+		};
 		1FEC64D01D910EAD0045038C /* OneSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -1344,6 +1367,9 @@
 		F1AF83881B75F01938A9D1A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */,
+				1FCCA9691DCC787C001112AC /* CoreLocation.framework */,
+				1FCCA9671DCC7866001112AC /* libz.1.2.5.tbd */,
 				1FEC64CE1D910E680045038C /* libresolv.tbd */,
 				1F1B7F281D66E03C009910DF /* TencentOpenAPI.framework */,
 				1F1B7F261D66DF2B009910DF /* libiconv.tbd */,
@@ -1400,7 +1426,6 @@
 				183B84F01CE5BFDC00709235 /* Resources */,
 				4E23B7EE2B57F7B54D0641B3 /* [CP] Embed Pods Frameworks */,
 				6287A40C159D35352A4EA41E /* [CP] Copy Pods Resources */,
-				1F23EFF81DC34EFF0049F1F0 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1552,19 +1577,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1F23EFF81DC34EFF0049F1F0 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n# Copyright 2015-2016 Bugrpt @Netease. All rights reserved.\n#\n# V 1.1\n#\n################################################################################\n# 注意: 请配置下面的信息\n################################################################################\nBUGRPT_APP_ID=\"I005769740\"\n################################################################################\n# 自定义配置\n################################################################################\n# Debug模式编译是否上传，1＝上传 0＝不上传，默认不上传\nUPLOAD_DEBUG_SYMBOLS=0\n\n# 模拟器编译是否上传，1＝上传，0＝不上传，默认不上传\nUPLOAD_SIMULATOR_SYMBOLS=0\n\n#\n# # 脚本默认配置的版本格式为CFBundleShortVersionString(CFBundleVersion),  如果你修改默认的版本格式, 请设置此变量, 如果不想修改, 请忽略此设置\n# CUSTOMIZED_APP_VERSION=\"\"\n#\n#\n#\n# This script will extract symbols from the .dSYM and generate .symbol file(BUGRPT supported) and upload to server.\n# You could visit http://crash.163.com to get more details about BUGRPT.\n#\n# Usage:\n#   * The instructions assume you have copyed this script into your project int Xcode.\n#   * Copy the \"symbolTool.jar\" file into the \"~/bin\" folder.\n#   * Open the project editor, select your build target.\n#   * Click \"Build Phases\" at the top of the project editor.\n#   * Click \"+\" button in the top left corner and select \"New Run Script Phase\".\n#   * Click \"Run Script\".\n#   * Paste the following script into the dark text box. You will have to uncomment the lines (remove the #) of course.\n#\n# --- SCRIPT BEGINS ON NEXT LINE, COPY AND EDIT FROM THERE ---\n#\n#\n#\n# --- END OF SCRIPT ---\n\n\n################################################################################\n# 注意: 如果你不知道此脚本的执行流程和用法，请不要随便修改！\n################################################################################\n\n# 退出执行并打印提示信息\nexitWithMessage() {\n    echo \"--------------------------------\"\n    echo -e \"${1}\"\n    echo \"--------------------------------\"\n    echo \"No upload and exit.\"\n    echo \"----------------------------------------------------------------\"\n    exit ${2}\n}\n\necho \"----------------------------------------------------------------\"\necho \"Copyright 2015-2016 BUGRPT @Netease. All rights reserved.\"\n\necho \"This script will extract symbols from the .dSYM file and generate .symbol file(BUGRPT supported) and upload to server.\"\necho \"You could visit http://crash.163.com to get more details about BUGRPT.\"\necho \"----------------------------------------------------------------\"\n\necho \"Uploading dSYM to 网易云捕.\"\necho \"\"\n\n# BUGRPT服务域名\nDSYM_UPLOAD_DOMAIN=\"crash.163.com\"\n\n# 读取Info.plist文件中的版本信息\necho \"Info.Plist : ${INFOPLIST_FILE}\"\n\nBUNDLE_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleVersion' \"${INFOPLIST_FILE}\")\nBUNDLE_SHORT_VERSION=$(/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' \"${INFOPLIST_FILE}\")\n\n# 组装BUGRPT默认识别的版本信息(格式为CFBundleShortVersionString(CFBundleVersion), 例如: 1.0(1))\nif [ ! \"${CUSTOMIZED_APP_VERSION}\" ]; then\nBUGRPT_APP_VERSION=\"${BUNDLE_SHORT_VERSION}(${BUNDLE_VERSION})\"\nelse\nBUGRPT_APP_VERSION=\"${CUSTOMIZED_APP_VERSION}\"\nfi\n\n# BUGRPT符号提取工具路径, symbolTool.jar拷贝到目录~/bin\nBUGRPT_SYMBOL_JAR_PATH=\"$HOME/bin/symbolTool.jar\"\n\necho \"--------------------------------\"\necho \"Step 1: Prepare application information.\"\necho \"--------------------------------\"\n\necho \"Product Name: ${PRODUCT_NAME}\"\necho \"Bundle Identifier: ${PRODUCT_BUNDLE_IDENTIFIER}\"\necho \"Version: ${BUNDLE_SHORT_VERSION}\"\necho \"Build: ${BUNDLE_VERSION}\"\n\necho \"BUGRPT App ID: ${BUGRPT_APP_ID}\"\necho \"BUGRPT App key: ${BUGRPT_APP_KEY}\"\necho \"BUGRPT App Version: ${BUGRPT_APP_VERSION}\"\n\necho \"--------------------------------\"\necho \"Step 2: Check the arguments ...\"\n\n##检查模拟器是否允许上传符号\nif [ \"$EFFECTIVE_PLATFORM_NAME\" == \"-iphonesimulator\" ]; then\nif [[ $UPLOAD_SIMULATOR_SYMBOLS -eq 0 ]]; then\nexitWithMessage \"Warning: Build for simulator and skipping to upload. \\nYou can modify 'UPLOAD_SIMULATOR_SYMBOLS' to 1 in the script.\" 0\nfi\nfi\n\n# 检查DEBUG模式是否允许上传符号\nif [ \"${CONFIGURATION=}\" == \"Debug\" ]; then\nif [[ $UPLOAD_DEBUG_SYMBOLS -eq 0 ]]; then\nexitWithMessage \"Warning: Build for debug mode and skipping to upload. \\nYou can modify 'UPLOAD_DEBUG_SYMBOLS' to 1 in the script.\" 0\nfi\nfi\n\n# 检查必须参数是否设置\nif [ ! \"${BUGRPT_APP_ID}\" ]; then\nexitWithMessage \"Error: BUGRPT App ID not defined.\" 1\nfi\n\nif [ ! \"${PRODUCT_BUNDLE_IDENTIFIER}\" ]; then\nexitWithMessage \"Error: Bundle Identifier not defined.\" 1\nfi\n\nfunction uploadDSYM {\n    DSYM_SRC=\"$1\"\n    echo \".dSYM file: ${DSYM_SRC}\"\n    if [ ! -d \"$DSYM_SRC\" ]; then\n    exitWithMessage \"dSYM source not found: ${DSYM_SRC}\" 1\n    fi\n    DSYM_FILE_NAME=${DSYM_SRC}\n    DSYM_SYMBOL_OUT_ZIP_NAME=\"${DSYM_FILE_NAME}.bSymbol.zip\"\n    # 替换空格\n    DSYM_SYMBOL_OUT_ZIP_NAME=\"${DSYM_SYMBOL_OUT_ZIP_NAME// /_}\"\n    DSYM_ZIP_FPATH=\"${BUILT_PRODUCTS_DIR}/${DSYM_SYMBOL_OUT_ZIP_NAME}\"\n    \n    DSYM_SYMBOL_BACKUP_DIR=${BUILD_DIR}/Symbols\n    \n    if [ ! -e \"${DSYM_SYMBOL_BACKUP_DIR}\" ]; then\n    mkdir ${DSYM_SYMBOL_BACKUP_DIR}\n    fi\n    \n    # 备份并清理\n    find ${BUILT_PRODUCTS_DIR} -name \"*.zip\" -print0 | xargs -0 -I {} mv {} ${DSYM_SYMBOL_BACKUP_DIR}\n    /bin/rm -rf \"${BUILT_PRODUCTS_DIR}/*.zip\"\n    \n    echo \"Extract symbols from dSYM to ${BUILT_PRODUCTS_DIR}.\"\n    \n    echo \"--------------------------------\"\n    cd \"${BUILT_PRODUCTS_DIR}\";\n    (/usr/bin/java -Xms512m -Xmx1024m -Dfile.encoding=UTF8 -jar \"${BUGRPT_SYMBOL_JAR_PATH}\" -i \"${DSYM_SRC}/Contents/Resources/DWARF/${PRODUCT_NAME}\") || exitWithMessage \"Error: Failed to extract symbols.\" 1\n    echo \"--------------------------------\"\n    \n    if [ ! -e \"${DSYM_ZIP_FPATH}\" ]; then\n    DSYM_SYMBOL_OUT_ZIP_NAME=$(ls ${BUILT_PRODUCTS_DIR} | grep \".zip\")\n    DSYM_ZIP_FPATH=\"${BUILT_PRODUCTS_DIR}/${DSYM_SYMBOL_OUT_ZIP_NAME}\"\n    DSYM_SYMBOL_OUT_ZIP_NAME=${DSYM_SYMBOL_OUT_ZIP_NAME//&/_}\n        fi\n        \n        if [ ! -e \"${DSYM_ZIP_FPATH}\" ] ; then\n        exitWithMessage \"no symbol file zip archive generated: ${DSYM_ZIP_FPATH}\" 1\n        fi\n        \n        # 提取符号信息\n        echo \"--------------------------------\"\n        echo \"Step 3: Extract symbol info from .dSYM file.\"\n        \n        if [ ! -e \"$BUGRPT_SYMBOL_JAR_PATH\" ]; then\n        exitWithMessage \"Error: Jar file '${BUGRPT_SYMBOL_JAR_PATH}' was not found. \\nPlease copy the jar file into ~/bin folder.\" 1\n        fi\n        \n        echo \"Step 4: Upload the symbols of dSYM.\"\n        echo \"--------------------------------\"\n        echo \"zip : ${DSYM_SYMBOL_OUT_ZIP_NAME}\"\n        echo \"dir : ${DSYM_ZIP_FPATH}\"\n        \n        echo \"dSYM upload domain: ${DSYM_UPLOAD_DOMAIN}\"\n        DSYM_UPLOAD_URL=\"http://${DSYM_UPLOAD_DOMAIN}/upload/auto.do?appId=${BUGRPT_APP_ID}&version=${BUGRPT_APP_VERSION}&bid=${PRODUCT_BUNDLE_IDENTIFIER}\"\n        echo \"dSYM upload url: ${DSYM_UPLOAD_URL}\"\n        \n        # Upload dSYM to BUGRPT\n        echo \"curl -F \\\"file=@${DSYM_ZIP_FPATH};type=application/zip\\\" \\\"${DSYM_UPLOAD_URL}\\\" --verbose\"\n        \n        echo \"--------------------------------\"\n        STATUS=$(/usr/bin/curl -F \"file=@${DSYM_ZIP_FPATH};type=application/zip\" \"${DSYM_UPLOAD_URL}\" --verbose)\n        echo \"--------------------------------\"\n        \n        UPLOAD_RESULT=\"FAILTURE\"\n        echo \"BUGRPT server response: ${STATUS}\"\n        if [ ! \"${STATUS}\" ]; then\n        echo \"Error: Failed to upload the zip archive file.\"\n        elif [[ \"${STATUS}\" == *\":true\"* ]]; then\n        echo \"Success to upload the dSYM for the app [${BUNDLE_IDENTIFIER} ${BUGRPT_APP_VERSION}]\"\n        UPLOAD_RESULT=\"SUCCESS\"\n        else\n        echo \"Error: Failed to upload the zip archive file to BUGRPT.\"\n        fi\n        \n        #Remove temp dSYM archive\n        echo \"Remove temporary zip archive: ${DSYM_ZIP_FPATH}\"\n        #/bin/rm -f \"${DSYM_ZIP_FPATH}\"\n        \n        if [ \"$?\" -ne 0 ]; then\n        exitWithMessage \"Error: Failed to remove temporary zip archive.\" 1\n        fi\n        \n        echo \"--------------------------------\"\n        echo \"${UPLOAD_RESULT} - dSYM upload complete.\"\n        \n        if [[ \"${UPLOAD_RESULT}\" == \"FAILTURE\" ]]; then\n        echo \"--------------------------------\"\n        echo \"Failed to upload the dSYM\"\n        echo \"Please check the script and try it again.\"\n        fi\n        \n        echo \"----------------------------------------------------------------\"\n    }\n    \n    # .dSYM文件信息\n    \n    echo \"DSYM FOLDER ${DWARF_DSYM_FOLDER_PATH}\"\n    \n    DSYM_FOLDER=\"${DWARF_DSYM_FOLDER_PATH}\"\n    \n    IFS=$'\\n'\n    \n    for dsymFile in $(find \"$DSYM_FOLDER\" -name '*.dSYM'); do\n    echo \"Found dSYM file: $dsymFile\"\n    uploadDSYM $dsymFile\n    done\n    \n";
-		};
 		29748462319664A2CF41B336 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1967,7 +1979,10 @@
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../nurse_3rd\"";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/HSHW_2016/ios_api",
+					"\"$(SRCROOT)/../nurse_3rd\"",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2011,7 +2026,10 @@
 				INFOPLIST_FILE = HSHW_2016/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../nurse_3rd\"";
+				LIBRARY_SEARCH_PATHS = (
+					"$(PROJECT_DIR)/HSHW_2016/ios_api",
+					"\"$(SRCROOT)/../nurse_3rd\"",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"$(inherited)",

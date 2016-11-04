@@ -33,6 +33,12 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     //    var titArr:[String] = Array<String>()
     var imageArr = Array<NewsInfo>()
     
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewEndWithName(self.title)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         if newsType != nil {
@@ -57,6 +63,9 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewStartWithName(self.title)
+
         recivePush()
     }
     

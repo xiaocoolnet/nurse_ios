@@ -57,6 +57,18 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     let studyIdArray = ["10","95","11","130","131","132","12","134","135","136","13","137","138","139","140","141","142","143","14","15","16"]
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewStartWithName("新闻详情页"+(self.title ?? "")!)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewEndWithName("新闻详情页"+(self.title ?? "")!)
+    }
+    
     override func viewWillAppear(animated: Bool) {
         self.navigationController?.navigationBar.hidden = false
         self.tabBarController?.tabBar.hidden = true
@@ -1107,7 +1119,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         
-        NTESJSCrashReporter.sharedInstance().initJSCrashReporterWithWebView(webView, injectScript: true)
+        BaiduMobStat.defaultStat().webviewStartLoadWithRequest(request)
         return true
     }
     
