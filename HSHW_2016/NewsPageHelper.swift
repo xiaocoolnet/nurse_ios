@@ -123,6 +123,34 @@ class NewsPageHelper: NSObject {
         
     }
     
+    // 获取分类列表
+    func getChannellist(id:String,handle:ResponseBlock) {
+        let url = PARK_URL_Header+"getChannellist"
+        let param = [
+                "parentid":id
+            ];
+        
+        
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            // print(request)
+            if(error != nil){
+                handle(success: false, response: nil)
+            }else{
+                let result = GNewsCateModel(JSONDecoder(json!))
+                // print("状态是")
+                // print(result.status)
+                if(result.status == "error"){
+                    handle(success: true, response: Array<GNewsCate>())
+                }
+                if(result.status == "success"){
+                    handle(success: true, response:result.data)
+                }
+            }
+            
+        }
+        
+    }
+    
     // 添加积分——阅读资讯
     func addScore_ReadingInformation(remarks:String, handle:ResponseBlock){
         

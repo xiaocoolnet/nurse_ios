@@ -146,6 +146,8 @@
 		1F54B60E1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54B60D1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift */; };
 		1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */; };
 		1FC823D01D6C37D4005ED821 /* SuccessfulCaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */; };
+		1FCCA9561DCC18CA001112AC /* FiftyThousandExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA9551DCC18CA001112AC /* FiftyThousandExamViewController.swift */; };
+		1FCCA9581DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA9571DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift */; };
 		1FE3A6341D5AFC2D0039D94D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */; };
 		1FE3A6361D5AFC370039D94D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */; };
 		1FE3A6381D5AFC430039D94D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6371D5AFC430039D94D /* Security.framework */; };
@@ -440,6 +442,8 @@
 		1F54B60D1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPersonalInfoDetailViewController.swift; sourceTree = "<group>"; };
 		1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTimeCell.swift; sourceTree = "<group>"; };
 		1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessfulCaseViewController.swift; sourceTree = "<group>"; };
+		1FCCA9551DCC18CA001112AC /* FiftyThousandExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiftyThousandExamViewController.swift; sourceTree = "<group>"; };
+		1FCCA9571DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiftyThousandExamSubCateViewController.swift; sourceTree = "<group>"; };
 		1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1FE3A6371D5AFC430039D94D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1001,6 +1005,8 @@
 				0B7392861D40C5AC00F785AF /* OnLineViewController.swift */,
 				0B94E7841D436B380008FD57 /* AllStudyViewController.swift */,
 				1F33D7751D752A360028444A /* GoAboardExamViewController.swift */,
+				1FCCA9551DCC18CA001112AC /* FiftyThousandExamViewController.swift */,
+				1FCCA9571DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1615,6 +1621,7 @@
 				0B1937741D421CCE00D87F42 /* GMyErrorTableViewCell.swift in Sources */,
 				0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */,
 				1FFD49C41D63068900AB1460 /* TPKeyboardAvoidingScrollView.m in Sources */,
+				1FCCA9561DCC18CA001112AC /* FiftyThousandExamViewController.swift in Sources */,
 				0DBF54741D406D1900B4B5FB /* GNewsCateDetailViewController.swift in Sources */,
 				181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */,
 				1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */,
@@ -1755,6 +1762,7 @@
 				1F1B7F331D66F480009910DF /* wechatDelegate.swift in Sources */,
 				185408751CE6C88D00DFBA7C /* StudyViewController.swift in Sources */,
 				1FFD9EC91D518F8500951098 /* contentTableViewCell.swift in Sources */,
+				1FCCA9581DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift in Sources */,
 				1854088F1CE713A100DFBA7C /* MagicboxViewController.swift in Sources */,
 				F631DFAE1D069EE100E52FDB /* PhotoModel.swift in Sources */,
 				F66912391D2B5C0C0021706B /* HSStudyNetHelper.swift in Sources */,

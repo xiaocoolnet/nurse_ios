@@ -11,9 +11,11 @@ import PagingMenuController
 
 class QuestionViewController: UIViewController {
     
-    let oneView = QuestionBankViewController()
-    let twoView = QuestionBankViewController()
-    let threeView = QuestionBankViewController()
+    let oneView = FiftyThousandExamViewController()
+    let twoView = FiftyThousandExamViewController()
+    let threeView = FiftyThousandExamViewController()
+//    let threeView = QuestionBankViewController()
+
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
@@ -25,6 +27,16 @@ class QuestionViewController: UIViewController {
         super.viewDidLoad()
         
         self.title = "5万道题库"
+        
+//        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+//        line.backgroundColor = COLOR
+//        self.view.addSubview(line)
+//        self.view.backgroundColor = UIColor.whiteColor()
+        
+        let line2 = UILabel(frame: CGRectMake(0, 45, WIDTH, 1))
+        line2.backgroundColor = COLOR
+        self.view.addSubview(line2)
+        self.view.backgroundColor = UIColor.whiteColor()
         
         self.view.backgroundColor = UIColor.whiteColor()
         oneView.title = "护士资格"
@@ -45,7 +57,7 @@ class QuestionViewController: UIViewController {
         options.selectedTextColor = COLOR
         options.menuItemMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
         let pagingMenuController = PagingMenuController(viewControllers: viewControllers, options: options)
-        pagingMenuController.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
+        pagingMenuController.view.frame = CGRectMake(0, 1, WIDTH, HEIGHT-1)
         pagingMenuController.view.frame.origin.y += 0
         pagingMenuController.view.frame.size.height -= 0
         addChildViewController(pagingMenuController)
