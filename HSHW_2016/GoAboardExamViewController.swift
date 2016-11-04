@@ -46,7 +46,7 @@ class GoAboardExamViewController: UIViewController {
         options.selectedTextColor = COLOR
         options.menuItemMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
         let pagingMenuController = PagingMenuController(viewControllers: viewControllers, options: options)
-        pagingMenuController.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT-44)
+        pagingMenuController.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
         pagingMenuController.view.frame.origin.y += 0
         pagingMenuController.view.frame.size.height -= 0
         addChildViewController(pagingMenuController)

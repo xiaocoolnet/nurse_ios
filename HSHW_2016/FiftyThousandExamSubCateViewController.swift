@@ -91,6 +91,7 @@ class FiftyThousandExamSubCateViewController: UIViewController, UITableViewDeleg
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let twoView = QuestionBankViewController()
+        twoView.hasMenuHeight = false
         twoView.title = self.data[indexPath.row].name
         twoView.term_id = (self.data[indexPath.row].term_id ?? "")!
         

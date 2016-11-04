@@ -19,6 +19,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
     var term_id = "11"
     // 5万道题库
     
+    var hasMenuHeight = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         self.view.addSubview(line)
         self.view.backgroundColor = RGREY
         
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-44-64-1)
+        myTableView.frame = CGRectMake(0, 1, WIDTH, hasMenuHeight ? HEIGHT-44-64-1:HEIGHT-64-1)
         myTableView.backgroundColor = UIColor.clearColor()
         myTableView.delegate = self
         myTableView.dataSource = self
