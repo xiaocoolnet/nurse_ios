@@ -33,15 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         // TODO
         statTracker.channelId = "debug"
 
-        BmobCloud.callFunctionInBackground("returnBaiduAppID", withParameters: ["name":"appid"], block: { (object, error) in
-            
-            if error == nil {
-                statTracker.startWithAppId(object as! String) // 设置您在mtj网站上添加的app的appkey,此处AppId即为应用的appKey
-            }else{
-                statTracker.startWithAppId("07237c02a4") // 设置您在mtj网站上添加的app的appkey,此处AppId即为应用的appKey
-            }
-            
-        })
+        statTracker.startWithAppId("7f69594569") // 设置您在mtj网站上添加的app的appkey,此处AppId即为应用的appKey
         
     }
     

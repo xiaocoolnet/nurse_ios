@@ -18,8 +18,8 @@ class FiftyThousandExamViewController: UIViewController {
         "132":["197","198","199","200","201","202"]
     ]
     
-    let imageNameArray = ["模拟试题","历年真题","辅导精华","核心考点","考前冲刺","押题密卷"]
-    let nameArray = ["模拟试题","历年真题","辅导精华","核心考点","考前冲刺","押题密卷"]
+    let imageNameArray = ["模拟试题","历年真题","考前冲刺","辅导精华","核心考点","押题密卷"]
+    let nameArray = ["模拟试题","历年真题","考前冲刺","辅导精华","核心考点","押题密卷"]
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -72,9 +72,10 @@ class FiftyThousandExamViewController: UIViewController {
             
             let imageBgView = UIImageView(frame: CGRectMake(0, 0, bgBtnWidth, bgBtnWidth))
             imageBgView.layer.cornerRadius = bgBtnWidth/2.0
-            imageBgView.layer.borderColor = COLOR.CGColor
-            imageBgView.layer.borderWidth = 1
+//            imageBgView.layer.borderColor = COLOR.CGColor
+//            imageBgView.layer.borderWidth = 1
             imageBgView.clipsToBounds = true
+            imageBgView.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 242/255.0, alpha: 1)
             bgBtn.addSubview(imageBgView)
             
             let imageView1 = UIImageView(frame: CGRectMake(bgBtnWidth/4.0, bgBtnWidth/4.0, bgBtnWidth/2.0, bgBtnWidth/2.0))
@@ -84,7 +85,7 @@ class FiftyThousandExamViewController: UIViewController {
             
             let titLab = UILabel(frame: CGRectMake(0, CGRectGetMaxY(imageBgView.frame)+5, bgBtnWidth, calculateHeight(nameArray[i], size: 13, width: bgBtnWidth)))
             titLab.font = UIFont.systemFontOfSize(13)
-            titLab.textColor = UIColor.lightGrayColor()
+            titLab.textColor = UIColor.blackColor()
             titLab.textAlignment = .Center
             titLab.text = nameArray[i]
             bgBtn.addSubview(titLab)
