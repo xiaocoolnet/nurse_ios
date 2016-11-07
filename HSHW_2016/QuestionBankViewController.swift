@@ -17,7 +17,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
     var dataSource = NewsList()
 
     var term_id = "11"
-    // 5万道题库
+    // 8万道题库
     
     var hasMenuHeight = true
     

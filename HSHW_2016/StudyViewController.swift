@@ -23,7 +23,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     var newsList = Array<NewsInfo>()
     var imageArr = Array<NewsInfo>()
     
-    let titLabArr:[String] = ["每日一练","5万道题库","模拟考场"]
+    let titLabArr:[String] = ["每日一练","8万道题库","模拟考场"]
     let titImgArr:[String] = ["ic_bi.png","ic_fuzhi.png","在线考试"]
     
     let titLabArrTwo:[String] = ["临床护理","50项护理操作","考试宝典"]

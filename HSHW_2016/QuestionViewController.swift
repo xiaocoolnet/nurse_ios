@@ -37,7 +37,7 @@ class QuestionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "5万道题库"
+        self.title = "8万道题库"
         
 //        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
 //        line.backgroundColor = COLOR
