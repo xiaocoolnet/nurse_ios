@@ -16,6 +16,18 @@ class HSWebViewDetailController: UIViewController, UIWebViewDelegate {
     
     var hud = MBProgressHUD()
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewStartWithName("出国百宝箱（第三方） " + (self.title ?? "")!)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewEndWithName("出国百宝箱（第三方） " + (self.title ?? "")!)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.hidden = false

@@ -36,7 +36,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName(self.title)
+        BaiduMobStat.defaultStat().pageviewEndWithName("新闻/出国 "+(self.title ?? "")!)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -64,7 +64,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName(self.title)
+        BaiduMobStat.defaultStat().pageviewStartWithName("新闻/出国 "+(self.title ?? "")!)
 
         recivePush()
     }

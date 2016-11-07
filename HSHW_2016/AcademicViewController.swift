@@ -26,13 +26,13 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName(self.title)
+        BaiduMobStat.defaultStat().pageviewStartWithName(self.title == "学术会议" ? ("新闻 "+(self.title ?? "")!):("学习 "+(self.title ?? "")!))
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName(self.title)
+        BaiduMobStat.defaultStat().pageviewEndWithName(self.title == "学术会议" ? ("新闻 "+(self.title ?? "")!):("学习 "+(self.title ?? "")!))
     }
     
     override func viewWillAppear(animated: Bool) {

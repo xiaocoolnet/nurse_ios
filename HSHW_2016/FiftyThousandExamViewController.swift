@@ -24,13 +24,13 @@ class FiftyThousandExamViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("学习 "+(self.title ?? "")!)
+        BaiduMobStat.defaultStat().pageviewStartWithName("学习 5万 "+(self.title ?? "")!)
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("学习 "+(self.title ?? "")!)
+        BaiduMobStat.defaultStat().pageviewEndWithName("学习 5万 "+(self.title ?? "")!)
     }
     
     override func viewDidLoad() {
@@ -98,6 +98,7 @@ class FiftyThousandExamViewController: UIViewController {
         
         let fiftyThousandExamController = FiftyThousandExamSubCateViewController()
         fiftyThousandExamController.term_id = cateId[self.term_id]![btn.tag-100]
+        fiftyThousandExamController.term_name = (self.title ?? "")!
         fiftyThousandExamController.title = nameArray[btn.tag-100]
         self.navigationController?.pushViewController(fiftyThousandExamController, animated: true)
         

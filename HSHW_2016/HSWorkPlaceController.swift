@@ -14,6 +14,18 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
     var newsList:Array<NewsInfo>?
     var articleID:String?
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 招聘 " + (self.title ?? "")!)
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 招聘 " + (self.title ?? "")!)
+    }
+    
     override func viewDidLoad() {
         listTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "zhichangbaodiancell")
         listTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))

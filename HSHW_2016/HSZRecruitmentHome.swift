@@ -17,6 +17,22 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
     
     var pagingMenuController:PagingMenuController?
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        findJob.superViewController = superViewController ?? nil
+        findPersonnel.superViewController = superViewController ?? nil
+        
+        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 招聘")
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 招聘")
+    }
+   
+    
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.hidden = true
@@ -75,10 +91,7 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
-        findJob.superViewController = superViewController ?? nil
-        findPersonnel.superViewController = superViewController ?? nil
-    }
+    
     
     func rightBarButtonClicked(){
         findJob.rightBarButtonClicked()

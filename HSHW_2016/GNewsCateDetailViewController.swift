@@ -35,13 +35,13 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("子分类详情页"+(self.title ?? "")!)
+        BaiduMobStat.defaultStat().pageviewStartWithName("新闻分类页"+(self.title ?? "")!)
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("子分类详情页"+(self.title ?? "")!)
+        BaiduMobStat.defaultStat().pageviewEndWithName("新闻分类页"+(self.title ?? "")!)
     }
     
     override func viewWillAppear(animated: Bool) {

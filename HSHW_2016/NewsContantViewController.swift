@@ -60,13 +60,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("新闻详情页"+(self.title ?? "")!)
+        BaiduMobStat.defaultStat().pageviewStartWithName("新闻详情页")
     }
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("新闻详情页"+(self.title ?? "")!)
+        BaiduMobStat.defaultStat().pageviewEndWithName("新闻详情页")
     }
     
     override func viewWillAppear(animated: Bool) {
