@@ -28,10 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
 
         // 此处(startWithAppId之前)可以设置初始化的可选参数，具体有哪些参数，可详见BaiduMobStat.h文件，例如：
         statTracker.shortAppVersion = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
-        statTracker.enableDebugOn = true
+//        statTracker.enableDebugOn = true
         
         // TODO
-        statTracker.channelId = "debug"
+        statTracker.channelId = "pgyer"
 
         statTracker.startWithAppId("7f69594569") // 设置您在mtj网站上添加的app的appkey,此处AppId即为应用的appKey
         

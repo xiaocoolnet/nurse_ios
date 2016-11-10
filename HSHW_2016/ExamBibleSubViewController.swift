@@ -46,7 +46,16 @@ class ExamBibleSubViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        var viewControllers = [UIViewController]()
+//        var viewControllers = [UIViewController]()
+        
+        let studyController = AllStudyViewController()
+        
+        studyController.title = "全部"
+        studyController.articleID = self.term_id
+        studyController.showLineView = false
+        
+        var viewControllers = [studyController]
+        
         for (_,newsCate) in self.data.enumerate() {
             let studyController = AllStudyViewController()
             

@@ -72,8 +72,6 @@ class FiftyThousandExamViewController: UIViewController {
             
             let imageBgView = UIImageView(frame: CGRectMake(0, 0, bgBtnWidth, bgBtnWidth))
             imageBgView.layer.cornerRadius = bgBtnWidth/2.0
-//            imageBgView.layer.borderColor = COLOR.CGColor
-//            imageBgView.layer.borderWidth = 1
             imageBgView.clipsToBounds = true
             imageBgView.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 242/255.0, alpha: 1)
             bgBtn.addSubview(imageBgView)

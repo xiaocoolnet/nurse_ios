@@ -739,7 +739,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             if (nameTF.text != "" && eduBtn.selected &&  professionalBtn.selected && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected &&   expectedPositionBtn.selected)||changeResume {
                 
                 if !PhoneNumberIsValidated(telTF.text!) {
-                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的手机号", comment: "empty message"), preferredStyle: .Alert)
+                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的电话号码", comment: "empty message"), preferredStyle: .Alert)
                     let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
                     alertController.addAction(doneAction)
                     

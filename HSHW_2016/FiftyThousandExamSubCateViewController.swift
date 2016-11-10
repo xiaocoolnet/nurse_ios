@@ -75,6 +75,8 @@ class FiftyThousandExamSubCateViewController: UIViewController, UITableViewDeleg
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
+        rootTableView.tableFooterView = UIView(frame: CGRectZero)
+        
         rootTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData))
         
         self.view.addSubview(rootTableView)
@@ -96,6 +98,7 @@ class FiftyThousandExamSubCateViewController: UIViewController, UITableViewDeleg
             cell?.selectionStyle = .None
         }
         
+        cell?.textLabel?.font = UIFont.systemFontOfSize(18)
         cell?.textLabel?.text = self.data[indexPath.row].name
         
         return cell!

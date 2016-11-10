@@ -265,8 +265,9 @@ func ValidateText(validatedType type: ValidatedType, validateString: String) -> 
             pattern = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$"
         }
         else {
-            pattern = "^(13[0-9]|15[0-9]|18[0-9]|17[0-9]|147)\\d{8}$"
+            pattern = "(^(13[0-9]|15[0-9]|18[0-9]|17[0-9]|147)\\d{8}$)|(^(0\\d{2})-(\\d{8})$)|(^(0\\d{3})-(\\d{7})$)|(^(0\\d{2})-(\\d{8})-(\\d+)$)|(^(0\\d{3})-(\\d{7})-(\\d+)$)"
         }
+//        (^(0\d{2})-(\d{8})$)|(^(0\d{3})-(\d{7})$)|(^(0\d{2})-(\d{8})-(\d+)$)|(^(0\d{3})-(\d{7})-(\d+)$)
         
         let regex: NSRegularExpression = try NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
         let matches = regex.matchesInString(validateString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, validateString.characters.count))
@@ -282,3 +283,5 @@ func EmailIsValidated(vStr: String) -> Bool {
 func PhoneNumberIsValidated(vStr: String) -> Bool {
     return ValidateText(validatedType: ValidatedType.PhoneNumber, validateString: vStr)
 }
+
+

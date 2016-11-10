@@ -60,16 +60,8 @@ class MiFeedbackViewController: UIViewController {
             checkCodeHud.hide(true, afterDelay: 1)
         }else{
 
-            let feedback = BmobObject(className: "feedback")
-            feedback.setObject(QCLoginUserInfo.currentInfo.userid, forKey: "userid")
-            feedback.setObject(feedbackTv.text, forKey: "content")
-            feedback.setObject(UIDevice.currentDevice().systemVersion, forKey: "systemVersion")
-            feedback.setObject(MyUtil.getCurrentDeviceModel(), forKey: "DeviceModel")
-            feedback.setObject(NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"], forKey: "appVersion")
-
-            feedback.saveInBackgroundWithResultBlock { (isSuccessful, error) in
-                if isSuccessful{
-                    
+            HSMineHelper().addfeedback(feedbackTv.text, handle: { (success, response) in
+                if success {
                     checkCodeHud.mode = .Text
                     checkCodeHud.labelText = "反馈成功"
                     checkCodeHud.hide(true, afterDelay: 1)
@@ -91,6 +83,39 @@ class MiFeedbackViewController: UIViewController {
                     
                     print("反馈失败")
                 }
+            })
+            
+            let feedback = BmobObject(className: "feedback")
+            feedback.setObject(QCLoginUserInfo.currentInfo.userid, forKey: "userid")
+            feedback.setObject(feedbackTv.text, forKey: "content")
+            feedback.setObject(UIDevice.currentDevice().systemVersion, forKey: "systemVersion")
+            feedback.setObject(MyUtil.getCurrentDeviceModel(), forKey: "DeviceModel")
+            feedback.setObject(NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"], forKey: "appVersion")
+
+            feedback.saveInBackgroundWithResultBlock { (isSuccessful, error) in
+//                if isSuccessful{
+//                    
+//                    checkCodeHud.mode = .Text
+//                    checkCodeHud.labelText = "反馈成功"
+//                    checkCodeHud.hide(true, afterDelay: 1)
+//                    
+//                    print("反馈成功")
+//                    
+//                    let time: NSTimeInterval = 1.0
+//                    let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(time * Double(NSEC_PER_SEC)))
+//                    
+//                    dispatch_after(delay, dispatch_get_main_queue()) {
+//                        self.navigationController?.popViewControllerAnimated(true)
+//                    }
+//                }else{
+//                    
+//                    checkCodeHud.mode = .Text
+//                    checkCodeHud.labelText = "反馈失败，请稍后再试"
+//                    checkCodeHud.hide(true, afterDelay: 1)
+//                    
+//                    
+//                    print("反馈失败")
+//                }
             }
         }
         
