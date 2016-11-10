@@ -625,14 +625,17 @@ class HSMineHelper: NSObject {
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(success: false, response: "获取企业认证状态失败")
             }else{
                 let result = CompanyInfoStatus(JSONDecoder(json!))
                 // print(result.status)
                 if(result.status == "success"){
                     handle(success: true, response: result.data)
                 }else{
-                    handle(success: false, response: "获取企业认证状态失败")
+                    let dic = ["status":"0"]
+                    let model:CompanyInfo = CompanyInfo.init(JSONDecoder(dic))
+                    
+                    handle(success: true, response: model)
                 }
 //
 //                do {

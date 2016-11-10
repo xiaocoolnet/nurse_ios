@@ -257,6 +257,23 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
             let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
             alertController.addAction(doneAction)
         }else {
+            
+            if !PhoneNumberIsValidated(telField.text!) {
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的电话号码", comment: "empty message"), preferredStyle: .Alert)
+                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                alertController.addAction(doneAction)
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                return
+            }
+            if !EmailIsValidated(mailField.text!) {
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的邮箱地址", comment: "empty message"), preferredStyle: .Alert)
+                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                alertController.addAction(doneAction)
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                return
+            }
            uploadLicense()
         }
         
