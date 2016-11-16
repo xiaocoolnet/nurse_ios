@@ -960,18 +960,36 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             let heightArray = NSMutableArray()
             for j in 0 ..< examInfo.answerlist.count {
                 var string = ""
+                let ascInt:Int = 65+j
+                let asc:UniChar = UInt16(ascInt)
+                let chara:Character = Character(UnicodeScalar(asc))
+                string.append(chara)
+                
                 let btn = UIButton(type: .Custom)
                 let answerInfo = examInfo.answerlist[j]
-                let height:CGFloat = calculateHeight(string+"、"+answerInfo.answer_title, size: 18, width: WIDTH*314/375-10)
+                let height:CGFloat = calculateHeight(string+"、"+answerInfo.answer_title, size: 17, width: WIDTH*314/375-10)
                 if j>0 {
                     // print(j)
                     // print(heightArray)
-                    btn.frame =  CGRectMake(WIDTH*21/375, 10+(CGFloat(heightArray[j-1] as! NSNumber))*CGFloat(1), WIDTH*314/375, height+10)
-                    heightArray.addObject(btn.frame.size.height+btn.frame.origin.y)
+                    btn.frame =  CGRectMake(
+                        WIDTH*21/375,
+                        10+(CGFloat(heightArray[j-1] as! NSNumber))*CGFloat(1),
+                        WIDTH*314/375,
+                        height+10)
                 }else{
-                    btn.frame = CGRectMake(WIDTH*21/375, 5+question.frame.size.height+question.frame.origin.y+(15+WIDTH*46/375)*CGFloat(0), WIDTH*314/375, height+10)
-                    heightArray.addObject(btn.frame.size.height+btn.frame.origin.y)
+                    btn.frame = CGRectMake(
+                        WIDTH*21/375,
+                        5+question.frame.size.height+question.frame.origin.y+(15+WIDTH*46/375)*CGFloat(0),
+                        WIDTH*314/375,
+                        height+10)
                 }
+                
+                btn.setTitle(string+"、"+answerInfo.answer_title, forState: .Normal)
+                btn.sizeToFit()
+                heightArray.addObject(btn.frame.size.height+btn.frame.origin.y)
+
+                btn.backgroundColor = UIColor.cyanColor()
+                
                 //选项按钮
                 btn.tag = j+1
                 btn.layer.cornerRadius = 10
@@ -980,17 +998,15 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 btn.addTarget(self, action: #selector(self.pleaseChooseOne(_:)), forControlEvents: .TouchUpInside)
                 btn.setTitleColor(COLOR, forState: .Normal)
                 btn.contentHorizontalAlignment = .Left;
+                btn.titleLabel?.font = UIFont.systemFontOfSize(17)
                 btn.titleLabel?.numberOfLines = 0
                 btn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
                 //back.addSubview(btn)
+                
                 contentScrollView.addSubview(btn)
                 //根据题号赋值
                 contentScrollView.tag = i+110
-                let ascInt:Int = 65+j
-                let asc:UniChar = UInt16(ascInt)
-                let chara:Character = Character(UnicodeScalar(asc))
-                string.append(chara)
-                btn.setTitle(string+"、"+answerInfo.answer_title, forState: .Normal)
+                
                 var AllHeight = CGFloat()
                 AllHeight = CGFloat(heightArray.lastObject as! NSNumber)
                 contentScrollView.contentSize = CGSizeMake(0, AllHeight+10*CGFloat(examInfo.answerlist.count-1))

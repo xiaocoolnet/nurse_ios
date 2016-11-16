@@ -256,7 +256,13 @@ class addScore_ReadingInformationModel: JSONJoy{
         status = decoder["status"].string ?? ""
         
         if status == "success"{
-            data = addScore_ReadingInformationDataModel(decoder["data"])
+            
+            errorData = decoder["data"].string
+            if errorData != "Name repetition" {
+                
+                data = addScore_ReadingInformationDataModel(decoder["data"])
+            }
+            
         }else{
             errorData = decoder["data"].string
         }

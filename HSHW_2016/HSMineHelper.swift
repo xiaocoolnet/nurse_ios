@@ -66,10 +66,16 @@ class HSMineHelper: NSObject {
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
-                    self.getPersonalInfo({ (success, response) in
+                    
+                    if result.errorData == "Name repetition" {
+                        handle(success: false, response: "用户名重复")
+                    }else{
                         
-                    })
-                    handle(success: true, response: result.data)
+                        self.getPersonalInfo({ (success, response) in
+                            
+                        })
+                        handle(success: true, response: result.data)
+                    }
                 }else{
                     handle(success: false, response: result.errorData)
                 }

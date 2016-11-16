@@ -110,7 +110,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     @IBAction func sendBtnClicked(sender: AnyObject) {
         //        if delegate != nil {
         
-        if postNameField.text != "" && firmNameField.text != "" && resumeFeild.text != "" && linkmanField.text != "" && phoneField.text != "" && mailboxField.text != "" && workplaceBtn.selected && detailPlaceTF.text != "" && positionBtn.selected && conditionBtn.selected && treatmentBtn.selected && personBtn.selected && moneyBtn.selected && requestField.text != "" {
+        if postNameField.text != "" && firmNameField.text != "" && resumeFeild.text != "" && linkmanField.text != "" && phoneField.text != "" && workplaceBtn.selected && detailPlaceTF.text != "" && positionBtn.selected && conditionBtn.selected && treatmentBtn.selected && personBtn.selected && moneyBtn.selected && requestField.text != "" {
             
             
             if !PhoneNumberIsValidated(phoneField.text!) {
@@ -122,15 +122,15 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
 
                 return
             }
-            if !EmailIsValidated(mailboxField.text!) {
-                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的邮箱地址", comment: "empty message"), preferredStyle: .Alert)
-                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
-                alertController.addAction(doneAction)
-                
-                UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
-
-                return
-            }
+//            if !EmailIsValidated(mailboxField.text!) {
+//                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的邮箱地址", comment: "empty message"), preferredStyle: .Alert)
+//                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+//                alertController.addAction(doneAction)
+//                
+//                UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
+//
+//                return
+//            }
 
             
             let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)

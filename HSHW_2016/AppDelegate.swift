@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         statTracker.shortAppVersion = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
 //        statTracker.enableDebugOn = true
         
-        // TODO
+        // TODO:
         statTracker.channelId = "pgyer"
 
         statTracker.startWithAppId("7f69594569") // 设置您在mtj网站上添加的app的appkey,此处AppId即为应用的appKey

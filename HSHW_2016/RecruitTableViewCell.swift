@@ -64,8 +64,10 @@ class RecruitTableViewCell: UITableViewCell {
         time.text = timeStampToString(model.create_time)
         time.sizeToFit()
         
-        
-        locationLab.text = (model.address.componentsSeparatedByString(" ").first?.componentsSeparatedByString("-")[1])!+"-"+(model.address.componentsSeparatedByString(" ").first?.componentsSeparatedByString("-")[2])!
+        locationLab.text = model.address.componentsSeparatedByString("-").first! + "-" + model.address.componentsSeparatedByString("-")[1]
+
+//        locationLab.text = model.address.stringByReplacingOccurrencesOfString("-"+(model.address.componentsSeparatedByString("-").last ?? "")!, withString: "")
+//        locationLab.text = (model.address.componentsSeparatedByString(" ").first?.componentsSeparatedByString("-")[1])!+"-"+(model.address.componentsSeparatedByString(" ").first?.componentsSeparatedByString("-")[2])!
         locationLab.sizeToFit()
         
         delivery.setTitle("投递简历", forState: .Normal)
@@ -91,12 +93,10 @@ class RecruitTableViewCell: UITableViewCell {
         delivery.frame.origin.y = content.frame.size.height+content.frame.origin.y
         delivery.center.y = locationLab.center.y
         btnTit.center.y = locationLab.center.y
-//        btnTit.text = "投递简历"
-//        btnTit.adjustsFontSizeToFitWidth = true
         img.center.y = locationLab.center.y
         
         locationImg.frame.origin.x = CGRectGetMaxX(time.frame)+5
-        locationLab.frame.origin.x = CGRectGetMaxX(locationImg.frame)
+        locationLab.frame.origin.x = CGRectGetMaxX(locationImg.frame)+5
     }
     
     func showforCVModel(model:CVModel){
@@ -105,11 +105,7 @@ class RecruitTableViewCell: UITableViewCell {
         }else{
             titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))
         }
-//        titImg.sd_setImageWithURL(NSURL(string:SHOW_IMAGE_HEADER + model.avatar),placeholderImage: UIImage(named: "1"))
-        title.text = model.name
-//        name.text = model.name
-        locationLab.text = model.address.componentsSeparatedByString(" ").first
-        locationLab.sizeToFit()
+        
         let contentStr = "性别:"+(model.sex == "1" ? "男" : "女")+"\n当前薪资:"+model.currentsalary+"\n工作状态:"+model.jobstate
         
         let attrStr = NSMutableAttributedString(string: contentStr)
@@ -140,25 +136,25 @@ class RecruitTableViewCell: UITableViewCell {
         time.text = timeStampToString(model.create_time)
         time.sizeToFit()
         
-        
-        locationLab.text = (model.address.componentsSeparatedByString(" ").first?.componentsSeparatedByString("-")[1])!+"-"+(model.address.componentsSeparatedByString(" ").first?.componentsSeparatedByString("-")[2])!
+        locationLab.text = model.address.componentsSeparatedByString("-").first! + "-" + model.address.componentsSeparatedByString("-")[1]
         locationLab.sizeToFit()
         
-        let titleHeight:CGFloat = calculateHeight(model.name, size: 16, width: WIDTH*300/375)
+        let titleHeight:CGFloat = calculateHeight(model.title, size: 16, width: WIDTH*300/375)
         title.frame.size.height = titleHeight
         content.frame.origin.y = title.frame.size.height + title.frame.origin.y
         cont.frame.origin.y = title.frame.size.height + title.frame.origin.y
         time.frame.origin.y = content.frame.size.height+content.frame.origin.y
         locationLab.center.y = time.center.y
-        locationImg.frame.origin.y = content.frame.size.height+content.frame.origin.y
-        timeImg.frame.origin.y = content.frame.size.height+content.frame.origin.y
-        
+        locationImg.center.y = time.center.y
+        timeImg.center.y = time.center.y
+        titImg.frame.origin.y = title.frame.size.height + 5
         delivery.frame.origin.y = content.frame.size.height+content.frame.origin.y
         delivery.center.y = locationLab.center.y
         btnTit.center.y = locationLab.center.y
-//        btnTit.text = "邀请面试"
         img.center.y = locationLab.center.y
-        titImg.frame.origin.y = title.frame.size.height + 5
+        
+        locationImg.frame.origin.x = CGRectGetMaxX(time.frame)+5
+        locationLab.frame.origin.x = CGRectGetMaxX(locationImg.frame)+5
     }
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -177,11 +173,9 @@ class RecruitTableViewCell: UITableViewCell {
         title.textColor = COLOR
         title.numberOfLines = 0
         
-        //        content.frame = CGRectMake(WIDTH*95/375, WIDTH*20/375+20, WIDTH*152/375, 142-WIDTH*20/375+20-WIDTH*20/375-30)
         content.frame = CGRectMake(WIDTH*95/375, title.frame.size.height+title.frame.origin.y , WIDTH*152/375, 142-WIDTH*20/375+20-WIDTH*20/375-30)
         content.font = UIFont.systemFontOfSize(12)
         content.numberOfLines = 0
-//        content.backgroundColor = UIColor.redColor()
         
         name.frame = CGRectMake(WIDTH*10/375, WIDTH*85/375, WIDTH*70/375, WIDTH*40/375)
         name.font = UIFont.systemFontOfSize(10)
@@ -189,40 +183,31 @@ class RecruitTableViewCell: UITableViewCell {
         name.textColor = GREY
         name.textAlignment = .Center
         
-//        delivery.frame = CGRectMake(WIDTH-WIDTH*15/375-80, 142-WIDTH*20/375-24, 80, 24)
         delivery.frame = CGRectMake(WIDTH-WIDTH*15/375-80, content.frame.size.height+content.frame.origin.y-5, 80, 24)
         
         delivery.setTitleColor(COLOR, forState: .Normal)
         delivery.titleLabel?.font = UIFont.systemFontOfSize(15)
         delivery.setImage(UIImage(named: "ic_note.png"), forState: .Normal)
         
-//        let img = UIImageView(frame: CGRectMake(WIDTH-WIDTH*15/375-71, 142-WIDTH*20/375-18, 11, 13))
         img.frame = CGRectMake(WIDTH-WIDTH*15/375-71, content.frame.size.height+content.frame.origin.y, 11, 13)
         img.image = UIImage(named: "ic_note.png")
         
-        //let btnTit = UILabel(frame: CGRectMake(WIDTH-WIDTH*15/375-56, 142-WIDTH*20/375-18, 48, 12))
         btnTit.frame = CGRectMake(WIDTH-WIDTH*15/375-56, content.frame.size.height+content.frame.origin.y, 48, 12)
-//        btnTit.text = "投递简历"
         btnTit.textColor = COLOR
         btnTit.font = UIFont.systemFontOfSize(12)
         
-
-        
-        //let timeImg = UIImageView(frame: CGRectMake(WIDTH*95/375, 142-WIDTH*20/375-16, 8, 8))
         timeImg = UIImageView(frame: CGRectMake(WIDTH*95/375, content.frame.size.height+content.frame.origin.y, 8, 8))
         timeImg.image = UIImage(named: "ic_time_purple.png")
-        //time.frame = CGRectMake(WIDTH*95/375+10, 142-WIDTH*20/375-17, 50, 10)
         time.frame = CGRectMake(WIDTH*95/375+10, content.frame.size.height+content.frame.origin.y, 50, 10)
         time.font = UIFont.systemFontOfSize(10)
         time.textColor = GREY
         time.text = "05/24"
         time.sizeToFit()
         
-        //let loca = UIImageView(frame: CGRectMake(WIDTH*95/375+20+time.bounds.size.width, 142-WIDTH*20/375-16.5, 6, 9))
         locationImg = UIImageView(frame: CGRectMake(CGRectGetMaxX(time.frame)+10, content.frame.size.height+content.frame.origin.y, 6, 9))
         locationImg.image = UIImage(named: "ic_location.png")
-//        location.frame = CGRectMake(WIDTH*95/375+28+time.bounds.size.width, 142-WIDTH*20/375-17, 50, 10)
-         locationLab.frame = CGRectMake(CGRectGetMaxX(locationImg.frame)+5, content.frame.size.height+content.frame.origin.y, 50, 10)
+        
+        locationLab.frame = CGRectMake(CGRectGetMaxX(locationImg.frame)+10, content.frame.size.height+content.frame.origin.y, 50, 10)
         locationLab.textColor = GREY
         locationLab.font = UIFont.systemFontOfSize(10)
         locationLab.text = "北京市朝阳区"

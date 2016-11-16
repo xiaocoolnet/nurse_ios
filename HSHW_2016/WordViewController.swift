@@ -210,6 +210,10 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         // print(self.myChoose)
         // print(self.rightAnswer)
         
+        for view in questBack.subviews {
+            view.removeFromSuperview()
+        }
+        
         let labelArray = ["答对","答错","未答","当前题"]
         questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
         questBack.backgroundColor = UIColor.whiteColor()
@@ -560,6 +564,11 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
             let heightArray = NSMutableArray()
             for j in 0 ..< examInfo.answerlist.count {
                 var string = ""
+                let ascInt:Int = 65+j
+                let asc:UniChar = UInt16(ascInt)
+                let chara:Character = Character(UnicodeScalar(asc))
+                string.append(chara)
+                
                 let btn = UIButton(type: .Custom)
                 let answerInfo = examInfo.answerlist[j]
                 let height:CGFloat = calculateHeight(string+"、"+answerInfo.answer_title, size: 18, width: WIDTH*314/375-10)
@@ -586,10 +595,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                 contentScrollView.addSubview(btn)
                 //根据题号赋值
                 contentScrollView.tag = i+110
-                let ascInt:Int = 65+j
-                let asc:UniChar = UInt16(ascInt)
-                let chara:Character = Character(UnicodeScalar(asc))
-                string.append(chara)
+                
                 btn.setTitle(string+"、"+answerInfo.answer_title, forState: .Normal)
                 var AllHeight = CGFloat()
                 AllHeight = CGFloat(heightArray.lastObject as! NSNumber)

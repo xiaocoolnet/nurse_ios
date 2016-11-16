@@ -53,18 +53,10 @@ class HSNewsCommentCell: UITableViewCell {
                 }
             }
             
-            var child_commentBtnY = CGRectGetMaxY(timeLab.frame)+8
+            let height = calculateHeight((self.commentModel!.content), size: 14, width: WIDTH-62)
+            
+            var child_commentBtnY = height+8+40+8+8+14+8
             for (_,child_comment) in (commentModel?.child_comments)!.enumerate() {
-                
-//                let str = child_comment.username+"：\n"+child_comment.content
-//                let nsStr = NSString(string: str)
-//                let attStr = NSMutableAttributedString(string: str)
-//                
-//                attStr.addAttributes([NSForegroundColorAttributeName: UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1),NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, nsStr.length))
-//                attStr.addAttributes([NSForegroundColorAttributeName: COLOR,NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, nsStr.rangeOfString("：").location))
-                
-//                let child_commentBtnHeight = child_comment.content.boundingRectWithSize(CGSizeMake(WIDTH-self
-//                    .contentLab.frame.origin.x-8-10, 0), options: .UsesLineFragmentOrigin, context: nil).size.height+10
                 
                 let child_commentBtnHeight = child_comment.content.boundingRectWithSize(
                     CGSizeMake(WIDTH-self.contentLab.frame.origin.x-8-10, 0),
@@ -82,19 +74,6 @@ class HSNewsCommentCell: UITableViewCell {
                 bgView.tag = 1000
                 bgView.backgroundColor = UIColor(red: 249/255.0, green: 242/255.0, blue: 247/255.0, alpha: 1)
                 self.contentView.addSubview(bgView)
-                
-//                let child_commentBtn = UIButton(frame: CGRectMake(
-//                    5,
-//                    0,
-//                    WIDTH-62-10,
-//                    child_commentBtnHeight))
-//                child_commentBtn.contentHorizontalAlignment = .Left
-//                child_commentBtn.titleLabel?.numberOfLines = 0
-//                
-//                child_commentBtn.setAttributedTitle(attStr, forState: .Normal)
-//                child_commentBtn.tag = i
-////                child_commentBtn.addTarget(self, action: #selector(child_commentBtnClick(_:)), forControlEvents: .TouchUpInside)
-//                bgView.addSubview(child_commentBtn)
                 
                 // 用户名
                 let child_comment_userNameLab = UILabel(frame: CGRectMake(
@@ -124,12 +103,7 @@ class HSNewsCommentCell: UITableViewCell {
                 child_commentLab.textColor = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1)
                 child_commentLab.font = UIFont.systemFontOfSize(14)
                 child_commentLab.text = child_comment.content
-//                child_commentLab.tag = i
-                //                child_commentBtn.addTarget(self, action: #selector(child_commentBtnClick(_:)), forControlEvents: .TouchUpInside)
                 bgView.addSubview(child_commentLab)
-                
-//                child_commentLab.backgroundColor = UIColor.blueColor()
-//                child_comment_userNameLab.backgroundColor = UIColor.brownColor()
                 
                 child_commentBtnY = CGRectGetMaxY(bgView.frame)
                 

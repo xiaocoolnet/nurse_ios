@@ -30,7 +30,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.tabBarController?.tabBar.hidden = false
+        self.tabBarController?.tabBar.hidden = true
     }
     
     override func viewDidLoad() {
@@ -209,7 +209,7 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
             nextVC.type = everyDayInfo.term_id
             self.navigationController?.pushViewController(nextVC, animated: true)
         }else{
-            let nextVC = OnLineViewController()
+            let nextVC = GOnlineViewController()
             nextVC.title = "在线考试·\(everyDayInfo.name)"
             nextVC.questionCount = everyDayInfo.count
             nextVC.exam_time = Int(everyDayInfo.exam_time)!

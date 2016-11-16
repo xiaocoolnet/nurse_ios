@@ -15,7 +15,7 @@ protocol changeModelDelegate {
     func changeModel(newInfo:NewsInfo, andIndex:Int)
 }
 
-class NewsContantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate,cateBtnClickedDelegate, UITextViewDelegate {
+class NewsContantViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate, UITextViewDelegate {
 
     let myTableView = UITableView()
     var collectBtn = UIButton()
@@ -27,7 +27,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             self.title = newsInfo?.term_name
             self.likeNum = (newsInfo?.likes.count)!
             newsInfo?.post_hits = String(Int((newsInfo?.post_hits)!)!+1)
-            self.getDate()
             self.getComment()
         }
     }
@@ -43,7 +42,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     var webHeight:CGFloat = 100
 //    var isLike:Bool = false
 //    var isCollect:Bool = false
-    var dataSource = NewsList()
+//    var dataSource = NewsList()
     var commentArray = [commentDataModel]()
     var helper = NewsPageHelper()
     let zan = UIButton(frame: CGRectMake(WIDTH*148/375, WIDTH*80/375, WIDTH*80/375, WIDTH*80/375))
@@ -97,8 +96,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.collectBtn.enabled = true
 //                        hud.hide(true)
                         self.mainFlag += 1
-                        if self.mainFlag == 4 {
-                            self.mainFlag = 3
+                        if self.mainFlag == 3 {
+                            self.mainFlag = 0
                             self.mainHud.hide(true)
                         }
                     })
@@ -243,10 +242,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         line_topView.backgroundColor = UIColor.lightGrayColor()
         replyView.addSubview(line_topView)
         
-//        let line_bottomView:UIView = UIView.init(frame: CGRectMake(0, 49, WIDTH, 1))
-//        line_bottomView.backgroundColor = UIColor.lightGrayColor()
-//        replyView.addSubview(line_bottomView)
-        
         self.view.addSubview(replyView)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
@@ -258,8 +253,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     // MARK: 评论按钮点击事件
     func commentBtnClick() {
-        if self.myTableView.rectForSection(2).size.height > self.myTableView.frame.size.height {
-            self.myTableView.contentOffset.y = self.myTableView.rectForSection(2).origin.y
+        if self.myTableView.rectForSection(1).size.height > self.myTableView.frame.size.height {
+            self.myTableView.contentOffset.y = self.myTableView.rectForSection(1).origin.y
         }else{
             self.myTableView.contentOffset.y = self.myTableView.contentSize.height-self.myTableView.frame.size.height
         }
@@ -282,11 +277,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         
         UIView.animateWithDuration(0.3) {
             self.replyView.frame.origin.y = HEIGHT-86-33-64-keyboardheight
-//            self.myTableView.frame.size.height = HEIGHT-64-1-46-keyboardheight
         }
-        
-        // print("键盘弹起")
-        // print(keyboardheight)
         
     }
     
@@ -307,9 +298,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     // MARK:-
     
-//    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-//        
-//    }
     
     func textViewShouldBeginEditing(textView: UITextView) -> Bool {
         // MARK:要求登录
@@ -342,14 +330,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             send_bottom_Btn.backgroundColor = UIColor.whiteColor()
         }
     }
-//    // MARK:点击回车  发表回复
-//    func textFieldShouldReturn(textField: UITextField) -> Bool {
-//        // print("textfield.text = ",textField.text)
-//        
-//        sendComment()
-//        
-//        return true
-//    }
     
     //去除空格和回车
     func trimLineString(str:String)->String{
@@ -448,7 +428,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         if keyboardShowState == true {
-//            self.view.endEditing(true)
+
             replyTextField.resignFirstResponder()
             keyboardShowState = false
         }
@@ -484,7 +464,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 "userid":QCLoginUserInfo.currentInfo.userid
             ];
             Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
-                // print(request)
                 
                 dispatch_async(dispatch_get_main_queue(), {
                 
@@ -493,30 +472,21 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.collectHud.labelText = "取消收藏失败"
                     }else{
                         let status = Http(JSONDecoder(json!))
-                        // print("状态是")
-                        // print(status.status)
+             
                         if(status.status == "error"){
-    //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+
                             self.collectHud.mode = MBProgressHUDMode.Text;
                             self.collectHud.labelText = status.errorData
-//                            hud.margin = 10.0
-//                            hud.removeFromSuperViewOnHide = true
-//                            hud.hide(true, afterDelay: 1)
+
                         }
                         if(status.status == "success"){
                             
                             self.collectBtn.selected = false
                             self.collect_bottom_Btn.selected = false
                             
-    //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                             self.collectHud.mode = MBProgressHUDMode.Text;
                             self.collectHud.labelText = "取消收藏成功"
-//                            hud.margin = 10.0
-//                            hud.removeFromSuperViewOnHide = true
-//                            hud.hide(true, afterDelay: 1)
-                            //self.myTableView .reloadData()
-                            // print(status.data)
-    //                        self.isCollect=false
+
                         }
                     }
                     self.collectHud.hide(true, afterDelay: 1)
@@ -525,51 +495,25 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 })
             }
         }else{
-//            var str = NSString()
-//            if tagNum == 1 {
-//                str = "3"
-//            }else{
-//                str = "1"
-//            }
+            
             helper.collectionNews(newsInfo!.object_id,type: type as String, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt) { (success, response) in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
                         self.collectBtn.selected = true
                         self.collect_bottom_Btn.selected = true
-//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         self.collectHud.mode = MBProgressHUDMode.Text;
                         self.collectHud.labelText = "收藏成功"
-//                        hud.margin = 10.0
-//                        hud.removeFromSuperViewOnHide = true
                         self.collectHud.hide(true, afterDelay: 1)
                         self.collectBtn.enabled = true
                         self.collect_bottom_Btn.enabled = true
-//                        self.isCollect=true
                     })
                 }
             }
         }
-        
-//        let user = NSUserDefaults.standardUserDefaults()
-//        let uid = user.stringForKey("userid")//登录用户 id
-//        let userID = user.stringForKey((self.newsInfo?.object_id)!)
-//        // print(userID)
-//        
-//        
-//        
-//        if userID == "false"||userID==nil{
-//            
-//        }else{
-//            
-//            
-//            
-//        }
 
     }
     
     func collectionNews_1(){
-//        let height = calculateHeight((newsInfo?.post_title)!, size: 17, width: WIDTH-20)
-//        self.myTableView.contentOffset = CGPointMake(0, height + webHeight - 120)
         
         let alertController = UIAlertController(title: "分享到...", message: nil, preferredStyle: .ActionSheet)
         self.presentViewController(alertController, animated: true, completion: nil)
@@ -587,12 +531,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             let btn = UIButton()
             btn.tag = 2
             self.shareTheNews(btn)
-//            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//            hud.mode = MBProgressHUDMode.Text;
-//            hud.labelText = "新浪微博 敬请期待"
-//            hud.margin = 10.0
-//            hud.removeFromSuperViewOnHide = true
-//            hud.hide(true, afterDelay: 2)
+
         }
         alertController.addAction(weiboAction)
         
@@ -718,20 +657,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         if section == 1 {
-            
-            let one = UIView(frame: CGRectMake(0, 0, WIDTH, 30))
-            one.backgroundColor = UIColor.whiteColor()
-            let lineone = UILabel(frame: CGRectMake(10, 29, WIDTH-20, 1))
-            lineone.backgroundColor = COLOR
-            one.addSubview(lineone)
-            let tit = UILabel(frame: CGRectMake(10, 0, 100, 30))
-            tit.textColor = COLOR
-            tit.font = UIFont.systemFontOfSize(14)
-            tit.text = "相关阅读"
-            one.addSubview(tit)
-            
-            return one
-        }else if section == 2 {
             let one = UIView(frame: CGRectMake(0, 0, WIDTH, 30))
             one.backgroundColor = UIColor.whiteColor()
             let lineone = UILabel(frame: CGRectMake(10, 29, WIDTH-20, 1))
@@ -747,47 +672,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         }else{
             return nil
         }
-    }
-    
-    // MARK:获取关联文章列表
-    func getDate() {
-//        // print(newsInfo?.object_id,newsInfo?.title)
-//        let url = PARK_URL_Header+"getRelatedNewslist"
-//        let param = [
-//           "refid": newsInfo!.object_id
-//        ];
-//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-//            // print(request)
-//            if(error != nil){
-//            }else{
-//                let status = NewsModel(JSONDecoder(json!))
-//                // print("状态是")
-//                // print(status.status)
-//                if(status.status == "error"){
-////                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-////                    hud.mode = MBProgressHUDMode.Text;
-////                    hud.labelText = "获取关联文章失败"
-////                    hud.detailsLabelText = status.errorData
-////                    hud.margin = 10.0
-////                    hud.removeFromSuperViewOnHide = true
-////                    hud.hide(true, afterDelay: 1)
-//                }
-//                if(status.status == "success"){
-//                    //self.createTableView()
-//                    // print(status)
-//                    self.dataSource = NewsList(status.data!)
-//                    self.myTableView .reloadData()
-//                    // print(status.data)
-//                }
-//            }
-        
-        self.mainFlag += 1
-        if self.mainFlag == 4 {
-            self.mainFlag = 3
-            self.mainHud.hide(true)
-        }
-            
-//        }
     }
     
     // MARK:获取评论列表
@@ -825,8 +709,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         
             self.mainFlag += 1
-            if self.mainFlag == 4 {
-                self.mainFlag = 3
+            if self.mainFlag == 3 {
+                self.mainFlag = 0
                 self.mainHud.hide(true)
             }
         
@@ -837,9 +721,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
             return  0
-        }else if section == 1 && self.dataSource.count > 0{
-            return 30
-        }else if section == 2{
+        }else if section == 1 {
             return 30
         }else{
             return 0
@@ -849,14 +731,14 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if section == 0 {
             return 4
         }else if section == 1 {
-             return self.dataSource.count;
-        }else{
             if self.commentArray.count == 0 {
                 return 1
             }else{
                 
                 return (self.commentArray.count)
             }
+        }else{
+            return 0
         }
     }
     
@@ -877,26 +759,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 return 220
             }
          
-        }else if indexPath.section == 1 {
-            
-            let newsInfo = self.dataSource.objectlist[indexPath.row]
-            
-            if newsInfo.thumbArr.count >= 3 {
-                
-                let height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-20)
-                
-                let margin:CGFloat = 15
-                return (WIDTH-20-margin*2)/3.0*2/3.0+19+height+27+4
-            }else{
-                
-                let height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-140)
-                
-                if height+27>100 {
-                    return height+27+4
-                }else{
-                    return 100
-                }
-            }
         }else{
             if self.commentArray.count == 0 {
                 return 100
@@ -1067,20 +929,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }
 
             
-        }else if indexPath.section == 1 {
-            
-            let cell = tableView.dequeueReusableCellWithIdentifier("RelatedNewsListCell", forIndexPath: indexPath) as! GToutiaoTableViewCell
-            //        cell.type = 1
-            cell.delegate = self
-            cell.selectionStyle = .None
-            let newsInfo = self.dataSource.objectlist[indexPath.row]
-            if newsInfo.thumbArr.count >= 3 {
-                cell.setThreeImgCellWithNewsInfo(newsInfo)
-            }else{
-                cell.setCellWithNewsInfo(newsInfo)
-            }
-            
-            return cell
         }else{
             
             let cell = tableView.dequeueReusableCellWithIdentifier("newsCommentCell") as! HSNewsCommentCell
@@ -1105,18 +953,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         
     }
     
-    
-    func loadURL() {
-        
-    }
-    
-    // MARK: 点击分类按钮
-    func cateBtnClicked(categoryBtn: UIButton) {
-        let cateDetail = GNewsCateDetailViewController()
-        cateDetail.newsType = categoryBtn.tag
-        self.navigationController!.pushViewController(cateDetail, animated: true)
-    }
-    
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         
         BaiduMobStat.defaultStat().webviewStartLoadWithRequest(request)
@@ -1124,9 +960,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func webViewDidFinishLoad(webView: UIWebView) {
-//        if (finishLoad) {
-//            return
-//        }
         
         //获取页面高度（像素）
         let clientheight_str:String = webView.stringByEvaluatingJavaScriptFromString("document.body.offsetHeight")!
@@ -1139,16 +972,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         let frame:CGSize = webView.sizeThatFits(webView.frame.size)
         //再次设置WebView高度（点）
         webView.frame = CGRectMake(0, 0, self.view.frame.size.width, frame.height);
-//        // print("webViewDidFinishLoad")
-//        // print(webView.frame.size.height)
         webHeight = webView.frame.size.height
-//        webHeight = webView.scrollView.contentSize.height
         self.myTableView.reloadData()
-//        finishLoad = true
         
         self.mainFlag += 1
-        if self.mainFlag == 4 {
-            self.mainFlag = 3
+        if self.mainFlag == 3 {
+            self.mainFlag = 0
             self.mainHud.hide(true)
             if addScore_ReadingInformation {
                 
@@ -1211,13 +1040,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 1 {
-            
-            let newsInfo = self.dataSource.objectlist[indexPath.row]
-            let next = NewsContantViewController()
-            next.newsInfo = newsInfo
-            self.navigationController?.pushViewController(next, animated: true)
-        }else if indexPath.section == 2 {
+       if indexPath.section == 1 {
             self.replyTextField.placeholder = "回复 \(self.commentArray[indexPath.row].username)"
             self.send_bottom_Btn.tag = NSString(string: self.commentArray[indexPath.row].cid).integerValue
             self.send_bottom_Btn.selected = true
@@ -1232,13 +1055,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         let url = "http://apis.baidu.com/3023/shorturl/shorten"
         
         Alamofire.request(.GET, url, parameters: ["url_long":NewsInfo_Header+(newsInfo?.object_id)!+"&type=1"], encoding: .URLEncodedInURL, headers: ["apikey":"615ac7276ff0b752fc5f0b8cfa845544"]).response { (request, response, json, error) in
-//            // print(response,json,error)
+
             if error != nil {
                 self.shareNewsUrl = NewsInfo_Header+(self.newsInfo?.object_id)!
             }else{
                 
                 let js = try?NSJSONSerialization.JSONObjectWithData(json!, options: .MutableLeaves)
-//                // print(JSON(js!)["urls"][0]["url_short"].string!)
+
                 if JSON(js!)["urls"][0]["result"].boolValue {
 
                     self.shareNewsUrl = JSON(js!)["urls"][0]["url_short"].string!
@@ -1259,8 +1082,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             let message = WXMediaMessage()
             message.title = newsInfo?.post_title
             message.description = newsInfo?.post_excerpt
-            // TODO:
-            //            let imageName = newsInfo?.thumbArr.count == 0 ? "1":newsInfo?.thumbArr.first?.url
+
             if newsInfo?.thumbArr.count == 0 {
                 let thumbImage = UIImage(named: "appLogo")
                 message.setThumbImage(thumbImage)
@@ -1283,7 +1105,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }
             
             let webPageObject = WXWebpageObject()
-//            webPageObject.webpageUrl = shareNewsUrl
             webPageObject.webpageUrl = NewsInfo_Header+(newsInfo?.object_id)!+"&type=1"
             message.mediaObject = webPageObject
             
@@ -1300,11 +1121,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 break
             }
             
-            //        req.scene = Int32(WXSceneTimeline.rawValue)
             
             WXApi.sendReq(req)
         }else if btn.tag == 2 {
-            //            let myDelegate = UIApplication.sharedApplication().delegate
             let authRequest:WBAuthorizeRequest = WBAuthorizeRequest.request() as! WBAuthorizeRequest
             authRequest.redirectURI = kRedirectURI
             authRequest.scope = "all"
@@ -1315,7 +1134,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }else{
                 message.text = "\((newsInfo?.post_title)!) \(shareNewsUrl) 想看更多内容，马上下载【中国护士网】http://t.cn/RczKRS3 (分享自@中国护士网)"
             }
-            //            message.text = newsInfo?.post_title
             let webpage:WBWebpageObject = WBWebpageObject.object() as! WBWebpageObject
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyyMMddHHmmss"
@@ -1343,15 +1161,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     let data2 = thumbImage!.compressImage(thumbImage!, maxLength: 32700)
                     
-                    //                let data2 = UIImageJPEGRepresentation(thumbImage!, 0.000001)!
-                    //                message.setThumbImage(thumbImage)
                     webpage.thumbnailData = data2
                 }
             }
-            //            webpage.thumbnailData = NSDa
+
             webpage.webpageUrl = shareNewsUrl
             message.mediaObject = webpage
-//            // print(message.mediaObject.debugDescription)
             
             let request = WBSendMessageToWeiboRequest.requestWithMessage(message, authInfo: authRequest, access_token: AppDelegate().wbtoken) as! WBSendMessageToWeiboRequest
             request.userInfo = ["ShareMessageFrom":"NewsContantViewController"]
@@ -1393,16 +1208,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func zanAddNum(btn:UIButton) {
         
-//        // print("赞")
         self.zan.enabled = false
-        // MARK:要求登录
+
         if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
             return
         }
         
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//        hud.mode = MBProgressHUDMode.Text;
-//        hud.labelText = status.errorData
         hud.margin = 10.0
         hud.removeFromSuperViewOnHide = true
         
@@ -1414,36 +1226,26 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 "userid":QCLoginUserInfo.currentInfo.userid
             ];
             Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
-//                // print(request)
                 if(error != nil){
                     hud.mode = MBProgressHUDMode.Text
                     hud.labelText = "取消点赞失败"
                     hud.hide(true, afterDelay: 1)
                 }else{
                     let status = Http(JSONDecoder(json!))
-//                    // print("状态是")
-//                    // print(status.status)
+
                     if(status.status == "error"){
-//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+
                         hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = status.errorData
-//                        hud.margin = 10.0
-//                        hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                         //                            user.setObject("false", forKey: (self.newsInfo?.object_id)!)
                     }
                     if(status.status == "success"){
                         
-//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = "取消点赞成功"
-//                        hud.margin = 10.0
-//                        hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
-                        //self.myTableView .reloadData()
-//                        // print(status.data)
-//                        self.isLike=false
-//                        user.setObject("false", forKey: "isLike")
+
                         self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"0"], waitUntilDone:true)
                         
                         for (i,obj) in (self.newsInfo?.likes)!.enumerate() {
@@ -1452,12 +1254,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             }
                         }
                         
-                        for (i,obj) in self.dataSource.objectlist.enumerate() {
-                            if obj.object_id == self.newsInfo?.object_id {
-                                self.dataSource.objectlist[i] = self.newsInfo!
-                            }
-                        }
-                        //                            user.removeObjectForKey((self.newsInfo?.object_id)!）
                     }
                 }
                 
@@ -1470,88 +1266,39 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
             Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
-                // print(request)
+
                 if(error != nil){
                     hud.mode = MBProgressHUDMode.Text
                     hud.labelText = "点赞失败"
                     hud.hide(true, afterDelay: 1)
                 }else{
                     let status = addScore_ReadingInformationModel(JSONDecoder(json!))
-                    // print("状态是")
-                    // print(status.status)
+
                     if(status.status == "error"){
-//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+
                         hud.mode = MBProgressHUDMode.Text
                         hud.labelText = status.errorData
-//                        hud.margin = 10.0
-//                        hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                     }
                     if(status.status == "success"){
                         
-//                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         hud.mode = MBProgressHUDMode.Text;
                         hud.labelText = "点赞成功"
-//                        hud.margin = 10.0
-//                        hud.removeFromSuperViewOnHide = true
                         hud.hide(true, afterDelay: 1)
                         self.performSelectorOnMainThread(#selector(self.upDateUI(_:)), withObject: [btn.tag,"1"], waitUntilDone:true)
                         if ((status.data?.event) != "") {
                             self.showScoreTips((status.data?.event)!, score: (status.data?.score)!)
                         }
                         
-//                        user.setObject("true", forKey: "isLike")
-                        //                            user.setObject("true", forKey: (self.newsInfo?.object_id)!)
-                        // print(status.data)
-//                        self.isLike=true
-                        
                         let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
                         let model:LikeInfo = LikeInfo.init(JSONDecoder(dic))
                         self.newsInfo?.likes.append(model)
-                        
-                        for (i,obj) in self.dataSource.objectlist.enumerate() {
-                            if obj.object_id == self.newsInfo?.object_id {
-                                self.dataSource.objectlist[i] = self.newsInfo!
-                            }
-                        }
                         
                     }
                 }
             }
         }
         
-//        let user = NSUserDefaults.standardUserDefaults()
-//        let uid = user.stringForKey("userid")
-//        // print(uid)
-//        if uid==nil {
-//            zan.setImage(UIImage(named: "img_like.png"), forState: .Normal)
-//            let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-//            let vc  = mainStoryboard.instantiateViewControllerWithIdentifier("Login")
-//            //self.presentViewController(vc, animated: true, completion: nil)
-//            self.navigationController?.pushViewController(vc, animated: true)
-//            
-//        }else{
-//
-//            let userID = user.stringForKey((self.newsInfo?.object_id)!)
-//            // print(userID)
-//            let str = newsInfo!.likes
-//            var answerInfo = NSString()
-//            
-//            for j in 0 ..< str.count {
-//                answerInfo = str[j].userid!
-//            }
-//                if answerInfo != QCLoginUserInfo.currentInfo.userid && isLike == false{
-//        
-////            if userID == "false"||userID==nil{
-//                
-//            }else{
-//                
-//                
-//                
-//            }
-//            
-//
-//        }
     }
     
     
@@ -1568,40 +1315,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         self.zan.enabled = true
         
         let indexPath = NSIndexPath.init(forRow: status[0] as! Int, inSection: 0)
-//        let cell = self.myTableView.cellForRowAtIndexPath(indexPath)
-        //self.myTableView.reloadData()
-         self.myTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
+
+        self.myTableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.None)
     }
-    
-//    func GetDate1(){
-// 
-//        let url = PARK_URL_Header+"SetLike"
-//        let param = [
-//            "userid":"4",
-//            "id":"2",
-//            "type":"1"
-//        ];
-//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-//            // print(request)
-//            if(error != nil){
-//            }else{
-//                let status = Http(JSONDecoder(json!))
-//                // print("状态是")
-//                // print(status.status)
-//                if(status.status == "error"){
-//                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//                    hud.mode = MBProgressHUDMode.Text;
-//                    hud.labelText = status.errorData
-//                    hud.margin = 10.0
-//                    hud.removeFromSuperViewOnHide = true
-//                    hud.hide(true, afterDelay: 1)
-//                }
-//                if(status.status == "success"){
-//                    // print(status.data)
-//                }
-//            }
-//        }
-//    }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)

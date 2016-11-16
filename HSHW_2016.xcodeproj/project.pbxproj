@@ -119,10 +119,12 @@
 		18C240601CEEB6340059BF48 /* TalentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C2405F1CEEB6340059BF48 /* TalentViewController.swift */; };
 		18C240621CEF10150059BF48 /* OnlineExaminationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */; };
 		1F019CAF1D587286009A0818 /* MineRecruit_userViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F019CAE1D587286009A0818 /* MineRecruit_userViewController.swift */; };
+		1F0433CC1DDBEA7800C0FC3F /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F0433CB1DDBEA7800C0FC3F /* libWeiboSDK.a */; };
 		1F09382E1D77F72700451948 /* HSNewsCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09382C1D77F72700451948 /* HSNewsCommentCell.swift */; };
 		1F09382F1D77F72700451948 /* HSNewsCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F09382D1D77F72700451948 /* HSNewsCommentCell.xib */; };
-		1F0BE12A1D54A84300842B80 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F0BE1251D54A84300842B80 /* libWeChatSDK.a */; };
 		1F0BE12B1D54A84300842B80 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F0BE1261D54A84300842B80 /* README.txt */; };
+		1F0D06B51DDAFAAF00A00CB5 /* GOnlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0D06B41DDAFAAF00A00CB5 /* GOnlineViewController.swift */; };
+		1F0D06BB1DDB0CEF00A00CB5 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F0D06BA1DDB0CEF00A00CB5 /* libWeChatSDK.a */; };
 		1F0FDFE21D69384D005DDB80 /* ScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0FDFE11D69384D005DDB80 /* ScoreViewController.swift */; };
 		1F0FDFE61D6949F4005DDB80 /* ScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0FDFE51D6949F4005DDB80 /* ScoreTableViewCell.swift */; };
 		1F0FDFEB1D6955C7005DDB80 /* DownLoadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0FDFE91D6955C7005DDB80 /* DownLoadViewController.swift */; };
@@ -137,6 +139,7 @@
 		1F1B7F311D66F1CA009910DF /* qqDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B7F301D66F1CA009910DF /* qqDelegate.swift */; };
 		1F1B7F331D66F480009910DF /* wechatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B7F321D66F480009910DF /* wechatDelegate.swift */; };
 		1F1EA38A1D61AAB200151FA7 /* ReachabilitySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */; };
+		1F2853611DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2853601DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift */; };
 		1F33D7761D752A360028444A /* GoAboardExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F33D7751D752A360028444A /* GoAboardExamViewController.swift */; };
 		1F33D7791D7554280028444A /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33D7781D7554280028444A /* SMPageControl.m */; };
 		1F3674CF1DBDE734007D55E6 /* MyUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3674CE1DBDE734007D55E6 /* MyUtil.m */; };
@@ -418,13 +421,15 @@
 		18C2405F1CEEB6340059BF48 /* TalentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalentViewController.swift; sourceTree = "<group>"; };
 		18C240611CEF10150059BF48 /* OnlineExaminationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineExaminationViewController.swift; sourceTree = "<group>"; };
 		1F019CAE1D587286009A0818 /* MineRecruit_userViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineRecruit_userViewController.swift; sourceTree = "<group>"; };
+		1F0433CB1DDBEA7800C0FC3F /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWeiboSDK.a; path = Pods/WeiboSDK/libWeiboSDK/libWeiboSDK.a; sourceTree = "<group>"; };
 		1F09382C1D77F72700451948 /* HSNewsCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSNewsCommentCell.swift; sourceTree = "<group>"; };
 		1F09382D1D77F72700451948 /* HSNewsCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSNewsCommentCell.xib; sourceTree = "<group>"; };
-		1F0BE1251D54A84300842B80 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		1F0BE1261D54A84300842B80 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		1F0BE1271D54A84300842B80 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
 		1F0BE1281D54A84300842B80 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
 		1F0BE1291D54A84300842B80 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		1F0D06B41DDAFAAF00A00CB5 /* GOnlineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GOnlineViewController.swift; sourceTree = "<group>"; };
+		1F0D06BA1DDB0CEF00A00CB5 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
 		1F0FDFE11D69384D005DDB80 /* ScoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreViewController.swift; sourceTree = "<group>"; };
 		1F0FDFE51D6949F4005DDB80 /* ScoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreTableViewCell.swift; sourceTree = "<group>"; };
 		1F0FDFE91D6955C7005DDB80 /* DownLoadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownLoadViewController.swift; sourceTree = "<group>"; };
@@ -439,6 +444,7 @@
 		1F1B7F301D66F1CA009910DF /* qqDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = qqDelegate.swift; sourceTree = "<group>"; };
 		1F1B7F321D66F480009910DF /* wechatDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wechatDelegate.swift; sourceTree = "<group>"; };
 		1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReachabilitySwift.framework; path = "../../Library/Developer/Xcode/DerivedData/HSHW_2016-amsbvsmqvgzeibcteymcunjxavqg/Build/Products/Debug-iphonesimulator/ReachabilitySwift.framework"; sourceTree = "<group>"; };
+		1F2853601DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiFeedbackListViewController.swift; sourceTree = "<group>"; };
 		1F33D7751D752A360028444A /* GoAboardExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoAboardExamViewController.swift; sourceTree = "<group>"; };
 		1F33D7771D7554280028444A /* SMPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageControl.h; sourceTree = "<group>"; };
 		1F33D7781D7554280028444A /* SMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageControl.m; sourceTree = "<group>"; };
@@ -583,6 +589,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F0433CC1DDBEA7800C0FC3F /* libWeiboSDK.a in Frameworks */,
 				1FCCA96C1DCC78E3001112AC /* libBaiduMobStat.a in Frameworks */,
 				1FE3A6401D5AFC720039D94D /* Foundation.framework in Frameworks */,
 				1FE3A63E1D5AFC650039D94D /* UIKit.framework in Frameworks */,
@@ -592,6 +599,7 @@
 				1FCCA96A1DCC787C001112AC /* CoreLocation.framework in Frameworks */,
 				1FE3A6381D5AFC430039D94D /* Security.framework in Frameworks */,
 				1FCCA9681DCC7866001112AC /* libz.1.2.5.tbd in Frameworks */,
+				1F0D06BB1DDB0CEF00A00CB5 /* libWeChatSDK.a in Frameworks */,
 				F604A4E21D0E7A1D008A4888 /* JavaScriptCore.framework in Frameworks */,
 				1FEC64CF1D910E680045038C /* libresolv.tbd in Frameworks */,
 				1FEC64D81D910EAE0045038C /* UTMini.framework in Frameworks */,
@@ -605,7 +613,6 @@
 				1FEC64D71D910EAE0045038C /* UTDID.framework in Frameworks */,
 				1FE3A6341D5AFC2D0039D94D /* QuartzCore.framework in Frameworks */,
 				F604A4E41D0E7A2E008A4888 /* libsqlite3.tbd in Frameworks */,
-				1F0BE12A1D54A84300842B80 /* libWeChatSDK.a in Frameworks */,
 				F604A4E01D0E7A16008A4888 /* libstdc++.tbd in Frameworks */,
 				F604A4DE1D0E7A03008A4888 /* libz.tbd in Frameworks */,
 				F604A4DC1D0E79F7008A4888 /* libicucore.tbd in Frameworks */,
@@ -1034,6 +1041,7 @@
 				1FCCA9591DCC52A6001112AC /* ExamBibleViewController.swift */,
 				1FCCA95B1DCC5334001112AC /* ExamBibleSubViewController.swift */,
 				1FCCA9611DCC64FA001112AC /* ExamBibleSubCateViewController.swift */,
+				1F0D06B41DDAFAAF00A00CB5 /* GOnlineViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1246,6 +1254,7 @@
 				181E0D3B1CEC429C00E34A7F /* Collection */,
 				181E0D3C1CEC429F00E34A7F /* Recruit */,
 				1FEFF3F91DBDD6FF00E82F98 /* MiFeedbackViewController.swift */,
+				1F2853601DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1262,7 +1271,7 @@
 		1F0BE1241D54A84300842B80 /* openSDK1.7.2 */ = {
 			isa = PBXGroup;
 			children = (
-				1F0BE1251D54A84300842B80 /* libWeChatSDK.a */,
+				1F0D06BA1DDB0CEF00A00CB5 /* libWeChatSDK.a */,
 				1F0BE1261D54A84300842B80 /* README.txt */,
 				1F0BE1271D54A84300842B80 /* WechatAuthSDK.h */,
 				1F0BE1281D54A84300842B80 /* WXApi.h */,
@@ -1367,6 +1376,7 @@
 		F1AF83881B75F01938A9D1A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F0433CB1DDBEA7800C0FC3F /* libWeiboSDK.a */,
 				1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */,
 				1FCCA9691DCC787C001112AC /* CoreLocation.framework */,
 				1FCCA9671DCC7866001112AC /* libz.1.2.5.tbd */,
@@ -1762,6 +1772,7 @@
 				0BDAB62D1D2A43380081E883 /* QuestionModel.swift in Sources */,
 				F6342C681D38DD2800800D8E /* HSArticleCollectCell.swift in Sources */,
 				18A6BAC51CE5F9A700B6B1FD /* MineViewController.swift in Sources */,
+				1F0D06B51DDAFAAF00A00CB5 /* GOnlineViewController.swift in Sources */,
 				0B7392871D40C5AC00F785AF /* OnLineViewController.swift in Sources */,
 				0DB467B91D4C8600009AE2AD /* MJRefreshConst.m in Sources */,
 				0DB467B31D4C8600009AE2AD /* MJRefreshBackNormalFooter.m in Sources */,
@@ -1793,6 +1804,7 @@
 				18ADDDED1CE9609000557FFE /* MineTableViewCell.swift in Sources */,
 				183B86701CE5CF9500709235 /* Httpresult.swift in Sources */,
 				1854087F1CE6F15500DFBA7C /* Tool.swift in Sources */,
+				1F2853611DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift in Sources */,
 				0DB467BC1D4C8600009AE2AD /* UIScrollView+MJRefresh.m in Sources */,
 				0DB467B61D4C8600009AE2AD /* MJRefreshNormalHeader.m in Sources */,
 				18C240601CEEB6340059BF48 /* TalentViewController.swift in Sources */,
@@ -1981,7 +1993,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/HSHW_2016/ios_api",
-					"\"$(SRCROOT)/../nurse_3rd\"",
+					"$(SRCROOT)/../nurse_3rd",
+					"$(PROJECT_DIR)/HSHW_2016/libReuseView",
+					"$(PROJECT_DIR)/HSHW_2016/openSDK1.7.2",
+					"$(PROJECT_DIR)/Pods/WeiboSDK/libWeiboSDK",
+					"$(PROJECT_DIR)/HSHW_2016",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -2028,7 +2044,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/HSHW_2016/ios_api",
-					"\"$(SRCROOT)/../nurse_3rd\"",
+					"$(SRCROOT)/../nurse_3rd",
+					"$(PROJECT_DIR)/HSHW_2016/libReuseView",
+					"$(PROJECT_DIR)/HSHW_2016/openSDK1.7.2",
+					"$(PROJECT_DIR)/Pods/WeiboSDK/libWeiboSDK",
+					"$(PROJECT_DIR)/HSHW_2016",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (

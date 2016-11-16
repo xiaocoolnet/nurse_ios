@@ -89,11 +89,28 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
             }
         }
         if showType == .UserName {
+            
+            if textFeild.text! == QCLoginUserInfo.currentInfo.userName {
+                self.navigationController?.popViewControllerAnimated(true)
+                return
+            }
             mineHelper.changeUserName(textFeild.text!, handle: {[unowned self] (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
                         QCLoginUserInfo.currentInfo.userName = self.textFeild.text!
                         self.navigationController?.popViewControllerAnimated(true)
+                    }else{
+                        let responseStr = response as! String
+                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.mode = .Text
+                        hud.removeFromSuperViewOnHide = true
+                        if responseStr == "用户名重复" {
+                            hud.labelText = "用户名重复，请重新输入"
+                        }else{
+                            hud.labelText = responseStr
+                        }
+                        
+                        hud.hide(true, afterDelay: 1)
                     }
                 })
             })
