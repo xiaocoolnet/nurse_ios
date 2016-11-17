@@ -684,7 +684,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
                     let ud = NSUserDefaults.standardUserDefaults()
                     //  把得到的用户信息存入到沙盒
                     //  得到 useID
-                    ud.setObject([USER_NAME:self.phoneNumber.text!,USER_PWD:self.passwordNumber.text!], forKey: LOGINFO_KEY)
+                    ud.setObject([USER_NAME:num,USER_PWD:pwd], forKey: LOGINFO_KEY)
                     ud.setObject(QCLoginUserInfo.currentInfo.userid, forKey: "userid")
                     //登录成功
                     LOGIN_STATE = true

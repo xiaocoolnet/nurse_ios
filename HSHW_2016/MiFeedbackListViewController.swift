@@ -45,7 +45,7 @@ class MiFeedbackListViewController: UIViewController, UITableViewDataSource, UIT
                 
                 self.rootTableView.reloadData()
             }else{
-                self.navigationController?.pushViewController(MiFeedbackViewController(), animated: true)
+//                self.navigationController?.pushViewController(MiFeedbackViewController(), animated: true)
                 return
             }
         }

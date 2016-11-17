@@ -22,15 +22,15 @@ public class JSONDecoder {
     }
     ///convert the value to a String
     public var string: String? {
-//        return value as? String
+        return value as? String
         
-        var str = value as? String
-        str = str?.stringByReplacingOccurrencesOfString("&quot;", withString: "\"")
-        str = str?.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
-        str = str?.stringByReplacingOccurrencesOfString("&lt;", withString: "<")
-        str = str?.stringByReplacingOccurrencesOfString("&gt;", withString: ">")
-        str = str?.stringByReplacingOccurrencesOfString("&nbsp;", withString: " ")
-        return str
+//        var str = value as? String
+//        str = str?.stringByReplacingOccurrencesOfString("&quot;", withString: "\"")
+//        str = str?.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
+//        str = str?.stringByReplacingOccurrencesOfString("&lt;", withString: "<")
+//        str = str?.stringByReplacingOccurrencesOfString("&gt;", withString: ">")
+//        str = str?.stringByReplacingOccurrencesOfString("&nbsp;", withString: " ")
+//        return str
     }
     ///convert the value to an Int
     public var integer: Int? {
