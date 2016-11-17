@@ -617,7 +617,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             clearDisk()
         }else if indexPath.section == 6 {
             
-            self.navigationController?.pushViewController(MiFeedbackViewController(), animated: true)
+            self.navigationController?.pushViewController(MiFeedbackListViewController(), animated: true)
 
         }
     }

@@ -631,3 +631,80 @@ class HSStatusModel:JSONJoy {
         
     }
 }
+
+// Model 意见反馈
+class FeedbackList:JSONJoy {
+    
+    
+    var status: String?
+
+    var data = [FeedbackListData]()
+    
+    required init(_ decoder: JSONDecoder) {
+        status = decoder["status"].string ?? ""
+        for childs:JSONDecoder in decoder["data"].array ?? [] {
+            data.append(FeedbackListData(childs))
+        }
+    }
+}
+class FeedbackListData: JSONJoy {
+
+    var userid: String?
+
+    var content: String?
+
+    var status: String?
+
+    var id: String?
+
+    var devicestate: String?
+
+    var create_time: String?
+
+    var reply = [Reply]()
+    
+    required init(_ decoder: JSONDecoder) {
+        userid = decoder["userid"].string ?? ""
+        content = decoder["content"].string ?? ""
+        status = decoder["status"].string ?? ""
+        id = decoder["id"].string ?? ""
+        devicestate = decoder["devicestate"].string ?? ""
+        create_time = decoder["create_time"].string ?? ""
+        
+        for childs:JSONDecoder in decoder["reply"].array ?? [] {
+            reply.append(Reply(childs))
+        }
+    }
+
+}
+
+class Reply: JSONJoy {
+
+    var userid: String?
+
+    var content: String?
+
+    var status: String?
+
+    var id: String?
+
+    var title: String?
+
+    var fid: String?
+
+    var create_time: String?
+    
+    required init(_ decoder: JSONDecoder) {
+        
+        userid = decoder["userid"].string ?? ""
+        content = decoder["content"].string ?? ""
+        status = decoder["status"].string ?? ""
+        id = decoder["id"].string ?? ""
+        title = decoder["title"].string ?? ""
+        fid = decoder["fid"].string ?? ""
+        create_time = decoder["create_time"].string ?? ""
+        
+    }
+
+}
+

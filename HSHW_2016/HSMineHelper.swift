@@ -777,11 +777,15 @@ class HSMineHelper: NSObject {
     }
     
     // 意见反馈
-    func addfeedback(content:String, handle:ResponseBlock){
+    func addfeedback(content:String, devicestate:String, handle:ResponseBlock){
         
         let url = PARK_URL_Header+"addfeedback"
         
-        let param = ["userid":QCLoginUserInfo.currentInfo.userid,"content":content];
+        let param = [
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "content":content,
+            "devicestate":devicestate
+        ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             // print(request)
             if(error != nil){
@@ -792,6 +796,31 @@ class HSMineHelper: NSObject {
                 
                 if(result.status == "success"){
                     handle(success: true, response: nil)
+                }else{
+                    handle(success: false, response: nil)
+                }
+            }
+        }
+    }
+    
+    // 获取已意见反馈 包括系统回复列表
+    func getfeedbackList(handle:ResponseBlock){
+        
+        let url = PARK_URL_Header+"getfeedbackList"
+        
+        let param = ["userid":QCLoginUserInfo.currentInfo.userid];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            // print(request)
+            if(error != nil){
+                handle(success: false, response: error?.description)
+            }else{
+                
+                let result = Http(JSONDecoder(json!))
+                
+                if(result.status == "success"){
+                    
+                    let feedbackList = FeedbackList(JSONDecoder(json!))
+                    handle(success: true, response: feedbackList.data)
                 }else{
                     handle(success: false, response: nil)
                 }

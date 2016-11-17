@@ -12,6 +12,8 @@ class MiFeedbackListViewController: UIViewController, UITableViewDataSource, UIT
 
     let rootTableView = UITableView(frame: CGRectZero, style: .Grouped)
     
+    var feedbackListData = [FeedbackListData]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,11 +28,32 @@ class MiFeedbackListViewController: UIViewController, UITableViewDataSource, UIT
 
         self.navigationController?.navigationBar.hidden = false
         self.tabBarController?.tabBar.hidden = true
+        
+        self.loadData()
+
+    }
+    
+    // MARK: 加载数据
+    func loadData() {
+        HSMineHelper().getfeedbackList { (success, response) in
+            
+            if self.rootTableView.mj_header.isRefreshing() {
+                self.rootTableView.mj_header.endRefreshing()
+            }
+            if success {
+                self.feedbackListData = response as! [FeedbackListData]
+                
+                self.rootTableView.reloadData()
+            }else{
+                self.navigationController?.pushViewController(MiFeedbackViewController(), animated: true)
+                return
+            }
+        }
     }
     
     func setSubviews() {
         
-        self.title = "意见反馈"
+        self.title = "我的反馈意见"
         
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
@@ -41,6 +64,9 @@ class MiFeedbackListViewController: UIViewController, UITableViewDataSource, UIT
         rootTableView.dataSource = self
         rootTableView.delegate = self
         self.view.addSubview(rootTableView)
+        
+        rootTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData))
+        rootTableView.mj_header.beginRefreshing()
         
         let feedbackBtn = UIButton()
         feedbackBtn.frame = CGRectMake(WIDTH-70 , HEIGHT-230, 50, 50)
@@ -57,15 +83,19 @@ class MiFeedbackListViewController: UIViewController, UITableViewDataSource, UIT
     
     // MARK: uitableview datasource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 5
+        return self.feedbackListData.count
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+//        return self.feedbackListData[section].reply.count
+        if self.feedbackListData[section].reply.count > 0 {
+            return 1
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return calculateHeight(replyText, size: 16, width: WIDTH-58)+10
+        return 25+calculateHeight(self.feedbackListData[indexPath.section].reply[indexPath.row].content!, size: 14, width: WIDTH-80)+10+5
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -74,56 +104,92 @@ class MiFeedbackListViewController: UIViewController, UITableViewDataSource, UIT
 //        
 //        if cell == nil {
 //        }
-        let replyHeight = calculateHeight(replyText, size: 16, width: WIDTH-58)+10
+        let replyHeight = calculateHeight(self.feedbackListData[indexPath.section].reply[indexPath.row].content!, size: 14, width: WIDTH-80)
 
         let cell = UITableViewCell(frame: CGRectMake(0, 0, WIDTH, replyHeight))
 //        let cell = UITableViewCell(style: .Default, reuseIdentifier: "feedbackListCell")
         cell.selectionStyle = .None
         
-        let replyLab = UILabel(frame: CGRectMake(50, 0, WIDTH-58, 0))
-        replyLab.backgroundColor = UIColor(red: 249/255.0, green: 242/255.0, blue: 247/255.0, alpha: 1)
+        let replyBgView = UIView(frame: CGRectMake(50, 0, WIDTH-70, 25+replyHeight+10))
+        replyBgView.backgroundColor = UIColor(red: 249/255.0, green: 242/255.0, blue: 247/255.0, alpha: 1)
+        cell.contentView.addSubview(replyBgView)
+        
+        let replyTitleLab = UILabel(frame: CGRectMake(55, 5, WIDTH-80, 25))
+        replyTitleLab.textColor = COLOR
+        replyTitleLab.font = UIFont.systemFontOfSize(14)
+        replyTitleLab.text = self.feedbackListData[indexPath.section].reply[indexPath.row].title
+        cell.contentView.addSubview(replyTitleLab)
+        
+        let replyLab = UILabel(frame: CGRectMake(55, CGRectGetMaxY(replyTitleLab.frame), WIDTH-80, 0))
         replyLab.numberOfLines = 0
-        replyLab.textColor = COLOR
-        replyLab.font = UIFont.systemFontOfSize(16)
+        replyLab.textColor = UIColor.grayColor()
+        replyLab.font = UIFont.systemFontOfSize(14)
         cell.contentView.addSubview(replyLab)
         
         replyLab.frame.size.height = replyHeight
-        replyLab.text = replyText
+//        replyLab.center = replyBgView.center
+        replyLab.text = self.feedbackListData[indexPath.section].reply[indexPath.row].content
         
         
         return cell
     }
     
-    let feedbackContent = "找工作：填写简历按钮无反应、投递简历 无反应 找人才：发布企业招聘按钮无反应"
-    let replyText = "您好，您反馈的问题我们已经收到了，会及时作出处理"
     // MARK: uitableview delegate
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let contentHeight = calculateHeight(feedbackContent, size: 16, width: WIDTH-8-25-8-8)
+        let contentHeight = calculateHeight(self.feedbackListData[section].content!, size: 16, width: WIDTH-8-25-8-8)
         
         let feedbackView = UIView(frame: CGRectMake(0, 0, WIDTH, 8+contentHeight+8))
         feedbackView.backgroundColor = UIColor.whiteColor()
         
-        let iconImg = UIImageView(frame: CGRectMake(8, 8, 25, 30))
-        iconImg.image = UIImage(named: "ic_note")
-        feedbackView.addSubview(iconImg)
+        let indexLab = UILabel(frame: CGRectMake(8, 8, 30, 30))
+        indexLab.layer.cornerRadius = 15
+//        indexLab.layer.backgroundColor = COLOR.CGColor
+        indexLab.layer.borderWidth = 1
+        indexLab.layer.borderColor = COLOR.CGColor
+        indexLab.textAlignment = .Center
+        indexLab.textColor = COLOR
+        indexLab.text = String(section+1)
+        feedbackView.addSubview(indexLab)
         
-        let feedbackContentLab = UILabel(frame: CGRectMake(CGRectGetMaxX(iconImg.frame)+8, 8, WIDTH-8-25-8-8, contentHeight))
+        let feedbackContentLab = UILabel(frame: CGRectMake(CGRectGetMaxX(indexLab.frame)+8, 8, WIDTH-8-30-8-8, contentHeight))
         feedbackContentLab.numberOfLines = 0
         feedbackContentLab.font = UIFont.systemFontOfSize(16)
         feedbackContentLab.textColor = UIColor.blackColor()
-        feedbackContentLab.text = feedbackContent
+        feedbackContentLab.text = self.feedbackListData[section].content
         feedbackView.addSubview(feedbackContentLab)
+        
+        let feedbackTimeLab = UILabel(frame: CGRectMake(CGRectGetMaxX(indexLab.frame)+8, CGRectGetMaxY(feedbackContentLab.frame)+8, WIDTH-8-30-8-8, 25))
+        feedbackTimeLab.font = UIFont.systemFontOfSize(14)
+        feedbackTimeLab.textAlignment = .Right
+        feedbackTimeLab.textColor = UIColor.grayColor()
+        feedbackTimeLab.text = self.timeStampToString(self.feedbackListData[section].create_time!)
+        feedbackView.addSubview(feedbackTimeLab)
         
         return feedbackView
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 8+calculateHeight(feedbackContent, size: 16, width: WIDTH-8-25-8-8)+8
+        return 8+calculateHeight(self.feedbackListData[section].content!, size: 16, width: WIDTH-8-30-8-8)+8+25+8
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.001
+        return 8
+    }
+    
+    // Linux时间戳转标准时间
+    func timeStampToString(timeStamp:String)->String {
+        
+        let string = NSString(string: timeStamp)
+        
+        let timeSta:NSTimeInterval = string.doubleValue
+        let dfmatter = NSDateFormatter()
+        dfmatter.dateFormat="yyyy-MM-dd hh:mm:ss"
+        
+        let date = NSDate(timeIntervalSince1970: timeSta)
+        
+        //        print(dfmatter.stringFromDate(date))
+        return dfmatter.stringFromDate(date)
     }
 
     override func didReceiveMemoryWarning() {

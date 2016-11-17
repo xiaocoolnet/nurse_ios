@@ -105,7 +105,8 @@ class RecruitTableViewCell: UITableViewCell {
         }else{
             titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))
         }
-        
+        title.text = model.name
+
         let contentStr = "性别:"+(model.sex == "1" ? "男" : "女")+"\n当前薪资:"+model.currentsalary+"\n工作状态:"+model.jobstate
         
         let attrStr = NSMutableAttributedString(string: contentStr)
@@ -139,7 +140,7 @@ class RecruitTableViewCell: UITableViewCell {
         locationLab.text = model.address.componentsSeparatedByString("-").first! + "-" + model.address.componentsSeparatedByString("-")[1]
         locationLab.sizeToFit()
         
-        let titleHeight:CGFloat = calculateHeight(model.title, size: 16, width: WIDTH*300/375)
+        let titleHeight:CGFloat = calculateHeight(model.name, size: 16, width: WIDTH*300/375)
         title.frame.size.height = titleHeight
         content.frame.origin.y = title.frame.size.height + title.frame.origin.y
         cont.frame.origin.y = title.frame.size.height + title.frame.origin.y

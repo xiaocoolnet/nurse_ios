@@ -506,11 +506,21 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
                             dispatch_async(dispatch_get_main_queue(), {
                                 if success {
                                     
-                                    self.phoneNum.text = nil
-                                    self.password.text = nil
-                                    self.yanzheng.text = nil
-                                    let alert = UIAlertView(title: "提示信息",message: "注册成功",delegate: self,cancelButtonTitle: "确定")
-                                    alert.show()
+                                    
+                                    
+                                    let alertVC = UIAlertController(title: "提示信息", message: "注册成功", preferredStyle: .Alert)
+                                    self.presentViewController(alertVC, animated: true, completion: nil)
+                                    
+                                    let alertAction = UIAlertAction(title: "确定", style: .Default, handler: { (action) in
+                                        self.loginWithNum(self.phoneNum.text!, pwd: self.password.text!)
+                                        
+                                        self.phoneNum.text = nil
+                                        self.password.text = nil
+                                        self.yanzheng.text = nil
+                                    })
+                                    alertVC.addAction(alertAction)
+//                                    let alert = UIAlertView(title: "提示信息",message: "注册成功",delegate: self,cancelButtonTitle: "确定")
+//                                    alert.show()
                                     let result = response as! addScore_ReadingInformationDataModel
                                     self.showScoreTips(result.event, score: result.score)
 //                                    self.navigationController?.popViewControllerAnimated(true)

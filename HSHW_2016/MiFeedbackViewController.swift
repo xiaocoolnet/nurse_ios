@@ -60,7 +60,13 @@ class MiFeedbackViewController: UIViewController {
             checkCodeHud.hide(true, afterDelay: 1)
         }else{
 
-            HSMineHelper().addfeedback(feedbackTv.text, handle: { (success, response) in
+//            feedback.setObject(UIDevice.currentDevice().systemVersion, forKey: "systemVersion")
+//            feedback.setObject(MyUtil.getCurrentDeviceModel(), forKey: "DeviceModel")
+//            feedback.setObject(NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"], forKey: "appVersion")
+            
+            let devicestate:String = "\(MyUtil.getCurrentDeviceModel()) - \(UIDevice.currentDevice().systemVersion) - Version:\(NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"]!) Build:\(NSBundle.mainBundle().infoDictionary!["CFBundleVersion"]!)"
+            HSMineHelper().addfeedback(feedbackTv.text, devicestate: devicestate, handle: { (success, response) in
+
                 if success {
                     checkCodeHud.mode = .Text
                     checkCodeHud.labelText = "反馈成功"
