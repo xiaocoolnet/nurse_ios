@@ -19,10 +19,6 @@ class HSNewsCommentCell: UITableViewCell {
     
     @IBOutlet weak var nameLab: UILabel!
     
-    @IBOutlet weak var positionLab: UILabel!
-    
-    @IBOutlet weak var levelLab: UILabel!
-    
     @IBOutlet weak var contentLab: UILabel!
     
     @IBOutlet weak var timeLab: UILabel!
@@ -53,13 +49,15 @@ class HSNewsCommentCell: UITableViewCell {
                 }
             }
             
-            let height = calculateHeight((self.commentModel!.content), size: 14, width: WIDTH-62)
+            let height = calculateHeight((self.commentModel!.content), size: 14, width: WIDTH-62-16)
             
-            var child_commentBtnY = height+8+40+8+8+14+8
+            var child_commentBtnY = 8+40+8+height+8+14+8
+            
+//            print((self.commentModel!.content),child_commentBtnY,self.commentModel?.username)
             for (_,child_comment) in (commentModel?.child_comments)!.enumerate() {
                 
                 let child_commentBtnHeight = child_comment.content.boundingRectWithSize(
-                    CGSizeMake(WIDTH-self.contentLab.frame.origin.x-8-10, 0),
+                    CGSizeMake(WIDTH-52-8-10-30-16, 0),
                     options: .UsesLineFragmentOrigin,
                     attributes: [NSFontAttributeName:UIFont.systemFontOfSize(14)],
                     context: nil).size.height+10
@@ -68,8 +66,7 @@ class HSNewsCommentCell: UITableViewCell {
                     self
                         .contentLab.frame.origin.x+30,
                     child_commentBtnY,
-                    WIDTH-self
-                        .contentLab.frame.origin.x-8-30,
+                    WIDTH-52-8-30-16,
                     child_commentBtnHeight+5+25))
                 bgView.tag = 1000
                 bgView.backgroundColor = UIColor(red: 249/255.0, green: 242/255.0, blue: 247/255.0, alpha: 1)
@@ -79,8 +76,7 @@ class HSNewsCommentCell: UITableViewCell {
                 let child_comment_userNameLab = UILabel(frame: CGRectMake(
                     5,
                     5,
-                    WIDTH-self
-                        .contentLab.frame.origin.x-8-10-30,
+                    WIDTH-52-8-10-30,
                     25))
                 child_comment_userNameLab.textAlignment = .Left
                 child_comment_userNameLab.numberOfLines = 1
@@ -94,8 +90,7 @@ class HSNewsCommentCell: UITableViewCell {
                 let child_commentLab = UILabel(frame: CGRectMake(
                     5,
                     CGRectGetMaxY(child_comment_userNameLab.frame),
-                    WIDTH-self
-                        .contentLab.frame.origin.x-8-10-30,
+                    WIDTH-52-8-10-30-16,
                     child_commentBtnHeight))
                 child_commentLab.textAlignment = .Left
                 child_commentLab.numberOfLines = 0
@@ -110,10 +105,9 @@ class HSNewsCommentCell: UITableViewCell {
             }
             
             let lineView = UIView(frame: CGRectMake(
-                self
-                    .contentLab.frame.origin.x,
+                52,
                 child_commentBtnY+8,
-                WIDTH-62,
+                WIDTH-62-16,
                 1))
             lineView.tag = 1000
             lineView.backgroundColor = UIColor.lightGrayColor()

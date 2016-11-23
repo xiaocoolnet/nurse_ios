@@ -119,24 +119,26 @@ class AcademicTableViewCell: UITableViewCell {
 //            if hashValue != 0 {
 //                aca_zan.selected = true
 //            }
-            
+            if newsInfo?.favorites_add == "1" {
+                comBtn.selected = true
+            }
             for obj in newsInfo!.likes {
                 if obj.userid == QCLoginUserInfo.currentInfo.userid {
                     aca_zan.selected = true
                 }
             }
             
-            for obj in newsInfo!.favorites {
-                if obj.userid == QCLoginUserInfo.currentInfo.userid {
-                    comBtn.selected = true
-                }
-            }
+//            for obj in newsInfo!.favorites {
+//                if obj.userid == QCLoginUserInfo.currentInfo.userid {
+//                    comBtn.selected = true
+//                }
+//            }
             
             
 //            print("\(hashValue)")
 //            self.likeNum = newsInfo.likes.count
             zanNum.text =  String(newsInfo!.likes.count)
-            conNum.text = String(newsInfo!.favorites.count)
+            conNum.text = (newsInfo!.favorites_count ?? "")!
             
             timeBtn.center.y = timeLab.center.y
             aca_zan.center.y = timeLab.center.y
@@ -182,17 +184,19 @@ class AcademicTableViewCell: UITableViewCell {
                 }
             }
             
-            for obj in academicNewsInfo!.favorites {
-                if obj.userid == QCLoginUserInfo.currentInfo.userid {
-                    comBtn.selected = true
-                }
+//            for obj in academicNewsInfo!.favorites {
+//                if obj.userid == QCLoginUserInfo.currentInfo.userid {
+//                    comBtn.selected = true
+//                }
+//            }
+            if academicNewsInfo?.favorites_add == "1" {
+                comBtn.selected = true
             }
-            
             
             //            print("\(hashValue)")
             //            self.likeNum = academicNewsInfo.likes.count
             zanNum.text =  String(academicNewsInfo!.likes.count)
-            conNum.text = String(academicNewsInfo!.favorites.count)
+            conNum.text = String((academicNewsInfo!.favorites_count ?? "")!)
             
             timeBtn.center.y = timeLab.center.y
             aca_zan.center.y = timeLab.center.y

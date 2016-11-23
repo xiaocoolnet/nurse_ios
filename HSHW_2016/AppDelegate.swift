@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
 //        statTracker.enableDebugOn = true
         
         // TODO:
-        statTracker.channelId = "pgyer"
+//        statTracker.channelId = "pgyer"
 
         statTracker.startWithAppId("7f69594569") // 设置您在mtj网站上添加的app的appkey,此处AppId即为应用的appKey
         
@@ -47,7 +47,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
             let remoteNotificationDic = launchOptions!["UIApplicationLaunchOptionsRemoteNotificationKey"]
             
             NSUserDefaults.standardUserDefaults().setValue(remoteNotificationDic, forKey: "recivePushNotification")
+            
+
         }
+        application.applicationIconBadgeNumber = application.applicationIconBadgeNumber >= 1 ? (application.applicationIconBadgeNumber - 1):0
+        
         // 向苹果注册推送，获取deviceToken并上报
         self.registerAPNS(application)
         // 初始化SDK

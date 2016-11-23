@@ -739,7 +739,15 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             if (nameTF.text != "" && eduBtn.selected &&  professionalBtn.selected && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected &&   expectedPositionBtn.selected)||changeResume {
                 
                 if !PhoneNumberIsValidated(telTF.text!) {
-                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的电话号码", comment: "empty message"), preferredStyle: .Alert)
+                    var messageStr = "请填写正确的电话号码"
+                    
+                    if telTF.text!.hasPrefix("0") {
+                        messageStr = "请填写正确的电话号码\n区号与座机号之间用-隔开"
+                    }else if 7 <= telTF.text!.characters.count && telTF.text!.characters.count <= 8 && telTF.text?.stringByTrimmingCharactersInSet(NSCharacterSet.decimalDigitCharacterSet()).characters.count <= 0 {
+                        messageStr = "请填写正确的电话号码\n（包含区号）"
+                    }
+                    
+                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString(messageStr, comment: "empty message"), preferredStyle: .Alert)
                     let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
                     alertController.addAction(doneAction)
                     
@@ -998,7 +1006,6 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     }
 
     
-    // TODO:
     func resignTextFieldFirstResponder() {
         nameTF.resignFirstResponder()
         telTF.resignFirstResponder()

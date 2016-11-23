@@ -259,7 +259,15 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
         }else {
             
             if !PhoneNumberIsValidated(telField.text!) {
-                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的电话号码", comment: "empty message"), preferredStyle: .Alert)
+                var messageStr = "请填写正确的电话号码"
+                
+                if telField.text!.hasPrefix("0") {
+                    messageStr = "请填写正确的电话号码\n区号与座机号之间用-隔开"
+                }else if 7 <= telField.text!.characters.count && telField.text!.characters.count <= 8 && telField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.decimalDigitCharacterSet()).characters.count <= 0 {
+                    messageStr = "请填写正确的电话号码\n（包含区号）"
+                }
+                
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString(messageStr, comment: "empty message"), preferredStyle: .Alert)
                 let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
                 alertController.addAction(doneAction)
                 

@@ -114,7 +114,9 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
         cell.selectionStyle = .None
         
         cell.nameLab.text = scoreArray[indexPath.row].event
-        cell.scoreLab.text = "+"+scoreArray[indexPath.row].score
+        let scoreStr = scoreArray[indexPath.row].score
+        
+        cell.scoreLab.text = scoreStr.containsString("-") ? scoreStr:"+"+scoreStr
         cell.timeLab.text = scoreArray[indexPath.row].create_time
         
         return cell

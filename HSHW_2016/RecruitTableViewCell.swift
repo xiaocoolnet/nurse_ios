@@ -53,7 +53,7 @@ class RecruitTableViewCell: UITableViewCell {
         attrStr.addAttributes([NSParagraphStyleAttributeName:paragraphStyle1], range: NSMakeRange(0, contentStr.characters.count))
         content.attributedText = attrStr
         
-        let contStr = "学历要求:"+model.education+"\n工作年限:"+"\n招聘人数:"+model.count
+        let contStr = "学历要求:"+model.education+"\n工作年限:"+model.experience+"\n招聘人数:"+model.count
         let attrcontStr = NSMutableAttributedString(string: contStr)
         let contParagraphStyle1 = NSMutableParagraphStyle()
         contParagraphStyle1.lineSpacing = 8

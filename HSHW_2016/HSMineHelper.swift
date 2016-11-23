@@ -337,7 +337,6 @@ class HSMineHelper: NSObject {
         }
     }
     
-    // TODO:目前是假的！！！
     // 获取粉丝列表 type 1 粉丝  !=1  关注
     func getFansOrFollowList(type:Int,handle:ResponseBlock){
         

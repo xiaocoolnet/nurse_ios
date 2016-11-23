@@ -172,41 +172,53 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
         criteriaLabel.sizeToFit()
         rootScrollView.addSubview(criteriaLabel)
 
-        let salaryTagLab = UILabel(frame: CGRectMake(170,CGRectGetMaxY(descript.frame)+10,70,25))
+        
+        let personalNumTagLab = UILabel(frame: CGRectMake(10,CGRectGetMaxY(criteriaLabel.frame)+10,70,25))
+        personalNumTagLab.font = UIFont.boldSystemFontOfSize(15)
+        personalNumTagLab.text = "招聘人数:"
+        personalNumTagLab.sizeToFit()
+        rootScrollView.addSubview(personalNumTagLab)
+
+        let personalNumLab = UILabel(frame: CGRectMake(CGRectGetMaxX(personalNumTagLab.frame)+8,CGRectGetMaxY(criteriaLabel.frame)+10,75,25))
+        personalNumLab.font = UIFont.systemFontOfSize(14)
+        personalNumLab.textColor = UIColor.lightGrayColor()
+        personalNumLab.text = jobModel!.count
+        personalNumLab.sizeToFit()
+        rootScrollView.addSubview(personalNumLab)
+        
+        let salaryTagLab = UILabel(frame: CGRectMake(170,CGRectGetMaxY(criteriaLabel.frame)+10,70,25))
         salaryTagLab.font = UIFont.boldSystemFontOfSize(15)
         salaryTagLab.text = "薪资待遇:"
         salaryTagLab.sizeToFit()
         rootScrollView.addSubview(salaryTagLab)
-
-        let salaryLab = UILabel(frame: CGRectMake(CGRectGetMaxX(salaryTagLab.frame)+8,CGRectGetMaxY(descript.frame)+10,WIDTH-240,25))
+        
+        let salaryLab = UILabel(frame: CGRectMake(CGRectGetMaxX(salaryTagLab.frame)+8,CGRectGetMaxY(criteriaLabel.frame)+10,WIDTH-240,25))
         salaryLab.font = UIFont.systemFontOfSize(14)
         salaryLab.textColor = UIColor.lightGrayColor()
         salaryLab.text = currentJobModel!.salary
         salaryLab.sizeToFit()
         rootScrollView.addSubview(salaryLab)
         
+        let expTagLab = UILabel(frame: CGRectMake(10,CGRectGetMaxY(personalNumLab.frame)+10,70,25))
+        expTagLab.font = UIFont.boldSystemFontOfSize(15)
+        expTagLab.text = "工作年限:"
+        expTagLab.sizeToFit()
+        rootScrollView.addSubview(expTagLab)
         
-        
-        let personalNumTagLab = UILabel(frame: CGRectMake(10,CGRectGetMaxY(salaryLab.frame)+10,70,25))
-        personalNumTagLab.font = UIFont.boldSystemFontOfSize(15)
-        personalNumTagLab.text = "招聘人数:"
-        personalNumTagLab.sizeToFit()
-        rootScrollView.addSubview(personalNumTagLab)
+        let expLab = UILabel(frame: CGRectMake(CGRectGetMaxX(expTagLab.frame)+8,CGRectGetMaxY(personalNumLab.frame)+10,WIDTH-240,25))
+        expLab.font = UIFont.systemFontOfSize(14)
+        expLab.textColor = UIColor.lightGrayColor()
+        expLab.text = currentJobModel!.experience
+        expLab.sizeToFit()
+        rootScrollView.addSubview(expLab)
 
-        let personalNumLab = UILabel(frame: CGRectMake(CGRectGetMaxX(personalNumTagLab.frame)+8,CGRectGetMaxY(salaryLab.frame)+10,75,25))
-        personalNumLab.font = UIFont.systemFontOfSize(14)
-        personalNumLab.textColor = UIColor.lightGrayColor()
-        personalNumLab.text = jobModel!.count
-        personalNumLab.sizeToFit()
-        rootScrollView.addSubview(personalNumLab)
-
-        let welfareTagLab = UILabel(frame: CGRectMake(170,CGRectGetMaxY(salaryLab.frame)+10,70,25))
+        let welfareTagLab = UILabel(frame: CGRectMake(170,CGRectGetMaxY(personalNumLab.frame)+10,70,25))
         welfareTagLab.font = UIFont.boldSystemFontOfSize(15)
         welfareTagLab.text = "福利待遇:"
         welfareTagLab.sizeToFit()
         rootScrollView.addSubview(welfareTagLab)
 
-        let welfareLab = UILabel(frame: CGRectMake(CGRectGetMaxX(welfareTagLab.frame)+8,CGRectGetMaxY(salaryLab.frame)+10,WIDTH-240,25))
+        let welfareLab = UILabel(frame: CGRectMake(CGRectGetMaxX(welfareTagLab.frame)+8,CGRectGetMaxY(personalNumLab.frame)+10,WIDTH-240,25))
         welfareLab.font = UIFont.systemFontOfSize(14)
         welfareLab.textColor = UIColor.lightGrayColor()
         welfareLab.text = jobModel!.welfare

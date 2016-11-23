@@ -79,7 +79,7 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
     }
     
     func getDate(){
-            let url = PARK_URL_Header+"getMyPublishJobList_android"
+            let url = PARK_URL_Header+"getMyPublishJobList"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 if(error != nil){

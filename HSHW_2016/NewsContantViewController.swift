@@ -764,13 +764,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 return 100
             }else{
                 
-                let height = calculateHeight((self.commentArray[indexPath.row].content), size: 14, width: WIDTH-62)
+                let height = calculateHeight((self.commentArray[indexPath.row].content), size: 14, width: WIDTH-62-16)
                 
                 var child_commentBtnY = height+8+40+8+8+14+8
                 for child_comment in (self.commentArray[indexPath.row].child_comments) {
                     
                     let child_commentBtnHeight = child_comment.content.boundingRectWithSize(
-                        CGSizeMake(WIDTH-60-8-10, 0),
+                        CGSizeMake(WIDTH-60-10-30-16, 0),
                         options: .UsesLineFragmentOrigin,
                         attributes: [NSFontAttributeName:UIFont.systemFontOfSize(14)],
                         context: nil).size.height+10
@@ -792,8 +792,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         if indexPath.section == 0 {
             
             var cell1:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cellIntenfer")!
-            // print(indexPath.section,indexPath.row)
-            //let cell = tableView.dequeueReusableCellWithIdentifier("cellIntenfer", forIndexPath: indexPath)
             cell1.selectionStyle = .None
             
             cell1.textLabel?.numberOfLines = 0
@@ -808,11 +806,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 title.frame = CGRectMake(15, 0, WIDTH-30, height+30)
                 title.text = newsInfo?.post_title
                 title.numberOfLines = 0
-//                title.textColor = UIColor.redColor()
                 title.font = UIFont.systemFontOfSize(21)
                 cell1.addSubview(title)
                 tableView.rowHeight=height+30
-                // print(tableView.rowHeight)
                 
                 return cell1
 
@@ -1052,26 +1048,30 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func shareTheNews(btn:UIButton) {
         
-        let url = "http://apis.baidu.com/3023/shorturl/shorten"
+        self.shareNewsUrl = NewsInfo_Header+(self.newsInfo?.object_id)!
+        self.shareNews(btn)
+
         
-        Alamofire.request(.GET, url, parameters: ["url_long":NewsInfo_Header+(newsInfo?.object_id)!+"&type=1"], encoding: .URLEncodedInURL, headers: ["apikey":"615ac7276ff0b752fc5f0b8cfa845544"]).response { (request, response, json, error) in
-
-            if error != nil {
-                self.shareNewsUrl = NewsInfo_Header+(self.newsInfo?.object_id)!
-            }else{
-                
-                let js = try?NSJSONSerialization.JSONObjectWithData(json!, options: .MutableLeaves)
-
-                if JSON(js!)["urls"][0]["result"].boolValue {
-
-                    self.shareNewsUrl = JSON(js!)["urls"][0]["url_short"].string!
-                }else{
-                    self.shareNewsUrl = NewsInfo_Header+(self.newsInfo?.object_id)!
-                }
-            }
-            
-            self.shareNews(btn)
-        }
+//        let url = "http://apis.baidu.com/3023/shorturl/shorten"
+//        
+//        Alamofire.request(.GET, url, parameters: ["url_long":NewsInfo_Header+(newsInfo?.object_id)!+"&type=1"], encoding: .URLEncodedInURL, headers: ["apikey":"615ac7276ff0b752fc5f0b8cfa845544"]).response { (request, response, json, error) in
+//
+//            if error != nil {
+//                self.shareNewsUrl = NewsInfo_Header+(self.newsInfo?.object_id)!
+//            }else{
+//                
+//                let js = try?NSJSONSerialization.JSONObjectWithData(json!, options: .MutableLeaves)
+//
+//                if JSON(js!)["urls"][0]["result"].boolValue {
+//
+//                    self.shareNewsUrl = JSON(js!)["urls"][0]["url_short"].string!
+//                }else{
+//                    self.shareNewsUrl = NewsInfo_Header+(self.newsInfo?.object_id)!
+//                }
+//            }
+//            
+//            self.shareNews(btn)
+//        }
         
     }
     
@@ -1208,12 +1208,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func zanAddNum(btn:UIButton) {
         
-        self.zan.enabled = false
 
         if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
             return
         }
         
+        self.zan.enabled = false
+
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         hud.margin = 10.0
         hud.removeFromSuperViewOnHide = true
@@ -1226,6 +1227,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 "userid":QCLoginUserInfo.currentInfo.userid
             ];
             Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+                
+                self.zan.enabled = true
+
                 if(error != nil){
                     hud.mode = MBProgressHUDMode.Text
                     hud.labelText = "取消点赞失败"
@@ -1266,6 +1270,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
             Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+
+                self.zan.enabled = true
 
                 if(error != nil){
                     hud.mode = MBProgressHUDMode.Text

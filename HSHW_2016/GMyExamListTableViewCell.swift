@@ -61,20 +61,7 @@ class GMyExamListTableViewCell: UITableViewCell {
     
     var fansModel:GTestExamList?{
         didSet {
-            //TODO:image 后期要改，从网上获取
-//            indexLab.text = "\(inde+1)."
-//            indexLab.sizeToFit()
-//            indexLab.frame = CGRectMake(10, (70-CGRectGetHeight(indexLab.frame))/2.0, CGRectGetWidth(indexLab.frame), CGRectGetHeight(indexLab.frame))
-            
-//            titImg.frame = CGRectMake(CGRectGetMaxX(indexLab.frame)+10, 10, 50, 50)
-//            titImg.image = UIImage.init(named: "ic_note")
-//            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-//                titImg.image = UIImage.init(named: "img_head_nor")
-//            }else{
-//                titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))
-//            }
-//            titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar))
-            
+
             titleLab.text = fansModel?.post_title
             titleLab.sizeToFit()
             titleLab.frame = CGRectMake(CGRectGetMaxX(titImg.frame)+15, 15, CGRectGetWidth(titleLab.frame), 20)

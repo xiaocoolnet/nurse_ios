@@ -93,6 +93,15 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
             if textFeild.text! == QCLoginUserInfo.currentInfo.userName {
                 self.navigationController?.popViewControllerAnimated(true)
                 return
+            }else if unicodeLengthOfString(self.textFeild.text!) < 4 {
+                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                hud.mode = .Text
+                hud.removeFromSuperViewOnHide = true
+
+                hud.labelText = "用户名要大于4个字母或者2个汉字"
+                
+                hud.hide(true, afterDelay: 1)
+                return
             }
             mineHelper.changeUserName(textFeild.text!, handle: {[unowned self] (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
@@ -154,6 +163,57 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
 //        self.navigationController?.popViewControllerAnimated(true)
     }
     
+    // MARK: 限制输入字数
+    func textFieldTextCount(textField: UITextField) -> Int {
+        
+        let lang = textInputMode?.primaryLanguage
+        if lang == "zh-Hans" {
+            return (textField.text?.characters.count ?? 0)!*2
+        }
+        else {
+            return (textField.text?.characters.count ?? 0)!
+        }
+
+    }
+    func unicodeLengthOfString(str:String) -> Int {
+        
+        let text = NSString(string: str)
+        
+        var asciiLength = 0
+        
+        for i in 0 ..< text.length {
+            let uc = text.characterAtIndex(i)
+
+            asciiLength += isascii(Int32(uc)) != 0 ? 1 : 2
+        }
+        
+//        var unicodeLength = asciiLength/2
+//        if asciiLength%2 != 0 {
+//            unicodeLength += 1
+//        }
+        
+        return asciiLength
+    }
+//    -(NSUInteger) unicodeLengthOfString: (NSString *) text {
+//    NSUInteger asciiLength = 0;
+//    
+//    for (NSUInteger i = 0; i < text.length; i++) {
+//    
+//    
+//    unichar uc = [text characterAtIndex: i];
+//    
+//    asciiLength += isascii(uc) ? 1 : 2;
+//    }
+//    
+//    NSUInteger unicodeLength = asciiLength / 2;
+//    
+//    if(asciiLength % 2) {
+//    unicodeLength++;
+//    }
+//    
+//    return unicodeLength;
+//    }
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if showType == .Education || showType == .Sex || showType == .Major {
             return self.dateSource.objectlist.count
@@ -197,6 +257,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
         if showType == .Education {
             handle!(changeType: showType,value: self.dateSource.objectlist[indexPath.row].name)
             mineHelper.changeEducation(self.dateSource.objectlist[indexPath.row].name, handle: {[unowned self] (success, response) in

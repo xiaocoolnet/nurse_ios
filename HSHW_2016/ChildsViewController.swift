@@ -339,7 +339,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
             
             
             
-            let url = PARK_URL_Header+"UserGetInvite_android"
+            let url = PARK_URL_Header+"UserGetInvite"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 if(error != nil){

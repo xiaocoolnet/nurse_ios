@@ -122,7 +122,7 @@ class TouTiaoTableViewCell: UITableViewCell {
         self.hitsNum.sizeToFit()
         self.zanNum.text = String(newsInfo.likes.count)
         self.zanNum.sizeToFit()
-        self.colNum.text = String(newsInfo.favorites.count)
+        self.colNum.text = (newsInfo.favorites_count ?? "0")!
         self.colNum.sizeToFit()
         
 //        let photoUrl:String = DomainName+newsInfo.thumb!
@@ -221,7 +221,7 @@ class TouTiaoTableViewCell: UITableViewCell {
         hitsNum.sizeToFit()
         self.zanNum.text = String(newsInfo.likes.count)
         self.zanNum.sizeToFit()
-        self.colNum.text = String(newsInfo.favorites.count)
+        self.colNum.text = (newsInfo.favorites_count ?? "0")!
         self.colNum.sizeToFit()
 
         hitsBtn.center.y = heal.center.y

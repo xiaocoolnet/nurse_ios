@@ -220,7 +220,6 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
                 let height = calculateHeight(text, size: 15, width: WIDTH - 40)
                 return height+107
             }else{
-                // TODO:仅作测试用，后期改为0
                 return 0
             }
         }
@@ -231,7 +230,7 @@ class HSPostDetailViewController: UIViewController,UITableViewDataSource, UITabl
         
         if tableView.tag == 311 {
             if section == 1 {
-        // TODO:有评论内容后postInfo?.comment.count > 0 统统改为postInfo?.comment.count == 0
+
                 if postInfo?.comment.count == 0 {
                     
                     let noReply:UILabel = UILabel.init(frame: CGRectMake(0, 0, WIDTH, 200))

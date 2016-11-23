@@ -74,8 +74,6 @@ class FansTableViewCell: UITableViewCell {
     
     private func setUI(model:HSFansAndFollowModel) {
         dispatch_async(dispatch_get_main_queue(), {
-            //TODO:image 后期要改，从网上获取
-            //            titImg.image = UIImage(named: newValue.headerImage)
             
             // TODO: 数据问题 理应删掉model.photo == "21.jpg"
             if model.photo == "" || model.photo == "21.jpg" {

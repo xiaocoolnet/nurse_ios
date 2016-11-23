@@ -9,7 +9,7 @@ import UIKit
 import Alamofire
 import MBProgressHUD
 
-class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,PostVacanciesDelegate,HSPostResumeViewDelegate {
+class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,PostVacanciesDelegate,HSPostResumeViewDelegate, LFLUISegmentedControlDelegate {
     
     let myTableView = UITableView()
     let scrollView = UIScrollView()
@@ -40,6 +40,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var count = NSString()
     var linkman = NSString()
     
+    var jobPager = 1
+    var resumePager = 1
+
     
     weak var superViewController:NurseStationViewController?
     
@@ -61,18 +64,243 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureUI()
+
         if showType == 1 {
-            self.setSlideView()
             
+//            self.setFiltrateItem_findJob()
+            self.setSlideView()
+            myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
+//            myTableView.frame = CGRectMake(0, 38, WIDTH, HEIGHT-110-37)
+
+
+        }else{
+            
+//            self.setFiltrateItem_findPerson()
+            myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
+//            myTableView.frame = CGRectMake(0, 38, WIDTH, HEIGHT-110-37)
+
+
         }
-        makeDataSource()
+        self.configureUI()
+
+//        makeDataSource()
         sendPostion.delegate = self
         sendResume.delegate = self
         
         self.makeEmployment()
         self.view.backgroundColor = COLOR
         
+    }
+    
+    // 学历
+    let eduDrop = DropDown()
+    var eduDataSource = ["不限"]
+    
+    // 工作经验
+    let expDrop = DropDown()
+    var expDataSource = ["不限"]
+
+    // 职称
+    let certificateDrop = DropDown()
+    var certificateDataSource = ["不限"]
+    
+    // MARK: 设置筛选按钮(找人才)
+    func setFiltrateItem_findPerson() {
+        
+        // 学历
+        let eduBtn = UIButton()
+        eduBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        eduBtn.setTitle("学历", forState: UIControlState())
+        
+        // 学历 下拉
+        eduDrop.anchorView = eduBtn
+        
+        eduDrop.bottomOffset = CGPoint(x: 0, y: 37)
+        eduDrop.width = WIDTH
+        eduDrop.direction = .Bottom
+        
+        eduDrop.dataSource = self.eduDataSource
+        
+        // 下拉列表选中后的回调方法
+        eduDrop.selectionAction = { (index, item) in
+            
+            self.myTableView.mj_header.beginRefreshing()
+            eduBtn.setTitle(item, forState: UIControlState())
+            
+        }
+        
+        // 工作经验
+        let expBtn = UIButton()
+        expBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        expBtn.setTitle("工作经验", forState: UIControlState())
+        
+        // 工作经验 下拉
+        expDrop.anchorView = expBtn
+        
+        expDrop.bottomOffset = CGPoint(x: 0, y: 37)
+        expDrop.width = WIDTH
+        expDrop.direction = .Bottom
+        
+        expDrop.dataSource = self.expDataSource
+        
+        // 下拉列表选中后的回调方法
+        expDrop.selectionAction = { (index, item) in
+            
+            self.myTableView.mj_header.beginRefreshing()
+            expBtn.setTitle(item, forState: UIControlState())
+            
+        }
+        
+        // 职称
+        let certificateBtn = UIButton()
+        certificateBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        certificateBtn.setTitle("职称", forState: UIControlState())
+        
+        // 职称 下拉
+        certificateDrop.anchorView = certificateBtn
+        
+        certificateDrop.bottomOffset = CGPoint(x: 0, y: 37)
+        certificateDrop.width = WIDTH
+        certificateDrop.direction = .Bottom
+        
+        certificateDrop.dataSource = self.certificateDataSource
+        
+        // 下拉列表选中后的回调方法
+        certificateDrop.selectionAction = { (index, item) in
+            
+            self.myTableView.mj_header.beginRefreshing()
+            certificateBtn.setTitle(item, forState: UIControlState())
+            
+        }
+        
+        // 选择菜单
+        let segChoose = LFLUISegmentedControl.segmentWithFrame(CGRectMake(0, 1, WIDTH, 37), titleArray: [eduBtn,expBtn,certificateBtn], defaultSelect: 0)
+        segChoose.tag = 101
+        segChoose.lineColor(COLOR)
+        segChoose.titleColor(UIColor.blackColor(), selectTitleColor: COLOR, backGroundColor: UIColor.whiteColor(), titleFontSize: 14)
+        segChoose.delegate = self
+        self.view.addSubview(segChoose)
+    }
+    
+    // 工作地点
+    let addressBtn = UIButton()
+//    let addressDrop = DropDown()
+    var addressDataSource = ["不限"]
+    
+    // 薪资
+    let salaryDrop = DropDown()
+    var salaryDataSource = ["不限"]
+    
+    // 职位
+    let jobTypeDrop = DropDown()
+    var jobTypeDataSource = ["不限"]
+    
+    // MARK: 设置筛选按钮(找工作)
+    func setFiltrateItem_findJob() {
+        
+        // 工作地点
+        addressBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        addressBtn.setTitle("北京市-北京市", forState: UIControlState())
+        
+        // 薪资
+        let expBtn = UIButton()
+        expBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        expBtn.setTitle("薪资", forState: UIControlState())
+        
+        // 薪资 下拉
+        salaryDrop.anchorView = expBtn
+        
+        salaryDrop.bottomOffset = CGPoint(x: 0, y: 37)
+        salaryDrop.width = WIDTH
+        salaryDrop.direction = .Bottom
+        
+        salaryDrop.dataSource = self.salaryDataSource
+        
+        // 下拉列表选中后的回调方法
+        salaryDrop.selectionAction = { (index, item) in
+            
+            self.myTableView.mj_header.beginRefreshing()
+            expBtn.setTitle(item, forState: UIControlState())
+            
+        }
+        
+        // 职位
+        let certificateBtn = UIButton()
+        certificateBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+        certificateBtn.setTitle("职位", forState: UIControlState())
+        
+        // 职位 下拉
+        jobTypeDrop.anchorView = certificateBtn
+        
+        jobTypeDrop.bottomOffset = CGPoint(x: 0, y: 37)
+        jobTypeDrop.width = WIDTH
+        jobTypeDrop.direction = .Bottom
+        
+        jobTypeDrop.dataSource = self.jobTypeDataSource
+        
+        // 下拉列表选中后的回调方法
+        jobTypeDrop.selectionAction = { (index, item) in
+            
+            self.myTableView.mj_header.beginRefreshing()
+            certificateBtn.setTitle(item, forState: UIControlState())
+            
+        }
+        
+        // 选择菜单
+        let segChoose = LFLUISegmentedControl.segmentWithFrame(CGRectMake(0, 1, WIDTH, 37), titleArray: [addressBtn,expBtn,certificateBtn], defaultSelect: 0)
+        segChoose.tag = 102
+        segChoose.lineColor(COLOR)
+        segChoose.titleColor(UIColor.blackColor(), selectTitleColor: COLOR, backGroundColor: UIColor.whiteColor(), titleFontSize: 14)
+        segChoose.delegate = self
+        self.view.addSubview(segChoose)
+    }
+    
+    var targetCityArray = ["北京市","北京市"]
+    
+    func targetCityBtnClick() {
+        
+        // print("点击目标城市")
+        // 初始化
+        let pick = AdressPickerView_2.shareInstance
+        
+        // 设置是否显示区县等，默认为false不显示
+        pick.showTown = false
+        pick.pickArray = targetCityArray // 设置第一次加载时需要跳转到相对应的地址
+        pick.show((UIApplication.sharedApplication().keyWindow)!)
+        
+        // 选择完成之后回调
+        pick.selectAdress { (dressArray) in
+            
+            self.targetCityArray = dressArray as! Array<String>
+            
+            self.addressBtn.setTitle("\(self.targetCityArray[0])-\(self.targetCityArray[1])", forState: .Normal)
+            
+            self.myTableView.mj_header.beginRefreshing()
+            
+        }
+    }
+    
+    func uisegumentSelectionChange(selection: Int, segmentTag: Int) {
+        
+        if segmentTag == 101 {
+            
+            if selection == 0 {
+                eduDrop.show()
+            }else if selection == 1 {
+                expDrop.show()
+            }else if selection == 2 {
+                certificateDrop.show()
+            }
+        }else{
+            
+            if selection == 0 {
+                self.targetCityBtnClick()
+            }else if selection == 1 {
+                salaryDrop.show()
+            }else if selection == 2 {
+                jobTypeDrop.show()
+            }
+        }
     }
     
     
@@ -135,13 +363,17 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     func makeDataSource(){
+        
+        self.jobPager = 1
+        self.resumePager = 1
         if showType == 1 {
             
             var flag = 0
             
-            jobHelper.getJobList({[unowned self] (success, response) in
+            jobHelper.getJobList((self.addressBtn.currentTitle ?? "")!, salary: (self.salaryDrop.selectedItem ?? "")!, jobtype: (self.jobTypeDrop.selectedItem ?? "")!, pager: String(jobPager), handle: { (success, response) in
+
                 if success {
-                    
+                    self.jobPager += 1
                     dispatch_async(dispatch_get_main_queue(), {
                         self.jobDataSource = response as? Array<JobModel> ?? []
                         self.myTableView.reloadData()
@@ -213,11 +445,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 }
             }
         } else if showType == 2 {
-            jobHelper.getCVList({[unowned self] (success, response) in
+            
+            jobHelper.getCVList((eduDrop.selectedItem ?? "")!, experience: (expDrop.selectedItem ?? "")!, certificate: (certificateDrop.selectedItem ?? "")!, pager: String(resumePager), handle: { (success, response) in
+
                 dispatch_async(dispatch_get_main_queue(), {
                     if !success {
                         return
                     }
+                    self.resumePager += 1
                     self.CVDataSource = response as? Array<CVModel> ?? []
                     self.myTableView.reloadData()
                     //                    self.configureUI()
@@ -225,7 +460,170 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.myTableView.mj_header.endRefreshing()
                 })
         }
+        
+        if self.eduDataSource.count <= 1 {
+            getDictionaryList("1", key: "education")
+        }
+        
+        if self.expDataSource.count <= 1 {
+            getDictionaryList("15", key: "experience")
+        }
+        
+        if self.certificateDataSource.count <= 1 {
+            getDictionaryList("6", key: "title")
+        }
+        
+        if self.salaryDataSource.count <= 1 {
+            getDictionaryList("11", key: "money")
+        }
+        
+        if self.jobTypeDataSource.count <= 1 {
+            getDictionaryList("7", key: "position")
+        }
     }
+    
+    func loadData_pullUp(){
+        if showType == 1 {
+            
+            jobHelper.getJobList((self.addressBtn.currentTitle ?? "")!, salary: (self.salaryDrop.selectedItem ?? "")!, jobtype: (self.jobTypeDrop.selectedItem ?? "")!, pager: String(jobPager), handle: { (success, response) in
+                
+                if success {
+                    self.jobPager += 1
+                    dispatch_async(dispatch_get_main_queue(), {
+                        
+                        for jobModel in (response as? Array<JobModel> ?? []) {
+                            self.jobDataSource?.append(jobModel)
+                        }
+                        self.myTableView.reloadData()
+                        self.myTableView.mj_footer.endRefreshing()
+
+                    })
+                    
+                }else{
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.myTableView.mj_footer.endRefreshingWithNoMoreData()
+                        
+                    })
+                }
+            })
+            
+        } else if showType == 2 {
+            
+            jobHelper.getCVList((eduDrop.selectedItem ?? "")!, experience: (expDrop.selectedItem ?? "")!, certificate: (certificateDrop.selectedItem ?? "")!, pager: String(resumePager), handle: { (success, response) in
+
+                dispatch_async(dispatch_get_main_queue(), {
+                    if !success {
+                        self.myTableView.mj_footer.endRefreshingWithNoMoreData()
+                        return
+                    }
+                    
+                    self.resumePager += 1
+                    for cvModel in (response as? Array<CVModel> ?? []) {
+                        self.CVDataSource?.append(cvModel)
+                    }
+                    self.myTableView.reloadData()
+                    self.myTableView.mj_footer.endRefreshing()
+
+                })
+            })
+        }
+        
+        if self.eduDataSource.count <= 1 {
+            getDictionaryList("1", key: "education")
+        }
+        
+        if self.expDataSource.count <= 1 {
+            getDictionaryList("15", key: "experience")
+        }
+        
+        if self.certificateDataSource.count <= 1 {
+            getDictionaryList("6", key: "title")
+        }
+        
+        if self.salaryDataSource.count <= 1 {
+            getDictionaryList("11", key: "money")
+        }
+        
+        if self.jobTypeDataSource.count <= 1 {
+            getDictionaryList("7", key: "position")
+        }
+    }
+    
+    func getDictionaryList(type:String, key:String) {
+        
+        let url = PARK_URL_Header+"getDictionaryList"
+        
+        let param = ["type":type]
+
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+
+            if(error != nil){
+                
+            }else{
+                let status = EduModel(JSONDecoder(json!))
+                
+                if(status.status == "error"){
+                    
+                }
+                if(status.status == "success"){
+
+                    switch key {
+                    case "education":
+                        if self.eduDataSource.count <= 1 {
+                            
+                            for obj in EduList(status.data!).objectlist {
+                                self.eduDataSource.append(obj.name)
+                            }
+                            self.eduDrop.dataSource = self.eduDataSource
+                        }
+
+                    case "experience":
+                        if self.expDataSource.count <= 1 {
+                            
+                            for obj in EduList(status.data!).objectlist {
+                                self.expDataSource.append(obj.name)
+                            }
+                            self.expDrop.dataSource = self.expDataSource
+                        }
+
+                    case "title":
+                        if self.certificateDataSource.count <= 1 {
+                            
+                            for obj in EduList(status.data!).objectlist {
+                                self.certificateDataSource.append(obj.name)
+                            }
+                            self.certificateDrop.dataSource = self.certificateDataSource
+                        }
+                        
+                    case "money":
+                        if self.salaryDataSource.count <= 1 {
+                            
+                            for obj in EduList(status.data!).objectlist {
+                                self.salaryDataSource.append(obj.name)
+                            }
+                            self.salaryDrop.dataSource = self.salaryDataSource
+                        }
+                        
+                    case "position":
+                        if self.jobTypeDataSource.count <= 1 {
+                            
+                            for obj in EduList(status.data!).objectlist {
+                                self.jobTypeDataSource.append(obj.name)
+                            }
+                            self.jobTypeDrop.dataSource = self.jobTypeDataSource
+                        }
+
+                    default: break
+                        
+                    }
+                }else{
+                }
+            }
+            
+        }
+    }
+
     
     func configureUI(){
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
@@ -234,7 +632,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         self.view.backgroundColor = UIColor.whiteColor()
         //        myTableView.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
         myTableView.backgroundColor = UIColor.whiteColor()
         myTableView.tag = 0
         myTableView.delegate = self
@@ -243,6 +640,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         myTableView.registerClass(RecruitTableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
         myTableView.mj_header.beginRefreshing()
+        
+        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
         
         self.view.addSubview(myTableView)
         
@@ -384,7 +783,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             })
             alertController.addAction(cancelAction)
         }else{
-            let url = PARK_URL_Header+"getMyPublishJobList_android"
+            let url = PARK_URL_Header+"getMyPublishJobList"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 if(error != nil){

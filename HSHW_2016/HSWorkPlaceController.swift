@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDataSource,ToutiaoCateBtnClickedDelegate,changeModelDelegate {
     @IBOutlet weak var listTableView:UITableView!
@@ -30,6 +31,9 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
         listTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "zhichangbaodiancell")
         listTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         listTableView.mj_header.beginRefreshing()
+        
+        listTableView.mj_footer = MJRefreshBackNormalFooter.init(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
+        
         listTableView.tableFooterView = UIView()
         
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
@@ -37,16 +41,81 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
         self.view.addSubview(line)
     }
     
-    func loadData() {
-        if articleID != nil {
-            helper.getArticleListWithID(articleID!) {[unowned self] (success, response) in
-                if success {
-                    self.newsList = response as? Array<NewsInfo> ?? []
+//    func loadData() {
+//        if articleID != nil {
+//            helper.getArticleListWithID(articleID!) {[unowned self] (success, response) in
+//                if success {
+//                    self.newsList = response as? Array<NewsInfo> ?? []
+//                    dispatch_async(dispatch_get_main_queue(), {
+//                        self.listTableView.reloadData()
+//                        self.listTableView.mj_header.endRefreshing()
+//                    })
+//                }
+//            }
+//        }
+//    }
+    
+    func loadData(){
+        
+        let url = PARK_URL_Header+"getNewslist"
+        
+        let param = [
+            "channelid":(articleID ?? "")!,
+            "pager":"1",
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "show_fav":"1"
+        ];
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            //            print(request)
+            if(error != nil){
+            }else{
+                let status = NewsModel(JSONDecoder(json!))
+
+                if(status.status == "error"){
+                    
+                }
+                if (status.status == "success") {
+                    self.newsList = NewsList(status.data!).objectlist
                     dispatch_async(dispatch_get_main_queue(), {
                         self.listTableView.reloadData()
-                        self.listTableView.mj_header.endRefreshing()
                     })
                 }
+            }
+            dispatch_async(dispatch_get_main_queue(), {
+                self.listTableView.mj_header.endRefreshing()
+            })
+            
+        }
+        
+        
+    }
+    
+    var pager = 2
+    func loadData_pullUp() {
+        
+        HSNurseStationHelper().getArticleListWithID((articleID ?? "")!, pager: String(pager)) { (success, response) in
+            
+            if success {
+                //                print(response)
+                
+                for element in response as! Array<NewsInfo> {
+                    self.newsList?.append(element)
+                }
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.listTableView.reloadData()
+                    self.pager += 1
+                })
+                
+                self.listTableView.mj_footer.endRefreshing()
+                
+            }else{
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    self.listTableView.mj_footer.endRefreshingWithNoMoreData()
+                    
+                })
             }
         }
     }

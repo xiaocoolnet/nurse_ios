@@ -116,12 +116,16 @@ class NewsInfo: JSONJoy{
     var term_id :String
     var term_name:String
     var term_hits:String
-    var favorites = Array<LikeInfo>()
+//    var favorites = Array<LikeInfo>()
     var likes = Array<LikeInfo>()
     var smeta :JSONDecoder?
     var comments = Array<NewsCommentsModel>()
     var message_id: String
     
+//    "favorites_count": "0",
+//    "favorites_add": "0",
+    var favorites_count:String?
+    var favorites_add:String?
     
     required init(_ decoder: JSONDecoder){
         post_title = decoder["post_title"].string ?? ""
@@ -142,6 +146,9 @@ class NewsInfo: JSONJoy{
         term_name = decoder["term_name"].string ?? ""
         term_hits = decoder["term_hits"].string ?? ""
         message_id = decoder["message_id"].string ?? ""
+        favorites_count = decoder["favorites_count"].string ?? ""
+        favorites_add = decoder["favorites_add"].string ?? ""
+
         // print(post_excerpt)
         // print(decoder["likes"].array)
         if decoder["likes"].array != nil {
@@ -149,11 +156,11 @@ class NewsInfo: JSONJoy{
                 self.likes.append(LikeInfo(childs))
             }
         }
-        if decoder["favorites"].array != nil {
-            for childs: JSONDecoder in decoder["favorites"].array!{
-                self.favorites.append(LikeInfo(childs))
-            }
-        }
+//        if decoder["favorites"].array != nil {
+//            for childs: JSONDecoder in decoder["favorites"].array!{
+//                self.favorites.append(LikeInfo(childs))
+//            }
+//        }
         if decoder["thumb"].array != nil {
             for childs: JSONDecoder in decoder["thumb"].array!{
                 self.thumbArr.append(thumbModel(childs))

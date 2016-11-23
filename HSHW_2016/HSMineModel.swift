@@ -73,7 +73,6 @@ class HSFansAndFollowModel: JSONJoy {
     var city:String
     var level:String
     
-    // TODO:待接口好后看
     required init(_ decoder: JSONDecoder) {
         id = decoder["id"].string ?? ""
         userid = decoder["userid"].string ?? ""

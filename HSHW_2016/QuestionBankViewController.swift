@@ -64,7 +64,10 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         let url = PARK_URL_Header+"getNewslist"
         let param = [
             "channelid":term_id,
-            "pager":String(pager)
+            "pager":String(pager),
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "show_fav":"1"
+            
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             // print(request)
@@ -95,7 +98,9 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         let url = PARK_URL_Header+"getNewslist"
         let param = [
             "channelid":term_id,
-            "pager":"1"
+            "pager":"1",
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "show_fav":"1"
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             // print(request)
@@ -349,12 +354,13 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                     hud.labelText = "取消收藏成功"
                     hud.hide(true, afterDelay: 0.5)
                     
-                    for (i,obj) in (newsInfo.favorites).enumerate() {
-                        if obj.userid == QCLoginUserInfo.currentInfo.userid {
-                            newsInfo.favorites.removeAtIndex(i)
-                        }
-                    }
-                    
+//                    for (i,obj) in (newsInfo.favorites).enumerate() {
+//                        if obj.userid == QCLoginUserInfo.currentInfo.userid {
+//                            newsInfo.favorites.removeAtIndex(i)
+//                        }
+//                    }
+                    newsInfo.favorites_count = String(NSString(string: (newsInfo.favorites_count ?? "0")!).integerValue-1)
+                    newsInfo.favorites_add = "0"
                     self.dataSource.objectlist[collectionBtn.tag] = newsInfo
                     
                     self.myTableView.reloadData()
@@ -375,9 +381,13 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                     hud.labelText = "收藏成功"
                     hud.hide(true, afterDelay: 0.5)
                     
-                    let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
-                    let model:LikeInfo = LikeInfo.init(JSONDecoder(dic))
-                    newsInfo.favorites.append(model)
+//                    let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
+//                    let model:LikeInfo = LikeInfo.init(JSONDecoder(dic))
+//                    newsInfo.favorites.append(model)
+                    
+                    newsInfo.favorites_count = String(NSString(string: (newsInfo.favorites_count ?? "0")!).integerValue+1)
+                    newsInfo.favorites_add = "1"
+                    
                     self.dataSource.objectlist[collectionBtn.tag] = newsInfo
                     
                     self.myTableView.reloadData()

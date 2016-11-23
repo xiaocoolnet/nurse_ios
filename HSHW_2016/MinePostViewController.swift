@@ -72,7 +72,6 @@ class MinePostViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //        cell.title.text = "真是醉了，上班时间谈人生"
 //        cell.timeLab.text = "2016/05/23"
         cell.zanNum.text = String(model.like.count)
-        // TODO:阅读量暂无
         cell.conLab.text = String(model.comment.count)
         
         cell.timeLab.text = timeStampToString(model.write_time)

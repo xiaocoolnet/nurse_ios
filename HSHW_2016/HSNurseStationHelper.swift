@@ -11,10 +11,14 @@ import Alamofire
 
 class HSNurseStationHelper: NSObject {
     //获取职位列表
-    func getJobList(handle:ResponseBlock){
-        let url = PARK_URL_Header+"getjoblist_android"
+    func getJobList(address:String, salary:String, jobtype:String, pager:String, handle:ResponseBlock){
+        let url = PARK_URL_Header+"getjoblist"
         let param = [
-            "userid":QCLoginUserInfo.currentInfo.userid
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "address":address,
+            "salary":salary == "不限" ? "":salary,
+            "jobtype":jobtype == "不限" ? "":jobtype,
+            "pager":pager
         ]
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             // print(request)
@@ -27,14 +31,14 @@ class HSNurseStationHelper: NSObject {
                 if(result.status == "success"){
                     handle(success: true, response: result.datas)
                 }else{
-                    handle(success: true, response: result.errorData)
+                    handle(success: false, response: result.errorData)
                 }
             }
         }
     }
     
     //发布招聘信息
-    func publishJob(companyname:String,companyinfo:String,linkman:String,phone:String,email:String,title:String,jobtype:String,education:String,welfare:String,address:String,count:String,salary:String,description:String, handle:ResponseBlock){
+    func publishJob(companyname:String,companyinfo:String,linkman:String,phone:String,email:String,title:String,jobtype:String,education:String,experience:String,welfare:String,address:String,count:String,salary:String,description:String, handle:ResponseBlock){
         let url = PARK_URL_Header+"publishjob"
         let param = ["userid":QCLoginUserInfo.currentInfo.userid,
                      "photo":QCLoginUserInfo.currentInfo.avatar,
@@ -46,6 +50,7 @@ class HSNurseStationHelper: NSObject {
                      "title":title,
                      "jobtype":jobtype,
                      "education":education,
+                     "experience":experience,
                      "welfare":welfare,
                      "address":address,
                      "count":count,
@@ -69,10 +74,19 @@ class HSNurseStationHelper: NSObject {
     }
     
     //获取简历列表
-    func getCVList(handle:ResponseBlock){
-        let url = PARK_URL_Header+"getResumeList_android"
+    func getCVList(education:String, experience:String, certificate:String, pager:String, handle:ResponseBlock){
+        let url = PARK_URL_Header+"getResumeList"
         
-        Alamofire.request(.GET, url).response { request, response, json, error in
+        var param = [
+            "education":education == "不限" ? "":education,
+            "experience":experience == "不限" ? "":experience,
+            "certificate":certificate == "不限" ? "":certificate,
+            "pager":pager
+        ]
+        
+        param["experience"] = param["experience"]?.componentsSeparatedByString("-").first
+        
+        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)

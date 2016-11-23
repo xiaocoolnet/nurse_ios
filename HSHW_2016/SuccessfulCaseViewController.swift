@@ -58,7 +58,10 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
         let url = PARK_URL_Header+"getNewslist"
         
         let param = [
-            "channelid":articleID == nil ? "7":articleID!
+            "channelid":articleID == nil ? "7":articleID!,
+            "pager":"1",
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "show_fav":"1"
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             // print(request)
@@ -133,7 +136,9 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
         
         let param = [
             "channelid":articleID == nil ? "7":articleID!,
-            "pager":String(pager)
+            "pager":String(pager),
+            "userid":QCLoginUserInfo.currentInfo.userid,
+            "show_fav":"1"
         ];
         Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             // print(request)
@@ -200,6 +205,8 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
         successfulCaseCell.newsInfo = newsInfo
         successfulCaseCell.aca_zan.tag = indexPath.row
         successfulCaseCell.aca_zan.addTarget(self, action: #selector(click1(_:)), forControlEvents: .TouchUpInside)
+        successfulCaseCell.comBtn.tag = indexPath.row
+        successfulCaseCell.comBtn.addTarget(self, action: #selector(collectionBtnClick(_:)), forControlEvents: .TouchUpInside)
         
         return successfulCaseCell
     }
@@ -254,6 +261,75 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
         next.delegate = self
         
         self.navigationController?.pushViewController(next, animated: true)
+    }
+    
+    func collectionBtnClick(collectionBtn:UIButton) {
+        // MARK:要求登录
+        if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
+            return
+        }
+        
+        let newsInfo = self.dataSource.objectlist[collectionBtn.tag]
+        
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        //        hud.mode = MBProgressHUDMode.Text;
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
+        
+        if collectionBtn.selected {
+            
+            hud.labelText = "正在取消收藏"
+            
+            HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", handle: { (success, response) in
+                if success {
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "取消收藏成功"
+                    hud.hide(true, afterDelay: 0.5)
+                    
+                    //                    for (i,obj) in (newsInfo.favorites).enumerate() {
+                    //                        if obj.userid == QCLoginUserInfo.currentInfo.userid {
+                    //                            newsInfo.favorites.removeAtIndex(i)
+                    //                        }
+                    //                    }
+                    
+                    newsInfo.favorites_count = String(NSString(string: (newsInfo.favorites_count ?? "0")!).integerValue-1)
+                    newsInfo.favorites_add = "0"
+                    self.dataSource.objectlist[collectionBtn.tag] = newsInfo
+                    
+                    self.myTableView.reloadData()
+                }else{
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = String((response ?? "")!)
+                    hud.hide(true, afterDelay: 1)
+                }
+            })
+            
+        }else {
+            
+            hud.labelText = "正在收藏"
+            
+            HSMineHelper().addFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", title: newsInfo.post_title, description: newsInfo.post_excerpt, handle: { (success, response) in
+                if success {
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = "收藏成功"
+                    hud.hide(true, afterDelay: 0.5)
+                    
+                    //                    let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
+                    //                    let model:LikeInfo = LikeInfo.init(JSONDecoder(dic))
+                    //                    newsInfo.favorites.append(model)
+                    newsInfo.favorites_count = String(NSString(string: (newsInfo.favorites_count ?? "0")!).integerValue+1)
+                    newsInfo.favorites_add = "1"
+                    
+                    self.dataSource.objectlist[collectionBtn.tag] = newsInfo
+                    
+                    self.myTableView.reloadData()
+                }else{
+                    hud.mode = MBProgressHUDMode.Text;
+                    hud.labelText = String((response ?? "")!)
+                    hud.hide(true, afterDelay: 3)
+                }
+            })
+        }
     }
     
     func click1(btn:UIButton){

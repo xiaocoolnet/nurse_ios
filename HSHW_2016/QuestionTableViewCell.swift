@@ -92,7 +92,7 @@ class QuestionTableViewCell: UITableViewCell {
             self.hitsNum.frame.origin.x = CGRectGetMaxX(self.eyeImage.frame)+5
             self.hitsNum.center.y = self.eyeImage.center.y
             
-            self.colNum.text = "\((newsInfo?.favorites.count)!)"
+            self.colNum.text = "\((newsInfo?.favorites_count ?? "0")!)"
             self.colNum.sizeToFit()
             self.colNum.frame.origin.x = WIDTH-10-self.colNum.frame.size.width
             self.colNum.center.y = self.eyeImage.center.y
@@ -115,11 +115,14 @@ class QuestionTableViewCell: UITableViewCell {
                 }
             }
             
-            for obj in newsInfo!.favorites {
-                if obj.userid == QCLoginUserInfo.currentInfo.userid {
-                    colBtn.selected = true
-                }
+            if newsInfo?.favorites_add == "1" {
+                colBtn.selected = true
             }
+//            for obj in newsInfo!.favorites {
+//                if obj.userid == QCLoginUserInfo.currentInfo.userid {
+//                    colBtn.selected = true
+//                }
+//            }
         }
     }
     
