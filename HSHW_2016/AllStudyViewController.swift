@@ -45,7 +45,7 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
         }else{
             
             self.view.viewWithTag(10001)?.removeFromSuperview()
-            listTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-64)
+            listTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-64-70)
 
         }
         
@@ -58,19 +58,46 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
         
         listTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         listTableView.mj_header.beginRefreshing()
+        
+        listTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
     }
     
     func loadData() {
         
         if articleID != nil {
-            helper.getArticleListWithID(articleID!) {[unowned self] (success, response) in
+            pager = 1
+            helper.getArticleListWithID(articleID!, pager:String(pager)) {[unowned self] (success, response) in
                 if success {
+                    self.pager += 1
                     self.newsList = response as? Array<NewsInfo> ?? []
                     dispatch_async(dispatch_get_main_queue(), {
                         self.listTableView.reloadData()
                     })
                 }
                 self.listTableView.mj_header.endRefreshing()
+            }
+        }
+    }
+    var pager = 1
+    func loadData_pullUp() {
+        
+        if articleID != nil {
+            helper.getArticleListWithID(articleID!, pager: String(pager)) {[unowned self] (success, response) in
+                if success {
+                    self.pager += 1
+                    
+                    for newsInfo in response as? Array<NewsInfo> ?? []{
+                        self.newsList?.append(newsInfo)
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.listTableView.reloadData()
+                        self.listTableView.mj_footer.endRefreshing()
+                    })
+                }else{
+                    
+                    self.listTableView.mj_footer.endRefreshingWithNoMoreData()
+                }
             }
         }
     }

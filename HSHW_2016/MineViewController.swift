@@ -130,7 +130,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             }
         }else{// 企业用户
             
-            let url = PARK_URL_Header+"getMyReciveResumeList_ios"
+            let url = PARK_URL_Header+"getMyReciveResumeList"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
             Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 if(error != nil){

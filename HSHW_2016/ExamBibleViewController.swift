@@ -36,6 +36,7 @@ class ExamBibleViewController: UIViewController {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         self.navigationController?.navigationBar.hidden = false
         self.tabBarController?.tabBar.hidden = true
+        self.navigationController?.interactivePopGestureRecognizer?.enabled = false
     }
     
     override func viewDidLoad() {

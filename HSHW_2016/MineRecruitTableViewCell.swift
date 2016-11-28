@@ -49,7 +49,7 @@ class MineRecruitTableViewCell: UITableViewCell {
         
         self.addSubview(line)
         self.addSubview(ones)
-//        self.addSubview(timeLab)
+        self.addSubview(timeLab)
         self.addSubview(time)
         self.addSubview(nameTit)
         self.addSubview(one)
@@ -59,7 +59,7 @@ class MineRecruitTableViewCell: UITableViewCell {
     }
     
     func showforCVModel(model:CVModel) {
-        timeLab.text = "15分钟前"
+        timeLab.text = self.timeStampToString(model.create_time)
         timeLab.sizeToFit()
         
         nameTit.frame = CGRectMake(15, 15, 50, 20)
@@ -88,7 +88,7 @@ class MineRecruitTableViewCell: UITableViewCell {
     }
     
     func showforUserModel(model:InvitedInfo) {
-        timeLab.text = "15分钟前"
+        timeLab.text = self.timeStampToString(model.create_time)
         timeLab.sizeToFit()
         
         nameTit.frame = CGRectMake(15, 15, 50, 20)
@@ -114,6 +114,21 @@ class MineRecruitTableViewCell: UITableViewCell {
         two.font = UIFont.systemFontOfSize(14)
         two.sizeToFit()
         
+    }
+    
+    // Linux时间戳转标准时间
+    func timeStampToString(timeStamp:String)->String {
+        
+        let string = NSString(string: timeStamp)
+        
+        let timeSta:NSTimeInterval = string.doubleValue
+        let dfmatter = NSDateFormatter()
+        dfmatter.dateFormat="yyyy-MM-dd   hh:mm"
+        
+        let date = NSDate(timeIntervalSince1970: timeSta)
+        
+        //        print(dfmatter.stringFromDate(date))
+        return dfmatter.stringFromDate(date)
     }
     
     required init?(coder aDecoder: NSCoder) {

@@ -47,11 +47,15 @@ class MineJobTableViewCell: UITableViewCell {
         }
         title.text = model.title
         name.text = model.companyname
-        location.text = model.address.componentsSeparatedByString(" ").first
+        location.text = model.address.componentsSeparatedByString("-").first! + "-" + model.address.componentsSeparatedByString("-")[1]
+
+//        location.text = model.address.componentsSeparatedByString(" ").first
         location.sizeToFit()
         let contentStr = "薪资待遇:"+model.salary+"\n福利待遇:"+model.welfare+"\n招聘职位:"+model.jobtype
         content.text = contentStr
-        let contStr = "学历要求:"+model.education+"\n工作年限:"+"\n相关证件:"+model.certificate
+        let contStr = "学历要求:"+model.education+"\n工作年限:"+model.experience+"\n招聘人数:"+model.count
+
+//        let contStr = "学历要求:"+model.education+"\n工作年限:"+"\n相关证件:"+model.certificate
         cont.text = contStr
         let titleHeight:CGFloat = calculateHeight(model.title, size: 16, width: WIDTH*300/375)
         title.frame.size.height = titleHeight

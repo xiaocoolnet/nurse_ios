@@ -70,6 +70,7 @@ class MineJobInfo: JSONJoy {
     var companyinfo:String
     var create_time:String
     var hits:String
+    var experience:String
     
     required init(_ decoder:JSONDecoder){
         id = decoder["id"].string ?? ""
@@ -90,5 +91,7 @@ class MineJobInfo: JSONJoy {
         companyinfo = decoder["companyinfo"].string ?? ""
         create_time = decoder["create_time"].string ?? ""
         hits = decoder["hits"].string ?? ""
+        experience = decoder["experience"].string ?? "0"
+
     }
 }
