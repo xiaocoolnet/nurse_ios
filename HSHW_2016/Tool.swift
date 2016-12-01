@@ -45,8 +45,11 @@ let kRedirectURI = "http://app.chinanurse.cn"
 let APP_SHARE_URL = "https://www.pgyer.com/kUyM"
 let APP_SHARE_NAME = "中国护士网"
 
-let APP_INVITEFRIEND_TITLE = "中国护士网"
-let APP_INVITEFRIEND_DESCRIPTION = "服务于中国320万护士 白衣天使的网上家园"
+let APP_INVITEFRIEND_TITLE_ZONE = "邀请护士好友加入中国护士网，赚积分赢大奖，OPPO、VIVO更多大奖等你拿>>"
+let APP_INVITEFRIEND_TITLE_FREND = "中国护士网-邀请您加入"
+
+let APP_INVITEFRIEND_DESCRIPTION_ZONE = "成为中国护士网会员，会享受100余项积分功能和政策。我们会有积分兑换商城，定期会有积分活动，让您真正享受到您的每一份支持都将获得我们的真情回报。"
+let APP_INVITEFRIEND_DESCRIPTION_FREND = "邀请护士好友加入中国护士网，赚积分赢大奖，OPPO、VIVO更多大奖等你拿>>"
 let APP_INVITEFRIEND_URL = "http://app.chinanurse.cn/index.php?g=Score&m=Score&a=scorepengyou&userid="
 //var myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
 var myInviteFriendUrl = NSUserDefaults.standardUserDefaults().stringForKey("myInviteFriendUrl") ?? APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid

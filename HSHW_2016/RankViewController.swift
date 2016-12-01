@@ -43,12 +43,18 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
         myTableView.delegate = self
         self.view.addSubview(myTableView)
         
-        let noteLab = UILabel(frame: CGRectMake(20/750.0*WIDTH, CGRectGetMaxY(myTableView.frame), 71/75.0*WIDTH, 158/1380.0*HEIGHT))
-        noteLab.numberOfLines = 0
-        noteLab.font = UIFont.systemFontOfSize(12)
-        noteLab.textColor = UIColor.whiteColor()
-        noteLab.text = "  排行榜是一个对进行综合评比和展示的栏目。以日为单位，主要依据会员买卖通指数、登录次数、受关注程度、信息丰富程度等来进行评比。"
-        noteLab.layer.cornerRadius = 3
+        let noteLab = UIButton(frame: CGRectMake(20/750.0*WIDTH, CGRectGetMaxY(myTableView.frame), 71/75.0*WIDTH, 158/1380.0*HEIGHT))
+        noteLab.titleLabel?.numberOfLines = 0
+        noteLab.titleLabel!.font = UIFont.systemFontOfSize(12)
+        noteLab.titleLabel?.textColor = UIColor.whiteColor()
+        
+        let descripStr = "  在中国护士网，赚积分、赢大奖。榜上有名，期待您的参与上榜！点击查看>>"
+        let attrStr = NSMutableAttributedString(string: descripStr)
+        attrStr.addAttributes([NSUnderlineStyleAttributeName:NSNumber(integer: NSUnderlineStyle.StyleSingle.rawValue)], range: NSMakeRange(attrStr.length-6, 6))
+        noteLab.setAttributedTitle(attrStr, forState: .Normal)
+        
+        noteLab.addTarget(self, action: #selector(noteLabClick), forControlEvents: .TouchUpInside)
+
         self.view.addSubview(noteLab)
         
         let shareBtn = UIButton(frame: CGRectMake(20/750.0*WIDTH, CGRectGetMaxY(noteLab.frame), 71/75.0*WIDTH, 84/1380.0*HEIGHT))
@@ -63,6 +69,13 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
         // print(myTableView.frame,noteLab.frame,shareBtn.frame)
         
         loadData()
+    }
+    
+    func noteLabClick() {
+        
+        let scoreNoteController = ScoreNoteViewController()
+        scoreNoteController.urlStr = "http://app.chinanurse.cn/index.php?g=portal&m=article&a=index&id=407&type=2"
+        self.navigationController?.pushViewController(scoreNoteController, animated: true)
     }
     
     // MARK:- 获取数据
@@ -281,33 +294,50 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
         
         if btn.tag == 0 || btn.tag == 1 {
             
-            let message = WXMediaMessage()
-            message.title = APP_INVITEFRIEND_TITLE
-            message.description = APP_INVITEFRIEND_DESCRIPTION
-
-            let thumbImage = UIImage(named: "appLogo")
-            message.setThumbImage(thumbImage)
-            
-            let webPageObject = WXWebpageObject()
-            webPageObject.webpageUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
-            message.mediaObject = webPageObject
-            
-            let req = SendMessageToWXReq()
-            req.bText = false
-            req.message = message
             
             switch btn.tag {
             case 0:
+                let message = WXMediaMessage()
+                message.title = APP_INVITEFRIEND_TITLE_ZONE
+                message.description = APP_INVITEFRIEND_DESCRIPTION_ZONE
+                
+                let thumbImage = UIImage(named: "appLogo")
+                message.setThumbImage(thumbImage)
+                
+                let webPageObject = WXWebpageObject()
+                webPageObject.webpageUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+                message.mediaObject = webPageObject
+                
+                let req = SendMessageToWXReq()
+                req.bText = false
+                req.message = message
                 req.scene = Int32(WXSceneTimeline.rawValue)
+                WXApi.sendReq(req)
+                
             case 1:
+                let message = WXMediaMessage()
+                message.title = APP_INVITEFRIEND_TITLE_FREND
+                message.description = APP_INVITEFRIEND_DESCRIPTION_FREND
+                
+                let thumbImage = UIImage(named: "appLogo")
+                message.setThumbImage(thumbImage)
+                
+                let webPageObject = WXWebpageObject()
+                webPageObject.webpageUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+                message.mediaObject = webPageObject
+                
+                let req = SendMessageToWXReq()
+                req.bText = false
+                req.message = message
                 req.scene = Int32(WXSceneSession.rawValue)
+                WXApi.sendReq(req)
+                
             default:
                 break
             }
             
             //        req.scene = Int32(WXSceneTimeline.rawValue)
             
-            WXApi.sendReq(req)
         }else if btn.tag == 2 {
             //            let myDelegate = UIApplication.sharedApplication().delegate
             let authRequest:WBAuthorizeRequest = WBAuthorizeRequest.request() as! WBAuthorizeRequest
@@ -316,17 +346,17 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
             
             let message = WBMessageObject.message() as! WBMessageObject
             if WeiboSDK.isCanShareInWeiboAPP() {
-                message.text = "\(APP_INVITEFRIEND_TITLE)\n\(APP_INVITEFRIEND_DESCRIPTION)"
+                message.text = "\(APP_INVITEFRIEND_TITLE_ZONE)\n\(APP_INVITEFRIEND_DESCRIPTION_ZONE)"
             }else{
-                message.text = "\(APP_INVITEFRIEND_TITLE)\n\(APP_INVITEFRIEND_DESCRIPTION) \(myInviteFriendUrl)"
+                message.text = "\(APP_INVITEFRIEND_TITLE_ZONE)\n\(APP_INVITEFRIEND_DESCRIPTION_ZONE) \(myInviteFriendUrl)"
             }
             let webpage:WBWebpageObject = WBWebpageObject.object() as! WBWebpageObject
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "yyyyMMddHHmmss"
             let dateStr = dateFormatter.stringFromDate(NSDate())
             webpage.objectID = "chinanurse\(kAppKey)\(dateStr)"
-            webpage.title = APP_INVITEFRIEND_TITLE
-            webpage.description = APP_INVITEFRIEND_DESCRIPTION
+            webpage.title = APP_INVITEFRIEND_TITLE_ZONE
+            webpage.description = APP_INVITEFRIEND_DESCRIPTION_ZONE
             
             let thumbImage = UIImage(named: "appLogo")
             let data = UIImageJPEGRepresentation(thumbImage!, 0.5)!
@@ -334,7 +364,7 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
             
             webpage.webpageUrl = myInviteFriendUrl
             message.mediaObject = webpage
-            // print(message.mediaObject.debugDescription)
+            //            print(message.mediaObject.debugDescription)
             
             let request = WBSendMessageToWeiboRequest.requestWithMessage(message, authInfo: authRequest, access_token: AppDelegate().wbtoken) as! WBSendMessageToWeiboRequest
             request.userInfo = ["ShareMessageFrom":"NewsContantViewController"]
@@ -342,26 +372,37 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
             WeiboSDK.sendRequest(request)
         }else{
             
-            let newsUrl = NSURL(string: myInviteFriendUrl)
-            let title = APP_INVITEFRIEND_TITLE
-            let description = APP_INVITEFRIEND_DESCRIPTION
-            
-            var previewImageData = NSData()
-            
-            let thumbImage = UIImage(named: "appLogo")
-            previewImageData = thumbImage!.compressImage(thumbImage!, maxLength: 32700)!
-            
-            let newsObj = QQApiNewsObject(URL: newsUrl, title: title, description: description, previewImageData: previewImageData, targetContentType: QQApiURLTargetTypeNews)
-            let req = SendMessageToQQReq(content: newsObj)
             
             if btn.tag == 3 {
+                let newsUrl = NSURL(string: myInviteFriendUrl)
+                let title = APP_INVITEFRIEND_TITLE_FREND
+                let description = APP_INVITEFRIEND_DESCRIPTION_FREND
+                
+                var previewImageData = NSData()
+                
+                let thumbImage = UIImage(named: "appLogo")
+                previewImageData = thumbImage!.compressImage(thumbImage!, maxLength: 32700)!
+                
+                let newsObj = QQApiNewsObject(URL: newsUrl, title: title, description: description, previewImageData: previewImageData, targetContentType: QQApiURLTargetTypeNews)
+                let req = SendMessageToQQReq(content: newsObj)
                 QQApiInterface.sendReq(req)
             }else if btn.tag == 4 {
+                let newsUrl = NSURL(string: myInviteFriendUrl)
+                let title = APP_INVITEFRIEND_TITLE_ZONE
+                let description = APP_INVITEFRIEND_DESCRIPTION_ZONE
+                
+                var previewImageData = NSData()
+                
+                let thumbImage = UIImage(named: "appLogo")
+                previewImageData = thumbImage!.compressImage(thumbImage!, maxLength: 32700)!
+                
+                let newsObj = QQApiNewsObject(URL: newsUrl, title: title, description: description, previewImageData: previewImageData, targetContentType: QQApiURLTargetTypeNews)
+                let req = SendMessageToQQReq(content: newsObj)
                 QQApiInterface.SendReqToQZone(req)
             }
         }
         
-        // print(btn.tag)
+        //        print(btn.tag)
     }
 
     
