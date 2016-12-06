@@ -13,15 +13,15 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
     let findJob = RecruitmentViewController()
     let findPersonnel = RecruitmentViewController()
     var workPlace:HSWorkPlaceController?
-    weak var superViewController:NurseStationViewController?
+//    weak var superViewController:NurseStationViewController?
     
     var pagingMenuController:PagingMenuController?
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        findJob.superViewController = superViewController ?? nil
-        findPersonnel.superViewController = superViewController ?? nil
+//        findJob.superViewController = superViewController ?? nil
+//        findPersonnel.superViewController = superViewController ?? nil
         
         BaiduMobStat.defaultStat().pageviewStartWithName("护士站 招聘")
     }
@@ -35,7 +35,7 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
     
     override func viewWillAppear(animated: Bool) {
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.hidden = true
+        self.navigationController?.navigationBar.hidden = false
         self.tabBarController?.tabBar.hidden = false
     }
     
@@ -61,7 +61,7 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
         
         pagingMenuController = PagingMenuController(viewControllers: viewControllers, options: options)
         pagingMenuController!.delegate = self
-        pagingMenuController!.view.frame = CGRectMake(0, 20, WIDTH, HEIGHT-64)
+        pagingMenuController!.view.frame = CGRectMake(0, 1, WIDTH, HEIGHT-45)
         pagingMenuController!.view.frame.origin.y += 0
         pagingMenuController!.view.frame.size.height -= 0
         addChildViewController(pagingMenuController!)
@@ -93,16 +93,16 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
     
     
     
-    func rightBarButtonClicked(){
-        findJob.rightBarButtonClicked()
-        findPersonnel.rightBarButtonClicked()
-    }
+//    func rightBarButtonClicked(){
+//        findJob.rightBarButtonClicked()
+//        findPersonnel.rightBarButtonClicked()
+//    }
     
     func willMoveToPageMenuController(menuController: UIViewController, previousMenuController: UIViewController) {
-        if previousMenuController == findJob {
-            findJob.saveResumeBtnClicked()
-        }else if previousMenuController == findPersonnel {
-            findPersonnel.saveResumeBtnClicked()
-        }
+//        if previousMenuController == findJob {
+//            findJob.saveResumeBtnClicked()
+//        }else if previousMenuController == findPersonnel {
+//            findPersonnel.saveResumeBtnClicked()
+//        }
     }
 }

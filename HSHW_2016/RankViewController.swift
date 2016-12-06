@@ -74,7 +74,7 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
     func noteLabClick() {
         
         let scoreNoteController = ScoreNoteViewController()
-        scoreNoteController.urlStr = "http://app.chinanurse.cn/index.php?g=portal&m=article&a=index&id=407&type=2"
+        scoreNoteController.urlStr = "\(DomainName)index.php?g=portal&m=article&a=index&id=407&type=2"
         self.navigationController?.pushViewController(scoreNoteController, animated: true)
     }
     

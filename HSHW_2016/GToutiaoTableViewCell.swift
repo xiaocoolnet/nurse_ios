@@ -325,7 +325,13 @@ class GToutiaoTableViewCell: UITableViewCell {
         
         let time:Array = (newsInfo.post_modified?.componentsSeparatedByString(" "))!
         let date:Array = time[0].componentsSeparatedByString("-")
-        self.timeLab.text = "\(date[1])/\(date[2])"
+        if date.count >= 3 {
+            self.timeLab.text = "\(date[1])/\(date[2])"
+        }else if date.count >= 2 {
+            self.timeLab.text = "\(date[0])/\(date[1])"
+        }else{
+            self.timeLab.text = "\(date[0])"
+        }
         self.contant.text = newsInfo.post_excerpt
         
         line.frame.origin.y = self.frame.size.height-0.5

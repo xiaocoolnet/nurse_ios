@@ -9,7 +9,7 @@ import UIKit
 import Alamofire
 import MBProgressHUD
 
-class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,PostVacanciesDelegate,HSPostResumeViewDelegate, LFLUISegmentedControlDelegate {
+class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate, LFLUISegmentedControlDelegate {//PostVacanciesDelegate,HSPostResumeViewDelegate
     
     let myTableView = UITableView()
     let scrollView = UIScrollView()
@@ -44,7 +44,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var resumePager = 1
 
     
-    weak var superViewController:NurseStationViewController?
+//    weak var superViewController:NurseStationViewController?
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -69,14 +69,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             
 //            self.setFiltrateItem_findJob()
             self.setSlideView()
-            myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
+            myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65-45-49)
 //            myTableView.frame = CGRectMake(0, 38, WIDTH, HEIGHT-110-37)
 
 
         }else{
             
 //            self.setFiltrateItem_findPerson()
-            myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
+            myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65-45-49)
 //            myTableView.frame = CGRectMake(0, 38, WIDTH, HEIGHT-110-37)
 
 
@@ -84,8 +84,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         self.configureUI()
 
 //        makeDataSource()
-        sendPostion.delegate = self
-        sendResume.delegate = self
+//        sendPostion.delegate = self
+//        sendResume.delegate = self
         
         self.makeEmployment()
         self.view.backgroundColor = COLOR
@@ -1092,27 +1092,27 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
-    func rightBarButtonClicked() {
-        if showType == 2 {
-            UIView.animateWithDuration(0.2) {
-                self.sendPostion.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
-            }
-            self.sendPostion.removeFromSuperview()
-            self.employmentMessage.removeFromSuperview()
-            superViewController?.hiddenBtn()
-        } else if showType == 1 {
-            UIView.animateWithDuration(0.2) {
-                self.sendResume.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
-            }
-            self.sendResume.removeFromSuperview()
-            self.resumeDetail.removeFromSuperview()
-            superViewController?.hiddenBtn()
-        }
-    }
+//    func rightBarButtonClicked() {
+//        if showType == 2 {
+//            UIView.animateWithDuration(0.2) {
+//                self.sendPostion.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
+//            }
+//            self.sendPostion.removeFromSuperview()
+//            self.employmentMessage.removeFromSuperview()
+//            superViewController?.hiddenBtn()
+//        } else if showType == 1 {
+//            UIView.animateWithDuration(0.2) {
+//                self.sendResume.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
+//            }
+//            self.sendResume.removeFromSuperview()
+//            self.resumeDetail.removeFromSuperview()
+//            superViewController?.hiddenBtn()
+//        }
+//    }
     //MARK:-----SendPositionDelegate-----
-    func clickedSendBtn(){
-        rightBarButtonClicked()
-    }
+//    func clickedSendBtn(){
+//        rightBarButtonClicked()
+//    }
     
     func takeThePost() {
         UIView.animateWithDuration(0.3) {
@@ -1190,9 +1190,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     func uploadAvatar() -> UIImage{
         return UIImage()
     }
-    func saveResumeBtnClicked(){
-        rightBarButtonClicked()
-    }
+//    func saveResumeBtnClicked(){
+//        rightBarButtonClicked()
+//    }
     
     // MARK:图片点击事件
     func tapAction(tap:UIGestureRecognizer) {
