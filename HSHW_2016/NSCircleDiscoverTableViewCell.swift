@@ -35,11 +35,12 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        self.addSubview(likeBtn)
-        self.addSubview(comBtn)
         self.addSubview(titleLab)
+        self.addSubview(contantLab)
         self.addSubview(titleImg)
         self.addSubview(titSubImg)
+        self.addSubview(likeBtn)
+        self.addSubview(comBtn)
         
         self.setSubViews()
     }
@@ -56,11 +57,11 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
     
     func setSubViews() {
         
-        titleLab.font = UIFont.systemFontOfSize(15)
-        titleLab.textColor = UIColor.darkGrayColor()
+        titleLab.font = UIFont.systemFontOfSize(titleSize)
+        titleLab.textColor = UIColor.blackColor()
         titleLab.numberOfLines = 0
         
-        contantLab.font = UIFont.systemFontOfSize(14)
+        contantLab.font = UIFont.systemFontOfSize(contentSize)
         contantLab.textColor = UIColor.grayColor()
         contantLab.numberOfLines = 2
         
@@ -91,77 +92,93 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
         titSubImg.addSubview(titSubImg_3)
     }
     
-    func setCellWithNewsInfo(newsInfo:NewsInfo) {
+    private let titleSize:CGFloat = 14
+    private let contentSize:CGFloat = 12
+    
+    func setCellWithNewsInfo(forum:ForumModel) {
         
-        let height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-140)
-        self.titleLab.frame = CGRectMake(10, 9, WIDTH-140, height)
         
-        self.titleLab.text = newsInfo.post_title
-        
-        //        if type == 1 {
-        //            heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+22, 46, 15)
-        //        }
-        
-        likeBtn.setTitle(newsInfo.term_name, forState: .Normal)
-        likeBtn.tag = Int(newsInfo.term_id)!
-        
-        let healWidth = calculateWidth(newsInfo.term_name, size: 11, height: 15)+5
-        likeBtn.frame = CGRectMake(10, titleLab.frame.size.height+titleLab.frame.origin.y+22, healWidth, 15)
-        if type == 2 {
-            likeBtn.removeFromSuperview()
-        }
-        
-        comBtn.frame = CGRectMake(type == 1 ? CGRectGetMaxX(likeBtn.frame)+10:5, titleLab.frame.size.height+titleLab.frame.origin.y+25, 13, 9)
         
         var conNumStr = "0"
-        if Int(newsInfo.post_hits!) > 99999 {
+        if Int(forum.hits) > 99999 {
             conNumStr = "10W+"
-        }else if Int(newsInfo.post_hits!) > 199999 {
+        }else if Int(forum.hits) > 199999 {
             conNumStr = "20W+"
-        }else if Int(newsInfo.post_hits!) > 299999 {
+        }else if Int(forum.hits) > 299999 {
             conNumStr = "30W+"
-        }else if Int(newsInfo.post_hits!) > 399999 {
+        }else if Int(forum.hits) > 399999 {
             conNumStr = "40W+"
-        }else if Int(newsInfo.post_hits!) > 499999 {
+        }else if Int(forum.hits) > 499999 {
             conNumStr = "50W+"
-        }else if Int(newsInfo.post_hits!) > 599999 {
+        }else if Int(forum.hits) > 599999 {
             conNumStr = "60W+"
-        }else if Int(newsInfo.post_hits!) > 799999 {
+        }else if Int(forum.hits) > 799999 {
             conNumStr = "80W+"
-        }else if Int(newsInfo.post_hits!) > 899999 {
+        }else if Int(forum.hits) > 899999 {
             conNumStr = "90W+"
-        }else if Int(newsInfo.post_hits!) > 999999 {
+        }else if Int(forum.hits) > 999999 {
             conNumStr = "100W+"
-        }else if Int(newsInfo.post_hits!) > 9999999 {
+        }else if Int(forum.hits) > 9999999 {
             conNumStr = "1000W+"
         }else{
-            conNumStr = newsInfo.post_hits!
+            conNumStr = forum.hits
         }
         
         
-        self.contantLab.text = newsInfo.post_excerpt
         
-        if newsInfo.thumbArr.count == 0 {
+        if forum.photo.count == 0 {
             
             titleImg.hidden = true
             titSubImg.hidden = true
             
-            self.titleLab.frame.size.width = WIDTH-20
+            let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
+            self.titleLab.frame = CGRectMake(8, 8, WIDTH-16, height)
             
-        }else{
+            self.titleLab.text = forum.title
+            
+            var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
+            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
+                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
+            }
+            self.contantLab.frame = CGRectMake(8, 8+height+8, WIDTH-16, contentHeight)
+            
+            self.contantLab.text = forum.content
+            
+            likeBtn.setTitle(forum.like, forState: .Normal)
+            comBtn.setTitle(forum.hits, forState: .Normal)
+            
+            likeBtn.sizeToFit()
+            likeBtn.frame.origin = CGPoint(x: 8, y: contantLab.frame.maxY+8)
+            
+            comBtn.sizeToFit()
+            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: contantLab.frame.maxY+8)
+            
+        }else if forum.photo.count < 3 {
+            
+            let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16-110-8)
+            self.titleLab.frame = CGRectMake(8, 8, WIDTH-16-110-8, height)
+            
+            self.titleLab.text = forum.title
+            
+            var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16-110-8)
+            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
+                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
+            }
+            self.contantLab.frame = CGRectMake(8, 8+height+8, WIDTH-16-110-8, contentHeight)
+            
+            self.contantLab.text = forum.content
             
             if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
                 
-                titleImg.frame = CGRectMake(WIDTH-120, 10, 110, 80)
+                titleImg.frame = CGRectMake(WIDTH-110-8, 10, 110, 80)
                 self.titleImg.image = UIImage.init(named: "defaultImage.png")
                 
                 titleImg.hidden = false
                 titSubImg.hidden = true
             }else{
-                let photoUrl:String = DomainName+"data/upload/"+(newsInfo.thumbArr.first?.url)!
-                //                print("GToutiaoTableViewCell =-=-=-=-=-=-=   ",photoUrl)
+                let photoUrl:String = DomainName+"data/upload/"+(forum.photo.first!.url ?? "")!
                 
-                titleImg.frame = CGRectMake(WIDTH-120, 10, 110, 80)
+                titleImg.frame = CGRectMake(WIDTH-110-8, 10, 110, 80)
                 self.titleImg.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
                 
                 titleImg.hidden = false
@@ -169,80 +186,66 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
                 //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
                 //        titLab.frame.size.height = titleHeight+100
             }
-        }
-        likeBtn.frame.origin.y = self.frame.size.height-likeBtn.frame.size.height-1-8
-        comBtn.frame.origin.y = self.frame.size.height-comBtn.frame.size.height-4-8
-        
-    }
-    
-    func setThreeImgCellWithNewsInfo(newsInfo:NewsInfo) {
-        
-        let height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-20)
-        self.titleLab.frame = CGRectMake(10, 9, WIDTH-20, height)
-        
-        self.titleLab.text = newsInfo.post_title
-        
-        //        let margin:CGFloat = 15
-        
-        titSubImg.frame = CGRectMake(10, CGRectGetMaxY(titleLab.frame)+10, WIDTH-20, (WIDTH-20-margin*2)/3.0*2/3.0)
-        
-        if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
             
-            titSubImg_1.image = UIImage(named: "defaultImage.png")
-            titSubImg_2.image = UIImage(named: "defaultImage.png")
-            titSubImg_3.image = UIImage(named: "defaultImage.png")
-        }else {
+            if 8+80+8 < contantLab.frame.maxY+8+8+8 {
+                titleImg.frame.origin.y = (contantLab.frame.maxY+8+8+8-80)/2.0
+            }
             
-            let photoUrl_1:String = DomainName+"data/upload/"+(newsInfo.thumbArr[0].url)
-            titSubImg_1.sd_setImageWithURL(NSURL(string:photoUrl_1), placeholderImage: UIImage(named: "defaultImage.png"))
+            likeBtn.setTitle(forum.like, forState: .Normal)
+            comBtn.setTitle(forum.hits, forState: .Normal)
             
-            let photoUrl_2:String = DomainName+"data/upload/"+(newsInfo.thumbArr[1].url)
-            titSubImg_2.sd_setImageWithURL(NSURL(string:photoUrl_2), placeholderImage: UIImage(named: "defaultImage.png"))
+            likeBtn.sizeToFit()
+            likeBtn.frame.origin = CGPoint(x: 8, y: max(8+80-likeBtn.frame.height, contantLab.frame.maxY+8))
             
-            let photoUrl_3:String = DomainName+"data/upload/"+(newsInfo.thumbArr[2].url)
-            titSubImg_3.sd_setImageWithURL(NSURL(string:photoUrl_3), placeholderImage: UIImage(named: "defaultImage.png"))
-        }
-        
-        titleImg.hidden = true
-        titSubImg.hidden = false
-        
-        likeBtn.setTitle(newsInfo.term_name, forState: .Normal)
-        likeBtn.tag = Int(newsInfo.term_id)!
-        
-        let healWidth = calculateWidth(newsInfo.term_name, size: 11, height: 15)+5
-        likeBtn.frame = CGRectMake(10, CGRectGetMaxY(titSubImg.frame)+12, healWidth, 15)
-        if type == 2 {
-            likeBtn.removeFromSuperview()
-        }
-        
-        comBtn.frame = CGRectMake(type == 1 ? CGRectGetMaxX(likeBtn.frame)+10:5, CGRectGetMaxY(titSubImg.frame)+15, 13, 9)
-        
-        var conNumStr = "0"
-        if Int(newsInfo.post_hits!) > 99999 {
-            conNumStr = "10W+"
-        }else if Int(newsInfo.post_hits!) > 199999 {
-            conNumStr = "20W+"
-        }else if Int(newsInfo.post_hits!) > 299999 {
-            conNumStr = "30W+"
-        }else if Int(newsInfo.post_hits!) > 399999 {
-            conNumStr = "40W+"
-        }else if Int(newsInfo.post_hits!) > 499999 {
-            conNumStr = "50W+"
-        }else if Int(newsInfo.post_hits!) > 599999 {
-            conNumStr = "60W+"
-        }else if Int(newsInfo.post_hits!) > 799999 {
-            conNumStr = "80W+"
-        }else if Int(newsInfo.post_hits!) > 899999 {
-            conNumStr = "90W+"
-        }else if Int(newsInfo.post_hits!) > 999999 {
-            conNumStr = "100W+"
-        }else if Int(newsInfo.post_hits!) > 9999999 {
-            conNumStr = "1000W+"
+            comBtn.sizeToFit()
+            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: max(8+80-likeBtn.frame.height, contantLab.frame.maxY+8))
         }else{
-            conNumStr = newsInfo.post_hits!
+            
+            let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
+            self.titleLab.frame = CGRectMake(8, 8, WIDTH-16, height)
+            
+            self.titleLab.text = forum.title
+            
+            var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
+            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
+                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
+            }
+            self.contantLab.frame = CGRectMake(8, 8+height+8, WIDTH-16, contentHeight)
+            
+            self.contantLab.text = forum.content
+            
+            titSubImg.frame = CGRectMake(8, contantLab.frame.maxY+8, WIDTH-16, (WIDTH-16-margin*2)/3.0*2/3.0)
+            
+            if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
+                
+                titSubImg_1.image = UIImage(named: "defaultImage.png")
+                titSubImg_2.image = UIImage(named: "defaultImage.png")
+                titSubImg_3.image = UIImage(named: "defaultImage.png")
+            }else {
+                
+                let photoUrl_1:String = DomainName+"data/upload/"+(forum.photo[0].url)
+                titSubImg_1.sd_setImageWithURL(NSURL(string:photoUrl_1), placeholderImage: UIImage(named: "defaultImage.png"))
+                
+                let photoUrl_2:String = DomainName+"data/upload/"+(forum.photo[1].url)
+                titSubImg_2.sd_setImageWithURL(NSURL(string:photoUrl_2), placeholderImage: UIImage(named: "defaultImage.png"))
+                
+                let photoUrl_3:String = DomainName+"data/upload/"+(forum.photo[2].url)
+                titSubImg_3.sd_setImageWithURL(NSURL(string:photoUrl_3), placeholderImage: UIImage(named: "defaultImage.png"))
+            }
+            
+            titleImg.hidden = true
+            titSubImg.hidden = false
+            
+            likeBtn.setTitle(forum.like, forState: .Normal)
+            comBtn.setTitle(forum.hits, forState: .Normal)
+            
+            likeBtn.sizeToFit()
+            likeBtn.frame.origin = CGPoint(x: 8, y: titSubImg.frame.maxY+8)
+            
+            comBtn.sizeToFit()
+            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: titSubImg.frame.maxY+8)
         }
-     
-        self.contantLab.text = newsInfo.post_excerpt
+        
         
         
     }

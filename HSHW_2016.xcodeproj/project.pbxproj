@@ -135,6 +135,9 @@
 		1F1C1B2D1DF656FB0051F638 /* NSCircleMineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B2C1DF656FB0051F638 /* NSCircleMineViewController.swift */; };
 		1F1C1B301DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B2F1DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift */; };
 		1F1C1B331DF68E310051F638 /* CircleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B321DF68E310051F638 /* CircleModel.swift */; };
+		1F1C1B371DF6ADA20051F638 /* NSCircleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B361DF6ADA20051F638 /* NSCircleListViewController.swift */; };
+		1F1C1B3C1DF6B0930051F638 /* NSCircleListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B3A1DF6B0930051F638 /* NSCircleListTableViewCell.swift */; };
+		1F1C1B3D1DF6B0930051F638 /* NSCircleListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1C1B3B1DF6B0930051F638 /* NSCircleListTableViewCell.xib */; };
 		1F1EA38A1D61AAB200151FA7 /* ReachabilitySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */; };
 		1F2853611DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2853601DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift */; };
 		1F2F55EC1DF003BD00FE037E /* ScoreNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F55EB1DF003BD00FE037E /* ScoreNoteViewController.swift */; };
@@ -429,6 +432,9 @@
 		1F1C1B2C1DF656FB0051F638 /* NSCircleMineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMineViewController.swift; sourceTree = "<group>"; };
 		1F1C1B2F1DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDiscoverTableViewCell.swift; sourceTree = "<group>"; };
 		1F1C1B321DF68E310051F638 /* CircleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleModel.swift; sourceTree = "<group>"; };
+		1F1C1B361DF6ADA20051F638 /* NSCircleListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleListViewController.swift; sourceTree = "<group>"; };
+		1F1C1B3A1DF6B0930051F638 /* NSCircleListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleListTableViewCell.swift; sourceTree = "<group>"; };
+		1F1C1B3B1DF6B0930051F638 /* NSCircleListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSCircleListTableViewCell.xib; sourceTree = "<group>"; };
 		1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReachabilitySwift.framework; path = "../../Library/Developer/Xcode/DerivedData/HSHW_2016-amsbvsmqvgzeibcteymcunjxavqg/Build/Products/Debug-iphonesimulator/ReachabilitySwift.framework"; sourceTree = "<group>"; };
 		1F2853601DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiFeedbackListViewController.swift; sourceTree = "<group>"; };
 		1F2F55EB1DF003BD00FE037E /* ScoreNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreNoteViewController.swift; sourceTree = "<group>"; };
@@ -1249,6 +1255,7 @@
 				1F1C1B281DF64C550051F638 /* HSNSCircleHomeViewController.swift */,
 				1F1C1B2A1DF656E00051F638 /* NSCircleDiscoverViewController.swift */,
 				1F1C1B2C1DF656FB0051F638 /* NSCircleMineViewController.swift */,
+				1F1C1B361DF6ADA20051F638 /* NSCircleListViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1267,6 +1274,8 @@
 			isa = PBXGroup;
 			children = (
 				1F1C1B2F1DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift */,
+				1F1C1B3A1DF6B0930051F638 /* NSCircleListTableViewCell.swift */,
+				1F1C1B3B1DF6B0930051F638 /* NSCircleListTableViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1540,6 +1549,7 @@
 				0DB082E31D49D726004510B1 /* GHSSQCollectionViewCell.xib in Resources */,
 				F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */,
 				F6342C691D38DD2800800D8E /* HSArticleCollectCell.xib in Resources */,
+				1F1C1B3D1DF6B0930051F638 /* NSCircleListTableViewCell.xib in Resources */,
 				F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */,
 				183B84FD1CE5BFDC00709235 /* Assets.xcassets in Resources */,
 				1FFD9EE51D51EBD700951098 /* DropDownCell.xib in Resources */,
@@ -1740,6 +1750,7 @@
 				F64C9AC01D3B9BFC0041E360 /* ChildsViewController.swift in Sources */,
 				1FFD9EE71D51EBD700951098 /* DropDown.swift in Sources */,
 				1F019CAF1D587286009A0818 /* MineRecruit_userViewController.swift in Sources */,
+				1F1C1B371DF6ADA20051F638 /* NSCircleListViewController.swift in Sources */,
 				1F1C1B2B1DF656E00051F638 /* NSCircleDiscoverViewController.swift in Sources */,
 				181E0D2F1CEBF8E000E34A7F /* MineRecruitViewController.swift in Sources */,
 				185408831CE7052700DFBA7C /* NewsContantViewController.swift in Sources */,
@@ -1779,6 +1790,7 @@
 				0BD429451D3DCDF70064B64C /* MineExaminationViewController.swift in Sources */,
 				0B9C64071D41B89F008B7F6C /* GMyExamViewController.swift in Sources */,
 				0B6FED501D3382B800A4488E /* EducationModel.swift in Sources */,
+				1F1C1B3C1DF6B0930051F638 /* NSCircleListTableViewCell.swift in Sources */,
 				18A3F4E61CEAAF1100028FA5 /* WordViewController.swift in Sources */,
 				0BDAB6331D2A57320081E883 /* QuestionViewController.swift in Sources */,
 				185408731CE6C87F00DFBA7C /* NewsViewController.swift in Sources */,
