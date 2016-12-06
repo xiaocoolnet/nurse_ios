@@ -17,6 +17,7 @@
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="w3q-VN-6jU">
                         <rect key="frame" x="8" y="8" width="80" height="60"/>
+                        <color key="backgroundColor" red="0.95686274509803915" green="0.89803921568627454" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="60" id="ccf-vR-HHI"/>
                             <constraint firstAttribute="width" constant="80" id="xpO-3c-OTJ"/>
@@ -25,7 +26,7 @@
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="儿科" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyZ-6y-dz8">
                         <rect key="frame" x="96" y="8" width="34" height="21"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="textColor" red="0.56470588239999997" green="0.0" blue="0.41960784309999999" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="113万人 16万帖子" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cW2-2i-K0L">
@@ -41,7 +42,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L1o-oZ-1n6">
-                        <rect key="frame" x="318" y="26" width="60" height="25"/>
+                        <rect key="frame" x="318" y="25" width="60" height="25"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="HUt-dB-JHX"/>
                             <constraint firstAttribute="height" constant="25" id="nc5-Xc-LHp"/>
@@ -74,6 +75,13 @@
                     </mask>
                 </variation>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="countLab" destination="cW2-2i-K0L" id="Ra8-sT-W6g"/>
+                <outlet property="descriptionLab" destination="ItS-hS-bbc" id="o3r-bu-VWo"/>
+                <outlet property="joinBtn" destination="L1o-oZ-1n6" id="fIp-27-84u"/>
+                <outlet property="nameLab" destination="YyZ-6y-dz8" id="LSW-jJ-fRY"/>
+                <outlet property="photoImg" destination="w3q-VN-6jU" id="ZxV-yY-PPs"/>
+            </connections>
             <point key="canvasLocation" x="323" y="307.5"/>
         </tableViewCell>
     </objects>

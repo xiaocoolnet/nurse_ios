@@ -10,9 +10,9 @@ import UIKit
 
 class NSCircleListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    let rootTableView = UITableView(frame: CGRect.zero, style: .Grouped)
+    let rootTableView = UITableView()
     
-    var forumModelArray = [ForumModel]()
+    var forumModelArray = [CommunityModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,41 +38,31 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func loadData() {
-        let forum1 = ForumModel()
-        forum1.title = "1请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum1.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum1.like = "2254"
-        forum1.hits = "2255"
+        let forum1 = CommunityModel()
+        forum1.community_name = "儿科"
+        forum1.description = "儿科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..."
         
-        let forum2 = ForumModel()
-        forum2.title = "2请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum2.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum2.like = "2254"
-        forum2.hits = "2255"
-        let photo1 = photoModel()
-        photo1.url = "20161202/5840e94624cb0.jpg"
-        forum2.photo = [photo1]
+        let forum2 = CommunityModel()
+        forum2.community_name = "内科"
+        forum2.description = "内科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..."
         
-        let forum3 = ForumModel()
-        forum3.title = "3请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum3.content = "从期望薪资可以从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可...从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum3.like = "2254"
-        forum3.hits = "2255"
-        let photo2 = photoModel()
-        photo2.url = "20161130/583eb4efc6dad.jpg"
-        let photo3 = photoModel()
-        photo3.url = "20161129/583ce3b933d98.jpg"
-        forum3.photo = [photo2,photo3]
+        let forum3 = CommunityModel()
+        forum3.community_name = "外科"
+        forum3.description = "外科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..."
         
-        let forum4 = ForumModel()
-        forum4.title = "4请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum4.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum4.like = "2254"
-        forum4.hits = "2255"
+        let forum4 = CommunityModel()
+        forum4.community_name = "妇产科"
+        forum4.description = "妇产科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..."
         
-        forum4.photo = [photo1,photo2,photo3]
+        let forum5 = CommunityModel()
+        forum5.community_name = "急诊科"
+        forum5.description = "急诊科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..."
         
-        forumModelArray = [forum1,forum2,forum3,forum4]
+        let forum6 = CommunityModel()
+        forum6.community_name = "灌水吐槽"
+        forum6.description = "儿科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..."
+        
+        forumModelArray = [forum1,forum2,forum3,forum4,forum5,forum6]
         
         self.rootTableView.reloadData()
     }
@@ -81,19 +71,24 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     func setSubview() {
         self.view.backgroundColor = UIColor.whiteColor()
         
+        self.title = "圈子列表"
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
+        line.layer.cornerRadius = 6
+        line.layer.borderColor = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 1.0).CGColor
+        line.layer.borderWidth = 1
+        
         
         rootTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65-49)
         rootTableView.backgroundColor = UIColor.whiteColor()
         
+        rootTableView.rowHeight = 76
+        
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
-        rootTableView.registerClass(NSCircleListTableViewCell.self, forCellReuseIdentifier: "NSCircleListTableViewCell")
-//        rootTableView.re
-        
+        rootTableView.registerNib(UINib(nibName: "NSCircleListTableViewCell", bundle: nil), forCellReuseIdentifier: "circleListCell")
         
         //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
         //        rootTableView.mj_header.beginRefreshing()
@@ -102,129 +97,30 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         
         self.view.addSubview(rootTableView)
         
-        self.setTableViewHeaderView()
     }
     
     // MARK: - UItableViewdatasource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return forumModelArray.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("circleDiscoverCell", forIndexPath: indexPath) as! NSCircleDiscoverTableViewCell
+//        let cell = tableView.dequeueReusableCellWithIdentifier("circleListCell", forIndexPath: indexPath) as! NSCircleListTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("circleListCell") as! NSCircleListTableViewCell
         
         cell.selectionStyle = .None
         
-        cell.setCellWithNewsInfo(forumModelArray[indexPath.section])
+        cell.communityModel = forumModelArray[indexPath.row]
+//        cell.setCellWithNewsInfo(forumModelArray[indexPath.section])
         
         return cell
     }
     
     // MARK: - UITableViewDelegate
-    private let titleSize:CGFloat = 14
-    private let contentSize:CGFloat = 12
-    
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        let forum = forumModelArray[indexPath.section]
-        
-        if forum.photo.count == 0 {
-            
-            let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
-            
-            
-            var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
-            }
-            
-            return 8+height+8+contentHeight+8+8+8// 上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
-        }else if forum.photo.count < 3 {
-            let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16-110-8)
-            
-            
-            var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16-110-8)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
-            }
-            
-            let cellHeight1:CGFloat = 8+80+8// 上边距+图片高+下边距
-            let cellHeight2 = 8+height+8+contentHeight+8+8+8// 上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
-            
-            
-            return max(cellHeight1, cellHeight2)
-        }else{
-            let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
-            
-            
-            var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
-            }
-            
-            let imgHeight = (WIDTH-16-15*2)/3.0*2/3.0
-            
-            return 8+height+8+contentHeight+8+imgHeight+8+8+8// 上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
-        }
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
-    }
-    
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 35
-    }
-    
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 35))
-        footerView.addTarget(self, action: #selector(footerViewClick), forControlEvents: .TouchUpInside)
-        
-        let nameBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 30))
-        nameBtn.setImage(UIImage(named: "精华帖"), forState: .Normal)
-        nameBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
-        nameBtn.setTitleColor(COLOR, forState: .Normal)
-        nameBtn.setTitle("内科", forState: .Normal)
-        nameBtn.sizeToFit()
-        nameBtn.frame.origin = CGPoint(x: 8, y: (35-nameBtn.frame.height)/2.0)
-        footerView.addSubview(nameBtn)
-        
-        let comeinLab = UILabel(frame: CGRect(x: nameBtn.frame.maxX, y: 0, width: WIDTH-nameBtn.frame.maxX-8, height: 35))
-        comeinLab.textAlignment = .Right
-        comeinLab.font = UIFont.systemFontOfSize(12)
-        comeinLab.textColor = COLOR
-        comeinLab.text = "进入圈子"
-        footerView.addSubview(comeinLab)
-        
-        return footerView
-    }
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 20))
-        headerView.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        
-        return headerView
-    }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("帖子详情")
-    }
-    
-    // footerView 点击事件
-    func footerViewClick()  {
-        print("进入圈子")
-    }
-    
-    // 调整 button 图片和文字
-    func initButton(btn:UIButton) {
-        btn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center//使图片和文字水平居中显示
-        btn.titleEdgeInsets = UIEdgeInsetsMake((btn.imageView!.frame.size.height+btn.titleLabel!.bounds.size.height)/2+8, -btn.imageView!.frame.size.width, 0.0,0.0)//文字距离上边框的距离增加imageView的高度，距离左边框减少imageView的宽度，距离下边框和右边框距离不变
-        btn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0,(btn.imageView!.frame.size.height+btn.titleLabel!.bounds.size.height)/2+5, -btn.titleLabel!.bounds.size.width)//图片距离右边框距离减少图片的宽度，其它不边
+        print("点击圈子")
     }
     
     override func didReceiveMemoryWarning() {

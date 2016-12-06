@@ -211,6 +211,9 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             print("热门圈子")
         case 102:
             print("全部圈子")
+            let circleListController = NSCircleListViewController()
+            circleListController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(circleListController, animated: true)
         default:
             break
         }
