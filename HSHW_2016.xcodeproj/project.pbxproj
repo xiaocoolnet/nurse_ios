@@ -918,9 +918,9 @@
 		1854085F1CE6C69900DFBA7C /* NurseStation */ = {
 			isa = PBXGroup;
 			children = (
-				1854086C1CE6C7FA00DFBA7C /* Controller */,
-				1854086B1CE6C7F800DFBA7C /* Model */,
-				1854086A1CE6C7F600DFBA7C /* View */,
+				185408781CE6C8B600DFBA7C /* NurseStationViewController.swift */,
+				1F1C1B251DF64B5F0051F638 /* Circle */,
+				1F1C1B271DF64B9F0051F638 /* Recruit */,
 			);
 			name = NurseStation;
 			sourceTree = "<group>";
@@ -1100,7 +1100,6 @@
 		1854086C1CE6C7FA00DFBA7C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				185408781CE6C8B600DFBA7C /* NurseStationViewController.swift */,
 				18A514891CED548C00A30AA5 /* Community */,
 				18A5148A1CED54C000A30AA5 /* Recruitment */,
 			);
@@ -1242,6 +1241,31 @@
 				1F0BE1291D54A84300842B80 /* WXApiObject.h */,
 			);
 			path = openSDK1.7.2;
+			sourceTree = "<group>";
+		};
+		1F1C1B251DF64B5F0051F638 /* Circle */ = {
+			isa = PBXGroup;
+			children = (
+				1F1C1B261DF64B6A0051F638 /* Controller */,
+			);
+			name = Circle;
+			sourceTree = "<group>";
+		};
+		1F1C1B261DF64B6A0051F638 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		1F1C1B271DF64B9F0051F638 /* Recruit */ = {
+			isa = PBXGroup;
+			children = (
+				1854086C1CE6C7FA00DFBA7C /* Controller */,
+				1854086B1CE6C7F800DFBA7C /* Model */,
+				1854086A1CE6C7F600DFBA7C /* View */,
+			);
+			name = Recruit;
 			sourceTree = "<group>";
 		};
 		1FCCA95D1DCC6483001112AC /* LFLUISegmentedControl */ = {
