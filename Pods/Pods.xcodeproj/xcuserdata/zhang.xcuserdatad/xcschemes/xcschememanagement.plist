@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>HandyJSON.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>IQKeyboardManagerSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -77,17 +82,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>23582BE6023A53FC08FD6766889F5E7E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>23D4B5C9CC657B68134305BFEB076270</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>25A2F843F938B272707C5078E5346444</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>3509609872B4F663FF33E54EB14985F6</key>
+		<key>3B3E50D1764F7539993C076DC8E62F93</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,22 +102,27 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>65F643412155F7AFFA435C0ADE17A60B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7BA2A7BBC7E015AABCA519437CFD54DD</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>7DD7AC1AD79AE3EDA33A80CCE631D4E1</key>
+		<key>9B3DA99177E6F5A46FAF56204BE4C60C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>B14818B88D6F74842FE04D50379EF5CA</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DE3F1B8ECF90FDCE852C052C6F02BE68</key>
 		<dict>
 			<key>primary</key>
 			<true/>

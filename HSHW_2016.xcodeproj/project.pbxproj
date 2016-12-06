@@ -134,6 +134,7 @@
 		1F1C1B2B1DF656E00051F638 /* NSCircleDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B2A1DF656E00051F638 /* NSCircleDiscoverViewController.swift */; };
 		1F1C1B2D1DF656FB0051F638 /* NSCircleMineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B2C1DF656FB0051F638 /* NSCircleMineViewController.swift */; };
 		1F1C1B301DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B2F1DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift */; };
+		1F1C1B331DF68E310051F638 /* CircleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B321DF68E310051F638 /* CircleModel.swift */; };
 		1F1EA38A1D61AAB200151FA7 /* ReachabilitySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */; };
 		1F2853611DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2853601DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift */; };
 		1F2F55EC1DF003BD00FE037E /* ScoreNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F55EB1DF003BD00FE037E /* ScoreNoteViewController.swift */; };
@@ -200,8 +201,6 @@
 		F605F0C11D2266B100769299 /* HSFindPersonDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F605F0C01D2266B100769299 /* HSFindPersonDetailView.swift */; };
 		F61228051D0558C4009E3D4D /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F61228041D0558C4009E3D4D /* NewsModel.swift */; };
 		F631470D1D1A2BEE005103C9 /* HSComOpenHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631470C1D1A2BEE005103C9 /* HSComOpenHeader.swift */; };
-		F63147141D1A6D2E005103C9 /* HSComTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63147121D1A6D2E005103C9 /* HSComTableCell.swift */; };
-		F63147151D1A6D2E005103C9 /* HSComTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F63147131D1A6D2E005103C9 /* HSComTableCell.xib */; };
 		F631DFAC1D069C6200E52FDB /* SmetaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631DFAB1D069C6200E52FDB /* SmetaModel.swift */; };
 		F631DFAE1D069EE100E52FDB /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631DFAD1D069EE100E52FDB /* PhotoModel.swift */; };
 		F632EF121D192F530038AF9D /* HSWorkPlaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F632EF101D192F530038AF9D /* HSWorkPlaceController.swift */; };
@@ -251,8 +250,6 @@
 		F6D02CE01D07BB5300353557 /* contentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6D02CDE1D07BB5300353557 /* contentCell.xib */; };
 		F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6E00DE71D263CC100D023B8 /* HSPostResumeView.xib */; };
 		F6E86AF61D34DF7E001536B6 /* HSForumDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E86AF41D34DF7E001536B6 /* HSForumDetailCell.swift */; };
-		F6E9E9531D362AF000E99FDD /* HSHotPostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E9E9511D362AF000E99FDD /* HSHotPostCell.swift */; };
-		F6E9E9541D362AF000E99FDD /* HSHotPostCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6E9E9521D362AF000E99FDD /* HSHotPostCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -431,6 +428,7 @@
 		1F1C1B2A1DF656E00051F638 /* NSCircleDiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDiscoverViewController.swift; sourceTree = "<group>"; };
 		1F1C1B2C1DF656FB0051F638 /* NSCircleMineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMineViewController.swift; sourceTree = "<group>"; };
 		1F1C1B2F1DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDiscoverTableViewCell.swift; sourceTree = "<group>"; };
+		1F1C1B321DF68E310051F638 /* CircleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleModel.swift; sourceTree = "<group>"; };
 		1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReachabilitySwift.framework; path = "../../Library/Developer/Xcode/DerivedData/HSHW_2016-amsbvsmqvgzeibcteymcunjxavqg/Build/Products/Debug-iphonesimulator/ReachabilitySwift.framework"; sourceTree = "<group>"; };
 		1F2853601DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiFeedbackListViewController.swift; sourceTree = "<group>"; };
 		1F2F55EB1DF003BD00FE037E /* ScoreNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreNoteViewController.swift; sourceTree = "<group>"; };
@@ -510,8 +508,6 @@
 		F605F0C01D2266B100769299 /* HSFindPersonDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSFindPersonDetailView.swift; sourceTree = "<group>"; };
 		F61228041D0558C4009E3D4D /* NewsModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		F631470C1D1A2BEE005103C9 /* HSComOpenHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSComOpenHeader.swift; sourceTree = "<group>"; };
-		F63147121D1A6D2E005103C9 /* HSComTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSComTableCell.swift; sourceTree = "<group>"; };
-		F63147131D1A6D2E005103C9 /* HSComTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSComTableCell.xib; sourceTree = "<group>"; };
 		F631DFAB1D069C6200E52FDB /* SmetaModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmetaModel.swift; sourceTree = "<group>"; };
 		F631DFAD1D069EE100E52FDB /* PhotoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
 		F632EF101D192F530038AF9D /* HSWorkPlaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSWorkPlaceController.swift; sourceTree = "<group>"; };
@@ -564,8 +560,6 @@
 		F6D02CDE1D07BB5300353557 /* contentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = contentCell.xib; sourceTree = "<group>"; };
 		F6E00DE71D263CC100D023B8 /* HSPostResumeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSPostResumeView.xib; sourceTree = "<group>"; };
 		F6E86AF41D34DF7E001536B6 /* HSForumDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSForumDetailCell.swift; sourceTree = "<group>"; };
-		F6E9E9511D362AF000E99FDD /* HSHotPostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSHotPostCell.swift; sourceTree = "<group>"; };
-		F6E9E9521D362AF000E99FDD /* HSHotPostCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSHotPostCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1066,8 +1060,6 @@
 				180482EE1CEDF54200BF716C /* RecruitTableViewCell.swift */,
 				F631470C1D1A2BEE005103C9 /* HSComOpenHeader.swift */,
 				F632EF141D1949910038AF9D /* HSComOpenHeader.xib */,
-				F63147121D1A6D2E005103C9 /* HSComTableCell.swift */,
-				F63147131D1A6D2E005103C9 /* HSComTableCell.xib */,
 				1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */,
 				0B64EBE11D37A626001548EE /* ReleaseTimeCell.xib */,
 				F6C265C51D24F08C0033D2A9 /* PostVacancies.xib */,
@@ -1083,8 +1075,6 @@
 				F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */,
 				F6E86AF41D34DF7E001536B6 /* HSForumDetailCell.swift */,
 				0B64EBDF1D37A60F001548EE /* HSForumDetailCell.xib */,
-				F6E9E9511D362AF000E99FDD /* HSHotPostCell.swift */,
-				F6E9E9521D362AF000E99FDD /* HSHotPostCell.xib */,
 				0DB082E01D49D726004510B1 /* GHSSQCollectionViewCell.swift */,
 				0DB082E11D49D726004510B1 /* GHSSQCollectionViewCell.xib */,
 				1FFD9ECC1D519C4D00951098 /* GHSPostResumeView.swift */,
@@ -1246,6 +1236,7 @@
 		1F1C1B251DF64B5F0051F638 /* Circle */ = {
 			isa = PBXGroup;
 			children = (
+				1F1C1B311DF68DE40051F638 /* Model */,
 				1F1C1B2E1DF686B20051F638 /* View */,
 				1F1C1B261DF64B6A0051F638 /* Controller */,
 			);
@@ -1278,6 +1269,14 @@
 				1F1C1B2F1DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		1F1C1B311DF68DE40051F638 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1F1C1B321DF68E310051F638 /* CircleModel.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		1FCCA95D1DCC6483001112AC /* LFLUISegmentedControl */ = {
@@ -1542,7 +1541,6 @@
 				F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */,
 				F6342C691D38DD2800800D8E /* HSArticleCollectCell.xib in Resources */,
 				F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */,
-				F6E9E9541D362AF000E99FDD /* HSHotPostCell.xib in Resources */,
 				183B84FD1CE5BFDC00709235 /* Assets.xcassets in Resources */,
 				1FFD9EE51D51EBD700951098 /* DropDownCell.xib in Resources */,
 				0DB467C51D4CADFA009AE2AD /* CompanyAuthViewController.xib in Resources */,
@@ -1552,7 +1550,6 @@
 				0B64EBE01D37A60F001548EE /* HSForumDetailCell.xib in Resources */,
 				F6C265CE1D2513560033D2A9 /* HSWebViewDetailController.xib in Resources */,
 				0B64EBE21D37A626001548EE /* ReleaseTimeCell.xib in Resources */,
-				F63147151D1A6D2E005103C9 /* HSComTableCell.xib in Resources */,
 				F6D02CDC1D07A46800353557 /* NewsSourceCell.xib in Resources */,
 				1F09382F1D77F72700451948 /* HSNewsCommentCell.xib in Resources */,
 				F6C265C61D24F08C0033D2A9 /* PostVacancies.xib in Resources */,
@@ -1642,6 +1639,7 @@
 				183B86711CE5CF9500709235 /* JSONJoy.swift in Sources */,
 				180482EF1CEDF54200BF716C /* RecruitTableViewCell.swift in Sources */,
 				181E0D251CEBF83200E34A7F /* FansViewController.swift in Sources */,
+				1F1C1B331DF68E310051F638 /* CircleModel.swift in Sources */,
 				F6CFC7421D2A164700AC591C /* ForumlistModel.swift in Sources */,
 				0DB467BA1D4C8600009AE2AD /* NSBundle+MJRefresh.m in Sources */,
 				1F0FDFEE1D697A1F005DDB80 /* RankViewController.swift in Sources */,
@@ -1689,7 +1687,6 @@
 				F64C9ACC1D3B9C870041E360 /* MineJobDetailsTableViewCell.swift in Sources */,
 				0DB467B11D4C8600009AE2AD /* MJRefreshAutoStateFooter.m in Sources */,
 				0B1911C11D11222700CDE18D /* LoginModel.swift in Sources */,
-				F6E9E9531D362AF000E99FDD /* HSHotPostCell.swift in Sources */,
 				0DB082E61D49F14D004510B1 /* GHSExamTableViewCell.swift in Sources */,
 				181E0D271CEBF85100E34A7F /* MineStudyViewController.swift in Sources */,
 				1FFD49C31D63068900AB1460 /* TPKeyboardAvoidingCollectionView.m in Sources */,
@@ -1736,7 +1733,6 @@
 				F63B3A6F1D2F953600C5B2CF /* HSStateEditResumeController.swift in Sources */,
 				F6342C6B1D391CBE00800D8E /* FansTableViewCell.swift in Sources */,
 				F64C9AC81D3B9C3F0041E360 /* MineChildView.swift in Sources */,
-				F63147141D1A6D2E005103C9 /* HSComTableCell.swift in Sources */,
 				189849B41CE812CB007B37B4 /* TouTiaoTableViewCell.swift in Sources */,
 				F6D02CDB1D07A46800353557 /* NewsSourceCell.swift in Sources */,
 				F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */,

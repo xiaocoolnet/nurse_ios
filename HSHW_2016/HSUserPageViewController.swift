@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate {
+class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertViewDelegate {//UITableViewDataSource
 
     var userTableView = UITableView()
     
@@ -86,7 +86,7 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableView
         userTableView.registerNib(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
         userTableView.rowHeight = UITableViewAutomaticDimension
         userTableView.delegate = self
-        userTableView.dataSource = self
+//        userTableView.dataSource = self
         self.view.addSubview(userTableView)
     }
     
@@ -244,14 +244,14 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableView
         return dataSource.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSComTableCell
-
-        cell.showForForumModel(dataSource[indexPath.row])
-        cell.selectionStyle = .None
-        
-        return cell
-    }
+//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSComTableCell
+//
+//        cell.showForForumModel(dataSource[indexPath.row])
+//        cell.selectionStyle = .None
+//        
+//        return cell
+//    }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 140

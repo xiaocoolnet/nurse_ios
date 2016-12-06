@@ -112,7 +112,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         
         let btn2Width = WIDTH/375*100
         var btn2Height:CGFloat = 0
-        let btn2NameArray = ["儿科","内科","外科","妇产科","急诊科","灌水","吐槽"]
+        let btn2NameArray = ["儿科","内科","外科","妇产科","急诊科","灌水吐槽"]
         
         for (i,circleName) in btn2NameArray.enumerate() {
             let btn2 = UIButton(frame: CGRect(x: 8+(btn2Width+8)*CGFloat(i), y: 0, width: btn2Width, height: 0))

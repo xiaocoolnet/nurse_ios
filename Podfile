@@ -14,6 +14,7 @@ target 'HSHW_2016' do
     pod 'PagingMenuController','~> 0.9.1'
     pod 'BmobSDK'
     pod "WeiboSDK", :git => "https://github.com/sinaweibosdk/weibo_ios_sdk.git"
+    pod 'HandyJSON', '~> 0.4.0'
     
     post_install do |installer|
       installer.pods_project.targets.each do |target|
