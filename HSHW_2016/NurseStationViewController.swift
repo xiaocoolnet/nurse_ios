@@ -13,7 +13,7 @@ class NurseStationViewController: UIViewController {
     
     var segment:UISegmentedControl?
     var currentVCIndex:Int = 0
-    let ComVC = HSWCommunityHome(nibName: "HSWCommunityHome", bundle: nil)
+//    let ComVC = HSWCommunityHome(nibName: "HSWCommunityHome", bundle: nil)
     let RecVC = HSZRecruitmentHome()
     
     override func viewDidAppear(animated: Bool) {
@@ -38,10 +38,10 @@ class NurseStationViewController: UIViewController {
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
-        ComVC.view.frame = self.view.frame
+//        ComVC.view.frame = self.view.frame
         RecVC.view.frame = self.view.frame
         RecVC.superViewController = self
-        self .addChildViewController(ComVC)
+//        self .addChildViewController(ComVC)
         self.addChildViewController(RecVC)
         segment = UISegmentedControl(items: ["社区","招聘"])
         navigationItem.titleView = segment
@@ -49,7 +49,7 @@ class NurseStationViewController: UIViewController {
         segment?.selectedSegmentIndex = 0
         segment?.addTarget(self, action: #selector(selectorSegment), forControlEvents: UIControlEvents.ValueChanged)
         
-        view.addSubview(ComVC.view)
+//        view.addSubview(ComVC.view)
         currentVCIndex = 0
         // Do any additional setup after loading the view.
         
@@ -84,16 +84,16 @@ class NurseStationViewController: UIViewController {
                 (RecVC.pagingMenuController!.currentViewController as! RecruitmentViewController).saveResumeBtnClicked()
             }
             
-            self.transitionFromViewController(RecVC, toViewController: ComVC, duration: 0, options: .TransitionNone, animations: nil, completion: { [unowned self](Bool) in
-                self.currentVCIndex = 0
-            })
+//            self.transitionFromViewController(RecVC, toViewController: ComVC, duration: 0, options: .TransitionNone, animations: nil, completion: { [unowned self](Bool) in
+//                self.currentVCIndex = 0
+//            })
         }else{
             if currentVCIndex == 1{
                 return
             }
-            self.transitionFromViewController(ComVC, toViewController: RecVC, duration: 0, options: .TransitionNone, animations: nil, completion: { [unowned self] (Bool) in
-                self.currentVCIndex = 1
-            })
+//            self.transitionFromViewController(ComVC, toViewController: RecVC, duration: 0, options: .TransitionNone, animations: nil, completion: { [unowned self] (Bool) in
+//                self.currentVCIndex = 1
+//            })
         }
     }
 }

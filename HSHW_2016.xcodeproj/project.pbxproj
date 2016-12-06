@@ -35,8 +35,6 @@
 		0BDAB62D1D2A43380081E883 /* QuestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB62C1D2A43380081E883 /* QuestionModel.swift */; };
 		0BDAB6331D2A57320081E883 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BDAB6321D2A57320081E883 /* QuestionViewController.swift */; };
 		0BEA9CAA1D1390120012FC11 /* ForgetPasswordController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BEA9CA91D1390120012FC11 /* ForgetPasswordController.swift */; };
-		0D3780141D372390000D31E2 /* HSPostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */; };
-		0D3780151D372390000D31E2 /* HSPostDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */; };
 		0DB082E21D49D726004510B1 /* GHSSQCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB082E01D49D726004510B1 /* GHSSQCollectionViewCell.swift */; };
 		0DB082E31D49D726004510B1 /* GHSSQCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DB082E11D49D726004510B1 /* GHSSQCollectionViewCell.xib */; };
 		0DB082E61D49F14D004510B1 /* GHSExamTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB082E41D49F14D004510B1 /* GHSExamTableViewCell.swift */; };
@@ -74,11 +72,9 @@
 		0DE829DB1D3B52050047FB23 /* GMyExamListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE829DA1D3B52050047FB23 /* GMyExamListViewController.swift */; };
 		0DE829DD1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE829DC1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift */; };
 		180482EF1CEDF54200BF716C /* RecruitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180482EE1CEDF54200BF716C /* RecruitTableViewCell.swift */; };
-		181DE09B1CEAFFC00085ECB1 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181DE09A1CEAFFC00085ECB1 /* PostViewController.swift */; };
 		181E0D231CEBF80B00E34A7F /* SetDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E0D221CEBF80B00E34A7F /* SetDataViewController.swift */; };
 		181E0D251CEBF83200E34A7F /* FansViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E0D241CEBF83200E34A7F /* FansViewController.swift */; };
 		181E0D271CEBF85100E34A7F /* MineStudyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E0D261CEBF85100E34A7F /* MineStudyViewController.swift */; };
-		181E0D291CEBF86900E34A7F /* MinePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E0D281CEBF86900E34A7F /* MinePostViewController.swift */; };
 		181E0D2B1CEBF87D00E34A7F /* MineMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E0D2A1CEBF87D00E34A7F /* MineMessageViewController.swift */; };
 		181E0D2D1CEBF8A900E34A7F /* MineCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E0D2C1CEBF8A900E34A7F /* MineCollectionViewController.swift */; };
 		181E0D2F1CEBF8E000E34A7F /* MineRecruitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181E0D2E1CEBF8E000E34A7F /* MineRecruitViewController.swift */; };
@@ -105,12 +101,10 @@
 		185408891CE70D8A00DFBA7C /* AcademicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185408881CE70D8A00DFBA7C /* AcademicViewController.swift */; };
 		1854088B1CE7133600DFBA7C /* AbroadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854088A1CE7133600DFBA7C /* AbroadViewController.swift */; };
 		1854088F1CE713A100DFBA7C /* MagicboxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1854088E1CE713A100DFBA7C /* MagicboxViewController.swift */; };
-		185408911CE716E900DFBA7C /* AllViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185408901CE716E900DFBA7C /* AllViewController.swift */; };
 		189849B41CE812CB007B37B4 /* TouTiaoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189849B31CE812CB007B37B4 /* TouTiaoTableViewCell.swift */; };
 		189849B61CE815D3007B37B4 /* AcademicTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189849B51CE815D3007B37B4 /* AcademicTableViewCell.swift */; };
 		18A3F4E61CEAAF1100028FA5 /* WordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A3F4E51CEAAF1100028FA5 /* WordViewController.swift */; };
 		18A5148C1CED550800A30AA5 /* RecruitmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A5148B1CED550800A30AA5 /* RecruitmentViewController.swift */; };
-		18A5148E1CED596F00A30AA5 /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A5148D1CED596F00A30AA5 /* UserViewController.swift */; };
 		18A6BAC51CE5F9A700B6B1FD /* MineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A6BAC41CE5F9A700B6B1FD /* MineViewController.swift */; };
 		18ADDDED1CE9609000557FFE /* MineTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADDDEC1CE9609000557FFE /* MineTableViewCell.swift */; };
 		18ADDDEF1CE9995700557FFE /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18ADDDEE1CE9995700557FFE /* PostTableViewCell.swift */; };
@@ -206,8 +200,6 @@
 		F63147151D1A6D2E005103C9 /* HSComTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F63147131D1A6D2E005103C9 /* HSComTableCell.xib */; };
 		F631DFAC1D069C6200E52FDB /* SmetaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631DFAB1D069C6200E52FDB /* SmetaModel.swift */; };
 		F631DFAE1D069EE100E52FDB /* PhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631DFAD1D069EE100E52FDB /* PhotoModel.swift */; };
-		F632EF0E1D18E8890038AF9D /* HSSQCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F632EF0C1D18E8890038AF9D /* HSSQCollectionViewCell.swift */; };
-		F632EF0F1D18E8890038AF9D /* HSSQCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F632EF0D1D18E8890038AF9D /* HSSQCollectionViewCell.xib */; };
 		F632EF121D192F530038AF9D /* HSWorkPlaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F632EF101D192F530038AF9D /* HSWorkPlaceController.swift */; };
 		F632EF131D192F530038AF9D /* HSWorkPlaceController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F632EF111D192F530038AF9D /* HSWorkPlaceController.xib */; };
 		F632EF151D1949910038AF9D /* HSComOpenHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = F632EF141D1949910038AF9D /* HSComOpenHeader.xib */; };
@@ -223,8 +215,6 @@
 		F639810D1D373C71002EE95B /* HSChartCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F639810B1D373C71002EE95B /* HSChartCell.xib */; };
 		F63B3A6F1D2F953600C5B2CF /* HSStateEditResumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63B3A6E1D2F953600C5B2CF /* HSStateEditResumeController.swift */; };
 		F63BE1EF1D0546F9008292AC /* NewsPageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63BE1EE1D0546F9008292AC /* NewsPageHelper.swift */; };
-		F63E19811D17C38A001BDE8A /* HSWCommunityHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E197F1D17C38A001BDE8A /* HSWCommunityHome.swift */; };
-		F63E19821D17C38A001BDE8A /* HSWCommunityHome.xib in Resources */ = {isa = PBXBuildFile; fileRef = F63E19801D17C38A001BDE8A /* HSWCommunityHome.xib */; };
 		F63E198D1D17E10E001BDE8A /* HSZRecruitmentHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */; };
 		F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */; };
 		F64C9ABE1D3B85620041E360 /* HSMineHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9ABD1D3B85620041E360 /* HSMineHelper.swift */; };
@@ -238,7 +228,6 @@
 		F64C9ACE1D3B9E980041E360 /* MineRecruitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9ACD1D3B9E980041E360 /* MineRecruitTableViewCell.swift */; };
 		F661F25C1D33754E00E04CE8 /* HSImageCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */; };
 		F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */; };
-		F661F25F1D33BB7B00E04CE8 /* HSSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F661F25E1D33BB7B00E04CE8 /* HSSelectController.swift */; };
 		F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66216861D1E228B0099AD0E /* HSCVListModel.swift */; };
 		F66912391D2B5C0C0021706B /* HSStudyNetHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66912381D2B5C0C0021706B /* HSStudyNetHelper.swift */; };
 		F6B4083D1D1D212800BDFDBE /* HSNurseStationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6B4083C1D1D212800BDFDBE /* HSNurseStationHelper.swift */; };
@@ -308,8 +297,6 @@
 		0BDAB62C1D2A43380081E883 /* QuestionModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
 		0BDAB6321D2A57320081E883 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		0BEA9CA91D1390120012FC11 /* ForgetPasswordController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgetPasswordController.swift; sourceTree = "<group>"; };
-		0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSPostDetailViewController.swift; sourceTree = "<group>"; };
-		0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSPostDetailViewController.xib; sourceTree = "<group>"; };
 		0DB082E01D49D726004510B1 /* GHSSQCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GHSSQCollectionViewCell.swift; sourceTree = "<group>"; };
 		0DB082E11D49D726004510B1 /* GHSSQCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GHSSQCollectionViewCell.xib; sourceTree = "<group>"; };
 		0DB082E41D49F14D004510B1 /* GHSExamTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GHSExamTableViewCell.swift; sourceTree = "<group>"; };
@@ -369,11 +356,9 @@
 		0DE829DA1D3B52050047FB23 /* GMyExamListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyExamListViewController.swift; sourceTree = "<group>"; };
 		0DE829DC1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GMyExamListTableViewCell.swift; sourceTree = "<group>"; };
 		180482EE1CEDF54200BF716C /* RecruitTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecruitTableViewCell.swift; sourceTree = "<group>"; };
-		181DE09A1CEAFFC00085ECB1 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		181E0D221CEBF80B00E34A7F /* SetDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetDataViewController.swift; sourceTree = "<group>"; };
 		181E0D241CEBF83200E34A7F /* FansViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FansViewController.swift; sourceTree = "<group>"; };
 		181E0D261CEBF85100E34A7F /* MineStudyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineStudyViewController.swift; sourceTree = "<group>"; };
-		181E0D281CEBF86900E34A7F /* MinePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MinePostViewController.swift; sourceTree = "<group>"; };
 		181E0D2A1CEBF87D00E34A7F /* MineMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineMessageViewController.swift; sourceTree = "<group>"; };
 		181E0D2C1CEBF8A900E34A7F /* MineCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineCollectionViewController.swift; sourceTree = "<group>"; };
 		181E0D2E1CEBF8E000E34A7F /* MineRecruitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineRecruitViewController.swift; sourceTree = "<group>"; };
@@ -406,12 +391,10 @@
 		185408881CE70D8A00DFBA7C /* AcademicViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcademicViewController.swift; sourceTree = "<group>"; };
 		1854088A1CE7133600DFBA7C /* AbroadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AbroadViewController.swift; sourceTree = "<group>"; };
 		1854088E1CE713A100DFBA7C /* MagicboxViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MagicboxViewController.swift; sourceTree = "<group>"; };
-		185408901CE716E900DFBA7C /* AllViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllViewController.swift; sourceTree = "<group>"; };
 		189849B31CE812CB007B37B4 /* TouTiaoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouTiaoTableViewCell.swift; sourceTree = "<group>"; };
 		189849B51CE815D3007B37B4 /* AcademicTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcademicTableViewCell.swift; sourceTree = "<group>"; };
 		18A3F4E51CEAAF1100028FA5 /* WordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordViewController.swift; sourceTree = "<group>"; };
 		18A5148B1CED550800A30AA5 /* RecruitmentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecruitmentViewController.swift; sourceTree = "<group>"; };
-		18A5148D1CED596F00A30AA5 /* UserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserViewController.swift; sourceTree = "<group>"; };
 		18A6BAC41CE5F9A700B6B1FD /* MineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineViewController.swift; sourceTree = "<group>"; };
 		18ADDDEC1CE9609000557FFE /* MineTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineTableViewCell.swift; sourceTree = "<group>"; };
 		18ADDDEE1CE9995700557FFE /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
@@ -523,8 +506,6 @@
 		F63147131D1A6D2E005103C9 /* HSComTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSComTableCell.xib; sourceTree = "<group>"; };
 		F631DFAB1D069C6200E52FDB /* SmetaModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SmetaModel.swift; sourceTree = "<group>"; };
 		F631DFAD1D069EE100E52FDB /* PhotoModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoModel.swift; sourceTree = "<group>"; };
-		F632EF0C1D18E8890038AF9D /* HSSQCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSSQCollectionViewCell.swift; sourceTree = "<group>"; };
-		F632EF0D1D18E8890038AF9D /* HSSQCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSSQCollectionViewCell.xib; sourceTree = "<group>"; };
 		F632EF101D192F530038AF9D /* HSWorkPlaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSWorkPlaceController.swift; sourceTree = "<group>"; };
 		F632EF111D192F530038AF9D /* HSWorkPlaceController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSWorkPlaceController.xib; sourceTree = "<group>"; };
 		F632EF141D1949910038AF9D /* HSComOpenHeader.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSComOpenHeader.xib; sourceTree = "<group>"; };
@@ -541,8 +522,6 @@
 		F639810B1D373C71002EE95B /* HSChartCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSChartCell.xib; sourceTree = "<group>"; };
 		F63B3A6E1D2F953600C5B2CF /* HSStateEditResumeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStateEditResumeController.swift; sourceTree = "<group>"; };
 		F63BE1EE1D0546F9008292AC /* NewsPageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsPageHelper.swift; sourceTree = "<group>"; };
-		F63E197F1D17C38A001BDE8A /* HSWCommunityHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSWCommunityHome.swift; sourceTree = "<group>"; };
-		F63E19801D17C38A001BDE8A /* HSWCommunityHome.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSWCommunityHome.xib; sourceTree = "<group>"; };
 		F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZRecruitmentHome.swift; sourceTree = "<group>"; };
 		F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZSliderMenuView.swift; sourceTree = "<group>"; };
 		F64C9ABD1D3B85620041E360 /* HSMineHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineHelper.swift; sourceTree = "<group>"; };
@@ -556,7 +535,6 @@
 		F64C9ACD1D3B9E980041E360 /* MineRecruitTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineRecruitTableViewCell.swift; sourceTree = "<group>"; };
 		F661F25A1D33754E00E04CE8 /* HSImageCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSImageCollectionCell.swift; sourceTree = "<group>"; };
 		F661F25B1D33754E00E04CE8 /* HSImageCollectionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSImageCollectionCell.xib; sourceTree = "<group>"; };
-		F661F25E1D33BB7B00E04CE8 /* HSSelectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSSelectController.swift; sourceTree = "<group>"; };
 		F66216861D1E228B0099AD0E /* HSCVListModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSCVListModel.swift; sourceTree = "<group>"; };
 		F66912381D2B5C0C0021706B /* HSStudyNetHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStudyNetHelper.swift; sourceTree = "<group>"; };
 		F6B4083B1D1D100900BDFDBE /* HSHW_2016-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HSHW_2016-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -777,7 +755,6 @@
 		181E0D391CEC429700E34A7F /* Post */ = {
 			isa = PBXGroup;
 			children = (
-				181E0D281CEBF86900E34A7F /* MinePostViewController.swift */,
 			);
 			name = Post;
 			sourceTree = "<group>";
@@ -1079,8 +1056,6 @@
 				F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */,
 				185102E11CED612E00F797EE /* UserPostTableViewCell.swift */,
 				180482EE1CEDF54200BF716C /* RecruitTableViewCell.swift */,
-				F632EF0C1D18E8890038AF9D /* HSSQCollectionViewCell.swift */,
-				F632EF0D1D18E8890038AF9D /* HSSQCollectionViewCell.xib */,
 				F631470C1D1A2BEE005103C9 /* HSComOpenHeader.swift */,
 				F632EF141D1949910038AF9D /* HSComOpenHeader.xib */,
 				F63147121D1A6D2E005103C9 /* HSComTableCell.swift */,
@@ -1197,14 +1172,6 @@
 		18A514891CED548C00A30AA5 /* Community */ = {
 			isa = PBXGroup;
 			children = (
-				185408901CE716E900DFBA7C /* AllViewController.swift */,
-				18A5148D1CED596F00A30AA5 /* UserViewController.swift */,
-				181DE09A1CEAFFC00085ECB1 /* PostViewController.swift */,
-				F63E197F1D17C38A001BDE8A /* HSWCommunityHome.swift */,
-				F63E19801D17C38A001BDE8A /* HSWCommunityHome.xib */,
-				F661F25E1D33BB7B00E04CE8 /* HSSelectController.swift */,
-				0D3780121D372390000D31E2 /* HSPostDetailViewController.swift */,
-				0D3780131D372390000D31E2 /* HSPostDetailViewController.xib */,
 			);
 			name = Community;
 			sourceTree = "<group>";
@@ -1537,7 +1504,6 @@
 				0B6FED521D33999700A4488E /* area.plist in Resources */,
 				0DB082E31D49D726004510B1 /* GHSSQCollectionViewCell.xib in Resources */,
 				F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */,
-				0D3780151D372390000D31E2 /* HSPostDetailViewController.xib in Resources */,
 				F6342C691D38DD2800800D8E /* HSArticleCollectCell.xib in Resources */,
 				F661F25D1D33754E00E04CE8 /* HSImageCollectionCell.xib in Resources */,
 				F6E9E9541D362AF000E99FDD /* HSHotPostCell.xib in Resources */,
@@ -1554,8 +1520,6 @@
 				F6D02CDC1D07A46800353557 /* NewsSourceCell.xib in Resources */,
 				1F09382F1D77F72700451948 /* HSNewsCommentCell.xib in Resources */,
 				F6C265C61D24F08C0033D2A9 /* PostVacancies.xib in Resources */,
-				F63E19821D17C38A001BDE8A /* HSWCommunityHome.xib in Resources */,
-				F632EF0F1D18E8890038AF9D /* HSSQCollectionViewCell.xib in Resources */,
 				1F1A33961D548D7A00F7C20A /* editResumeViewController.xib in Resources */,
 				F6D02CE01D07BB5300353557 /* contentCell.xib in Resources */,
 				0DB082E71D49F14D004510B1 /* GHSExamTableViewCell.xib in Resources */,
@@ -1639,13 +1603,11 @@
 				1F0FDFF01D697C24005DDB80 /* RankTableViewCell.swift in Sources */,
 				F605F0C11D2266B100769299 /* HSFindPersonDetailView.swift in Sources */,
 				F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */,
-				0D3780141D372390000D31E2 /* HSPostDetailViewController.swift in Sources */,
 				183B86711CE5CF9500709235 /* JSONJoy.swift in Sources */,
 				180482EF1CEDF54200BF716C /* RecruitTableViewCell.swift in Sources */,
 				181E0D251CEBF83200E34A7F /* FansViewController.swift in Sources */,
 				F6CFC7421D2A164700AC591C /* ForumlistModel.swift in Sources */,
 				0DB467BA1D4C8600009AE2AD /* NSBundle+MJRefresh.m in Sources */,
-				F632EF0E1D18E8890038AF9D /* HSSQCollectionViewCell.swift in Sources */,
 				1F0FDFEE1D697A1F005DDB80 /* RankViewController.swift in Sources */,
 				0DB467C41D4CADFA009AE2AD /* CompanyAuthViewController.swift in Sources */,
 				0BC3878E1D339C2C001460B8 /* AdressPickerView.swift in Sources */,
@@ -1674,7 +1636,6 @@
 				18C0BF991CEB655F003E2886 /* QuestionTableViewCell.swift in Sources */,
 				F6C265C81D24FD770033D2A9 /* PostVacancies.swift in Sources */,
 				1FFD9EE61D51EBD700951098 /* DropDown+Appearance.swift in Sources */,
-				185408911CE716E900DFBA7C /* AllViewController.swift in Sources */,
 				F64C9ABE1D3B85620041E360 /* HSMineHelper.swift in Sources */,
 				F6C265CA1D25106F0033D2A9 /* HSTabBarController.swift in Sources */,
 				0DB467B21D4C8600009AE2AD /* MJRefreshBackGifFooter.m in Sources */,
@@ -1704,7 +1665,6 @@
 				F6B4083D1D1D212800BDFDBE /* HSNurseStationHelper.swift in Sources */,
 				1F0FDFE61D6949F4005DDB80 /* ScoreTableViewCell.swift in Sources */,
 				18ADDDEF1CE9995700557FFE /* PostTableViewCell.swift in Sources */,
-				181DE09B1CEAFFC00085ECB1 /* PostViewController.swift in Sources */,
 				1FE6E4C21D52EBE3009E036B /* AdressPickerView_2.swift in Sources */,
 				1FFD49C61D63068900AB1460 /* UIScrollView+TPKeyboardAvoidingAdditions.m in Sources */,
 				181E0D2B1CEBF87D00E34A7F /* MineMessageViewController.swift in Sources */,
@@ -1721,7 +1681,6 @@
 				1FFD9EE21D51EBD700951098 /* DPDKeyboardListener.swift in Sources */,
 				1FFD9EE81D51EBD700951098 /* DropDownCell.swift in Sources */,
 				1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */,
-				18A5148E1CED596F00A30AA5 /* UserViewController.swift in Sources */,
 				1FFD49C51D63068900AB1460 /* TPKeyboardAvoidingTableView.m in Sources */,
 				185408771CE6C8A600DFBA7C /* GoABroadViewController.swift in Sources */,
 				0B94E7791D4312E60008FD57 /* MineFinesView.swift in Sources */,
@@ -1734,11 +1693,9 @@
 				0DB467AD1D4C8600009AE2AD /* MJRefreshFooter.m in Sources */,
 				0DE829DD1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift in Sources */,
 				1F54B60C1DB706E400AAA5A6 /* NSRecruitmentDetailViewController.swift in Sources */,
-				181E0D291CEBF86900E34A7F /* MinePostViewController.swift in Sources */,
 				F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */,
 				1FCCA9621DCC64FA001112AC /* ExamBibleSubCateViewController.swift in Sources */,
 				F63B3A6F1D2F953600C5B2CF /* HSStateEditResumeController.swift in Sources */,
-				F63E19811D17C38A001BDE8A /* HSWCommunityHome.swift in Sources */,
 				F6342C6B1D391CBE00800D8E /* FansTableViewCell.swift in Sources */,
 				F64C9AC81D3B9C3F0041E360 /* MineChildView.swift in Sources */,
 				F63147141D1A6D2E005103C9 /* HSComTableCell.swift in Sources */,
@@ -1746,7 +1703,6 @@
 				F6D02CDB1D07A46800353557 /* NewsSourceCell.swift in Sources */,
 				F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */,
 				1F1B7F311D66F1CA009910DF /* qqDelegate.swift in Sources */,
-				F661F25F1D33BB7B00E04CE8 /* HSSelectController.swift in Sources */,
 				F64C9AC01D3B9BFC0041E360 /* ChildsViewController.swift in Sources */,
 				1FFD9EE71D51EBD700951098 /* DropDown.swift in Sources */,
 				1F019CAF1D587286009A0818 /* MineRecruit_userViewController.swift in Sources */,
