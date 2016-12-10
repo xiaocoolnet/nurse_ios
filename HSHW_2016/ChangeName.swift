@@ -8,7 +8,7 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
+//import Alamofire
 
 enum HSEditUserInfo {
     case Avatar
@@ -338,7 +338,9 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         let url = PARK_URL_Header+"getDictionaryList"
         let param = ["type":id]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 hud.mode = MBProgressHUDMode.Text;
                 hud.labelText = "数据获取失败"

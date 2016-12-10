@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import MBProgressHUD
 
 class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,cateBtnClickedDelegate,changeModelDelegate {
@@ -114,11 +113,25 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
             let  imageView = UIImageView()
             imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
             imageView.tag = i+1
-            if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || slideImage.thumbArr.count == 0 {
-                imageView.image = UIImage.init(named: "defaultImage.png")
-            }else{
-                imageView.sd_setImageWithURL(NSURL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
-            }
+            
+            var isWifi = false
+            NurseUtil.net.connectionStatus({ (status) in
+                switch status {
+                case .offline:
+                    isWifi = false
+                case .online(ReachabilityType.wiFi):
+                    isWifi = true
+                case .online(ReachabilityType.wwan):
+                    isWifi = false
+                case .unknown:
+                    isWifi = false
+                }
+                if  (!isWifi && loadPictureOnlyWiFi) || slideImage.thumbArr.count == 0 {
+                    imageView.image = UIImage.init(named: "defaultImage.png")
+                }else{
+                    imageView.sd_setImageWithURL(NSURL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
+                }
+            })
             
             let bottom = UIView(frame: CGRectMake(0, WIDTH*190/375-25, WIDTH, 25))
             bottom.backgroundColor = UIColor.grayColor()

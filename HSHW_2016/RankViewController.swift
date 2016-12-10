@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 import SwiftyJSON
 
 class RankViewController: UIViewController,UITableViewDataSource, UITableViewDelegate {

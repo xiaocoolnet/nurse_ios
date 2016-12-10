@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
     
@@ -248,7 +247,9 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
             cell.textLabel?.text = oneArr[indexPath.row]
             cell.detailTextLabel?.text = onedeArr[indexPath.row]
             if indexPath.row == 0 {
-                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                // TODO:JUDGE WIFI
+                if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
+//                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
                     avatarView.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
                 }else{
                     avatarView.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))

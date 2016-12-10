@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import MBProgressHUD
 class NewsPageHelper: NSObject {
     
@@ -17,7 +16,7 @@ class NewsPageHelper: NSObject {
         let param = [
             "typeid":typeid
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -41,7 +40,7 @@ class NewsPageHelper: NSObject {
         let param = [
             "channelid":channelid
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 
@@ -71,7 +70,7 @@ class NewsPageHelper: NSObject {
             "title":title,
             "description":description
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 
@@ -103,7 +102,7 @@ class NewsPageHelper: NSObject {
             param = ["termid":id]
         }
         
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 
@@ -131,7 +130,7 @@ class NewsPageHelper: NSObject {
             ];
         
         
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: nil)
@@ -159,7 +158,7 @@ class NewsPageHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,
             "remarks":remarks
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: "网络错误")
@@ -184,7 +183,7 @@ class NewsPageHelper: NSObject {
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: "网络错误")

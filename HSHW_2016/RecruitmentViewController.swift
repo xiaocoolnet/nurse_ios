@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Alamofire
 import MBProgressHUD
 
 class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate, LFLUISegmentedControlDelegate {//PostVacanciesDelegate,HSPostResumeViewDelegate
@@ -327,7 +326,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             let  imageView = UIImageView()
             imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
             imageView.tag = i+1
-            if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || slideImage.thumbArr.count == 0 {
+            // TODO:JUDGE WIFI
+            if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
+//            if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || slideImage.thumbArr.count == 0 {
                 imageView.image = UIImage.init(named: "defaultImage.png")
             }else{
                 imageView.sd_setImageWithURL(NSURL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
@@ -556,7 +557,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let param = ["type":type]
 
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
 
             if(error != nil){
                 
@@ -785,7 +786,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }else{
             let url = PARK_URL_Header+"getMyPublishJobList"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                 if(error != nil){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;
@@ -860,7 +861,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                     "jobid":job.id,
                                     "companyid":QCLoginUserInfo.currentInfo.userid
                                 ]
-                                Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                                     // print(request)
                                     if(error != nil){
                                         sendInviteHud.mode = MBProgressHUDMode.Text;
@@ -973,7 +974,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                         "jobid":self.jobDataSource![btn.tag].id,
                                         "companyid":self.jobDataSource![btn.tag].companyid
                                     ]
-                                    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                                    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                                         // print(request)
                                         if(error != nil){
                                             
@@ -1134,7 +1135,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 "jobid":model!.id,
                 "companyid" :model!.companyid
             ]
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                 // print(request)
                 if(error != nil){
                     //  菊花加载

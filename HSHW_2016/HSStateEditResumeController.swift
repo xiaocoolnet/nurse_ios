@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 //接口类型
 enum PortType{
@@ -103,7 +102,9 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
         }
         // print(param)
         
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 
             }else{

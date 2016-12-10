@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 class GMyExamViewController: UIViewController, UIScrollViewDelegate {
     
@@ -654,11 +653,13 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
                     
                     "refid":examInfo.questionid,
                     "type":"1",
-                    "userid":uid,
+                    "userid":uid!,
                     "title":examInfo.post_title,
                     "description":examInfo.post_description
                 ];
-                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+
+//                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
                     // print(request)
                     if(error != nil){
                         
@@ -695,9 +696,12 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
                     
                     "refid":examInfo.questionid,
                     "type":"1",
-                    "userid":uid
+                    "userid":uid!
                 ];
-                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+                
+                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//
+//                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
                     // print(request)
                     if(error != nil){
                         

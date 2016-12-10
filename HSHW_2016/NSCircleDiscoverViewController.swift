@@ -339,6 +339,10 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     // footerView 点击事件
     func footerViewClick()  {
         print("进入圈子")
+        
+        let circleDetailController = NSCircleDetailViewController()
+        circleDetailController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(circleDetailController, animated: true)
     }
     
     // 调整 button 图片和文字

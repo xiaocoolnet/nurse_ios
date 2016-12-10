@@ -9,17 +9,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Alamofire.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>HandyJSON.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>IQKeyboardManagerSwift.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -54,11 +44,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>ReachabilitySwift.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -72,17 +57,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1520003FEBEC114D6C84F832AFEDB994</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>1C3436CEA5C3D39764C5F54374794ECB</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>23582BE6023A53FC08FD6766889F5E7E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,27 +67,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3B3E50D1764F7539993C076DC8E62F93</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>5BBB34170986C897E8931C1768FD6EE3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>65F643412155F7AFFA435C0ADE17A60B</key>
+		<key>61B4DA6055FCBEEC1269B8BA2534601F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
+		<key>71C1238AFF24CD6CDC9DA187D755B555</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9B3DA99177E6F5A46FAF56204BE4C60C</key>
+		<key>8DB0415CF33147AF88F63B36CE12F054</key>
 		<dict>
 			<key>primary</key>
 			<true/>

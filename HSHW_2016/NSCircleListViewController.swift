@@ -12,7 +12,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     
     let rootTableView = UITableView()
     
-    var forumModelArray = [CommunityModel]()
+    var communityModelArray = [CommunityModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,7 +62,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         forum6.community_name = "灌水吐槽"
         forum6.description = "儿科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..."
         
-        forumModelArray = [forum1,forum2,forum3,forum4,forum5,forum6]
+        communityModelArray = [forum1,forum2,forum3,forum4,forum5,forum6]
         
         self.rootTableView.reloadData()
     }
@@ -102,7 +102,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: - UItableViewdatasource
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return forumModelArray.count
+        return communityModelArray.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -111,7 +111,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         
         cell.selectionStyle = .None
         
-        cell.communityModel = forumModelArray[indexPath.row]
+        cell.communityModel = communityModelArray[indexPath.row]
 //        cell.setCellWithNewsInfo(forumModelArray[indexPath.section])
         
         return cell
@@ -121,6 +121,10 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("点击圈子")
+        
+        let circleDetailController = NSCircleDetailViewController()
+        circleDetailController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(circleDetailController, animated: true)
     }
     
     override func didReceiveMemoryWarning() {

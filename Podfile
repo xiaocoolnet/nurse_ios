@@ -3,10 +3,10 @@ use_frameworks!
 
 target 'HSHW_2016' do
     pod 'SwiftyJSON'
-    pod 'ReachabilitySwift'
-    pod 'Alamofire','~> 3.0'
+#    pod 'ReachabilitySwift'
+#    pod 'Alamofire','~> 3.0'
     pod 'MBProgressHUD'
-    pod 'IQKeyboardManagerSwift'
+#    pod 'IQKeyboardManagerSwift'
     pod 'ImageSlideshow', '~> 0.2.2'
     pod 'SDWebImage', '~> 3.7.3'
     pod 'MOBFoundation'

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import MBProgressHUD
 
 class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
@@ -386,7 +385,7 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
                                         "jobid":self.jobDataSource![btn.tag].id,
                                         "companyid":self.jobDataSource![btn.tag].companyid
                                     ]
-                                    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                                    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                                         // print(request)
                                         if(error != nil){
                                             

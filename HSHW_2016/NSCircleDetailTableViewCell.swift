@@ -1,22 +1,30 @@
 //
-//  NSCircleDiscoverTableViewCell.swift
+//  NSCircleDetailTableViewCell.swift
 //  HSHW_2016
 //
-//  Created by 高扬 on 2016/12/6.
+//  Created by 高扬 on 2016/12/8.
 //  Copyright © 2016年 校酷网络科技公司. All rights reserved.
 //
 
 import UIKit
 
-class NSCircleDiscoverTableViewCell: UITableViewCell {
+class NSCircleDetailTableViewCell: UITableViewCell {
     
-    var type = 1 // 1 有分类 2 没分类
+    // 个人信息
+    let imgBtn = UIButton()
+    let nameLab = UILabel()
+    let positionLab = UILabel()
+    let timeLab = UILabel()
+    let levelLab = UILabel()
     
+    // 帖子信息
     let titleLab = UILabel()
     let contantLab = UILabel()
     let titleImg = UIImageView()
     let likeBtn = UIButton()
     let comBtn = UIButton()
+    let addressBtn = UIButton()
+    let moreBtn = UIButton()
     let titSubImg = UIImageView()
     let titSubImg_1 = UIImageView()
     let titSubImg_2 = UIImageView()
@@ -34,12 +42,20 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
+        self.addSubview(imgBtn)
+        self.addSubview(nameLab)
+        self.addSubview(positionLab)
+        self.addSubview(timeLab)
+        self.addSubview(levelLab)
+
         self.addSubview(titleLab)
         self.addSubview(contantLab)
         self.addSubview(titleImg)
         self.addSubview(titSubImg)
         self.addSubview(likeBtn)
         self.addSubview(comBtn)
+        self.addSubview(addressBtn)
+        self.addSubview(moreBtn)
         
         self.setSubViews()
     }
@@ -56,6 +72,25 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
     
     func setSubViews() {
         
+        imgBtn.frame = CGRect(x: 8, y: 10, width: 35, height: 35)
+        imgBtn.layer.cornerRadius = 17.5
+        imgBtn.clipsToBounds = true
+        
+        nameLab.font = UIFont.systemFontOfSize(12)
+        nameLab.textColor = UIColor.blackColor()
+        
+        positionLab.font = UIFont.systemFontOfSize(8)
+        positionLab.textColor = UIColor.whiteColor()
+//        positionLab.backgroundColor = COLOR
+        positionLab.layer.backgroundColor = COLOR.CGColor
+        positionLab.textAlignment = .Center
+        
+        timeLab.font = UIFont.systemFontOfSize(10)
+        timeLab.textColor = UIColor.lightGrayColor()
+        
+        levelLab.font = UIFont.systemFontOfSize(10)
+        levelLab.textColor = COLOR
+        
         titleLab.font = UIFont.systemFontOfSize(titleSize)
         titleLab.textColor = UIColor.blackColor()
         titleLab.numberOfLines = 0
@@ -71,6 +106,16 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
         comBtn.setImage(UIImage(named: "评论"), forState: .Normal)
         comBtn.titleLabel?.font = UIFont.systemFontOfSize(10)
         comBtn.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+        
+        addressBtn.setImage(UIImage(named: "发帖位置"), forState: .Normal)
+        addressBtn.titleLabel?.font = UIFont.systemFontOfSize(10)
+        addressBtn.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+        
+        moreBtn.setTitle("···", forState: .Normal)
+        moreBtn.titleLabel?.font = UIFont.systemFontOfSize(18)
+        moreBtn.layer.cornerRadius = 2
+        moreBtn.setTitleColor(UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), forState: .Normal)
+        moreBtn.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
         
         titleImg.contentMode = .ScaleAspectFill
         titleImg.clipsToBounds = true
@@ -123,7 +168,27 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             conNumStr = forum.hits
         }
         
+        imgBtn.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+"avatar20161116173819639.png"), forState: .Normal)
         
+        nameLab.text = "小丫头妈咪宝贝"
+        nameLab.frame = CGRect(x: imgBtn.frame.maxX+8, y: 10, width: calculateWidth("小丫头妈咪宝贝", size: 12, height: 17), height: 17)
+//        nameLab.sizeToFit()
+//        nameLab.frame.origin = CGPoint(x: imgBtn.frame.maxX+8, y: 10)
+        
+        positionLab.text = "护士"
+        positionLab.frame = CGRect(x: nameLab.frame.maxX+8, y: 0, width: calculateWidth("护士", size: 10, height: 12)+12, height: 12)
+        positionLab.center.y = nameLab.center.y
+        positionLab.layer.cornerRadius = 6
+        
+        timeLab.text = "3分钟前"
+        timeLab.sizeToFit()
+        timeLab.frame.origin.x = WIDTH-8-timeLab.frame.width
+        timeLab.center.y = nameLab.center.y
+        
+        levelLab.text = "Lv.35"
+        levelLab.frame = CGRect(x: imgBtn.frame.maxX+8, y: nameLab.frame.maxY+1, width: calculateWidth("Lv.35", size: 10, height: 17), height: 17)
+        
+        let forumMinY:CGFloat = 55
         
         if forum.photo.count == 0 {
             
@@ -131,7 +196,7 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             titSubImg.hidden = true
             
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
-            self.titleLab.frame = CGRectMake(8, 8, WIDTH-16, height)
+            self.titleLab.frame = CGRectMake(8, forumMinY, WIDTH-16, height)
             
             self.titleLab.text = forum.title
             
@@ -139,23 +204,28 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
                 contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
             }
-            self.contantLab.frame = CGRectMake(8, 8+height+8, WIDTH-16, contentHeight)
+            self.contantLab.frame = CGRectMake(8, self.titleLab.frame.maxY+8, WIDTH-16, contentHeight)
             
             self.contantLab.text = forum.content
             
             likeBtn.setTitle(forum.like, forState: .Normal)
             comBtn.setTitle(forum.hits, forState: .Normal)
-            
+            // TODO:
+            addressBtn.setTitle(QCLoginUserInfo.currentInfo.address, forState: .Normal)
+
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: contantLab.frame.maxY+8)
             
             comBtn.sizeToFit()
             comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: contantLab.frame.maxY+8)
             
+            addressBtn.sizeToFit()
+            addressBtn.frame.origin = CGPoint(x: comBtn.frame.maxX+10, y: contantLab.frame.maxY+8)
+            
         }else if forum.photo.count < 3 {
             
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16-110-8)
-            self.titleLab.frame = CGRectMake(8, 8, WIDTH-16-110-8, height)
+            self.titleLab.frame = CGRectMake(8, forumMinY, WIDTH-16-110-8, height)
             
             self.titleLab.text = forum.title
             
@@ -163,7 +233,7 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
                 contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
             }
-            self.contantLab.frame = CGRectMake(8, 8+height+8, WIDTH-16-110-8, contentHeight)
+            self.contantLab.frame = CGRectMake(8, self.titleLab.frame.maxY+8, WIDTH-16-110-8, contentHeight)
             
             self.contantLab.text = forum.content
             
@@ -171,7 +241,7 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
 //            if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
                 
-                titleImg.frame = CGRectMake(WIDTH-110-8, 10, 110, 80)
+                titleImg.frame = CGRectMake(WIDTH-110-8, forumMinY+8, 110, 80)
                 self.titleImg.image = UIImage.init(named: "defaultImage.png")
                 
                 titleImg.hidden = false
@@ -179,7 +249,7 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             }else{
                 let photoUrl:String = DomainName+"data/upload/"+(forum.photo.first!.url ?? "")!
                 
-                titleImg.frame = CGRectMake(WIDTH-110-8, 10, 110, 80)
+                titleImg.frame = CGRectMake(WIDTH-110-8, forumMinY+8, 110, 80)
                 self.titleImg.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
                 
                 titleImg.hidden = false
@@ -188,22 +258,34 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
                 //        titLab.frame.size.height = titleHeight+100
             }
             
-            if 8+80+8 < contantLab.frame.maxY+8+8+8 {
-                titleImg.frame.origin.y = (contantLab.frame.maxY+8+8+8-80)/2.0
+            if 80 < contantLab.frame.maxY-8-forumMinY {
+                titleImg.frame.origin.y = (contantLab.frame.maxY-8-forumMinY-80)/2.0+forumMinY
+            }else{
+                
+                self.titleLab.frame.origin.y = forumMinY+(80-height-8-contentHeight)/2.0
+                self.contantLab.frame.origin.y = self.titleLab.frame.maxY+8
+
+                titleImg.frame.origin.y = forumMinY
             }
             
             likeBtn.setTitle(forum.like, forState: .Normal)
             comBtn.setTitle(forum.hits, forState: .Normal)
+            // TODO:
+            addressBtn.setTitle(QCLoginUserInfo.currentInfo.address, forState: .Normal)
             
             likeBtn.sizeToFit()
-            likeBtn.frame.origin = CGPoint(x: 8, y: max(8+80-likeBtn.frame.height, contantLab.frame.maxY+8))
+            likeBtn.frame.origin = CGPoint(x: 8, y: max(titleImg.frame.maxY+8, contantLab.frame.maxY+8))
             
             comBtn.sizeToFit()
-            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: max(8+80-likeBtn.frame.height, contantLab.frame.maxY+8))
+            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: max(titleImg.frame.maxY+8, contantLab.frame.maxY+8))
+            
+            addressBtn.sizeToFit()
+            addressBtn.frame.origin = CGPoint(x: comBtn.frame.maxX+10, y: max(titleImg.frame.maxY+8, contantLab.frame.maxY+8))
+            
         }else{
             
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
-            self.titleLab.frame = CGRectMake(8, 8, WIDTH-16, height)
+            self.titleLab.frame = CGRectMake(8, forumMinY, WIDTH-16, height)
             
             self.titleLab.text = forum.title
             
@@ -211,7 +293,7 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
                 contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
             }
-            self.contantLab.frame = CGRectMake(8, 8+height+8, WIDTH-16, contentHeight)
+            self.contantLab.frame = CGRectMake(8, self.titleLab.frame.maxY+8, WIDTH-16, contentHeight)
             
             self.contantLab.text = forum.content
             
@@ -241,15 +323,23 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             
             likeBtn.setTitle(forum.like, forState: .Normal)
             comBtn.setTitle(forum.hits, forState: .Normal)
+            // TODO:
+            addressBtn.setTitle(QCLoginUserInfo.currentInfo.address, forState: .Normal)
             
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: titSubImg.frame.maxY+8)
             
             comBtn.sizeToFit()
             comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: titSubImg.frame.maxY+8)
+            
+            addressBtn.sizeToFit()
+            addressBtn.frame.origin = CGPoint(x: comBtn.frame.maxX+10, y: titSubImg.frame.maxY+8)
+
         }
         
-        
+        let moreBtnWidth = calculateWidth("···", size: 18, height: comBtn.frame.height)+10
+        moreBtn.frame = CGRect(x: WIDTH-8-moreBtnWidth, y: 0, width: moreBtnWidth, height: comBtn.frame.height)
+        moreBtn.center.y = comBtn.center.y
         
     }
     

@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 //定义协议改变Btn的标题
 protocol ChangeDelegate:NSObjectProtocol{
@@ -80,7 +79,9 @@ class HSEditResumeViewController: UIViewController, UITableViewDelegate, UITable
         let url = PARK_URL_Header+"getDictionaryList"
         let param = ["type":num]
         // print(param)
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 
             }else{

@@ -8,7 +8,6 @@
 
 import UIKit
 import SDWebImage
-import Alamofire
 import MBProgressHUD
 
 class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
@@ -69,7 +68,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         // 设置我的消息提醒数
         let url = PARK_URL_Header+"getsystemmessage_new"
         let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
            
             if(error != nil){
                 
@@ -81,7 +80,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     
                     let url_read = PARK_URL_Header+"getMessagereadlist"
                     let param_read = ["userid":QCLoginUserInfo.currentInfo.userid]
-                    Alamofire.request(.GET, url_read, parameters: param_read).response { request, response, json, error in
+                    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url_read, Parameter: param_read) { (json, error) in
+
                         
                         if(error != nil){
                             
@@ -103,7 +103,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
             let url = PARK_URL_Header+"UserGetInvite"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+
                 if(error != nil){
                     
                 }else{
@@ -132,7 +133,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
             let url = PARK_URL_Header+"getMyReciveResumeList"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                 if(error != nil){
                     
                 }else{
@@ -197,7 +198,9 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if success {
                 
                 dispatch_async(dispatch_get_main_queue(), {
-                    if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                    // TODO:JUDGE WIFI
+                    if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
+//                    if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
                         self.titImage.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
                     }else{
 //                        self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
@@ -236,7 +239,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             "day":self.timeStamp
             
         ];
-        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject] ).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:AnyObject]) { (json, error) in
             // print(request)
             if(error != nil){
                 dispatch_async(dispatch_get_main_queue(), {
@@ -441,8 +444,9 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         if indexPath.section == 0 && indexPath.row == 0 {
             
-            
-            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+            // TODO:JUDGE WIFI
+            if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
+//            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
                 self.titImage.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
             }else{
                 self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
@@ -824,7 +828,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             "day":self.timeStamp
         ];
         // print(QCLoginUserInfo.currentInfo.userid)
-        Alamofire.request(.GET, url, parameters: param as? [String : AnyObject] ).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String : AnyObject]) { (json, error) in
             // print(request)
             if(error != nil){
                 

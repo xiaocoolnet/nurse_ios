@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Alamofire
 import MBProgressHUD
 
 class OnLineViewController: UIViewController,UIScrollViewDelegate {
@@ -181,7 +180,8 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         hud.margin = 10.0
         hud.removeFromSuperViewOnHide = true
         
-        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { [unowned self] request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String]) { (json, error) in
+
             dispatch_async(dispatch_get_main_queue(), {
                 if(error != nil){
                     hud.mode = MBProgressHUDMode.Text;
@@ -1205,7 +1205,8 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                     "title":examInfo.post_title,
                     "description":examInfo.post_description
                 ];
-                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String]) { (json, error) in
+
                     // print(request)
                     if(error != nil){
                         hud.mode = MBProgressHUDMode.Text;
@@ -1249,7 +1250,9 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                     "type":"2",
                     "userid":uid
                 ];
-                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+                
+                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String]) { (json, error) in
+
                     // print(request)
                     if(error != nil){
                         hud.mode = MBProgressHUDMode.Text;

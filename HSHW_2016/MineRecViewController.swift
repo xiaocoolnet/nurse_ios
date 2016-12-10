@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -81,7 +80,7 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
     func getDate(){
             let url = PARK_URL_Header+"getMyPublishJobList"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                 if(error != nil){
                     let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     hud.mode = MBProgressHUDMode.Text;

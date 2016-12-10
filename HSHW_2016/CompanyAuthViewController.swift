@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -54,7 +53,11 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
                 successTelLab.text = companyInfo?.phone
                 successMailLab.text = companyInfo?.email
 //                successLicenseImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(companyInfo?.license)!))
-                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                
+                // TODO:JUDGE WIFI
+                if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
+
+//                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
                     successLicenseImg.image = UIImage.init(named: "defaultImage.png")
                 }else{
                     successLicenseImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(companyInfo?.license)!), placeholderImage: UIImage.init(named: "defaultImage.png"))

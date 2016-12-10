@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 //接口类型
 enum OptionType{
@@ -344,7 +343,9 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         let url = PARK_URL_Header+"getDictionaryList"
         let param = ["type":type]
         // print(param)
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             self.getDicCheckFlag += 1
             // print("self.getDicCheckFlag  ===  ",self.getDicCheckFlag)
             if(error != nil){

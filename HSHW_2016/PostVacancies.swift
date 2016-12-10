@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 protocol PostVacanciesDelegate:NSObjectProtocol{
     func clickedSendBtn()
@@ -352,7 +351,8 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         let url = PARK_URL_Header+"getDictionaryList"
         let param = ["type":type]
         // print(param)
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             self.getDicCheckFlag += 1
             // print("self.getDicCheckFlag  ===  ",self.getDicCheckFlag)
             if(error != nil){
@@ -867,7 +867,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         }
         // print(param)
         
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             if(error != nil){
                 
             }else{

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Alamofire
+//import Alamofire
 import MBProgressHUD
 
 class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
@@ -341,7 +341,9 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
             
             let url = PARK_URL_Header+"UserGetInvite"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+
+//            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 if(error != nil){
                     
                 }else{
@@ -382,7 +384,9 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
             
             let url = PARK_URL_Header+"getMyReciveResumeList"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+
+//            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 if(error != nil){
                     
                 }else{

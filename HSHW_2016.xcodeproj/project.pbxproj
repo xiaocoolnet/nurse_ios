@@ -138,7 +138,6 @@
 		1F1C1B371DF6ADA20051F638 /* NSCircleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B361DF6ADA20051F638 /* NSCircleListViewController.swift */; };
 		1F1C1B3C1DF6B0930051F638 /* NSCircleListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B3A1DF6B0930051F638 /* NSCircleListTableViewCell.swift */; };
 		1F1C1B3D1DF6B0930051F638 /* NSCircleListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1C1B3B1DF6B0930051F638 /* NSCircleListTableViewCell.xib */; };
-		1F1EA38A1D61AAB200151FA7 /* ReachabilitySwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */; };
 		1F2853611DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2853601DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift */; };
 		1F2F55EC1DF003BD00FE037E /* ScoreNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F55EB1DF003BD00FE037E /* ScoreNoteViewController.swift */; };
 		1F33D7761D752A360028444A /* GoAboardExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F33D7751D752A360028444A /* GoAboardExamViewController.swift */; };
@@ -149,7 +148,10 @@
 		1F54B60C1DB706E400AAA5A6 /* NSRecruitmentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54B60B1DB706E300AAA5A6 /* NSRecruitmentDetailViewController.swift */; };
 		1F54B60E1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54B60D1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift */; };
 		1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */; };
+		1F8558E81DFB8CFD00C885EA /* NurseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8558E71DFB8CFD00C885EA /* NurseUtil.swift */; };
 		1FC823D01D6C37D4005ED821 /* SuccessfulCaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */; };
+		1FC83D281DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */; };
+		1FC83D2A1DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */; };
 		1FCCA9561DCC18CA001112AC /* FiftyThousandExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA9551DCC18CA001112AC /* FiftyThousandExamViewController.swift */; };
 		1FCCA9581DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA9571DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift */; };
 		1FCCA95A1DCC52A6001112AC /* ExamBibleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA9591DCC52A6001112AC /* ExamBibleViewController.swift */; };
@@ -160,6 +162,8 @@
 		1FCCA9681DCC7866001112AC /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA9671DCC7866001112AC /* libz.1.2.5.tbd */; };
 		1FCCA96A1DCC787C001112AC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA9691DCC787C001112AC /* CoreLocation.framework */; };
 		1FCCA96C1DCC78E3001112AC /* libBaiduMobStat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */; };
+		1FD464981DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD464971DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift */; };
+		1FD464A61DF951970029BFEA /* NSCircleHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD464A51DF951970029BFEA /* NSCircleHomeViewController.swift */; };
 		1FE3A6341D5AFC2D0039D94D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */; };
 		1FE3A6361D5AFC370039D94D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */; };
 		1FE3A6381D5AFC430039D94D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6371D5AFC430039D94D /* Security.framework */; };
@@ -435,7 +439,6 @@
 		1F1C1B361DF6ADA20051F638 /* NSCircleListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleListViewController.swift; sourceTree = "<group>"; };
 		1F1C1B3A1DF6B0930051F638 /* NSCircleListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleListTableViewCell.swift; sourceTree = "<group>"; };
 		1F1C1B3B1DF6B0930051F638 /* NSCircleListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSCircleListTableViewCell.xib; sourceTree = "<group>"; };
-		1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReachabilitySwift.framework; path = "../../Library/Developer/Xcode/DerivedData/HSHW_2016-amsbvsmqvgzeibcteymcunjxavqg/Build/Products/Debug-iphonesimulator/ReachabilitySwift.framework"; sourceTree = "<group>"; };
 		1F2853601DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiFeedbackListViewController.swift; sourceTree = "<group>"; };
 		1F2F55EB1DF003BD00FE037E /* ScoreNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreNoteViewController.swift; sourceTree = "<group>"; };
 		1F33D7751D752A360028444A /* GoAboardExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoAboardExamViewController.swift; sourceTree = "<group>"; };
@@ -448,7 +451,10 @@
 		1F54B60B1DB706E300AAA5A6 /* NSRecruitmentDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSRecruitmentDetailViewController.swift; sourceTree = "<group>"; };
 		1F54B60D1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPersonalInfoDetailViewController.swift; sourceTree = "<group>"; };
 		1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTimeCell.swift; sourceTree = "<group>"; };
+		1F8558E71DFB8CFD00C885EA /* NurseUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NurseUtil.swift; sourceTree = "<group>"; };
 		1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessfulCaseViewController.swift; sourceTree = "<group>"; };
+		1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailViewController.swift; sourceTree = "<group>"; };
+		1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailTableViewCell.swift; sourceTree = "<group>"; };
 		1FCCA9551DCC18CA001112AC /* FiftyThousandExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiftyThousandExamViewController.swift; sourceTree = "<group>"; };
 		1FCCA9571DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiftyThousandExamSubCateViewController.swift; sourceTree = "<group>"; };
 		1FCCA9591DCC52A6001112AC /* ExamBibleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExamBibleViewController.swift; sourceTree = "<group>"; };
@@ -461,6 +467,8 @@
 		1FCCA9671DCC7866001112AC /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		1FCCA9691DCC787C001112AC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBaiduMobStat.a; path = ../../../../Downloads/BaiduMTJ_iOS_App_Crash_V4.3.0/ios_api/libBaiduMobStat.a; sourceTree = "<group>"; };
+		1FD464971DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailTopTableViewCell.swift; sourceTree = "<group>"; };
+		1FD464A51DF951970029BFEA /* NSCircleHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleHomeViewController.swift; sourceTree = "<group>"; };
 		1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1FE3A6371D5AFC430039D94D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -589,7 +597,6 @@
 				1FEC64D81D910EAE0045038C /* UTMini.framework in Frameworks */,
 				1FEC64D51D910EAE0045038C /* AlicloudUtils.framework in Frameworks */,
 				1F1B7F271D66DF2B009910DF /* libiconv.tbd in Frameworks */,
-				1F1EA38A1D61AAB200151FA7 /* ReachabilitySwift.framework in Frameworks */,
 				1FE3A63C1D5AFC570039D94D /* CoreText.framework in Frameworks */,
 				1FCCA9661DCC7683001112AC /* libBaiduMobStat.a in Frameworks */,
 				1F1B7F291D66E03C009910DF /* TencentOpenAPI.framework in Frameworks */,
@@ -889,6 +896,7 @@
 				1F1B7F321D66F480009910DF /* wechatDelegate.swift */,
 				1F3674CD1DBDE734007D55E6 /* MyUtil.h */,
 				1F3674CE1DBDE734007D55E6 /* MyUtil.m */,
+				1F8558E71DFB8CFD00C885EA /* NurseUtil.swift */,
 			);
 			name = Tool;
 			sourceTree = "<group>";
@@ -1256,6 +1264,8 @@
 				1F1C1B2A1DF656E00051F638 /* NSCircleDiscoverViewController.swift */,
 				1F1C1B2C1DF656FB0051F638 /* NSCircleMineViewController.swift */,
 				1F1C1B361DF6ADA20051F638 /* NSCircleListViewController.swift */,
+				1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */,
+				1FD464A51DF951970029BFEA /* NSCircleHomeViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1276,6 +1286,8 @@
 				1F1C1B2F1DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift */,
 				1F1C1B3A1DF6B0930051F638 /* NSCircleListTableViewCell.swift */,
 				1F1C1B3B1DF6B0930051F638 /* NSCircleListTableViewCell.xib */,
+				1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */,
+				1FD464971DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1391,7 +1403,6 @@
 				1FEC64CE1D910E680045038C /* libresolv.tbd */,
 				1F1B7F281D66E03C009910DF /* TencentOpenAPI.framework */,
 				1F1B7F261D66DF2B009910DF /* libiconv.tbd */,
-				1F1EA3891D61AAB200151FA7 /* ReachabilitySwift.framework */,
 				1FE3A6411D5AFC7A0039D94D /* CoreGraphics.framework */,
 				1FE3A63F1D5AFC720039D94D /* Foundation.framework */,
 				1FE3A63D1D5AFC650039D94D /* UIKit.framework */,
@@ -1660,6 +1671,7 @@
 				1F1A33981D54952600F7C20A /* PostVacanciewViewController.swift in Sources */,
 				1FCCA95C1DCC5334001112AC /* ExamBibleSubViewController.swift in Sources */,
 				1FCCA9601DCC6483001112AC /* LFLUISegmentedControl.m in Sources */,
+				1FD464981DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift in Sources */,
 				F6E86AF61D34DF7E001536B6 /* HSForumDetailCell.swift in Sources */,
 				1FF06CB01D7D07C60032943B /* UIPlaceHolderTextView.m in Sources */,
 				F6D02CDF1D07BB5300353557 /* contentCell.swift in Sources */,
@@ -1715,6 +1727,7 @@
 				1F1A33951D548D7A00F7C20A /* editResumeViewController.swift in Sources */,
 				1F1C1B291DF64C550051F638 /* HSNSCircleHomeViewController.swift in Sources */,
 				F632EF121D192F530038AF9D /* HSWorkPlaceController.swift in Sources */,
+				1FC83D2A1DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift in Sources */,
 				1F33D7761D752A360028444A /* GoAboardExamViewController.swift in Sources */,
 				1FEF15A81D5047EE00FF343C /* MainCompanyAuthViewController.swift in Sources */,
 				F61228051D0558C4009E3D4D /* NewsModel.swift in Sources */,
@@ -1724,6 +1737,7 @@
 				F63E198D1D17E10E001BDE8A /* HSZRecruitmentHome.swift in Sources */,
 				0DB467B71D4C8600009AE2AD /* MJRefreshStateHeader.m in Sources */,
 				1FFD9EE21D51EBD700951098 /* DPDKeyboardListener.swift in Sources */,
+				1F8558E81DFB8CFD00C885EA /* NurseUtil.swift in Sources */,
 				1FFD9EE81D51EBD700951098 /* DropDownCell.swift in Sources */,
 				1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */,
 				1FFD49C51D63068900AB1460 /* TPKeyboardAvoidingTableView.m in Sources */,
@@ -1737,6 +1751,7 @@
 				F6338B951D29105B00EE5CA2 /* HSStateCommentCell.swift in Sources */,
 				0DB467AD1D4C8600009AE2AD /* MJRefreshFooter.m in Sources */,
 				0DE829DD1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift in Sources */,
+				1FC83D281DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift in Sources */,
 				1F54B60C1DB706E400AAA5A6 /* NSRecruitmentDetailViewController.swift in Sources */,
 				F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */,
 				1FCCA9621DCC64FA001112AC /* ExamBibleSubCateViewController.swift in Sources */,
@@ -1779,6 +1794,7 @@
 				0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */,
 				F6CC839A1D2797F300B9A358 /* HSPostResumeView.swift in Sources */,
 				1FFD9EE11D51EBD700951098 /* DPDConstants.swift in Sources */,
+				1FD464A61DF951970029BFEA /* NSCircleHomeViewController.swift in Sources */,
 				0DB467B51D4C8600009AE2AD /* MJRefreshGifHeader.m in Sources */,
 				0BAF21BC1D1134790065146B /* LoginUserInfoModel.swift in Sources */,
 				1F33D7791D7554280028444A /* SMPageControl.m in Sources */,
@@ -2005,10 +2021,6 @@
 					"-framework",
 					"\"AFNetworking\"",
 					"-framework",
-					"\"Alamofire\"",
-					"-framework",
-					"\"IQKeyboardManagerSwift\"",
-					"-framework",
 					"\"MBProgressHUD\"",
 					"-framework",
 					"\"PagingMenuController\"",
@@ -2055,10 +2067,6 @@
 					"$(inherited)",
 					"-framework",
 					"\"AFNetworking\"",
-					"-framework",
-					"\"Alamofire\"",
-					"-framework",
-					"\"IQKeyboardManagerSwift\"",
 					"-framework",
 					"\"MBProgressHUD\"",
 					"-framework",

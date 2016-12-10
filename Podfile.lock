@@ -14,17 +14,14 @@ PODS:
   - AFNetworking/Serialization (3.0.4)
   - AFNetworking/UIKit (3.0.4):
     - AFNetworking/NSURLSession
-  - Alamofire (3.3.1)
   - BmobSDK (1.7.2)
   - HandyJSON (0.4.0)
   - ImageSlideshow (0.2.3):
     - ImageSlideshow/Core (= 0.2.3)
   - ImageSlideshow/Core (0.2.3)
-  - IQKeyboardManagerSwift (4.0.2)
   - MBProgressHUD (0.9.2)
   - MOBFoundation (2.0.1)
   - PagingMenuController (0.9.1)
-  - ReachabilitySwift (2.3.3)
   - SDWebImage (3.7.5):
     - SDWebImage/Core (= 3.7.5)
   - SDWebImage/Core (3.7.5)
@@ -33,15 +30,12 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0.1)
-  - Alamofire (~> 3.0)
   - BmobSDK
   - HandyJSON (~> 0.4.0)
   - ImageSlideshow (~> 0.2.2)
-  - IQKeyboardManagerSwift
   - MBProgressHUD
   - MOBFoundation
   - PagingMenuController (~> 0.9.1)
-  - ReachabilitySwift
   - SDWebImage (~> 3.7.3)
   - SwiftyJSON
   - WeiboSDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk.git`)
@@ -57,19 +51,16 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
-  Alamofire: 369bc67b6f5ac33ded3648d7bd21c5bfb91c2ecc
   BmobSDK: e188cb31d6a8417ab668aee821da227d7512b865
   HandyJSON: 92708e8790347978ac6568c25e316d5be6256d8b
   ImageSlideshow: 2895e62777c2ea36f56d948723b3586a12a89756
-  IQKeyboardManagerSwift: 2f2c19c509f67c4c0df2826db54033d3e090ce65
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MOBFoundation: a42168392e216fc56cbcbdfc3d5dcb3bbce5ef87
   PagingMenuController: 95bab00761e1ba4f4f9fa6bf22ac71b065a675aa
-  ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
   SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
   WeiboSDK: bceab625ec59b7039ba721cc4ba9f5868804f63e
 
-PODFILE CHECKSUM: 3400ebdc529cd1d3e352f20f671963be99842c9f
+PODFILE CHECKSUM: dafc32699dc0d806514163756124a7e11fec7e08
 
 COCOAPODS: 1.0.1

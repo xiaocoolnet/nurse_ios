@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import MBProgressHUD
 
 class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
@@ -161,7 +160,9 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
             "type":"2",
             "count":questionCount
         ];
-        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String]) { (json, error) in
+
+//        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
             // print(request)
             if(error != nil){
                 
@@ -723,7 +724,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                     "title":examInfo.post_title,
                     "description":examInfo.post_description
                 ];
-                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String]) { (json, error) in
                     // print(request)
                     if(error != nil){
                         
@@ -762,7 +763,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
                     "type":"2",
                     "userid":uid
                 ];
-                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String]) { (json, error) in
                     // print(request)
                     if(error != nil){
                         

@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDataSource,ToutiaoCateBtnClickedDelegate,changeModelDelegate {
     @IBOutlet weak var listTableView:UITableView!
@@ -65,7 +64,9 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
             "userid":QCLoginUserInfo.currentInfo.userid,
             "show_fav":"1"
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             //            print(request)
             if(error != nil){
             }else{

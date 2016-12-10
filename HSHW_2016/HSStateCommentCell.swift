@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class HSStateCommentCell: UITableViewCell {
 
@@ -52,7 +51,9 @@ class HSStateCommentCell: UITableViewCell {
             HSMineHelper().getUserInfo((commentModel?.userid)!) { (success, response) in
                 let model = response as! HSFansAndFollowModel
                 dispatch_async(dispatch_get_main_queue(), {
-                    if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                    // TODO:JUDGE WIFI
+                    if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
+//                    if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
                         self.headerBtn.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
                     }else{
                         self.headerBtn.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(model.photo)), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))

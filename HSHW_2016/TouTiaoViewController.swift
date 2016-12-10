@@ -8,7 +8,6 @@
 
 import UIKit
 import AFNetworking
-import Alamofire
 import MBProgressHUD
 
 class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,cateBtnClickedDelegate,changeModelDelegate {
@@ -317,7 +316,9 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
             let  imageView = UIImageView()
             imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
             imageView.tag = i+1
-            if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || slideImage.thumbArr.count == 0 {
+            // TODO:JUDGE WIFI
+            if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
+//            if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || slideImage.thumbArr.count == 0 {
                 imageView.image = UIImage.init(named: "defaultImage.png")
             }else{
                 imageView.sd_setImageWithURL(NSURL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
