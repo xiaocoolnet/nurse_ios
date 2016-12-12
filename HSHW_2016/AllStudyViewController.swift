@@ -18,6 +18,8 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
     
     var showLineView = true
     
+    var pager = 1
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -78,7 +80,6 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
             }
         }
     }
-    var pager = 1
     func loadData_pullUp() {
         
         if articleID != nil {

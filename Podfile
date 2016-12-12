@@ -11,7 +11,7 @@ target 'HSHW_2016' do
     pod 'SDWebImage', '~> 3.7.3'
     pod 'MOBFoundation'
     pod 'AFNetworking','~> 3.0.1'
-    pod 'PagingMenuController','~> 0.9.1'
+    pod 'PagingMenuController','~> 1.2.0'
     pod 'BmobSDK'
     pod "WeiboSDK", :git => "https://github.com/sinaweibosdk/weibo_ios_sdk.git"
     pod 'HandyJSON', '~> 0.4.0'
