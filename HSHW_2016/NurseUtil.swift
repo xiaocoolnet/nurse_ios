@@ -242,84 +242,12 @@ class NurseUtil: NSObject {
     }
     
     //检测网络
-    //下面是关于网络检测的方法
-    func connectionStatus(reachabilityStatus: (ReachabilityStatus) -> Void) {
-        
-        AFNetworkReachabilityManager(forDomain: "app.chinanurse.cn").reachableViaWiFi
-        AFNetworkReachabilityManager.sharedManager().setReachabilityStatusChangeBlock { (status) in
-            print(status)
-            
-            switch status {
-            case .Unknown:
-                reachabilityStatus(ReachabilityStatus.unknown)
-            case .NotReachable:
-                reachabilityStatus(.offline)
-            case .ReachableViaWWAN:
-                reachabilityStatus(.online(.wwan))
-            case .ReachableViaWiFi:
-                reachabilityStatus(.online(.wiFi))
-            }
-        }
-        AFNetworkReachabilityManager.sharedManager().startMonitoring()
-//        AFNetworkReachabilityManager.shared().setReachabilityStatusChange { (status) in
-//            print(status)
-//            
-//            switch status {
-//            case .unknown:
-//                reachabilityStatus(ReachabilityStatus.unknown)
-//            case .notReachable:
-//                reachabilityStatus(.offline)
-//            case .reachableViaWWAN:
-//                reachabilityStatus(.online(.wwan))
-//            case .reachableViaWiFi:
-//                reachabilityStatus(.online(.wiFi))
-//            }
-//        }
-        
-//        AFNetworkReachabilityManager.shared().startMonitoring()
-        
-    }
     
     //下面是关于网络检测的方法
     func isWifi() -> Bool {
         
-        if AFNetworkReachabilityManager(forDomain: "http://app.chinanurse.cn/").reachableViaWiFi {
-            return true
-        }else {
-            return false
-        }
-        
-//        AFNetworkReachabilityManager.sharedManager().setReachabilityStatusChangeBlock { (status) in
-//            print(status)
-//            
-//            switch status {
-//            case .Unknown:
-//                reachabilityStatus(ReachabilityStatus.unknown)
-//            case .NotReachable:
-//                reachabilityStatus(.offline)
-//            case .ReachableViaWWAN:
-//                reachabilityStatus(.online(.wwan))
-//            case .ReachableViaWiFi:
-//                reachabilityStatus(.online(.wiFi))
-//            }
-//        }
-//        AFNetworkReachabilityManager.sharedManager().startMonitoring()
-        //        AFNetworkReachabilityManager.shared().setReachabilityStatusChange { (status) in
-        //            print(status)
-        //
-        //            switch status {
-        //            case .unknown:
-        //                reachabilityStatus(ReachabilityStatus.unknown)
-        //            case .notReachable:
-        //                reachabilityStatus(.offline)
-        //            case .reachableViaWWAN:
-        //                reachabilityStatus(.online(.wwan))
-        //            case .reachableViaWiFi:
-        //                reachabilityStatus(.online(.wiFi))
-        //            }
-        //        }
-        
-        //        AFNetworkReachabilityManager.shared().startMonitoring()
+        return (NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)!
+
         
     }
     

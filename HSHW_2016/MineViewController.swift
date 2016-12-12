@@ -198,15 +198,12 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             if success {
                 
                 dispatch_async(dispatch_get_main_queue(), {
-                    // TODO:JUDGE WIFI
+
                     if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
-//                    if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
                         self.titImage.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
                     }else{
-//                        self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
-                        self.titImage.sd_setBackgroundImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal)
+                        self.titImage.sd_setBackgroundImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
                     }
-                    //                    self.titImage.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal,placeholderImage: UIImage(named: "6"))
                     self.userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
                     self.levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, forState: .Normal)
                     self.fansCountBtn.setTitle(QCLoginUserInfo.currentInfo.fansCount, forState: .Normal)

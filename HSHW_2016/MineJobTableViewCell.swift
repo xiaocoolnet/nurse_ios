@@ -39,9 +39,7 @@ class MineJobTableViewCell: UITableViewCell {
     
     func showforJobModel(model:MineJobInfo){
 
-        // TODO:JUDGE WIFI
         if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
-//        if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
             self.titImg.image = UIImage.init(named: "img_head_nor")
         }else{
             self.titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))

@@ -12,8 +12,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     
     let rootTableView = UITableView(frame: CGRect.zero, style: .Grouped)
     
-    var forumModelArray = [ForumModel]()
-    var forumBestOrTopModelArray = [ForumModel]()
+    var cellNameArray = ["置顶帖","精华帖","申请圈主","取消关注"]
     
     var communityModel = CommunityModel()
     
@@ -55,8 +54,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
-        rootTableView.registerClass(NSCircleDetailTableViewCell.self, forCellReuseIdentifier: "circleDetailCell")
-        rootTableView.registerClass(NSCircleDetailTopTableViewCell.self, forCellReuseIdentifier: "circleDetailTopCell")
+        rootTableView.registerClass(NSCircleHomeTableViewCell.self, forCellReuseIdentifier: "circleHomeCell")
         
         self.view.addSubview(rootTableView)
         
@@ -64,7 +62,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     // MARK: - 设置头视图
-    func setTableViewHeaderView() {
+    func setTableViewHeaderView(unfoldIntroduce:Bool = false) {
         
         let tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: WIDTH/375*60+20))
         
@@ -119,111 +117,107 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         introduceTagLab.text = "圈子介绍"
         tableHeaderView.addSubview(introduceTagLab)
         
-        let introduceLab = UILabel(frame: CGRect(x: 8, y: introduceTagLab.frame.maxY+8, width: WIDTH-16, height: UIFont.systemFontOfSize(14).lineHeight))
-        introduceLab.numberOfLines = 0
-        introduceLab.textAlignment = .Left
-        introduceLab.font = UIFont.systemFontOfSize(14)
-        introduceLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
-        var introduceStr:NSString = "儿科是全面研究小儿时期身心发育、保健以及疾病防治的综合医学科学。凡涉及儿童儿科是全面研究小儿时期身心发育、保健以及疾病防治的综合医学科学。凡涉及儿童"
+        let introduceBtn = UIButton(frame: CGRect(x: 8, y: introduceTagLab.frame.maxY+8, width: WIDTH-16, height: UIFont.systemFontOfSize(14).lineHeight))
+        introduceBtn.titleLabel?.numberOfLines = 0
+        introduceBtn.contentHorizontalAlignment = .Left
+        introduceBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
+        introduceBtn.setTitleColor(UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1), forState: .Normal)
+
+        let introduceStr:NSString = "儿科是全面研究小儿时期身心发育、保健以及疾病防治的综合医学科学。凡涉及儿童儿科是全面研究小儿时期身心发育、保健以及疾病防治的综合医学科学。凡涉及儿童。"
         let range = NSMakeRange(40, introduceStr.length-40)
-        introduceStr = introduceStr.length > 40 ? introduceStr.stringByReplacingCharactersInRange(range, withString: "..."):introduceStr
-        let attrStr = NSMutableAttributedString(string: "    \(introduceStr)展开")
-        attrStr.addAttributes([NSForegroundColorAttributeName:UIColor(),NSUnderlineStyleAttributeName:NSUnderlineStyle.StyleSingle.rawValue], range: NSMakeRange(attrStr.length-2, 2))
+        let cutIntroduceStr = introduceStr.length > 40 ? introduceStr.stringByReplacingCharactersInRange(range, withString: "..."):introduceStr
+        let attrStr = NSMutableAttributedString(string: "    \(cutIntroduceStr) 展开")
+        attrStr.addAttributes([NSForegroundColorAttributeName:UIColor(red: 28/255.0, green: 159/255.0, blue: 227/255.0, alpha: 1),NSUnderlineStyleAttributeName:NSUnderlineStyle.StyleSingle.rawValue], range: NSMakeRange(attrStr.length-2, 2))
+        
+        let attrStrUnfold = NSMutableAttributedString(string: "    \(introduceStr) 收起")
+        
+        attrStrUnfold.addAttributes([NSForegroundColorAttributeName:UIColor(red: 28/255.0, green: 159/255.0, blue: 227/255.0, alpha: 1),NSUnderlineStyleAttributeName:NSUnderlineStyle.StyleSingle.rawValue], range: NSMakeRange(attrStrUnfold.length-2, 2))
+        
+        introduceBtn.setAttributedTitle(attrStr, forState: .Normal)
+        introduceBtn.setAttributedTitle(attrStrUnfold, forState: .Selected)
+        
+        introduceBtn.selected = unfoldIntroduce
+        introduceBtn.frame.size.height = calculateHeight(introduceBtn.currentAttributedTitle!.string, size: 14, width: WIDTH-16)
+        introduceBtn.addTarget(self, action: #selector(introduceBtnClick(_:)), forControlEvents: .TouchUpInside)
+        tableHeaderView.addSubview(introduceBtn)
         
         
-        introduceLab.attributedText = attrStr
-        introduceLab.sizeToFit()
-        tableHeaderView.addSubview(introduceLab)
+        // MARK: - 圈主
+        let managerTagLab = UILabel(frame: CGRect(x: 8, y: introduceBtn.frame.maxY+10, width: WIDTH-16, height: UIFont.systemFontOfSize(14).lineHeight))
+        managerTagLab.textAlignment = .Left
+        managerTagLab.font = UIFont.systemFontOfSize(14)
+        managerTagLab.textColor = UIColor.grayColor()
+        managerTagLab.text = "圈主"
+        tableHeaderView.addSubview(managerTagLab)
         
-        tableHeaderView.frame.size.height = introduceLab.frame.maxY+10
+        let managerBgView = UIView(frame: CGRect(x: 8, y: managerTagLab.frame.maxY+10, width: WIDTH-16, height: 0))
+        tableHeaderView.addSubview(managerBgView)
+        
+        let margin = (WIDTH-16)/12
+        for i in 0 ..< 3 {
+            let headerImg = UIImageView(frame: CGRect(x: margin+(margin*4*CGFloat(i)), y: 0, width: margin*2, height: margin*2))
+            headerImg.backgroundColor = UIColor.lightGrayColor()
+            headerImg.layer.cornerRadius = margin
+            headerImg.clipsToBounds = true
+            managerBgView.addSubview(headerImg)
+            
+            let nameLab = UILabel(frame: CGRect(x: margin*4*CGFloat(i), y: headerImg.frame.maxY+10, width: margin*4, height: UIFont.systemFontOfSize(12).lineHeight))
+            nameLab.textAlignment = .Center
+            nameLab.font = UIFont.systemFontOfSize(12)
+            nameLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
+            nameLab.text = "小丫头妈咪宝贝"
+            managerBgView.addSubview(nameLab)
+        }
+        
+        managerBgView.frame.size.height = margin*2+10+UIFont.systemFontOfSize(12).lineHeight
+        
+//        let introduceLab = UILabel(frame: CGRect(x: 8, y: introduceTagLab.frame.maxY+8, width: WIDTH-16, height: UIFont.systemFontOfSize(14).lineHeight))
+//        introduceLab.numberOfLines = 0
+//        introduceLab.textAlignment = .Left
+//        introduceLab.font = UIFont.systemFontOfSize(14)
+//        introduceLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
+//        
+//        introduceLab.attributedText = attrStr
+//        introduceLab.sizeToFit()
+//        tableHeaderView.addSubview(introduceLab)
+        
+        tableHeaderView.frame.size.height = managerBgView.frame.maxY+10
         
         rootTableView.tableHeaderView = tableHeaderView
     }
     
+    // MARK: - 点击展开按钮
+    func introduceBtnClick(introduceBtn:UIButton) {
+        setTableViewHeaderView(!introduceBtn.selected)
+    }
+    
     // MARK: - UItableViewdatasource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return forumBestOrTopModelArray.count <= 0 ? 1:2
+        return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 && forumBestOrTopModelArray.count > 0 {
-            return forumBestOrTopModelArray.count
-        }
-        return forumModelArray.count
+        return cellNameArray.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if indexPath.section == 0 && forumBestOrTopModelArray.count > 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("circleDetailTopCell", forIndexPath: indexPath) as! NSCircleDetailTopTableViewCell
-            
-            cell.selectionStyle = .None
-            
-            cell.setCellWithNewsInfo(forumBestOrTopModelArray[indexPath.row])
-            
-            return cell
-        }
-        let cell = tableView.dequeueReusableCellWithIdentifier("circleDetailCell", forIndexPath: indexPath) as! NSCircleDetailTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("circleHomeCell", forIndexPath: indexPath) as! NSCircleHomeTableViewCell
         
         cell.selectionStyle = .None
+        cell.accessoryType = .DisclosureIndicator
         
-        cell.setCellWithNewsInfo(forumModelArray[indexPath.row])
-        
-        cell.moreBtn.tag = 100+indexPath.row
+//        cell.setCellWithNewsInfo(forumModelArray[indexPath.row])
+        cell.setCellWith(cellNameArray[indexPath.row])
         
         return cell
     }
     
     // MARK: - UITableViewDelegate
-    private let titleSize:CGFloat = 14
-    private let contentSize:CGFloat = 12
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        if indexPath.section == 0 && forumBestOrTopModelArray.count > 0 {
-            return 30
-        }
-        
-        let forum = forumModelArray[indexPath.row]
-        
-        if forum.photo.count == 0 {
-            
-            let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
-            
-            
-            var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
-            }
-            
-            return 55+8+height+8+contentHeight+8+8+8// 个人信息高+上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
-        }else if forum.photo.count < 3 {
-            let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16-110-8)
-            
-            
-            var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16-110-8)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
-            }
-            
-            let cellHeight1:CGFloat = 80+8+8+8// 上边距+图片高+下边距
-            let cellHeight2 = 8+height+8+contentHeight+8+8+8// 上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
-            
-            
-            return max(cellHeight1, cellHeight2)+55
-        }else{
-            let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
-            
-            
-            var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
-            }
-            
-            let imgHeight = (WIDTH-16-15*2)/3.0*2/3.0
-            
-            return 55+8+height+8+contentHeight+8+imgHeight+8+8+8// 个人信息高+上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
-        }
+        return 44
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -267,11 +261,6 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("帖子详情")
-    }
-    
-    // footerView 点击事件
-    func footerViewClick()  {
-        print("进入圈子")
     }
     
     // 调整 button 图片和文字

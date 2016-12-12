@@ -81,9 +81,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         
 //        cell.nameLable.text = model.post_excerpt
 
-        // TODO:JUDGE WIFI
         if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
-//        if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
             cell.imgBtn.image = UIImage.init(named: "ic_lan.png")
         }else{
             cell.imgBtn.sd_setImageWithURL(NSURL(string:DomainName+"data/upload/"+(model.thumbArr.first?.url ?? "")!), placeholderImage: UIImage.init(named: "ic_lan.png"))

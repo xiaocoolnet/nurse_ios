@@ -37,9 +37,7 @@ class RecruitTableViewCell: UITableViewCell {
     
     func showforJobModel(model:JobModel){
         
-        // TODO:JUDGE WIFI
-        if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
-//        if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || model.photo == "" {
+        if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi || model.photo == "" {
             titImg.image = UIImage.init(named: "img_head_nor")
         }else{
             titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.photo), placeholderImage: UIImage.init(named: "img_head_nor"))
@@ -102,9 +100,7 @@ class RecruitTableViewCell: UITableViewCell {
     
     func showforCVModel(model:CVModel){
         
-        // TODO:JUDGE WIFI
-        if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
-//        if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || model.avatar == "" {
+        if  (!NurseUtil.net.isWifi() && loadPictureOnlyWiFi) || model.avatar == "" {
             titImg.image = UIImage.init(named: "img_head_nor")
         }else{
             titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))

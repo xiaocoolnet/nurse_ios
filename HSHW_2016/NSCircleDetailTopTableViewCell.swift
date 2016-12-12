@@ -17,8 +17,6 @@ class NSCircleDetailTopTableViewCell: UITableViewCell {
     
     let titleLab = UILabel()
     
-    let margin:CGFloat = 15 // 三张图 间距
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

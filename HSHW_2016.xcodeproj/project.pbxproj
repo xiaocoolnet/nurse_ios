@@ -138,6 +138,9 @@
 		1F1C1B371DF6ADA20051F638 /* NSCircleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B361DF6ADA20051F638 /* NSCircleListViewController.swift */; };
 		1F1C1B3C1DF6B0930051F638 /* NSCircleListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B3A1DF6B0930051F638 /* NSCircleListTableViewCell.swift */; };
 		1F1C1B3D1DF6B0930051F638 /* NSCircleListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1C1B3B1DF6B0930051F638 /* NSCircleListTableViewCell.xib */; };
+		1F1C64F61DFE35880082F00F /* NetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C64F51DFE35880082F00F /* NetworkReachabilityManager.swift */; };
+		1F1C64F81DFE49630082F00F /* NSCircleHomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C64F71DFE49630082F00F /* NSCircleHomeTableViewCell.swift */; };
+		1F1C64FC1DFE86F90082F00F /* ImageBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C64FB1DFE86F90082F00F /* ImageBtn.m */; };
 		1F2853611DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2853601DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift */; };
 		1F2F55EC1DF003BD00FE037E /* ScoreNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F55EB1DF003BD00FE037E /* ScoreNoteViewController.swift */; };
 		1F33D7761D752A360028444A /* GoAboardExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F33D7751D752A360028444A /* GoAboardExamViewController.swift */; };
@@ -439,6 +442,10 @@
 		1F1C1B361DF6ADA20051F638 /* NSCircleListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleListViewController.swift; sourceTree = "<group>"; };
 		1F1C1B3A1DF6B0930051F638 /* NSCircleListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleListTableViewCell.swift; sourceTree = "<group>"; };
 		1F1C1B3B1DF6B0930051F638 /* NSCircleListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSCircleListTableViewCell.xib; sourceTree = "<group>"; };
+		1F1C64F51DFE35880082F00F /* NetworkReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityManager.swift; sourceTree = "<group>"; };
+		1F1C64F71DFE49630082F00F /* NSCircleHomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleHomeTableViewCell.swift; sourceTree = "<group>"; };
+		1F1C64FA1DFE86F90082F00F /* ImageBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBtn.h; sourceTree = "<group>"; };
+		1F1C64FB1DFE86F90082F00F /* ImageBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBtn.m; sourceTree = "<group>"; };
 		1F2853601DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiFeedbackListViewController.swift; sourceTree = "<group>"; };
 		1F2F55EB1DF003BD00FE037E /* ScoreNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreNoteViewController.swift; sourceTree = "<group>"; };
 		1F33D7751D752A360028444A /* GoAboardExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoAboardExamViewController.swift; sourceTree = "<group>"; };
@@ -874,6 +881,8 @@
 		183B866B1CE5CF7900709235 /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				1F1C64F91DFE86F90082F00F /* ImageBtn */,
+				1F1C64F51DFE35880082F00F /* NetworkReachabilityManager.swift */,
 				1FCCA9631DCC7683001112AC /* ios_api */,
 				1FCCA95D1DCC6483001112AC /* LFLUISegmentedControl */,
 				1FEC64D01D910EAD0045038C /* OneSDK */,
@@ -1288,6 +1297,7 @@
 				1F1C1B3B1DF6B0930051F638 /* NSCircleListTableViewCell.xib */,
 				1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */,
 				1FD464971DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift */,
+				1F1C64F71DFE49630082F00F /* NSCircleHomeTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1298,6 +1308,15 @@
 				1F1C1B321DF68E310051F638 /* CircleModel.swift */,
 			);
 			name = Model;
+			sourceTree = "<group>";
+		};
+		1F1C64F91DFE86F90082F00F /* ImageBtn */ = {
+			isa = PBXGroup;
+			children = (
+				1F1C64FA1DFE86F90082F00F /* ImageBtn.h */,
+				1F1C64FB1DFE86F90082F00F /* ImageBtn.m */,
+			);
+			path = ImageBtn;
 			sourceTree = "<group>";
 		};
 		1FCCA95D1DCC6483001112AC /* LFLUISegmentedControl */ = {
@@ -1796,6 +1815,7 @@
 				1FFD9EE11D51EBD700951098 /* DPDConstants.swift in Sources */,
 				1FD464A61DF951970029BFEA /* NSCircleHomeViewController.swift in Sources */,
 				0DB467B51D4C8600009AE2AD /* MJRefreshGifHeader.m in Sources */,
+				1F1C64F81DFE49630082F00F /* NSCircleHomeTableViewCell.swift in Sources */,
 				0BAF21BC1D1134790065146B /* LoginUserInfoModel.swift in Sources */,
 				1F33D7791D7554280028444A /* SMPageControl.m in Sources */,
 				1FC823D01D6C37D4005ED821 /* SuccessfulCaseViewController.swift in Sources */,
@@ -1803,6 +1823,7 @@
 				189849B61CE815D3007B37B4 /* AcademicTableViewCell.swift in Sources */,
 				185408891CE70D8A00DFBA7C /* AcademicViewController.swift in Sources */,
 				181E0D231CEBF80B00E34A7F /* SetDataViewController.swift in Sources */,
+				1F1C64F61DFE35880082F00F /* NetworkReachabilityManager.swift in Sources */,
 				0BD429451D3DCDF70064B64C /* MineExaminationViewController.swift in Sources */,
 				0B9C64071D41B89F008B7F6C /* GMyExamViewController.swift in Sources */,
 				0B6FED501D3382B800A4488E /* EducationModel.swift in Sources */,
@@ -1823,6 +1844,7 @@
 				0DB467BC1D4C8600009AE2AD /* UIScrollView+MJRefresh.m in Sources */,
 				0DB467B61D4C8600009AE2AD /* MJRefreshNormalHeader.m in Sources */,
 				18C240601CEEB6340059BF48 /* TalentViewController.swift in Sources */,
+				1F1C64FC1DFE86F90082F00F /* ImageBtn.m in Sources */,
 				F6342C641D38DB4000800D8E /* HSCollectionListController.swift in Sources */,
 				1F1B7F331D66F480009910DF /* wechatDelegate.swift in Sources */,
 				185408751CE6C88D00DFBA7C /* StudyViewController.swift in Sources */,

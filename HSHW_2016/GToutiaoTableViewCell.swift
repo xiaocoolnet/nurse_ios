@@ -219,9 +219,7 @@ class GToutiaoTableViewCell: UITableViewCell {
             
         }else{
             
-            // TODO:JUDGE WIFI
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
-//            if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
                 
                 titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
                 self.titImage.image = UIImage.init(named: "defaultImage.png")
@@ -261,9 +259,7 @@ class GToutiaoTableViewCell: UITableViewCell {
         
         titSubImg.frame = CGRectMake(10, CGRectGetMaxY(titLab.frame)+10, WIDTH-20, (WIDTH-20-margin*2)/3.0*2/3.0)
         
-        // TODO:JUDGE WIFI
         if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
-//        if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
             
             titSubImg_1.image = UIImage(named: "defaultImage.png")
             titSubImg_2.image = UIImage(named: "defaultImage.png")

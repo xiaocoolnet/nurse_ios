@@ -97,24 +97,11 @@ class AcademicTableViewCell: UITableViewCell {
                 let photoUrl:String = DomainName+"data/upload/"+(newsInfo!.thumbArr.first?.url)!
                 print("AcademicTableViewCell photoUrl == \(photoUrl)")
                 
-                var isWifi = false
-                NurseUtil.net.connectionStatus({ (status) in
-                    switch status {
-                    case .offline:
-                        isWifi = false
-                    case .online(ReachabilityType.wiFi):
-                        isWifi = true
-                    case .online(ReachabilityType.wwan):
-                        isWifi = false
-                    case .unknown:
-                        isWifi = false
-                    }
-                    if  !isWifi && loadPictureOnlyWiFi {
-                        self.titImage.image = UIImage.init(named: "defaultImage.png")
-                    }else{
-                        self.titImage.sd_setImageWithURL(NSURL.init(string: photoUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
-                    }
-                })
+                if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
+                    self.titImage.image = UIImage.init(named: "defaultImage.png")
+                }else{
+                    self.titImage.sd_setImageWithURL(NSURL.init(string: photoUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
+                }
                 //            titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
             }else{
                 titImage.image = UIImage.init(named: "defaultImage.png")
@@ -171,24 +158,11 @@ class AcademicTableViewCell: UITableViewCell {
                 let photoUrl:String = DomainName+"data/upload/"+(academicNewsInfo!.thumbArr.first?.url)!
                 print("AcademicTableViewCell photoUrl == \(photoUrl)")
                 
-                var isWifi = false
-                NurseUtil.net.connectionStatus({ (status) in
-                    switch status {
-                    case .offline:
-                        isWifi = false
-                    case .online(ReachabilityType.wiFi):
-                        isWifi = true
-                    case .online(ReachabilityType.wwan):
-                        isWifi = false
-                    case .unknown:
-                        isWifi = false
-                    }
-                    if  !isWifi && loadPictureOnlyWiFi {
-                        self.titImage.image = UIImage.init(named: "defaultImage.png")
-                    }else{
-                        self.titImage.sd_setImageWithURL(NSURL.init(string: photoUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
-                    }
-                })
+                if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
+                    self.titImage.image = UIImage.init(named: "defaultImage.png")
+                }else{
+                    self.titImage.sd_setImageWithURL(NSURL.init(string: photoUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
+                }
                 
                 //            titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
             }else{

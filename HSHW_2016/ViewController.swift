@@ -470,13 +470,15 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     // 验证手机号是否正确
     func validationEmailFormat(string:String) -> Bool {
         
-        let mobileRegex = "^((13[0-9])|(147)|(170)|(15[^4,\\D])|(18[0-9]))\\d{8}$"
+//        let mobileRegex = "^((13[0-9])|(147)|(170)|(15[^4,\\D])|(18[0-9]))\\d{8}$"
+        let mobileRegex = "(^(13[0-9]|15[0-9]|18[0-9]|17[0-9]|147)\\d{8}$)"
+
         let mobileTest:NSPredicate = NSPredicate(format: "SELF MATCHES %@",mobileRegex)
         return mobileTest.evaluateWithObject(string)
         
     }
     
-    //  注册提交事件
+    // MARK: - 注册提交事件
     func submitTheUser() {
         // print("提交")
         //        phoneNum.resignFirstResponder()

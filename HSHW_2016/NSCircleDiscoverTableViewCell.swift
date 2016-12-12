@@ -167,9 +167,7 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             
             self.contantLab.text = forum.content
             
-            // TODO:JUDGE WIFI
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
-//            if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
                 
                 titleImg.frame = CGRectMake(WIDTH-110-8, 10, 110, 80)
                 self.titleImg.image = UIImage.init(named: "defaultImage.png")
@@ -217,9 +215,7 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             
             titSubImg.frame = CGRectMake(8, contantLab.frame.maxY+8, WIDTH-16, (WIDTH-16-margin*2)/3.0*2/3.0)
             
-            // TODO:JUDGE WIFI
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
-//            if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
                 
                 titSubImg_1.image = UIImage(named: "defaultImage.png")
                 titSubImg_2.image = UIImage(named: "defaultImage.png")

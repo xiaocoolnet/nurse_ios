@@ -37,9 +37,8 @@ class HSNewsCommentCell: UITableViewCell {
             nameLab.text = commentModel?.username
             contentLab.text = commentModel?.content
             timeLab.text = self.timeStampToString((commentModel?.add_time)!)+"    回复"
-            // TODO:JUDGE WIFI
+
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
-//            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
                 self.headerBtn.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
             }else{
                 self.headerBtn.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(commentModel?.photo)!), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))

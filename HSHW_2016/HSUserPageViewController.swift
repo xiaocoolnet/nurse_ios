@@ -118,9 +118,7 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
                 headerView.backgroundColor = UIColor.cyanColor()
                 let str = SHOW_IMAGE_HEADER+(userInfo?.photo)!
                 
-                // TODO:JUDGE WIFI
                 if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
-//                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
                     headerView.image = UIImage.init(named: "defaultImage.png")
                 }else{
                     headerView.sd_setImageWithURL(NSURL.init(string: str), placeholderImage: UIImage.init(named: "defaultImage.png"))

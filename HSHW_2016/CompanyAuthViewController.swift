@@ -52,12 +52,9 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
                 successContactLab.text = companyInfo?.linkman
                 successTelLab.text = companyInfo?.phone
                 successMailLab.text = companyInfo?.email
-//                successLicenseImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(companyInfo?.license)!))
                 
-                // TODO:JUDGE WIFI
                 if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
 
-//                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
                     successLicenseImg.image = UIImage.init(named: "defaultImage.png")
                 }else{
                     successLicenseImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(companyInfo?.license)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
