@@ -44,7 +44,7 @@ extension DropDownCell {
 	}
 	
 	override public func setSelected(selected: Bool, animated: Bool) {
-		let executeSelection: () -> Void = { [unowned self] in
+		let executeSelection: () -> Void = {
 			if let selectedBackgroundColor = self.selectedBackgroundColor {
 				if selected {
 					self.backgroundColor = selectedBackgroundColor

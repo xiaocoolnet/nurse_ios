@@ -194,7 +194,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         hud!.margin = 10.0
         hud!.removeFromSuperViewOnHide = true
         
-        mineHelper.getPersonalInfo {[unowned self] (success, response) in
+        mineHelper.getPersonalInfo {(success, response) in
             if success {
                 
                 dispatch_async(dispatch_get_main_queue(), {

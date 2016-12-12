@@ -67,7 +67,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         super.viewDidLoad()
         //  添加一个导航控制器
         //  获取验证码倒计时
-        processHandle = {[unowned self] (timeInterVal) in
+        processHandle = {(timeInterVal) in
             dispatch_async(dispatch_get_main_queue(), {
                 //    self.acquire.backgroundColor = COLOR
                 self.acquire.userInteractionEnabled = false
@@ -79,7 +79,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
             })
         }
         //  获取验证码
-        finishHandle = {[unowned self] (timeInterVal) in
+        finishHandle = {(timeInterVal) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.acquire.userInteractionEnabled = true
                 // self.acquire.backgroundColor = COLOR
@@ -447,7 +447,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         hud.margin = 10.0
         hud.removeFromSuperViewOnHide = true
         
-        logVM?.comfirmPhoneHasRegister(phoneNum.text!, handle: {[unowned self](success, response) in
+        logVM?.comfirmPhoneHasRegister(phoneNum.text!, handle: {(success, response) in
             dispatch_async(dispatch_get_main_queue(), {
                 //  不管填什么内容都走了这个方法
                 if success {
@@ -504,7 +504,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         
         
         logVM?.register(phoneNum.text!,password:password.text!,
-                        code:yanzheng.text!,usertype:usertype,devicestate:"1", handle: { [unowned self] (success, response) in
+                        code:yanzheng.text!,usertype:usertype,devicestate:"1", handle: {(success, response) in
                             dispatch_async(dispatch_get_main_queue(), {
                                 if success {
                                     
@@ -660,7 +660,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         
-        logVM?.login(num, passwordNumber: pwd, handle: { [unowned self] (success, response) in
+        logVM?.login(num, passwordNumber: pwd, handle: {(success, response) in
             dispatch_async(dispatch_get_main_queue(), {
                 if success == false {
                     if response != nil {

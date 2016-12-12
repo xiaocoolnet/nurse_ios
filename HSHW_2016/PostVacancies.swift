@@ -455,7 +455,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
 //        self.positionImg.frame.origin.x = CGRectGetMaxX(self.positionLab.frame)+5
         
         // 下拉列表选中后的回调方法
-        positionDrop.selectionAction = { [unowned self] (index, item) in
+        positionDrop.selectionAction = { (index, item) in
             
             self.positionLab.text = item
             self.positionLab.sizeToFit()
@@ -483,7 +483,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
 //        self.conditionImg.frame.origin.x = CGRectGetMaxX(self.conditionLab.frame)+5
         
         // 下拉列表选中后的回调方法
-        coditionDrop.selectionAction = { [unowned self] (index, item) in
+        coditionDrop.selectionAction = { (index, item) in
             
             self.conditionBtn.selected = true
             self.conditionLab.text = item
@@ -506,7 +506,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         //        self.conditionImg.frame.origin.x = CGRectGetMaxX(self.conditionLab.frame)+5
         
         // 下拉列表选中后的回调方法
-        expDrop.selectionAction = { [unowned self] (index, item) in
+        expDrop.selectionAction = { (index, item) in
             
             self.expBtn.selected = true
             self.expLab.text = item
@@ -529,7 +529,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
 //        self.treatmentImg.frame.origin.x = CGRectGetMaxX(self.treatmentLab.frame)+5
         
         // 下拉列表选中后的回调方法
-        treatmentDrop.selectionAction = { [unowned self] (index, item) in
+        treatmentDrop.selectionAction = { (index, item) in
             
             self.treatmentBtn.selected = true
             
@@ -553,7 +553,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
 //        self.personImg.frame.origin.x = CGRectGetMaxX(self.personLab.frame)+5
 
         // 下拉列表选中后的回调方法
-        personDrop.selectionAction = { [unowned self] (index, item) in
+        personDrop.selectionAction = { (index, item) in
             
             self.personBtn.selected = true
             
@@ -577,7 +577,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
 //        self.moneyImg.frame.origin.x = CGRectGetMaxX(self.moneyLab.frame)+5
 
         // 下拉列表选中后的回调方法
-        moneyDrop.selectionAction = { [unowned self] (index, item) in
+        moneyDrop.selectionAction = { (index, item) in
             
             self.moneyBtn.selected = true
             

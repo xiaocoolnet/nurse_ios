@@ -302,7 +302,8 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
         let imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
         
         ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "\(PARK_URL_Header)uploadavatar") {  (data) in
-            dispatch_async(dispatch_get_main_queue(), { [unowned self] in
+        
+            dispatch_async(dispatch_get_main_queue(), {
                 let result = Http(JSONDecoder(data))
                 if result.status != nil {
                     if result.status! == "success"{

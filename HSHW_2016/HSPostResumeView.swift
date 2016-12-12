@@ -405,7 +405,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         eduDropDown.dataSource = dropDownDic["edu"]!
         
         // 下拉列表选中后的回调方法
-        eduDropDown.selectionAction = { [unowned self] (index, item) in
+        eduDropDown.selectionAction = {(index, item) in
             self.eduLab.text = item
             self.eduLab.sizeToFit()
             self.eduImg.frame.origin.x = CGRectGetMaxX(self.eduLab.frame)+5
@@ -422,7 +422,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         expDropDown.dataSource = dropDownDic["exp"]!
         
-        expDropDown.selectionAction = { [unowned self] (index, item) in
+        expDropDown.selectionAction = {(index, item) in
             self.expLab.text = item
             self.expLab.sizeToFit()
             self.expImg.frame.origin.x = CGRectGetMaxX(self.expLab.frame)+5
@@ -440,7 +440,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         professionalDropDown.dataSource = dropDownDic["professional"]!
         
-        professionalDropDown.selectionAction = { [unowned self] (index, item) in
+        professionalDropDown.selectionAction = {(index, item) in
             self.professionalLab.text = item
             self.professionalLab.sizeToFit()
             self.professionalImg.frame.origin.x = CGRectGetMaxX(self.professionalLab.frame)+5
@@ -457,7 +457,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         salaryDropDown.dataSource = dropDownDic["salary"]!
         
-        salaryDropDown.selectionAction = { [unowned self] (index, item) in
+        salaryDropDown.selectionAction = {(index, item) in
             self.salaryLab.text = item
             self.salaryLab.sizeToFit()
             self.salaryImg.frame.origin.x = CGRectGetMaxX(self.salaryLab.frame)+5
@@ -475,7 +475,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         jobTimeDropDown.dataSource = dropDownDic["jobTime"]!
         
-        jobTimeDropDown.selectionAction = { [unowned self] (index, item) in
+        jobTimeDropDown.selectionAction = {(index, item) in
             self.jobTimeLab.text = item
             self.jobTimeLab.sizeToFit()
             self.jobTimeImg.frame.origin.x = CGRectGetMaxX(self.jobTimeLab.frame)+5
@@ -492,7 +492,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         expectedSalaryDropDown.dataSource = dropDownDic["expectedSalary"]!
         
-        expectedSalaryDropDown.selectionAction = { [unowned self] (index, item) in
+        expectedSalaryDropDown.selectionAction = {(index, item) in
             self.expectedSalaryLab.text = item
             self.expectedSalaryLab.sizeToFit()
             self.expectedSalaryImg.frame.origin.x = CGRectGetMaxX(self.expectedSalaryLab.frame)+5
@@ -510,7 +510,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         expectedPositionDropDown.dataSource = dropDownDic["expectedPosition"]!
         
-        expectedPositionDropDown.selectionAction = { [unowned self] (index, item) in
+        expectedPositionDropDown.selectionAction = {(index, item) in
             self.expectedPositionLab.text = item
             self.expectedPositionLab.sizeToFit()
             self.expectedPositionImg.frame.origin.x = CGRectGetMaxX(self.expectedPositionLab.frame)+5
@@ -605,13 +605,13 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         // print("头像点击事件")
         
         myActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        myActionSheet?.addAction(UIAlertAction(title: "拍照", style: .Default, handler: {[unowned self] (UIAlertAction) in
+        myActionSheet?.addAction(UIAlertAction(title: "拍照", style: .Default, handler: {(UIAlertAction) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.takePhoto()
             })
             }))
         
-        myActionSheet?.addAction(UIAlertAction(title: "从相册获取", style: .Default, handler: { [unowned self] (UIAlertAction) in
+        myActionSheet?.addAction(UIAlertAction(title: "从相册获取", style: .Default, handler: {(UIAlertAction) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.LocalPhoto()
             })
@@ -825,7 +825,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         let dateStr = dateFormatter.stringFromDate(NSDate())
         imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
         
-        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "\(PARK_URL_Header)uploadavatar") { [unowned self] (data) in
+        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "\(PARK_URL_Header)uploadavatar") {(data) in
             dispatch_async(dispatch_get_main_queue(), {
                 let result = Http(JSONDecoder(data))
                 if result.status != nil {

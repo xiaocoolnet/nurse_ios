@@ -108,20 +108,11 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
             
             private var horizontalMargin: CGFloat = 5
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "护理界", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
+                let title = MenuItemText(text: "职场宝典", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
                 return .Text(title: title)
             }
         }
-        
-        struct MenuItem4: MenuItemViewCustomizable {
-            
-            private var horizontalMargin: CGFloat = 5
-            var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "护理界", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
-                return .Text(title: title)
-            }
-        }
-        
+       
         struct MenuOptions: MenuViewCustomizable {
             
             private var backgroundColor: UIColor = UIColor.clearColor()
@@ -132,7 +123,7 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
             private var focusMode: MenuFocusMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
             
             var itemsOptions: [MenuItemViewCustomizable] {
-                return [MenuItem1(), MenuItem2(), MenuItem3(), MenuItem4()]
+                return [MenuItem1(), MenuItem2(), MenuItem3()]
             }
         }
         

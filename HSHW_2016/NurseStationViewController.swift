@@ -88,14 +88,14 @@ class NurseStationViewController: UIViewController {
 //                (RecVC.pagingMenuController!.currentViewController as! RecruitmentViewController).saveResumeBtnClicked()
             }
             
-            self.transitionFromViewController(RecVC, toViewController: circleController, duration: 0, options: .TransitionNone, animations: nil, completion: { [unowned self](Bool) in
+            self.transitionFromViewController(RecVC, toViewController: circleController, duration: 0, options: .TransitionNone, animations: nil, completion: {(Bool) in
                 self.currentVCIndex = 0
             })
         }else{
             if currentVCIndex == 1{
                 return
             }
-            self.transitionFromViewController(circleController, toViewController: RecVC, duration: 0, options: .TransitionNone, animations: nil, completion: { [unowned self] (Bool) in
+            self.transitionFromViewController(circleController, toViewController: RecVC, duration: 0, options: .TransitionNone, animations: nil, completion: {(Bool) in
                 self.currentVCIndex = 1
             })
         }

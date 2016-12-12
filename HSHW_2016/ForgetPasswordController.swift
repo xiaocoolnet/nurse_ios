@@ -70,7 +70,7 @@ class ForgetPasswordController: UIViewController {
 
     }
     func time(){
-        processHandle = {[unowned self] (timeInterVal) in
+        processHandle = {(timeInterVal) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.checkNumBtn.userInteractionEnabled = false
                 let btnTitle = String(timeInterVal) + "秒后重新获取"
@@ -84,7 +84,7 @@ class ForgetPasswordController: UIViewController {
             })
         }
         
-        finishHandle = {[unowned self] (timeInterVal) in
+        finishHandle = {(timeInterVal) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.checkNumBtn.userInteractionEnabled = true
                 self.checkNumBtn.setTitleColor(COLOR, forState: .Normal)
@@ -232,7 +232,7 @@ class ForgetPasswordController: UIViewController {
 //        print(phoneNumFiled.text!)
         
         //  [unowned self]什么意思   dispatch_async(dispatch_get_main_queue() 这里为什么需要加一个主线程
-        changeVM?.comfirmPhoneHasRegister(phoneNumFiled.text!, handle: {[unowned self](success, response) in
+        changeVM?.comfirmPhoneHasRegister(phoneNumFiled.text!, handle: {(success, response) in
             dispatch_async(dispatch_get_main_queue(), {
                 if success {
                     //  2.1成功,验证码传到手机,执行倒计时操作
@@ -286,7 +286,7 @@ class ForgetPasswordController: UIViewController {
                 alert("两次输入密码不一致", delegate: self)
                 return
             }
-            changeVM?.forgetPassword(phoneNumFiled.text!, code: checkNumFiled.text!, password: passWordFiled.text!, handle: { [unowned self] (success, response) in
+            changeVM?.forgetPassword(phoneNumFiled.text!, code: checkNumFiled.text!, password: passWordFiled.text!, handle: {(success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     
                     if success {
