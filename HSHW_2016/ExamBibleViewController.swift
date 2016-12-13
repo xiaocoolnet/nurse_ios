@@ -11,10 +11,6 @@ import PagingMenuController
 
 class ExamBibleViewController: UIViewController {
     
-    let oneView = ExamBibleSubViewController()
-    let twoView = ExamBibleSubViewController()
-    let threeView = ExamBibleSubViewController()
-    
     // TODO: 需要子类时  放开上边  注释下边
 //    let oneView = AllStudyViewController()
 //    let twoView = AllStudyViewController()
@@ -56,13 +52,6 @@ class ExamBibleViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.whiteColor()
         
-        oneView.title = "护士资格"
-        oneView.term_id = "149"
-        twoView.title = "初级护师"
-        twoView.term_id = "150"
-        threeView.title = "主管护师"
-        threeView.term_id = "151"
-        
         // TODO: 需要子类时  放开上边  注释下边
 //        oneView.title = "护士资格"
 //        oneView.articleID = "149"
@@ -74,26 +63,92 @@ class ExamBibleViewController: UIViewController {
 //        threeView.articleID = "151"
 //        threeView.showLineView = false
         
-        let viewControllers = [oneView,twoView,threeView]
+//        let viewControllers = [oneView,twoView,threeView]
+//        let options = PagingMenuOptions()
+//        options.scrollEnabled = false
+//        options.menuItemMargin = 5
+//        options.menuHeight = 40
+//        options.menuDisplayMode = .SegmentedControl
+//        options.backgroundColor = UIColor.clearColor()
+//        options.selectedBackgroundColor = UIColor.clearColor()
+//        options.font = UIFont.systemFontOfSize(16)
+//        options.selectedFont = UIFont.systemFontOfSize(16)
+//        options.selectedTextColor = COLOR
+//        options.menuItemMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+//        let pagingMenuController = PagingMenuController(viewControllers: viewControllers, options: options)
+//        pagingMenuController.view.frame = CGRectMake(0, 1, WIDTH, HEIGHT-1)
+////        pagingMenuController.view.frame.origin.y += 0
+////        pagingMenuController.view.frame.size.height -= 0
+//        addChildViewController(pagingMenuController)
+//        view.addSubview(pagingMenuController.view)
+//        pagingMenuController.didMoveToParentViewController(self)
+        
+        
+        struct MenuItem1: MenuItemViewCustomizable {
+            
+            private var horizontalMargin: CGFloat = 5
+            var displayMode: MenuItemDisplayMode {
+                let title = MenuItemText(text: "护士资格", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(16), selectedFont: UIFont.systemFontOfSize(16))
+                return .Text(title: title)
+            }
+        }
+        struct MenuItem2: MenuItemViewCustomizable {
+            private var horizontalMargin: CGFloat = 5
+            var displayMode: MenuItemDisplayMode {
+                let title = MenuItemText(text: "初级护师", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(16), selectedFont: UIFont.systemFontOfSize(16))
+                return .Text(title: title)
+            }
+        }
+        
+        struct MenuItem3: MenuItemViewCustomizable {
+            
+            private var horizontalMargin: CGFloat = 5
+            var displayMode: MenuItemDisplayMode {
+                let title = MenuItemText(text: "主管护师", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(16), selectedFont: UIFont.systemFontOfSize(16))
+                return .Text(title: title)
+            }
+        }
+        
+        struct MenuOptions: MenuViewCustomizable {
+            
+            private var backgroundColor: UIColor = UIColor.clearColor()
+            private var selectedBackgroundColor: UIColor = UIColor.clearColor()
+            private var displayMode: MenuDisplayMode = .SegmentedControl
+            private var height: CGFloat = 40
+            
+            private var focusMode: MenuFocusMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+            
+            var itemsOptions: [MenuItemViewCustomizable] {
+                return [MenuItem1(), MenuItem2(), MenuItem3()]
+            }
+        }
+        
+        struct PagingMenuOptions: PagingMenuControllerCustomizable {
+            private var scrollEnabled: Bool = false
+            var componentType: ComponentType {
+                
+                let oneView = ExamBibleSubViewController()
+                let twoView = ExamBibleSubViewController()
+                let threeView = ExamBibleSubViewController()
+                
+                oneView.title = "护士资格"
+                oneView.term_id = "149"
+                twoView.title = "初级护师"
+                twoView.term_id = "150"
+                threeView.title = "主管护师"
+                threeView.term_id = "151"
+                
+                return .All(menuOptions: MenuOptions(), pagingControllers: [oneView, twoView, threeView])
+            }
+        }
+        
         let options = PagingMenuOptions()
-        options.scrollEnabled = false
-        options.menuItemMargin = 5
-        options.menuHeight = 40
-        options.menuDisplayMode = .SegmentedControl
-        options.backgroundColor = UIColor.clearColor()
-        options.selectedBackgroundColor = UIColor.clearColor()
-        options.font = UIFont.systemFontOfSize(16)
-        options.selectedFont = UIFont.systemFontOfSize(16)
-        options.selectedTextColor = COLOR
-        options.menuItemMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
-        let pagingMenuController = PagingMenuController(viewControllers: viewControllers, options: options)
+        let pagingMenuController = PagingMenuController(options: options)
         pagingMenuController.view.frame = CGRectMake(0, 1, WIDTH, HEIGHT-1)
-//        pagingMenuController.view.frame.origin.y += 0
-//        pagingMenuController.view.frame.size.height -= 0
+
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
         pagingMenuController.didMoveToParentViewController(self)
-        
     }
 }
 

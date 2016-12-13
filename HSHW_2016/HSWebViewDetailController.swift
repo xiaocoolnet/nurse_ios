@@ -56,7 +56,7 @@ class HSWebViewDetailController: UIViewController, UIWebViewDelegate {
     
     func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
         hud.hide(true)
-        if webView.request?.URLString == self.url {
+        if webView.request?.URL?.absoluteString == self.url {
             
             let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("获取详情失败 \(error.debugDescription)", comment: "empty message"), preferredStyle: .Alert)
             self.presentViewController(alertController, animated: true, completion: nil)

@@ -126,7 +126,7 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
     func loadData() {
         
         if articleID != nil {
-            helper.getArticleListWithID(articleID!) {[unowned self] (success, response) in
+            helper.getArticleListWithID(articleID!) {(success, response) in
                 if success {
                     self.newsList = response as? Array<NewsInfo> ?? []
                     dispatch_async(dispatch_get_main_queue(), {

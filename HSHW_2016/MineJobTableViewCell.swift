@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import SDWebImage
 
 class MineJobTableViewCell: UITableViewCell {
@@ -40,7 +39,7 @@ class MineJobTableViewCell: UITableViewCell {
     
     func showforJobModel(model:MineJobInfo){
 
-        if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+        if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
             self.titImg.image = UIImage.init(named: "img_head_nor")
         }else{
             self.titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))

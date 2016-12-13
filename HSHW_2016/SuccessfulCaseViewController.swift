@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import MBProgressHUD
 
 class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,changeModelDelegate {
@@ -63,7 +62,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
             "userid":QCLoginUserInfo.currentInfo.userid,
             "show_fav":"1"
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 dispatch_async(dispatch_get_main_queue(), {
@@ -140,7 +139,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
             "userid":QCLoginUserInfo.currentInfo.userid,
             "show_fav":"1"
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 self.myTableView.mj_footer.endRefreshingWithNoMoreData()
@@ -356,7 +355,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                 "type":"1",
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                 // print(request)
                 if(error != nil){
                     
@@ -400,7 +399,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                 "type":"1",
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                 // print(request)
                 if(error != nil){
                     

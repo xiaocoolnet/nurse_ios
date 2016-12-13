@@ -54,39 +54,39 @@ class ForumTypeModel: JSONJoy {
     }
 }
 
-class ForumModel: JSONJoy {
-    
-    var mid:String
-    var type:String
-    var userid:String
-    var name:String
-    var title:String
-    var content:String
-    var write_time:String
-    var photo:String
-    var pic = Array<PicModel>()
-    var like:String
-    var comment = Array<CommentModel>()
-    
-    required init(_ decoder:JSONDecoder){
-        
-        mid = decoder["mid"].string ?? ""
-        type = decoder["type"].string ?? ""
-        userid = decoder["userid"].string ?? ""
-        name = decoder["name"].string ?? ""
-        title = decoder["title"].string ?? ""
-        content = decoder["content"].string ?? ""
-        write_time = decoder["write_time"].string ?? ""
-        photo = decoder["photo"].string ?? ""
-        for child:JSONDecoder in decoder["pic"].array ?? [] {
-            pic.append(PicModel(child))
-        }
-        like = decoder["like"].string ?? ""
-        for child:JSONDecoder in decoder["comment"].array ?? [] {
-            comment.append(CommentModel(child))
-        }
-    }
-}
+//class ForumModel: JSONJoy {
+//    
+//    var mid:String
+//    var type:String
+//    var userid:String
+//    var name:String
+//    var title:String
+//    var content:String
+//    var write_time:String
+//    var photo:String
+//    var pic = Array<PicModel>()
+//    var like:String
+//    var comment = Array<CommentModel>()
+//    
+//    required init(_ decoder:JSONDecoder){
+//        
+//        mid = decoder["mid"].string ?? ""
+//        type = decoder["type"].string ?? ""
+//        userid = decoder["userid"].string ?? ""
+//        name = decoder["name"].string ?? ""
+//        title = decoder["title"].string ?? ""
+//        content = decoder["content"].string ?? ""
+//        write_time = decoder["write_time"].string ?? ""
+//        photo = decoder["photo"].string ?? ""
+//        for child:JSONDecoder in decoder["pic"].array ?? [] {
+//            pic.append(PicModel(child))
+//        }
+//        like = decoder["like"].string ?? ""
+//        for child:JSONDecoder in decoder["comment"].array ?? [] {
+//            comment.append(CommentModel(child))
+//        }
+//    }
+//}
 
 class PostlistModel: JSONJoy {
     var status:String?

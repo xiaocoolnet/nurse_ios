@@ -9,7 +9,6 @@
 import UIKit
 import AFNetworking
 import MBProgressHUD
-import Alamofire
 
 //  block
 typealias ResponseBlock = (success:Bool,response:AnyObject?)->Void
@@ -27,7 +26,9 @@ class LoginModel: NSObject {
         //  GET请求
         let paramDic = ["a":"applogin","phone":phoneNumber,"password":passwordNumber]
         
-        Alamofire.request(.GET, PARK_URL_Header, parameters: paramDic).response { (request, response, json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paramDic) { (json, error) in
+
+//        Alamofire.request(.GET, PARK_URL_Header, parameters: paramDic).response { (request, response, json, error) in
             if error != nil {
                 //  请求失败
                 //  闭包传送错误信息
@@ -75,7 +76,9 @@ class LoginModel: NSObject {
         let paramDic = ["a":"SendMobileCode","phone":phoneNumber]
 //        print(phoneNumber)
         
-        Alamofire.request(.GET, PARK_URL_Header, parameters: paramDic).response { (request, response, json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paramDic) { (json, error) in
+
+//        Alamofire.request(.GET, PARK_URL_Header, parameters: paramDic).response { (request, response, json, error) in
             if error != nil {
                 // 请求成功
             }else{
@@ -100,7 +103,9 @@ class LoginModel: NSObject {
                         "code":code,"usertype":usertype,"devicestate":devicestate]
         //  进行GET请求
         
-        Alamofire.request(.GET, PARK_URL_Header, parameters: paramDic).response { (request, response, json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paramDic) { (json, error) in
+
+//        Alamofire.request(.GET, PARK_URL_Header, parameters: paramDic).response { (request, response, json, error) in
             if error != nil {
                 //  请求错误的传值
                 handle(success: false,response: "网络错误")
@@ -126,7 +131,9 @@ class LoginModel: NSObject {
     func comfirmPhoneHasRegister(phoneNum:String,handle:ResponseBlock){
         let paraDic = ["a":"checkphone","phone":phoneNum]
         
-        Alamofire.request(.GET, PARK_URL_Header, parameters: paraDic).response { (request, response, json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paraDic) { (json, error) in
+
+//        Alamofire.request(.GET, PARK_URL_Header, parameters: paraDic).response { (request, response, json, error) in
             if error != nil {
                 handle(success: false,response: "网络错误")
             }else{
@@ -148,7 +155,9 @@ class LoginModel: NSObject {
     func forgetPassword(phone:String,code:String,password:String,handle:ResponseBlock){
         let paramDic = ["a":"forgetpwd","phone":phone,"code":code,"password":password]
         
-        Alamofire.request(.GET, PARK_URL_Header, parameters: paramDic).response { (request, response, json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paramDic) { (json, error) in
+
+//        Alamofire.request(.GET, PARK_URL_Header, parameters: paramDic).response { (request, response, json, error) in
             if error != nil {
                 handle(success: false,response: "网络错误")
             }else{

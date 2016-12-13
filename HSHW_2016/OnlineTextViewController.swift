@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
 
@@ -72,7 +71,10 @@ class OnlineTextViewController: UIViewController,UITableViewDelegate,UITableView
             "userid":uid,
             "type":type == 1 ? "1":"11"
         ];
-        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String]) { (json, error) in
+
+//        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
             // print(request)
             if(error != nil){
                 

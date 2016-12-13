@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class HSStudyNetHelper: NSObject {
     //提交考试答案
@@ -21,7 +20,9 @@ class HSStudyNetHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid
         ]
 //        print(param)
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
 //            print(request?.URLString)
             if(error != nil){
                 handle(success: false, response: error?.description)

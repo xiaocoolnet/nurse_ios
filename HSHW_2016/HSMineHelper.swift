@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class HSMineHelper: NSObject {
     //获取个人资料
@@ -15,7 +14,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -59,7 +58,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"nicename":niceName
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -89,7 +88,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"realname":realName
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -111,7 +110,9 @@ class HSMineHelper: NSObject {
     func uploadImageWithData(imageData:NSData,imageName:String,handle:ResponseBlock){
         let url = PARK_URL_Header+"uploadavatar"
         let param = ["POST":imageData]
-        Alamofire.request(.POST, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypePost, URLString: url, Parameter: param) { (json, error) in
+
+//        Alamofire.request(.POST, url, parameters: param).response { request, response, json, error in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -134,7 +135,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"avatar":avatar
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -157,7 +158,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"sex":sex
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -180,7 +181,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"phone":phoneNumber
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -203,7 +204,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"email":email
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -227,7 +228,7 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,
             "birthday":birthday
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -250,7 +251,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"address":address
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -273,7 +274,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"school":school
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -296,7 +297,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"major":major
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -319,7 +320,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"education":education
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -349,7 +350,7 @@ class HSMineHelper: NSObject {
         }
         
         let param = ["userid":QCLoginUserInfo.currentInfo.userid];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -370,7 +371,7 @@ class HSMineHelper: NSObject {
         let url = PARK_URL_Header+"addfavorite"
         
         let param = ["userid":userid,"refid":refid,"type":type,"title":title,"description":description];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -391,7 +392,7 @@ class HSMineHelper: NSObject {
         let url = PARK_URL_Header+"cancelfavorite"
         
         let param = ["userid":userid,"refid":refid,"type":type];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request?.URLString)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -411,7 +412,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":userid
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -435,7 +436,7 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,
             "type":type
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -457,7 +458,7 @@ class HSMineHelper: NSObject {
         let url = PARK_URL_Header+"GetExampaper"
         
         let param = ["userid":userid,"type":type];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -482,7 +483,7 @@ class HSMineHelper: NSObject {
         let url = PARK_URL_Header+"GetMyErrorExampaper"
         
         let param = ["userid":userid,"type":type];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -506,7 +507,7 @@ class HSMineHelper: NSObject {
         let url = PARK_URL_Header+"getfavoritelist"
         
         let param = ["userid":userid,"type":type];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -531,7 +532,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":userid
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -555,7 +556,7 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,
             "type":type
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -588,25 +589,28 @@ class HSMineHelper: NSObject {
             "license":license
             
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
-                do {
-                    
-                    let result = try NSJSONSerialization.JSONObjectWithData(json!, options: NSJSONReadingOptions.MutableLeaves) as! NSDictionary
-                    // print("状态是")
-                    // print(result["status"])
-                    if(String(result["status"]!) == "success"){
-                        handle(success: true, response: String(result["data"]!))
-                    }else{
-                        handle(success: false, response: String(result["data"]!))
-                    }
-                }catch{
-                    handle(success: false, response: "json解析异常")
-                    
+                let status = HSStatusModel(JSONDecoder(json!))
+
+                if(status.status == "success"){
+                    handle(success: true, response: nil)
+                }else{
+                    handle(success: false, response: nil)
                 }
+//                do {
+//                    
+////                    let result = try NSJSONSerialization.JSONObjectWithData(json!, options: NSJSONReadingOptions.MutableLeaves) as! NSDictionary
+//                    // print("状态是")
+//                    // print(result["status"])
+//                   
+//                }catch{
+//                    handle(success: false, response: "json解析异常")
+//                    
+//                }
 
 //                let result = Http(JSONDecoder(json!))
 //                // print("状态是")
@@ -627,7 +631,7 @@ class HSMineHelper: NSObject {
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: "获取企业认证状态失败")
@@ -665,8 +669,11 @@ class HSMineHelper: NSObject {
     func getRankingList(handle:ResponseBlock){
         
         let url = PARK_URL_Header+"getRankingList"
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: nil) { (json, error) in
 
-        Alamofire.request(.GET, url).response { (request, response, json, error) in
+
+//        Alamofire.request(.GET, url).response { (request, response, json, error) in
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -690,7 +697,9 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,
             ];
         
-        Alamofire.request(.GET, url, parameters: param).response { (request, response, json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//
+//        Alamofire.request(.GET, url, parameters: param).response { (request, response, json, error) in
             if(error != nil){
                 handle(success: false, response: error?.description)
             }else{
@@ -711,7 +720,7 @@ class HSMineHelper: NSObject {
 //        let url = PARK_URL_Header+"GetMyExamData"
 //        
 //        let param = ["userid":QCLoginUserInfo.currentInfo.userid];
-//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+//        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
 //            // print(request)
 //            if(error != nil){
 //                handle(success: false, response: error?.description)
@@ -735,7 +744,7 @@ class HSMineHelper: NSObject {
         let url = PARK_URL_Header+"GetLineChartData"
         
         let param = ["userid":QCLoginUserInfo.currentInfo.userid];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -758,7 +767,7 @@ class HSMineHelper: NSObject {
         let url = PARK_URL_Header+"getSynAccuracy"
         
         let param = ["userid":QCLoginUserInfo.currentInfo.userid];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -785,7 +794,7 @@ class HSMineHelper: NSObject {
             "content":content,
             "devicestate":devicestate
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)
@@ -808,7 +817,7 @@ class HSMineHelper: NSObject {
         let url = PARK_URL_Header+"getfeedbackList"
         
         let param = ["userid":QCLoginUserInfo.currentInfo.userid];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 handle(success: false, response: error?.description)

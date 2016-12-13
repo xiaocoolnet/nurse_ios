@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 class editResumeViewController: UIViewController {
 
@@ -73,9 +72,8 @@ class editResumeViewController: UIViewController {
                 self.resumeView.alreadyHasResume = true
                 
                 let model = response as! CVModel
-                
-//                self.resumeView.headerImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+model.avatar))
-                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                                
+                if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                     self.resumeView.headerImg.image = UIImage.init(named: "img_head_nor")
                 }else{
                      self.resumeView.headerImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+model.avatar), placeholderImage: UIImage.init(named: "img_head_nor"))

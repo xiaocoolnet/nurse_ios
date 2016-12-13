@@ -18,6 +18,8 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
     
     var showLineView = true
     
+    var pager = 1
+
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -66,37 +68,42 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
         
         if articleID != nil {
             pager = 1
-            helper.getArticleListWithID(articleID!, pager:String(pager)) {[unowned self] (success, response) in
+            helper.getArticleListWithID(articleID!, pager:String(pager)) { (success, response) in
                 if success {
-                    self.pager += 1
-                    self.newsList = response as? Array<NewsInfo> ?? []
                     dispatch_async(dispatch_get_main_queue(), {
+                        self.pager += 1
+                        self.newsList = response as? Array<NewsInfo> ?? []
                         self.listTableView.reloadData()
                     })
                 }
-                self.listTableView.mj_header.endRefreshing()
+                dispatch_async(dispatch_get_main_queue(), {
+                    if self.listTableView.mj_header.isRefreshing() {
+                        
+                        self.listTableView.mj_header.endRefreshing()
+                    }
+                })
             }
         }
     }
-    var pager = 1
     func loadData_pullUp() {
         
         if articleID != nil {
-            helper.getArticleListWithID(articleID!, pager: String(pager)) {[unowned self] (success, response) in
+            helper.getArticleListWithID(articleID!, pager: String(pager)) { (success, response) in
                 if success {
-                    self.pager += 1
-                    
-                    for newsInfo in response as? Array<NewsInfo> ?? []{
-                        self.newsList?.append(newsInfo)
-                    }
                     
                     dispatch_async(dispatch_get_main_queue(), {
+                        self.pager += 1
+                        
+                        for newsInfo in response as? Array<NewsInfo> ?? []{
+                            self.newsList?.append(newsInfo)
+                        }
                         self.listTableView.reloadData()
                         self.listTableView.mj_footer.endRefreshing()
                     })
                 }else{
-                    
-                    self.listTableView.mj_footer.endRefreshingWithNoMoreData()
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.listTableView.mj_footer.endRefreshingWithNoMoreData()
+                    })
                 }
             }
         }

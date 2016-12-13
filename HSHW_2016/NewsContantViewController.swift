@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import MBProgressHUD
 import SwiftyJSON
 
@@ -363,7 +362,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     let param = [
                         "refid": self.newsInfo!.object_id
                     ];
-                    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                    
+                    
+                    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                         
                         if(error != nil){
                             
@@ -463,7 +464,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 "type":type,
                 "userid":QCLoginUserInfo.currentInfo.userid
             ];
-            Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String]) { (json, error) in
                 
                 dispatch_async(dispatch_get_main_queue(), {
                 
@@ -681,7 +682,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         let param = [
             "refid": newsInfo!.object_id
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
 
             if(error != nil){
             }else{
@@ -1226,7 +1227,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 "type":"1",
                 "userid":QCLoginUserInfo.currentInfo.userid
             ];
-            Alamofire.request(.GET, url, parameters: param as? [String:String]).response { request, response, json, error in
+            
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String]) { (json, error) in
+
                 
                 self.zan.enabled = true
 
@@ -1269,7 +1272,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 "type":"1",
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
-            Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String]) { (json, error) in
+
 
                 self.zan.enabled = true
 

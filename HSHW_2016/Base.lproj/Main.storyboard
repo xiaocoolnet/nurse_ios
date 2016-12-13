@@ -204,7 +204,7 @@
         <!--招聘-->
         <scene sceneID="lkL-Ep-fLF">
             <objects>
-                <viewController id="Rlg-Ac-h9V" customClass="HSZRecruitmentHome" customModule="HSHW_2016" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Rlg-Ac-h9V" customClass="NurseStationViewController" customModule="HSHW_2016" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qg0-sT-Ss0"/>
                         <viewControllerLayoutGuide type="bottom" id="IHJ-dl-bDA"/>

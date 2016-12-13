@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate  {
     
@@ -61,13 +60,13 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
         myTableView.dataSource = self
         
         myActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        myActionSheet?.addAction(UIAlertAction(title: "拍照", style: .Default, handler: {[unowned self] (UIAlertAction) in
+        myActionSheet?.addAction(UIAlertAction(title: "拍照", style: .Default, handler: {(UIAlertAction) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.takePhoto()
             })
         }))
         
-        myActionSheet?.addAction(UIAlertAction(title: "从相册获取", style: .Default, handler: { [unowned self] (UIAlertAction) in
+        myActionSheet?.addAction(UIAlertAction(title: "从相册获取", style: .Default, handler: { (UIAlertAction) in
             dispatch_async(dispatch_get_main_queue(), {
                 self.LocalPhoto()
             })
@@ -115,7 +114,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
         let dateStr = dateFormatter.stringFromDate(NSDate())
         let imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
         
-        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "\(PARK_URL_Header)uploadavatar") { [unowned self] (data) in
+        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "\(PARK_URL_Header)uploadavatar") { (data) in
             dispatch_async(dispatch_get_main_queue(), {
                 
                 let result = Http(JSONDecoder(data))
@@ -248,7 +247,8 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
             cell.textLabel?.text = oneArr[indexPath.row]
             cell.detailTextLabel?.text = onedeArr[indexPath.row]
             if indexPath.row == 0 {
-                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+
+                if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                     avatarView.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
                 }else{
                     avatarView.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
@@ -274,7 +274,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let changeNameVC = ChangeName()
-        changeNameVC.handle = {[unowned self] (type,value) in
+        changeNameVC.handle = {(type,value) in
             dispatch_async(dispatch_get_main_queue(), {
                 if indexPath.section == 0 {
                     self.onedeArr[indexPath.row] = value
@@ -359,7 +359,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 self.array=dressArray as! Array<String>
                 self.twodeArr[indexPath.row] = ("\(dressArray[0])-\(dressArray[1])-\(dressArray[2])")
                 let mineHelper = HSMineHelper()
-                mineHelper.changeAddress(self.twodeArr[indexPath.row], handle: { [unowned self] (success, response) in
+                mineHelper.changeAddress(self.twodeArr[indexPath.row], handle: {(success, response) in
                     dispatch_async(dispatch_get_main_queue(), {
                         if success {
                             QCLoginUserInfo.currentInfo.city = self.twodeArr[indexPath.row]

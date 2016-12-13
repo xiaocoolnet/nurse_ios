@@ -8,7 +8,7 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
+//import Alamofire
 
 enum HSEditUserInfo {
     case Avatar
@@ -103,7 +103,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 hud.hide(true, afterDelay: 1)
                 return
             }
-            mineHelper.changeUserName(textFeild.text!, handle: {[unowned self] (success, response) in
+            mineHelper.changeUserName(textFeild.text!, handle: { (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
                         QCLoginUserInfo.currentInfo.userName = self.textFeild.text!
@@ -124,7 +124,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 })
             })
         }else if showType == .PhoneNumber {
-            mineHelper.changePhoneNumber(textFeild.text!, handle: {[unowned self] (success, response) in
+            mineHelper.changePhoneNumber(textFeild.text!, handle: { (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
                         QCLoginUserInfo.currentInfo.phoneNumber = self.textFeild.text!
@@ -133,7 +133,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 })
                 })
         }else if showType == .RealName {
-            mineHelper.changeUserRealName(textFeild.text!, handle: {[unowned self] (success, response) in
+            mineHelper.changeUserRealName(textFeild.text!, handle: {(success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
                         QCLoginUserInfo.currentInfo.realName = self.textFeild.text!
@@ -142,7 +142,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 })
             })
         }else if showType == .Email {
-            mineHelper.changeEmail(textFeild.text!, handle: { [unowned self] (success, response) in
+            mineHelper.changeEmail(textFeild.text!, handle: { (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
                         QCLoginUserInfo.currentInfo.email = self.textFeild.text!
@@ -151,7 +151,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 })
             })
          }else if showType == .School {
-            mineHelper.changeSchool(textFeild.text!, handle: {[unowned self] (success, response) in
+            mineHelper.changeSchool(textFeild.text!, handle: {(success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
                         QCLoginUserInfo.currentInfo.school = self.textFeild.text!
@@ -260,7 +260,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         if showType == .Education {
             handle!(changeType: showType,value: self.dateSource.objectlist[indexPath.row].name)
-            mineHelper.changeEducation(self.dateSource.objectlist[indexPath.row].name, handle: {[unowned self] (success, response) in
+            mineHelper.changeEducation(self.dateSource.objectlist[indexPath.row].name, handle: { (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
                         QCLoginUserInfo.currentInfo.education = self.dateSource.objectlist[indexPath.row].name
@@ -274,7 +274,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
             }else{
                 handle!(changeType: showType,value: "女")
             }
-            mineHelper.changeUserSex(self.dateSource.objectlist[indexPath.row].name, handle: {[unowned self] (success, response) in
+            mineHelper.changeUserSex(self.dateSource.objectlist[indexPath.row].name, handle: { (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
                         QCLoginUserInfo.currentInfo.sex = self.dateSource.objectlist[indexPath.row].name
@@ -284,7 +284,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
             })
         }else if showType == .Major {
             handle!(changeType: showType,value: self.dateSource.objectlist[indexPath.row].name)
-            mineHelper.changeMajor(self.dateSource.objectlist[indexPath.row].name, handle: {[unowned self] (success, response) in
+            mineHelper.changeMajor(self.dateSource.objectlist[indexPath.row].name, handle: { (success, response) in
                 dispatch_async(dispatch_get_main_queue(), {
                     if success {
                         QCLoginUserInfo.currentInfo.major = self.dateSource.objectlist[indexPath.row].name
@@ -338,7 +338,9 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
         
         let url = PARK_URL_Header+"getDictionaryList"
         let param = ["type":id]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 hud.mode = MBProgressHUDMode.Text;
                 hud.labelText = "数据获取失败"

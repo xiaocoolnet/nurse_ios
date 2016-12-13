@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 class MineRecDetailsViewController: UIViewController {
     

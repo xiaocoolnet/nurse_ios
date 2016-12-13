@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -53,8 +52,9 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
                 successContactLab.text = companyInfo?.linkman
                 successTelLab.text = companyInfo?.phone
                 successMailLab.text = companyInfo?.email
-//                successLicenseImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(companyInfo?.license)!))
-                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                
+                if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
+
                     successLicenseImg.image = UIImage.init(named: "defaultImage.png")
                 }else{
                     successLicenseImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(companyInfo?.license)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
@@ -302,7 +302,8 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
         let imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
         
         ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "\(PARK_URL_Header)uploadavatar") {  (data) in
-            dispatch_async(dispatch_get_main_queue(), { [unowned self] in
+        
+            dispatch_async(dispatch_get_main_queue(), {
                 let result = Http(JSONDecoder(data))
                 if result.status != nil {
                     if result.status! == "success"{

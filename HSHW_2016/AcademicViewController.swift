@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import MBProgressHUD
 
 class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,changeModelDelegate {
@@ -71,7 +70,10 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
             "userid":QCLoginUserInfo.currentInfo.userid,
             "show_fav":"1"
         ]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//            <#code#>
+//        }
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             //            print(request)
             if(error != nil){
                 self.myTableView.mj_footer.endRefreshingWithNoMoreData()
@@ -111,8 +113,11 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
             "userid":QCLoginUserInfo.currentInfo.userid,
             "show_fav":"1"
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-//            print(request)
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+////            print(request)
             if(error != nil){
                 
             }else{
@@ -277,7 +282,9 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 "type":"1",
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//
+//            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
 //                print(request)
                 if(error != nil){
                     
@@ -333,7 +340,10 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 "type":"1",
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//
+//            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
 //                print(request)
                 if(error != nil){
                     

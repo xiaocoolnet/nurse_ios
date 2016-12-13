@@ -32,27 +32,82 @@ class MineRecruit_userViewController: UIViewController,PagingMenuControllerDeleg
         twoView.title = "我的简历"
         twoView.flag = false
         twoView.height = HEIGHT-64-44
-        let viewControllers = [oneView,twoView]
-        let options = PagingMenuOptions()
-        options.menuItemMargin = 5
-        options.menuHeight = 44
-        options.menuDisplayMode = .SegmentedControl
-        options.backgroundColor = UIColor.clearColor()
-        options.selectedBackgroundColor = UIColor.clearColor()
-        options.font = UIFont.systemFontOfSize(16)
-        options.selectedFont = UIFont.systemFontOfSize(16)
-        options.selectedTextColor = COLOR
-        options.menuItemMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
-        let pagingMenuController = PagingMenuController(viewControllers: viewControllers, options: options)
+//        let viewControllers = [oneView,twoView]
+//        let options = PagingMenuOptions()
+//        options.menuItemMargin = 5
+//        options.menuHeight = 44
+//        options.menuDisplayMode = .SegmentedControl
+//        options.backgroundColor = UIColor.clearColor()
+//        options.selectedBackgroundColor = UIColor.clearColor()
+//        options.font = UIFont.systemFontOfSize(16)
+//        options.selectedFont = UIFont.systemFontOfSize(16)
+//        options.selectedTextColor = COLOR
+//        options.menuItemMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+//        let pagingMenuController = PagingMenuController(viewControllers: viewControllers, options: options)
+//        
+//        pagingMenuController.delegate = self
+//        pagingMenuController.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
+//        pagingMenuController.view.frame.origin.y += 0
+//        pagingMenuController.view.frame.size.height -= 0
+//        addChildViewController(pagingMenuController)
+//        view.addSubview(pagingMenuController.view)
+//        pagingMenuController.didMoveToParentViewController(self)
         
+        struct MenuItem: MenuItemViewCustomizable {
+            var horizontalMargin: CGFloat {
+                return 5
+            }
+            var text = ""
+            
+            var displayMode: MenuItemDisplayMode {
+                let title = MenuItemText(text: text, color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(16), selectedFont: UIFont.systemFontOfSize(16))
+                return .Text(title: title)
+            }
+        }
+        
+        struct MenuOptions: MenuViewCustomizable {
+                        
+            var backgroundColor: UIColor {
+                return UIColor.clearColor()
+            }
+            var selectedBackgroundColor: UIColor {
+                return UIColor.clearColor()
+            }
+            var height: CGFloat {
+                return 44
+            }
+            var displayMode: MenuDisplayMode {
+                return .SegmentedControl
+            }
+            var focusMode: MenuFocusMode {
+                return .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+            }
+            
+            var itemsOptions: [MenuItemViewCustomizable] {
+                return [MenuItem.init(text: "面试邀请"), MenuItem.init(text: "我的简历")]
+            }
+        }
+        
+        struct PagingMenuOptions: PagingMenuControllerCustomizable {
+            var viewControllers = [UIViewController]()
+            var scrollEnabled: Bool {
+                return false
+            }
+            
+            var componentType: ComponentType {
+                
+                return .All(menuOptions: MenuOptions(), pagingControllers: viewControllers)
+            }
+        }
+        
+        let options = PagingMenuOptions.init(viewControllers: [oneView,twoView])
+        let pagingMenuController = PagingMenuController(options: options)
         pagingMenuController.delegate = self
         pagingMenuController.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
-        pagingMenuController.view.frame.origin.y += 0
-        pagingMenuController.view.frame.size.height -= 0
+        
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
         pagingMenuController.didMoveToParentViewController(self)
-        
     }
     
     func willMoveToPageMenuController(menuController: UIViewController, previousMenuController: UIViewController) {

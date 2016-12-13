@@ -8,7 +8,6 @@
 
 import UIKit
 import AFNetworking
-import Alamofire
 import MBProgressHUD
 
 class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate,changeModelDelegate {
@@ -87,7 +86,9 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         let url = PARK_URL_Header+"getNewslist"
         // print(newsType)
         let param = ["channelid":String(newsType!)]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 
             }else{
@@ -131,7 +132,9 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         let url = PARK_URL_Header+"getNewslist"
         // print(newsType)
         let param = ["channelid":String(newsType!),"pager":String(pager)]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
                 self.myTableView.mj_footer.endRefreshingWithNoMoreData()
             }else{

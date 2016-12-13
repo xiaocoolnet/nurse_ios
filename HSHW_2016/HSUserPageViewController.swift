@@ -7,9 +7,8 @@
 //
 
 import UIKit
-import Alamofire
 
-class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,UIAlertViewDelegate {
+class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertViewDelegate {//UITableViewDataSource
 
     var userTableView = UITableView()
     
@@ -86,7 +85,7 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableView
         userTableView.registerNib(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
         userTableView.rowHeight = UITableViewAutomaticDimension
         userTableView.delegate = self
-        userTableView.dataSource = self
+//        userTableView.dataSource = self
         self.view.addSubview(userTableView)
     }
     
@@ -118,7 +117,8 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableView
                 headerView = UIImageView.init(frame: CGRectMake(WIDTH/3.0, 30, WIDTH/3.0, WIDTH/3.0))
                 headerView.backgroundColor = UIColor.cyanColor()
                 let str = SHOW_IMAGE_HEADER+(userInfo?.photo)!
-                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                
+                if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                     headerView.image = UIImage.init(named: "defaultImage.png")
                 }else{
                     headerView.sd_setImageWithURL(NSURL.init(string: str), placeholderImage: UIImage.init(named: "defaultImage.png"))
@@ -244,14 +244,14 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UITableView
         return dataSource.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSComTableCell
-
-        cell.showForForumModel(dataSource[indexPath.row])
-        cell.selectionStyle = .None
-        
-        return cell
-    }
+//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! HSComTableCell
+//
+//        cell.showForForumModel(dataSource[indexPath.row])
+//        cell.selectionStyle = .None
+//        
+//        return cell
+//    }
     
     func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 140

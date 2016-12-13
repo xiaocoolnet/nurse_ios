@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 class FansTableViewCell: UITableViewCell {
 
@@ -80,7 +79,7 @@ class FansTableViewCell: UITableViewCell {
                 
                 self.titImg.image = UIImage.init(named: "img_head_nor")
             }else{
-                if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+                if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                     self.titImg.image = UIImage.init(named: "img_head_nor")
                 }else{
                     self.titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+model.photo), placeholderImage: UIImage.init(named: "img_head_nor"))

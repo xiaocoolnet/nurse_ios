@@ -8,7 +8,6 @@
 
 import UIKit
 import MBProgressHUD
-import Alamofire
 
 class MineMessageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -82,7 +81,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         
 //        cell.nameLable.text = model.post_excerpt
 
-        if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
+        if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
             cell.imgBtn.image = UIImage.init(named: "ic_lan.png")
         }else{
             cell.imgBtn.sd_setImageWithURL(NSURL(string:DomainName+"data/upload/"+(model.thumbArr.first?.url ?? "")!), placeholderImage: UIImage.init(named: "ic_lan.png"))
@@ -120,7 +119,9 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         
         let url = PARK_URL_Header+"setMessageread"
         let param = ["userid":QCLoginUserInfo.currentInfo.userid,"refid":model.message_id]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+
+//        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             UIApplication.sharedApplication().applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber > 1 ? UIApplication.sharedApplication().applicationIconBadgeNumber - 1:0
             unreadNum -= 1
         }
@@ -161,7 +162,9 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
                 
                 let url = PARK_URL_Header+"delMySystemMessag"
                 let param = ["userid":QCLoginUserInfo.currentInfo.userid,"refid":model.message_id]
-                Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+
+//                Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                     
                     let status = HSStatusModel(JSONDecoder(json!))
                     if status.status == "success" {
@@ -195,7 +198,9 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
             
             let url = PARK_URL_Header+"setMessageread"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid,"refid":model.message_id]
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+
+//            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                 UIApplication.sharedApplication().applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber > 1 ? UIApplication.sharedApplication().applicationIconBadgeNumber - 1:0
                 unreadNum -= 1
                 
@@ -242,7 +247,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
 
             let url = PARK_URL_Header+"setMessageread"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                 
                 self.getDate()
 //                self.myTableView.reloadData()
@@ -265,7 +270,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         
         let url = PARK_URL_Header+"getsystemmessage_new"
         let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             flag += 1
             if self.myTableView.mj_header.isRefreshing() && flag == 2 {
                 self.myTableView.mj_header.endRefreshing()
@@ -300,7 +305,9 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         
         let url_read = PARK_URL_Header+"getMessagereadlist"
         let param_read = ["userid":QCLoginUserInfo.currentInfo.userid]
-        Alamofire.request(.GET, url_read, parameters: param_read).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url_read, Parameter: param_read) { (json, error) in
+
+//        Alamofire.request(.GET, url_read, parameters: param_read).response { request, response, json, error in
             
             flag += 1
             

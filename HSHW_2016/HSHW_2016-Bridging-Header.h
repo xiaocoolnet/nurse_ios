@@ -28,3 +28,5 @@
 #import "LFLUISegmentedControl.h"
 
 #import "BaiduMobStat.h"
+
+#import "ImageBtn.h"

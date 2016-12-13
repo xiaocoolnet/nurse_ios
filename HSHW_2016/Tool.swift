@@ -8,7 +8,6 @@
 
 import Foundation
 import UIKit
-import Alamofire
 import SwiftyJSON
 
 let WIDTH = UIScreen.mainScreen().bounds.size.width
@@ -40,7 +39,9 @@ let RECRUIT_COMPANY_ORIGINALCREATETIME = "RECRUIT_USER_ORIGINALNEWSCREATETIME\(Q
 
 var LOGIN_STATE = false
 let kAppKey = "3139633252"
+// TODO:
 let kRedirectURI = "http://app.chinanurse.cn"
+//let kRedirectURI = "http://nurse.xiaocool.net"
 
 let APP_SHARE_URL = "https://www.pgyer.com/kUyM"
 let APP_SHARE_NAME = "中国护士网"
@@ -50,7 +51,7 @@ let APP_INVITEFRIEND_TITLE_FREND = "中国护士网-邀请您加入"
 
 let APP_INVITEFRIEND_DESCRIPTION_ZONE = "成为中国护士网会员，会享受100余项积分功能和政策。我们会有积分兑换商城，定期会有积分活动，让您真正享受到您的每一份支持都将获得我们的真情回报。"
 let APP_INVITEFRIEND_DESCRIPTION_FREND = "邀请护士好友加入中国护士网，赚积分赢大奖，OPPO、VIVO更多大奖等你拿>>"
-let APP_INVITEFRIEND_URL = "http://app.chinanurse.cn/index.php?g=Score&m=Score&a=scorepengyou&userid="
+let APP_INVITEFRIEND_URL = "\(DomainName)index.php?g=Score&m=Score&a=scorepengyou&userid="
 //var myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
 var myInviteFriendUrl = NSUserDefaults.standardUserDefaults().stringForKey("myInviteFriendUrl") ?? APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
 
@@ -170,8 +171,10 @@ func checkHadFavorite(refid:String, type:String, handle:ResponseBlock){
         "type":type,
         "refid":refid
     ];
-    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-        print(request)
+    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+
+//    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+//        print(request)
         if(error != nil){
             handle(success: false, response: error?.description)
         }else{
@@ -192,8 +195,10 @@ func checkHadLike(id:String, type:String, handle:ResponseBlock){
         "type":type,
         "id":id
     ];
-    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-        print(request)
+    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+
+//    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+//        print(request)
         if(error != nil){
             handle(success: false, response: error?.description)
         }else{
@@ -215,46 +220,51 @@ func alert(message:String,delegate:AnyObject){
 
 func getInvitedUrl() {
     
-    let url = "http://apis.baidu.com/3023/shorturl/shorten"
+    myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+
     
-    Alamofire.request(.GET, url, parameters: ["url_long":APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid], encoding: .URLEncodedInURL, headers: ["apikey":"615ac7276ff0b752fc5f0b8cfa845544"]).response { (request, response, json, error) in
-        print(response,json,error)
-        if error != nil {
-            myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
-        }else{
-            
-            let js = try?NSJSONSerialization.JSONObjectWithData(json!, options: .MutableLeaves)
-            print(JSON(js!)["urls"][0]["url_short"].string!)
-            if JSON(js!)["urls"][0]["result"].boolValue {
-                NSUserDefaults.standardUserDefaults().setValue(JSON(js!)["urls"][0]["url_short"].string!, forKey: "myInviteFriendUrl")
-                myInviteFriendUrl = JSON(js!)["urls"][0]["url_short"].string!
-            }else{
-                myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
-            }
-        }
-    }
+//    let url = "http://apis.baidu.com/3023/shorturl/shorten"
+//    
+//    Alamofire.request(.GET, url, parameters: ["url_long":APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid], encoding: .URLEncodedInURL, headers: ["apikey":"615ac7276ff0b752fc5f0b8cfa845544"]).response { (request, response, json, error) in
+//        print(response,json,error)
+//        if error != nil {
+//            myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+//        }else{
+//            
+//            let js = try?NSJSONSerialization.JSONObjectWithData(json!, options: .MutableLeaves)
+//            print(JSON(js!)["urls"][0]["url_short"].string!)
+//            if JSON(js!)["urls"][0]["result"].boolValue {
+//                NSUserDefaults.standardUserDefaults().setValue(JSON(js!)["urls"][0]["url_short"].string!, forKey: "myInviteFriendUrl")
+//                myInviteFriendUrl = JSON(js!)["urls"][0]["url_short"].string!
+//            }else{
+//                myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+//            }
+//        }
+//    }
 }
 
 func getShareNewsUrl(originalUrlStr:String) {
     
-    let url = "http://apis.baidu.com/3023/shorturl/shorten"
-    
-    Alamofire.request(.GET, url, parameters: ["url_long":APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid], encoding: .URLEncodedInURL, headers: ["apikey":"615ac7276ff0b752fc5f0b8cfa845544"]).response { (request, response, json, error) in
-        print(response,json,error)
-        if error != nil {
-            myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
-        }else{
-            
-            let js = try?NSJSONSerialization.JSONObjectWithData(json!, options: .MutableLeaves)
-            print(JSON(js!)["urls"][0]["url_short"].string!)
-            if JSON(js!)["urls"][0]["result"].boolValue {
-                NSUserDefaults.standardUserDefaults().setValue(JSON(js!)["urls"][0]["url_short"].string!, forKey: "myInviteFriendUrl")
-                myInviteFriendUrl = JSON(js!)["urls"][0]["url_short"].string!
-            }else{
-                myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
-            }
-        }
-    }
+    myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+
+//    let url = "http://apis.baidu.com/3023/shorturl/shorten"
+//    
+//    Alamofire.request(.GET, url, parameters: ["url_long":APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid], encoding: .URLEncodedInURL, headers: ["apikey":"615ac7276ff0b752fc5f0b8cfa845544"]).response { (request, response, json, error) in
+//        print(response,json,error)
+//        if error != nil {
+//            myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+//        }else{
+//            
+//            let js = try?NSJSONSerialization.JSONObjectWithData(json!, options: .MutableLeaves)
+//            print(JSON(js!)["urls"][0]["url_short"].string!)
+//            if JSON(js!)["urls"][0]["result"].boolValue {
+//                NSUserDefaults.standardUserDefaults().setValue(JSON(js!)["urls"][0]["url_short"].string!, forKey: "myInviteFriendUrl")
+//                myInviteFriendUrl = JSON(js!)["urls"][0]["url_short"].string!
+//            }else{
+//                myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+//            }
+//        }
+//    }
 }
 
 enum ValidatedType {

@@ -8,7 +8,6 @@
 
 import UIKit
 import AFNetworking
-import Alamofire
 import MBProgressHUD
 
 class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableViewDataSource,changeModelDelegate {
@@ -69,7 +68,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
             "show_fav":"1"
             
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 self.myTableView.mj_footer.endRefreshingWithNoMoreData()
@@ -102,7 +101,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
             "userid":QCLoginUserInfo.currentInfo.userid,
             "show_fav":"1"
         ];
-        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
             // print(request)
             if(error != nil){
                 
@@ -193,7 +192,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                 "type":"1",
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                 // print(request)
                 if(error != nil){
                     
@@ -240,7 +239,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                 "type":"1",
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                 // print(request)
                 if(error != nil){
                     

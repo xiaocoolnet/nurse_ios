@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="77" id="KGk-i7-Jjw" customClass="NSCircleListTableViewCell" customModule="HSHW_2016" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="394" height="77"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="394" height="76"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="w3q-VN-6jU">
+                        <rect key="frame" x="8" y="8" width="80" height="60"/>
+                        <color key="backgroundColor" red="0.95686274509803915" green="0.89803921568627454" blue="0.94117647058823528" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="ccf-vR-HHI"/>
+                            <constraint firstAttribute="width" constant="80" id="xpO-3c-OTJ"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="儿科" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YyZ-6y-dz8">
+                        <rect key="frame" x="96" y="8" width="34" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.56470588239999997" green="0.0" blue="0.41960784309999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="113万人 16万帖子" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cW2-2i-K0L">
+                        <rect key="frame" x="138" y="17" width="81" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="儿科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ItS-hS-bbc">
+                        <rect key="frame" x="96" y="37" width="214" height="24"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L1o-oZ-1n6">
+                        <rect key="frame" x="318" y="25" width="60" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="HUt-dB-JHX"/>
+                            <constraint firstAttribute="height" constant="25" id="nc5-Xc-LHp"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <state key="normal" title="加入" image="加入">
+                            <color key="titleColor" red="0.56470588235294117" green="0.0" blue="0.41960784313725491" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="ItS-hS-bbc" firstAttribute="bottom" secondItem="w3q-VN-6jU" secondAttribute="bottom" id="0Js-4f-ttD"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="w3q-VN-6jU" secondAttribute="bottom" id="20Z-7E-Ogz"/>
+                    <constraint firstItem="cW2-2i-K0L" firstAttribute="bottom" secondItem="YyZ-6y-dz8" secondAttribute="bottom" id="9Vn-1A-fMm"/>
+                    <constraint firstItem="L1o-oZ-1n6" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cW2-2i-K0L" secondAttribute="trailing" priority="750" constant="8" id="CNu-5q-T7K"/>
+                    <constraint firstItem="YyZ-6y-dz8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="D2g-Yf-mZk"/>
+                    <constraint firstItem="ItS-hS-bbc" firstAttribute="top" secondItem="YyZ-6y-dz8" secondAttribute="bottom" constant="8" id="DXP-zd-G2M"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="L1o-oZ-1n6" secondAttribute="trailing" constant="8" id="JJO-M9-wKY"/>
+                    <constraint firstItem="L1o-oZ-1n6" firstAttribute="leading" secondItem="ItS-hS-bbc" secondAttribute="trailing" constant="8" id="Pf9-J3-oEc"/>
+                    <constraint firstItem="L1o-oZ-1n6" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="VNJ-CM-h8d"/>
+                    <constraint firstItem="ItS-hS-bbc" firstAttribute="leading" secondItem="w3q-VN-6jU" secondAttribute="trailing" constant="8" id="WAl-f0-fYz"/>
+                    <constraint firstItem="YyZ-6y-dz8" firstAttribute="leading" secondItem="w3q-VN-6jU" secondAttribute="trailing" constant="8" id="Zme-6Q-qbA"/>
+                    <constraint firstItem="cW2-2i-K0L" firstAttribute="leading" secondItem="YyZ-6y-dz8" secondAttribute="trailing" constant="8" id="dRk-yO-Bmq"/>
+                    <constraint firstItem="w3q-VN-6jU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="s3k-zL-y00"/>
+                    <constraint firstItem="w3q-VN-6jU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="zwN-pX-XaZ"/>
+                </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="0Js-4f-ttD"/>
+                    </mask>
+                </variation>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="countLab" destination="cW2-2i-K0L" id="Ra8-sT-W6g"/>
+                <outlet property="descriptionLab" destination="ItS-hS-bbc" id="o3r-bu-VWo"/>
+                <outlet property="joinBtn" destination="L1o-oZ-1n6" id="fIp-27-84u"/>
+                <outlet property="nameLab" destination="YyZ-6y-dz8" id="LSW-jJ-fRY"/>
+                <outlet property="photoImg" destination="w3q-VN-6jU" id="ZxV-yY-PPs"/>
+            </connections>
+            <point key="canvasLocation" x="323" y="307.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="加入" width="9" height="9"/>
+    </resources>
+</document>

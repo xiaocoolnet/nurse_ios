@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import MBProgressHUD
 
 class NSPersonalInfoDetailViewController: UIViewController, HSFindPersonDetailViewDelegate {
@@ -184,7 +183,7 @@ class NSPersonalInfoDetailViewController: UIViewController, HSFindPersonDetailVi
         }else{
             let url = PARK_URL_Header+"getMyPublishJobList"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                 if(error != nil){
                     
                 }else{
@@ -254,7 +253,7 @@ class NSPersonalInfoDetailViewController: UIViewController, HSFindPersonDetailVi
                                     "jobid":model.id,
                                     "companyid":QCLoginUserInfo.currentInfo.userid
                                 ]
-                                Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
+                                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
                                     // print(request)
                                     if(error != nil){
                                         sendInviteHud.mode = MBProgressHUDMode.Text;

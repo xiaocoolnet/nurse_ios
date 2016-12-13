@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 protocol cateBtnClickedDelegate:NSObjectProtocol {
     func cateBtnClicked(categoryBtn:UIButton)
@@ -220,7 +219,7 @@ class GToutiaoTableViewCell: UITableViewCell {
             
         }else{
             
-            if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
+            if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                 
                 titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
                 self.titImage.image = UIImage.init(named: "defaultImage.png")
@@ -259,8 +258,8 @@ class GToutiaoTableViewCell: UITableViewCell {
 //        let margin:CGFloat = 15
         
         titSubImg.frame = CGRectMake(10, CGRectGetMaxY(titLab.frame)+10, WIDTH-20, (WIDTH-20-margin*2)/3.0*2/3.0)
-            
-        if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
+        
+        if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
             
             titSubImg_1.image = UIImage(named: "defaultImage.png")
             titSubImg_2.image = UIImage(named: "defaultImage.png")
@@ -325,7 +324,13 @@ class GToutiaoTableViewCell: UITableViewCell {
         
         let time:Array = (newsInfo.post_modified?.componentsSeparatedByString(" "))!
         let date:Array = time[0].componentsSeparatedByString("-")
-        self.timeLab.text = "\(date[1])/\(date[2])"
+        if date.count >= 3 {
+            self.timeLab.text = "\(date[1])/\(date[2])"
+        }else if date.count >= 2 {
+            self.timeLab.text = "\(date[0])/\(date[1])"
+        }else{
+            self.timeLab.text = "\(date[0])"
+        }
         self.contant.text = newsInfo.post_excerpt
         
         line.frame.origin.y = self.frame.size.height-0.5

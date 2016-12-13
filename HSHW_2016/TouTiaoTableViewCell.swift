@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 protocol ToutiaoCateBtnClickedDelegate:NSObjectProtocol {
     func cateBtnClicked(categoryBtn:UIButton)
@@ -137,7 +136,7 @@ class TouTiaoTableViewCell: UITableViewCell {
             
         }else{
             
-            if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
+            if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                 
                 titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
                 self.titImage.image = UIImage.init(named: "defaultImage.png")
@@ -192,7 +191,7 @@ class TouTiaoTableViewCell: UITableViewCell {
         
         titSubImg.frame = CGRectMake(10, CGRectGetMaxY(titLab.frame)+10, WIDTH-20, (WIDTH-20-margin*2)/3.0*2/3.0)
         
-        if loadPictureOnlyWiFi && !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! {
+        if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
             
             titSubImg_1.image = UIImage(named: "defaultImage.png")
             titSubImg_2.image = UIImage(named: "defaultImage.png")
