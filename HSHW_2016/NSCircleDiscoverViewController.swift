@@ -334,6 +334,10 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("帖子详情")
+        
+        let forumDetailController = NSCircleForumDetailViewController()
+        forumDetailController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(forumDetailController, animated: true)
     }
     
     // footerView 点击事件

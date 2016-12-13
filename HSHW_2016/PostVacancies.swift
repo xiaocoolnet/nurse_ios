@@ -340,7 +340,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+        print("1234567890-")
 
     }
     

@@ -84,9 +84,9 @@ class NurseStationViewController: UIViewController {
                 return
             }
             
-            if RecVC.pagingMenuController!.currentPage == 0 || RecVC.pagingMenuController!.currentPage == 1 {
-//                (RecVC.pagingMenuController!.currentViewController as! RecruitmentViewController).saveResumeBtnClicked()
-            }
+//            if RecVC.pagingMenuController!.currentPage == 0 || RecVC.pagingMenuController!.currentPage == 1 {
+////                (RecVC.pagingMenuController!.currentViewController as! RecruitmentViewController).saveResumeBtnClicked()
+//            }
             
             self.transitionFromViewController(RecVC, toViewController: circleController, duration: 0, options: .TransitionNone, animations: nil, completion: {(Bool) in
                 self.currentVCIndex = 0

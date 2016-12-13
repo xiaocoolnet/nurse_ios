@@ -10,12 +10,13 @@ import UIKit
 import PagingMenuController
 
 class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
-//    let findJob = RecruitmentViewController()
-//    let findPersonnel = RecruitmentViewController()
-//    var workPlace:HSWorkPlaceController?
-////    weak var superViewController:NurseStationViewController?
     
-    var pagingMenuController:PagingMenuController?
+    let findJob = RecruitmentViewController()
+    let findPersonnel = RecruitmentViewController()
+    var workPlace:HSWorkPlaceController?
+//    weak var superViewController:NurseStationViewController?
+    
+//    var pagingMenuController:PagingMenuController?
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -41,12 +42,13 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        workPlace = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
-//        workPlace?.articleID = "26"
-//        findJob.title = "找工作"
-//        findPersonnel.title = "找人才"
-//        findPersonnel.showType = 2
-//        workPlace!.title = "职场宝典"
+        
+        workPlace = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
+        workPlace?.articleID = "26"
+        findJob.title = "找工作"
+        findPersonnel.title = "找人才"
+        findPersonnel.showType = 2
+        workPlace!.title = "职场宝典"
 //        let viewControllers = [findJob,findPersonnel,workPlace!]
 //        let options = PagingMenuOptions()
 //        options.menuItemMargin = 5
@@ -128,25 +130,19 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
         }
         
         struct PagingMenuOptions: PagingMenuControllerCustomizable {
-            private var scrollEnabled: Bool = false
+            
+            var viewcontrollers = [UIViewController]()
+            
+            var scrollEnabled: Bool {
+                return false
+            }
             var componentType: ComponentType {
                 
-                let findJob = RecruitmentViewController()
-                let findPersonnel = RecruitmentViewController()
-                var workPlace:HSWorkPlaceController?
-                
-                workPlace = HSWorkPlaceController(nibName: "HSWorkPlaceController", bundle: nil)
-                workPlace?.articleID = "26"
-                findJob.title = "找工作"
-                findPersonnel.title = "找人才"
-                findPersonnel.showType = 2
-                workPlace!.title = "职场宝典"
-                
-                return .All(menuOptions: MenuOptions(), pagingControllers: [findJob,findPersonnel,workPlace!])
+                return .All(menuOptions: MenuOptions(), pagingControllers: viewcontrollers)
             }
         }
         
-        let options = PagingMenuOptions()
+        let options = PagingMenuOptions.init(viewcontrollers: [findJob,findPersonnel,workPlace!])
         let pagingMenuController = PagingMenuController(options: options)
         pagingMenuController.view.frame = CGRectMake(0, 1, WIDTH, HEIGHT-45)
         

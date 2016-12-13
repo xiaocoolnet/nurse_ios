@@ -176,7 +176,7 @@ class NSCircleDetailTableViewCell: UITableViewCell {
 //        nameLab.frame.origin = CGPoint(x: imgBtn.frame.maxX+8, y: 10)
         
         positionLab.text = "护士"
-        positionLab.frame = CGRect(x: nameLab.frame.maxX+8, y: 0, width: calculateWidth("护士", size: 10, height: 12)+12, height: 12)
+        positionLab.frame = CGRect(x: nameLab.frame.maxX+8, y: 0, width: calculateWidth("护士", size: 8, height: 12)+12, height: 12)
         positionLab.center.y = nameLab.center.y
         positionLab.layer.cornerRadius = 6
         
