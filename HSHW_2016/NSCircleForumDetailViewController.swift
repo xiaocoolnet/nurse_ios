@@ -124,6 +124,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         positionLab.textAlignment = .Center
         positionLab.center.y = nameLab.center.y
         positionLab.layer.cornerRadius = 6
+        positionLab.text = "护士"
         tableHeaderView.addSubview(positionLab)
 
         let levelLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: nameLab.frame.maxY+1, width: calculateWidth("Lv.35", size: 10, height: 17), height: 17))
