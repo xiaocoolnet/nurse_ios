@@ -260,7 +260,10 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("帖子详情")
+        
+        let forumListController = NSCircleForumListViewController()
+        forumListController.title = "加精置顶帖子列表"
+        self.navigationController?.pushViewController(forumListController, animated: true)
     }
     
     // 调整 button 图片和文字

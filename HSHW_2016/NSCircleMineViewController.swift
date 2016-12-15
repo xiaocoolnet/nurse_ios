@@ -187,6 +187,13 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("帖子详情")
+        
+        switch (indexPath.section,indexPath.row) {
+        case (0,0):
+            self.navigationController?.pushViewController(NSCircleMyForumHomeViewController(), animated: true)
+        default:
+            break
+        }
     }
     
     override func didReceiveMemoryWarning() {

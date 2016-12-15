@@ -157,6 +157,10 @@
 		1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */; };
 		1F8558E81DFB8CFD00C885EA /* NurseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8558E71DFB8CFD00C885EA /* NurseUtil.swift */; };
 		1F879FA21E026513001385CE /* NSCircleMyForumHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA11E026513001385CE /* NSCircleMyForumHomeViewController.swift */; };
+		1F879FA61E0265AC001385CE /* NSCircleMyForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA51E0265AC001385CE /* NSCircleMyForumViewController.swift */; };
+		1F879FA81E0265C1001385CE /* NSCircleMyCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA71E0265C1001385CE /* NSCircleMyCommentViewController.swift */; };
+		1F879FAA1E026CB0001385CE /* NSCircleForumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA91E026CB0001385CE /* NSCircleForumListViewController.swift */; };
+		1F879FAC1E026F3B001385CE /* NSCircleForumListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FAB1E026F3B001385CE /* NSCircleForumListTableViewCell.swift */; };
 		1FC823D01D6C37D4005ED821 /* SuccessfulCaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */; };
 		1FC83D281DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */; };
 		1FC83D2A1DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */; };
@@ -469,6 +473,10 @@
 		1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTimeCell.swift; sourceTree = "<group>"; };
 		1F8558E71DFB8CFD00C885EA /* NurseUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NurseUtil.swift; sourceTree = "<group>"; };
 		1F879FA11E026513001385CE /* NSCircleMyForumHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMyForumHomeViewController.swift; sourceTree = "<group>"; };
+		1F879FA51E0265AC001385CE /* NSCircleMyForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMyForumViewController.swift; sourceTree = "<group>"; };
+		1F879FA71E0265C1001385CE /* NSCircleMyCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMyCommentViewController.swift; sourceTree = "<group>"; };
+		1F879FA91E026CB0001385CE /* NSCircleForumListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleForumListViewController.swift; sourceTree = "<group>"; };
+		1F879FAB1E026F3B001385CE /* NSCircleForumListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleForumListTableViewCell.swift; sourceTree = "<group>"; };
 		1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessfulCaseViewController.swift; sourceTree = "<group>"; };
 		1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailViewController.swift; sourceTree = "<group>"; };
 		1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -1280,14 +1288,9 @@
 			isa = PBXGroup;
 			children = (
 				1F1C1B281DF64C550051F638 /* HSNSCircleHomeViewController.swift */,
-				1F1C1B2A1DF656E00051F638 /* NSCircleDiscoverViewController.swift */,
-				1F1C1B2C1DF656FB0051F638 /* NSCircleMineViewController.swift */,
-				1F1C1B361DF6ADA20051F638 /* NSCircleListViewController.swift */,
-				1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */,
-				1FD464A51DF951970029BFEA /* NSCircleHomeViewController.swift */,
-				1F2E77F41DFFD0C200676237 /* NSCircleForumDetailViewController.swift */,
 				1F39126A1E0147CC00A26FDE /* NSCirclePublicAction.swift */,
-				1F879FA11E026513001385CE /* NSCircleMyForumHomeViewController.swift */,
+				1F879FA31E026544001385CE /* 发现 */,
+				1F879FA41E026566001385CE /* 我的 */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1313,6 +1316,7 @@
 				1F1C64F71DFE49630082F00F /* NSCircleHomeTableViewCell.swift */,
 				1F3912661E00E5CA00A26FDE /* NSCircleCommentTableViewCell.swift */,
 				1F3912671E00E5CA00A26FDE /* NSCircleCommentTableViewCell.xib */,
+				1F879FAB1E026F3B001385CE /* NSCircleForumListTableViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1332,6 +1336,30 @@
 				1F1C64FB1DFE86F90082F00F /* ImageBtn.m */,
 			);
 			path = ImageBtn;
+			sourceTree = "<group>";
+		};
+		1F879FA31E026544001385CE /* 发现 */ = {
+			isa = PBXGroup;
+			children = (
+				1F1C1B2A1DF656E00051F638 /* NSCircleDiscoverViewController.swift */,
+				1F1C1B361DF6ADA20051F638 /* NSCircleListViewController.swift */,
+				1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */,
+				1FD464A51DF951970029BFEA /* NSCircleHomeViewController.swift */,
+				1F2E77F41DFFD0C200676237 /* NSCircleForumDetailViewController.swift */,
+				1F879FA91E026CB0001385CE /* NSCircleForumListViewController.swift */,
+			);
+			name = "发现";
+			sourceTree = "<group>";
+		};
+		1F879FA41E026566001385CE /* 我的 */ = {
+			isa = PBXGroup;
+			children = (
+				1F1C1B2C1DF656FB0051F638 /* NSCircleMineViewController.swift */,
+				1F879FA11E026513001385CE /* NSCircleMyForumHomeViewController.swift */,
+				1F879FA51E0265AC001385CE /* NSCircleMyForumViewController.swift */,
+				1F879FA71E0265C1001385CE /* NSCircleMyCommentViewController.swift */,
+			);
+			name = "我的";
 			sourceTree = "<group>";
 		};
 		1FCCA95D1DCC6483001112AC /* LFLUISegmentedControl */ = {
@@ -1722,6 +1750,7 @@
 				1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */,
 				0DB467AF1D4C8600009AE2AD /* MJRefreshAutoGifFooter.m in Sources */,
 				1F09382E1D77F72700451948 /* HSNewsCommentCell.swift in Sources */,
+				1F879FAC1E026F3B001385CE /* NSCircleForumListTableViewCell.swift in Sources */,
 				0BD429471D3DD3500064B64C /* MineExamCollectTableViewCell.swift in Sources */,
 				0DE829DB1D3B52050047FB23 /* GMyExamListViewController.swift in Sources */,
 				1FE6E4C41D536171009E036B /* GHSExamCollectTableViewCell.swift in Sources */,
@@ -1775,6 +1804,7 @@
 				0DB467B71D4C8600009AE2AD /* MJRefreshStateHeader.m in Sources */,
 				1FFD9EE21D51EBD700951098 /* DPDKeyboardListener.swift in Sources */,
 				1F8558E81DFB8CFD00C885EA /* NurseUtil.swift in Sources */,
+				1F879FA81E0265C1001385CE /* NSCircleMyCommentViewController.swift in Sources */,
 				1FFD9EE81D51EBD700951098 /* DropDownCell.swift in Sources */,
 				1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */,
 				1FFD49C51D63068900AB1460 /* TPKeyboardAvoidingTableView.m in Sources */,
@@ -1786,6 +1816,7 @@
 				1FCCA95A1DCC52A6001112AC /* ExamBibleViewController.swift in Sources */,
 				F631DFAC1D069C6200E52FDB /* SmetaModel.swift in Sources */,
 				F6338B951D29105B00EE5CA2 /* HSStateCommentCell.swift in Sources */,
+				1F879FAA1E026CB0001385CE /* NSCircleForumListViewController.swift in Sources */,
 				0DB467AD1D4C8600009AE2AD /* MJRefreshFooter.m in Sources */,
 				0DE829DD1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift in Sources */,
 				1FC83D281DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift in Sources */,
@@ -1879,6 +1910,7 @@
 				F64C9AC61D3B9C2C0041E360 /* MineJobView.swift in Sources */,
 				0BAF21C41D113E100065146B /* QCLoginUserInfo.swift in Sources */,
 				0BEA9CAA1D1390120012FC11 /* ForgetPasswordController.swift in Sources */,
+				1F879FA61E0265AC001385CE /* NSCircleMyForumViewController.swift in Sources */,
 				1FFD9ECD1D519C4D00951098 /* GHSPostResumeView.swift in Sources */,
 				0BD429491D3DFAA20064B64C /* CollectDetailViewController.swift in Sources */,
 				1F2F55EC1DF003BD00FE037E /* ScoreNoteViewController.swift in Sources */,
