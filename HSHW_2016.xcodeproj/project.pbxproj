@@ -156,6 +156,7 @@
 		1F54B60E1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54B60D1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift */; };
 		1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */; };
 		1F8558E81DFB8CFD00C885EA /* NurseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8558E71DFB8CFD00C885EA /* NurseUtil.swift */; };
+		1F879FA21E026513001385CE /* NSCircleMyForumHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA11E026513001385CE /* NSCircleMyForumHomeViewController.swift */; };
 		1FC823D01D6C37D4005ED821 /* SuccessfulCaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */; };
 		1FC83D281DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */; };
 		1FC83D2A1DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */; };
@@ -467,6 +468,7 @@
 		1F54B60D1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPersonalInfoDetailViewController.swift; sourceTree = "<group>"; };
 		1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTimeCell.swift; sourceTree = "<group>"; };
 		1F8558E71DFB8CFD00C885EA /* NurseUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NurseUtil.swift; sourceTree = "<group>"; };
+		1F879FA11E026513001385CE /* NSCircleMyForumHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMyForumHomeViewController.swift; sourceTree = "<group>"; };
 		1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessfulCaseViewController.swift; sourceTree = "<group>"; };
 		1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailViewController.swift; sourceTree = "<group>"; };
 		1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -1285,6 +1287,7 @@
 				1FD464A51DF951970029BFEA /* NSCircleHomeViewController.swift */,
 				1F2E77F41DFFD0C200676237 /* NSCircleForumDetailViewController.swift */,
 				1F39126A1E0147CC00A26FDE /* NSCirclePublicAction.swift */,
+				1F879FA11E026513001385CE /* NSCircleMyForumHomeViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1841,6 +1844,7 @@
 				181E0D231CEBF80B00E34A7F /* SetDataViewController.swift in Sources */,
 				1F1C64F61DFE35880082F00F /* NetworkReachabilityManager.swift in Sources */,
 				0BD429451D3DCDF70064B64C /* MineExaminationViewController.swift in Sources */,
+				1F879FA21E026513001385CE /* NSCircleMyForumHomeViewController.swift in Sources */,
 				0B9C64071D41B89F008B7F6C /* GMyExamViewController.swift in Sources */,
 				0B6FED501D3382B800A4488E /* EducationModel.swift in Sources */,
 				1F1C1B3C1DF6B0930051F638 /* NSCircleListTableViewCell.swift in Sources */,

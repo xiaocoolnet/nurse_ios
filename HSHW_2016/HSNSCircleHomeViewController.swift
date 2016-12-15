@@ -10,10 +10,10 @@ import UIKit
 import PagingMenuController
 
 class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelegate {
-//    let discoverController = NSCircleDiscoverViewController()
-//    let mineController = NSCircleMineViewController()
+    let discoverController = NSCircleDiscoverViewController()
+    let mineController = NSCircleMineViewController()
     
-    var pagingMenuController:PagingMenuController?
+//    var pagingMenuController:PagingMenuController?
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
@@ -36,8 +36,8 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        discoverController.title = "发现"
-//        mineController.title = "我的"
+        discoverController.title = "发现"
+        mineController.title = "我的"
 //        let viewControllers = [discoverController,mineController]
 //        let options = PagingMenuOptions()
 //        options.menuItemMargin = 5
@@ -59,51 +59,72 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
 //        view.addSubview(pagingMenuController!.view)
 //        pagingMenuController!.didMoveToParentViewController(self)
         
-        struct MenuItem1: MenuItemViewCustomizable {
+//        struct MenuItem1: MenuItemViewCustomizable {
+//            
+//            private var horizontalMargin: CGFloat = 5
+//            var displayMode: MenuItemDisplayMode {
+//                let title = MenuItemText(text: "发现", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
+//                return .Text(title: title)
+//            }
+//        }
+        struct MenuItem: MenuItemViewCustomizable {
+
+            var text = ""
             
-            private var horizontalMargin: CGFloat = 5
-            var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "发现", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
-                return .Text(title: title)
+            var horizontalMargin: CGFloat {
+                return 5
             }
-        }
-        struct MenuItem2: MenuItemViewCustomizable {
-            private var horizontalMargin: CGFloat = 5
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "我的", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
+                let title = MenuItemText(text: text, color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
                 return .Text(title: title)
             }
         }
         
         struct MenuOptions: MenuViewCustomizable {
             
-            private var backgroundColor: UIColor = UIColor.clearColor()
-            private var selectedBackgroundColor: UIColor = UIColor.clearColor()
-            private var displayMode: MenuDisplayMode = .SegmentedControl
-            private var height: CGFloat = 44
+            var textArray = [String]()
             
-            private var focusMode: MenuFocusMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
-            
+            var backgroundColor: UIColor {
+                return UIColor.clearColor()
+            }
+            var selectedBackgroundColor: UIColor {
+                return UIColor.clearColor()
+            }
+            var height: CGFloat {
+                return 44
+            }
+            var displayMode: MenuDisplayMode {
+                return .SegmentedControl
+            }
+            var focusMode: MenuFocusMode {
+                return .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+            }
             var itemsOptions: [MenuItemViewCustomizable] {
-                return [MenuItem1(), MenuItem2()]
+                
+                var menuItemArray = [MenuItemViewCustomizable]()
+                for text in textArray {
+                    menuItemArray.append(MenuItem.init(text: text))
+                }
+                
+                return menuItemArray
             }
         }
         
         struct PagingMenuOptions: PagingMenuControllerCustomizable {
-            private var scrollEnabled: Bool = false
+
+            var viewControllers = [UIViewController]()
+            var itemTextArray = [String]()
+
+            var scrollEnabled: Bool {
+                return false
+            }
             var componentType: ComponentType {
                 
-                let discoverController = NSCircleDiscoverViewController()
-                let mineController = NSCircleMineViewController()
-                
-                discoverController.title = "发现"
-                mineController.title = "我的"
-                
-                return .All(menuOptions: MenuOptions(), pagingControllers: [discoverController,mineController])
+                return .All(menuOptions: MenuOptions.init(textArray: itemTextArray), pagingControllers: viewControllers)
             }
         }
         
-        let options = PagingMenuOptions()
+        let options = PagingMenuOptions.init(viewControllers: [discoverController,mineController], itemTextArray: ["发现","我的"])
         let pagingMenuController = PagingMenuController(options: options)
         pagingMenuController.view.frame = CGRectMake(0, 1, WIDTH, HEIGHT-45)
         

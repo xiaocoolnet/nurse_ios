@@ -322,6 +322,12 @@ class NSCirclePublicAction: NSObject {
         if action.currentTitle == "举报" {
             alertCancel(action)
             self.showReportAlert()
+        }else if action.currentTitle == "删除" {
+            alertCancel(action)
+            self.showSheet(with: ["删除帖子","取消"], buttonTitleColorArray: [UIColor.blackColor(),UIColor.lightGrayColor()])
+        }else if action.currentTitle == "删除帖子" {
+            alertCancel(action)
+            print("删除帖子")
         }
     }
     

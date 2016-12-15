@@ -14,6 +14,8 @@ class NSCircleHomeTableViewCell: UITableViewCell {
     
     let titleLab = UILabel()
     
+    let noteLab = UILabel()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -24,8 +26,9 @@ class NSCircleHomeTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        self.addSubview(iconImg)
-        self.addSubview(titleLab)
+        self.contentView.addSubview(iconImg)
+        self.contentView.addSubview(titleLab)
+        self.contentView.addSubview(noteLab)
         
         self.setSubViews()
     }
@@ -44,18 +47,45 @@ class NSCircleHomeTableViewCell: UITableViewCell {
         
         iconImg.contentMode = .ScaleAspectFit
         iconImg.clipsToBounds = true
-        iconImg.frame = CGRectMake(8, 8, 28, 28)
+        iconImg.frame = CGRectMake(8, 11, 22, 22)
         
-        titleLab.frame = CGRect(x: 44, y: 0, width: WIDTH-44-8, height: 44)
         titleLab.font = UIFont.systemFontOfSize(18)
         titleLab.textColor = UIColor.blackColor()
+        titleLab.textAlignment = .Left
         
+        noteLab.font = UIFont.systemFontOfSize(12)
+        noteLab.textColor = UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1)
+        noteLab.textAlignment = .Right
     }
         
-    func setCellWith(name:String) {
+//    func setCellWith(name:String) {
+//        
+//        self.iconImg.image = UIImage(named: name)
+//        self.titleLab.text = name
+//        self.noteLab.text =
+//        
+//    }
+    func setCellWith(name:String, imageName:String, noteStr:String?, isNetImage:Bool = false) {
         
-        self.iconImg.image = UIImage(named: name)
+        if isNetImage {
+            
+            self.iconImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+imageName), placeholderImage: nil)
+        }else{
+            
+            self.iconImg.image = UIImage(named: imageName)
+        }
         self.titleLab.text = name
+        
+        if noteStr == nil {
+            self.noteLab.hidden = true
+            titleLab.frame = CGRect(x: 38, y: 0, width: WIDTH-38-38, height: 44)
+        }else{
+            self.noteLab.hidden = false
+            self.noteLab.text = noteStr
+            self.titleLab.sizeToFit()
+            titleLab.frame = CGRect(x: 38, y: 0, width: self.titleLab.frame.width, height: 44)
+            self.noteLab.frame = CGRect(x: self.titleLab.frame.maxX, y: 0, width: WIDTH-self.titleLab.frame.maxX-38, height: 44)
+        }
         
     }
     

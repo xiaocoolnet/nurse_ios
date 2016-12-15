@@ -81,7 +81,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     func setSubview() {
         
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
-        line.backgroundColor = COLOR
+        line.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
         self.view.addSubview(line)
         
         self.view.backgroundColor = UIColor.whiteColor()

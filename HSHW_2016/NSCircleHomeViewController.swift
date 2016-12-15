@@ -208,7 +208,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         cell.accessoryType = .DisclosureIndicator
         
 //        cell.setCellWithNewsInfo(forumModelArray[indexPath.row])
-        cell.setCellWith(cellNameArray[indexPath.row])
+        cell.setCellWith(cellNameArray[indexPath.row], imageName: cellNameArray[indexPath.row], noteStr: nil)
         
         return cell
     }
