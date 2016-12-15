@@ -200,7 +200,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         replyView.addSubview(comment_bottom_Btn)
         
         // 评论角标
-        let commentIcon_bottom_Lab_Width = calculateWidth(String((self.commentArray.count)), size: 12, height: 15)+10
+        let commentIcon_bottom_Lab_Width = calculateWidth(String((self.commentArray.count)), size: 12, height: 15)+15
         commentIcon_bottom_Lab.frame = CGRectMake(CGRectGetWidth(comment_bottom_Btn.frame)-commentIcon_bottom_Lab_Width/2.0, -7.5, commentIcon_bottom_Lab_Width, 15)
         commentIcon_bottom_Lab.backgroundColor = UIColor.redColor()
         commentIcon_bottom_Lab.layer.cornerRadius = 7.5

@@ -9,7 +9,7 @@
 import UIKit
 import MBProgressHUD
 
-class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
     let rootTableView = UITableView(frame: CGRect.zero, style: .Grouped)
     
@@ -19,6 +19,8 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     var forumModel = ForumModel()
     
     var communityModel = CommunityModel()
+    
+    var forumCommentArray = [ForumCommentDataModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +64,60 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         forumModel.isreward = "1"
         
         forumModel.photo = [photo1,photo2,photo3]
+        
+        let comment1 = ForumCommentDataModel()
+        comment1.userid = "639"
+        comment1.content = "谢谢您"
+        comment1.major = "护士"
+        comment1.cid = ""
+        
+        let childComment1 = ForumChildCommentDataModel()
+        childComment1.userid = "617"
+        childComment1.content = "自作自受，和谁也不能和他最近的人啊。还有就是他弟弟也不怎么样。"
+        childComment1.add_time = ""
+        childComment1.major = ""
+        childComment1.userlevel = ""
+        childComment1.username = "树友322j"
+        childComment1.photo = ""
+        childComment1.type = ""
+        childComment1.pid = ""
+        childComment1.cid = ""
+        comment1.child_comments = [childComment1]
+        
+        comment1.userlevel = "5"
+        comment1.username = "小丫头妈咪宝贝"
+        comment1.photo = "avatar20161210111815639.png"
+        comment1.refid = ""
+        comment1.type = ""
+        comment1.add_time = "1471762340"
+        
+        let comment2 = ForumCommentDataModel()
+        comment2.userid = "617"
+        comment2.content = "中国护士网圈子功能上线，欢迎大家测试使用~"
+        comment2.major = "学生"
+        comment2.cid = ""
+        
+//        let childComment1 = ForumChildCommentDataModel()
+//        childComment1.userid = "617"
+//        childComment1.content = "自作自受，和谁也不能和他最近的人啊。还有就是他弟弟也不怎么样。"
+//        childComment1.add_time = ""
+//        childComment1.major = ""
+//        childComment1.userlevel = ""
+//        childComment1.username = "树友322j"
+//        childComment1.photo = ""
+//        childComment1.type = ""
+//        childComment1.pid = ""
+//        childComment1.cid = ""
+//        comment2.child_comments = [childComment1]
+        
+        comment2.userlevel = "6"
+        comment2.username = "小丫头妈咪宝贝6小丫头妈咪宝贝"
+        comment2.photo = "avatar20161210111815639.png"
+        comment2.refid = ""
+        comment2.type = ""
+        comment2.add_time = "1471865340"
+        
+        self.forumCommentArray = [comment1,comment2]
 
         self.rootTableView.reloadData()
     }
@@ -76,15 +132,16 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         self.view.addSubview(line)
         
         self.view.backgroundColor = UIColor.whiteColor()
-        rootTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65)
+        rootTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65-49)
         rootTableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        
+        rootTableView.separatorStyle = .None
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
         rootTableView.registerClass(NSCircleDetailTableViewCell.self, forCellReuseIdentifier: "circleDetailCell")
         rootTableView.registerClass(NSCircleDetailTopTableViewCell.self, forCellReuseIdentifier: "circleDetailTopCell")
-        
+        rootTableView.registerNib(UINib.init(nibName: "NSCircleCommentTableViewCell", bundle: nil), forCellReuseIdentifier: "circleForumCommentCell")
+
         //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
         //        rootTableView.mj_header.beginRefreshing()
         
@@ -93,6 +150,8 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         self.view.addSubview(rootTableView)
         
         self.setTableViewHeaderView()
+        
+        self.setReplyView()
     }
     
     // MARK: - 设置头视图
@@ -147,88 +206,247 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         rootTableView.tableHeaderView = tableHeaderView
     }
     
-    // MARK:- tableView click
+    let replyView = UIView()
+    var send_bottom_Btn:UIButton = UIButton() // 下方发送按钮
+    let replyTextField = UIPlaceHolderTextView()
+    var keyboardShowState = false
+    
+    // MARK: 设置回复视图
+    func setReplyView() {
+        // 回复 视图
+        replyView.frame = CGRectMake(0, HEIGHT-49-65, WIDTH, 49)
+        replyView.backgroundColor = UIColor(red: 244/255.0, green: 245/255.0, blue: 246/255.0, alpha: 1)
+        
+        // 回复框
+        replyTextField.frame = CGRectMake(10, 8, WIDTH-10-10-80-10, 33)
+        replyTextField.layer.cornerRadius = 6
+        //        replyTextField.borderStyle = UITextBorderStyle.RoundedRect
+        replyTextField.placeholder = "回复"
+        replyTextField.font = UIFont.systemFontOfSize(14)
+        replyTextField.returnKeyType = UIReturnKeyType.Send
+        replyTextField.delegate = self
+        replyView.addSubview(replyTextField)
+        
+        // 发送
+        send_bottom_Btn.frame = CGRectMake(CGRectGetMaxX(replyTextField.frame)+10, 8, 80, 33)
+        send_bottom_Btn.layer.cornerRadius = 6
+        send_bottom_Btn.backgroundColor = UIColor.grayColor()
+        send_bottom_Btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        send_bottom_Btn.titleLabel!.font = UIFont.systemFontOfSize(14)
+        send_bottom_Btn.setTitle("发送", forState: .Normal)
+//        send_bottom_Btn.tag = NSString(string: (newsInfo?.object_id)!).integerValue
+        send_bottom_Btn.addTarget(self, action: #selector(sendComment), forControlEvents: .TouchUpInside)
+        replyView.addSubview(send_bottom_Btn)
+        
+        let line_topView:UIView = UIView.init(frame: CGRectMake(0, 0, WIDTH, 1/UIScreen.mainScreen().scale))
+        line_topView.backgroundColor = UIColor.lightGrayColor()
+        replyView.addSubview(line_topView)
+        
+        self.view.addSubview(replyView)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidAppear), name: UIKeyboardDidShowNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    // MARK: - 获取键盘信息并改变视图
+    func keyboardWillAppear(notification: NSNotification) {
+        
+        // 获取键盘信息
+        let keyboardinfo = notification.userInfo![UIKeyboardFrameEndUserInfoKey]
+        
+        let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
+        
+        replyView.frame = CGRectMake(0, HEIGHT-86-33-8-65, WIDTH, 86+33+8)
+        replyTextField.frame.size = CGSizeMake(WIDTH-30, 70)
+        send_bottom_Btn.frame = CGRect(x: replyTextField.frame.maxX-80, y: replyTextField.frame.maxY+8, width: 80, height: 33)
+        
+        UIView.animateWithDuration(0.3) {
+            self.replyView.frame.origin.y = HEIGHT-86-33-65-keyboardheight
+        }
+        
+    }
+    
+    func keyboardDidAppear(notification:NSNotification) {
+        keyboardShowState = true
+    }
+    
+    func keyboardWillDisappear(notification:NSNotification){
+        UIView.animateWithDuration(0.3) {
+            self.replyView.frame = CGRectMake(0, HEIGHT-49-65, WIDTH, 49)
+            self.replyTextField.frame = CGRectMake(10, 8, WIDTH-10-10-80-10, 33)
+            self.send_bottom_Btn.frame = CGRectMake(CGRectGetMaxX(self.replyTextField.frame)+10, 8, 80, 33)
+
+            //            self.rootTableView.frame.size.height = HEIGHT-64-1-46
+        }
+        // print("键盘落下")
+    }
+    // MARK: -
+    
+    // MARK: - UITextViewDelegate
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        // MARK:要求登录
+        if requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
+            
+            HSMineHelper().getPersonalInfo { (success, response) in
+                if success {
+                    
+                    
+                }else{
+                    
+                }
+            }
+            return true
+        }else{
+            return false
+        }
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        self.send_bottom_Btn.selected = false
+//        self.send_bottom_Btn.tag = NSString(string: ("111")).integerValue
+        self.replyTextField.placeholder = "写评论..."
+    }
+    
+    func textViewDidChange(textView: UITextView) {
+        if textView.text.characters.count > 0 {
+            send_bottom_Btn.backgroundColor = COLOR
+        }else{
+            send_bottom_Btn.backgroundColor = UIColor.whiteColor()
+        }
+    }
+    // MARK: -
+    
+    // MARK: - 去除空格和回车
+    func trimLineString(str:String)->String{
+        let nowStr = str.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        return nowStr
+    }
+    //  MARK: - 发表评论
+    func sendComment() {
+        
+        
+        if replyTextField.text != "" && trimLineString(replyTextField.text) != ""{
+            
+            
+            
+//            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+//            hud.labelText = "正在发表评论"
+//            hud.margin = 10.0
+//            hud.removeFromSuperViewOnHide = true
+//            
+//            HSNurseStationHelper().setComment(
+//                String(self.send_bottom_Btn.tag),
+//                content: (replyTextField.text)!,
+//                type: self.send_bottom_Btn.selected ? "3":"1",
+//                photo: "",
+//                handle: { (success, response) in
+//                    // print("添加评论",success,response)
+//                    let result = response as! addScore_ReadingInformationDataModel
+//                    if success {
+//                        
+//                        let url = PARK_URL_Header+"getRefComments"
+//                        let param = [
+//                            "refid": ""
+//                        ];
+//                        
+//                        
+//                        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//                            
+//                            if(error != nil){
+//                                
+//                                hud.mode = MBProgressHUDMode.Text;
+//                                hud.labelText = "评论失败"
+//                                
+//                                hud.hide(true, afterDelay: 1)
+//                            }else{
+//                                let status = commentModel(JSONDecoder(json!))
+//                                
+//                                if(status.status == "error"){
+//                                    
+//                                    hud.mode = MBProgressHUDMode.Text;
+//                                    hud.labelText = "评论失败"
+//                                    
+//                                    hud.hide(true, afterDelay: 1)
+//                                }
+//                                if(status.status == "success"){
+//                                    
+//                                    hud.mode = MBProgressHUDMode.Text;
+//                                    hud.labelText = "评论成功"
+//                                    hud.hide(true, afterDelay: 1)
+//                                    
+//                                    self.replyTextField.placeholder = "写评论..."
+////                                    self.send_bottom_Btn.tag = NSString(string: (self.newsInfo?.object_id)!).integerValue
+//                                    self.send_bottom_Btn.selected = false
+//                                    
+////                                    self.commentArray = status.data
+//                                    self.rootTableView.reloadData()
+//                                    
+////                                    if ((result.event) != "") {
+////                                        self.showScoreTips((result.event), score: (result.score))
+////                                    }
+//                                    
+//                                    self.rootTableView.contentOffset.y = self.rootTableView.contentSize.height-self.rootTableView.frame.size.height
+//                                    
+//                                }
+//                            }
+//                        }
+//                        
+//                        self.replyTextField.text = nil
+//                        
+//                    }else{
+//                        dispatch_async(dispatch_get_main_queue(), {
+//                            hud.mode = MBProgressHUDMode.Text;
+//                            hud.labelText = "评论失败"
+//                            hud.hide(true, afterDelay: 1)
+//                        })
+//                    }
+//            })
+            replyTextField.resignFirstResponder()
+        }else{
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = MBProgressHUDMode.Text;
+            hud.labelText = "请输入内容"
+            hud.hide(true, afterDelay: 1)
+        }
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        if keyboardShowState == true {
+            
+            replyTextField.resignFirstResponder()
+            keyboardShowState = false
+        }
+    }
+    
+    // MARK:- tableView header click
     func tableViewHeaderViewClick() {
         self.navigationController?.pushViewController(NSCircleHomeViewController(), animated: true)
     }
     
-    // MARK: - moreBtnClick
-    func moreBtnClick(moreBtn:UIButton) {
-        print(moreBtn.tag)
-        
-        
-        //        let alert =
-        let labelTextArray = ["加精","置顶","删除","取消"]
-        let labelTextColorArray = [COLOR,COLOR,UIColor.blackColor(),UIColor.lightGrayColor()]
-        
-        self.showAlert(with: labelTextArray, buttonTitleColorArray: labelTextColorArray)
-        
-        
-    }
-    
-    func showAlert(with buttonTitleArray:[String], buttonTitleColorArray:[UIColor]) {
-        
-        let buttonFontSize:CGFloat = 15
-        let buttonTitleDefaultColor = UIColor.blackColor()
-        let animateWithDuration = 0.3
-        
-        let bgView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT))
-        bgView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
-        bgView.addTarget(self, action: #selector(alertCancel(_:)), forControlEvents: .TouchUpInside)
-        UIApplication.sharedApplication().keyWindow?.addSubview(bgView)
-        
-        let alert = UIView(frame: CGRect(x: 0, y: HEIGHT, width: WIDTH, height: 0))
-        alert.backgroundColor = UIColor.whiteColor()
-        bgView.addSubview(alert)
-        
-        for (i,buttonTitle) in buttonTitleArray.enumerate() {
-            let button = UIButton(frame: CGRect(x: 0, y: 44*CGFloat(i), width: WIDTH, height: 44))
-            button.tag = 100+i
-            button.titleLabel?.font = UIFont.systemFontOfSize(buttonFontSize)
-            button.setTitle(buttonTitle, forState: .Normal)
-            
-            button.setTitleColor((i<buttonTitleColorArray.count ? buttonTitleColorArray[i]:buttonTitleDefaultColor), forState: .Normal)
-            if i == buttonTitleArray.count-1 {
-                button.addTarget(self, action: #selector(alertCancel(_:)), forControlEvents: .TouchUpInside)
-            }else{
-                button.addTarget(self, action: #selector(alertActionClick(_:)), forControlEvents: .TouchUpInside)
-            }
-            alert.addSubview(button)
-            
-            let line = UIView(frame: CGRect(x: 0, y: button.frame.height-1/UIScreen.mainScreen().scale, width: button.frame.width, height: 1/UIScreen.mainScreen().scale))
-            line.backgroundColor = UIColor.lightGrayColor()
-            button.addSubview(line)
-        }
-        
-        UIView.animateWithDuration(animateWithDuration) {
-            
-            alert.frame = CGRect(x: 0, y: HEIGHT-44*CGFloat(buttonTitleArray.count), width: WIDTH, height: 44*CGFloat(buttonTitleArray.count))
-        }
-    }
-    
-    func alertActionClick(action:UIButton) {
-        print(action.tag)
-    }
-    
-    func alertCancel(action:UIView) {
-        if action.superview == UIApplication.sharedApplication().keyWindow {
-            action.removeFromSuperview()
-        }else{
-            alertCancel(action.superview!)
-        }
-    }
-    
-    
     // MARK: - UItableViewdatasource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
         if section == 0 {
             return 2
+        }else if section == 1 {
+            if self.forumCommentArray.count == 0 {
+                return 1
+            }else{
+                
+                return (self.forumCommentArray.count)
+            }
+        }else{
+            return 0
         }
-        return 5
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -263,22 +481,27 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             
             return cell!
         }
-        let cell = tableView.dequeueReusableCellWithIdentifier("circleDetailCell", forIndexPath: indexPath) as! NSCircleDetailTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("circleForumCommentCell") as! NSCircleCommentTableViewCell
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
-        cell.selectionStyle = .None
-        
-        cell.setCellWithNewsInfo(forumModelArray[indexPath.row])
-        
-        cell.moreBtn.tag = 100+indexPath.row
-        cell.moreBtn.addTarget(self, action: #selector(moreBtnClick(_:)), forControlEvents: .TouchUpInside)
-        
+        if self.forumCommentArray.count == 0 {
+            cell.textLabel?.text = "暂无评论"
+            cell.textLabel?.textColor = UIColor.grayColor()
+            cell.textLabel?.textAlignment = .Center
+            
+            cell.nameLab.text = nil
+            cell.contentLab.text = nil
+            cell.timeLab.text = nil
+            cell.headerBtn.setImage(nil, forState: .Normal)
+        }else{
+            cell.textLabel?.text = nil
+            cell.floorLab.text = "\(self.forumCommentArray.count-indexPath.row)楼"
+            cell.commentModel = self.forumCommentArray[indexPath.row]
+        }
         return cell
     }
     
     // MARK: - UITableViewDelegate
-    private let titleSize:CGFloat = 14
-    private let contentSize:CGFloat = 12
-    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
         if indexPath.section == 0 {
@@ -292,7 +515,27 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             }
             return 0
         }
-        return 0
+        if self.forumCommentArray.count == 0 {
+            return 100
+        }else{
+            
+            let height = calculateHeight((self.forumCommentArray[indexPath.row].content), size: 14, width: WIDTH-10-16)
+            
+            var child_commentBtnY = height+8+40+8+8
+            for child_comment in (self.forumCommentArray[indexPath.row].child_comments) {
+                
+                let child_commentBtnHeight = child_comment.content.boundingRectWithSize(
+                    CGSizeMake(WIDTH-60-10-16, 0),
+                    options: .UsesLineFragmentOrigin,
+                    attributes: [NSFontAttributeName:UIFont.systemFontOfSize(14)],
+                    context: nil).size.height+10
+                
+                child_commentBtnY += child_commentBtnHeight+25+5
+                
+            }
+            
+            return child_commentBtnY+8+7+8+1
+        }
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -370,7 +613,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             moreBtn.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
             
             let moreBtnWidth = calculateWidth("···", size: 18, height: 10)+10
-            moreBtn.frame = CGRect(x: contentView.frame.width-20-moreBtnWidth, y: 0, width: moreBtnWidth, height: 10)
+            moreBtn.frame = CGRect(x: contentView.frame.width-20-moreBtnWidth, y: 0, width: moreBtnWidth, height: 15)
             moreBtn.center.y = rewardNumLab.center.y
             
             moreBtn.addTarget(self, action: #selector(moreBtnClick(_:)), forControlEvents: .TouchUpInside)
@@ -396,6 +639,23 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         print("点击cell")
     }
     
+    
+    // MARK: - moreBtnClick
+    func moreBtnClick(moreBtn:UIButton) {
+        print(moreBtn.tag)
+        
+        
+        //        let alert =
+//        let labelTextArray = ["加精","置顶","删除","取消"]
+//        let labelTextColorArray = [COLOR,COLOR,UIColor.blackColor(),UIColor.lightGrayColor()]
+
+        let labelTextArray = ["举报","取消"]
+        let labelTextColorArray = [UIColor.blackColor(),UIColor.lightGrayColor()]
+
+        NSCirclePublicAction.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray)
+        
+    }
+    
     // MARK: - 收藏、点赞、打赏 按钮点击事件
     func collectBtnClick(collectBtn:UIButton) {
         print("1")
@@ -403,9 +663,14 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     func likeBtnClick(likeBtn:UIButton) {
         print("2")
     }
+    
     func rewardBtnClick(rewardBtn:UIButton) {
         print("3")
+        
+        NSCirclePublicAction.showAlert()
     }
+    
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

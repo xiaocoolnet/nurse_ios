@@ -147,6 +147,9 @@
 		1F33D7761D752A360028444A /* GoAboardExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F33D7751D752A360028444A /* GoAboardExamViewController.swift */; };
 		1F33D7791D7554280028444A /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33D7781D7554280028444A /* SMPageControl.m */; };
 		1F3674CF1DBDE734007D55E6 /* MyUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3674CE1DBDE734007D55E6 /* MyUtil.m */; };
+		1F3912681E00E5CA00A26FDE /* NSCircleCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3912661E00E5CA00A26FDE /* NSCircleCommentTableViewCell.swift */; };
+		1F3912691E00E5CA00A26FDE /* NSCircleCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3912671E00E5CA00A26FDE /* NSCircleCommentTableViewCell.xib */; };
+		1F39126B1E0147CC00A26FDE /* NSCirclePublicAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F39126A1E0147CC00A26FDE /* NSCirclePublicAction.swift */; };
 		1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */; };
 		1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */; };
 		1F54B60C1DB706E400AAA5A6 /* NSRecruitmentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54B60B1DB706E300AAA5A6 /* NSRecruitmentDetailViewController.swift */; };
@@ -455,6 +458,9 @@
 		1F33D7781D7554280028444A /* SMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageControl.m; sourceTree = "<group>"; };
 		1F3674CD1DBDE734007D55E6 /* MyUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyUtil.h; sourceTree = "<group>"; };
 		1F3674CE1DBDE734007D55E6 /* MyUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyUtil.m; sourceTree = "<group>"; };
+		1F3912661E00E5CA00A26FDE /* NSCircleCommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleCommentTableViewCell.swift; sourceTree = "<group>"; };
+		1F3912671E00E5CA00A26FDE /* NSCircleCommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSCircleCommentTableViewCell.xib; sourceTree = "<group>"; };
+		1F39126A1E0147CC00A26FDE /* NSCirclePublicAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCirclePublicAction.swift; sourceTree = "<group>"; };
 		1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayModel.swift; sourceTree = "<group>"; };
 		1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaliyExamModel.swift; sourceTree = "<group>"; };
 		1F54B60B1DB706E300AAA5A6 /* NSRecruitmentDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSRecruitmentDetailViewController.swift; sourceTree = "<group>"; };
@@ -1278,6 +1284,7 @@
 				1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */,
 				1FD464A51DF951970029BFEA /* NSCircleHomeViewController.swift */,
 				1F2E77F41DFFD0C200676237 /* NSCircleForumDetailViewController.swift */,
+				1F39126A1E0147CC00A26FDE /* NSCirclePublicAction.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1301,6 +1308,8 @@
 				1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */,
 				1FD464971DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift */,
 				1F1C64F71DFE49630082F00F /* NSCircleHomeTableViewCell.swift */,
+				1F3912661E00E5CA00A26FDE /* NSCircleCommentTableViewCell.swift */,
+				1F3912671E00E5CA00A26FDE /* NSCircleCommentTableViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1592,6 +1601,7 @@
 				1F0BE12B1D54A84300842B80 /* README.txt in Resources */,
 				0B64EBE01D37A60F001548EE /* HSForumDetailCell.xib in Resources */,
 				F6C265CE1D2513560033D2A9 /* HSWebViewDetailController.xib in Resources */,
+				1F3912691E00E5CA00A26FDE /* NSCircleCommentTableViewCell.xib in Resources */,
 				0B64EBE21D37A626001548EE /* ReleaseTimeCell.xib in Resources */,
 				F6D02CDC1D07A46800353557 /* NewsSourceCell.xib in Resources */,
 				1F09382F1D77F72700451948 /* HSNewsCommentCell.xib in Resources */,
@@ -1705,6 +1715,7 @@
 				1FCCA9561DCC18CA001112AC /* FiftyThousandExamViewController.swift in Sources */,
 				0DBF54741D406D1900B4B5FB /* GNewsCateDetailViewController.swift in Sources */,
 				181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */,
+				1F3912681E00E5CA00A26FDE /* NSCircleCommentTableViewCell.swift in Sources */,
 				1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */,
 				0DB467AF1D4C8600009AE2AD /* MJRefreshAutoGifFooter.m in Sources */,
 				1F09382E1D77F72700451948 /* HSNewsCommentCell.swift in Sources */,
@@ -1739,6 +1750,7 @@
 				0BAB74BF1D34B95200D2E365 /* HSEditResumeViewController.swift in Sources */,
 				183B866F1CE5CF9500709235 /* Http.swift in Sources */,
 				185408791CE6C8B600DFBA7C /* NurseStationViewController.swift in Sources */,
+				1F39126B1E0147CC00A26FDE /* NSCirclePublicAction.swift in Sources */,
 				F6B4083D1D1D212800BDFDBE /* HSNurseStationHelper.swift in Sources */,
 				1F0FDFE61D6949F4005DDB80 /* ScoreTableViewCell.swift in Sources */,
 				18ADDDEF1CE9995700557FFE /* PostTableViewCell.swift in Sources */,

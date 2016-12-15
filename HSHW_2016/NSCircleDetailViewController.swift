@@ -213,68 +213,12 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     func moreBtnClick(moreBtn:UIButton) {
         print(moreBtn.tag)
         
-        
-//        let alert =
         let labelTextArray = ["加精","置顶","删除","取消"]
         let labelTextColorArray = [COLOR,COLOR,UIColor.blackColor(),UIColor.lightGrayColor()]
         
-        self.showAlert(with: labelTextArray, buttonTitleColorArray: labelTextColorArray)
-        
+        NSCirclePublicAction.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray)
         
     }
-    
-    func showAlert(with buttonTitleArray:[String], buttonTitleColorArray:[UIColor]) {
-        
-        let buttonFontSize:CGFloat = 15
-        let buttonTitleDefaultColor = UIColor.blackColor()
-        let animateWithDuration = 0.3
-        
-        let bgView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT))
-        bgView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
-        bgView.addTarget(self, action: #selector(alertCancel(_:)), forControlEvents: .TouchUpInside)
-        UIApplication.sharedApplication().keyWindow?.addSubview(bgView)
-        
-        let alert = UIView(frame: CGRect(x: 0, y: HEIGHT, width: WIDTH, height: 0))
-        alert.backgroundColor = UIColor.whiteColor()
-        bgView.addSubview(alert)
-
-        for (i,buttonTitle) in buttonTitleArray.enumerate() {
-            let button = UIButton(frame: CGRect(x: 0, y: 44*CGFloat(i), width: WIDTH, height: 44))
-            button.tag = 100+i
-            button.titleLabel?.font = UIFont.systemFontOfSize(buttonFontSize)
-            button.setTitle(buttonTitle, forState: .Normal)
-            
-            button.setTitleColor((i<buttonTitleColorArray.count ? buttonTitleColorArray[i]:buttonTitleDefaultColor), forState: .Normal)
-            if i == buttonTitleArray.count-1 {
-                button.addTarget(self, action: #selector(alertCancel(_:)), forControlEvents: .TouchUpInside)
-            }else{
-                button.addTarget(self, action: #selector(alertActionClick(_:)), forControlEvents: .TouchUpInside)
-            }
-            alert.addSubview(button)
-            
-            let line = UIView(frame: CGRect(x: 0, y: button.frame.height-1/UIScreen.mainScreen().scale, width: button.frame.width, height: 1/UIScreen.mainScreen().scale))
-            line.backgroundColor = UIColor.lightGrayColor()
-            button.addSubview(line)
-        }
-        
-        UIView.animateWithDuration(animateWithDuration) {
-            
-            alert.frame = CGRect(x: 0, y: HEIGHT-44*CGFloat(buttonTitleArray.count), width: WIDTH, height: 44*CGFloat(buttonTitleArray.count))
-        }
-    }
-    
-    func alertActionClick(action:UIButton) {
-        print(action.tag)
-    }
-    
-    func alertCancel(action:UIView) {
-        if action.superview == UIApplication.sharedApplication().keyWindow {
-            action.removeFromSuperview()
-        }else{
-            alertCancel(action.superview!)
-        }
-    }
-    
     
     // MARK: - UItableViewdatasource
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -370,29 +314,6 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.001
     }
-    
-//    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 35))
-//        footerView.addTarget(self, action: #selector(footerViewClick), forControlEvents: .TouchUpInside)
-//        
-//        let nameBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 30))
-//        nameBtn.setImage(UIImage(named: "精华帖"), forState: .Normal)
-//        nameBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
-//        nameBtn.setTitleColor(COLOR, forState: .Normal)
-//        nameBtn.setTitle("内科", forState: .Normal)
-//        nameBtn.sizeToFit()
-//        nameBtn.frame.origin = CGPoint(x: 8, y: (35-nameBtn.frame.height)/2.0)
-//        footerView.addSubview(nameBtn)
-//        
-//        let comeinLab = UILabel(frame: CGRect(x: nameBtn.frame.maxX, y: 0, width: WIDTH-nameBtn.frame.maxX-8, height: 35))
-//        comeinLab.textAlignment = .Right
-//        comeinLab.font = UIFont.systemFontOfSize(12)
-//        comeinLab.textColor = COLOR
-//        comeinLab.text = "进入圈子"
-//        footerView.addSubview(comeinLab)
-//        
-//        return footerView
-//    }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         

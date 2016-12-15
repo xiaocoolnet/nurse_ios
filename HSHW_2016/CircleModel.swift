@@ -94,3 +94,55 @@ class photoModel: HandyJSON {
     
     required init() {}
 }
+
+class ForumCommentDataModel: HandyJSON {
+    
+    var userid = ""
+    
+    var content = ""
+    
+    var major = ""
+    
+    var cid = ""
+    
+    var child_comments = [ForumChildCommentDataModel]()
+    
+    var userlevel = ""
+    
+    var username = ""
+    
+    var photo = ""
+    
+    var refid = ""
+    
+    var type = ""
+    
+    var add_time = ""
+    
+    required init() {}
+}
+
+class ForumChildCommentDataModel: HandyJSON {
+    
+    var userid = ""
+    
+    var content = ""
+    
+    var add_time = ""
+    
+    var major = ""
+    
+    var userlevel = ""
+    
+    var username = ""
+    
+    var photo = ""
+    
+    var type = ""
+    
+    var pid = ""
+    
+    var cid = ""
+    
+    required init() {}
+}
