@@ -16,7 +16,7 @@ let COLOR = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 1.0
 let GREY = UIColor(red: 158/255.0, green: 158/255.0, blue: 158/255.0, alpha: 1.0)
 let RGREY = UIColor(red: 242/255.0, green: 242/255.0, blue: 242/255.0, alpha: 1.0)
 let slideImageListMaxNum = 5
-let DomainName = "http://app.chinanurse.cn/"
+let DomainName = "https://app.chinanurse.cn/"
 //let DomainName = "http://nurse.xiaocool.net/"
 //let PARK_URL_Header = "http://app.chinanurse.cn/index.php?g=apps&m=index&a="
 let PARK_URL_Header = "\(DomainName)index.php?g=apps&m=index&a="

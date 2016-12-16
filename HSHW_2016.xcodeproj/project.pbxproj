@@ -161,6 +161,7 @@
 		1F879FA81E0265C1001385CE /* NSCircleMyCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA71E0265C1001385CE /* NSCircleMyCommentViewController.swift */; };
 		1F879FAA1E026CB0001385CE /* NSCircleForumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA91E026CB0001385CE /* NSCircleForumListViewController.swift */; };
 		1F879FAC1E026F3B001385CE /* NSCircleForumListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FAB1E026F3B001385CE /* NSCircleForumListTableViewCell.swift */; };
+		1F9868471E037D4F00E2FA60 /* NSCirclePostForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9868461E037D4F00E2FA60 /* NSCirclePostForumViewController.swift */; };
 		1FC823D01D6C37D4005ED821 /* SuccessfulCaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */; };
 		1FC83D281DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */; };
 		1FC83D2A1DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */; };
@@ -477,6 +478,7 @@
 		1F879FA71E0265C1001385CE /* NSCircleMyCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMyCommentViewController.swift; sourceTree = "<group>"; };
 		1F879FA91E026CB0001385CE /* NSCircleForumListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleForumListViewController.swift; sourceTree = "<group>"; };
 		1F879FAB1E026F3B001385CE /* NSCircleForumListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleForumListTableViewCell.swift; sourceTree = "<group>"; };
+		1F9868461E037D4F00E2FA60 /* NSCirclePostForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCirclePostForumViewController.swift; sourceTree = "<group>"; };
 		1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessfulCaseViewController.swift; sourceTree = "<group>"; };
 		1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailViewController.swift; sourceTree = "<group>"; };
 		1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -1347,6 +1349,7 @@
 				1FD464A51DF951970029BFEA /* NSCircleHomeViewController.swift */,
 				1F2E77F41DFFD0C200676237 /* NSCircleForumDetailViewController.swift */,
 				1F879FA91E026CB0001385CE /* NSCircleForumListViewController.swift */,
+				1F9868461E037D4F00E2FA60 /* NSCirclePostForumViewController.swift */,
 			);
 			name = "发现";
 			sourceTree = "<group>";
@@ -1869,6 +1872,7 @@
 				0BAF21BC1D1134790065146B /* LoginUserInfoModel.swift in Sources */,
 				1F33D7791D7554280028444A /* SMPageControl.m in Sources */,
 				1FC823D01D6C37D4005ED821 /* SuccessfulCaseViewController.swift in Sources */,
+				1F9868471E037D4F00E2FA60 /* NSCirclePostForumViewController.swift in Sources */,
 				0DB467AE1D4C8600009AE2AD /* MJRefreshHeader.m in Sources */,
 				189849B61CE815D3007B37B4 /* AcademicTableViewCell.swift in Sources */,
 				185408891CE70D8A00DFBA7C /* AcademicViewController.swift in Sources */,

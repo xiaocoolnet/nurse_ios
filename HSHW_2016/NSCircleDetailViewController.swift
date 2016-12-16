@@ -154,6 +154,18 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
         self.view.addSubview(rootTableView)
         
         self.setTableViewHeaderView()
+        
+        let editBtn = UIButton(frame: CGRect(x: WIDTH-50-10, y: HEIGHT-50-64-65, width: 50, height: 50))
+        editBtn.setImage(UIImage(named: "悬浮按钮"), forState: .Normal)
+        editBtn.addTarget(self, action: #selector(editBtnClick), forControlEvents: .TouchUpInside)
+        self.view.addSubview(editBtn)
+    }
+    
+    // MARK: - 悬浮按钮点击事件
+    func editBtnClick() {
+        print("悬浮按钮   点击")
+        
+        self.navigationController?.pushViewController(NSCirclePostForumViewController(), animated: true)
     }
     
     // MARK: - 设置头视图
