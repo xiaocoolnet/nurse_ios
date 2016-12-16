@@ -131,18 +131,23 @@
 		1F1B7F311D66F1CA009910DF /* qqDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B7F301D66F1CA009910DF /* qqDelegate.swift */; };
 		1F1B7F331D66F480009910DF /* wechatDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B7F321D66F480009910DF /* wechatDelegate.swift */; };
 		1F1C1B291DF64C550051F638 /* HSNSCircleHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B281DF64C550051F638 /* HSNSCircleHomeViewController.swift */; };
-		1F1C1B2B1DF656E00051F638 /* NSCircleDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B2A1DF656E00051F638 /* NSCircleDiscoverViewController.swift */; };
 		1F1C1B2D1DF656FB0051F638 /* NSCircleMineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B2C1DF656FB0051F638 /* NSCircleMineViewController.swift */; };
 		1F1C1B301DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B2F1DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift */; };
 		1F1C1B331DF68E310051F638 /* CircleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B321DF68E310051F638 /* CircleModel.swift */; };
-		1F1C1B371DF6ADA20051F638 /* NSCircleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B361DF6ADA20051F638 /* NSCircleListViewController.swift */; };
 		1F1C1B3C1DF6B0930051F638 /* NSCircleListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C1B3A1DF6B0930051F638 /* NSCircleListTableViewCell.swift */; };
 		1F1C1B3D1DF6B0930051F638 /* NSCircleListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1C1B3B1DF6B0930051F638 /* NSCircleListTableViewCell.xib */; };
 		1F1C64F61DFE35880082F00F /* NetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C64F51DFE35880082F00F /* NetworkReachabilityManager.swift */; };
 		1F1C64F81DFE49630082F00F /* NSCircleHomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C64F71DFE49630082F00F /* NSCircleHomeTableViewCell.swift */; };
 		1F1C64FC1DFE86F90082F00F /* ImageBtn.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F1C64FB1DFE86F90082F00F /* ImageBtn.m */; };
+		1F2679E01E03FD4700FF2D25 /* NSCircleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2679D81E03FD4700FF2D25 /* NSCircleDetailViewController.swift */; };
+		1F2679E11E03FD4700FF2D25 /* NSCircleDiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2679D91E03FD4700FF2D25 /* NSCircleDiscoverViewController.swift */; };
+		1F2679E21E03FD4700FF2D25 /* NSCircleForumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2679DA1E03FD4700FF2D25 /* NSCircleForumDetailViewController.swift */; };
+		1F2679E31E03FD4700FF2D25 /* NSCircleForumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2679DB1E03FD4700FF2D25 /* NSCircleForumListViewController.swift */; };
+		1F2679E41E03FD4700FF2D25 /* NSCircleHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2679DC1E03FD4700FF2D25 /* NSCircleHomeViewController.swift */; };
+		1F2679E51E03FD4700FF2D25 /* NSCircleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2679DD1E03FD4700FF2D25 /* NSCircleListViewController.swift */; };
+		1F2679E61E03FD4700FF2D25 /* NSCirclePostChooseCircleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2679DE1E03FD4700FF2D25 /* NSCirclePostChooseCircleViewController.swift */; };
+		1F2679E71E03FD4700FF2D25 /* NSCirclePostForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2679DF1E03FD4700FF2D25 /* NSCirclePostForumViewController.swift */; };
 		1F2853611DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2853601DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift */; };
-		1F2E77F51DFFD0C200676237 /* NSCircleForumDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2E77F41DFFD0C200676237 /* NSCircleForumDetailViewController.swift */; };
 		1F2F55EC1DF003BD00FE037E /* ScoreNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2F55EB1DF003BD00FE037E /* ScoreNoteViewController.swift */; };
 		1F33D7761D752A360028444A /* GoAboardExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F33D7751D752A360028444A /* GoAboardExamViewController.swift */; };
 		1F33D7791D7554280028444A /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F33D7781D7554280028444A /* SMPageControl.m */; };
@@ -159,11 +164,8 @@
 		1F879FA21E026513001385CE /* NSCircleMyForumHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA11E026513001385CE /* NSCircleMyForumHomeViewController.swift */; };
 		1F879FA61E0265AC001385CE /* NSCircleMyForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA51E0265AC001385CE /* NSCircleMyForumViewController.swift */; };
 		1F879FA81E0265C1001385CE /* NSCircleMyCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA71E0265C1001385CE /* NSCircleMyCommentViewController.swift */; };
-		1F879FAA1E026CB0001385CE /* NSCircleForumListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA91E026CB0001385CE /* NSCircleForumListViewController.swift */; };
 		1F879FAC1E026F3B001385CE /* NSCircleForumListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FAB1E026F3B001385CE /* NSCircleForumListTableViewCell.swift */; };
-		1F9868471E037D4F00E2FA60 /* NSCirclePostForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9868461E037D4F00E2FA60 /* NSCirclePostForumViewController.swift */; };
 		1FC823D01D6C37D4005ED821 /* SuccessfulCaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */; };
-		1FC83D281DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */; };
 		1FC83D2A1DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */; };
 		1FCCA9561DCC18CA001112AC /* FiftyThousandExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA9551DCC18CA001112AC /* FiftyThousandExamViewController.swift */; };
 		1FCCA9581DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA9571DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift */; };
@@ -176,7 +178,6 @@
 		1FCCA96A1DCC787C001112AC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA9691DCC787C001112AC /* CoreLocation.framework */; };
 		1FCCA96C1DCC78E3001112AC /* libBaiduMobStat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */; };
 		1FD464981DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD464971DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift */; };
-		1FD464A61DF951970029BFEA /* NSCircleHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD464A51DF951970029BFEA /* NSCircleHomeViewController.swift */; };
 		1FE3A6341D5AFC2D0039D94D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */; };
 		1FE3A6361D5AFC370039D94D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */; };
 		1FE3A6381D5AFC430039D94D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6371D5AFC430039D94D /* Security.framework */; };
@@ -445,19 +446,24 @@
 		1F1B7F301D66F1CA009910DF /* qqDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = qqDelegate.swift; sourceTree = "<group>"; };
 		1F1B7F321D66F480009910DF /* wechatDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = wechatDelegate.swift; sourceTree = "<group>"; };
 		1F1C1B281DF64C550051F638 /* HSNSCircleHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSNSCircleHomeViewController.swift; sourceTree = "<group>"; };
-		1F1C1B2A1DF656E00051F638 /* NSCircleDiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDiscoverViewController.swift; sourceTree = "<group>"; };
 		1F1C1B2C1DF656FB0051F638 /* NSCircleMineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMineViewController.swift; sourceTree = "<group>"; };
 		1F1C1B2F1DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDiscoverTableViewCell.swift; sourceTree = "<group>"; };
 		1F1C1B321DF68E310051F638 /* CircleModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleModel.swift; sourceTree = "<group>"; };
-		1F1C1B361DF6ADA20051F638 /* NSCircleListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleListViewController.swift; sourceTree = "<group>"; };
 		1F1C1B3A1DF6B0930051F638 /* NSCircleListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleListTableViewCell.swift; sourceTree = "<group>"; };
 		1F1C1B3B1DF6B0930051F638 /* NSCircleListTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSCircleListTableViewCell.xib; sourceTree = "<group>"; };
 		1F1C64F51DFE35880082F00F /* NetworkReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkReachabilityManager.swift; sourceTree = "<group>"; };
 		1F1C64F71DFE49630082F00F /* NSCircleHomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleHomeTableViewCell.swift; sourceTree = "<group>"; };
 		1F1C64FA1DFE86F90082F00F /* ImageBtn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageBtn.h; sourceTree = "<group>"; };
 		1F1C64FB1DFE86F90082F00F /* ImageBtn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageBtn.m; sourceTree = "<group>"; };
+		1F2679D81E03FD4700FF2D25 /* NSCircleDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailViewController.swift; sourceTree = "<group>"; };
+		1F2679D91E03FD4700FF2D25 /* NSCircleDiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDiscoverViewController.swift; sourceTree = "<group>"; };
+		1F2679DA1E03FD4700FF2D25 /* NSCircleForumDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleForumDetailViewController.swift; sourceTree = "<group>"; };
+		1F2679DB1E03FD4700FF2D25 /* NSCircleForumListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleForumListViewController.swift; sourceTree = "<group>"; };
+		1F2679DC1E03FD4700FF2D25 /* NSCircleHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleHomeViewController.swift; sourceTree = "<group>"; };
+		1F2679DD1E03FD4700FF2D25 /* NSCircleListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleListViewController.swift; sourceTree = "<group>"; };
+		1F2679DE1E03FD4700FF2D25 /* NSCirclePostChooseCircleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCirclePostChooseCircleViewController.swift; sourceTree = "<group>"; };
+		1F2679DF1E03FD4700FF2D25 /* NSCirclePostForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCirclePostForumViewController.swift; sourceTree = "<group>"; };
 		1F2853601DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiFeedbackListViewController.swift; sourceTree = "<group>"; };
-		1F2E77F41DFFD0C200676237 /* NSCircleForumDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleForumDetailViewController.swift; sourceTree = "<group>"; };
 		1F2F55EB1DF003BD00FE037E /* ScoreNoteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreNoteViewController.swift; sourceTree = "<group>"; };
 		1F33D7751D752A360028444A /* GoAboardExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoAboardExamViewController.swift; sourceTree = "<group>"; };
 		1F33D7771D7554280028444A /* SMPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageControl.h; sourceTree = "<group>"; };
@@ -476,11 +482,8 @@
 		1F879FA11E026513001385CE /* NSCircleMyForumHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMyForumHomeViewController.swift; sourceTree = "<group>"; };
 		1F879FA51E0265AC001385CE /* NSCircleMyForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMyForumViewController.swift; sourceTree = "<group>"; };
 		1F879FA71E0265C1001385CE /* NSCircleMyCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMyCommentViewController.swift; sourceTree = "<group>"; };
-		1F879FA91E026CB0001385CE /* NSCircleForumListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleForumListViewController.swift; sourceTree = "<group>"; };
 		1F879FAB1E026F3B001385CE /* NSCircleForumListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleForumListTableViewCell.swift; sourceTree = "<group>"; };
-		1F9868461E037D4F00E2FA60 /* NSCirclePostForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCirclePostForumViewController.swift; sourceTree = "<group>"; };
 		1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessfulCaseViewController.swift; sourceTree = "<group>"; };
-		1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailViewController.swift; sourceTree = "<group>"; };
 		1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailTableViewCell.swift; sourceTree = "<group>"; };
 		1FCCA9551DCC18CA001112AC /* FiftyThousandExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiftyThousandExamViewController.swift; sourceTree = "<group>"; };
 		1FCCA9571DCC2AA2001112AC /* FiftyThousandExamSubCateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiftyThousandExamSubCateViewController.swift; sourceTree = "<group>"; };
@@ -495,7 +498,6 @@
 		1FCCA9691DCC787C001112AC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBaiduMobStat.a; path = ../../../../Downloads/BaiduMTJ_iOS_App_Crash_V4.3.0/ios_api/libBaiduMobStat.a; sourceTree = "<group>"; };
 		1FD464971DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailTopTableViewCell.swift; sourceTree = "<group>"; };
-		1FD464A51DF951970029BFEA /* NSCircleHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleHomeViewController.swift; sourceTree = "<group>"; };
 		1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1FE3A6371D5AFC430039D94D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1343,13 +1345,14 @@
 		1F879FA31E026544001385CE /* 发现 */ = {
 			isa = PBXGroup;
 			children = (
-				1F1C1B2A1DF656E00051F638 /* NSCircleDiscoverViewController.swift */,
-				1F1C1B361DF6ADA20051F638 /* NSCircleListViewController.swift */,
-				1FC83D271DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift */,
-				1FD464A51DF951970029BFEA /* NSCircleHomeViewController.swift */,
-				1F2E77F41DFFD0C200676237 /* NSCircleForumDetailViewController.swift */,
-				1F879FA91E026CB0001385CE /* NSCircleForumListViewController.swift */,
-				1F9868461E037D4F00E2FA60 /* NSCirclePostForumViewController.swift */,
+				1F2679D81E03FD4700FF2D25 /* NSCircleDetailViewController.swift */,
+				1F2679D91E03FD4700FF2D25 /* NSCircleDiscoverViewController.swift */,
+				1F2679DA1E03FD4700FF2D25 /* NSCircleForumDetailViewController.swift */,
+				1F2679DB1E03FD4700FF2D25 /* NSCircleForumListViewController.swift */,
+				1F2679DC1E03FD4700FF2D25 /* NSCircleHomeViewController.swift */,
+				1F2679DD1E03FD4700FF2D25 /* NSCircleListViewController.swift */,
+				1F2679DE1E03FD4700FF2D25 /* NSCirclePostChooseCircleViewController.swift */,
+				1F2679DF1E03FD4700FF2D25 /* NSCirclePostForumViewController.swift */,
 			);
 			name = "发现";
 			sourceTree = "<group>";
@@ -1729,6 +1732,7 @@
 				1F1C1B331DF68E310051F638 /* CircleModel.swift in Sources */,
 				F6CFC7421D2A164700AC591C /* ForumlistModel.swift in Sources */,
 				0DB467BA1D4C8600009AE2AD /* NSBundle+MJRefresh.m in Sources */,
+				1F2679E21E03FD4700FF2D25 /* NSCircleForumDetailViewController.swift in Sources */,
 				1F0FDFEE1D697A1F005DDB80 /* RankViewController.swift in Sources */,
 				0DB467C41D4CADFA009AE2AD /* CompanyAuthViewController.swift in Sources */,
 				0BC3878E1D339C2C001460B8 /* AdressPickerView.swift in Sources */,
@@ -1804,8 +1808,10 @@
 				0DB7E1901D38B7EC001D7B66 /* HSMineModel.swift in Sources */,
 				0BB378551D2B4BE600E4A84D /* OnlineTextViewController.swift in Sources */,
 				F63E198D1D17E10E001BDE8A /* HSZRecruitmentHome.swift in Sources */,
+				1F2679E01E03FD4700FF2D25 /* NSCircleDetailViewController.swift in Sources */,
 				0DB467B71D4C8600009AE2AD /* MJRefreshStateHeader.m in Sources */,
 				1FFD9EE21D51EBD700951098 /* DPDKeyboardListener.swift in Sources */,
+				1F2679E11E03FD4700FF2D25 /* NSCircleDiscoverViewController.swift in Sources */,
 				1F8558E81DFB8CFD00C885EA /* NurseUtil.swift in Sources */,
 				1F879FA81E0265C1001385CE /* NSCircleMyCommentViewController.swift in Sources */,
 				1FFD9EE81D51EBD700951098 /* DropDownCell.swift in Sources */,
@@ -1819,15 +1825,14 @@
 				1FCCA95A1DCC52A6001112AC /* ExamBibleViewController.swift in Sources */,
 				F631DFAC1D069C6200E52FDB /* SmetaModel.swift in Sources */,
 				F6338B951D29105B00EE5CA2 /* HSStateCommentCell.swift in Sources */,
-				1F879FAA1E026CB0001385CE /* NSCircleForumListViewController.swift in Sources */,
 				0DB467AD1D4C8600009AE2AD /* MJRefreshFooter.m in Sources */,
 				0DE829DD1D3B55EA0047FB23 /* GMyExamListTableViewCell.swift in Sources */,
-				1FC83D281DF8EE2600E5C5C5 /* NSCircleDetailViewController.swift in Sources */,
 				1F54B60C1DB706E400AAA5A6 /* NSRecruitmentDetailViewController.swift in Sources */,
 				F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */,
 				1FCCA9621DCC64FA001112AC /* ExamBibleSubCateViewController.swift in Sources */,
 				F63B3A6F1D2F953600C5B2CF /* HSStateEditResumeController.swift in Sources */,
 				F6342C6B1D391CBE00800D8E /* FansTableViewCell.swift in Sources */,
+				1F2679E41E03FD4700FF2D25 /* NSCircleHomeViewController.swift in Sources */,
 				F64C9AC81D3B9C3F0041E360 /* MineChildView.swift in Sources */,
 				189849B41CE812CB007B37B4 /* TouTiaoTableViewCell.swift in Sources */,
 				F6D02CDB1D07A46800353557 /* NewsSourceCell.swift in Sources */,
@@ -1836,8 +1841,6 @@
 				F64C9AC01D3B9BFC0041E360 /* ChildsViewController.swift in Sources */,
 				1FFD9EE71D51EBD700951098 /* DropDown.swift in Sources */,
 				1F019CAF1D587286009A0818 /* MineRecruit_userViewController.swift in Sources */,
-				1F1C1B371DF6ADA20051F638 /* NSCircleListViewController.swift in Sources */,
-				1F1C1B2B1DF656E00051F638 /* NSCircleDiscoverViewController.swift in Sources */,
 				181E0D2F1CEBF8E000E34A7F /* MineRecruitViewController.swift in Sources */,
 				185408831CE7052700DFBA7C /* NewsContantViewController.swift in Sources */,
 				F64C9ACA1D3B9C7E0041E360 /* MineJobTableViewCell.swift in Sources */,
@@ -1845,7 +1848,6 @@
 				0B9C64091D420957008B7F6C /* GMyErrorViewController.swift in Sources */,
 				1F1C1B301DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift in Sources */,
 				0DE829D91D3B25250047FB23 /* GMyExaminationViewController.swift in Sources */,
-				1F2E77F51DFFD0C200676237 /* NSCircleForumDetailViewController.swift in Sources */,
 				18A5148C1CED550800A30AA5 /* RecruitmentViewController.swift in Sources */,
 				F6C04AF81D20D4D2009E1613 /* ConnectModel.m in Sources */,
 				183B84F61CE5BFDC00709235 /* AppDelegate.swift in Sources */,
@@ -1865,14 +1867,15 @@
 				F63BE1EF1D0546F9008292AC /* NewsPageHelper.swift in Sources */,
 				0B8DD4DE1D128E0200F5E9FF /* ChangeName.swift in Sources */,
 				F6CC839A1D2797F300B9A358 /* HSPostResumeView.swift in Sources */,
+				1F2679E71E03FD4700FF2D25 /* NSCirclePostForumViewController.swift in Sources */,
+				1F2679E61E03FD4700FF2D25 /* NSCirclePostChooseCircleViewController.swift in Sources */,
 				1FFD9EE11D51EBD700951098 /* DPDConstants.swift in Sources */,
-				1FD464A61DF951970029BFEA /* NSCircleHomeViewController.swift in Sources */,
 				0DB467B51D4C8600009AE2AD /* MJRefreshGifHeader.m in Sources */,
 				1F1C64F81DFE49630082F00F /* NSCircleHomeTableViewCell.swift in Sources */,
 				0BAF21BC1D1134790065146B /* LoginUserInfoModel.swift in Sources */,
 				1F33D7791D7554280028444A /* SMPageControl.m in Sources */,
+				1F2679E31E03FD4700FF2D25 /* NSCircleForumListViewController.swift in Sources */,
 				1FC823D01D6C37D4005ED821 /* SuccessfulCaseViewController.swift in Sources */,
-				1F9868471E037D4F00E2FA60 /* NSCirclePostForumViewController.swift in Sources */,
 				0DB467AE1D4C8600009AE2AD /* MJRefreshHeader.m in Sources */,
 				189849B61CE815D3007B37B4 /* AcademicTableViewCell.swift in Sources */,
 				185408891CE70D8A00DFBA7C /* AcademicViewController.swift in Sources */,
@@ -1915,6 +1918,7 @@
 				0BAF21C41D113E100065146B /* QCLoginUserInfo.swift in Sources */,
 				0BEA9CAA1D1390120012FC11 /* ForgetPasswordController.swift in Sources */,
 				1F879FA61E0265AC001385CE /* NSCircleMyForumViewController.swift in Sources */,
+				1F2679E51E03FD4700FF2D25 /* NSCircleListViewController.swift in Sources */,
 				1FFD9ECD1D519C4D00951098 /* GHSPostResumeView.swift in Sources */,
 				0BD429491D3DFAA20064B64C /* CollectDetailViewController.swift in Sources */,
 				1F2F55EC1DF003BD00FE037E /* ScoreNoteViewController.swift in Sources */,

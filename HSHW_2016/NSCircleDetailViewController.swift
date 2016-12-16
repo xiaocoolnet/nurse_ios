@@ -193,7 +193,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
         countLab.font = UIFont.systemFontOfSize(12)
         countLab.textColor = UIColor.lightGrayColor()
         countLab.adjustsFontSizeToFitWidth = true
-        countLab.text = "13.5万人 16.5万帖子"
+        countLab.text = "13.5万人 16.5万贴子"
         tableHeaderView.addSubview(countLab)
         
         let joinBtn = UIButton(frame: CGRect(x: WIDTH-88, y: tableHeaderView.frame.height/2.0-15, width: 80, height: 30))
@@ -207,13 +207,21 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
         joinBtn.setTitle("已加入", forState: .Selected)
         joinBtn.setImage(UIImage(named: "加入"), forState: .Normal)
         joinBtn.setImage(UIImage(named: "已加入"), forState: .Selected)
+        joinBtn.addTarget(self, action: #selector(joinBtnClick(_:)), forControlEvents: .TouchUpInside)
         tableHeaderView.addSubview(joinBtn)
 //        joinBtn.backgroundColor = COLOR
 //        joinBtn.selected = true
-        joinBtn.backgroundColor = UIColor.clearColor()
-        joinBtn.selected = false
+        joinBtn.backgroundColor = UIColor.whiteColor()
+//        joinBtn.selected = false
 
         rootTableView.tableHeaderView = tableHeaderView
+    }
+    
+    // MARK: - 加入按钮点击事件
+    func joinBtnClick(joinBtn:UIButton) {
+        joinBtn.selected = !joinBtn.selected
+        joinBtn.backgroundColor = joinBtn.selected ? COLOR:UIColor.whiteColor()
+
     }
     
     // MARK:- tableView click
@@ -336,19 +344,12 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("帖子详情")
-    }
-    
-    // footerView 点击事件
-    func footerViewClick()  {
-        print("进入圈子")
-    }
-    
-    // 调整 button 图片和文字
-    func initButton(btn:UIButton) {
-        btn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center//使图片和文字水平居中显示
-        btn.titleEdgeInsets = UIEdgeInsetsMake((btn.imageView!.frame.size.height+btn.titleLabel!.bounds.size.height)/2+8, -btn.imageView!.frame.size.width, 0.0,0.0)//文字距离上边框的距离增加imageView的高度，距离左边框减少imageView的宽度，距离下边框和右边框距离不变
-        btn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0,(btn.imageView!.frame.size.height+btn.titleLabel!.bounds.size.height)/2+5, -btn.titleLabel!.bounds.size.width)//图片距离右边框距离减少图片的宽度，其它不边
+        print("贴子详情")
+        
+        let forumDetailController = NSCircleForumDetailViewController()
+        forumDetailController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(forumDetailController, animated: true)
+
     }
     
     override func didReceiveMemoryWarning() {

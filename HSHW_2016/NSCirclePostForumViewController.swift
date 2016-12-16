@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate {
+class NSCirclePostForumViewController: UIViewController, UITextViewDelegate {
 
     // 选择图片、圈子、位置等 底图
     let toolBgView = UIView()
@@ -69,6 +69,7 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UIT
         
         // 选择圈子
         let chooseCircleBtn = UIButton(frame: CGRect(x: 0, y: line3.frame.maxY, width: WIDTH, height: 40))
+        chooseCircleBtn.addTarget(self, action: #selector(chooseCircleBtnClick), forControlEvents: .TouchUpInside)
         toolBgView.addSubview(chooseCircleBtn)
         
         let chooseCircleImg = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
@@ -88,6 +89,7 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UIT
         
         // 所在位置
         let addressBtn = UIButton(frame: CGRect(x: 0, y: line4.frame.maxY, width: WIDTH, height: 40))
+        addressBtn.addTarget(self, action: #selector(addressBtnClick), forControlEvents: .TouchUpInside)
         toolBgView.addSubview(addressBtn)
         
         let addressImg = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
@@ -110,6 +112,7 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UIT
         
         // 内容
         contentTextView.frame = CGRect(x: 8, y: line2.frame.maxY, width: WIDTH-16, height: toolBgView.frame.minY-line2.frame.maxY)
+        contentTextView.tag = 102
         contentTextView.font = UIFont.systemFontOfSize(14)
         contentTextView.placeholderColor = UIColor(red: 199/255.0, green: 199/255.0, blue: 199/255.0, alpha: 1)
         contentTextView.placeholder = "对圈子内的朋友说点什么吧"
@@ -124,11 +127,15 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UIT
     }
     
     // MARK: - UITextFieldDelegate
-//    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
-//        
-//    }
-    
-    // MARK:- 获取键盘信息并改变视图
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if text == "\n" && textView.tag == 101 {//判断输入的字是否是回车，即按下return
+            //在这里做你响应return键的代码
+            return false//这里返回false，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
+        }
+        return true
+    }
+   
+    // MARK: - 获取键盘信息并改变视图
     func keyboardWillAppear(notification: NSNotification) {
         
         // 获取键盘信息
@@ -140,29 +147,36 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UIT
         contentTextView.frame.size.height = toolBgView.frame.minY-titleTextField.frame.maxY-1
         UIView.animateWithDuration(0.3) {
         }
-        
     }
     
     func keyboardDidAppear(notification:NSNotification) {
     }
     
     func keyboardWillDisappear(notification:NSNotification){
+        
         UIView.animateWithDuration(0.3) {
+            
             self.toolBgView.frame.origin.y = HEIGHT-65-self.toolBgView.frame.size.height
             self.contentTextView.frame.size.height = self.toolBgView.frame.minY-self.titleTextField.frame.maxY-1
-//            self.replyView.frame = CGRectMake(0, HEIGHT-46-64, WIDTH, 46)
-//            self.replyTextField.frame.size = CGSizeMake(WIDTH-90-75, 30)
-//            self.comment_bottom_Btn.hidden = false
-//            self.collect_bottom_Btn.hidden = false
-//            self.share_bottom_Btn.hidden = false
-            //            self.myTableView.frame.size.height = HEIGHT-64-1-46
         }
-        // print("键盘落下")
     }
-    // MARK:-
+    // MARK: -
     
+    // MARK: - 点击发布按钮
     func postBtnClick() {
         print("点击发布按钮")
+    }
+    
+    // MARK: - 点击选择圈子按钮
+    func chooseCircleBtnClick() {
+        print("点击选择圈子按钮")
+        
+        self.navigationController?.pushViewController(NSCirclePostChooseCircleViewController(), animated: true)
+    }
+    
+    // MARK: - 点击发贴位置按钮
+    func addressBtnClick() {
+        print("点击发贴位置按钮")
     }
 
     override func didReceiveMemoryWarning() {

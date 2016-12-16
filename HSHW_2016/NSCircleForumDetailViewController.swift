@@ -125,7 +125,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     // MARK: - 设置子视图
     func setSubview() {
         
-        self.title = "帖子详情"
+        self.title = "贴子详情"
         
         let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
         line.backgroundColor = COLOR
@@ -307,7 +307,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     func textViewDidEndEditing(textView: UITextView) {
         self.send_bottom_Btn.selected = false
 //        self.send_bottom_Btn.tag = NSString(string: ("111")).integerValue
-        self.replyTextField.placeholder = "写评论..."
+        self.replyTextField.placeholder = "回复"
     }
     
     func textViewDidChange(textView: UITextView) {
@@ -497,6 +497,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             cell.textLabel?.text = nil
             cell.floorLab.text = "\(self.forumCommentArray.count-indexPath.row)楼"
             cell.commentModel = self.forumCommentArray[indexPath.row]
+            cell.reportBtn.addTarget(self, action: #selector(reportBtnClick(_:)), forControlEvents: .TouchUpInside)
         }
         return cell
     }
@@ -637,8 +638,17 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("点击cell")
+        
+        replyTextField.placeholder = "回复\(self.forumCommentArray[indexPath.row].username)"
+        replyTextField.becomeFirstResponder()
     }
     
+    // MARK: - 举报 按钮点击事件
+    func reportBtnClick(reportBtn:UIButton) {
+        print("举报 按钮点击事件",reportBtn.tag)
+        
+        NSCirclePublicAction.showReportAlert()
+    }
     
     // MARK: - moreBtnClick
     func moreBtnClick(moreBtn:UIButton) {

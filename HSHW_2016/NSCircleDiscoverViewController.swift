@@ -184,7 +184,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             countLab.font = UIFont.systemFontOfSize(10)
             countLab.textColor = UIColor.lightGrayColor()
             countLab.adjustsFontSizeToFitWidth = true
-            countLab.text = "13.5万人 16.5万帖子"
+            countLab.text = "13.5万人 16.5万贴子"
             btn2.addSubview(countLab)
             
             btn2.frame.size.height = countLab.frame.maxY
@@ -207,8 +207,14 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         switch btn1.tag {
         case 100:
             print("精选圈子")
+            let circleListController = NSCircleListViewController()
+            circleListController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(circleListController, animated: true)
         case 101:
             print("热门圈子")
+            let circleListController = NSCircleListViewController()
+            circleListController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(circleListController, animated: true)
         case 102:
             print("全部圈子")
             let circleListController = NSCircleListViewController()
@@ -224,6 +230,10 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         
         print("点击热门圈子推荐 之 \(btn2.tag-200)")
         
+        let circleDetailController = NSCircleDetailViewController()
+        circleDetailController.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(circleDetailController, animated: true)
+
     }
     
     // MARK: - UItableViewdatasource
@@ -306,7 +316,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         footerView.addTarget(self, action: #selector(footerViewClick), forControlEvents: .TouchUpInside)
         
         let nameBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 30))
-        nameBtn.setImage(UIImage(named: "精华帖"), forState: .Normal)
+        nameBtn.setImage(UIImage(named: "精华贴"), forState: .Normal)
         nameBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
         nameBtn.setTitleColor(COLOR, forState: .Normal)
         nameBtn.setTitle("内科", forState: .Normal)
@@ -333,7 +343,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("帖子详情")
+        print("贴子详情")
         
         let forumDetailController = NSCircleForumDetailViewController()
         forumDetailController.hidesBottomBarWhenPushed = true

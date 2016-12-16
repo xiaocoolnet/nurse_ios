@@ -169,7 +169,7 @@ class NSCircleForumListViewController: UIViewController, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("帖子详情")
+        print("贴子详情")
     }
     
     override func didReceiveMemoryWarning() {

@@ -12,7 +12,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     
     let rootTableView = UITableView(frame: CGRect.zero, style: .Grouped)
     
-    var cellNameArray = ["置顶帖","精华帖","申请圈主","取消关注"]
+    var cellNameArray = ["置顶贴","精华贴","申请圈主","取消关注"]
     
     var communityModel = CommunityModel()
     
@@ -85,7 +85,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         countLab.font = UIFont.systemFontOfSize(12)
         countLab.textColor = UIColor.lightGrayColor()
         countLab.adjustsFontSizeToFitWidth = true
-        countLab.text = "13.5万人 16.5万帖子"
+        countLab.text = "13.5万人 16.5万贴子"
         tableHeaderView.addSubview(countLab)
         
         let joinBtn = UIButton(frame: CGRect(x: WIDTH-88, y: tableHeaderView.frame.height/2.0-15, width: 80, height: 30))
@@ -233,7 +233,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     //        footerView.addTarget(self, action: #selector(footerViewClick), forControlEvents: .TouchUpInside)
     //
     //        let nameBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 30))
-    //        nameBtn.setImage(UIImage(named: "精华帖"), forState: .Normal)
+    //        nameBtn.setImage(UIImage(named: "精华贴"), forState: .Normal)
     //        nameBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
     //        nameBtn.setTitleColor(COLOR, forState: .Normal)
     //        nameBtn.setTitle("内科", forState: .Normal)
@@ -262,7 +262,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let forumListController = NSCircleForumListViewController()
-        forumListController.title = "加精置顶帖子列表"
+        forumListController.title = "加精置顶贴子列表"
         self.navigationController?.pushViewController(forumListController, animated: true)
     }
     
