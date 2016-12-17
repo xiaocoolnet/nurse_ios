@@ -91,35 +91,35 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
         if showType == .userName {
             
             if textFeild.text! == QCLoginUserInfo.currentInfo.userName {
-                self.navigationController?.popViewController(animated: true)
+                _ = self.navigationController?.popViewController(animated: true)
                 return
             }else if unicodeLengthOfString(self.textFeild.text!) < 4 {
                 let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                hud?.mode = .text
-                hud?.removeFromSuperViewOnHide = true
+                hud.mode = .text
+                hud.removeFromSuperViewOnHide = true
 
-                hud?.labelText = "用户名要大于4个字母或者2个汉字"
+                hud.label.text = "用户名要大于4个字母或者2个汉字"
                 
-                hud?.hide(true, afterDelay: 1)
+                hud.hide(animated: true, afterDelay: 1)
                 return
             }
             mineHelper.changeUserName(textFeild.text!, handle: { (success, response) in
                 DispatchQueue.main.async(execute: {
                     if success {
                         QCLoginUserInfo.currentInfo.userName = self.textFeild.text!
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     }else{
                         let responseStr = response as! String
                         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                        hud?.mode = .text
-                        hud?.removeFromSuperViewOnHide = true
+                        hud.mode = .text
+                        hud.removeFromSuperViewOnHide = true
                         if responseStr == "用户名重复" {
-                            hud?.labelText = "用户名重复，请重新输入"
+                            hud.label.text = "用户名重复，请重新输入"
                         }else{
-                            hud?.labelText = responseStr
+                            hud.label.text = responseStr
                         }
                         
-                        hud?.hide(true, afterDelay: 1)
+                        hud.hide(animated: true, afterDelay: 1)
                     }
                 })
             })
@@ -128,7 +128,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 DispatchQueue.main.async(execute: {
                     if success {
                         QCLoginUserInfo.currentInfo.phoneNumber = self.textFeild.text!
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     }
                 })
                 })
@@ -137,7 +137,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 DispatchQueue.main.async(execute: {
                     if success {
                         QCLoginUserInfo.currentInfo.realName = self.textFeild.text!
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     }
                 })
             })
@@ -146,7 +146,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 DispatchQueue.main.async(execute: {
                     if success {
                         QCLoginUserInfo.currentInfo.email = self.textFeild.text!
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     }
                 })
             })
@@ -155,12 +155,12 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 DispatchQueue.main.async(execute: {
                     if success {
                         QCLoginUserInfo.currentInfo.school = self.textFeild.text!
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     }
                 })
             })
         }
-//        self.navigationController?.popViewControllerAnimated(true)
+//        _ = self.navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: 限制输入字数
@@ -264,7 +264,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 DispatchQueue.main.async(execute: {
                     if success {
                         QCLoginUserInfo.currentInfo.education = self.dateSource.objectlist[indexPath.row].name
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     }
                 })
             })
@@ -278,7 +278,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 DispatchQueue.main.async(execute: {
                     if success {
                         QCLoginUserInfo.currentInfo.sex = self.dateSource.objectlist[indexPath.row].name
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     }
                 })
             })
@@ -288,7 +288,7 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
                 DispatchQueue.main.async(execute: {
                     if success {
                         QCLoginUserInfo.currentInfo.major = self.dateSource.objectlist[indexPath.row].name
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     }
                 })
             })
@@ -333,8 +333,8 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
     func dataGet(){
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
         let url = PARK_URL_Header+"getDictionaryList"
         let param = ["type":id]
@@ -342,21 +342,21 @@ class ChangeName: UIViewController,UITableViewDelegate,UITableViewDataSource {
 //
 //        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
-                hud?.mode = MBProgressHUDMode.text;
-                hud?.labelText = "数据获取失败"
-                hud?.hide(true, afterDelay: 1)
+                hud.mode = MBProgressHUDMode.text;
+                hud.label.text = "数据获取失败"
+                hud.hide(animated: true, afterDelay: 1)
             }else{
                 let status = EduModel(JSONDecoder(json!))
                 // print("状态是")
                 // print(status.status)
                 if(status.status == "error"){
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = "数据获取失败"
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = "数据获取失败"
+                    hud.hide(animated: true, afterDelay: 1)
                 }
                 if(status.status == "success"){
 
-                    hud?.hide(true)
+                    hud.hide(animated: true)
                     // print(status)
                     self.dateSource = EduList(status.data!)
                     

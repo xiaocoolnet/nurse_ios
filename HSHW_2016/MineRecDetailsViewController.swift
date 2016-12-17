@@ -515,7 +515,7 @@ class MineRecDetailsViewController: UIViewController {
 //        UIView.animateWithDuration(0.2) {
 //            self.employmentMessage.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
 //        }
-//        self.navigationController?.popViewControllerAnimated(true)
+//        _ = self.navigationController?.popViewControllerAnimated(true)
 //    }
     
 //    func takeTheResume() {
@@ -557,7 +557,7 @@ class MineRecDetailsViewController: UIViewController {
 //            }
 //        }
 //        
-//        self.navigationController?.popViewControllerAnimated(true)
+//        _ = self.navigationController?.popViewControllerAnimated(true)
 //    }
 
     // Linux时间戳转标准时间

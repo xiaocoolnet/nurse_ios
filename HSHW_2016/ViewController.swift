@@ -443,20 +443,20 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //            hud.mode = MBProgressHUDMode.Text;
-        //        hud.labelText = "正在发送邀请"
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        //        hud.label.text = "正在发送邀请"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
         logVM?.comfirmPhoneHasRegister(phoneNum.text!, handle: {(success, response) in
             DispatchQueue.main.async(execute: {
                 //  不管填什么内容都走了这个方法
                 if success {
-                    hud?.hide(true)
+                    hud.hide(animated: true)
                     let alert = UIAlertView(title:"提示信息",message: "手机已注册",delegate: self,cancelButtonTitle: "确定")
                     
                     alert.show()
                 }else{
-                    hud?.hide(true)
+                    hud.hide(animated: true)
                     //  单例进行倒计时
                     TimeManager.shareManager.begainTimerWithKey("register", timeInterval: 30, process: self.processHandle!, finish: self.finishHandle!)
                     self.logVM?.sendMobileCodeWithPhoneNumber(self.phoneNum.text!)
@@ -524,66 +524,15 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
 //                                    let alert = UIAlertView(title: "提示信息",message: "注册成功",delegate: self,cancelButtonTitle: "确定")
 //                                    alert.show()
                                     let result = response as! addScore_ReadingInformationDataModel
-                                    self.showScoreTips(result.event, score: result.score)
-//                                    self.navigationController?.popViewControllerAnimated(true)
+                                    NursePublicAction.showScoreTips(UIApplication.shared.keyWindow!, nameString: result.event, score: result.score)
+                                    
+//                                    _ = self.navigationController?.popViewControllerAnimated(true)
                                 }else{
                                     let alert = UIAlertView(title: "提示信息",message: response as? String,delegate: self,cancelButtonTitle: "确定")
                                     alert.show()
                                 }
                             })
             })
-    }
-    
-    // MARK: 显示积分提示
-    func showScoreTips(_ name:String, score:String) {
-        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-        hud?.opacity = 0.3
-        hud?.margin = 10
-        hud?.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
-        hud?.mode = .customView
-        let customView = UIImageView(frame: CGRect(x: 0, y: 0, width: WIDTH*0.8, height: WIDTH*0.8*238/537))
-        customView.image = UIImage(named: "scorePopImg.png")
-        let titLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*30/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
-        titLab.textAlignment = .left
-        titLab.font = UIFont.systemFont(ofSize: 16)
-        titLab.text = name
-        titLab.adjustsFontSizeToFitWidth = true
-        customView.addSubview(titLab)
-        
-        let scoreLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
-        
-        scoreLab.textAlignment = .left
-        scoreLab.font = UIFont.systemFont(ofSize: 24)
-        scoreLab.text = "+\(score)"
-        scoreLab.adjustsFontSizeToFitWidth = true
-        scoreLab.sizeToFit()
-        customView.addSubview(scoreLab)
-        
-        let jifenLab = UILabel(frame: CGRect(
-            x: scoreLab.frame.maxX+5,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width-scoreLab.frame.maxX-5-customView.frame.width*13/537,
-            height: customView.frame.height*50/238))
-        jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
-        jifenLab.textAlignment = .center
-        jifenLab.font = UIFont.systemFont(ofSize: 16)
-        jifenLab.text = "护士币"
-        jifenLab.adjustsFontSizeToFitWidth = true
-        jifenLab.center.y = scoreLab.center.y
-        customView.addSubview(jifenLab)
-        
-        hud?.customView = customView
-        hud?.hide(true, afterDelay: 3)
     }
     
     //  用来收起键盘
@@ -664,7 +613,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
             DispatchQueue.main.async(execute: {
                 if success == false {
                     if response != nil {
-                        hud?.hide(true)
+                        hud.hide(animated: true)
                         let string = response as! String
                         if string == "密码错误！" || string == "用户不存在"{
                             let alert = UIAlertView(title:"提示信息",message: string,delegate: self,cancelButtonTitle: "确定")
@@ -681,7 +630,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
                     }
                     return
                 }else{
-                    hud?.hide(true)
+                    hud.hide(animated: true)
                     
                     let ud = UserDefaults.standard
                     //  把得到的用户信息存入到沙盒
@@ -707,7 +656,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     
     //  MARK:登录成功
     func loginSuccess(){
-        //        self.navigationController?.popViewControllerAnimated(true)
+        //        _ = self.navigationController?.popViewControllerAnimated(true)
         
         getInvitedUrl()
         
@@ -726,7 +675,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         if previousViewcontroller.isKind(of: MineViewController.self) {
             self.navigationController?.pushViewController(MineViewController(), animated: true)
         }else{
-            self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
         }
 
         

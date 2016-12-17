@@ -127,17 +127,17 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
                                     let respo = response as! addScore_ReadingInformationDataModel
                                     QCLoginUserInfo.currentInfo.avatar = imageName+".png"
                                     if respo.event != "" {
-                                        self.showScoreTips((respo.event), score: (respo.score))
+                                        NursePublicAction.showScoreTips(self.view, nameString: (respo.event), score: (respo.score))
                                     }
                                 }
                             })
                         }else{
                             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                            hud?.mode = MBProgressHUDMode.text;
-                            hud?.labelText = "图片上传失败"
-                            hud?.margin = 10.0
-                            hud?.removeFromSuperViewOnHide = true
-                            hud?.hide(true, afterDelay: 1)
+                            hud.mode = MBProgressHUDMode.text;
+                            hud.label.text = "图片上传失败"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(animated: true, afterDelay: 1)
                         }
                     }
                 })
@@ -147,58 +147,6 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
 
         myTableView.reloadData()
         picker.dismiss(animated: true, completion: nil)
-    }
-    
-    // MARK: 显示积分提示
-    func showScoreTips(_ name:String, score:String) {
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud?.opacity = 0.3
-        hud?.margin = 10
-        hud?.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
-        hud?.mode = .customView
-        let customView = UIImageView(frame: CGRect(x: 0, y: 0, width: WIDTH*0.8, height: WIDTH*0.8*238/537))
-        customView.image = UIImage(named: "scorePopImg.png")
-        let titLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*30/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
-        titLab.textAlignment = .left
-        titLab.font = UIFont.systemFont(ofSize: 16)
-        titLab.text = name
-        titLab.adjustsFontSizeToFitWidth = true
-        customView.addSubview(titLab)
-        
-        let scoreLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
-        
-        scoreLab.textAlignment = .left
-        scoreLab.font = UIFont.systemFont(ofSize: 24)
-        scoreLab.text = "+\(score)"
-        scoreLab.adjustsFontSizeToFitWidth = true
-        scoreLab.sizeToFit()
-        customView.addSubview(scoreLab)
-        
-        let jifenLab = UILabel(frame: CGRect(
-            x: scoreLab.frame.maxX+5,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width-scoreLab.frame.maxX-5-customView.frame.width*13/537,
-            height: customView.frame.height*50/238))
-        jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
-        jifenLab.textAlignment = .center
-        jifenLab.font = UIFont.systemFont(ofSize: 16)
-        jifenLab.text = "护士币"
-        jifenLab.adjustsFontSizeToFitWidth = true
-        jifenLab.center.y = scoreLab.center.y
-        customView.addSubview(jifenLab)
-        
-        hud?.customView = customView
-        hud?.hide(true, afterDelay: 3)
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -340,7 +288,7 @@ class SetDataViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     DispatchQueue.main.async(execute: {
                         if success {
                             QCLoginUserInfo.currentInfo.birthday = time
-//                            self.navigationController?.popViewControllerAnimated(true)
+//                            _ = self.navigationController?.popViewControllerAnimated(true)
                         }
                     })
                 })

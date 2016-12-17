@@ -72,37 +72,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         self.tabBarController?.tabBar.isHidden = true
         self.navigationItem.leftBarButtonItem?.title = "返回"
         
-        if LOGIN_STATE {
-            mainHud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            //        MBProgressHUD().labelText = ""
-            
-            // MARK: 检查是否收藏
-            checkHadFavorite((self.newsInfo?.object_id)!, type: "1", handle: { (success, response) in
-                if success {
-                    self.collectBtn.isSelected = true
-                    self.collect_bottom_Btn.isSelected = true
-                }else{
-                    self.collectBtn.isSelected = false
-                    self.collect_bottom_Btn.isSelected = false
-                }
-                checkHadLike((self.newsInfo?.object_id)!, type: "1", handle: { (success, response) in
-                    if success {
-                        self.zan.isSelected = true
-                    }else{
-                        self.zan.isSelected = false
-                    }
-                    DispatchQueue.main.async(execute: {
-                        self.collectBtn.isEnabled = true
-//                        hud.hide(true)
-                        self.mainFlag += 1
-                        if self.mainFlag == 3 {
-                            self.mainFlag = 0
-                            self.mainHud.hide(true)
-                        }
-                    })
-                })
-            })
-        }
+        
     }
     
     override func viewDidLoad() {
@@ -162,6 +132,37 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 
         setReplyView()
 
+        if LOGIN_STATE {
+            mainHud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            //        MBProgressHUD().label.text = ""
+            
+            // MARK: 检查是否收藏
+            checkHadFavorite((self.newsInfo?.object_id)!, type: "1", handle: { (success, response) in
+                if success {
+                    self.collectBtn.isSelected = true
+                    self.collect_bottom_Btn.isSelected = true
+                }else{
+                    self.collectBtn.isSelected = false
+                    self.collect_bottom_Btn.isSelected = false
+                }
+                checkHadLike((self.newsInfo?.object_id)!, type: "1", handle: { (success, response) in
+                    if success {
+                        self.zan.isSelected = true
+                    }else{
+                        self.zan.isSelected = false
+                    }
+                    DispatchQueue.main.async(execute: {
+                        self.collectBtn.isEnabled = true
+                        //                        hud.hide(animated: true)
+                        self.mainFlag += 1
+                        if self.mainFlag == 3 {
+                            self.mainFlag = 0
+                            self.mainHud.hide(animated: true)
+                        }
+                    })
+                })
+            })
+        }
     }
     
     let replyView = UIView()
@@ -344,9 +345,9 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             
             
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud?.labelText = "正在发表评论"
-            hud?.margin = 10.0
-            hud?.removeFromSuperViewOnHide = true
+            hud.label.text = "正在发表评论"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
             
             HSNurseStationHelper().setComment(
                 String(self.send_bottom_Btn.tag),
@@ -368,25 +369,25 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                         if(error != nil){
                             
-                            hud?.mode = MBProgressHUDMode.text;
-                            hud?.labelText = "评论失败"
+                            hud.mode = MBProgressHUDMode.text;
+                            hud.label.text = "评论失败"
                           
-                            hud?.hide(true, afterDelay: 1)
+                            hud.hide(animated: true, afterDelay: 1)
                         }else{
                             let status = commentModel(JSONDecoder(json!))
                             
                             if(status.status == "error"){
                                 
-                                hud?.mode = MBProgressHUDMode.text;
-                                hud?.labelText = "评论失败"
+                                hud.mode = MBProgressHUDMode.text;
+                                hud.label.text = "评论失败"
                                 
-                                hud?.hide(true, afterDelay: 1)
+                                hud.hide(animated: true, afterDelay: 1)
                             }
                             if(status.status == "success"){
                                 
-                                hud?.mode = MBProgressHUDMode.text;
-                                hud?.labelText = "评论成功"
-                                hud?.hide(true, afterDelay: 1)
+                                hud.mode = MBProgressHUDMode.text;
+                                hud.label.text = "评论成功"
+                                hud.hide(animated: true, afterDelay: 1)
                                 
                                 self.replyTextField.placeholder = "写评论..."
                                 self.send_bottom_Btn.tag = NSString(string: (self.newsInfo?.object_id)!).integerValue
@@ -397,7 +398,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                                 self.myTableView.reloadData()
                                 
                                 if ((result.event) != "") {
-                                    self.showScoreTips((result.event), score: (result.score))
+                                    NursePublicAction.showScoreTips(self.view, nameString: (result.event), score: (result.score))
                                 }
                                 
                                 self.myTableView.contentOffset.y = self.myTableView.contentSize.height-self.myTableView.frame.size.height
@@ -410,20 +411,20 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                 }else{
                     DispatchQueue.main.async(execute: {
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "评论失败"
-                        hud?.hide(true, afterDelay: 1)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "评论失败"
+                        hud.hide(animated: true, afterDelay: 1)
                     })
                 }
             })
             replyTextField.resignFirstResponder()
         }else{
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud?.margin = 10.0
-            hud?.removeFromSuperViewOnHide = true
-            hud?.mode = MBProgressHUDMode.text;
-            hud?.labelText = "请输入内容"
-            hud?.hide(true, afterDelay: 1)
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = MBProgressHUDMode.text;
+            hud.label.text = "请输入内容"
+            hud.hide(animated: true, afterDelay: 1)
         }
     }
     
@@ -451,7 +452,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         }
         
-        collectHud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
+        collectHud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
         collectHud.margin = 10.0
         collectHud.removeFromSuperViewOnHide = true
         self.collectBtn.isEnabled = false
@@ -470,14 +471,14 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 
                     if(error != nil){
                         self.collectHud.mode = MBProgressHUDMode.text;
-                        self.collectHud.labelText = "取消收藏失败"
+                        self.collectHud.label.text = "取消收藏失败"
                     }else{
                         let status = Http(JSONDecoder(json!))
              
                         if(status.status == "error"){
 
                             self.collectHud.mode = MBProgressHUDMode.text;
-                            self.collectHud.labelText = status.errorData
+                            self.collectHud.label.text = status.errorData!
 
                         }
                         if(status.status == "success"){
@@ -486,11 +487,11 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             self.collect_bottom_Btn.isSelected = false
                             
                             self.collectHud.mode = MBProgressHUDMode.text;
-                            self.collectHud.labelText = "取消收藏成功"
+                            self.collectHud.label.text = "取消收藏成功"
 
                         }
                     }
-                    self.collectHud.hide(true, afterDelay: 1)
+                    self.collectHud.hide(animated: true, afterDelay: 1)
                     self.collectBtn.isEnabled = true
                     self.collect_bottom_Btn.isEnabled = true
                 })
@@ -503,8 +504,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.collectBtn.isSelected = true
                         self.collect_bottom_Btn.isSelected = true
                         self.collectHud.mode = MBProgressHUDMode.text;
-                        self.collectHud.labelText = "收藏成功"
-                        self.collectHud.hide(true, afterDelay: 1)
+                        self.collectHud.label.text = "收藏成功"
+                        self.collectHud.hide(animated: true, afterDelay: 1)
                         self.collectBtn.isEnabled = true
                         self.collect_bottom_Btn.isEnabled = true
                     })
@@ -690,12 +691,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 
                 if(status.status == "error") && status.errorData != ""{
                     let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = "获取评论列表失败"
-                    hud?.detailsLabelText = status.errorData
-                    hud?.margin = 10.0
-                    hud?.removeFromSuperViewOnHide = true
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = "获取评论列表失败"
+                    hud.detailsLabel.text = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(animated: true, afterDelay: 1)
                 }
                 if(status.status == "success"){
                     //self.createTableView()
@@ -712,7 +713,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             self.mainFlag += 1
             if self.mainFlag == 3 {
                 self.mainFlag = 0
-                self.mainHud.hide(true)
+                self.mainHud.hide(animated: true)
             }
         
         }
@@ -830,7 +831,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 if webFlag {
                     
                     NewsPageHelper().addScore_ReadingInformation((newsInfo?.object_id)!, handle: { (success, response) in
-                        if success || String(describing: response) == "阅读资讯加积分到上限值"{
+                        if success || String(describing: (response ?? ("" as AnyObject))!) == "阅读资讯加积分到上限值"{
                             
                             let url = URL(string:NewsInfo_Header+(self.newsInfo?.object_id)!)
                             webCell.loadRequestUrl(url!)
@@ -975,65 +976,13 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         self.mainFlag += 1
         if self.mainFlag == 3 {
             self.mainFlag = 0
-            self.mainHud.hide(true)
+            self.mainHud.hide(animated: true)
             if addScore_ReadingInformation {
                 
-                showScoreTips(addScore_ReadingInformationName, score: addScore_ReadingInformationScore)
+                NursePublicAction.showScoreTips(self.view, nameString: addScore_ReadingInformationName, score: addScore_ReadingInformationScore)
             }
         }
 
-    }
-    
-    // MARK: 显示积分提示
-    func showScoreTips(_ name:String, score:String) {
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud?.opacity = 0.3
-        hud?.margin = 10
-        hud?.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
-        hud?.mode = .customView
-        let customView = UIImageView(frame: CGRect(x: 0, y: 0, width: WIDTH*0.8, height: WIDTH*0.8*238/537))
-        customView.image = UIImage(named: "scorePopImg.png")
-        let titLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*30/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
-        titLab.textAlignment = .left
-        titLab.font = UIFont.systemFont(ofSize: 16)
-        titLab.text = name
-        titLab.adjustsFontSizeToFitWidth = true
-        customView.addSubview(titLab)
-        
-        let scoreLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
-
-        scoreLab.textAlignment = .left
-        scoreLab.font = UIFont.systemFont(ofSize: 24)
-        scoreLab.text = "+\(score)"
-        scoreLab.adjustsFontSizeToFitWidth = true
-        scoreLab.sizeToFit()
-        customView.addSubview(scoreLab)
-        
-        let jifenLab = UILabel(frame: CGRect(
-            x: scoreLab.frame.maxX+5,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width-scoreLab.frame.maxX-5-customView.frame.width*13/537,
-            height: customView.frame.height*50/238))
-        jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
-        jifenLab.textAlignment = .center
-        jifenLab.font = UIFont.systemFont(ofSize: 16)
-        jifenLab.text = "护士币"
-        jifenLab.adjustsFontSizeToFitWidth = true
-        jifenLab.center.y = scoreLab.center.y
-        customView.addSubview(jifenLab)
-        
-        hud?.customView = customView
-        hud?.hide(true, afterDelay: 3)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -1217,8 +1166,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         self.zan.isEnabled = false
 
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
         if zan.isSelected {
             let url = PARK_URL_Header+"ResetLike"
@@ -1234,24 +1183,24 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.zan.isEnabled = true
 
                 if(error != nil){
-                    hud?.mode = MBProgressHUDMode.text
-                    hud?.labelText = "取消点赞失败"
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text
+                    hud.label.text = "取消点赞失败"
+                    hud.hide(animated: true, afterDelay: 1)
                 }else{
                     let status = Http(JSONDecoder(json!))
 
                     if(status.status == "error"){
 
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = status.errorData
-                        hud?.hide(true, afterDelay: 1)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = status.errorData
+                        hud.hide(animated: true, afterDelay: 1)
                         //                            user.setObject("false", forKey: (self.newsInfo?.object_id)!)
                     }
                     if(status.status == "success"){
                         
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "取消点赞成功"
-                        hud?.hide(true, afterDelay: 1)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "取消点赞成功"
+                        hud.hide(animated: true, afterDelay: 1)
 
                         self.performSelector(onMainThread: #selector(self.upDateUI(_:)), with: [btn.tag,"0"], waitUntilDone:true)
                         
@@ -1278,28 +1227,29 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.zan.isEnabled = true
 
                 if(error != nil){
-                    hud?.mode = MBProgressHUDMode.text
-                    hud?.labelText = "点赞失败"
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text
+                    hud.label.text = "点赞失败"
+                    hud.hide(animated: true, afterDelay: 1)
                 }else{
                     let status = addScore_ReadingInformationModel(JSONDecoder(json!))
 
                     if(status.status == "error"){
 
-                        hud?.mode = MBProgressHUDMode.text
-                        hud?.labelText = status.errorData
-                        hud?.hide(true, afterDelay: 1)
+                        hud.mode = MBProgressHUDMode.text
+                        hud.label.text = status.errorData
+                        hud.hide(animated: true, afterDelay: 1)
                     }
                     if(status.status == "success"){
                         
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "点赞成功"
-                        hud?.hide(true, afterDelay: 1)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "点赞成功"
+                        hud.hide(animated: true, afterDelay: 1)
                         self.performSelector(onMainThread: #selector(self.upDateUI(_:)), with: [btn.tag,"1"], waitUntilDone:true)
                         if ((status.data?.event) != "") {
-                            self.showScoreTips((status.data?.event)!, score: (status.data?.score)!)
+                            NursePublicAction.showScoreTips(self.view, nameString: (status.data?.event)!, score: (status.data?.score)!)
                         }
-                        
+
+
                         let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
                         let model:LikeInfo = LikeInfo.init(JSONDecoder(dic as AnyObject))
                         self.newsInfo?.likes.append(model)

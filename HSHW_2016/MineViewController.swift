@@ -88,7 +88,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                         }else{
                             let status = ReadMessageList(JSONDecoder(json!))
                             
-                            unreadNum = tempArray.count-(status.data ?? [ReadMessageData]())!.count
+                            unreadNum = tempArray.count-(status.data ).count
                             self.myTableView.reloadData()
                             
                         }
@@ -190,7 +190,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         
         hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud!.labelText = "正在获取个人信息"
+        hud!.label.text = "正在获取个人信息"
         hud!.margin = 10.0
         hud!.removeFromSuperViewOnHide = true
         
@@ -210,15 +210,15 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.attentionBtn.setTitle(QCLoginUserInfo.currentInfo.attentionCount, for: UIControlState())
                     self.nurseCoins.setTitle(QCLoginUserInfo.currentInfo.money, for: UIControlState())
                     self.myTableView.reloadData()
-                    //                self.hud!.hide(true)
-                    self.hud?.labelText = "正在获取签到状态"
+                    //                self.hud!.hide(animated: true)
+                    self.hud?.label.text = "正在获取签到状态"
                 })
                 self.zanAddNum()
             }else{
                 DispatchQueue.main.async(execute: {
                     self.hud?.mode = .text
-                    self.hud?.labelText = "获取个人信息失败"
-                    self.hud?.hide(true, afterDelay: 1)
+                    self.hud?.label.text = "获取个人信息失败"
+                    self.hud?.hide(animated: true, afterDelay: 1)
                     self.signLab.text = "Error"
                 })
             }
@@ -236,13 +236,13 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             "day":self.timeStamp
             
         ] as [String : Any];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:AnyObject]) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
                 DispatchQueue.main.async(execute: {
                     self.hud?.mode = .text
-                    self.hud?.labelText = "获取签到状态失败"
-                    self.hud?.hide(true, afterDelay: 1)
+                    self.hud?.label.text = "获取签到状态失败"
+                    self.hud?.hide(animated: true, afterDelay: 1)
                     self.signLab.text = "Error"
                 })
             }else{
@@ -251,7 +251,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 DispatchQueue.main.async(execute: {
                     
                     self.signBtn.isEnabled = true
-                    self.hud?.hide(true)
+                    self.hud?.hide(animated: true)
                 })
                 
                 // print("状态是")
@@ -259,10 +259,10 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 if(status.status == "error"){
                     //                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     //                            hud.mode = MBProgressHUDMode.Text
-                    ////                            hud.labelText = "HAHAHAAHAH"
+                    ////                            hud.label.text = "HAHAHAAHAH"
                     //                            hud.margin = 10.0
                     //                            hud.removeFromSuperViewOnHide = true
-                    //                            hud.hide(true, afterDelay: 1)
+                    //                            hud.hide(animated: true, afterDelay: 1)
                     self.isLike = false
                     DispatchQueue.main.async(execute: {
                         self.signLab.text = "每日签到"
@@ -273,10 +273,10 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     
                     //                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                     //                            hud.mode = MBProgressHUDMode.Text;
-                    //                            hud.labelText = "签到成功"
+                    //                            hud.label.text = "签到成功"
                     //                            hud.margin = 10.0
                     //                            hud.removeFromSuperViewOnHide = true
-                    //                            hud.hide(true, afterDelay: 1)
+                    //                            hud.hide(animated: true, afterDelay: 1)
                     self.isLike = true
                     DispatchQueue.main.async(execute: {
                         self.signLab.text = "已签到"
@@ -674,11 +674,11 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 SDImageCache.shared().clearMemory()
                 SDImageCache.shared().clearDisk(onCompletion: {
                     let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                    hud?.mode = MBProgressHUDMode.text
-                    hud?.labelText = "清除图片缓存成功"
-                    hud?.margin = 10.0
-                    hud?.removeFromSuperViewOnHide = true
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text
+                    hud.label.text = "清除图片缓存成功"
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(animated: true, afterDelay: 1)
                 })
             }
             alert.addAction(sureAction)
@@ -699,11 +699,11 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 URLCache.shared.removeAllCachedResponses()
                 
                 let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                hud?.mode = MBProgressHUDMode.text
-                hud?.labelText = "清除网页缓存成功"
-                hud?.margin = 10.0
-                hud?.removeFromSuperViewOnHide = true
-                hud?.hide(true, afterDelay: 1)
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = "清除网页缓存成功"
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(animated: true, afterDelay: 1)
             }
             alert.addAction(sureAction)
             
@@ -737,12 +737,12 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
                 
                 let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                hud?.mode = MBProgressHUDMode.text
-                hud?.labelText = "清除其他缓存成功"
-                hud?.detailsLabelText = "清理了\(otherCacheSize-totalSize)MB 缓存"
-                hud?.margin = 10.0
-                hud?.removeFromSuperViewOnHide = true
-                hud?.hide(true, afterDelay: 1)
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = "清除其他缓存成功"
+                hud.detailsLabel.text = "清理了\(otherCacheSize-totalSize)MB 缓存"
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(animated: true, afterDelay: 1)
             }
             alert.addAction(sureAction)
             
@@ -788,10 +788,10 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }else if btn.tag == 3 {
             //            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             //            hud.mode = MBProgressHUDMode.Text
-            //            hud.labelText = "敬请期待"
+            //            hud.label.text = "敬请期待"
             //            hud.margin = 10.0
             //            hud.removeFromSuperViewOnHide = true
-            //            hud.hide(true, afterDelay: 1)
+            //            hud.hide(animated: true, afterDelay: 1)
             let next = ScoreViewController()
             self.navigationController?.pushViewController(next, animated: true)
         }
@@ -806,11 +806,11 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             self.zan()
         }else{
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud?.mode = MBProgressHUDMode.text
-            hud?.labelText = "已经签过了哦~"
-            hud?.margin = 10.0
-            hud?.removeFromSuperViewOnHide = true
-            hud?.hide(true, afterDelay: 1)
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = "已经签过了哦~"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(animated: true, afterDelay: 1)
             //            self.isLike = false
         }
     }
@@ -825,7 +825,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             "day":self.timeStamp
         ] as [String : Any];
         // print(QCLoginUserInfo.currentInfo.userid)
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String : AnyObject]) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
                 
@@ -835,25 +835,25 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                    hud?.mode = MBProgressHUDMode.text
-                    hud?.labelText = status.errorData
-                    hud?.margin = 10.0
-                    hud?.removeFromSuperViewOnHide = true
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text
+                    hud.label.text = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(animated: true, afterDelay: 1)
                     
                 }
                 if(status.status == "success"){
                     
 //                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
 //                    hud.mode = MBProgressHUDMode.Text;
-//                    hud.labelText = "签到成功"
+//                    hud.label.text = "签到成功"
 //                    hud.margin = 10.0
 //                    hud.removeFromSuperViewOnHide = true
-//                    hud.hide(true, afterDelay: 1)
+//                    hud.hide(animated: true, afterDelay: 1)
                     
                     if (status.data?.event)! != "" && (status.data?.score)! != "" {
                         
-                        self.showScoreTips((status.data?.event)!, score: (status.data?.score)!)
+                        NursePublicAction.showScoreTips(self.view, nameString: (status.data?.event)!, score: (status.data?.score)!)
                     }
                     
                     self.isLike = true
@@ -867,58 +867,6 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
             }
         }
-    }
-    
-    // MARK: 显示积分提示
-    func showScoreTips(_ name:String, score:String) {
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud?.opacity = 0.3
-        hud?.margin = 10
-        hud?.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
-        hud?.mode = .customView
-        let customView = UIImageView(frame: CGRect(x: 0, y: 0, width: WIDTH*0.8, height: WIDTH*0.8*238/537))
-        customView.image = UIImage(named: "scorePopImg.png")
-        let titLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*30/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
-        titLab.textAlignment = .left
-        titLab.font = UIFont.systemFont(ofSize: 16)
-        titLab.text = name
-        titLab.adjustsFontSizeToFitWidth = true
-        customView.addSubview(titLab)
-        
-        let scoreLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
-        
-        scoreLab.textAlignment = .left
-        scoreLab.font = UIFont.systemFont(ofSize: 24)
-        scoreLab.text = "+\(score)"
-        scoreLab.adjustsFontSizeToFitWidth = true
-        scoreLab.sizeToFit()
-        customView.addSubview(scoreLab)
-        
-        let jifenLab = UILabel(frame: CGRect(
-            x: scoreLab.frame.maxX+5,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width-scoreLab.frame.maxX-5-customView.frame.width*13/537,
-            height: customView.frame.height*50/238))
-        jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
-        jifenLab.textAlignment = .center
-        jifenLab.font = UIFont.systemFont(ofSize: 16)
-        jifenLab.text = "护士币"
-        jifenLab.adjustsFontSizeToFitWidth = true
-        jifenLab.center.y = scoreLab.center.y
-        customView.addSubview(jifenLab)
-        
-        hud?.customView = customView
-        hud?.hide(true, afterDelay: 3)
     }
     
     // MARK: 点击退出

@@ -176,21 +176,21 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             
             let hud = MBProgressHUD.showAdded(to: self, animated: true)
             //                hud.mode = MBProgressHUDMode.Text;
-            hud?.labelText = "正在提交"
-            hud?.margin = 10.0
-            hud?.removeFromSuperViewOnHide = true
-            hud?.hide(true, afterDelay: 1)
+            hud.label.text = "正在提交"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(animated: true, afterDelay: 1)
             
             HSNurseStationHelper().publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, linkman: linkmanField.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionLab.text!, education: conditionLab.text!, experience: expLab.text!, welfare: treatmentLab.text!, address: placeLab_1.text!+"-"+placeLab_2.text!+"-"+placeLab_3.text!+" "+detailPlaceTF.text!, count: personLab.text!, salary: moneyLab.text!, description: requestField.text) { (success, response) in
                 // print(success)
                 
                 if success {
                     
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = "提交成功"
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = "提交成功"
+                    hud.hide(animated: true, afterDelay: 1)
                     
-                    self.selfNav?.popViewController(animated: true)
+                    _ = self.selfNav?.popViewController(animated: true)
                     //                        self.delegate?.clickedSendBtn()
                     
                     
@@ -221,7 +221,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
                     self.requestField.text = nil
                     self.requestLabel.text = "职位要求"
                 }else {
-                    hud?.hide(true)
+                    hud.hide(animated: true)
                     let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .alert)
                     let doneAction = UIAlertAction(title: "重试", style: .default, handler: { (action) in
                         self.sendBtnClicked(sender)
@@ -324,8 +324,8 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             let tabBar = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
             selfNav = tabBar.selectedViewController as? UINavigationController
             
-            mainHud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-            mainHud.labelText = "正在获取招聘信息"
+            mainHud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+            mainHud.label.text = "正在获取招聘信息"
             mainHud.removeFromSuperViewOnHide = true
         }
         
@@ -412,11 +412,11 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     // MARK: 获取企业认证状态
     func getCompanyStatus() {
         HSMineHelper().getCompanyCertify { (success, response) in
-            // print("1234567890====== \(String(describing: response))")
+            // print("1234567890====== \(String(describing: (response ?? ("" as AnyObject))!))")
             if success {
 //                hud.mode = MBProgressHUDMode.Text
-//                hud.labelText = "获取企业认证状态成功"
-//                hud.hide(true, afterDelay: 0.5)
+//                hud.label.text = "获取企业认证状态成功"
+//                hud.hide(animated: true, afterDelay: 0.5)
                 let companyInfo = response as! CompanyInfo
                 switch companyInfo.status! {
                 case "1":
@@ -431,8 +431,8 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
                 }
             }else{
 //                hud.mode = MBProgressHUDMode.Text
-//                hud.labelText = "获取企业认证状态失败"
-//                hud.hide(true)
+//                hud.label.text = "获取企业认证状态失败"
+//                hud.hide(animated: true)
                 
 //                let alert = UIAlertController(title: nil, message: "获取企业认证状态失败", preferredStyle: .Alert)
 //                self.presentViewController(alert, animated: true, completion: nil)
@@ -600,7 +600,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             self.moneyImg.frame.origin.x = self.moneyLab.frame.maxX+5
         }
         
-        mainHud.hide(true)
+        mainHud.hide(animated: true)
     }
     
     // MARK:自定义下拉列表样式
@@ -715,7 +715,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         resignTextFieldFirstResponder()
 
 //        listShow(sender as! UIView, andType: PortType.position)
-        positionDrop.show()
+        _ = positionDrop.show()
         positionBtn.isSelected = true
         positionBtn.tintColor = UIColor.clear
     }
@@ -725,7 +725,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         resignTextFieldFirstResponder()
 
 //        listShow(sender as! UIView, andType: PortType.condition)
-        coditionDrop.show()
+        _ = coditionDrop.show()
         conditionBtn.isSelected = true
         conditionBtn.tintColor = UIColor.clear
     }
@@ -735,7 +735,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         resignTextFieldFirstResponder()
         
         //        listShow(sender as! UIView, andType: PortType.condition)
-        expDrop.show()
+        _ = expDrop.show()
         expBtn.isSelected = true
         expBtn.tintColor = UIColor.clear
     }
@@ -744,7 +744,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         resignTextFieldFirstResponder()
 
 //        listShow(sender as! UIView, andType: PortType.welfare)
-        treatmentDrop.show()
+        _ = treatmentDrop.show()
         treatmentBtn.isSelected = true
         treatmentBtn.tintColor = UIColor.clear
     }
@@ -754,7 +754,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         resignTextFieldFirstResponder()
 
 //        listShow(sender as! UIView, andType: PortType.number)
-        personDrop.show()
+        _ = personDrop.show()
         personBtn.isSelected = true
         personBtn.tintColor = UIColor.clear
     }
@@ -764,7 +764,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         resignTextFieldFirstResponder()
         
 //        listShow(sender as! UIView, andType: PortType.money)
-        moneyDrop.show()
+        _ = moneyDrop.show()
         moneyBtn.isSelected = true
         moneyBtn.tintColor = UIColor.clear
     }
@@ -889,10 +889,10 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
                 // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showAdded(to: self, animated: true)
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.margin = 10.0
-                    hud?.removeFromSuperViewOnHide = true
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(animated: true, afterDelay: 1)
                 }
                 if(status.status == "success"){
                     // print(status)

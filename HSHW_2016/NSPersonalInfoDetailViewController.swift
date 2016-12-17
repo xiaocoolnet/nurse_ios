@@ -191,14 +191,14 @@ class NSPersonalInfoDetailViewController: UIViewController, HSFindPersonDetailVi
                     // print(status.status)
                     if(status.status == "error"){
                         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                        hud?.mode = MBProgressHUDMode.text;
+                        hud.mode = MBProgressHUDMode.text;
                         if status.data == nil {
-                            hud?.labelText = "您还没有发布职位，请先发布职位"
+                            hud.label.text = "您还没有发布职位，请先发布职位"
                         }
-                        //hud.labelText = status.errorData
-                        hud?.margin = 10.0
-                        hud?.removeFromSuperViewOnHide = true
-                        hud?.hide(true, afterDelay: 1)
+                        //hud.label.text = status.errorData
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(animated: true, afterDelay: 1)
                     }else if(status.status == "success"){
                         // print(status)
                         self.inviteJob_1(model, status: status)
@@ -220,15 +220,15 @@ class NSPersonalInfoDetailViewController: UIViewController, HSFindPersonDetailVi
             let doneAction = UIAlertAction(title: job.title, style: .default, handler: { (cancelAction) in
                 
                 let inviteHud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                inviteHud?.labelText = "正在获取邀请状态"
-                inviteHud?.removeFromSuperViewOnHide = true
-                inviteHud?.margin = 10.0
+                inviteHud.label.text = "正在获取邀请状态"
+                inviteHud.removeFromSuperViewOnHide = true
+                inviteHud.margin = 10.0
                 
                 HSNurseStationHelper().InviteJob_judge(model.userid, companyid: QCLoginUserInfo.currentInfo.userid, jobid: job.id) { (success, response) in
                     
                     if success {
-                        inviteHud?.hide(true)
-                        if (String(describing: response) ?? "")! == "1" {
+                        inviteHud.hide(animated: true)
+                        if (String(describing: (response ?? ("" as AnyObject))!) ) == "1" {
                             
                             let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已邀请过 \(model.name) 面试该职位，无需再次邀请", comment: "empty message"), preferredStyle: .alert)
                             self.present(alertController, animated: true, completion: nil)
@@ -242,9 +242,9 @@ class NSPersonalInfoDetailViewController: UIViewController, HSFindPersonDetailVi
                             let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: { (cancelAction) in
                                 
                                 let sendInviteHud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                                sendInviteHud?.labelText = "正在发送邀请"
-                                sendInviteHud?.removeFromSuperViewOnHide = true
-                                sendInviteHud?.margin = 10.0
+                                sendInviteHud.label.text = "正在发送邀请"
+                                sendInviteHud.removeFromSuperViewOnHide = true
+                                sendInviteHud.margin = 10.0
                                 
                                 let url = PARK_URL_Header+"InviteJob"
                                 let param = [
@@ -255,28 +255,28 @@ class NSPersonalInfoDetailViewController: UIViewController, HSFindPersonDetailVi
                                 NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
                                     // print(request)
                                     if(error != nil){
-                                        sendInviteHud?.mode = MBProgressHUDMode.text;
-                                        sendInviteHud?.labelText = "发送邀请失败 \(error?.localizedDescription)"
-                                        sendInviteHud?.hide(true, afterDelay: 1)
+                                        sendInviteHud.mode = MBProgressHUDMode.text;
+                                        sendInviteHud.label.text = "发送邀请失败 \(error?.localizedDescription)"
+                                        sendInviteHud.hide(animated: true, afterDelay: 1)
                                     }else{
                                         let result = Http(JSONDecoder(json!))
                                         if(result.status == "success"){
                                             //  菊花加载
                                             //                                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                            sendInviteHud?.mode = MBProgressHUDMode.text;
-                                            sendInviteHud?.labelText = "发送邀请成功"
+                                            sendInviteHud.mode = MBProgressHUDMode.text;
+                                            sendInviteHud.label.text = "发送邀请成功"
                                             //                                    hud.margin = 10.0
                                             //                                    hud.removeFromSuperViewOnHide = true
-                                            sendInviteHud?.hide(true, afterDelay: 1)
+                                            sendInviteHud.hide(animated: true, afterDelay: 1)
                                             // print(111111)
                                         }else{
                                             //  菊花加载
                                             //                                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                            sendInviteHud?.mode = MBProgressHUDMode.text;
-                                            sendInviteHud?.labelText = "发送邀请失败"
+                                            sendInviteHud.mode = MBProgressHUDMode.text;
+                                            sendInviteHud.label.text = "发送邀请失败"
                                             //                                    hud.margin = 10.0
                                             //                                    hud.removeFromSuperViewOnHide = true
-                                            sendInviteHud?.hide(true, afterDelay: 1)
+                                            sendInviteHud.hide(animated: true, afterDelay: 1)
                                             // print(2222222)
                                         }
                                     }
@@ -291,9 +291,9 @@ class NSPersonalInfoDetailViewController: UIViewController, HSFindPersonDetailVi
                             alertController.addAction(cancelAction)
                         }
                     }else{
-                        inviteHud?.mode = MBProgressHUDMode.text
-                        inviteHud?.labelText = "获取邀请状态失败"
-                        inviteHud?.hide(true, afterDelay: 1)
+                        inviteHud.mode = MBProgressHUDMode.text
+                        inviteHud.label.text = "获取邀请状态失败"
+                        inviteHud.hide(animated: true, afterDelay: 1)
                     }
                 }
             })

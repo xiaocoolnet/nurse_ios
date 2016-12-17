@@ -89,7 +89,7 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
     }
     
     func rightBarButtonClick() {
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     // 设置 tableView HeaderView

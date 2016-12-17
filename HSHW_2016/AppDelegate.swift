@@ -183,33 +183,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
                         
                         if success {
                             let result = response as! addScore_ReadingInformationDataModel
-                            self.showScoreTips(result.event, score: result.score)
+                            NursePublicAction.showScoreTips(self.window!, nameString: result.event, score: result.score)
                         }
                         //                    let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
                         //                    hud.mode = MBProgressHUDMode.Text;
-                        //                    hud.labelText = "分享成功 积分增加"
-                        //                    print(hud.labelText)
+                        //                    hud.label.text = "分享成功 积分增加"
+                        //                    
                         //                    hud.margin = 10.0
                         //                    hud.removeFromSuperViewOnHide = true
-                        //                    hud.hide(true, afterDelay: 1)
+                        //                    hud.hide(animated: true, afterDelay: 1)
                     }else{
-                        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "分享成功"
-                        print(hud?.labelText)
-                        hud?.margin = 10.0
-                        hud?.removeFromSuperViewOnHide = true
-                        hud?.hide(true, afterDelay: 1)
+                        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "分享成功"
+                        
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(animated: true, afterDelay: 1)
                     }
                 })
             }else{
-                let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-                hud?.mode = MBProgressHUDMode.text;
-                hud?.labelText = "分享失败"
-                print(hud?.labelText)
-                hud?.margin = 10.0
-                hud?.removeFromSuperViewOnHide = true
-                hud?.hide(true, afterDelay: 1)
+                let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+                hud.mode = MBProgressHUDMode.text;
+                hud.label.text = "分享失败"
+                
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(animated: true, afterDelay: 1)
             }
             
         }else if response.isKind(of: WBSendMessageToWeiboResponse.self) {
@@ -228,33 +228,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
                         
                         if success {
                             let result = response as! addScore_ReadingInformationDataModel
-                            self.showScoreTips(result.event, score: result.score)
+                            NursePublicAction.showScoreTips(self.window!, nameString: result.event, score: result.score)
                         }
                         //                    let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
                         //                    hud.mode = MBProgressHUDMode.Text;
-                        //                    hud.labelText = "分享成功 积分增加"
-                        //                    print(hud.labelText)
+                        //                    hud.label.text = "分享成功 积分增加"
+                        //                    
                         //                    hud.margin = 10.0
                         //                    hud.removeFromSuperViewOnHide = true
-                        //                    hud.hide(true, afterDelay: 1)
+                        //                    hud.hide(animated: true, afterDelay: 1)
                     }else{
-                        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "分享成功"
-                        print(hud?.labelText)
-                        hud?.margin = 10.0
-                        hud?.removeFromSuperViewOnHide = true
-                        hud?.hide(true, afterDelay: 1)
+                        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "分享成功"
+                        
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(animated: true, afterDelay: 1)
                     }
                 })
             }else{
-                let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-                hud?.mode = MBProgressHUDMode.text;
-                hud?.labelText = "分享失败"
-                print(hud?.labelText)
-                hud?.margin = 10.0
-                hud?.removeFromSuperViewOnHide = true
-                hud?.hide(true, afterDelay: 1)
+                let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+                hud.mode = MBProgressHUDMode.text;
+                hud.label.text = "分享失败"
+                
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(animated: true, afterDelay: 1)
             }
         }
     }
@@ -271,86 +271,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
                     
                     if success {
                         let result = response as! addScore_ReadingInformationDataModel
-                        self.showScoreTips(result.event, score: result.score)
+                        NursePublicAction.showScoreTips(self.window!, nameString: result.event, score: result.score)
                     }
 //                    let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
 //                    hud.mode = MBProgressHUDMode.Text;
-//                    hud.labelText = "分享成功 积分增加"
-//                    print(hud.labelText)
+//                    hud.label.text = "分享成功 积分增加"
+//                    
 //                    hud.margin = 10.0
 //                    hud.removeFromSuperViewOnHide = true
-//                    hud.hide(true, afterDelay: 1)
+//                    hud.hide(animated: true, afterDelay: 1)
                 }else{
-                    let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = "分享成功"
-                    print(hud?.labelText)
-                    hud?.margin = 10.0
-                    hud?.removeFromSuperViewOnHide = true
-                    hud?.hide(true, afterDelay: 1)
+                    let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = "分享成功"
+                    
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(animated: true, afterDelay: 1)
                 }
             })
         }else{
-            let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-            hud?.mode = MBProgressHUDMode.text;
-            hud?.labelText = "分享失败"
-            print(hud?.labelText)
-            hud?.margin = 10.0
-            hud?.removeFromSuperViewOnHide = true
-            hud?.hide(true, afterDelay: 1)
+            let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+            hud.mode = MBProgressHUDMode.text;
+            hud.label.text = "分享失败"
+            
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(animated: true, afterDelay: 1)
         }
-    }
-    
-    // MARK: 显示积分提示
-    func showScoreTips(_ name:String, score:String) {
-        let hud = MBProgressHUD.showAdded(to: self.window, animated: true)
-        hud?.opacity = 0.3
-        hud?.margin = 10
-        hud?.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
-        hud?.mode = .customView
-        let customView = UIImageView(frame: CGRect(x: 0, y: 0, width: WIDTH*0.8, height: WIDTH*0.8*238/537))
-        customView.image = UIImage(named: "scorePopImg.png")
-        let titLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*30/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
-        titLab.textAlignment = .left
-        titLab.font = UIFont.systemFont(ofSize: 16)
-        titLab.text = name
-        titLab.adjustsFontSizeToFitWidth = true
-        customView.addSubview(titLab)
-        
-        let scoreLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
-        
-        scoreLab.textAlignment = .left
-        scoreLab.font = UIFont.systemFont(ofSize: 24)
-        scoreLab.text = "+\(score)"
-        scoreLab.adjustsFontSizeToFitWidth = true
-        scoreLab.sizeToFit()
-        customView.addSubview(scoreLab)
-        
-        let jifenLab = UILabel(frame: CGRect(
-            x: scoreLab.frame.maxX+5,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width-scoreLab.frame.maxX-5-customView.frame.width*13/537,
-            height: customView.frame.height*50/238))
-        jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
-        jifenLab.textAlignment = .center
-        jifenLab.font = UIFont.systemFont(ofSize: 16)
-        jifenLab.text = "护士币"
-        jifenLab.adjustsFontSizeToFitWidth = true
-        jifenLab.center.y = scoreLab.center.y
-        customView.addSubview(jifenLab)
-        
-        hud?.customView = customView
-        hud?.hide(true, afterDelay: 3)
     }
     
     // MARK:- 阿里云推送
@@ -359,7 +307,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
             if (res?.success)! {
                 print("Push SDK init success, deviceId: %@.", CloudPushSDK.getDeviceId())
             }else{
-                print("Push SDK init failed, error: %@", res?.error)
+                print("Push SDK init failed, error: %@", res?.error ?? "error")
             }
         }
     }
@@ -383,7 +331,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
             if (res?.success)! {
                 print("Register deviceToken success.")
             }else{
-                print("Register deviceToken failed, error: %@", res?.error)
+                print("Register deviceToken failed, error: %@", res?.error ?? "error")
             }
         }
     }
@@ -425,7 +373,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         let title = NSString(data: message.title, encoding: String.Encoding.utf8.rawValue)
         let body = NSString(data: message.body, encoding: String.Encoding.utf8.rawValue)
         
-        print("Receive message title: %@, content: %@.", title, body);
+        print("Receive message title: \(title), content: \(body).")
     }
     /*
      *  App处于启动状态时，通知打开回调
@@ -443,7 +391,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         let sound = aps!.value(forKey: "sound") as? NSString
         // 取得Extras字段内容
         let Extras = userInfo["Extras"] as? NSString //服务端中Extras字段，key是自己定义的
-        print("content = [%@], badge = [%ld], sound = [%@], Extras = [%@]", content as Any, badge, sound, Extras)
+        print("content = [\(content)], badge = [\(badge)], sound = [\(sound)], Extras = [\(Extras)]")
         // iOS badge 清0
         application.applicationIconBadgeNumber = application.applicationIconBadgeNumber - (badge ?? 0)!
         

@@ -52,12 +52,12 @@ class MiFeedbackViewController: UIViewController {
     func submitBtnClick() {
         
         let checkCodeHud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        checkCodeHud?.removeFromSuperViewOnHide = true
+        checkCodeHud.removeFromSuperViewOnHide = true
         
         if feedbackTv.text!.isEmpty {
-            checkCodeHud?.mode = .text
-            checkCodeHud?.labelText = "请输入反馈内容"
-            checkCodeHud?.hide(true, afterDelay: 1)
+            checkCodeHud.mode = .text
+            checkCodeHud.label.text = "请输入反馈内容"
+            checkCodeHud.hide(animated: true, afterDelay: 1)
         }else{
 
 //            feedback.setObject(UIDevice.currentDevice().systemVersion, forKey: "systemVersion")
@@ -68,9 +68,9 @@ class MiFeedbackViewController: UIViewController {
             HSMineHelper().addfeedback(feedbackTv.text, devicestate: devicestate, handle: { (success, response) in
 
                 if success {
-                    checkCodeHud?.mode = .text
-                    checkCodeHud?.labelText = "反馈成功"
-                    checkCodeHud?.hide(true, afterDelay: 1)
+                    checkCodeHud.mode = .text
+                    checkCodeHud.label.text = "反馈成功"
+                    checkCodeHud.hide(animated: true, afterDelay: 1)
                     
                     print("反馈成功")
                     
@@ -78,13 +78,13 @@ class MiFeedbackViewController: UIViewController {
                     let delay = DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                     
                     DispatchQueue.main.asyncAfter(deadline: delay) {
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     }
                 }else{
                     
-                    checkCodeHud?.mode = .text
-                    checkCodeHud?.labelText = "反馈失败，请稍后再试"
-                    checkCodeHud?.hide(true, afterDelay: 1)
+                    checkCodeHud.mode = .text
+                    checkCodeHud.label.text = "反馈失败，请稍后再试"
+                    checkCodeHud.hide(animated: true, afterDelay: 1)
                     
                     
                     print("反馈失败")
@@ -102,8 +102,8 @@ class MiFeedbackViewController: UIViewController {
 //                if isSuccessful{
 //                    
 //                    checkCodeHud.mode = .Text
-//                    checkCodeHud.labelText = "反馈成功"
-//                    checkCodeHud.hide(true, afterDelay: 1)
+//                    checkCodeHud.label.text = "反馈成功"
+//                    checkCodeHud.hide(animated: true, afterDelay: 1)
 //                    
 //                    print("反馈成功")
 //                    
@@ -111,13 +111,13 @@ class MiFeedbackViewController: UIViewController {
 //                    let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(time * Double(NSEC_PER_SEC)))
 //                    
 //                    dispatch_after(delay, dispatch_get_main_queue()) {
-//                        self.navigationController?.popViewControllerAnimated(true)
+//                        _ = self.navigationController?.popViewControllerAnimated(true)
 //                    }
 //                }else{
 //                    
 //                    checkCodeHud.mode = .Text
-//                    checkCodeHud.labelText = "反馈失败，请稍后再试"
-//                    checkCodeHud.hide(true, afterDelay: 1)
+//                    checkCodeHud.label.text = "反馈失败，请稍后再试"
+//                    checkCodeHud.hide(animated: true, afterDelay: 1)
 //                    
 //                    
 //                    print("反馈失败")

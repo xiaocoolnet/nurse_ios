@@ -333,7 +333,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             
             
 //            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//            hud.labelText = "正在发表评论"
+//            hud.label.text = "正在发表评论"
 //            hud.margin = 10.0
 //            hud.removeFromSuperViewOnHide = true
 //            
@@ -358,24 +358,24 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
 //                            if(error != nil){
 //                                
 //                                hud.mode = MBProgressHUDMode.Text;
-//                                hud.labelText = "评论失败"
+//                                hud.label.text = "评论失败"
 //                                
-//                                hud.hide(true, afterDelay: 1)
+//                                hud.hide(animated: true, afterDelay: 1)
 //                            }else{
 //                                let status = commentModel(JSONDecoder(json!))
 //                                
 //                                if(status.status == "error"){
 //                                    
 //                                    hud.mode = MBProgressHUDMode.Text;
-//                                    hud.labelText = "评论失败"
+//                                    hud.label.text = "评论失败"
 //                                    
-//                                    hud.hide(true, afterDelay: 1)
+//                                    hud.hide(animated: true, afterDelay: 1)
 //                                }
 //                                if(status.status == "success"){
 //                                    
 //                                    hud.mode = MBProgressHUDMode.Text;
-//                                    hud.labelText = "评论成功"
-//                                    hud.hide(true, afterDelay: 1)
+//                                    hud.label.text = "评论成功"
+//                                    hud.hide(animated: true, afterDelay: 1)
 //                                    
 //                                    self.replyTextField.placeholder = "写评论..."
 ////                                    self.send_bottom_Btn.tag = NSString(string: (self.newsInfo?.object_id)!).integerValue
@@ -385,7 +385,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
 //                                    self.rootTableView.reloadData()
 //                                    
 ////                                    if ((result.event) != "") {
-////                                        self.showScoreTips((result.event), score: (result.score))
+////                                        NursePublicAction.showScoreTips(self.view, nameString: (result.event), score: (result.score))
 ////                                    }
 //                                    
 //                                    self.rootTableView.contentOffset.y = self.rootTableView.contentSize.height-self.rootTableView.frame.size.height
@@ -399,19 +399,19 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
 //                    }else{
 //                        dispatch_async(dispatch_get_main_queue(), {
 //                            hud.mode = MBProgressHUDMode.Text;
-//                            hud.labelText = "评论失败"
-//                            hud.hide(true, afterDelay: 1)
+//                            hud.label.text = "评论失败"
+//                            hud.hide(animated: true, afterDelay: 1)
 //                        })
 //                    }
 //            })
             replyTextField.resignFirstResponder()
         }else{
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud?.margin = 10.0
-            hud?.removeFromSuperViewOnHide = true
-            hud?.mode = MBProgressHUDMode.text;
-            hud?.labelText = "请输入内容"
-            hud?.hide(true, afterDelay: 1)
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = MBProgressHUDMode.text;
+            hud.label.text = "请输入内容"
+            hud.hide(animated: true, afterDelay: 1)
         }
     }
     
@@ -555,7 +555,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             contentView.backgroundColor = UIColor.white
             
             let collectBtn = UIButton(frame: CGRect(x: 20, y: 8, width: 30, height: 30))
-            collectBtn.tag == 100
+            collectBtn.tag = 100
             collectBtn.layer.cornerRadius = 15
 //            collectBtn.layer.backgroundColor = UIColor(red: 244/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1).CGColor
             collectBtn.setImage(UIImage(named: "收藏（默认）"), for: UIControlState())
@@ -572,7 +572,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             contentView.addSubview(collectNumLab)
             
             let likeBtn = UIButton(frame: CGRect(x: collectNumLab.frame.maxX+20, y: 8, width: 30, height: 30))
-            likeBtn.tag == 101
+            likeBtn.tag = 101
             likeBtn.layer.cornerRadius = 15
 //            likeBtn.layer.backgroundColor = UIColor(red: 244/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1).CGColor
             //                likeBtn.setImage(UIImage(named: "点赞（默认）"), forState: .Normal)
@@ -589,7 +589,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             contentView.addSubview(likeNumLab)
             
             let rewardBtn = UIButton(frame: CGRect(x: likeNumLab.frame.maxX+20, y: 8, width: 30, height: 30))
-            rewardBtn.tag == 102
+            rewardBtn.tag = 102
             rewardBtn.layer.cornerRadius = 15
 //            rewardBtn.layer.backgroundColor = UIColor(red: 244/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1).CGColor
             rewardBtn.setImage(UIImage(named: "打赏（默认）"), for: UIControlState())

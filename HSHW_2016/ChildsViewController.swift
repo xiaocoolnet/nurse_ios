@@ -354,21 +354,21 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                         //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
                         if status.errorData == nil {
                             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                            hud?.mode = .text
-                            hud?.labelText = "抱歉，您还没有收到面试邀请"
-                            hud?.margin = 10.0
-                            hud?.removeFromSuperViewOnHide = true
-                            hud?.hide(true, afterDelay: 1)
+                            hud.mode = .text
+                            hud.label.text = "抱歉，您还没有收到面试邀请"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(animated: true, afterDelay: 1)
                         }else{
                             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                            hud?.mode = .text
-                            hud?.labelText = status.errorData
-                            hud?.margin = 10.0
-                            hud?.removeFromSuperViewOnHide = true
-                            hud?.hide(true)
+                            hud.mode = .text
+                            hud.label.text = status.errorData
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(animated: true)
                             //                        hud.margin = 10.0
                             //                        hud.removeFromSuperViewOnHide = true
-                            hud?.hide(true, afterDelay: 1)
+                            hud.hide(animated: true, afterDelay: 1)
                         }
                     }
                     if(status.status == "success"){
@@ -395,15 +395,15 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
                     // print(status.status)
                     if(status.status == "error"){
                         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                        hud?.mode = MBProgressHUDMode.text;
-                        //hud.labelText = status.errorData
+                        hud.mode = MBProgressHUDMode.text;
+                        //hud.label.text = status.errorData
                         if status.datas.count == 0 {
-                            hud?.labelText = "您还没有收到简历"
+                            hud.label.text = "您还没有收到简历"
                             self.myTableView .reloadData()
                         }
-                        hud?.margin = 10.0
-                        hud?.removeFromSuperViewOnHide = true
-                        hud?.hide(true, afterDelay: 1)
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(animated: true, afterDelay: 1)
                     }
                     if(status.status == "success"){
                         // print(status)

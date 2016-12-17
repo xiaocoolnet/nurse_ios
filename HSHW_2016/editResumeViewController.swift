@@ -59,15 +59,15 @@ class editResumeViewController: UIViewController {
     
     func getMyResume() {
         
-        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-        hud?.labelText = "正在获取简历"
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+        hud.label.text = "正在获取简历"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
 //        let view = NSBundle.mainBundle().loadNibNamed("HSPostResumeView", owner: nil, options: nil).first as! HSPostResumeView
         HSNurseStationHelper().getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
             
-            hud?.hide(true)
+            hud.hide(animated: true)
             if success {
                 self.resumeView.alreadyHasResume = true
                 
@@ -141,7 +141,7 @@ class editResumeViewController: UIViewController {
                 self.resumeView.selfEvaluateLab.text = ""
                 
             }else{
-                if (String(describing: response) ?? "")! == "no data" {
+                if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
                     // 没有简历
                     self.resumeView.alreadyHasResume = false
                 }else{
@@ -155,7 +155,7 @@ class editResumeViewController: UIViewController {
                     alert.addAction(replyAction)
                     
                     let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     })
                     alert.addAction(cancelAction)
                 }

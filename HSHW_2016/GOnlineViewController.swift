@@ -110,7 +110,7 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
             self.present(alertController, animated: true, completion: nil)
             
             let cancelAction = UIAlertAction(title: "是", style: .cancel) { (cancelAction) in
-                self.navigationController?.popViewController(animated: true)
+                _ = self.navigationController?.popViewController(animated: true)
             }
             alertController.addAction(cancelAction)
             
@@ -120,14 +120,14 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
             }
             alertController.addAction(answerAction)
         }else{
-            self.navigationController?.popViewController(animated: true)
+            _ = self.navigationController?.popViewController(animated: true)
         }
         //        else{
         //            let alertController = UIAlertController(title: "尚未提交", message: "是否提交？", preferredStyle: .Alert)
         //            self.presentViewController(alertController, animated: true, completion: nil)
         //
         //            let cancelAction = UIAlertAction(title: "退出", style: .Cancel) { (cancelAction) in
-        //                self.navigationController?.popViewControllerAnimated(true)
+        //                _ = self.navigationController?.popViewControllerAnimated(true)
         //            }
         //            alertController.addAction(cancelAction)
         //
@@ -177,18 +177,18 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //        hud.mode = MBProgressHUDMode.Text;
-        hud?.labelText = "正在获取试题详情"
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        hud.label.text = "正在获取试题详情"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
         NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String] as [String : AnyObject]?) { (json, error) in
 //
 //        Alamofire.request(.GET, url, parameters: param as? [String:String]).response { [unowned self] request, response, json, error in
             DispatchQueue.main.async(execute: {
                 if(error != nil){
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = error?.localizedDescription
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = (error?.localizedDescription)
+                    hud.hide(animated: true, afterDelay: 1)
                 }else{
                     let status = EveryDayModel(JSONDecoder(json!))
                     // print("状态是")
@@ -199,15 +199,15 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
                         self.dataSource = DaliyExamList(status.data!).objectlist
                         // print(self.dataSource.count)
                         
-                        hud?.hide(true, afterDelay: 1)
+                        hud.hide(animated: true, afterDelay: 1)
                         
                         if self.dataSource.count == 0 {
-                            hud?.mode = MBProgressHUDMode.text;
-                            hud?.labelText = "尚无试题"
-                            hud?.hide(true, afterDelay: 1)
+                            hud.mode = MBProgressHUDMode.text;
+                            hud.label.text = "尚无试题"
+                            hud.hide(animated: true, afterDelay: 1)
                             
                         }else{
-                            hud?.hide(true, afterDelay: 1)
+                            hud.hide(animated: true, afterDelay: 1)
                             
                             self.createScrollerView()
                             self.AnswerView()
@@ -220,11 +220,11 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
                         
                     }else{
                         //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = status.errorData
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = status.errorData
                         //                        hud.margin = 10.0
                         //                        hud.removeFromSuperViewOnHide = true
-                        hud?.hide(true, afterDelay: 1)
+                        hud.hide(animated: true, afterDelay: 1)
                     }
                 }
             })
@@ -330,16 +330,16 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
         }else{
             //            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
             //            hud.mode = MBProgressHUDMode.Text;
-            //            hud.labelText = "时间到"
+            //            hud.label.text = "时间到"
             //            hud.margin = 10.0
             //            hud.removeFromSuperViewOnHide = true
-            //            hud.hide(true, afterDelay: 1)
+            //            hud.hide(animated: true, afterDelay: 1)
             
             let alertController = UIAlertController(title: "时间到", message: "尚未答题", preferredStyle: .alert)
             self.present(alertController, animated: true, completion: nil)
             
             let cancelAction = UIAlertAction(title: "退出", style: .cancel) { (cancelAction) in
-                self.navigationController?.popViewController(animated: true)
+                _ = self.navigationController?.popViewController(animated: true)
             }
             alertController.addAction(cancelAction)
             
@@ -352,12 +352,12 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
                     //                            btn.tag = 4
                     self.bottomBtnClick(self.btnTwo)
                     
-                    let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-                    hud?.mode = MBProgressHUDMode.text
-                    hud?.labelText = "点击 < 答案 > 按钮即可查看答案"
-                    hud?.margin = 10.0
-                    hud?.removeFromSuperViewOnHide = true
-                    hud?.hide(true, afterDelay: 1.5)
+                    let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+                    hud.mode = MBProgressHUDMode.text
+                    hud.label.text = "点击 < 答案 > 按钮即可查看答案"
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(animated: true, afterDelay: 1.5)
                 })
             }
             alertController.addAction(answerAction)
@@ -367,22 +367,22 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //        hud.mode = MBProgressHUDMode.;
-        hud?.labelText = "时间到"
-        hud?.detailsLabelText = "正在提交..."
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        hud.label.text = "时间到"
+        hud.detailsLabel.text = "正在提交..."
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
         HSStudyNetHelper.sendtestAnswerByType("2", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
             
             if(success){
                 DispatchQueue.main.async(execute: {
-                    hud?.hide(true)
+                    hud.hide(animated: true)
                     self.navigationItem.rightBarButtonItem = nil
                     let result = response as! ScoreDataModel
                     
                     var time: TimeInterval = 0.0
                     if result.event != "" {
-                        self.showScoreTips(result.event, score: result.score)
+                        NursePublicAction.showScoreTips(self.view, nameString: result.event, score: result.score)
                         time = 3.0
                     }
                     
@@ -394,7 +394,7 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
                         self.present(alertController, animated: true, completion: nil)
                         
                         let cancelAction = UIAlertAction(title: "退出", style: .cancel) { (cancelAction) in
-                            self.navigationController?.popViewController(animated: true)
+                            _ = self.navigationController?.popViewController(animated: true)
                         }
                         alertController.addAction(cancelAction)
                         
@@ -407,12 +407,12 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
                                 //                            btn.tag = 4
                                 self.bottomBtnClick(self.btnTwo)
                                 
-                                let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-                                hud?.mode = MBProgressHUDMode.text
-                                hud?.labelText = "点击 < 答案 > 按钮即可查看答案"
-                                hud?.margin = 10.0
-                                hud?.removeFromSuperViewOnHide = true
-                                hud?.hide(true, afterDelay: 1.5)
+                                let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+                                hud.mode = MBProgressHUDMode.text
+                                hud.label.text = "点击 < 答案 > 按钮即可查看答案"
+                                hud.margin = 10.0
+                                hud.removeFromSuperViewOnHide = true
+                                hud.hide(animated: true, afterDelay: 1.5)
                             })
                         }
                         alertController.addAction(answerAction)
@@ -421,74 +421,19 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
             }else{
                 DispatchQueue.main.async(execute: {
                     
-                    hud?.hide(false)
+                    hud.hide(animated: false)
                     
                     let hud2 = MBProgressHUD.showAdded(to: self.view, animated: true)
-                    hud2?.mode = MBProgressHUDMode.text;
-                    hud2?.labelText = "提交失败，请稍后再试"
-                    hud2?.margin = 10.0
-                    hud2?.removeFromSuperViewOnHide = true
-                    hud2?.hide(true, afterDelay: 2)
+                    hud2.mode = MBProgressHUDMode.text;
+                    hud2.label.text = "提交失败，请稍后再试"
+                    hud2.margin = 10.0
+                    hud2.removeFromSuperViewOnHide = true
+                    hud2.hide(animated: true, afterDelay: 2)
                 })
             }
             // print(response)
         }
     }
-    
-    
-    // MARK: 显示积分提示
-    func showScoreTips(_ name:String, score:String) {
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud?.opacity = 0.3
-        hud?.margin = 10
-        hud?.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
-        hud?.mode = .customView
-        let customView = UIImageView(frame: CGRect(x: 0, y: 0, width: WIDTH*0.8, height: WIDTH*0.8*238/537))
-        customView.image = UIImage(named: "scorePopImg.png")
-        let titLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*30/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
-        titLab.textAlignment = .left
-        titLab.font = UIFont.systemFont(ofSize: 16)
-        titLab.text = name
-        titLab.adjustsFontSizeToFitWidth = true
-        customView.addSubview(titLab)
-        
-        let scoreLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
-        
-        scoreLab.textAlignment = .left
-        scoreLab.font = UIFont.systemFont(ofSize: 24)
-        scoreLab.text = "+\(score)"
-        scoreLab.adjustsFontSizeToFitWidth = true
-        scoreLab.sizeToFit()
-        customView.addSubview(scoreLab)
-        
-        let jifenLab = UILabel(frame: CGRect(
-            x: scoreLab.frame.maxX+5,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width-scoreLab.frame.maxX-5-customView.frame.width*13/537,
-            height: customView.frame.height*50/238))
-        jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
-        jifenLab.textAlignment = .center
-        jifenLab.font = UIFont.systemFont(ofSize: 16)
-        jifenLab.text = "护士币"
-        jifenLab.adjustsFontSizeToFitWidth = true
-        jifenLab.center.y = scoreLab.center.y
-        customView.addSubview(jifenLab)
-        
-        hud?.customView = customView
-        hud?.hide(true, afterDelay: 3)
-    }
-    
-    
     
     // MARK: 答题卡视图
     func questionCard_uncommit() {
@@ -1118,11 +1063,11 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
             
             if self.num != 2 {
                 let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                hud?.mode = MBProgressHUDMode.text;
-                hud?.labelText = "没交卷不可以看答案哦"
-                hud?.margin = 10.0
-                hud?.removeFromSuperViewOnHide = true
-                hud?.hide(true, afterDelay: 1)
+                hud.mode = MBProgressHUDMode.text;
+                hud.label.text = "没交卷不可以看答案哦"
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
+                hud.hide(animated: true, afterDelay: 1)
                 
                 return
             }
@@ -1187,9 +1132,9 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
                 
                 let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
                 //                hud.mode = MBProgressHUDMode.Text;
-                //                hud.labelText = status.errorData
-                hud?.margin = 10.0
-                hud?.removeFromSuperViewOnHide = true
+                //                hud.label.text = status.errorData
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
                 
                 let url = PARK_URL_Header+"addfavorite"
                 let param = [
@@ -1206,9 +1151,9 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
 //                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
                     // print(request)
                     if(error != nil){
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "收藏失败"
-                        hud?.hide(true, afterDelay: 0.5)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "收藏失败"
+                        hud.hide(animated: true, afterDelay: 0.5)
                     }else{
                         let status = Http(JSONDecoder(json!))
                         // print("状态是")
@@ -1216,19 +1161,19 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
                         DispatchQueue.main.async(execute: {
                             if(status.status == "error"){
                                 //                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                hud?.mode = MBProgressHUDMode.text;
-                                hud?.labelText = status.errorData
+                                hud.mode = MBProgressHUDMode.text;
+                                hud.label.text = status.errorData!
                                 //                                hud.margin = 10.0
                                 //                                hud.removeFromSuperViewOnHide = true
-                                hud?.hide(true, afterDelay: 0.5)
+                                hud.hide(animated: true, afterDelay: 0.5)
                             }
                             if(status.status == "success"){
                                 //                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                hud?.mode = MBProgressHUDMode.text;
-                                hud?.labelText = "收藏成功"
+                                hud.mode = MBProgressHUDMode.text;
+                                hud.label.text = "收藏成功"
                                 //                                hud.margin = 10.0
                                 //                                hud.removeFromSuperViewOnHide = true
-                                hud?.hide(true, afterDelay: 0.5)
+                                hud.hide(animated: true, afterDelay: 0.5)
                                 btn.setImage(UIImage(named: "btn_collect_sel.png"), for: UIControlState())
                                 self.TitCol.textColor = COLOR
                                 self.collection = true
@@ -1239,8 +1184,8 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
                 }
             }else{
                 let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                hud?.margin = 10.0
-                hud?.removeFromSuperViewOnHide = true
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
                 let url = PARK_URL_Header+"cancelfavorite"
                 let param = [
                     "refid":examInfo.id,
@@ -1252,9 +1197,9 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
 //                Alamofire.request(.GET, url, parameters: param as? [String:String] ).response { request, response, json, error in
                     // print(request)
                     if(error != nil){
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "取消收藏失败"
-                        hud?.hide(true, afterDelay: 0.5)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "取消收藏失败"
+                        hud.hide(animated: true, afterDelay: 0.5)
                     }else{
                         let status = Http(JSONDecoder(json!))
                         // print("状态是")
@@ -1262,19 +1207,19 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
                         DispatchQueue.main.async(execute: {
                             if(status.status == "error"){
                                 //                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                hud?.mode = MBProgressHUDMode.text;
-                                hud?.labelText = status.errorData
+                                hud.mode = MBProgressHUDMode.text;
+                                hud.label.text = status.errorData
                                 //                                hud.margin = 10.0
                                 //                                hud.removeFromSuperViewOnHide = true
-                                hud?.hide(true, afterDelay: 0.5)
+                                hud.hide(animated: true, afterDelay: 0.5)
                             }
                             if(status.status == "success"){
                                 //                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                hud?.mode = MBProgressHUDMode.text;
-                                hud?.labelText = "取消收藏成功"
+                                hud.mode = MBProgressHUDMode.text;
+                                hud.label.text = "取消收藏成功"
                                 //                                hud.margin = 10.0
                                 //                                hud.removeFromSuperViewOnHide = true
-                                hud?.hide(true, afterDelay: 0.5)
+                                hud.hide(animated: true, afterDelay: 0.5)
                                 btn.setImage(UIImage(named: self.picArr[4]), for: UIControlState())
                                 self.TitCol.textColor = GREY
                                 self.collection = false
@@ -1354,32 +1299,32 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
             }
         }else{
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud?.mode = MBProgressHUDMode.text;
-            hud?.labelText = "请答题后提交"
-            hud?.margin = 10.0
-            hud?.removeFromSuperViewOnHide = true
-            hud?.hide(true, afterDelay: 1)
+            hud.mode = MBProgressHUDMode.text;
+            hud.label.text = "请答题后提交"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
+            hud.hide(animated: true, afterDelay: 1)
             return
         }
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //        hud.mode = MBProgressHUDMode.;
-        hud?.labelText = "正在提交..."
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        hud.label.text = "正在提交..."
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
         HSStudyNetHelper.sendtestAnswerByType("2", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
             
             if(success){
                 DispatchQueue.main.async(execute: {
-                    hud?.hide(true)
+                    hud.hide(animated: true)
                     self.navigationItem.rightBarButtonItem = nil
                     
                     let result = response as! ScoreDataModel
                     
                     var time: TimeInterval = 0.0
                     if result.event != "" {
-                        self.showScoreTips(result.event, score: result.score)
+                        NursePublicAction.showScoreTips(self.view, nameString: result.event, score: result.score)
                         time = 3.0
                     }
                     
@@ -1391,7 +1336,7 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
                         self.present(alertController, animated: true, completion: nil)
                         
                         let cancelAction = UIAlertAction(title: "退出", style: .cancel) { (cancelAction) in
-                            self.navigationController?.popViewController(animated: true)
+                            _ = self.navigationController?.popViewController(animated: true)
                         }
                         alertController.addAction(cancelAction)
                         
@@ -1404,12 +1349,12 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
                                 //                            btn.tag = 4
                                 self.bottomBtnClick(self.btnTwo)
                                 
-                                let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-                                hud?.mode = MBProgressHUDMode.text
-                                hud?.labelText = "点击 < 答案 > 按钮即可查看答案"
-                                hud?.margin = 10.0
-                                hud?.removeFromSuperViewOnHide = true
-                                hud?.hide(true, afterDelay: 1.5)
+                                let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+                                hud.mode = MBProgressHUDMode.text
+                                hud.label.text = "点击 < 答案 > 按钮即可查看答案"
+                                hud.margin = 10.0
+                                hud.removeFromSuperViewOnHide = true
+                                hud.hide(animated: true, afterDelay: 1.5)
                             })
                         }
                         alertController.addAction(answerAction)
@@ -1418,14 +1363,14 @@ class GOnlineViewController: UIViewController,UIScrollViewDelegate {
             }else{
                 DispatchQueue.main.async(execute: {
                     
-                    hud?.hide(false)
+                    hud.hide(animated: false)
                     
                     let hud2 = MBProgressHUD.showAdded(to: self.view, animated: true)
-                    hud2?.mode = MBProgressHUDMode.text;
-                    hud2?.labelText = "提交失败，请稍后再试"
-                    hud2?.margin = 10.0
-                    hud2?.removeFromSuperViewOnHide = true
-                    hud2?.hide(true, afterDelay: 2)
+                    hud2.mode = MBProgressHUDMode.text;
+                    hud2.label.text = "提交失败，请稍后再试"
+                    hud2.margin = 10.0
+                    hud2.removeFromSuperViewOnHide = true
+                    hud2.hide(animated: true, afterDelay: 2)
                 })
             }
             // print(response)

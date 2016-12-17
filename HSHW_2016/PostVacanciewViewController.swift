@@ -51,22 +51,22 @@ class PostVacanciewViewController: UIViewController {
     
     func getCompanyCertify() {
         
-        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-        hud?.labelText = "正在获取企业信息"
-        hud?.removeFromSuperViewOnHide = true
+        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+        hud.label.text = "正在获取企业信息"
+        hud.removeFromSuperViewOnHide = true
         // MARK: 获取企业认证状态
         HSMineHelper().getCompanyCertify({ (success, response) in
             
-            print("1234567890====== \((String(describing: response) ?? "")!)")
+            print("1234567890====== \((String(describing: (response ?? ("" as AnyObject))!) ))")
             if success {
-                hud?.mode = MBProgressHUDMode.text
-                hud?.labelText = "获取企业信息成功"
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = "获取企业信息成功"
                 let companyInfo = response as! CompanyInfo
                 
 //                print(companyInfo.status)
                 if companyInfo.status == "1" {
                     
-                    hud?.hide(true, afterDelay: 0.5)
+                    hud.hide(animated: true, afterDelay: 0.5)
                     
                     self.postView.alreadyCertify = true
                     
@@ -78,21 +78,21 @@ class PostVacanciewViewController: UIViewController {
                 }else{
                     self.postView.alreadyCertify = false
                     
-                    hud?.labelText = "尚未通过企业认证"
-                    hud?.hide(true, afterDelay: 1)
+                    hud.label.text = "尚未通过企业认证"
+                    hud.hide(animated: true, afterDelay: 1)
 
                 }
                 
             }else{
-                hud?.mode = MBProgressHUDMode.text
-                hud?.labelText = "获取企业信息失败"
-                hud?.hide(true)
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = "获取企业信息失败"
+                hud.hide(animated: true)
                 
                 let alert = UIAlertController(title: nil, message: "获取企业信息失败", preferredStyle: .alert)
                 self.present(alert, animated: true, completion: nil)
                 
                 let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
-                    self.navigationController?.popViewController(animated: false)
+                    _ = self.navigationController?.popViewController(animated: false)
                 })
                 alert.addAction(cancelAction)
                 

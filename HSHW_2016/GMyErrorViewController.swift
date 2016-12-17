@@ -146,9 +146,9 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
 //        let userid = QCLoginUserInfo.currentInfo.userid
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //        hud.mode = MBProgressHUDMode.Text;
-        hud?.labelText = "正在获取试题详情"
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        hud.label.text = "正在获取试题详情"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         var flag = 0
         
         let userid = QCLoginUserInfo.currentInfo.userid
@@ -159,7 +159,7 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 self.fansListArray = response as! Array<xamInfo>
                 self.fansTableView.reloadData()
             }else{
-                if String(describing: response) == "no data" {
+                if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
                     self.fansListArray = Array<xamInfo>()
                     self.fansTableView.reloadData()
                 }else{
@@ -169,7 +169,7 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             flag += 1
             if flag == 2 {
-                hud?.hide(true, afterDelay: 1)
+                hud.hide(animated: true, afterDelay: 1)
             }
         }
         
@@ -181,7 +181,7 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
                 self.focusTableView.reloadData()
             }else{
                 
-                if String(describing: response) == "no data" {
+                if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
                     self.focusListArray = Array<xamInfo>()
                     self.focusTableView.reloadData()
                 }else{
@@ -191,7 +191,7 @@ class GMyErrorViewController: UIViewController,UITableViewDelegate,UITableViewDa
             
             flag += 1
             if flag == 2 {
-                hud?.hide(true, afterDelay: 1)
+                hud.hide(animated: true, afterDelay: 1)
             }
         }
     }

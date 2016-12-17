@@ -131,17 +131,17 @@ class MineRecruitViewController: UIViewController, PagingMenuControllerDelegate 
         if menuController == self.threeView {
             print("this is companyAuth page")
             
-            let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
-            hud?.labelText = "正在获取企业认证状态"
-            hud?.removeFromSuperViewOnHide = true
+            let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow!, animated: true)
+            hud.label.text = "正在获取企业认证状态"
+            hud.removeFromSuperViewOnHide = true
             // MARK: 获取企业认证状态
             HSMineHelper().getCompanyCertify({ (success, response) in
                 
-                print("1234567890====== \(String(describing: response))")
+                print("1234567890====== \(String(describing: (response ?? ("" as AnyObject))!))")
                 if success {
-                    hud?.mode = MBProgressHUDMode.text
-                    hud?.labelText = "获取企业认证状态成功"
-                    hud?.hide(true, afterDelay: 0.5)
+                    hud.mode = MBProgressHUDMode.text
+                    hud.label.text = "获取企业认证状态成功"
+                    hud.hide(animated: true, afterDelay: 0.5)
                     let companyInfo = response as! CompanyInfo
                     switch companyInfo.status! {
                         case "-1":
@@ -157,9 +157,9 @@ class MineRecruitViewController: UIViewController, PagingMenuControllerDelegate 
                         break
                     }
                 }else{
-                    hud?.mode = MBProgressHUDMode.text
-                    hud?.labelText = "获取企业认证状态失败"
-                    hud?.hide(true)
+                    hud.mode = MBProgressHUDMode.text
+                    hud.label.text = "获取企业认证状态失败"
+                    hud.hide(animated: true)
                     
                     let alert = UIAlertController(title: nil, message: "获取企业认证状态失败", preferredStyle: .alert)
                     self.present(alert, animated: true, completion: nil)

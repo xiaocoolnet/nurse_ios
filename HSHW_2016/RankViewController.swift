@@ -81,23 +81,23 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
     func loadData() {
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
         HSMineHelper().getRankingList { (success, response) in
             if success {
-                hud?.hide(true)
+                hud.hide(animated: true)
                 self.scoreArray = response as! Array<RankModel>
                 self.myTableView.reloadData()
             }else{
 //                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
 //                hud.mode = MBProgressHUDMode.Text
-//                hud.labelText = response as! String
+//                hud.label.text = response as! String
 //                hud.margin = 10.0
 //                hud.removeFromSuperViewOnHide = true
-//                hud.hide(true, afterDelay: 1)
+//                hud.hide(animated: true, afterDelay: 1)
                 
-                hud?.hide(true)
+                hud.hide(animated: true)
                 
                 let alert = UIAlertController(title: nil, message: "获取个人积分详情失败", preferredStyle: .alert)
                 self.present(alert, animated: true, completion: {
@@ -160,10 +160,10 @@ class RankViewController: UIViewController,UITableViewDataSource, UITableViewDel
         
 //        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
 //        hud.mode = MBProgressHUDMode.Text
-//        hud.labelText = "敬请期待"
+//        hud.label.text = "敬请期待"
 //        hud.margin = 10.0
 //        hud.removeFromSuperViewOnHide = true
-//        hud.hide(true, afterDelay: 1)
+//        hud.hide(animated: true, afterDelay: 1)
         
         if QCLoginUserInfo.currentInfo.all_information == "1" {
             collectionNews()

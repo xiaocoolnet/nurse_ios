@@ -145,9 +145,9 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //        hud.mode = MBProgressHUDMode.Text;
-        hud?.labelText = "正在获取试题详情"
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        hud.label.text = "正在获取试题详情"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         var flag = 0
         
         helper.GetExampaper(QCLoginUserInfo.currentInfo.userid, type: "1") { (success, response) in
@@ -158,7 +158,7 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.fansListArray = response as! Array<GTestExamList>
                 self.fansTableView.reloadData()
             }else{
-                if (String(describing: response) ?? "")! == "no data" {
+                if (String(describing: (response ?? ("" as AnyObject))!) ) == "no data" {
                     self.fansListArray = Array<GTestExamList>()
                     self.fansTableView.reloadData()
                 }else{
@@ -168,7 +168,7 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
             
             flag += 1
             if flag == 2 {
-                hud?.hide(true, afterDelay: 1)
+                hud.hide(animated: true, afterDelay: 1)
             }
         }
         
@@ -179,7 +179,7 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.focusListArray = response as! Array<GTestExamList>
                 self.focusTableView.reloadData()
             }else{
-                if String(describing: response) == "no data" {
+                if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
                     self.focusListArray = Array<GTestExamList>()
                     self.focusTableView.reloadData()
                 }else{
@@ -189,7 +189,7 @@ class GMyExamListViewController: UIViewController,UITableViewDelegate,UITableVie
             
             flag += 1
             if flag == 2 {
-                hud?.hide(true, afterDelay: 1)
+                hud.hide(animated: true, afterDelay: 1)
             }
         }
     }

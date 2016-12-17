@@ -188,9 +188,9 @@ class ExamBibleSubViewController: UIViewController {
     func loadData() {
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud?.margin = 10
-        hud?.labelText = "正在加载"
-        hud?.removeFromSuperViewOnHide = true
+        hud.margin = 10
+        hud.label.text = "正在加载"
+        hud.removeFromSuperViewOnHide = true
         
         NewsPageHelper().getChannellist(self.term_id) { (success, response) in
             if success {
@@ -199,12 +199,11 @@ class ExamBibleSubViewController: UIViewController {
 //                self.rootTableView.mj_header.endRefreshing()
 //                self.rootTableView.reloadData()
                 self.setSubviews()
-                hud?.hide(true)
-                
+                hud.hide(animated: true)
             }else{
-                hud?.mode = .text
-                hud?.labelText = "网络错误，请稍后再试"
-                hud?.hide(true, afterDelay: 1)
+                hud.mode = .text
+                hud.label.text = "网络错误，请稍后再试"
+                hud.hide(animated: true, afterDelay: 1)
             }
         }
     }

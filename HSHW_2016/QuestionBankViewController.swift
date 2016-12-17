@@ -111,11 +111,11 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                 // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = status.errorData
-                    hud?.margin = 10.0
-                    hud?.removeFromSuperViewOnHide = true
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(animated: true, afterDelay: 1)
                 }
                 if(status.status == "success"){
                     // print(status)
@@ -179,12 +179,12 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         let newsInfo = self.dataSource.objectlist[btn.tag]
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
         if btn.isSelected {
             
-            hud?.labelText = "正在取消点赞"
+            hud.label.text = "正在取消点赞"
             
             let url = PARK_URL_Header+"ResetLike"
             let param = [
@@ -202,17 +202,17 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                     // print(status.status)
                     if(status.status == "error"){
                         
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = status.errorData
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = status.errorData
                         
-                        hud?.hide(true, afterDelay: 1)
+                        hud.hide(animated: true, afterDelay: 1)
                     }
                     if(status.status == "success"){
                         
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "取消点赞成功"
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "取消点赞成功"
                         
-                        hud?.hide(true, afterDelay: 0.5)
+                        hud.hide(animated: true, afterDelay: 0.5)
                         // print(status.data)
                         
                         for (i,obj) in (newsInfo.likes).enumerated() {
@@ -230,7 +230,7 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
             }
         }else {
             
-            hud?.labelText = "正在点赞"
+            hud.label.text = "正在点赞"
             
             let url = PARK_URL_Header+"SetLike"
             let param = [
@@ -249,17 +249,17 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                     // print(status.status)
                     if(status.status == "error"){
                         
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = status.errorData
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = status.errorData
                         
-                        hud?.hide(true, afterDelay: 3)
+                        hud.hide(animated: true, afterDelay: 3)
                     }
                     if(status.status == "success"){
                         
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "点赞成功"
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "点赞成功"
                        
-                        hud?.hide(true, afterDelay: 0.5)
+                        hud.hide(animated: true, afterDelay: 0.5)
                         
                         let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
                         let model:LikeInfo = LikeInfo.init(JSONDecoder(dic as AnyObject))
@@ -270,64 +270,12 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
           
                         // print(status.data)
                         if ((status.data?.event) != "") {
-                            self.showScoreTips((status.data?.event)!, score: (status.data?.score)!)
+                            NursePublicAction.showScoreTips(self.view, nameString: (status.data?.event)!, score: (status.data?.score)!)
                         }
                     }
                 }
             }
         }
-    }
-    
-    // MARK: 显示积分提示
-    func showScoreTips(_ name:String, score:String) {
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud?.opacity = 0.3
-        hud?.margin = 10
-        hud?.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
-        hud?.mode = .customView
-        let customView = UIImageView(frame: CGRect(x: 0, y: 0, width: WIDTH*0.8, height: WIDTH*0.8*238/537))
-        customView.image = UIImage(named: "scorePopImg.png")
-        let titLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*30/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
-        titLab.textAlignment = .left
-        titLab.font = UIFont.systemFont(ofSize: 16)
-        titLab.text = name
-        titLab.adjustsFontSizeToFitWidth = true
-        customView.addSubview(titLab)
-        
-        let scoreLab = UILabel(frame: CGRect(
-            x: customView.frame.width*351/537,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width*174/537,
-            height: customView.frame.height*50/238))
-        scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
-        
-        scoreLab.textAlignment = .left
-        scoreLab.font = UIFont.systemFont(ofSize: 24)
-        scoreLab.text = "+\(score)"
-        scoreLab.adjustsFontSizeToFitWidth = true
-        scoreLab.sizeToFit()
-        customView.addSubview(scoreLab)
-        
-        let jifenLab = UILabel(frame: CGRect(
-            x: scoreLab.frame.maxX+5,
-            y: customView.frame.height*100/238,
-            width: customView.frame.width-scoreLab.frame.maxX-5-customView.frame.width*13/537,
-            height: customView.frame.height*50/238))
-        jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
-        jifenLab.textAlignment = .center
-        jifenLab.font = UIFont.systemFont(ofSize: 16)
-        jifenLab.text = "护士币"
-        jifenLab.adjustsFontSizeToFitWidth = true
-        jifenLab.center.y = scoreLab.center.y
-        customView.addSubview(jifenLab)
-        
-        hud?.customView = customView
-        hud?.hide(true, afterDelay: 3)
     }
     
     func collectionBtnClick(_ collectionBtn:UIButton) {
@@ -340,18 +288,18 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //        hud.mode = MBProgressHUDMode.Text;
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
         if collectionBtn.isSelected {
             
-            hud?.labelText = "正在取消收藏"
+            hud.label.text = "正在取消收藏"
             
             HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", handle: { (success, response) in
                 if success {
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = "取消收藏成功"
-                    hud?.hide(true, afterDelay: 0.5)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = "取消收藏成功"
+                    hud.hide(animated: true, afterDelay: 0.5)
                     
 //                    for (i,obj) in (newsInfo.favorites).enumerate() {
 //                        if obj.userid == QCLoginUserInfo.currentInfo.userid {
@@ -364,21 +312,21 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                     
                     self.myTableView.reloadData()
                 }else{
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = String(describing: response)
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = String(describing: (response ?? ("" as AnyObject))!)
+                    hud.hide(animated: true, afterDelay: 1)
                 }
             })
             
         }else {
             
-            hud?.labelText = "正在收藏"
+            hud.label.text = "正在收藏"
             
             HSMineHelper().addFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", title: newsInfo.post_title, description: newsInfo.post_excerpt, handle: { (success, response) in
                 if success {
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = "收藏成功"
-                    hud?.hide(true, afterDelay: 0.5)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = "收藏成功"
+                    hud.hide(animated: true, afterDelay: 0.5)
                     
 //                    let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
 //                    let model:LikeInfo = LikeInfo.init(JSONDecoder(dic))
@@ -391,9 +339,9 @@ class QuestionBankViewController: UIViewController,UITableViewDelegate,UITableVi
                     
                     self.myTableView.reloadData()
                 }else{
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = String(describing: response)
-                    hud?.hide(true, afterDelay: 3)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = String(describing: (response ?? ("" as AnyObject))!)
+                    hud.hide(animated: true, afterDelay: 3)
                 }
             })
         }

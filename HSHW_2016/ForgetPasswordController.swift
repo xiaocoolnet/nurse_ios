@@ -291,7 +291,7 @@ class ForgetPasswordController: UIViewController {
                     
                     if success {
                         alert("修改成功", delegate: self)
-                        self.navigationController?.popViewController(animated: true)
+                        _ = self.navigationController?.popViewController(animated: true)
                     }else{
                         let string = response as! String
                         alert(string, delegate: self)

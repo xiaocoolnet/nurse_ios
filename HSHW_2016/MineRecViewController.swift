@@ -83,13 +83,13 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
         NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
                 if(error != nil){
                     let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                    hud?.mode = MBProgressHUDMode.text;
+                    hud.mode = MBProgressHUDMode.text;
                    
-                    hud?.labelText = "网络错误，请稍后再试"
-                    //hud.labelText = status.errorData
-                    hud?.margin = 10.0
-                    hud?.removeFromSuperViewOnHide = true
-                    hud?.hide(true, afterDelay: 1)
+                    hud.label.text = "网络错误，请稍后再试"
+                    //hud.label.text = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(animated: true, afterDelay: 1)
                 }else{
                     let status = MineJobModel(JSONDecoder(json!))
                     
@@ -100,14 +100,14 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
                         // print(status.data)
                     }else if(status.status == "error"){
                         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                        hud?.mode = MBProgressHUDMode.text;
+                        hud.mode = MBProgressHUDMode.text;
                         if status.data == nil {
-                            hud?.labelText = "您还没有发布职位，请先发布职位"
+                            hud.label.text = "您还没有发布职位，请先发布职位"
                         }
-                        //hud.labelText = status.errorData
-                        hud?.margin = 10.0
-                        hud?.removeFromSuperViewOnHide = true
-                        hud?.hide(true, afterDelay: 1)
+                        //hud.label.text = status.errorData
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(animated: true, afterDelay: 1)
                     }
                 }
                 if self.myTableView.mj_header.isRefreshing() {

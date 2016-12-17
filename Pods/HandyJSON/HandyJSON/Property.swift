@@ -70,11 +70,35 @@ public extension HandyJSON {
     public mutating func mapping(mapper: HelpingMapper) {}
 }
 
+public protocol InitWrapperProtocol {
+    func convertToEnum(object: NSObject) -> Any?
+}
+
+public struct InitWrapper<T: Property>: InitWrapperProtocol {
+
+    var _init: ((T) -> Any?)?
+
+    public init(rawInit: @escaping ((T) -> Any?)) {
+        self._init = rawInit
+    }
+
+    public func convertToEnum(object: NSObject) -> Any? {
+        if let typedValue = T.valueFrom(object: object) {
+            return _init?(typedValue)
+        }
+        return nil
+    }
+}
+
+public protocol HandyJSONEnum: Property {
+    static func makeInitWrapper() -> InitWrapperProtocol?
+}
+
 protocol BasePropertyProtocol: HandyJSON {
 }
 
 protocol OptionalTypeProtocol: HandyJSON {
-    static func getWrappedType() -> Any.Type
+    static func optionalFromNSObject(object: NSObject) -> Any?
 }
 
 extension Optional: OptionalTypeProtocol {
@@ -82,60 +106,62 @@ extension Optional: OptionalTypeProtocol {
         self = nil
     }
 
-    static func getWrappedType() -> Any.Type {
-        return Wrapped.self
+    static func optionalFromNSObject(object: NSObject) -> Any? {
+        if let value = (Wrapped.self as? Property.Type)?.valueFrom(object: object) as? Wrapped {
+            return Optional(value)
+        }
+        return nil
     }
 }
 
 protocol ImplicitlyUnwrappedTypeProtocol: HandyJSON {
-    static func getWrappedType() -> Any.Type
+    static func implicitlyUnwrappedOptionalFromNSObject(object: NSObject) -> Any?
 }
 
 extension ImplicitlyUnwrappedOptional: ImplicitlyUnwrappedTypeProtocol {
-    static func getWrappedType() -> Any.Type {
-        return Wrapped.self
+
+    static func implicitlyUnwrappedOptionalFromNSObject(object: NSObject) -> Any? {
+        if let value = (Wrapped.self as? Property.Type)?.valueFrom(object: object) as? Wrapped {
+            return ImplicitlyUnwrappedOptional(value)
+        }
+        return nil
     }
 }
 
 protocol ArrayTypeProtocol: HandyJSON {
-    static func getWrappedType() -> Any.Type
-
-    static func castArrayType(arr: [Any]) -> Self
+    static func arrayFromNSObject(object: NSObject) -> Any?
 }
 
 extension Array: ArrayTypeProtocol {
-    static func getWrappedType() -> Any.Type {
-        return Element.self
-    }
 
-    static func castArrayType(arr: [Any]) -> Array<Element> {
-        return arr.map({ (p) -> Element in
-            return p as! Element
-        })
+    static func arrayFromNSObject(object: NSObject) -> Any? {
+        guard let nsArray = object as? NSArray else {
+            return nil
+        }
+        var result: [Element] = [Element]()
+        nsArray.forEach { (each) in
+            if let nsObject = each as? NSObject, let element = (Element.self as? Property.Type)?.valueFrom(object: nsObject) as? Element {
+                result.append(element)
+            }
+        }
+        return result
     }
 }
 
 protocol DictionaryTypeProtocol: HandyJSON {
-    static func getWrappedIndexType() -> Any.Type
-    static func getWrappedValueType() -> Any.Type
-
-    static func castDictionaryType(dict: [String: Any]) -> Self
+    static func dictionaryFromNSObject(object: NSObject) -> Any?
 }
 
 extension Dictionary: DictionaryTypeProtocol {
-    static func getWrappedIndexType() -> Any.Type {
-        return Key.self
-    }
 
-    static func getWrappedValueType() -> Any.Type {
-        return Value.self
-    }
-
-    static func castDictionaryType(dict: [String: Any]) -> Dictionary<Key, Value> {
-        var result = Dictionary<Key, Value>()
-        dict.forEach { (key, value) in
-            if let sKey = key as? Key, let sValue = value as? Value {
-                result[sKey] = sValue
+    static func dictionaryFromNSObject(object: NSObject) -> Any? {
+        guard let nsDict = object as? NSDictionary else {
+            return nil
+        }
+        var result: [Key: Value] = [Key: Value]()
+        nsDict.forEach { (key, value) in
+            if let sKey = key as? Key, let nsValue = value as? NSObject, let nValue = (Value.self as? Property.Type)?.valueFrom(object: nsValue) as? Value {
+                result[sKey] = nValue
             }
         }
         return result
@@ -158,6 +184,17 @@ extension Property {
         mirror.children.forEach({ (child) in
 
             var offset = 0, size = 0
+
+            if let excludedPropertyLayout = mapper.exclude(key: mutablePointer.hashValue) {
+                let m = currentOffset % excludedPropertyLayout.1
+                offset =  (m == 0 ? 0 : (excludedPropertyLayout.1 - m))
+                mutablePointer = mutablePointer.advanced(by: offset)
+
+                size = excludedPropertyLayout.0
+                mutablePointer = mutablePointer.advanced(by: size)
+                currentOffset += size
+                return
+            }
 
             guard let propertyType = type(of: child.value) as? Property.Type else {
                 print("label: ", child.label ?? "", "type: ", "\(type(of: child.value))")
@@ -186,9 +223,8 @@ extension Property {
 
                 // if specific converter is set, use it the assign value to the property
                 if let specifyConverter = converter.1 {
-                    if let ocValue = (dict[key] as? NSObject)?.toStringForcedly() {
-                        specifyConverter(ocValue)
-                    }
+                    let ocValue = (dict[key] as? NSObject)?.toString()
+                    specifyConverter(ocValue ?? "")
 
                     mutablePointer = mutablePointer.advanced(by: size)
                     currentOffset += size
@@ -244,30 +280,34 @@ extension Property {
     }
 
     static func valueFrom(object: NSObject) -> Self? {
-        if self is BasePropertyProtocol.Type {
+        if self is HandyJSONEnum.Type {
+
+            if let initWrapper = (self as? HandyJSONEnum.Type)?.makeInitWrapper() {
+                if let resultValue = initWrapper.convertToEnum(object: object) {
+                    return resultValue as? Self
+                }
+            }
+            return nil
+        } else if self is BasePropertyProtocol.Type {
 
             // base type can be transformed directly
             return baseValueFrom(object: object)
         } else if self is OptionalTypeProtocol.Type {
 
             // optional type, we parse the wrapped generic type to construct the value, then wrap it to optional
-            return optionalValueFrom(object: object)
+            return (self as! OptionalTypeProtocol.Type).optionalFromNSObject(object: object) as? Self
         } else if self is ImplicitlyUnwrappedTypeProtocol.Type {
 
             // similar to optional
-            return implicitUnwrappedValueFrom(object: object)
+            return (self as! ImplicitlyUnwrappedTypeProtocol.Type).implicitlyUnwrappedOptionalFromNSObject(object: object) as? Self
         } else if self is ArrayTypeProtocol.Type {
-            if let va = arrayValueFrom(object: object) {
 
-                // we can't retrieve the generic type wrapped by array here, so we go into array extension to do the casting
-                return (self as! ArrayTypeProtocol.Type).castArrayType(arr: va) as? Self
-            }
+            // we can't retrieve the generic type wrapped by array here, so we go into array extension to do the casting
+            return (self as! ArrayTypeProtocol.Type).arrayFromNSObject(object: object) as? Self
         } else if self is DictionaryTypeProtocol.Type {
-            if let dict = dictValueFrom(object: object) {
 
-                // similar to array
-                return (self as! DictionaryTypeProtocol.Type).castDictionaryType(dict: dict) as? Self
-            }
+            // similar to array
+            return (self as! DictionaryTypeProtocol.Type).dictionaryFromNSObject(object: object) as? Self
         } else if self is NSArray.Type {
 
             if let arr = object as? NSArray {
@@ -327,76 +367,6 @@ extension Property {
             break
         }
         return nil
-    }
-
-    static func optionalValueFrom(object: NSObject) -> Self? {
-        if let wrappedType = (self as! OptionalTypeProtocol.Type).getWrappedType() as? Property.Type {
-            // only can infer v is property.type
-            if let v = wrappedType.valueFrom(object: object) {
-
-                // so the argument must be property.type of function "wrapByOptional"
-                return wrappedType.wrapByOptional(value: v) as? Self
-            }
-        }
-        return nil
-    }
-
-    static func implicitUnwrappedValueFrom(object: NSObject) -> Self? {
-        if let wrappedType = (self as! ImplicitlyUnwrappedTypeProtocol.Type).getWrappedType() as? Property.Type {
-
-            // similar to optional value processing
-            if let v = wrappedType.valueFrom(object: object) {
-                return wrappedType.wrapByImplicitUnwrapped(value: v) as? Self
-            }
-        }
-        return nil
-    }
-
-    static func wrapByOptional(value: Property) -> Optional<Self> {
-        return Optional(value as! Self)
-    }
-
-    static func wrapByImplicitUnwrapped(value: Property) -> ImplicitlyUnwrappedOptional<Self> {
-        return ImplicitlyUnwrappedOptional(value as! Self)
-    }
-
-    static func arrayValueFrom(object: NSObject) -> [Any]? {
-        if let wrappedType = (self as! ArrayTypeProtocol.Type).getWrappedType() as? Property.Type {
-            if let arr = object as? NSArray {
-                return wrappedType.composeToArray(nsArray: arr)
-            }
-        }
-        return nil
-    }
-
-    static func composeToArray(nsArray: NSArray) -> [Any] {
-        var arr = [Any]()
-        nsArray.forEach { (anyObject) in
-            if let nsObject = anyObject as? NSObject {
-                let v = valueFrom(object: nsObject)
-                arr.append(v as Any)
-            }
-        }
-        return arr
-    }
-
-    static func dictValueFrom(object: NSObject) -> [String: Any]? {
-        if let wrappedValueType = (self as! DictionaryTypeProtocol.Type).getWrappedValueType() as? Property.Type {
-            if let dict = object as? NSDictionary {
-                return wrappedValueType.composeToDictionary(nsDict: dict)
-            }
-        }
-        return nil
-    }
-
-    static func composeToDictionary(nsDict: NSDictionary) -> [String: Any] {
-        var dict = [String: Any]()
-        nsDict.forEach { (key, value) in
-            if let sKey = key as? String, let nsObject = value as? NSObject, let value = valueFrom(object: nsObject) {
-                dict[sKey] = value
-            }
-        }
-        return dict
     }
 
     // keep in mind, self type is the same with type of value

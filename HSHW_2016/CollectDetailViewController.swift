@@ -72,23 +72,23 @@ class CollectDetailViewController: UIViewController, UITableViewDelegate,UITable
             let newsInfo = self.collectListArray[row]
             
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud?.margin = 10.0
-            hud?.removeFromSuperViewOnHide = true
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
             
             HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "3", handle: { (success, response) in
                 if success {
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = "取消收藏成功"
-                    hud?.hide(true, afterDelay: 0.5)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = "取消收藏成功"
+                    hud.hide(animated: true, afterDelay: 0.5)
                     
                     self.collectListArray.remove(at: row)
                     
                     //        删除单元格的某一行时，在用动画效果实现删除过程
                     tableView.deleteRows(at: [indexPath], with: .automatic)
                 }else{
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = String(describing: response)
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = String(describing: (response ?? ("" as AnyObject))!)
+                    hud.hide(animated: true, afterDelay: 1)
                 }
             })
         }
@@ -97,9 +97,9 @@ class CollectDetailViewController: UIViewController, UITableViewDelegate,UITable
     func getData() {
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //        hud.mode = MBProgressHUDMode.Text;
-        hud?.labelText = "正在获取其他收藏"
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        hud.label.text = "正在获取其他收藏"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
         let userid = QCLoginUserInfo.currentInfo.userid
         helper.GetCollectList(userid, type: "3") { (success, response) in
@@ -108,13 +108,13 @@ class CollectDetailViewController: UIViewController, UITableViewDelegate,UITable
                 self.collectListArray = response as! Array<NewsInfo>
                 self.myTableView.reloadData()
             }else{
-                if String(describing: response) == "no data" {
+                if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
                     self.collectListArray = response as! Array<NewsInfo>
                     self.myTableView.reloadData()
                 }
             }
             
-            hud?.hide(true, afterDelay: 1)
+            hud.hide(animated: true, afterDelay: 1)
         }
     }
 

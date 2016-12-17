@@ -47,15 +47,15 @@ class HSWebViewDetailController: UIViewController, UIWebViewDelegate {
         return true
     }
     func webViewDidStartLoad(_ webView: UIWebView) {
-//        hud.hide(true)
+//        hud.hide(animated: true)
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView) {
-        hud.hide(true)
+        hud.hide(animated: true)
     }
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
-        hud.hide(true)
+        hud.hide(animated: true)
         if webView.request?.url == self.url {
             
             let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("获取详情失败 \(error.localizedDescription)", comment: "empty message"), preferredStyle: .alert)
@@ -66,7 +66,7 @@ class HSWebViewDetailController: UIViewController, UIWebViewDelegate {
             alertController.addAction(doneAction)
             
             let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
-                self.navigationController?.popViewController(animated: true)
+                _ = self.navigationController?.popViewController(animated: true)
             })
             alertController.addAction(cancelAction)
         }
@@ -74,7 +74,7 @@ class HSWebViewDetailController: UIViewController, UIWebViewDelegate {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        hud.hide(true)
+        hud.hide(animated: true)
     }
 
 }

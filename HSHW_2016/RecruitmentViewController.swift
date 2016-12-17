@@ -283,20 +283,20 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         if segmentTag == 101 {
             
             if selection == 0 {
-                eduDrop.show()
+                _ = eduDrop.show()
             }else if selection == 1 {
-                expDrop.show()
+                _ = expDrop.show()
             }else if selection == 2 {
-                certificateDrop.show()
+                _ = certificateDrop.show()
             }
         }else{
             
             if selection == 0 {
                 self.targetCityBtnClick()
             }else if selection == 1 {
-                salaryDrop.show()
+                _ = salaryDrop.show()
             }else if selection == 2 {
-                jobTypeDrop.show()
+                _ = jobTypeDrop.show()
             }
         }
     }
@@ -389,18 +389,18 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.myTableView.mj_header.endRefreshing()
                         
                         
-                        if String(describing: response) == "no data" {
+                        if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
                             self.jobDataSource = Array<JobModel>()
                             self.myTableView.reloadData()
                         }else{
                             
                             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                            hud?.mode = MBProgressHUDMode.text;
-                            hud?.labelText = "获取招聘信息失败"
-                            hud?.detailsLabelText = String(describing: response)
-                            hud?.margin = 10.0
-                            hud?.removeFromSuperViewOnHide = true
-                            hud?.hide(true, afterDelay: 1)
+                            hud.mode = MBProgressHUDMode.text;
+                            hud.label.text = "获取招聘信息失败"
+                            hud.detailsLabel.text = String(describing: (response ?? ("" as AnyObject))!)
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(animated: true, afterDelay: 1)
                         }
                         
                     })
@@ -427,19 +427,19 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     DispatchQueue.main.async(execute: {
                         self.myTableView.mj_header.endRefreshing()
                         
-                        if (String(describing: response) ?? "")! == "no data" {
+                        if (String(describing: (response ?? ("" as AnyObject))!) ) == "no data" {
                             self.imageArr = Array<NewsInfo>()
                             self.updateSlideImage()
                             self.myTableView.reloadData()
                         }else{
                             
                             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                            hud?.mode = MBProgressHUDMode.text;
-                            hud?.labelText = "轮播图获取失败"
-                            hud?.detailsLabelText = (String(describing: response) ?? "")!
-                            hud?.margin = 10.0
-                            hud?.removeFromSuperViewOnHide = true
-                            hud?.hide(true, afterDelay: 1)
+                            hud.mode = MBProgressHUDMode.text;
+                            hud.label.text = "轮播图获取失败"
+                            hud.detailsLabel.text = (String(describing: (response ?? ("" as AnyObject))!) )
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(animated: true, afterDelay: 1)
                         }
                         
                     })
@@ -789,13 +789,13 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
                 if(error != nil){
                     let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                    hud?.mode = MBProgressHUDMode.text;
+                    hud.mode = MBProgressHUDMode.text;
 
-                    hud?.labelText = "网络错误，请稍后再试"
-                    //hud.labelText = status.errorData
-                    hud?.margin = 10.0
-                    hud?.removeFromSuperViewOnHide = true
-                    hud?.hide(true, afterDelay: 1)
+                    hud.label.text = "网络错误，请稍后再试"
+                    //hud.label.text = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(animated: true, afterDelay: 1)
                 }else{
                     let status = MineJobModel(JSONDecoder(json!))
                     if(status.status == "success"){
@@ -804,14 +804,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         
                     }else if(status.status == "error"){
                         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                        hud?.mode = MBProgressHUDMode.text;
+                        hud.mode = MBProgressHUDMode.text;
                         if status.data == nil {
-                            hud?.labelText = "您还没有发布职位，请先发布职位"
+                            hud.label.text = "您还没有发布职位，请先发布职位"
                         }
-                        //hud.labelText = status.errorData
-                        hud?.margin = 10.0
-                        hud?.removeFromSuperViewOnHide = true
-                        hud?.hide(true, afterDelay: 1)
+                        //hud.label.text = status.errorData
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(animated: true, afterDelay: 1)
                     }
                 }
                 
@@ -829,15 +829,15 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             let doneAction = UIAlertAction(title: job.title, style: .default, handler: { (cancelAction) in
                 
                 let inviteHud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                inviteHud?.labelText = "正在获取邀请状态"
-                inviteHud?.removeFromSuperViewOnHide = true
-                inviteHud?.margin = 10.0
+                inviteHud.label.text = "正在获取邀请状态"
+                inviteHud.removeFromSuperViewOnHide = true
+                inviteHud.margin = 10.0
                 
                 HSNurseStationHelper().InviteJob_judge(model.userid, companyid: QCLoginUserInfo.currentInfo.userid, jobid: job.id) { (success, response) in
                     
                     if success {
-                        inviteHud?.hide(true)
-                        if String(describing: response) == "1" {
+                        inviteHud.hide(animated: true)
+                        if String(describing: (response ?? ("" as AnyObject))!) == "1" {
                             
                             let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已邀请过 \(model.name) 面试该职位，无需再次邀请", comment: "empty message"), preferredStyle: .alert)
                             self.present(alertController, animated: true, completion: nil)
@@ -851,9 +851,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                             let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: { (cancelAction) in
                                 
                                 let sendInviteHud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                                sendInviteHud?.labelText = "正在发送邀请"
-                                sendInviteHud?.removeFromSuperViewOnHide = true
-                                sendInviteHud?.margin = 10.0
+                                sendInviteHud.label.text = "正在发送邀请"
+                                sendInviteHud.removeFromSuperViewOnHide = true
+                                sendInviteHud.margin = 10.0
                                 
                                 let url = PARK_URL_Header+"InviteJob"
                                 let param = [
@@ -864,28 +864,28 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                 NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
                                     // print(request)
                                     if(error != nil){
-                                        sendInviteHud?.mode = MBProgressHUDMode.text;
-                                        sendInviteHud?.labelText = "发送邀请失败 \(error?.localizedDescription)"
-                                        sendInviteHud?.hide(true, afterDelay: 1)
+                                        sendInviteHud.mode = MBProgressHUDMode.text;
+                                        sendInviteHud.label.text = "发送邀请失败 \(error?.localizedDescription)"
+                                        sendInviteHud.hide(animated: true, afterDelay: 1)
                                     }else{
                                         let result = Http(JSONDecoder(json!))
                                         if(result.status == "success"){
                                             //  菊花加载
                                             //                                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                            sendInviteHud?.mode = MBProgressHUDMode.text;
-                                            sendInviteHud?.labelText = "发送邀请成功"
+                                            sendInviteHud.mode = MBProgressHUDMode.text;
+                                            sendInviteHud.label.text = "发送邀请成功"
                                             //                                    hud.margin = 10.0
                                             //                                    hud.removeFromSuperViewOnHide = true
-                                            sendInviteHud?.hide(true, afterDelay: 1)
+                                            sendInviteHud.hide(animated: true, afterDelay: 1)
                                             // print(111111)
                                         }else{
                                             //  菊花加载
                                             //                                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                            sendInviteHud?.mode = MBProgressHUDMode.text;
-                                            sendInviteHud?.labelText = "发送邀请失败"
+                                            sendInviteHud.mode = MBProgressHUDMode.text;
+                                            sendInviteHud.label.text = "发送邀请失败"
                                             //                                    hud.margin = 10.0
                                             //                                    hud.removeFromSuperViewOnHide = true
-                                            sendInviteHud?.hide(true, afterDelay: 1)
+                                            sendInviteHud.hide(animated: true, afterDelay: 1)
                                             // print(2222222)
                                         }
                                     }
@@ -900,9 +900,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                             alertController.addAction(cancelAction)
                         }
                     }else{
-                        inviteHud?.mode = MBProgressHUDMode.text
-                        inviteHud?.labelText = "获取邀请状态失败"
-                        inviteHud?.hide(true, afterDelay: 1)
+                        inviteHud.mode = MBProgressHUDMode.text
+                        inviteHud.label.text = "获取邀请状态失败"
+                        inviteHud.hide(animated: true, afterDelay: 1)
                     }
                 }
             })
@@ -937,20 +937,20 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }else{
             
             let resumeHud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            resumeHud?.labelText = "正在获取简历信息"
-            resumeHud?.removeFromSuperViewOnHide = true
-            resumeHud?.margin = 10.0
+            resumeHud.label.text = "正在获取简历信息"
+            resumeHud.removeFromSuperViewOnHide = true
+            resumeHud.margin = 10.0
             
             HSNurseStationHelper().getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
                 if success {
                     
                     // 判断是否已投递简历
-                    resumeHud?.labelText = "正在获取简历投递状态"
+                    resumeHud.label.text = "正在获取简历投递状态"
                     
                     HSNurseStationHelper().ApplyJob_judge(QCLoginUserInfo.currentInfo.userid, companyid: self.jobDataSource![btn.tag].companyid, jobid: self.jobDataSource![btn.tag].id, handle: { (success, response) in
                         if success {
-                            resumeHud?.hide(true)
-                            if String(describing: response) == "1" {
+                            resumeHud.hide(animated: true)
+                            if String(describing: (response ?? ("" as AnyObject))!) == "1" {
                                 let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已投递过该职位，无需再次投递", comment: "empty message"), preferredStyle: .alert)
                                 self.present(alertController, animated: true, completion: nil)
                                 let doneAction = UIAlertAction(title: "好的", style: .default, handler: nil)
@@ -964,9 +964,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                 let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: { (doneAction) in
                                     
                                     let applyJobHud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                                    applyJobHud?.labelText = "正在投递简历"
-                                    applyJobHud?.removeFromSuperViewOnHide = true
-                                    applyJobHud?.margin = 10.0
+                                    applyJobHud.label.text = "正在投递简历"
+                                    applyJobHud.removeFromSuperViewOnHide = true
+                                    applyJobHud.margin = 10.0
                                     
                                     let url = PARK_URL_Header+"ApplyJob"
                                     let param = [
@@ -983,20 +983,20 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                             if(result.status == "success"){
                                                 //  菊花加载
                                                 //                                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                                applyJobHud?.mode = MBProgressHUDMode.text;
-                                                applyJobHud?.labelText = "投递简历成功"
+                                                applyJobHud.mode = MBProgressHUDMode.text;
+                                                applyJobHud.label.text = "投递简历成功"
                                                 //                                            hud.margin = 10.0
                                                 //                                            hud.removeFromSuperViewOnHide = true
-                                                applyJobHud?.hide(true, afterDelay: 1)
+                                                applyJobHud.hide(animated: true, afterDelay: 1)
                                                 // print(111111)
                                             }else{
                                                 //  菊花加载
                                                 //                                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                                applyJobHud?.mode = MBProgressHUDMode.text;
-                                                applyJobHud?.labelText = "投递简历失败"
+                                                applyJobHud.mode = MBProgressHUDMode.text;
+                                                applyJobHud.label.text = "投递简历失败"
                                                 //                                            hud.margin = 10.0
                                                 //                                            hud.removeFromSuperViewOnHide = true
-                                                applyJobHud?.hide(true, afterDelay: 1)
+                                                applyJobHud.hide(animated: true, afterDelay: 1)
                                                 // print(2222222)
                                             }
                                         }
@@ -1012,18 +1012,18 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                 alertController.addAction(cancelAction)
                             }
                         }else{
-                            resumeHud?.mode = MBProgressHUDMode.text
-                            resumeHud?.labelText = "获取简历投递状态失败"
-                            resumeHud?.hide(true, afterDelay: 1)
+                            resumeHud.mode = MBProgressHUDMode.text
+                            resumeHud.label.text = "获取简历投递状态失败"
+                            resumeHud.hide(animated: true, afterDelay: 1)
                         }
                     })
                     
                     
                 }else{
-                    if String(describing: response) == "no data" {
+                    if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
                         
                         DispatchQueue.main.async(execute: {
-                            resumeHud?.hide(true)
+                            resumeHud.hide(animated: true)
                             let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您还没有简历，请上传简历后投递？", comment: "empty message"), preferredStyle: .alert)
                             self.present(alertController, animated: true, completion: nil)
                             let doneAction = UIAlertAction(title: "现在就去", style: .default, handler: { (action) in
@@ -1037,9 +1037,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                             alertController.addAction(cancelAction)
                         })
                     }else{
-                        resumeHud?.mode = MBProgressHUDMode.text
-                        resumeHud?.labelText = "获取简历信息失败"
-                        resumeHud?.hide(true, afterDelay: 1)
+                        resumeHud.mode = MBProgressHUDMode.text
+                        resumeHud.label.text = "获取简历信息失败"
+                        resumeHud.hide(animated: true, afterDelay: 1)
                     }
                 }
             }
@@ -1140,30 +1140,30 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 if(error != nil){
                     //  菊花加载
                     let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = "投递简历失败（error）"
-                    hud?.margin = 10.0
-                    hud?.removeFromSuperViewOnHide = true
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = "投递简历失败（error）"
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(animated: true, afterDelay: 1)
                 }else{
                     let result = Http(JSONDecoder(json!))
                     if(result.status == "success"){
                         //  菊花加载
                         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "投递简历成功"
-                        hud?.margin = 10.0
-                        hud?.removeFromSuperViewOnHide = true
-                        hud?.hide(true, afterDelay: 1)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "投递简历成功"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(animated: true, afterDelay: 1)
                         // print(111111)
                     }else{
                         //  菊花加载
                         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "投递简历失败"
-                        hud?.margin = 10.0
-                        hud?.removeFromSuperViewOnHide = true
-                        hud?.hide(true, afterDelay: 1)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "投递简历失败"
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(animated: true, afterDelay: 1)
                         // print(2222222)
                     }
                 }

@@ -194,7 +194,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
                 self.fansListArray = response as! Array<GTestExamList>
                 self.myTableView.reloadData()
             }else{
-                if String(describing: response) == "no data" {
+                if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
                     self.fansListArray = Array<GTestExamList>()
                     self.myTableView.reloadData()
                 }else{
@@ -209,7 +209,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
                 self.focusListArray = response as! Array<GTestExamList>
                 self.myTableView.reloadData()
             }else{
-                if String(describing: response) == "no data" {
+                if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
                     self.focusListArray = Array<GTestExamList>()
                     self.myTableView.reloadData()
                 }else{
@@ -235,7 +235,7 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
 //                self.examDataArray = response as! Array<examDataModel>
 //                self.myTableView.reloadData()
 //            }else{
-//                if String(describing: response) == "no data" {
+//                if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
 //                    self.examDataArray = Array<examDataModel>()
 //                    self.myTableView.reloadData()
 //                }else{

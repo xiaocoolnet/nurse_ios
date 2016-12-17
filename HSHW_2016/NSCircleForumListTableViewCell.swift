@@ -267,8 +267,7 @@ class NSCircleForumListTableViewCell: UITableViewCell {
                 titleImg.isHidden = false
                 titSubImg.isHidden = true
             }else{
-                let photoUrl:String = DomainName+"data/upload/"+(forum.photo.first!.url ?? "")!
-                
+                let photoUrl:String = DomainName+"data/upload/"+forum.photo.first!.url
                 titleImg.frame = CGRect(x: WIDTH-110-8, y: forumMinY+8, width: 110, height: 80)
                 self.titleImg.sd_setImage(with: URL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
                 

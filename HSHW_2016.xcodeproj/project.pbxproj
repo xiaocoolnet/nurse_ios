@@ -114,6 +114,7 @@
 		1F0433CC1DDBEA7800C0FC3F /* libWeiboSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F0433CB1DDBEA7800C0FC3F /* libWeiboSDK.a */; };
 		1F09382E1D77F72700451948 /* HSNewsCommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09382C1D77F72700451948 /* HSNewsCommentCell.swift */; };
 		1F09382F1D77F72700451948 /* HSNewsCommentCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F09382D1D77F72700451948 /* HSNewsCommentCell.xib */; };
+		1F0B4BB21E05327300D696B1 /* NursePublicAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0B4BB11E05327300D696B1 /* NursePublicAction.swift */; };
 		1F0BE12B1D54A84300842B80 /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1F0BE1261D54A84300842B80 /* README.txt */; };
 		1F0D06B51DDAFAAF00A00CB5 /* GOnlineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0D06B41DDAFAAF00A00CB5 /* GOnlineViewController.swift */; };
 		1F0D06BB1DDB0CEF00A00CB5 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F0D06BA1DDB0CEF00A00CB5 /* libWeChatSDK.a */; };
@@ -421,6 +422,7 @@
 		1F0433CB1DDBEA7800C0FC3F /* libWeiboSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWeiboSDK.a; path = Pods/WeiboSDK/libWeiboSDK/libWeiboSDK.a; sourceTree = "<group>"; };
 		1F09382C1D77F72700451948 /* HSNewsCommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSNewsCommentCell.swift; sourceTree = "<group>"; };
 		1F09382D1D77F72700451948 /* HSNewsCommentCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSNewsCommentCell.xib; sourceTree = "<group>"; };
+		1F0B4BB11E05327300D696B1 /* NursePublicAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NursePublicAction.swift; sourceTree = "<group>"; };
 		1F0BE1261D54A84300842B80 /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
 		1F0BE1271D54A84300842B80 /* WechatAuthSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WechatAuthSDK.h; sourceTree = "<group>"; };
 		1F0BE1281D54A84300842B80 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
@@ -868,6 +870,7 @@
 				183B84FE1CE5BFDC00709235 /* LaunchScreen.storyboard */,
 				183B85011CE5BFDC00709235 /* Info.plist */,
 				183B866B1CE5CF7900709235 /* Tool */,
+				1F0B4BB11E05327300D696B1 /* NursePublicAction.swift */,
 			);
 			path = HSHW_2016;
 			sourceTree = "<group>";
@@ -1545,7 +1548,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0820;
 				ORGANIZATIONNAME = "校酷网络科技公司";
 				TargetAttributes = {
 					183B84F11CE5BFDC00709235 = {
@@ -1872,6 +1875,7 @@
 				18C240601CEEB6340059BF48 /* TalentViewController.swift in Sources */,
 				1F1C64FC1DFE86F90082F00F /* ImageBtn.m in Sources */,
 				F6342C641D38DB4000800D8E /* HSCollectionListController.swift in Sources */,
+				1F0B4BB21E05327300D696B1 /* NursePublicAction.swift in Sources */,
 				1F1B7F331D66F480009910DF /* wechatDelegate.swift in Sources */,
 				185408751CE6C88D00DFBA7C /* StudyViewController.swift in Sources */,
 				1FFD9EC91D518F8500951098 /* contentTableViewCell.swift in Sources */,
@@ -1951,6 +1955,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -1961,8 +1966,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";
@@ -2000,6 +2007,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -2010,8 +2018,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";
@@ -2034,6 +2044,7 @@
 				PROVISIONING_PROFILE = "5f386403-0635-4c16-8aff-6635526a2e56";
 				SDKROOT = iphoneos;
 				SHARED_PRECOMPS_DIR = "/Users/zhang/Documents/nurse_ios/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -2042,6 +2053,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 93E8AE0F418C86C93D0AF6F6 /* Pods-HSHW_2016.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xu enjiang (5UKAG2PM43)";
@@ -2057,11 +2069,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/HSHW_2016/ios_api",
-					"$(SRCROOT)/../nurse_3rd",
-					"$(PROJECT_DIR)/HSHW_2016/libReuseView",
+					"$(inherited)",
 					"$(PROJECT_DIR)/HSHW_2016/openSDK1.7.2",
-					"$(PROJECT_DIR)/Pods/WeiboSDK/libWeiboSDK",
+					"$(PROJECT_DIR)/HSHW_2016/ios_api",
+					"$(PROJECT_DIR)/HSHW_2016/libReuseView",
 					"$(PROJECT_DIR)/HSHW_2016",
 				);
 				ONLY_ACTIVE_ARCH = YES;
@@ -2090,6 +2101,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C5D24AB857F88F8D1DC70DC4 /* Pods-HSHW_2016.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: xu enjiang (5UKAG2PM43)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xu enjiang (5UKAG2PM43)";
@@ -2105,11 +2117,10 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
-					"$(PROJECT_DIR)/HSHW_2016/ios_api",
-					"$(SRCROOT)/../nurse_3rd",
-					"$(PROJECT_DIR)/HSHW_2016/libReuseView",
+					"$(inherited)",
 					"$(PROJECT_DIR)/HSHW_2016/openSDK1.7.2",
-					"$(PROJECT_DIR)/Pods/WeiboSDK/libWeiboSDK",
+					"$(PROJECT_DIR)/HSHW_2016/ios_api",
+					"$(PROJECT_DIR)/HSHW_2016/libReuseView",
 					"$(PROJECT_DIR)/HSHW_2016",
 				);
 				ONLY_ACTIVE_ARCH = YES;

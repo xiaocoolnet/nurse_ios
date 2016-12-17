@@ -285,11 +285,11 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
                 // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                    hud?.mode = MBProgressHUDMode.text;
-                    //hud.labelText = status.errorData
-                    hud?.margin = 10.0
-                    hud?.removeFromSuperViewOnHide = true
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text;
+                    //hud.label.text = status.errorData
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(animated: true, afterDelay: 1)
                 }
                 if(status.status == "success"){
                     // print(status)
@@ -325,10 +325,10 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
                 if(status.status == "error"){
 //                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
 //                    hud.mode = MBProgressHUDMode.Text;
-//                    //hud.labelText = status.errorData
+//                    //hud.label.text = status.errorData
 //                    hud.margin = 10.0
 //                    hud.removeFromSuperViewOnHide = true
-//                    hud.hide(true, afterDelay: 1)
+//                    hud.hide(animated: true, afterDelay: 1)
                 }
                 if(status.status == "success"){
                     self.readMessageArray = (status.data )

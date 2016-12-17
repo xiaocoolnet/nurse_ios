@@ -86,7 +86,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 let sound = aps!.value(forKey: "sound") as? NSString
                 //            // 取得Extras字段内容
                 //            let Extras = userInfo!["Extras"] as? NSString //服务端中Extras字段，key是自己定义的
-                print("content = [%@], badge = [%ld], sound = [%@], Extras = [%@]", content as Any, badge, sound)
+                print("content = [%@], badge = [%ld], sound = [%@], Extras = [%@] \(content) \(badge) \(sound)")
                 //             iOS badge 清0
                 UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber - (badge ?? 0)!
                 
@@ -204,19 +204,19 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 DispatchQueue.main.async(execute: {
                     self.myTableView.mj_header.endRefreshing()
                     
-                    if String(describing: response)  == "no data" {
+                    if String(describing: (response ?? ("" as AnyObject))!)  == "no data" {
                         self.imageArr = Array<NewsInfo>()
                         self.updateSlideImage()
                         self.myTableView.reloadData()
                     }else{
                         
                         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "轮播图获取失败"
-                        hud?.detailsLabelText = String(describing: response)
-                        hud?.margin = 10.0
-                        hud?.removeFromSuperViewOnHide = true
-                        hud?.hide(true, afterDelay: 1)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "轮播图获取失败"
+                        hud.detailsLabel.text = String(describing: (response ?? ("" as AnyObject))!)
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(animated: true, afterDelay: 1)
                     }
                     
                 })
@@ -245,18 +245,18 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 DispatchQueue.main.async(execute: {
                     self.myTableView.mj_header.endRefreshing()
                     
-                    if String(describing: response) == "no data" {
+                    if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
                         self.dataSource = Array<NewsInfo>()
                         self.myTableView.reloadData()
                     }else{
                         
                         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "文章列表获取失败"
-                        hud?.detailsLabelText = String(describing: response)
-                        hud?.margin = 10.0
-                        hud?.removeFromSuperViewOnHide = true
-                        hud?.hide(true, afterDelay: 1)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "文章列表获取失败"
+                        hud.detailsLabel.text = String(describing: (response ?? ("" as AnyObject))!)
+                        hud.margin = 10.0
+                        hud.removeFromSuperViewOnHide = true
+                        hud.hide(animated: true, afterDelay: 1)
                     }
                     
                 })
@@ -370,10 +370,10 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     //                if(status.status == "error"){
     //                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
     //                    hud.mode = MBProgressHUDMode.Text;
-    //                    //hud.labelText = status.errorData
+    //                    //hud.label.text = status.errorData
     //                    hud.margin = 10.0
     //                    hud.removeFromSuperViewOnHide = true
-    //                    hud.hide(true, afterDelay: 1)
+    //                    hud.hide(animated: true, afterDelay: 1)
     //                }
     //                if(status.status == "success"){
     //                    print(status)

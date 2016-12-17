@@ -60,9 +60,9 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //        hud.mode = MBProgressHUDMode.Text;
-        hud?.labelText = "正在获取收藏试题"
-        hud?.margin = 10.0
-        hud?.removeFromSuperViewOnHide = true
+        hud.label.text = "正在获取收藏试题"
+        hud.margin = 10.0
+        hud.removeFromSuperViewOnHide = true
         
         helper.getCollectionInfoWith("2") { (success, response) in
             
@@ -70,13 +70,13 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
                 self.fansListArray = response as! Array<xamInfo>
                 self.fansTableView.reloadData()
             }else{
-                if String(describing: response) == "no data" {
+                if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
                     self.fansListArray = response as! Array<xamInfo>
                     self.fansTableView.reloadData()
                 }
             }
             
-            hud?.hide(true, afterDelay: 1)
+            hud.hide(animated: true, afterDelay: 1)
         }
         
     }
@@ -141,23 +141,23 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
             let newsInfo = self.fansListArray[row]
             
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud?.margin = 10.0
-            hud?.removeFromSuperViewOnHide = true
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
             
             HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.questionid, type: "2", handle: { (success, response) in
                 if success {
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = "取消收藏成功"
-                    hud?.hide(true, afterDelay: 0.5)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = "取消收藏成功"
+                    hud.hide(animated: true, afterDelay: 0.5)
                     
                     self.fansListArray.remove(at: row)
                     
                     //        删除单元格的某一行时，在用动画效果实现删除过程
                     tableView.deleteRows(at: [indexPath], with: .automatic)
                 }else{
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.labelText = String(describing: response)
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.label.text = String(describing: (response ?? ("" as AnyObject))!)
+                    hud.hide(animated: true, afterDelay: 1)
                 }
             })
         }

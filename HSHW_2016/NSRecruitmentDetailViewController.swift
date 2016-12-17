@@ -347,20 +347,20 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
         }else{
             
             let resumeHud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            resumeHud?.labelText = "正在获取简历信息"
-            resumeHud?.removeFromSuperViewOnHide = true
-            resumeHud?.margin = 10.0
+            resumeHud.label.text = "正在获取简历信息"
+            resumeHud.removeFromSuperViewOnHide = true
+            resumeHud.margin = 10.0
             
             HSNurseStationHelper().getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
                 if success {
                     
                     // 判断是否已投递简历
-                    resumeHud?.labelText = "正在获取简历投递状态"
+                    resumeHud.label.text = "正在获取简历投递状态"
                     
                     HSNurseStationHelper().ApplyJob_judge(QCLoginUserInfo.currentInfo.userid, companyid: self.jobDataSource![btn.tag].companyid, jobid: self.jobDataSource![btn.tag].id, handle: { (success, response) in
                         if success {
-                            resumeHud?.hide(true)
-                            if String(describing: response) == "1" {
+                            resumeHud.hide(animated: true)
+                            if String(describing: (response ?? ("" as AnyObject))!) == "1" {
                                 let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已投递过该职位，无需再次投递", comment: "empty message"), preferredStyle: .alert)
                                 self.present(alertController, animated: true, completion: nil)
                                 let doneAction = UIAlertAction(title: "好的", style: .default, handler: nil)
@@ -374,9 +374,9 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
                                 let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: { (doneAction) in
                                     
                                     let applyJobHud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                                    applyJobHud?.labelText = "正在投递简历"
-                                    applyJobHud?.removeFromSuperViewOnHide = true
-                                    applyJobHud?.margin = 10.0
+                                    applyJobHud.label.text = "正在投递简历"
+                                    applyJobHud.removeFromSuperViewOnHide = true
+                                    applyJobHud.margin = 10.0
                                     
                                     let url = PARK_URL_Header+"ApplyJob"
                                     let param = [
@@ -393,20 +393,20 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
                                             if(result.status == "success"){
                                                 //  菊花加载
                                                 //                                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                                applyJobHud?.mode = MBProgressHUDMode.text;
-                                                applyJobHud?.labelText = "投递简历成功"
+                                                applyJobHud.mode = MBProgressHUDMode.text;
+                                                applyJobHud.label.text = "投递简历成功"
                                                 //                                            hud.margin = 10.0
                                                 //                                            hud.removeFromSuperViewOnHide = true
-                                                applyJobHud?.hide(true, afterDelay: 1)
+                                                applyJobHud.hide(animated: true, afterDelay: 1)
                                                 // print(111111)
                                             }else{
                                                 //  菊花加载
                                                 //                                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                                applyJobHud?.mode = MBProgressHUDMode.text;
-                                                applyJobHud?.labelText = "投递简历失败"
+                                                applyJobHud.mode = MBProgressHUDMode.text;
+                                                applyJobHud.label.text = "投递简历失败"
                                                 //                                            hud.margin = 10.0
                                                 //                                            hud.removeFromSuperViewOnHide = true
-                                                applyJobHud?.hide(true, afterDelay: 1)
+                                                applyJobHud.hide(animated: true, afterDelay: 1)
                                                 // print(2222222)
                                             }
                                         }
@@ -422,19 +422,19 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
                                 alertController.addAction(cancelAction)
                             }
                         }else{
-                            resumeHud?.mode = MBProgressHUDMode.text
-                            resumeHud?.labelText = "获取简历投递状态失败"
-                            resumeHud?.hide(true, afterDelay: 1)
+                            resumeHud.mode = MBProgressHUDMode.text
+                            resumeHud.label.text = "获取简历投递状态失败"
+                            resumeHud.hide(animated: true, afterDelay: 1)
                         }
                     })
                     
                     
                 }else{
                     
-                    if String(describing: response) == "no data" {
+                    if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
                         
                         DispatchQueue.main.async(execute: {
-                            resumeHud?.hide(true)
+                            resumeHud.hide(animated: true)
                             let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您还没有简历，请上传简历后投递？", comment: "empty message"), preferredStyle: .alert)
                             self.present(alertController, animated: true, completion: nil)
                             let doneAction = UIAlertAction(title: "现在就去", style: .default, handler: { (action) in
@@ -459,9 +459,9 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
                             alertController.addAction(cancelAction)
                         })
                     }else{
-                        resumeHud?.mode = MBProgressHUDMode.text
-                        resumeHud?.labelText = "获取简历信息失败"
-                        resumeHud?.hide(true, afterDelay: 1)
+                        resumeHud.mode = MBProgressHUDMode.text
+                        resumeHud.label.text = "获取简历信息失败"
+                        resumeHud.hide(animated: true, afterDelay: 1)
                     }
                 }
             }

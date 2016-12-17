@@ -72,7 +72,7 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
         let eduInfo = self.dateSource.objectlist[indexPath.row]
         QCLoginUserInfo.currentInfo.education = eduInfo.name
         delegate?.changeWord(self, string: eduInfo.name)
-        self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
         // print(eduInfo.name)
     }
     
@@ -113,10 +113,10 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
                 // print(status.status)
                 if(status.status == "error"){
                     let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                    hud?.mode = MBProgressHUDMode.text;
-                    hud?.margin = 10.0
-                    hud?.removeFromSuperViewOnHide = true
-                    hud?.hide(true, afterDelay: 1)
+                    hud.mode = MBProgressHUDMode.text;
+                    hud.margin = 10.0
+                    hud.removeFromSuperViewOnHide = true
+                    hud.hide(animated: true, afterDelay: 1)
                 }
                 if(status.status == "success"){
                     // print(status)

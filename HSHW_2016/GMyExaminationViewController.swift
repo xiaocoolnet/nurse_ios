@@ -1046,20 +1046,20 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
                         // print(status.status)
                         if(status.status == "error"){
                             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                            hud?.mode = MBProgressHUDMode.text;
-                            hud?.labelText = status.errorData
-                            hud?.margin = 10.0
-                            hud?.removeFromSuperViewOnHide = true
-                            hud?.hide(true, afterDelay: 3)
+                            hud.mode = MBProgressHUDMode.text;
+                            hud.label.text = status.errorData!
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(animated: true, afterDelay: 3)
                         }
                         if(status.status == "success"){
                             
                             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                            hud?.mode = MBProgressHUDMode.text;
-                            hud?.labelText = "收藏成功"
-                            hud?.margin = 10.0
-                            hud?.removeFromSuperViewOnHide = true
-                            hud?.hide(true, afterDelay: 3)
+                            hud.mode = MBProgressHUDMode.text;
+                            hud.label.text = "收藏成功"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(animated: true, afterDelay: 3)
                             btn.setImage(UIImage(named: "btn_collect_sel.png"), for: UIControlState())
                             self.TitCol.textColor = COLOR
                             self.collection = true
@@ -1087,20 +1087,20 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
                         // print(status.status)
                         if(status.status == "error"){
                             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                            hud?.mode = MBProgressHUDMode.text;
-                            hud?.labelText = status.errorData
-                            hud?.margin = 10.0
-                            hud?.removeFromSuperViewOnHide = true
-                            hud?.hide(true, afterDelay: 3)
+                            hud.mode = MBProgressHUDMode.text;
+                            hud.label.text = status.errorData
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(animated: true, afterDelay: 3)
                         }
                         if(status.status == "success"){
                             
                             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                            hud?.mode = MBProgressHUDMode.text;
-                            hud?.labelText = "取消收藏成功"
-                            hud?.margin = 10.0
-                            hud?.removeFromSuperViewOnHide = true
-                            hud?.hide(true, afterDelay: 3)
+                            hud.mode = MBProgressHUDMode.text;
+                            hud.label.text = "取消收藏成功"
+                            hud.margin = 10.0
+                            hud.removeFromSuperViewOnHide = true
+                            hud.hide(animated: true, afterDelay: 3)
                             btn.setImage(UIImage(named: self.picArr[4]), for: UIControlState())
                             self.TitCol.textColor = GREY
                             self.collection = false

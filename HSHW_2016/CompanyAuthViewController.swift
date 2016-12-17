@@ -315,9 +315,9 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
     func uploadLicense() {
         // 正在上传提示
         let tipHud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        tipHud?.labelText = "正在上传营业执照"
-        tipHud?.margin = 10.0
-        tipHud?.removeFromSuperViewOnHide = true
+        tipHud.label.text = "正在上传营业执照"
+        tipHud.margin = 10.0
+        tipHud.removeFromSuperViewOnHide = true
         
         let data = UIImageJPEGRepresentation(selectedImage!, 0.1)!
         let dateFormatter = DateFormatter()
@@ -339,14 +339,14 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
                         
 //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
 //                        hud.mode = MBProgressHUDMode.Text;
-//                        hud.labelText = "营业执照上传成功"
+//                        hud.label.text = "营业执照上传成功"
 //                        hud.margin = 10.0
 //                        hud.removeFromSuperViewOnHide = true
-//                        hud.hide(true, afterDelay: 1)
+//                        hud.hide(animated: true, afterDelay: 1)
                         
-                        tipHud?.labelText = "正在提交企业信息"
+                        tipHud.label.text = "正在提交企业信息"
                         
-                        self.submit(tipHud!)
+                        self.submit(tipHud)
                        //                            let alertController = UIAlertController(title: "执照上传成功，等待接口！", message: "企业名称：\(self.nameField!.text)\n企业简介：\(self.descriptionField!.text)\n联系人：\(self.contactField!.text)\n企业电话\(self.telField!.text)\n企业邮箱：\(self.mailField!.text)\n营业执照URL：\(self.imageUrl!)", preferredStyle: .Alert)
                         //                            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
                         //                            alertController.addAction(doneAction)
@@ -354,11 +354,11 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
                     }else{
 //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
 //                        hud.mode = MBProgressHUDMode.Text;
-//                        hud.labelText = "营业执照上传失败"
+//                        hud.label.text = "营业执照上传失败"
 //                        hud.margin = 10.0
 //                        hud.removeFromSuperViewOnHide = true
-//                        hud.hide(true, afterDelay: 1)
-                        tipHud?.hide(true)
+//                        hud.hide(animated: true, afterDelay: 1)
+                        tipHud.hide(animated: true)
                         
                         let alertController = UIAlertController(title: "营业执照上传失败", message: "", preferredStyle: .alert)
                         self.present(alertController, animated: true, completion: nil)
@@ -388,7 +388,7 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
         HSMineHelper().updataCompanyCertifyWith(self.nameField.text!, companyinfo: self.descriptionField.text!, create_time: dateStr, phone: self.telField.text!, email: self.mailField.text!, linkman: self.contactField.text!, license: self.imageUrl!, handle: { (success, response) in
             print("=-=-+++++-=-=-=  \(success) \(response)")
             
-            hud.hide(true, afterDelay: 0.5)
+            hud.hide(animated: true, afterDelay: 0.5)
             
             if success {
                 let alertController = UIAlertController(title: "提交成功", message: "", preferredStyle: .alert)

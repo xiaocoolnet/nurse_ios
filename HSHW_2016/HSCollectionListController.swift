@@ -173,23 +173,23 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
                 let newsInfo = self.dataSource[row] 
                 
                 let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                hud?.margin = 10.0
-                hud?.removeFromSuperViewOnHide = true
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
                 
                 HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", handle: { (success, response) in
                     if success {
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "取消收藏成功"
-                        hud?.hide(true, afterDelay: 0.5)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "取消收藏成功"
+                        hud.hide(animated: true, afterDelay: 0.5)
                         
                         self.dataSource.remove(at: row)
                         
                         //        删除单元格的某一行时，在用动画效果实现删除过程
                         tableView.deleteRows(at: [indexPath], with: .automatic)
                     }else{
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = String(describing: response)
-                        hud?.hide(true, afterDelay: 1)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = String(describing: (response ?? ("" as AnyObject))!)
+                        hud.hide(animated: true, afterDelay: 1)
                     }
                 })
             }else{
@@ -197,23 +197,23 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
                 let newsInfo = self.fansListArray[row]
                 
                 let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                hud?.margin = 10.0
-                hud?.removeFromSuperViewOnHide = true
+                hud.margin = 10.0
+                hud.removeFromSuperViewOnHide = true
                 
                 HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.questionid, type: "2", handle: { (success, response) in
                     if success {
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = "取消收藏成功"
-                        hud?.hide(true, afterDelay: 0.5)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = "取消收藏成功"
+                        hud.hide(animated: true, afterDelay: 0.5)
                         
                         self.fansListArray.remove(at: row)
                         
                         //        删除单元格的某一行时，在用动画效果实现删除过程
                         tableView.deleteRows(at: [indexPath], with: .automatic)
                     }else{
-                        hud?.mode = MBProgressHUDMode.text;
-                        hud?.labelText = String(describing: response)
-                        hud?.hide(true, afterDelay: 1)
+                        hud.mode = MBProgressHUDMode.text;
+                        hud.label.text = String(describing: (response ?? ("" as AnyObject))!)
+                        hud.hide(animated: true, afterDelay: 1)
                     }
                 })
             }
