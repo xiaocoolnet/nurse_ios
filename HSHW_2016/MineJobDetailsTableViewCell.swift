@@ -43,70 +43,70 @@ class MineJobDetailsTableViewCell: UITableViewCell {
         }
         
 //        let height = calculateHeight(jobModel.title, size: 18, width: WIDTH-20)
-        title.frame = CGRectMake(10, 5, WIDTH-20, 30)
-        title.font = UIFont.systemFontOfSize(20)
+        title.frame = CGRect(x: 10, y: 5, width: WIDTH-20, height: 30)
+        title.font = UIFont.systemFont(ofSize: 20)
         title.textColor = COLOR
         title.numberOfLines = 0
         
 //        eyeImage.image = UIImage(named: "ic_eye_purple.png")
-        eyeImage.frame = CGRectMake(10,10,8,8)
-        lookCount.frame = CGRectMake(20,10,30,10)
-        lookCount.font = UIFont.systemFontOfSize(10)
+        eyeImage.frame = CGRect(x: 10,y: 10,width: 8,height: 8)
+        lookCount.frame = CGRect(x: 20,y: 10,width: 30,height: 10)
+        lookCount.font = UIFont.systemFont(ofSize: 10)
 //        lookCount.text = "3346"
 //        timeImage.image = UIImage(named: "ic_time_purple.png")
-        timeImage.frame = CGRectMake(55, 10, 8, 8)
-        timeLabel.frame = CGRectMake(65,10,100,10)
-        timeLabel.font = UIFont.systemFontOfSize(10)
+        timeImage.frame = CGRect(x: 55, y: 10, width: 8, height: 8)
+        timeLabel.frame = CGRect(x: 65,y: 10,width: 100,height: 10)
+        timeLabel.font = UIFont.systemFont(ofSize: 10)
 //        timeLabel.text = "2016/03/16"
 //
-        nameLabel.frame = CGRectMake(10,10,100,25)
-        nameLabel.font = UIFont.boldSystemFontOfSize(15)
+        nameLabel.frame = CGRect(x: 10,y: 10,width: 100,height: 25)
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 15)
 //        nameLabel.text = "企业名称:"
-        name.frame = CGRectMake(120,10,200,25)
-        name.font = UIFont.systemFontOfSize(14)
+        name.frame = CGRect(x: 120,y: 10,width: 200,height: 25)
+        name.font = UIFont.systemFont(ofSize: 14)
         
-        descript.frame = CGRectMake(10,10,WIDTH-20,50)
-        descript.font = UIFont.boldSystemFontOfSize(15)
+        descript.frame = CGRect(x: 10,y: 10,width: WIDTH-20,height: 50)
+        descript.font = UIFont.boldSystemFont(ofSize: 15)
         descript.numberOfLines = 0
 
-        criteria.frame = CGRectMake(10,10,70,25)
-        criteria.font = UIFont.boldSystemFontOfSize(15)
+        criteria.frame = CGRect(x: 10,y: 10,width: 70,height: 25)
+        criteria.font = UIFont.boldSystemFont(ofSize: 15)
 //        criteria.text = "招聘条件:"
-        criteriaLabel.frame = CGRectMake(80,10,75,25)
-        criteriaLabel.font = UIFont.systemFontOfSize(14)
-        address.frame = CGRectMake(170,10,70,25)
-        address.font = UIFont.boldSystemFontOfSize(15)
+        criteriaLabel.frame = CGRect(x: 80,y: 10,width: 75,height: 25)
+        criteriaLabel.font = UIFont.systemFont(ofSize: 14)
+        address.frame = CGRect(x: 170,y: 10,width: 70,height: 25)
+        address.font = UIFont.boldSystemFont(ofSize: 15)
 //        address.text = "工作地点:"
-        addressLabel.frame = CGRectMake(240,10,WIDTH-240,25)
-        addressLabel.font = UIFont.systemFontOfSize(14)
+        addressLabel.frame = CGRect(x: 240,y: 10,width: WIDTH-240,height: 25)
+        addressLabel.font = UIFont.systemFont(ofSize: 14)
         
-        criteri.frame = CGRectMake(10,10,70,25)
-        criteri.font = UIFont.boldSystemFontOfSize(15)
+        criteri.frame = CGRect(x: 10,y: 10,width: 70,height: 25)
+        criteri.font = UIFont.boldSystemFont(ofSize: 15)
 //        criteri.text = "招聘人数:"
-        criteriLabel.frame = CGRectMake(80,10,75,25)
-        criteriLabel.font = UIFont.systemFontOfSize(14)
-        addres.frame = CGRectMake(170,10,70,25)
-        addres.font = UIFont.boldSystemFontOfSize(15)
+        criteriLabel.frame = CGRect(x: 80,y: 10,width: 75,height: 25)
+        criteriLabel.font = UIFont.systemFont(ofSize: 14)
+        addres.frame = CGRect(x: 170,y: 10,width: 70,height: 25)
+        addres.font = UIFont.boldSystemFont(ofSize: 15)
 //        addres.text = "福利待遇:"
-        addresLabel.frame = CGRectMake(240,10,WIDTH-240,25)
-        addresLabel.font = UIFont.systemFontOfSize(14)
+        addresLabel.frame = CGRect(x: 240,y: 10,width: WIDTH-240,height: 25)
+        addresLabel.font = UIFont.systemFont(ofSize: 14)
 
-        positionDescript.frame = CGRectMake(10,10,100,25)
-        positionDescript.font = UIFont.boldSystemFontOfSize(15)
+        positionDescript.frame = CGRect(x: 10,y: 10,width: 100,height: 25)
+        positionDescript.font = UIFont.boldSystemFont(ofSize: 15)
 //        positionDescript.text = "职位描述:"
-        descripDetail.frame = CGRectMake(10,40,WIDTH-20,200)
-        descripDetail.font = UIFont.systemFontOfSize(14)
-        descripDetail.textColor = UIColor.lightGrayColor()
+        descripDetail.frame = CGRect(x: 10,y: 40,width: WIDTH-20,height: 200)
+        descripDetail.font = UIFont.systemFont(ofSize: 14)
+        descripDetail.textColor = UIColor.lightGray
         descripDetail.numberOfLines = 0
         
-        namLabel.frame = CGRectMake(10,10,80,25)
-        namLabel.font = UIFont.boldSystemFontOfSize(15)
+        namLabel.frame = CGRect(x: 10,y: 10,width: 80,height: 25)
+        namLabel.font = UIFont.boldSystemFont(ofSize: 15)
 //        namLabel.text = "联系方式:"
         
-        nam = UIButton(type: UIButtonType.Custom)
-        nam.frame = CGRectMake(100, 10, 100, 25)
-        nam.setTitleColor(COLOR, forState: .Normal)
-        nam.titleLabel!.font = UIFont.systemFontOfSize(14)
+        nam = UIButton(type: UIButtonType.custom)
+        nam.frame = CGRect(x: 100, y: 10, width: 100, height: 25)
+        nam.setTitleColor(COLOR, for: UIControlState())
+        nam.titleLabel!.font = UIFont.systemFont(ofSize: 14)
 
         self.addSubview(title)
         self.addSubview(eyeImage)
@@ -136,7 +136,7 @@ class MineJobDetailsTableViewCell: UITableViewCell {
     }
     
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

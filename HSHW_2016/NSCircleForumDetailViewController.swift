@@ -11,7 +11,7 @@ import MBProgressHUD
 
 class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
-    let rootTableView = UITableView(frame: CGRect.zero, style: .Grouped)
+    let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
     var forumModelArray = [ForumModel]()
 //    var forumBestOrTopModelArray = [ForumModel]()
@@ -33,16 +33,16 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         loadData()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 圈子 详情")
+        BaiduMobStat.default().pageviewStart(withName: "护士站 圈子 详情")
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 圈子 详情")
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 详情")
     }
     
     func loadData() {
@@ -127,20 +127,20 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         
         self.title = "贴子详情"
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
-        rootTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65-49)
+        self.view.backgroundColor = UIColor.white
+        rootTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-65-49)
         rootTableView.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        rootTableView.separatorStyle = .None
+        rootTableView.separatorStyle = .none
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
-        rootTableView.registerClass(NSCircleDetailTableViewCell.self, forCellReuseIdentifier: "circleDetailCell")
-        rootTableView.registerClass(NSCircleDetailTopTableViewCell.self, forCellReuseIdentifier: "circleDetailTopCell")
-        rootTableView.registerNib(UINib.init(nibName: "NSCircleCommentTableViewCell", bundle: nil), forCellReuseIdentifier: "circleForumCommentCell")
+        rootTableView.register(NSCircleDetailTableViewCell.self, forCellReuseIdentifier: "circleDetailCell")
+        rootTableView.register(NSCircleDetailTopTableViewCell.self, forCellReuseIdentifier: "circleDetailTopCell")
+        rootTableView.register(UINib.init(nibName: "NSCircleCommentTableViewCell", bundle: nil), forCellReuseIdentifier: "circleForumCommentCell")
 
         //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
         //        rootTableView.mj_header.beginRefreshing()
@@ -158,8 +158,8 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     func setTableViewHeaderView() {
         
         let tableHeaderView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 50))
-        tableHeaderView.backgroundColor = UIColor.whiteColor()
-        tableHeaderView.addTarget(self, action: #selector(tableViewHeaderViewClick), forControlEvents: .TouchUpInside)
+        tableHeaderView.backgroundColor = UIColor.white
+        tableHeaderView.addTarget(self, action: #selector(tableViewHeaderViewClick), for: .touchUpInside)
         
         // 用户信息
 
@@ -170,35 +170,35 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         tableHeaderView.addSubview(img)
         
         let nameLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: 8, width: calculateWidth("用户名", size: 12, height: 17), height: 17))
-        nameLab.textAlignment = .Left
-        nameLab.font = UIFont.systemFontOfSize(12)
-        nameLab.textColor = UIColor.blackColor()
+        nameLab.textAlignment = .left
+        nameLab.font = UIFont.systemFont(ofSize: 12)
+        nameLab.textColor = UIColor.black
         nameLab.text = "用户名"
         tableHeaderView.addSubview(nameLab)
         
         let positionLab = UILabel(frame: CGRect(x: nameLab.frame.maxX+8, y: 0, width: calculateWidth("护士", size: 8, height: 12)+12, height: 12))
-        positionLab.font = UIFont.systemFontOfSize(8)
-        positionLab.textColor = UIColor.whiteColor()
-        positionLab.layer.backgroundColor = COLOR.CGColor
-        positionLab.textAlignment = .Center
+        positionLab.font = UIFont.systemFont(ofSize: 8)
+        positionLab.textColor = UIColor.white
+        positionLab.layer.backgroundColor = COLOR.cgColor
+        positionLab.textAlignment = .center
         positionLab.center.y = nameLab.center.y
         positionLab.layer.cornerRadius = 6
         positionLab.text = "护士"
         tableHeaderView.addSubview(positionLab)
 
         let levelLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: nameLab.frame.maxY+1, width: calculateWidth("Lv.35", size: 10, height: 17), height: 17))
-        levelLab.font = UIFont.systemFontOfSize(10)
+        levelLab.font = UIFont.systemFont(ofSize: 10)
         levelLab.textColor = COLOR
-        levelLab.textAlignment = .Center
+        levelLab.textAlignment = .center
         levelLab.text = "Lv.35"
         tableHeaderView.addSubview(levelLab)
         
         let timeLab = UILabel(frame: CGRect(
             x: WIDTH-10-calculateWidth("3分钟前", size: 10, height: 17),
-            y: (50-UIFont.systemFontOfSize(10).lineHeight)/2.0,
-            width: calculateWidth("3分钟前", size: 10, height: UIFont.systemFontOfSize(10).lineHeight),
-            height: UIFont.systemFontOfSize(10).lineHeight))
-        timeLab.font = UIFont.systemFontOfSize(10)
+            y: (50-UIFont.systemFont(ofSize: 10).lineHeight)/2.0,
+            width: calculateWidth("3分钟前", size: 10, height: UIFont.systemFont(ofSize: 10).lineHeight),
+            height: UIFont.systemFont(ofSize: 10).lineHeight))
+        timeLab.font = UIFont.systemFont(ofSize: 10)
         timeLab.textColor = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1)
         timeLab.text = "3分钟前"
         tableHeaderView.addSubview(timeLab)
@@ -214,79 +214,79 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     // MARK: 设置回复视图
     func setReplyView() {
         // 回复 视图
-        replyView.frame = CGRectMake(0, HEIGHT-49-65, WIDTH, 49)
+        replyView.frame = CGRect(x: 0, y: HEIGHT-49-65, width: WIDTH, height: 49)
         replyView.backgroundColor = UIColor(red: 244/255.0, green: 245/255.0, blue: 246/255.0, alpha: 1)
         
         // 回复框
-        replyTextField.frame = CGRectMake(10, 8, WIDTH-10-10-80-10, 33)
+        replyTextField.frame = CGRect(x: 10, y: 8, width: WIDTH-10-10-80-10, height: 33)
         replyTextField.layer.cornerRadius = 6
         //        replyTextField.borderStyle = UITextBorderStyle.RoundedRect
         replyTextField.placeholder = "回复"
-        replyTextField.font = UIFont.systemFontOfSize(14)
-        replyTextField.returnKeyType = UIReturnKeyType.Send
+        replyTextField.font = UIFont.systemFont(ofSize: 14)
+        replyTextField.returnKeyType = UIReturnKeyType.send
         replyTextField.delegate = self
         replyView.addSubview(replyTextField)
         
         // 发送
-        send_bottom_Btn.frame = CGRectMake(CGRectGetMaxX(replyTextField.frame)+10, 8, 80, 33)
+        send_bottom_Btn.frame = CGRect(x: replyTextField.frame.maxX+10, y: 8, width: 80, height: 33)
         send_bottom_Btn.layer.cornerRadius = 6
-        send_bottom_Btn.backgroundColor = UIColor.grayColor()
-        send_bottom_Btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        send_bottom_Btn.titleLabel!.font = UIFont.systemFontOfSize(14)
-        send_bottom_Btn.setTitle("发送", forState: .Normal)
+        send_bottom_Btn.backgroundColor = UIColor.gray
+        send_bottom_Btn.setTitleColor(UIColor.white, for: UIControlState())
+        send_bottom_Btn.titleLabel!.font = UIFont.systemFont(ofSize: 14)
+        send_bottom_Btn.setTitle("发送", for: UIControlState())
 //        send_bottom_Btn.tag = NSString(string: (newsInfo?.object_id)!).integerValue
-        send_bottom_Btn.addTarget(self, action: #selector(sendComment), forControlEvents: .TouchUpInside)
+        send_bottom_Btn.addTarget(self, action: #selector(sendComment), for: .touchUpInside)
         replyView.addSubview(send_bottom_Btn)
         
-        let line_topView:UIView = UIView.init(frame: CGRectMake(0, 0, WIDTH, 1/UIScreen.mainScreen().scale))
-        line_topView.backgroundColor = UIColor.lightGrayColor()
+        let line_topView:UIView = UIView.init(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1/UIScreen.main.scale))
+        line_topView.backgroundColor = UIColor.lightGray
         replyView.addSubview(line_topView)
         
         self.view.addSubview(replyView)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidAppear), name: UIKeyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidAppear), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     // MARK: - 获取键盘信息并改变视图
-    func keyboardWillAppear(notification: NSNotification) {
+    func keyboardWillAppear(_ notification: Notification) {
         
         // 获取键盘信息
         let keyboardinfo = notification.userInfo![UIKeyboardFrameEndUserInfoKey]
         
-        let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
+        let keyboardheight:CGFloat = ((keyboardinfo as AnyObject).cgRectValue.size.height)
         
-        replyView.frame = CGRectMake(0, HEIGHT-86-33-8-65, WIDTH, 86+33+8)
-        replyTextField.frame.size = CGSizeMake(WIDTH-30, 70)
+        replyView.frame = CGRect(x: 0, y: HEIGHT-86-33-8-65, width: WIDTH, height: 86+33+8)
+        replyTextField.frame.size = CGSize(width: WIDTH-30, height: 70)
         send_bottom_Btn.frame = CGRect(x: replyTextField.frame.maxX-80, y: replyTextField.frame.maxY+8, width: 80, height: 33)
         
-        UIView.animateWithDuration(0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             self.replyView.frame.origin.y = HEIGHT-86-33-65-keyboardheight
-        }
+        }) 
         
     }
     
-    func keyboardDidAppear(notification:NSNotification) {
+    func keyboardDidAppear(_ notification:Notification) {
         keyboardShowState = true
     }
     
-    func keyboardWillDisappear(notification:NSNotification){
-        UIView.animateWithDuration(0.3) {
-            self.replyView.frame = CGRectMake(0, HEIGHT-49-65, WIDTH, 49)
-            self.replyTextField.frame = CGRectMake(10, 8, WIDTH-10-10-80-10, 33)
-            self.send_bottom_Btn.frame = CGRectMake(CGRectGetMaxX(self.replyTextField.frame)+10, 8, 80, 33)
+    func keyboardWillDisappear(_ notification:Notification){
+        UIView.animate(withDuration: 0.3, animations: {
+            self.replyView.frame = CGRect(x: 0, y: HEIGHT-49-65, width: WIDTH, height: 49)
+            self.replyTextField.frame = CGRect(x: 10, y: 8, width: WIDTH-10-10-80-10, height: 33)
+            self.send_bottom_Btn.frame = CGRect(x: self.replyTextField.frame.maxX+10, y: 8, width: 80, height: 33)
 
             //            self.rootTableView.frame.size.height = HEIGHT-64-1-46
-        }
+        }) 
         // print("键盘落下")
     }
     // MARK: -
     
     // MARK: - UITextViewDelegate
-    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         // MARK:要求登录
         if requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
             
@@ -304,24 +304,24 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         }
     }
     
-    func textViewDidEndEditing(textView: UITextView) {
-        self.send_bottom_Btn.selected = false
+    func textViewDidEndEditing(_ textView: UITextView) {
+        self.send_bottom_Btn.isSelected = false
 //        self.send_bottom_Btn.tag = NSString(string: ("111")).integerValue
         self.replyTextField.placeholder = "回复"
     }
     
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         if textView.text.characters.count > 0 {
             send_bottom_Btn.backgroundColor = COLOR
         }else{
-            send_bottom_Btn.backgroundColor = UIColor.whiteColor()
+            send_bottom_Btn.backgroundColor = UIColor.white
         }
     }
     // MARK: -
     
     // MARK: - 去除空格和回车
-    func trimLineString(str:String)->String{
-        let nowStr = str.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+    func trimLineString(_ str:String)->String{
+        let nowStr = str.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         return nowStr
     }
     //  MARK: - 发表评论
@@ -406,16 +406,16 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
 //            })
             replyTextField.resignFirstResponder()
         }else{
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.mode = MBProgressHUDMode.Text;
-            hud.labelText = "请输入内容"
-            hud.hide(true, afterDelay: 1)
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud?.margin = 10.0
+            hud?.removeFromSuperViewOnHide = true
+            hud?.mode = MBProgressHUDMode.text;
+            hud?.labelText = "请输入内容"
+            hud?.hide(true, afterDelay: 1)
         }
     }
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if keyboardShowState == true {
             
             replyTextField.resignFirstResponder()
@@ -429,11 +429,11 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     }
     
     // MARK: - UItableViewdatasource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         if section == 0 {
             return 2
@@ -449,29 +449,29 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
             
-            var cell = tableView.dequeueReusableCellWithIdentifier("forumDetailCell")
+            var cell = tableView.dequeueReusableCell(withIdentifier: "forumDetailCell")
             
             if cell == nil {
-                cell = UITableViewCell(style: .Default, reuseIdentifier: "forumDetailCell")
-                cell?.selectionStyle = .None
+                cell = UITableViewCell(style: .default, reuseIdentifier: "forumDetailCell")
+                cell?.selectionStyle = .none
                 cell?.textLabel?.numberOfLines = 0
             }
             
             switch indexPath.row {
             case 0:
-                cell?.textLabel?.font = UIFont.systemFontOfSize(18)
-                cell?.textLabel?.textColor = UIColor.blackColor()
-                cell?.textLabel?.textAlignment = .Center
+                cell?.textLabel?.font = UIFont.systemFont(ofSize: 18)
+                cell?.textLabel?.textColor = UIColor.black
+                cell?.textLabel?.textAlignment = .center
                 cell?.textLabel?.text = forumModel.title
                 
             case 1:
-                cell?.textLabel?.font = UIFont.systemFontOfSize(14)
+                cell?.textLabel?.font = UIFont.systemFont(ofSize: 14)
                 cell?.textLabel?.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
-                cell?.textLabel?.textAlignment = .Left
+                cell?.textLabel?.textAlignment = .left
                 cell?.textLabel?.text = forumModel.content
                 
             default:
@@ -481,29 +481,29 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             
             return cell!
         }
-        let cell = tableView.dequeueReusableCellWithIdentifier("circleForumCommentCell") as! NSCircleCommentTableViewCell
-        cell.selectionStyle = UITableViewCellSelectionStyle.None
+        let cell = tableView.dequeueReusableCell(withIdentifier: "circleForumCommentCell") as! NSCircleCommentTableViewCell
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
         
         if self.forumCommentArray.count == 0 {
             cell.textLabel?.text = "暂无评论"
-            cell.textLabel?.textColor = UIColor.grayColor()
-            cell.textLabel?.textAlignment = .Center
+            cell.textLabel?.textColor = UIColor.gray
+            cell.textLabel?.textAlignment = .center
             
             cell.nameLab.text = nil
             cell.contentLab.text = nil
             cell.timeLab.text = nil
-            cell.headerBtn.setImage(nil, forState: .Normal)
+            cell.headerBtn.setImage(nil, for: UIControlState())
         }else{
             cell.textLabel?.text = nil
             cell.floorLab.text = "\(self.forumCommentArray.count-indexPath.row)楼"
             cell.commentModel = self.forumCommentArray[indexPath.row]
-            cell.reportBtn.addTarget(self, action: #selector(reportBtnClick(_:)), forControlEvents: .TouchUpInside)
+            cell.reportBtn.addTarget(self, action: #selector(reportBtnClick(_:)), for: .touchUpInside)
         }
         return cell
     }
     
     // MARK: - UITableViewDelegate
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if indexPath.section == 0 {
             switch indexPath.row {
@@ -525,10 +525,10 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             var child_commentBtnY = height+8+40+8+8
             for child_comment in (self.forumCommentArray[indexPath.row].child_comments) {
                 
-                let child_commentBtnHeight = child_comment.content.boundingRectWithSize(
-                    CGSizeMake(WIDTH-60-10-16, 0),
-                    options: .UsesLineFragmentOrigin,
-                    attributes: [NSFontAttributeName:UIFont.systemFontOfSize(14)],
+                let child_commentBtnHeight = child_comment.content.boundingRect(
+                    with: CGSize(width: WIDTH-60-10-16, height: 0),
+                    options: .usesLineFragmentOrigin,
+                    attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: 14)],
                     context: nil).size.height+10
                 
                 child_commentBtnY += child_commentBtnHeight+25+5
@@ -539,33 +539,33 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         }
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 15
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return section == 0 ? 50:0.001
     }
     
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
         if section == 0 {
             
             let contentView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 50))
-            contentView.backgroundColor = UIColor.whiteColor()
+            contentView.backgroundColor = UIColor.white
             
             let collectBtn = UIButton(frame: CGRect(x: 20, y: 8, width: 30, height: 30))
             collectBtn.tag == 100
             collectBtn.layer.cornerRadius = 15
 //            collectBtn.layer.backgroundColor = UIColor(red: 244/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1).CGColor
-            collectBtn.setImage(UIImage(named: "收藏（默认）"), forState: .Normal)
-            collectBtn.setImage(UIImage(named: "收藏"), forState: .Selected)
-            collectBtn.addTarget(self, action: #selector(collectBtnClick(_:)), forControlEvents: .TouchUpInside)
+            collectBtn.setImage(UIImage(named: "收藏（默认）"), for: UIControlState())
+            collectBtn.setImage(UIImage(named: "收藏"), for: .selected)
+            collectBtn.addTarget(self, action: #selector(collectBtnClick(_:)), for: .touchUpInside)
             contentView.addSubview(collectBtn)
             
             let collectNumLab = UILabel(frame: CGRect(x: collectBtn.frame.maxX+8, y: 0, width: 0, height: 0))
             collectNumLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
-            collectNumLab.font = UIFont.systemFontOfSize(14)
+            collectNumLab.font = UIFont.systemFont(ofSize: 14)
             collectNumLab.text = forumModel.hits
             collectNumLab.sizeToFit()
             collectNumLab.center.y = collectBtn.center.y
@@ -576,13 +576,13 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             likeBtn.layer.cornerRadius = 15
 //            likeBtn.layer.backgroundColor = UIColor(red: 244/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1).CGColor
             //                likeBtn.setImage(UIImage(named: "点赞（默认）"), forState: .Normal)
-            likeBtn.setImage(UIImage(named: "点赞"), forState: .Normal)
-            likeBtn.addTarget(self, action: #selector(likeBtnClick(_:)), forControlEvents: .TouchUpInside)
+            likeBtn.setImage(UIImage(named: "点赞"), for: UIControlState())
+            likeBtn.addTarget(self, action: #selector(likeBtnClick(_:)), for: .touchUpInside)
             contentView.addSubview(likeBtn)
             
             let likeNumLab = UILabel(frame: CGRect(x: likeBtn.frame.maxX+8, y: 0, width: 0, height: 0))
             likeNumLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
-            likeNumLab.font = UIFont.systemFontOfSize(14)
+            likeNumLab.font = UIFont.systemFont(ofSize: 14)
             likeNumLab.text = forumModel.like
             likeNumLab.sizeToFit()
             likeNumLab.center.y = likeBtn.center.y
@@ -592,14 +592,14 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             rewardBtn.tag == 102
             rewardBtn.layer.cornerRadius = 15
 //            rewardBtn.layer.backgroundColor = UIColor(red: 244/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1).CGColor
-            rewardBtn.setImage(UIImage(named: "打赏（默认）"), forState: .Normal)
-            rewardBtn.setImage(UIImage(named: "打赏"), forState: .Selected)
-            rewardBtn.addTarget(self, action: #selector(rewardBtnClick(_:)), forControlEvents: .TouchUpInside)
+            rewardBtn.setImage(UIImage(named: "打赏（默认）"), for: UIControlState())
+            rewardBtn.setImage(UIImage(named: "打赏"), for: .selected)
+            rewardBtn.addTarget(self, action: #selector(rewardBtnClick(_:)), for: .touchUpInside)
             contentView.addSubview(rewardBtn)
             
             let rewardNumLab = UILabel(frame: CGRect(x: rewardBtn.frame.maxX+8, y: 0, width: 0, height: 0))
             rewardNumLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
-            rewardNumLab.font = UIFont.systemFontOfSize(14)
+            rewardNumLab.font = UIFont.systemFont(ofSize: 14)
             rewardNumLab.text = "打赏"
             rewardNumLab.sizeToFit()
             rewardNumLab.center.y = rewardBtn.center.y
@@ -607,17 +607,17 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             
             let moreBtn = UIButton(frame: CGRect(x: likeNumLab.frame.maxX+10, y: 8, width: 30, height: 30))
             
-            moreBtn.setTitle("···", forState: .Normal)
-            moreBtn.titleLabel?.font = UIFont.systemFontOfSize(18)
+            moreBtn.setTitle("···", for: UIControlState())
+            moreBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
             moreBtn.layer.cornerRadius = 2
-            moreBtn.setTitleColor(UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), forState: .Normal)
+            moreBtn.setTitleColor(UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), for: UIControlState())
             moreBtn.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
             
             let moreBtnWidth = calculateWidth("···", size: 18, height: 10)+10
             moreBtn.frame = CGRect(x: contentView.frame.width-20-moreBtnWidth, y: 0, width: moreBtnWidth, height: 15)
             moreBtn.center.y = rewardNumLab.center.y
             
-            moreBtn.addTarget(self, action: #selector(moreBtnClick(_:)), forControlEvents: .TouchUpInside)
+            moreBtn.addTarget(self, action: #selector(moreBtnClick(_:)), for: .touchUpInside)
             
             contentView.addSubview(moreBtn)
             
@@ -628,7 +628,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
 
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 15))
         headerView.backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -636,7 +636,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         return headerView
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("点击cell")
         
         replyTextField.placeholder = "回复\(self.forumCommentArray[indexPath.row].username)"
@@ -644,14 +644,14 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     }
     
     // MARK: - 举报 按钮点击事件
-    func reportBtnClick(reportBtn:UIButton) {
+    func reportBtnClick(_ reportBtn:UIButton) {
         print("举报 按钮点击事件",reportBtn.tag)
         
         NSCirclePublicAction.showReportAlert()
     }
     
     // MARK: - moreBtnClick
-    func moreBtnClick(moreBtn:UIButton) {
+    func moreBtnClick(_ moreBtn:UIButton) {
         print(moreBtn.tag)
         
         
@@ -660,21 +660,21 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
 //        let labelTextColorArray = [COLOR,COLOR,UIColor.blackColor(),UIColor.lightGrayColor()]
 
         let labelTextArray = ["举报","取消"]
-        let labelTextColorArray = [UIColor.blackColor(),UIColor.lightGrayColor()]
+        let labelTextColorArray = [UIColor.black,UIColor.lightGray]
 
         NSCirclePublicAction.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray)
         
     }
     
     // MARK: - 收藏、点赞、打赏 按钮点击事件
-    func collectBtnClick(collectBtn:UIButton) {
+    func collectBtnClick(_ collectBtn:UIButton) {
         print("1")
     }
-    func likeBtnClick(likeBtn:UIButton) {
+    func likeBtnClick(_ likeBtn:UIButton) {
         print("2")
     }
     
-    func rewardBtnClick(rewardBtn:UIButton) {
+    func rewardBtnClick(_ rewardBtn:UIButton) {
         print("3")
         
         NSCirclePublicAction.showAlert()

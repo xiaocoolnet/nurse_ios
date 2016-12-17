@@ -8,9 +8,9 @@
 
 import UIKit
 protocol HSFindPersonDetailViewDelegate:NSObjectProtocol {
-    func sendInvite(model:CVModel)
+    func sendInvite(_ model:CVModel)
 //    func hiddenResumeDetail()
-    func lookContectBtnClick(lookContectBtn:UIButton, phoneNumber: UILabel, email: UILabel)
+    func lookContectBtnClick(_ lookContectBtn:UIButton, phoneNumber: UILabel, email: UILabel)
 }
 
 
@@ -43,25 +43,25 @@ class HSFindPersonDetailView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        inviteInterView.layer.borderColor = COLOR.CGColor
+        inviteInterView.layer.borderColor = COLOR.cgColor
         inviteInterView.layer.borderWidth = 1
         inviteInterView.cornerRadius = 22
         
 //        headerImg.backgroundColor = UIColor(white: 0.8, alpha: 0.5)
-        headerImg.contentMode = .ScaleAspectFit
+        headerImg.contentMode = .scaleAspectFit
         headerImg.clipsToBounds = true
         
-        self.phoneNumber.hidden = true
-        self.email.hidden = true
+        self.phoneNumber.isHidden = true
+        self.email.isHidden = true
     }
-    @IBAction func sendInvite(sender: AnyObject) {
+    @IBAction func sendInvite(_ sender: AnyObject) {
         if delegate != nil {
             delegate!.sendInvite(model!)
         }
     }
     
     
-    @IBAction func lookContectBtnClick(sender: AnyObject) {
+    @IBAction func lookContectBtnClick(_ sender: AnyObject) {
         
         if delegate != nil {
             delegate!.lookContectBtnClick(lookContectBtn, phoneNumber: phoneNumber, email: email)
@@ -69,53 +69,53 @@ class HSFindPersonDetailView: UIView {
         
     }
     
-    func showFor(birthday:NSString){
+    func showFor(_ birthday:NSString){
         self.birthday.text = birthday as String
     }
-    func showName(userName:NSString){
+    func showName(_ userName:NSString){
         self.userName.text = userName as String
     }
-    func showSex(userSex:NSString){
+    func showSex(_ userSex:NSString){
         self.userSex.text = userSex as String
     }
-    func education(education:NSString){
+    func education(_ education:NSString){
         self.education.text = education as String
     }
-    func address(address:NSString){
+    func address(_ address:NSString){
         self.address.text = address as String
     }
-    func experience(experience:NSString){
+    func experience(_ experience:NSString){
         self.experience.text = experience as String
     }
-    func jobName(jobName:NSString){
+    func jobName(_ jobName:NSString){
         self.jobName.text = jobName as String
     }
-    func currentSalary(currentSalary:NSString){
+    func currentSalary(_ currentSalary:NSString){
         self.currentSalary.text = currentSalary as String
     }
-    func jobState(jobState:NSString){
+    func jobState(_ jobState:NSString){
         self.jobState.text = jobState as String
     }
-    func comeTime(comeTime:NSString){
+    func comeTime(_ comeTime:NSString){
         self.comeTime.text = comeTime as String
     }
-    func expectSalary(expectSalary:NSString){
+    func expectSalary(_ expectSalary:NSString){
         self.expectSalary.text = expectSalary as String
     }
-    func targetLocation(targetLocation:NSString){
+    func targetLocation(_ targetLocation:NSString){
         self.targetLocation.text = targetLocation as String
         self.targetLocation.adjustsFontSizeToFitWidth = true
     }
-    func targetPosition(targetPosition:NSString){
+    func targetPosition(_ targetPosition:NSString){
         self.targetPosition.text = targetPosition as String
     }
-    func selfEvaluation(selfEvaluation:NSString){
+    func selfEvaluation(_ selfEvaluation:NSString){
         self.selfEvaluation.text = selfEvaluation as String
     }
-    func phoneNumber(phoneNumber:NSString){
+    func phoneNumber(_ phoneNumber:NSString){
         self.phoneNumber.text = phoneNumber as String
     }
-    func email(email:NSString){
+    func email(_ email:NSString){
         self.email.text = email as String
     }
     
@@ -125,7 +125,7 @@ class HSFindPersonDetailView: UIView {
 //            self.linkman = model.linkman
 //            self.tit = model.title
             
-            self.headerImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+cvModel!.avatar), placeholderImage: UIImage(named: "img_head_nor"))
+            self.headerImg.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+cvModel!.avatar), placeholderImage: UIImage(named: "img_head_nor"))
 
             self.birthday.text = cvModel!.birthday
             
@@ -147,9 +147,9 @@ class HSFindPersonDetailView: UIView {
             
             self.comeTime.text = cvModel!.hiredate
             
-            self.expectSalary.text = cvModel!.wantsalary.stringByReplacingOccurrencesOfString("&lt;", withString: "<")
+            self.expectSalary.text = cvModel!.wantsalary.replacingOccurrences(of: "&lt;", with: "<")
             
-            self.targetLocation.text = cvModel!.wantcity.componentsSeparatedByString("-").last!
+            self.targetLocation.text = cvModel!.wantcity.components(separatedBy: "-").last!
             self.targetLocation.adjustsFontSizeToFitWidth = true
             
             self.targetPosition.text = cvModel!.wantposition

@@ -7,9 +7,33 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 protocol cateBtnClickedDelegate:NSObjectProtocol {
-    func cateBtnClicked(categoryBtn:UIButton)
+    func cateBtnClicked(_ categoryBtn:UIButton)
 }
 
 class GToutiaoTableViewCell: UITableViewCell {
@@ -57,8 +81,8 @@ class GToutiaoTableViewCell: UITableViewCell {
         self.addSubview(titSubImg)
 
         if reuseIdentifier == "RelatedNewsListCell" {
-            line.frame = CGRectMake(WIDTH*3/62.0, self.contentView.frame.size.height-0.5, WIDTH-WIDTH*3/62.0, 0.5)
-            line.backgroundColor = UIColor.lightGrayColor()
+            line.frame = CGRect(x: WIDTH*3/62.0, y: self.contentView.frame.size.height-0.5, width: WIDTH-WIDTH*3/62.0, height: 0.5)
+            line.backgroundColor = UIColor.lightGray
             self.addSubview(line)
         }else{
             line.removeFromSuperview()
@@ -69,7 +93,7 @@ class GToutiaoTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
@@ -77,31 +101,31 @@ class GToutiaoTableViewCell: UITableViewCell {
     func setSubViews() {
        
 //        titLab.frame = CGRectMake(10, 12, WIDTH-140, 40)
-        titLab.font = UIFont.systemFontOfSize(17)
+        titLab.font = UIFont.systemFont(ofSize: 17)
         titLab.numberOfLines = 0
         
         //        heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+22, 46, 15)
         heal.layer.cornerRadius = 3
-        heal.layer.borderColor = COLOR.CGColor
+        heal.layer.borderColor = COLOR.cgColor
         heal.layer.borderWidth = 0.4
-        heal.titleLabel?.font = UIFont.systemFontOfSize(11)
+        heal.titleLabel?.font = UIFont.systemFont(ofSize: 11)
         //        heal.setTitle("健康常识", forState: .Normal)
-        heal.setTitleColor(COLOR, forState: .Normal)
-        heal.addTarget(self, action: #selector(categoryBtnClick(_:)), forControlEvents: .TouchUpInside)
+        heal.setTitleColor(COLOR, for: UIControlState())
+        heal.addTarget(self, action: #selector(categoryBtnClick(_:)), for: .touchUpInside)
         
         //        comBtn.setImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
-        comBtn.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
+        comBtn.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), for: UIControlState())
         
-        conNum.font = UIFont.systemFontOfSize(13)
-        conNum.textAlignment = .Left
+        conNum.font = UIFont.systemFont(ofSize: 13)
+        conNum.textAlignment = .left
         conNum.textColor = GREY
         
         //        timeBtn.frame = CGRectMake(CGRectGetMaxX(conNum.frame)+5, titLab.frame.size.height+titLab.frame.origin.y+23, 11, 11)
         //        timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
-        timeBtn.setBackgroundImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
+        timeBtn.setBackgroundImage(UIImage(named: "ic_time_purple.png"), for: UIControlState())
         
         //        timeLab.frame = CGRectMake(CGRectGetMaxX(timeBtn.frame)+5, titLab.frame.size.height+titLab.frame.origin.y+22, 80, 15)
-        timeLab.font = UIFont.systemFontOfSize(13)
+        timeLab.font = UIFont.systemFont(ofSize: 13)
         timeLab.textColor = GREY
         
 //        contant.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+38, WIDTH-140, 40)
@@ -110,32 +134,32 @@ class GToutiaoTableViewCell: UITableViewCell {
 //        contant.textColor = UIColor.grayColor()
         
 //        titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
-        titImage.contentMode = .ScaleAspectFill
+        titImage.contentMode = .scaleAspectFill
         titImage.clipsToBounds = true
         
         
 //        titSubImg.frame = CGRectMake(10, CGRectGetMaxY(titLab.frame)+10, WIDTH-20, (WIDTH-20-margin*2)/3.0*2/3.0)
         
-        titSubImg_1.contentMode = .ScaleAspectFill
+        titSubImg_1.contentMode = .scaleAspectFill
         titSubImg_1.clipsToBounds = true
-        titSubImg_1.frame = CGRectMake(0, 0, (WIDTH-20-margin*2)/3.0, (WIDTH-20-margin*2)/3.0*2/3.0)
+        titSubImg_1.frame = CGRect(x: 0, y: 0, width: (WIDTH-20-margin*2)/3.0, height: (WIDTH-20-margin*2)/3.0*2/3.0)
         titSubImg.addSubview(titSubImg_1)
         
-        titSubImg_2.contentMode = .ScaleAspectFill
+        titSubImg_2.contentMode = .scaleAspectFill
         titSubImg_2.clipsToBounds = true
-        titSubImg_2.frame = CGRectMake((WIDTH-20-margin*2)/3.0+margin, 0, (WIDTH-20-margin*2)/3.0, (WIDTH-20-margin*2)/3.0*2/3.0)
+        titSubImg_2.frame = CGRect(x: (WIDTH-20-margin*2)/3.0+margin, y: 0, width: (WIDTH-20-margin*2)/3.0, height: (WIDTH-20-margin*2)/3.0*2/3.0)
         titSubImg.addSubview(titSubImg_2)
 
-        titSubImg_3.contentMode = .ScaleAspectFill
+        titSubImg_3.contentMode = .scaleAspectFill
         titSubImg_3.clipsToBounds = true
-        titSubImg_3.frame = CGRectMake(((WIDTH-20-margin*2)/3.0+margin)*2, 0, (WIDTH-20-margin*2)/3.0, (WIDTH-20-margin*2)/3.0*2/3.0)
+        titSubImg_3.frame = CGRect(x: ((WIDTH-20-margin*2)/3.0+margin)*2, y: 0, width: (WIDTH-20-margin*2)/3.0, height: (WIDTH-20-margin*2)/3.0*2/3.0)
         titSubImg.addSubview(titSubImg_3)
     }
     
-    func setCellWithNewsInfo(newsInfo:NewsInfo) {
+    func setCellWithNewsInfo(_ newsInfo:NewsInfo) {
         
         let height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-140)
-        self.titLab.frame = CGRectMake(10, 9, WIDTH-140, height)
+        self.titLab.frame = CGRect(x: 10, y: 9, width: WIDTH-140, height: height)
         
         self.titLab.text = newsInfo.post_title
 
@@ -143,16 +167,16 @@ class GToutiaoTableViewCell: UITableViewCell {
 //            heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+22, 46, 15)
 //        }
         
-        heal.setTitle(newsInfo.term_name, forState: .Normal)
+        heal.setTitle(newsInfo.term_name, for: UIControlState())
         heal.tag = Int(newsInfo.term_id)!
         
         let healWidth = calculateWidth(newsInfo.term_name, size: 11, height: 15)+5
-        heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+22, healWidth, 15)
+        heal.frame = CGRect(x: 10, y: titLab.frame.size.height+titLab.frame.origin.y+22, width: healWidth, height: 15)
         if type == 2 {
             heal.removeFromSuperview()
         }
         
-        comBtn.frame = CGRectMake(type == 1 ? CGRectGetMaxX(heal.frame)+10:5, titLab.frame.size.height+titLab.frame.origin.y+25, 13, 9)
+        comBtn.frame = CGRect(x: type == 1 ? heal.frame.maxX+10:5, y: titLab.frame.size.height+titLab.frame.origin.y+25, width: 13, height: 9)
         
         var conNumStr = "0"
         if Int(newsInfo.post_hits!) > 99999 {
@@ -181,13 +205,13 @@ class GToutiaoTableViewCell: UITableViewCell {
         
         self.conNum.text = conNumStr
         conNum.sizeToFit()
-        conNum.frame = CGRectMake(CGRectGetMaxX(comBtn.frame)+5, titLab.frame.size.height+titLab.frame.origin.y+22, CGRectGetWidth(conNum.frame), 15)
+        conNum.frame = CGRect(x: comBtn.frame.maxX+5, y: titLab.frame.size.height+titLab.frame.origin.y+22, width: conNum.frame.width, height: 15)
         
-        timeBtn.frame = CGRectMake(CGRectGetMaxX(conNum.frame)+10, titLab.frame.size.height+titLab.frame.origin.y+24, 11, 11)
-        timeLab.frame = CGRectMake(CGRectGetMaxX(timeBtn.frame)+5, titLab.frame.size.height+titLab.frame.origin.y+22, 80, 15)
+        timeBtn.frame = CGRect(x: conNum.frame.maxX+10, y: titLab.frame.size.height+titLab.frame.origin.y+24, width: 11, height: 11)
+        timeLab.frame = CGRect(x: timeBtn.frame.maxX+5, y: titLab.frame.size.height+titLab.frame.origin.y+22, width: 80, height: 15)
         
-        let time:Array = (newsInfo.post_modified?.componentsSeparatedByString(" "))!
-        let date:Array = time[0].componentsSeparatedByString("-")
+        let time:Array = (newsInfo.post_modified?.components(separatedBy: " "))!
+        let date:Array = time[0].components(separatedBy: "-")
         if date.count >= 3 {
             self.timeLab.text = "\(date[1])/\(date[2])"
         }else{
@@ -212,8 +236,8 @@ class GToutiaoTableViewCell: UITableViewCell {
 //        }
         if newsInfo.thumbArr.count == 0 {
             
-            titImage.hidden = true
-            titSubImg.hidden = true
+            titImage.isHidden = true
+            titSubImg.isHidden = true
             
             self.titLab.frame.size.width = WIDTH-20
             
@@ -221,20 +245,20 @@ class GToutiaoTableViewCell: UITableViewCell {
             
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                 
-                titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
+                titImage.frame = CGRect(x: WIDTH-120, y: 10, width: 110, height: 80)
                 self.titImage.image = UIImage.init(named: "defaultImage.png")
 
-                titImage.hidden = false
-                titSubImg.hidden = true
+                titImage.isHidden = false
+                titSubImg.isHidden = true
             }else{
                 let photoUrl:String = DomainName+"data/upload/"+(newsInfo.thumbArr.first?.url)!
 //                print("GToutiaoTableViewCell =-=-=-=-=-=-=   ",photoUrl)
                 
-                titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
-                self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
+                titImage.frame = CGRect(x: WIDTH-120, y: 10, width: 110, height: 80)
+                self.titImage.sd_setImage(with: URL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
 
-                titImage.hidden = false
-                titSubImg.hidden = true
+                titImage.isHidden = false
+                titSubImg.isHidden = true
                 //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
                 //        titLab.frame.size.height = titleHeight+100
             }
@@ -248,16 +272,16 @@ class GToutiaoTableViewCell: UITableViewCell {
         line.frame.origin.y = self.frame.size.height-0.5
     }
     
-    func setThreeImgCellWithNewsInfo(newsInfo:NewsInfo) {
+    func setThreeImgCellWithNewsInfo(_ newsInfo:NewsInfo) {
         
         let height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-20)
-        self.titLab.frame = CGRectMake(10, 9, WIDTH-20, height)
+        self.titLab.frame = CGRect(x: 10, y: 9, width: WIDTH-20, height: height)
         
         self.titLab.text = newsInfo.post_title
             
 //        let margin:CGFloat = 15
         
-        titSubImg.frame = CGRectMake(10, CGRectGetMaxY(titLab.frame)+10, WIDTH-20, (WIDTH-20-margin*2)/3.0*2/3.0)
+        titSubImg.frame = CGRect(x: 10, y: titLab.frame.maxY+10, width: WIDTH-20, height: (WIDTH-20-margin*2)/3.0*2/3.0)
         
         if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
             
@@ -267,28 +291,28 @@ class GToutiaoTableViewCell: UITableViewCell {
         }else {
             
             let photoUrl_1:String = DomainName+"data/upload/"+(newsInfo.thumbArr[0].url)
-            titSubImg_1.sd_setImageWithURL(NSURL(string:photoUrl_1), placeholderImage: UIImage(named: "defaultImage.png"))
+            titSubImg_1.sd_setImage(with: URL(string:photoUrl_1), placeholderImage: UIImage(named: "defaultImage.png"))
             
             let photoUrl_2:String = DomainName+"data/upload/"+(newsInfo.thumbArr[1].url)
-            titSubImg_2.sd_setImageWithURL(NSURL(string:photoUrl_2), placeholderImage: UIImage(named: "defaultImage.png"))
+            titSubImg_2.sd_setImage(with: URL(string:photoUrl_2), placeholderImage: UIImage(named: "defaultImage.png"))
             
             let photoUrl_3:String = DomainName+"data/upload/"+(newsInfo.thumbArr[2].url)
-            titSubImg_3.sd_setImageWithURL(NSURL(string:photoUrl_3), placeholderImage: UIImage(named: "defaultImage.png"))
+            titSubImg_3.sd_setImage(with: URL(string:photoUrl_3), placeholderImage: UIImage(named: "defaultImage.png"))
         }
         
-        titImage.hidden = true
-        titSubImg.hidden = false
+        titImage.isHidden = true
+        titSubImg.isHidden = false
         
-        heal.setTitle(newsInfo.term_name, forState: .Normal)
+        heal.setTitle(newsInfo.term_name, for: UIControlState())
         heal.tag = Int(newsInfo.term_id)!
         
         let healWidth = calculateWidth(newsInfo.term_name, size: 11, height: 15)+5
-        heal.frame = CGRectMake(10, CGRectGetMaxY(titSubImg.frame)+12, healWidth, 15)
+        heal.frame = CGRect(x: 10, y: titSubImg.frame.maxY+12, width: healWidth, height: 15)
         if type == 2 {
             heal.removeFromSuperview()
         }
         
-        comBtn.frame = CGRectMake(type == 1 ? CGRectGetMaxX(heal.frame)+10:5, CGRectGetMaxY(titSubImg.frame)+15, 13, 9)
+        comBtn.frame = CGRect(x: type == 1 ? heal.frame.maxX+10:5, y: titSubImg.frame.maxY+15, width: 13, height: 9)
         
         var conNumStr = "0"
         if Int(newsInfo.post_hits!) > 99999 {
@@ -317,13 +341,13 @@ class GToutiaoTableViewCell: UITableViewCell {
         
         self.conNum.text = conNumStr
         conNum.sizeToFit()
-        conNum.frame = CGRectMake(CGRectGetMaxX(comBtn.frame)+5, CGRectGetMaxY(titSubImg.frame)+12, CGRectGetWidth(conNum.frame), 15)
+        conNum.frame = CGRect(x: comBtn.frame.maxX+5, y: titSubImg.frame.maxY+12, width: conNum.frame.width, height: 15)
         
-        timeBtn.frame = CGRectMake(CGRectGetMaxX(conNum.frame)+10, CGRectGetMaxY(titSubImg.frame)+14, 11, 11)
-        timeLab.frame = CGRectMake(CGRectGetMaxX(timeBtn.frame)+5, CGRectGetMaxY(titSubImg.frame)+12, 80, 15)
+        timeBtn.frame = CGRect(x: conNum.frame.maxX+10, y: titSubImg.frame.maxY+14, width: 11, height: 11)
+        timeLab.frame = CGRect(x: timeBtn.frame.maxX+5, y: titSubImg.frame.maxY+12, width: 80, height: 15)
         
-        let time:Array = (newsInfo.post_modified?.componentsSeparatedByString(" "))!
-        let date:Array = time[0].componentsSeparatedByString("-")
+        let time:Array = (newsInfo.post_modified?.components(separatedBy: " "))!
+        let date:Array = time[0].components(separatedBy: "-")
         if date.count >= 3 {
             self.timeLab.text = "\(date[1])/\(date[2])"
         }else if date.count >= 2 {
@@ -346,7 +370,7 @@ class GToutiaoTableViewCell: UITableViewCell {
         
     }
     
-    func categoryBtnClick(categoryBtn:UIButton) {
+    func categoryBtnClick(_ categoryBtn:UIButton) {
 //        print(categoryBtn.tag)
         
         self.delegate!.cateBtnClicked(categoryBtn)

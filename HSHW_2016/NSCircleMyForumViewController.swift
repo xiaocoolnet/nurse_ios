@@ -10,7 +10,7 @@ import UIKit
 
 class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
-    let rootTableView = UITableView(frame: CGRect.zero, style: .Grouped)
+    let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
     var forumModelArray = [ForumModel]()
     
@@ -25,16 +25,16 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
         loadData()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 圈子 我的")
+        BaiduMobStat.default().pageviewStart(withName: "护士站 圈子 我的")
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 圈子 我的")
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 我的")
     }
     
     func loadData() {
@@ -79,20 +79,20 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
     
     // MARK: - 设置子视图
     func setSubview() {
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
         self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
-        rootTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65-45)
-        rootTableView.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
+        rootTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-65-45)
+        rootTableView.backgroundColor = UIColor.white
         
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
-        rootTableView.registerClass(NSCircleDetailTableViewCell.self, forCellReuseIdentifier: "circleDetailCell")
+        rootTableView.register(NSCircleDetailTableViewCell.self, forCellReuseIdentifier: "circleDetailCell")
         
         //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
         //        rootTableView.mj_header.beginRefreshing()
@@ -104,44 +104,44 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
     }
     
     // MARK: - moreBtnClick
-    func moreBtnClick(moreBtn:UIButton) {
+    func moreBtnClick(_ moreBtn:UIButton) {
         print(moreBtn.tag)
         
         let labelTextArray = ["删除","取消"]
-        let labelTextColorArray = [UIColor.blackColor(),UIColor.lightGrayColor()]
+        let labelTextColorArray = [UIColor.black,UIColor.lightGray]
         
         NSCirclePublicAction.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray)
         
     }
     
     // MARK: - UItableViewdatasource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return forumModelArray.count
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("circleDetailCell", forIndexPath: indexPath) as! NSCircleDetailTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "circleDetailCell", for: indexPath) as! NSCircleDetailTableViewCell
         
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         
         cell.setCellWithNewsInfo(forumModelArray[indexPath.section])
         
         cell.moreBtn.tag = 100+indexPath.row
-        cell.moreBtn.addTarget(self, action: #selector(moreBtnClick(_:)), forControlEvents: .TouchUpInside)
+        cell.moreBtn.addTarget(self, action: #selector(moreBtnClick(_:)), for: .touchUpInside)
         
         return cell
     }
     
     // MARK: - UITableViewDelegate
-    private let titleSize:CGFloat = 14
-    private let contentSize:CGFloat = 12
+    fileprivate let titleSize:CGFloat = 14
+    fileprivate let contentSize:CGFloat = 12
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let forum = forumModelArray[indexPath.section]
         
@@ -151,8 +151,8 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
             
             
             var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
+            if contentHeight >= UIFont.systemFont(ofSize: contentSize).lineHeight*3 {
+                contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
             return 55+8+height+8+contentHeight+8+8+8// 个人信息高+上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
@@ -161,8 +161,8 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
             
             
             var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16-110-8)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
+            if contentHeight >= UIFont.systemFont(ofSize: contentSize).lineHeight*3 {
+                contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
             let cellHeight1:CGFloat = 80+8+8+8// 上边距+图片高+下边距
@@ -175,8 +175,8 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
             
             
             var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
+            if contentHeight >= UIFont.systemFont(ofSize: contentSize).lineHeight*3 {
+                contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
             let imgHeight = (WIDTH-16-15*2)/3.0*2/3.0
@@ -185,30 +185,30 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
         }
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 14
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 35
     }
     
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 35))
-        footerView.addTarget(self, action: #selector(footerViewClick), forControlEvents: .TouchUpInside)
+        footerView.addTarget(self, action: #selector(footerViewClick), for: .touchUpInside)
         
         let nameBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 30))
-        nameBtn.setImage(UIImage(named: "精华帖"), forState: .Normal)
-        nameBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
-        nameBtn.setTitleColor(COLOR, forState: .Normal)
-        nameBtn.setTitle("内科", forState: .Normal)
+        nameBtn.setImage(UIImage(named: "精华帖"), for: UIControlState())
+        nameBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        nameBtn.setTitleColor(COLOR, for: UIControlState())
+        nameBtn.setTitle("内科", for: UIControlState())
         nameBtn.sizeToFit()
         nameBtn.frame.origin = CGPoint(x: 8, y: (35-nameBtn.frame.height)/2.0)
         footerView.addSubview(nameBtn)
         
         let comeinLab = UILabel(frame: CGRect(x: nameBtn.frame.maxX, y: 0, width: WIDTH-nameBtn.frame.maxX-8, height: 35))
-        comeinLab.textAlignment = .Right
-        comeinLab.font = UIFont.systemFontOfSize(12)
+        comeinLab.textAlignment = .right
+        comeinLab.font = UIFont.systemFont(ofSize: 12)
         comeinLab.textColor = COLOR
         comeinLab.text = "进入圈子"
         footerView.addSubview(comeinLab)
@@ -216,7 +216,7 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
         return footerView
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 14))
         headerView.backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -224,7 +224,7 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
         return headerView
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("帖子详情")
         
         switch (indexPath.section,indexPath.row) {

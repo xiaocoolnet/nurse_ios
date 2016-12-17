@@ -10,7 +10,7 @@ import UIKit
 
 class NSCircleForumListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    let rootTableView = UITableView(frame: CGRect.zero, style: .Plain)
+    let rootTableView = UITableView(frame: CGRect.zero, style: .plain)
     
     var forumModelArray = [ForumModel]()
     
@@ -27,16 +27,16 @@ class NSCircleForumListViewController: UIViewController, UITableViewDataSource, 
         loadData()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 圈子 \((self.title ?? "加精置顶贴子列表"))")
+        BaiduMobStat.default().pageviewStart(withName: "护士站 圈子 \((self.title ?? "加精置顶贴子列表"))")
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 圈子 \((self.title ?? "加精置顶贴子列表"))")
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 \((self.title ?? "加精置顶贴子列表"))")
     }
     
     func loadData() {
@@ -82,18 +82,18 @@ class NSCircleForumListViewController: UIViewController, UITableViewDataSource, 
     // MARK: - 设置子视图
     func setSubview() {
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
-        rootTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65)
-        rootTableView.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
+        rootTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-65)
+        rootTableView.backgroundColor = UIColor.white
         
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
-        rootTableView.registerClass(NSCircleForumListTableViewCell.self, forCellReuseIdentifier: "forumListCell")
+        rootTableView.register(NSCircleForumListTableViewCell.self, forCellReuseIdentifier: "forumListCell")
         
         //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
         //        rootTableView.mj_header.beginRefreshing()
@@ -105,15 +105,15 @@ class NSCircleForumListViewController: UIViewController, UITableViewDataSource, 
     }
     
     // MARK: - UItableViewdatasource
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return forumModelArray.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("forumListCell", forIndexPath: indexPath) as! NSCircleForumListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "forumListCell", for: indexPath) as! NSCircleForumListTableViewCell
         
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         
         cell.setCellWithNewsInfo(forumModelArray[indexPath.row])
         
@@ -121,10 +121,10 @@ class NSCircleForumListViewController: UIViewController, UITableViewDataSource, 
     }
     
     // MARK: - UITableViewDelegate
-    private let titleSize:CGFloat = 14
-    private let contentSize:CGFloat = 12
+    fileprivate let titleSize:CGFloat = 14
+    fileprivate let contentSize:CGFloat = 12
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let forum = forumModelArray[indexPath.row]
         
@@ -134,8 +134,8 @@ class NSCircleForumListViewController: UIViewController, UITableViewDataSource, 
             
             
             var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
+            if contentHeight >= UIFont.systemFont(ofSize: contentSize).lineHeight*3 {
+                contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
             return 55+8+height+8+contentHeight+8+8+8// 个人信息高+上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
@@ -144,8 +144,8 @@ class NSCircleForumListViewController: UIViewController, UITableViewDataSource, 
             
             
             var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16-110-8)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
+            if contentHeight >= UIFont.systemFont(ofSize: contentSize).lineHeight*3 {
+                contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
             let cellHeight1:CGFloat = 80+8+8+8// 上边距+图片高+下边距
@@ -158,8 +158,8 @@ class NSCircleForumListViewController: UIViewController, UITableViewDataSource, 
             
             
             var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
+            if contentHeight >= UIFont.systemFont(ofSize: contentSize).lineHeight*3 {
+                contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
             let imgHeight = (WIDTH-16-15*2)/3.0*2/3.0
@@ -168,7 +168,7 @@ class NSCircleForumListViewController: UIViewController, UITableViewDataSource, 
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("贴子详情")
     }
     

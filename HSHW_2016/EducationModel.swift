@@ -45,7 +45,7 @@ class EduList: JSONJoy {
         }
     }
     
-    func append(list: [EduInfo]){
+    func append(_ list: [EduInfo]){
         self.objectlist = list + self.objectlist
     }
     
@@ -60,8 +60,8 @@ class EduInfo: JSONJoy{
         id = decoder["id"].string ?? ""
         name = decoder["name"].string ?? ""
         
-        name = name.stringByReplacingOccurrencesOfString("&lt;", withString: "<")
-        name = name.stringByReplacingOccurrencesOfString("&gt;", withString: ">")
-        name = name.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
+        name = name.replacingOccurrences(of: "&lt;", with: "<")
+        name = name.replacingOccurrences(of: "&gt;", with: ">")
+        name = name.replacingOccurrences(of: "&amp;", with: "&")
     }
 }

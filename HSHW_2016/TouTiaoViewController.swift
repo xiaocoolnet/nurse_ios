@@ -17,7 +17,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     let scrollView = UIScrollView()
     let pageControl = SMPageControl()
     //    var picArr = Array<String>()
-    var timer = NSTimer()
+    var timer = Timer()
     var dataSource = Array<NewsInfo>()
     //    var likedataSource = LikeList()
 //    var requestHelper = NewsPageHelper()
@@ -32,45 +32,45 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     //    var titArr:[String] = Array<String>()
     var imageArr = Array<NewsInfo>()
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("新闻/出国 "+(self.title ?? "")!)
+        BaiduMobStat.default().pageviewEnd(withName: "新闻/出国 "+(self.title ?? "")!)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if newsType != nil {
-            self.navigationController?.navigationBar.hidden = false
-            self.tabBarController?.tabBar.hidden = true
+            self.navigationController?.navigationBar.isHidden = false
+            self.tabBarController?.tabBar.isHidden = true
         }
         
-        let rightItem = UIButton.init(frame: CGRectMake(0, 0, 50, 28))
+        let rightItem = UIButton.init(frame: CGRect(x: 0, y: 0, width: 50, height: 28))
         rightItem.backgroundColor = COLOR
         rightItem.layer.cornerRadius = 5
-        rightItem.addTarget(self, action: #selector(rightItemClick), forControlEvents: .TouchUpInside)
+        rightItem.addTarget(self, action: #selector(rightItemClick), for: .touchUpInside)
         
-        let rightLab = UILabel.init(frame: CGRectMake(0, 0, CGRectGetWidth(rightItem.frame), CGRectGetHeight(rightItem.frame)))
-        rightLab.textAlignment = NSTextAlignment.Center
+        let rightLab = UILabel.init(frame: CGRect(x: 0, y: 0, width: rightItem.frame.width, height: rightItem.frame.height))
+        rightLab.textAlignment = NSTextAlignment.center
         rightLab.text = "报名"
-        rightLab.textColor = UIColor.whiteColor()
+        rightLab.textColor = UIColor.white
         rightItem.addSubview(rightLab)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightItem)
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("新闻/出国 "+(self.title ?? "")!)
+        BaiduMobStat.default().pageviewStart(withName: "新闻/出国 "+(self.title ?? "")!)
 
         recivePush()
     }
     
     func recivePush() {
         
-        let userInfo = NSUserDefaults.standardUserDefaults().valueForKey("recivePushNotification") as? [NSObject : AnyObject]
+        let userInfo = UserDefaults.standard.value(forKey: "recivePushNotification") as? [AnyHashable: Any]
         
         if (userInfo != nil) {
             
@@ -83,26 +83,26 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 // badge数量
                 let badge = aps!["badge"] as? NSInteger
                 // 播放声音
-                let sound = aps!.valueForKey("sound") as? NSString
+                let sound = aps!.value(forKey: "sound") as? NSString
                 //            // 取得Extras字段内容
                 //            let Extras = userInfo!["Extras"] as? NSString //服务端中Extras字段，key是自己定义的
-                print("content = [%@], badge = [%ld], sound = [%@], Extras = [%@]", content, badge, sound)
+                print("content = [%@], badge = [%ld], sound = [%@], Extras = [%@]", content as Any, badge, sound)
                 //             iOS badge 清0
-                UIApplication.sharedApplication().applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber - (badge ?? 0)!
+                UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber - (badge ?? 0)!
                 
                 if (userInfo!["news"] != nil) {
                     
                     //                [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil
                     //                let data = try?NSJSONSerialization.dataWithJSONObject(userInfo, options: NSJSONWritingOptions.PrettyPrinted)
-                    var data2 = NSData()
-                    if userInfo!["news"]!.isKindOfClass(NSString) {
-                        data2 = (userInfo!["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)!
-                    }else if userInfo!["news"]!.isKindOfClass(NSDictionary) {
-                        data2 = try!NSJSONSerialization.dataWithJSONObject(userInfo!["news"] as! NSDictionary, options: NSJSONWritingOptions.PrettyPrinted)
+                    var data2 = Data()
+                    if (userInfo!["news"]! is NSString) {
+                        data2 = (userInfo!["news"] as! NSString).data(using: String.Encoding.utf8.rawValue)!
+                    }else if (userInfo!["news"]! is NSDictionary) {
+                        data2 = try!JSONSerialization.data(withJSONObject: userInfo!["news"] as! NSDictionary, options: JSONSerialization.WritingOptions.prettyPrinted)
                     }
                     //                let data = (userInfo["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)
                     
-                    let newsInfo =  NewsInfo(JSONDecoder(data2))
+                    let newsInfo =  NewsInfo(JSONDecoder(data2 as AnyObject))
                     let next = NewsContantViewController()
                     next.newsInfo = newsInfo
                     
@@ -111,13 +111,13 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 // 通知打开回执上报
                 CloudPushSDK.handleReceiveRemoteNotification(userInfo)
                 
-                NSUserDefaults.standardUserDefaults().removeObjectForKey("recivePushNotification")
+                UserDefaults.standard.removeObject(forKey: "recivePushNotification")
             }
         }
     }
     
     func rightItemClick() {
-        UIApplication.sharedApplication().openURL(NSURL.init(string: "http://crm.chinanurse.cn/form/sign_up.php")!)
+        UIApplication.shared.openURL(URL.init(string: "http://crm.chinanurse.cn/form/sign_up.php")!)
     }
     
     override func viewDidLoad() {
@@ -155,7 +155,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     self.dataSource.append(element)
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.myTableView.reloadData()
                     self.pager += 1
                 })
@@ -164,7 +164,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 
             }else{
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     
                     self.myTableView.mj_footer.endRefreshingWithNoMoreData()
                     
@@ -190,7 +190,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 //                    //                    self.titArr.append(imageInfo)
                 
                 //                }
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.updateSlideImage()
                     self.myTableView.reloadData()
                 })
@@ -201,22 +201,22 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 }
             }else{
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.myTableView.mj_header.endRefreshing()
                     
-                    if String((response ?? "")!)  == "no data" {
+                    if String(describing: response)  == "no data" {
                         self.imageArr = Array<NewsInfo>()
                         self.updateSlideImage()
                         self.myTableView.reloadData()
                     }else{
                         
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "轮播图获取失败"
-                        hud.detailsLabelText = String((response ?? "")!)
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = "轮播图获取失败"
+                        hud?.detailsLabelText = String(describing: response)
+                        hud?.margin = 10.0
+                        hud?.removeFromSuperViewOnHide = true
+                        hud?.hide(true, afterDelay: 1)
                     }
                     
                 })
@@ -229,7 +229,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 //                print(response)
                 
                 self.dataSource = response as! Array<NewsInfo>
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.updateSlideImage()
                     self.myTableView.reloadData()
                 })
@@ -242,21 +242,21 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                 
             }else{
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.myTableView.mj_header.endRefreshing()
                     
-                    if String((response ?? "")!) == "no data" {
+                    if String(describing: response) == "no data" {
                         self.dataSource = Array<NewsInfo>()
                         self.myTableView.reloadData()
                     }else{
                         
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "文章列表获取失败"
-                        hud.detailsLabelText = String((response ?? "")!)
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = "文章列表获取失败"
+                        hud?.detailsLabelText = String(describing: response)
+                        hud?.margin = 10.0
+                        hud?.removeFromSuperViewOnHide = true
+                        hud?.hide(true, afterDelay: 1)
                     }
                     
                 })
@@ -268,48 +268,48 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     func updateSlideImage(){
         
         for subView in self.scrollView.subviews {
-            if subView.isKindOfClass(UIImageView) {
+            if subView.isKind(of: UIImageView.self) {
                 subView.removeFromSuperview()
             }
         }
         
         let margin:CGFloat = 4
         pageControl.numberOfPages = self.imageArr.count
-        pageControl.frame = CGRectMake(
-            WIDTH-margin-pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)-margin*CGFloat(self.imageArr.count-1),
-            WIDTH*190/375-25,
-            pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)+margin*CGFloat(self.imageArr.count-1),
-            25)
+        pageControl.frame = CGRect(
+            x: WIDTH-margin-pageControl.rect(forPageIndicator: 0).width*CGFloat(self.imageArr.count)-margin*CGFloat(self.imageArr.count-1),
+            y: WIDTH*190/375-25,
+            width: pageControl.rect(forPageIndicator: 0).width*CGFloat(self.imageArr.count)+margin*CGFloat(self.imageArr.count-1),
+            height: 25)
         pageControl.indicatorMargin = margin
         pageControl.currentPage = 0
         
-        for (i,slideImage) in self.imageArr.enumerate() {
+        for (i,slideImage) in self.imageArr.enumerated() {
             
             let  imageView = UIImageView()
-            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
+            imageView.frame = CGRect(x: CGFloat(i)*WIDTH, y: 0, width: WIDTH, height: WIDTH*190/375)
             imageView.tag = i+1
 
             if  (!NurseUtil.net.isWifi() && loadPictureOnlyWiFi) || slideImage.thumbArr.count == 0 {
                 imageView.image = UIImage.init(named: "defaultImage.png")
             }else{
-                imageView.sd_setImageWithURL(NSURL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
+                imageView.sd_setImage(with: URL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
             }
             
-            let bottom = UIView(frame: CGRectMake(0, WIDTH*190/375-25, WIDTH, 25))
-            bottom.backgroundColor = UIColor.grayColor()
+            let bottom = UIView(frame: CGRect(x: 0, y: WIDTH*190/375-25, width: WIDTH, height: 25))
+            bottom.backgroundColor = UIColor.gray
             bottom.alpha = 0.5
             imageView.addSubview(bottom)
             
-            let titLab = UILabel(frame: CGRectMake(10, WIDTH*190/375-25, CGRectGetMinX(pageControl.frame)-10, 25))
-            titLab.font = UIFont.systemFontOfSize(13)
-            titLab.textColor = UIColor.whiteColor()
+            let titLab = UILabel(frame: CGRect(x: 10, y: WIDTH*190/375-25, width: pageControl.frame.minX-10, height: 25))
+            titLab.font = UIFont.systemFont(ofSize: 13)
+            titLab.textColor = UIColor.white
             titLab.adjustsFontSizeToFitWidth = true
             titLab.text = slideImage.post_title
             titLab.tag = i+1
             imageView.addSubview(titLab)
             
             //为图片视图添加点击事件
-            imageView.userInteractionEnabled = true
+            imageView.isUserInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
             //            手指头
             tap.numberOfTapsRequired = 1
@@ -319,34 +319,34 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
             self.scrollView.addSubview(imageView)
         }
         
-        scrollView.contentSize = CGSizeMake(CGFloat(self.imageArr.count)*WIDTH, 0)
-        scrollView.contentOffset = CGPointMake(0, 0)
+        scrollView.contentSize = CGSize(width: CGFloat(self.imageArr.count)*WIDTH, height: 0)
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)
         
     }
     
     func createTableView() {
-        myTableView.frame = CGRectMake(0, 1, WIDTH, newsType == nil ? HEIGHT-114:HEIGHT-64)
+        myTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: newsType == nil ? HEIGHT-114:HEIGHT-64)
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
+        myTableView.register(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
         self.view.addSubview(myTableView)
         
-        let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*190/375))
+        let one = UIView(frame: CGRect(x: 0, y: 1, width: WIDTH, height: WIDTH*190/375))
         self.view.addSubview(one)
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
         
-        scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*190/375)
+        scrollView.frame = CGRect(x: 0, y: 0,width: WIDTH, height: WIDTH*190/375)
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.pagingEnabled = true
+        scrollView.isPagingEnabled = true
         scrollView.delegate = self
         
-        scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
-        scrollView.contentOffset = CGPointMake(0, 0)
+        scrollView.contentSize = CGSize(width: 4*WIDTH, height: 0)
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)
         one.addSubview(scrollView)
         
-        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*190/375-25, 80, 25)
-        pageControl.pageIndicatorTintColor = UIColor.whiteColor()
+        pageControl.frame = CGRect(x: WIDTH-80, y: WIDTH*190/375-25, width: 80, height: 25)
+        pageControl.pageIndicatorTintColor = UIColor.white
         pageControl.currentPageIndicatorTintColor = COLOR
         pageControl.numberOfPages = self.imageArr.count
         pageControl.currentPage = 0
@@ -390,7 +390,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     //       }
     //    }
     // MARK: 图片点击事件
-    func tapAction(tap:UIGestureRecognizer) {
+    func tapAction(_ tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
@@ -420,20 +420,20 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
         //        timer.fireDate = NSDate.distantPast()
-        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         var offsetX:CGFloat = self.scrollView.contentOffset.x
         offsetX = offsetX + (self.scrollView.frame.size.width * 0.5)
         let page:Int = Int(offsetX)/Int(self.scrollView.frame.size.width)
         pageControl.currentPage = page
     }
     //开始拖拽时
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         //            timer.fireDate = NSDate.distantFuture()
         timer.invalidate()
     }
@@ -442,12 +442,12 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     //            timer.fireDate = NSDate.distantPast()
     //    }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return self.dataSource.count;
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let newsInfo = self.dataSource[indexPath.row]
         
         //        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
@@ -474,11 +474,11 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!GToutiaoTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "toutiao", for: indexPath)as!GToutiaoTableViewCell
         //        cell.type = 1
         cell.delegate = self
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         let newsInfo = self.dataSource[indexPath.row]
         
         if newsInfo.thumbArr.count >= 3 {
@@ -489,7 +489,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newsInfo = self.dataSource[indexPath.row]
         //        print(newsInfo.title,newsInfo.term_id)
         let next = NewsContantViewController()
@@ -515,7 +515,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     // MARK: 点击分类按钮
-    func cateBtnClicked(categoryBtn: UIButton) {
+    func cateBtnClicked(_ categoryBtn: UIButton) {
         let cateDetail = GNewsCateDetailViewController()
         cateDetail.newsType = categoryBtn.tag
         cateDetail.type = 1
@@ -524,7 +524,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     // MARK:更新模型
-    func changeModel(newInfo: NewsInfo, andIndex: Int) {
+    func changeModel(_ newInfo: NewsInfo, andIndex: Int) {
         self.dataSource[andIndex] = newInfo
         self.myTableView.reloadData()
     }

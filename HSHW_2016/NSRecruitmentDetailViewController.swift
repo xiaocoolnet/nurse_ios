@@ -33,23 +33,23 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
     
     weak var superViewController:NurseStationViewController?
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 招聘 " + (self.title ?? "")!)
+        BaiduMobStat.default().pageviewStart(withName: "护士站 招聘 " + (self.title ?? "")!)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 招聘 " + (self.title ?? "")!)
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 招聘 " + (self.title ?? "")!)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBar.hidden = false
-        self.tabBarController?.tabBar.hidden = true
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = true
 
     }
     
@@ -63,11 +63,11 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
     }
     
     func setSubViews() {
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         let jobModel = currentJobModel
         
@@ -75,40 +75,40 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
         
         self.automaticallyAdjustsScrollViewInsets = false
         
-        let rootScrollView = UIScrollView(frame: CGRectMake(0, 1, WIDTH, HEIGHT-64-1-WIDTH*59/375))
-        rootScrollView.backgroundColor = UIColor.whiteColor()
+        let rootScrollView = UIScrollView(frame: CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-64-1-WIDTH*59/375))
+        rootScrollView.backgroundColor = UIColor.white
         self.view.addSubview(rootScrollView)
         
         let title = UILabel()
         let height = calculateHeight(jobModel!.title, size: 18, width: WIDTH-20)
-        title.frame = CGRectMake(10, 10, WIDTH-20, height)
+        title.frame = CGRect(x: 10, y: 10, width: WIDTH-20, height: height)
         title.text = jobModel!.title
-        title.font = UIFont.systemFontOfSize(22)
+        title.font = UIFont.systemFont(ofSize: 22)
         title.textColor = COLOR
         title.numberOfLines = 0
         title.sizeToFit()
         rootScrollView.addSubview(title)
         
         let eyeImage = UIImageView(image: UIImage(named: "ic_eye_purple.png"))
-        eyeImage.frame = CGRectMake(10,CGRectGetMaxY(title.frame)+10,8,8)
-        eyeImage.contentMode = .ScaleAspectFit
+        eyeImage.frame = CGRect(x: 10,y: title.frame.maxY+10,width: 8,height: 8)
+        eyeImage.contentMode = .scaleAspectFit
         rootScrollView.addSubview(eyeImage)
         
-        let lookCount = UILabel(frame: CGRectMake(CGRectGetMaxX(eyeImage.frame)+5,CGRectGetMaxY(title.frame)+10,30,10))
-        lookCount.font = UIFont.systemFontOfSize(10)
+        let lookCount = UILabel(frame: CGRect(x: eyeImage.frame.maxX+5,y: title.frame.maxY+10,width: 30,height: 10))
+        lookCount.font = UIFont.systemFont(ofSize: 10)
         lookCount.text = (jobModel?.hits ?? "0")!
         lookCount.sizeToFit()
         lookCount.center.y = eyeImage.center.y
         rootScrollView.addSubview(lookCount)
         
         let timeImage = UIImageView(image: UIImage(named: "ic_time_purple.png"))
-        timeImage.frame = CGRectMake(CGRectGetMaxX(lookCount.frame)+18, CGRectGetMaxY(title.frame)+10, 8, 8)
+        timeImage.frame = CGRect(x: lookCount.frame.maxX+18, y: title.frame.maxY+10, width: 8, height: 8)
 //        timeImage.frame = CGRectMake(10, CGRectGetMaxY(title.frame)+10, 8, 8)
-        timeImage.contentMode = .ScaleAspectFit
+        timeImage.contentMode = .scaleAspectFit
         rootScrollView.addSubview(timeImage)
         
-        let timeLabel = UILabel(frame: CGRectMake(CGRectGetMaxX(timeImage.frame)+5,CGRectGetMaxY(title.frame)+10,100,10))
-        timeLabel.font = UIFont.systemFontOfSize(10)
+        let timeLabel = UILabel(frame: CGRect(x: timeImage.frame.maxX+5,y: title.frame.maxY+10,width: 100,height: 10))
+        timeLabel.font = UIFont.systemFont(ofSize: 10)
         timeLabel.text = self.timeStampToString((jobModel?.create_time)!)
         timeLabel.sizeToFit()
         timeLabel.center.y = timeImage.center.y
@@ -116,14 +116,14 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
         
         
         
-        let nameLabel = UILabel(frame: CGRectMake(10,CGRectGetMaxY(timeLabel.frame)+10,100,25))
-        nameLabel.font = UIFont.boldSystemFontOfSize(15)
+        let nameLabel = UILabel(frame: CGRect(x: 10,y: timeLabel.frame.maxY+10,width: 100,height: 25))
+        nameLabel.font = UIFont.boldSystemFont(ofSize: 15)
         nameLabel.text = "企业名称:"
         nameLabel.sizeToFit()
         rootScrollView.addSubview(nameLabel)
         
-        let name = UILabel(frame: CGRectMake(CGRectGetMaxX(nameLabel.frame)+8,CGRectGetMaxY(timeLabel.frame)+10,200,25))
-        name.font = UIFont.systemFontOfSize(14)
+        let name = UILabel(frame: CGRect(x: nameLabel.frame.maxX+8,y: timeLabel.frame.maxY+10,width: 200,height: 25))
+        name.font = UIFont.systemFont(ofSize: 14)
         name.text = jobModel!.companyname
         name.sizeToFit()
         name.center.y = nameLabel.center.y
@@ -131,9 +131,9 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
         
         
         
-        let descripTagLab = UILabel(frame: CGRectMake(10,CGRectGetMaxY(name.frame)+10,WIDTH-20,0))
-        descripTagLab.font = UIFont.boldSystemFontOfSize(15)
-        descripTagLab.textColor = UIColor.blackColor()
+        let descripTagLab = UILabel(frame: CGRect(x: 10,y: name.frame.maxY+10,width: WIDTH-20,height: 0))
+        descripTagLab.font = UIFont.boldSystemFont(ofSize: 15)
+        descripTagLab.textColor = UIColor.black
         descripTagLab.text = "企业简介:"
         descripTagLab.sizeToFit()
         rootScrollView.addSubview(descripTagLab)
@@ -141,15 +141,15 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
         let descripStr = jobModel!.companyinfo
         let attrStr = NSMutableAttributedString(string: descripStr)
         //                    attrStr.addAttributes([NSFontAttributeName:UIFont.boldSystemFontOfSize(15)], range: NSMakeRange(0, 5))
-        attrStr.addAttributes([NSFontAttributeName:UIFont.systemFontOfSize(14)], range: NSMakeRange(0, attrStr.length))
-        attrStr.addAttributes([NSForegroundColorAttributeName:UIColor.lightGrayColor()], range: NSMakeRange(0, attrStr.length))
+        attrStr.addAttributes([NSFontAttributeName:UIFont.systemFont(ofSize: 14)], range: NSMakeRange(0, attrStr.length))
+        attrStr.addAttributes([NSForegroundColorAttributeName:UIColor.lightGray], range: NSMakeRange(0, attrStr.length))
         
-        let descript = UILabel(frame: CGRectMake(
-            CGRectGetMaxX(descripTagLab.frame)+8,
-            CGRectGetMaxY(name.frame)+10,
-            WIDTH-CGRectGetMaxX(descripTagLab.frame)-10,
-            attrStr.boundingRectWithSize(CGSizeMake(WIDTH-CGRectGetMaxX(descripTagLab.frame)-10, 0), options: NSStringDrawingOptions.UsesLineFragmentOrigin, context: nil).size.height))
-        descript.font = UIFont.boldSystemFontOfSize(15)
+        let descript = UILabel(frame: CGRect(
+            x: descripTagLab.frame.maxX+8,
+            y: name.frame.maxY+10,
+            width: WIDTH-descripTagLab.frame.maxX-10,
+            height: attrStr.boundingRect(with: CGSize(width: WIDTH-descripTagLab.frame.maxX-10, height: 0), options: NSStringDrawingOptions.usesLineFragmentOrigin, context: nil).size.height))
+        descript.font = UIFont.boldSystemFont(ofSize: 15)
         descript.numberOfLines = 0
         descript.attributedText = attrStr
         descript.sizeToFit()
@@ -157,83 +157,83 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
         
         
         
-        let criteria = UILabel(frame: CGRectMake(10,CGRectGetMaxY(descript.frame)+10,70,25))
-        criteria.font = UIFont.boldSystemFontOfSize(15)
+        let criteria = UILabel(frame: CGRect(x: 10,y: descript.frame.maxY+10,width: 70,height: 25))
+        criteria.font = UIFont.boldSystemFont(ofSize: 15)
         criteria.text = "招聘条件:"
         criteria.sizeToFit()
         rootScrollView.addSubview(criteria)
         
-        let criteriaLabel = UILabel(frame: CGRectMake(CGRectGetMaxX(criteria.frame)+8,CGRectGetMaxY(descript.frame)+10,75,25))
-        criteriaLabel.font = UIFont.systemFontOfSize(14)
-        criteriaLabel.textColor = UIColor.lightGrayColor()
+        let criteriaLabel = UILabel(frame: CGRect(x: criteria.frame.maxX+8,y: descript.frame.maxY+10,width: 75,height: 25))
+        criteriaLabel.font = UIFont.systemFont(ofSize: 14)
+        criteriaLabel.textColor = UIColor.lightGray
         criteriaLabel.text = jobModel!.education
         criteriaLabel.sizeToFit()
         rootScrollView.addSubview(criteriaLabel)
 
         
-        let personalNumTagLab = UILabel(frame: CGRectMake(10,CGRectGetMaxY(criteriaLabel.frame)+10,70,25))
-        personalNumTagLab.font = UIFont.boldSystemFontOfSize(15)
+        let personalNumTagLab = UILabel(frame: CGRect(x: 10,y: criteriaLabel.frame.maxY+10,width: 70,height: 25))
+        personalNumTagLab.font = UIFont.boldSystemFont(ofSize: 15)
         personalNumTagLab.text = "招聘人数:"
         personalNumTagLab.sizeToFit()
         rootScrollView.addSubview(personalNumTagLab)
 
-        let personalNumLab = UILabel(frame: CGRectMake(CGRectGetMaxX(personalNumTagLab.frame)+8,CGRectGetMaxY(criteriaLabel.frame)+10,75,25))
-        personalNumLab.font = UIFont.systemFontOfSize(14)
-        personalNumLab.textColor = UIColor.lightGrayColor()
+        let personalNumLab = UILabel(frame: CGRect(x: personalNumTagLab.frame.maxX+8,y: criteriaLabel.frame.maxY+10,width: 75,height: 25))
+        personalNumLab.font = UIFont.systemFont(ofSize: 14)
+        personalNumLab.textColor = UIColor.lightGray
         personalNumLab.text = jobModel!.count
         personalNumLab.sizeToFit()
         rootScrollView.addSubview(personalNumLab)
         
-        let salaryTagLab = UILabel(frame: CGRectMake(170,CGRectGetMaxY(criteriaLabel.frame)+10,70,25))
-        salaryTagLab.font = UIFont.boldSystemFontOfSize(15)
+        let salaryTagLab = UILabel(frame: CGRect(x: 170,y: criteriaLabel.frame.maxY+10,width: 70,height: 25))
+        salaryTagLab.font = UIFont.boldSystemFont(ofSize: 15)
         salaryTagLab.text = "薪资待遇:"
         salaryTagLab.sizeToFit()
         rootScrollView.addSubview(salaryTagLab)
         
-        let salaryLab = UILabel(frame: CGRectMake(CGRectGetMaxX(salaryTagLab.frame)+8,CGRectGetMaxY(criteriaLabel.frame)+10,WIDTH-240,25))
-        salaryLab.font = UIFont.systemFontOfSize(14)
-        salaryLab.textColor = UIColor.lightGrayColor()
+        let salaryLab = UILabel(frame: CGRect(x: salaryTagLab.frame.maxX+8,y: criteriaLabel.frame.maxY+10,width: WIDTH-240,height: 25))
+        salaryLab.font = UIFont.systemFont(ofSize: 14)
+        salaryLab.textColor = UIColor.lightGray
         salaryLab.text = currentJobModel!.salary
         salaryLab.sizeToFit()
         rootScrollView.addSubview(salaryLab)
         
-        let expTagLab = UILabel(frame: CGRectMake(10,CGRectGetMaxY(personalNumLab.frame)+10,70,25))
-        expTagLab.font = UIFont.boldSystemFontOfSize(15)
+        let expTagLab = UILabel(frame: CGRect(x: 10,y: personalNumLab.frame.maxY+10,width: 70,height: 25))
+        expTagLab.font = UIFont.boldSystemFont(ofSize: 15)
         expTagLab.text = "工作年限:"
         expTagLab.sizeToFit()
         rootScrollView.addSubview(expTagLab)
         
-        let expLab = UILabel(frame: CGRectMake(CGRectGetMaxX(expTagLab.frame)+8,CGRectGetMaxY(personalNumLab.frame)+10,WIDTH-240,25))
-        expLab.font = UIFont.systemFontOfSize(14)
-        expLab.textColor = UIColor.lightGrayColor()
+        let expLab = UILabel(frame: CGRect(x: expTagLab.frame.maxX+8,y: personalNumLab.frame.maxY+10,width: WIDTH-240,height: 25))
+        expLab.font = UIFont.systemFont(ofSize: 14)
+        expLab.textColor = UIColor.lightGray
         expLab.text = currentJobModel!.experience
         expLab.sizeToFit()
         rootScrollView.addSubview(expLab)
 
-        let welfareTagLab = UILabel(frame: CGRectMake(170,CGRectGetMaxY(personalNumLab.frame)+10,70,25))
-        welfareTagLab.font = UIFont.boldSystemFontOfSize(15)
+        let welfareTagLab = UILabel(frame: CGRect(x: 170,y: personalNumLab.frame.maxY+10,width: 70,height: 25))
+        welfareTagLab.font = UIFont.boldSystemFont(ofSize: 15)
         welfareTagLab.text = "福利待遇:"
         welfareTagLab.sizeToFit()
         rootScrollView.addSubview(welfareTagLab)
 
-        let welfareLab = UILabel(frame: CGRectMake(CGRectGetMaxX(welfareTagLab.frame)+8,CGRectGetMaxY(personalNumLab.frame)+10,WIDTH-240,25))
-        welfareLab.font = UIFont.systemFontOfSize(14)
-        welfareLab.textColor = UIColor.lightGrayColor()
+        let welfareLab = UILabel(frame: CGRect(x: welfareTagLab.frame.maxX+8,y: personalNumLab.frame.maxY+10,width: WIDTH-240,height: 25))
+        welfareLab.font = UIFont.systemFont(ofSize: 14)
+        welfareLab.textColor = UIColor.lightGray
         welfareLab.text = jobModel!.welfare
         welfareLab.sizeToFit()
         rootScrollView.addSubview(welfareLab)
         
         
         
-        let addressTagLab = UILabel(frame: CGRectMake(10,CGRectGetMaxY(welfareLab.frame)+10,70,25))
-        addressTagLab.font = UIFont.boldSystemFontOfSize(15)
+        let addressTagLab = UILabel(frame: CGRect(x: 10,y: welfareLab.frame.maxY+10,width: 70,height: 25))
+        addressTagLab.font = UIFont.boldSystemFont(ofSize: 15)
         addressTagLab.text = "工作地点:"
         addressTagLab.sizeToFit()
         rootScrollView.addSubview(addressTagLab)
         
-        let addressLab = UILabel(frame: CGRectMake(CGRectGetMaxX(addressTagLab.frame)+8,CGRectGetMaxY(welfareLab.frame)+10,WIDTH-240,25))
-        addressLab.font = UIFont.systemFontOfSize(14)
-        addressLab.textColor = UIColor.lightGrayColor()
+        let addressLab = UILabel(frame: CGRect(x: addressTagLab.frame.maxX+8,y: welfareLab.frame.maxY+10,width: WIDTH-240,height: 25))
+        addressLab.font = UIFont.systemFont(ofSize: 14)
+        addressLab.textColor = UIColor.lightGray
         addressLab.text = currentJobModel!.address
         addressLab.sizeToFit()
         addressLab.center.y = addressTagLab.center.y
@@ -241,15 +241,15 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
         
         
         
-        let positionDescript = UILabel(frame: CGRectMake(10,CGRectGetMaxY(addressLab.frame)+10,100,25))
-        positionDescript.font = UIFont.boldSystemFontOfSize(15)
+        let positionDescript = UILabel(frame: CGRect(x: 10,y: addressLab.frame.maxY+10,width: 100,height: 25))
+        positionDescript.font = UIFont.boldSystemFont(ofSize: 15)
         positionDescript.text = "职位描述:"
         positionDescript.sizeToFit()
         rootScrollView.addSubview(positionDescript)
         
-        let descripDetail = UILabel(frame: CGRectMake(10,CGRectGetMaxY(addressLab.frame)+40,WIDTH-20,200))
-        descripDetail.font = UIFont.systemFontOfSize(14)
-        descripDetail.textColor = UIColor.lightGrayColor()
+        let descripDetail = UILabel(frame: CGRect(x: 10,y: addressLab.frame.maxY+40,width: WIDTH-20,height: 200))
+        descripDetail.font = UIFont.systemFont(ofSize: 14)
+        descripDetail.textColor = UIColor.lightGray
         descripDetail.numberOfLines = 0
         descripDetail.text = jobModel!.description
         descripDetail.frame.size.height = calculateHeight((jobModel?.description)!, size: 14, width: WIDTH-20)
@@ -258,46 +258,46 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
         
         
         
-        let contactTagLab = UILabel(frame: CGRectMake(10,CGRectGetMaxY(descripDetail.frame)+10,80,25))
-        contactTagLab.font = UIFont.boldSystemFontOfSize(15)
+        let contactTagLab = UILabel(frame: CGRect(x: 10,y: descripDetail.frame.maxY+10,width: 80,height: 25))
+        contactTagLab.font = UIFont.boldSystemFont(ofSize: 15)
         contactTagLab.text = "联系方式:"
         contactTagLab.sizeToFit()
         rootScrollView.addSubview(contactTagLab)
         
-        let contactNameLab = UILabel(frame: CGRectMake(CGRectGetMaxX(contactTagLab.frame)+8,CGRectGetMaxY(descripDetail.frame)+10,80,25))
-        contactNameLab.font = UIFont.boldSystemFontOfSize(14)
-        contactNameLab.textColor = UIColor.lightGrayColor()
+        let contactNameLab = UILabel(frame: CGRect(x: contactTagLab.frame.maxX+8,y: descripDetail.frame.maxY+10,width: 80,height: 25))
+        contactNameLab.font = UIFont.boldSystemFont(ofSize: 14)
+        contactNameLab.textColor = UIColor.lightGray
         contactNameLab.text = jobModel?.linkman
         contactNameLab.sizeToFit()
         contactNameLab.center.y = contactTagLab.center.y
         rootScrollView.addSubview(contactNameLab)
         
-        contactTelBtn.frame = CGRectMake(CGRectGetMaxX(contactTagLab.frame)+8, CGRectGetMaxY(contactNameLab.frame)+8, 10, 25)
-        contactTelBtn.setTitleColor(COLOR, forState: .Normal)
-        contactTelBtn.titleLabel!.font = UIFont.systemFontOfSize(14)
+        contactTelBtn.frame = CGRect(x: contactTagLab.frame.maxX+8, y: contactNameLab.frame.maxY+8, width: 10, height: 25)
+        contactTelBtn.setTitleColor(COLOR, for: UIControlState())
+        contactTelBtn.titleLabel!.font = UIFont.systemFont(ofSize: 14)
         if !canLookTel {
-            contactTelBtn.setTitle("查看联系方式", forState: .Normal)
-            contactTelBtn.addTarget(self, action: #selector(contactClick), forControlEvents: .TouchUpInside)
+            contactTelBtn.setTitle("查看联系方式", for: UIControlState())
+            contactTelBtn.addTarget(self, action: #selector(contactClick), for: .touchUpInside)
         }else {
-            contactTelBtn.setTitle(jobModel!.phone, forState: .Normal)
+            contactTelBtn.setTitle(jobModel!.phone, for: UIControlState())
         }
         contactTelBtn.sizeToFit()
 //        contactTelBtn.center.y = contactNameLab.center.y
         rootScrollView.addSubview(contactTelBtn)
         
-        rootScrollView.contentSize = CGSizeMake(0, CGRectGetMaxY(contactTelBtn.frame)+10)
+        rootScrollView.contentSize = CGSize(width: 0, height: contactTelBtn.frame.maxY+10)
         
-        let tack = UIButton(frame: CGRectMake(
-            WIDTH*35/375,
-            CGRectGetMaxY(rootScrollView.frame)+WIDTH*2/375,
-            WIDTH*305/375,
-            WIDTH*45/375))
+        let tack = UIButton(frame: CGRect(
+            x: WIDTH*35/375,
+            y: rootScrollView.frame.maxY+WIDTH*2/375,
+            width: WIDTH*305/375,
+            height: WIDTH*45/375))
         tack.layer.cornerRadius = WIDTH*22.5/375
-        tack.layer.borderColor = COLOR.CGColor
+        tack.layer.borderColor = COLOR.cgColor
         tack.layer.borderWidth = 1
-        tack.setTitle("投递简历", forState: .Normal)
-        tack.setTitleColor(COLOR, forState: .Normal)
-        tack.addTarget(self, action: #selector(self.resumeOnline(_:)), forControlEvents: .TouchUpInside)
+        tack.setTitle("投递简历", for: UIControlState())
+        tack.setTitleColor(COLOR, for: UIControlState())
+        tack.addTarget(self, action: #selector(self.resumeOnline(_:)), for: .touchUpInside)
         self.view.addSubview(tack)
     }
     
@@ -311,10 +311,10 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
         
         if QCLoginUserInfo.currentInfo.usertype == "2" {
             
-            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是企业用户，不能查看企业联系方式", comment: "empty message"), preferredStyle: .Alert)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是企业用户，不能查看企业联系方式", comment: "empty message"), preferredStyle: .alert)
+            self.present(alertController, animated: true, completion: nil)
             
-            let cancelAction = UIAlertAction(title: "好的", style: .Cancel, handler: { (action) in
+            let cancelAction = UIAlertAction(title: "好的", style: .cancel, handler: { (action) in
                 return
             })
             alertController.addAction(cancelAction)
@@ -323,12 +323,12 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
         
         canLookTel = true
         
-        contactTelBtn.setTitle(currentJobModel?.phone, forState: .Normal)
+        contactTelBtn.setTitle(currentJobModel?.phone, for: UIControlState())
         contactTelBtn.sizeToFit()
     }
     
     // MARK: 投递简历
-    func resumeOnline(btn:UIButton) {
+    func resumeOnline(_ btn:UIButton) {
         
         // MARK:要求登录
         if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
@@ -337,46 +337,46 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
         
         if QCLoginUserInfo.currentInfo.usertype == "2" {
             
-            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是企业用户，不能投递简历", comment: "empty message"), preferredStyle: .Alert)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是企业用户，不能投递简历", comment: "empty message"), preferredStyle: .alert)
+            self.present(alertController, animated: true, completion: nil)
             
-            let cancelAction = UIAlertAction(title: "好的", style: .Cancel, handler: { (action) in
+            let cancelAction = UIAlertAction(title: "好的", style: .cancel, handler: { (action) in
                 return
             })
             alertController.addAction(cancelAction)
         }else{
             
-            let resumeHud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            resumeHud.labelText = "正在获取简历信息"
-            resumeHud.removeFromSuperViewOnHide = true
-            resumeHud.margin = 10.0
+            let resumeHud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            resumeHud?.labelText = "正在获取简历信息"
+            resumeHud?.removeFromSuperViewOnHide = true
+            resumeHud?.margin = 10.0
             
             HSNurseStationHelper().getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
                 if success {
                     
                     // 判断是否已投递简历
-                    resumeHud.labelText = "正在获取简历投递状态"
+                    resumeHud?.labelText = "正在获取简历投递状态"
                     
                     HSNurseStationHelper().ApplyJob_judge(QCLoginUserInfo.currentInfo.userid, companyid: self.jobDataSource![btn.tag].companyid, jobid: self.jobDataSource![btn.tag].id, handle: { (success, response) in
                         if success {
-                            resumeHud.hide(true)
-                            if String((response ?? "")!) == "1" {
-                                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已投递过该职位，无需再次投递", comment: "empty message"), preferredStyle: .Alert)
-                                self.presentViewController(alertController, animated: true, completion: nil)
-                                let doneAction = UIAlertAction(title: "好的", style: .Default, handler: nil)
+                            resumeHud?.hide(true)
+                            if String(describing: response) == "1" {
+                                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已投递过该职位，无需再次投递", comment: "empty message"), preferredStyle: .alert)
+                                self.present(alertController, animated: true, completion: nil)
+                                let doneAction = UIAlertAction(title: "好的", style: .default, handler: nil)
                                 alertController.addAction(doneAction)
                             }else{
                                 
                                 // print("投递简历")
-                                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
-                                self.presentViewController(alertController, animated: true, completion: nil)
+                                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .alert)
+                                self.present(alertController, animated: true, completion: nil)
                                 
-                                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
+                                let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: { (doneAction) in
                                     
-                                    let applyJobHud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                    applyJobHud.labelText = "正在投递简历"
-                                    applyJobHud.removeFromSuperViewOnHide = true
-                                    applyJobHud.margin = 10.0
+                                    let applyJobHud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                                    applyJobHud?.labelText = "正在投递简历"
+                                    applyJobHud?.removeFromSuperViewOnHide = true
+                                    applyJobHud?.margin = 10.0
                                     
                                     let url = PARK_URL_Header+"ApplyJob"
                                     let param = [
@@ -384,7 +384,7 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
                                         "jobid":self.jobDataSource![btn.tag].id,
                                         "companyid":self.jobDataSource![btn.tag].companyid
                                     ]
-                                    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+                                    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
                                         // print(request)
                                         if(error != nil){
                                             
@@ -393,20 +393,20 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
                                             if(result.status == "success"){
                                                 //  菊花加载
                                                 //                                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                                applyJobHud.mode = MBProgressHUDMode.Text;
-                                                applyJobHud.labelText = "投递简历成功"
+                                                applyJobHud?.mode = MBProgressHUDMode.text;
+                                                applyJobHud?.labelText = "投递简历成功"
                                                 //                                            hud.margin = 10.0
                                                 //                                            hud.removeFromSuperViewOnHide = true
-                                                applyJobHud.hide(true, afterDelay: 1)
+                                                applyJobHud?.hide(true, afterDelay: 1)
                                                 // print(111111)
                                             }else{
                                                 //  菊花加载
                                                 //                                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                                applyJobHud.mode = MBProgressHUDMode.Text;
-                                                applyJobHud.labelText = "投递简历失败"
+                                                applyJobHud?.mode = MBProgressHUDMode.text;
+                                                applyJobHud?.labelText = "投递简历失败"
                                                 //                                            hud.margin = 10.0
                                                 //                                            hud.removeFromSuperViewOnHide = true
-                                                applyJobHud.hide(true, afterDelay: 1)
+                                                applyJobHud?.hide(true, afterDelay: 1)
                                                 // print(2222222)
                                             }
                                         }
@@ -416,33 +416,34 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
                                 })
                                 alertController.addAction(doneAction)
                                 
-                                let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
+                                let cancelAction = UIAlertAction(title: "取消", style: .default, handler: { (cancelAction) in
                                     return
                                 })
                                 alertController.addAction(cancelAction)
                             }
                         }else{
-                            resumeHud.mode = MBProgressHUDMode.Text
-                            resumeHud.labelText = "获取简历投递状态失败"
-                            resumeHud.hide(true, afterDelay: 1)
+                            resumeHud?.mode = MBProgressHUDMode.text
+                            resumeHud?.labelText = "获取简历投递状态失败"
+                            resumeHud?.hide(true, afterDelay: 1)
                         }
                     })
                     
                     
                 }else{
-                    if String((response ?? "")!) == "no data" {
+                    
+                    if String(describing: response) == "no data" {
                         
-                        dispatch_async(dispatch_get_main_queue(), {
-                            resumeHud.hide(true)
-                            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您还没有简历，请上传简历后投递？", comment: "empty message"), preferredStyle: .Alert)
-                            self.presentViewController(alertController, animated: true, completion: nil)
-                            let doneAction = UIAlertAction(title: "现在就去", style: .Default, handler: { (action) in
+                        DispatchQueue.main.async(execute: {
+                            resumeHud?.hide(true)
+                            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您还没有简历，请上传简历后投递？", comment: "empty message"), preferredStyle: .alert)
+                            self.present(alertController, animated: true, completion: nil)
+                            let doneAction = UIAlertAction(title: "现在就去", style: .default, handler: { (action) in
                                 if QCLoginUserInfo.currentInfo.usertype == "2" {
                                     
-                                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是企业用户，不能编辑简历", comment: "empty message"), preferredStyle: .Alert)
-                                    self.presentViewController(alertController, animated: true, completion: nil)
+                                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是企业用户，不能编辑简历", comment: "empty message"), preferredStyle: .alert)
+                                    self.present(alertController, animated: true, completion: nil)
                                     
-                                    let cancelAction = UIAlertAction(title: "好的", style: .Cancel, handler: { (action) in
+                                    let cancelAction = UIAlertAction(title: "好的", style: .cancel, handler: { (action) in
                                         return
                                     })
                                     alertController.addAction(cancelAction)
@@ -452,15 +453,15 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
                             })
                             alertController.addAction(doneAction)
                             
-                            let cancelAction = UIAlertAction(title: "先不投了", style: .Cancel, handler: { (action) in
+                            let cancelAction = UIAlertAction(title: "先不投了", style: .cancel, handler: { (action) in
                                 
                             })
                             alertController.addAction(cancelAction)
                         })
                     }else{
-                        resumeHud.mode = MBProgressHUDMode.Text
-                        resumeHud.labelText = "获取简历信息失败"
-                        resumeHud.hide(true, afterDelay: 1)
+                        resumeHud?.mode = MBProgressHUDMode.text
+                        resumeHud?.labelText = "获取简历信息失败"
+                        resumeHud?.hide(true, afterDelay: 1)
                     }
                 }
             }
@@ -469,17 +470,17 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
     }
     
     // Linux时间戳转标准时间
-    func timeStampToString(timeStamp:String)->String {
+    func timeStampToString(_ timeStamp:String)->String {
         
         let string = NSString(string: timeStamp)
         
-        let timeSta:NSTimeInterval = string.doubleValue
-        let dfmatter = NSDateFormatter()
+        let timeSta:TimeInterval = string.doubleValue
+        let dfmatter = DateFormatter()
         dfmatter.dateFormat="yyyy-MM-dd"
         
-        let date = NSDate(timeIntervalSince1970: timeSta)
+        let date = Date(timeIntervalSince1970: timeSta)
         
         //        print(dfmatter.stringFromDate(date))
-        return dfmatter.stringFromDate(date)
+        return dfmatter.string(from: date)
     }
 }

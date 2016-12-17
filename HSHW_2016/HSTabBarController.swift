@@ -13,12 +13,12 @@ class HSTabBarController: UITabBarController,UITabBarControllerDelegate,ViewCont
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
-        childViewControllers[0].tabBarItem.selectedImage = UIImage(named:"ic_news_sel")?.imageWithRenderingMode(.AlwaysOriginal)
-        childViewControllers[1].tabBarItem.image = UIImage.init(named: "ic_study_nor")?.imageWithRenderingMode(.AlwaysOriginal)
-        childViewControllers[1].tabBarItem.selectedImage = UIImage(named:"ic_study_sel")?.imageWithRenderingMode(.AlwaysOriginal)
-        childViewControllers[4].tabBarItem.image = UIImage(named:"ic_me_nor")?.imageWithRenderingMode(.AlwaysOriginal)
-        childViewControllers[4].tabBarItem.selectedImage = UIImage(named:"ic_me_sel")?.imageWithRenderingMode(.AlwaysOriginal)
-        let logInfo = NSUserDefaults.standardUserDefaults().objectForKey(LOGINFO_KEY) as? Dictionary<String,String>
+        childViewControllers[0].tabBarItem.selectedImage = UIImage(named:"ic_news_sel")?.withRenderingMode(.alwaysOriginal)
+        childViewControllers[1].tabBarItem.image = UIImage.init(named: "ic_study_nor")?.withRenderingMode(.alwaysOriginal)
+        childViewControllers[1].tabBarItem.selectedImage = UIImage(named:"ic_study_sel")?.withRenderingMode(.alwaysOriginal)
+        childViewControllers[4].tabBarItem.image = UIImage(named:"ic_me_nor")?.withRenderingMode(.alwaysOriginal)
+        childViewControllers[4].tabBarItem.selectedImage = UIImage(named:"ic_me_sel")?.withRenderingMode(.alwaysOriginal)
+        let logInfo = UserDefaults.standard.object(forKey: LOGINFO_KEY) as? Dictionary<String,String>
         
         if logInfo != nil {
             let usernameStr = logInfo![USER_NAME]!
@@ -31,7 +31,7 @@ class HSTabBarController: UITabBarController,UITabBarControllerDelegate,ViewCont
         }
     }
     
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         
         print("=-=-=-=-=-=-=-=-=-=    \(tabBarController.selectedIndex)")
 //        if tabBarController.selectedIndex == 1 {
@@ -66,7 +66,7 @@ class HSTabBarController: UITabBarController,UITabBarControllerDelegate,ViewCont
 
     }
     
-    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
        
 //        if LOGIN_STATE == true {
 //            return true

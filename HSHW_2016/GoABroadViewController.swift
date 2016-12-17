@@ -15,22 +15,22 @@ class GoABroadViewController: UIViewController {
 //    let successfulCaseView = SuccessfulCaseViewController()
 //    let nursesTrainingView = TouTiaoViewController()
     
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.hidden = true
-        self.tabBarController?.tabBar.hidden = false
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.navigationController?.navigationBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = false
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("出国")
+        BaiduMobStat.default().pageviewStart(withName: "出国")
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("出国")
+        BaiduMobStat.default().pageviewEnd(withName: "出国")
     }
     
     override func viewDidLoad() {
@@ -68,37 +68,37 @@ class GoABroadViewController: UIViewController {
         
         struct MenuItem1: MenuItemViewCustomizable {
             
-            private var horizontalMargin: CGFloat = 5
+            fileprivate var horizontalMargin: CGFloat = 5
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "护士出国", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
-                return .Text(title: title)
+                let title = MenuItemText(text: "护士出国", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+                return .text(title: title)
             }
         }
         struct MenuItem2: MenuItemViewCustomizable {
-            private var horizontalMargin: CGFloat = 5
+            fileprivate var horizontalMargin: CGFloat = 5
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "护士培训", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
-                return .Text(title: title)
+                let title = MenuItemText(text: "护士培训", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+                return .text(title: title)
             }
         }
         
         struct MenuItem3: MenuItemViewCustomizable {
             
-            private var horizontalMargin: CGFloat = 5
+            fileprivate var horizontalMargin: CGFloat = 5
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "成功案例", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
-                return .Text(title: title)
+                let title = MenuItemText(text: "成功案例", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+                return .text(title: title)
             }
         }
         
         struct MenuOptions: MenuViewCustomizable {
             
-            private var backgroundColor: UIColor = UIColor.clearColor()
-            private var selectedBackgroundColor: UIColor = UIColor.clearColor()
-            private var displayMode: MenuDisplayMode = .SegmentedControl
-            private var height: CGFloat = 44
+            fileprivate var backgroundColor: UIColor = UIColor.clear
+            fileprivate var selectedBackgroundColor: UIColor = UIColor.clear
+            fileprivate var displayMode: MenuDisplayMode = .segmentedControl
+            fileprivate var height: CGFloat = 44
             
-            private var focusMode: MenuFocusMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+            fileprivate var focusMode: MenuFocusMode = .underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
             
             var itemsOptions: [MenuItemViewCustomizable] {
                 return [MenuItem1(), MenuItem2(), MenuItem3()]
@@ -106,7 +106,7 @@ class GoABroadViewController: UIViewController {
         }
         
         struct PagingMenuOptions: PagingMenuControllerCustomizable {
-            private var scrollEnabled: Bool = false
+            fileprivate var scrollEnabled: Bool = false
             var componentType: ComponentType {
                 
                 let goAbroadDynamicView = AbroadViewController()
@@ -122,17 +122,17 @@ class GoABroadViewController: UIViewController {
                 successfulCaseView.title = "成功案例"
                 successfulCaseView.articleID = "9"
                 
-                return .All(menuOptions: MenuOptions(), pagingControllers: [goAbroadDynamicView,nursesTrainingView,successfulCaseView])
+                return .all(menuOptions: MenuOptions(), pagingControllers: [goAbroadDynamicView,nursesTrainingView,successfulCaseView])
             }
         }
         
         let options = PagingMenuOptions()
         let pagingMenuController = PagingMenuController(options: options)
-        pagingMenuController.view.frame = CGRectMake(0, 20, WIDTH, HEIGHT-64)
+        pagingMenuController.view.frame = CGRect(x: 0, y: 20, width: WIDTH, height: HEIGHT-64)
         
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
-        pagingMenuController.didMoveToParentViewController(self)
+        pagingMenuController.didMove(toParentViewController: self)
     }
 
 }

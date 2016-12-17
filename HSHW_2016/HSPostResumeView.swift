@@ -8,6 +8,30 @@
 
 import UIKit
 import MBProgressHUD
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
 
 //接口类型
 enum OptionType{
@@ -185,11 +209,11 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     var alreadyHasResume = true {
         didSet {
             if alreadyHasResume {
-                coverBtn.frame = CGRectMake(0, 0, WIDTH, 1127-80)//23+659+40+180+165+60 = 1127
-                coverBtn.addTarget(self, action: #selector(coverBtnClick), forControlEvents: .TouchUpInside)
+                coverBtn.frame = CGRect(x: 0, y: 0, width: WIDTH, height: 1127-80)//23+659+40+180+165+60 = 1127
+                coverBtn.addTarget(self, action: #selector(coverBtnClick), for: .touchUpInside)
                 self.myScrollView.addSubview(coverBtn)
                 
-                self.saveResumeBtn.setTitle("修改简历", forState: .Normal)
+                self.saveResumeBtn.setTitle("修改简历", for: UIControlState())
                 changeResume = true
             }else{
                 coverBtn.removeFromSuperview()
@@ -199,17 +223,17 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     
     func coverBtnClick() {
         // 修改简历
-        let alert = UIAlertController(title: "确认修改简历？", message: "修改简历会覆盖原简历，确认修改？", preferredStyle: .Alert)
-        UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: "确认修改简历？", message: "修改简历会覆盖原简历，确认修改？", preferredStyle: .alert)
+        UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true, completion: nil)
         
-        let replyAction = UIAlertAction(title: "修改", style: .Default, handler: { (action) in
+        let replyAction = UIAlertAction(title: "修改", style: .default, handler: { (action) in
             self.coverBtn.removeFromSuperview()
-            self.saveResumeBtn.setTitle("保存简历", forState: .Normal)
+            self.saveResumeBtn.setTitle("保存简历", for: UIControlState())
             self.alreadyHasResume = false
         })
         alert.addAction(replyAction)
         
-        let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (action) in
+        let cancelAction = UIAlertAction(title: "取消", style: .default, handler: { (action) in
         })
         alert.addAction(cancelAction)
     }
@@ -272,25 +296,25 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         super.layoutSubviews()
 
         // 设置默认样式
-        nameTF.borderStyle = .None
-        telTF.borderStyle = .None
-        mailTF.borderStyle = .None
+        nameTF.borderStyle = .none
+        telTF.borderStyle = .none
+        mailTF.borderStyle = .none
         headerImg.layer.cornerRadius = headerImg.frame.size.width/2.0
         headerImg.clipsToBounds = true
-        headerImg.userInteractionEnabled = true
+        headerImg.isUserInteractionEnabled = true
         
         // 设置边框
-        borderView_1.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
+        borderView_1.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).cgColor
         borderView_1.layer.borderWidth = 1
         
-        borderView_2.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
+        borderView_2.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).cgColor
         borderView_2.layer.borderWidth = 1
         
         selfEvaluate.layer.borderWidth = 1
-        selfEvaluate.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
+        selfEvaluate.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).cgColor
         
         saveResumeBtn.layer.borderWidth = 1
-        saveResumeBtn.layer.borderColor = COLOR.CGColor
+        saveResumeBtn.layer.borderColor = COLOR.cgColor
         saveResumeBtn.cornerRadius = saveResumeBtn.frame.height/2
         
         // 设置下拉列表的数据
@@ -327,14 +351,14 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
     }
     
-    func getDictionaryList(type:String, key:String) {
+    func getDictionaryList(_ type:String, key:String) {
 
         dropDownDic[key] = Array<String>()
         
         let url = PARK_URL_Header+"getDictionaryList"
         let param = ["type":type]
         // print(param)
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 
 //        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             self.getDicCheckFlag += 1
@@ -391,7 +415,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         eduDropDown.bottomOffset = CGPoint(x: 0, y: eduBtn.bounds.height)
         eduDropDown.width = 200
-        eduDropDown.direction = .Bottom
+        eduDropDown.direction = .bottom
         
         eduDropDown.dataSource = dropDownDic["edu"]!
         
@@ -399,7 +423,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         eduDropDown.selectionAction = {(index, item) in
             self.eduLab.text = item
             self.eduLab.sizeToFit()
-            self.eduImg.frame.origin.x = CGRectGetMaxX(self.eduLab.frame)+5
+            self.eduImg.frame.origin.x = self.eduLab.frame.maxX+5
         
             self.dropDownFinishDic["edu"] = item
         }
@@ -409,15 +433,15 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         expDropDown.bottomOffset = CGPoint(x: 0, y: expBtn.bounds.height)
         expDropDown.width = 200
-        expDropDown.direction = .Bottom
+        expDropDown.direction = .bottom
         
         expDropDown.dataSource = dropDownDic["exp"]!
         
         expDropDown.selectionAction = {(index, item) in
             self.expLab.text = item
             self.expLab.sizeToFit()
-            self.expImg.frame.origin.x = CGRectGetMaxX(self.expLab.frame)+5
-            self.expLab_year.frame.origin.x = CGRectGetMaxX(self.expImg.frame)+5
+            self.expImg.frame.origin.x = self.expLab.frame.maxX+5
+            self.expLab_year.frame.origin.x = self.expImg.frame.maxX+5
             
             self.dropDownFinishDic["exp"] = item
         }
@@ -427,14 +451,14 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         professionalDropDown.bottomOffset = CGPoint(x: 0, y: professionalBtn.bounds.height)
         professionalDropDown.width = 200
-        professionalDropDown.direction = .Bottom
+        professionalDropDown.direction = .bottom
         
         professionalDropDown.dataSource = dropDownDic["professional"]!
         
         professionalDropDown.selectionAction = {(index, item) in
             self.professionalLab.text = item
             self.professionalLab.sizeToFit()
-            self.professionalImg.frame.origin.x = CGRectGetMaxX(self.professionalLab.frame)+5
+            self.professionalImg.frame.origin.x = self.professionalLab.frame.maxX+5
             
             self.dropDownFinishDic["professional"] = item
         }
@@ -444,15 +468,15 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         salaryDropDown.bottomOffset = CGPoint(x: 0, y: salaryBtn.bounds.height)
         salaryDropDown.width = 200
-        salaryDropDown.direction = .Bottom
+        salaryDropDown.direction = .bottom
         
         salaryDropDown.dataSource = dropDownDic["salary"]!
         
         salaryDropDown.selectionAction = {(index, item) in
             self.salaryLab.text = item
             self.salaryLab.sizeToFit()
-            self.salaryImg.frame.origin.x = CGRectGetMaxX(self.salaryLab.frame)+5
-            self.salaryLab_unit.frame.origin.x = CGRectGetMaxX(self.salaryImg.frame)+5
+            self.salaryImg.frame.origin.x = self.salaryLab.frame.maxX+5
+            self.salaryLab_unit.frame.origin.x = self.salaryImg.frame.maxX+5
             
             self.dropDownFinishDic["salary"] = item
         }
@@ -462,14 +486,14 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         jobTimeDropDown.bottomOffset = CGPoint(x: 0, y: jobTimeBtn.bounds.height)
         jobTimeDropDown.width = 200
-        jobTimeDropDown.direction = .Bottom
+        jobTimeDropDown.direction = .bottom
         
         jobTimeDropDown.dataSource = dropDownDic["jobTime"]!
         
         jobTimeDropDown.selectionAction = {(index, item) in
             self.jobTimeLab.text = item
             self.jobTimeLab.sizeToFit()
-            self.jobTimeImg.frame.origin.x = CGRectGetMaxX(self.jobTimeLab.frame)+5
+            self.jobTimeImg.frame.origin.x = self.jobTimeLab.frame.maxX+5
             
             self.dropDownFinishDic["jobTime"] = item
         }
@@ -479,15 +503,15 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         expectedSalaryDropDown.bottomOffset = CGPoint(x: 0, y: expectedSalaryBtn.bounds.height)
         expectedSalaryDropDown.width = 200
-        expectedSalaryDropDown.direction = .Bottom
+        expectedSalaryDropDown.direction = .bottom
         
         expectedSalaryDropDown.dataSource = dropDownDic["expectedSalary"]!
         
         expectedSalaryDropDown.selectionAction = {(index, item) in
             self.expectedSalaryLab.text = item
             self.expectedSalaryLab.sizeToFit()
-            self.expectedSalaryImg.frame.origin.x = CGRectGetMaxX(self.expectedSalaryLab.frame)+5
-            self.expectedSalaryLab_unit.frame.origin.x = CGRectGetMaxX(self.expectedSalaryImg.frame)+5
+            self.expectedSalaryImg.frame.origin.x = self.expectedSalaryLab.frame.maxX+5
+            self.expectedSalaryLab_unit.frame.origin.x = self.expectedSalaryImg.frame.maxX+5
             
             self.dropDownFinishDic["expectedSalary"] = item
         }
@@ -497,14 +521,14 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         expectedPositionDropDown.bottomOffset = CGPoint(x: 0, y: expectedPositionBtn.bounds.height)
         expectedPositionDropDown.width = 200
-        expectedPositionDropDown.direction = .Bottom
+        expectedPositionDropDown.direction = .bottom
         
         expectedPositionDropDown.dataSource = dropDownDic["expectedPosition"]!
         
         expectedPositionDropDown.selectionAction = {(index, item) in
             self.expectedPositionLab.text = item
             self.expectedPositionLab.sizeToFit()
-            self.expectedPositionImg.frame.origin.x = CGRectGetMaxX(self.expectedPositionLab.frame)+5
+            self.expectedPositionImg.frame.origin.x = self.expectedPositionLab.frame.maxX+5
             
             self.dropDownFinishDic["expectedPosition"] = item
         }
@@ -520,102 +544,102 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             
             self.expLab.text = dropDownDic["exp"]!.first
             self.expLab.sizeToFit()
-            self.expImg.frame.origin.x = CGRectGetMaxX(self.expLab.frame)+5
-            self.expLab_year.frame.origin.x = CGRectGetMaxX(self.expImg.frame)+5
+            self.expImg.frame.origin.x = self.expLab.frame.maxX+5
+            self.expLab_year.frame.origin.x = self.expImg.frame.maxX+5
             
             self.salaryLab.text = dropDownDic["salary"]!.first
             self.salaryLab.sizeToFit()
-            self.salaryImg.frame.origin.x = CGRectGetMaxX(self.salaryLab.frame)+5
-            self.salaryLab_unit.frame.origin.x = CGRectGetMaxX(self.salaryImg.frame)+5
+            self.salaryImg.frame.origin.x = self.salaryLab.frame.maxX+5
+            self.salaryLab_unit.frame.origin.x = self.salaryImg.frame.maxX+5
             
             self.expectedSalaryLab.text = dropDownDic["expectedSalary"]!.first
             self.expectedSalaryLab.sizeToFit()
-            self.expectedSalaryImg.frame.origin.x = CGRectGetMaxX(self.expectedSalaryLab.frame)+5
-            self.expectedSalaryLab_unit.frame.origin.x = CGRectGetMaxX(self.expectedSalaryImg.frame)+5
+            self.expectedSalaryImg.frame.origin.x = self.expectedSalaryLab.frame.maxX+5
+            self.expectedSalaryLab_unit.frame.origin.x = self.expectedSalaryImg.frame.maxX+5
         }
     }
     
     // MARK:- 下拉列表 点击事件   开始
-    @IBAction func eduBtnClick(sender: AnyObject) {
+    @IBAction func eduBtnClick(_ sender: AnyObject) {
         resignTextFieldFirstResponder()
         eduDropDown.show()
-        eduBtn.selected = true
-        eduBtn.tintColor = UIColor.clearColor()
+        eduBtn.isSelected = true
+        eduBtn.tintColor = UIColor.clear
     }
     
-    @IBAction func expBtnClick(sender: AnyObject) {
+    @IBAction func expBtnClick(_ sender: AnyObject) {
         resignTextFieldFirstResponder()
         expDropDown.show()
-        expBtn.selected = true
-        expBtn.tintColor = UIColor.clearColor()
+        expBtn.isSelected = true
+        expBtn.tintColor = UIColor.clear
     }
     
-    @IBAction func professionalBtnClick(sender: AnyObject) {
+    @IBAction func professionalBtnClick(_ sender: AnyObject) {
         resignTextFieldFirstResponder()
         professionalDropDown.show()
-        professionalBtn.selected = true
-        professionalBtn.tintColor = UIColor.clearColor()
+        professionalBtn.isSelected = true
+        professionalBtn.tintColor = UIColor.clear
     }
     
-    @IBAction func salaryBtnClick(sender: AnyObject) {
+    @IBAction func salaryBtnClick(_ sender: AnyObject) {
         resignTextFieldFirstResponder()
         salaryDropDown.show()
-        salaryBtn.selected = true
-        salaryBtn.tintColor = UIColor.clearColor()
+        salaryBtn.isSelected = true
+        salaryBtn.tintColor = UIColor.clear
     }
     
-    @IBAction func jobTimeBtnClick(sender: AnyObject) {
+    @IBAction func jobTimeBtnClick(_ sender: AnyObject) {
         resignTextFieldFirstResponder()
         jobTimeDropDown.show()
-        jobTimeBtn.selected = true
-        jobTimeBtn.tintColor = UIColor.clearColor()
+        jobTimeBtn.isSelected = true
+        jobTimeBtn.tintColor = UIColor.clear
     }
     
-    @IBAction func expectedSalaryBtnClick(sender: AnyObject) {
+    @IBAction func expectedSalaryBtnClick(_ sender: AnyObject) {
         resignTextFieldFirstResponder()
         expectedSalaryDropDown.show()
-        expectedSalaryBtn.selected = true
-        expectedSalaryBtn.tintColor = UIColor.clearColor()
+        expectedSalaryBtn.isSelected = true
+        expectedSalaryBtn.tintColor = UIColor.clear
     }
     
-    @IBAction func expectedPositionBtnClick(sender: AnyObject) {
+    @IBAction func expectedPositionBtnClick(_ sender: AnyObject) {
         resignTextFieldFirstResponder()
         expectedPositionDropDown.show()
-        expectedPositionBtn.selected = true
-        expectedPositionBtn.tintColor = UIColor.clearColor()
+        expectedPositionBtn.isSelected = true
+        expectedPositionBtn.tintColor = UIColor.clear
     }
     // MARK:下拉列表 点击事件   结束
     // MARK:-
     
     // MARK:头像点击事件
-    @IBAction func headerBtnClick(sender: UIButton) {
+    @IBAction func headerBtnClick(_ sender: UIButton) {
         
 //        delegate?.uploadAvatar()
         resignTextFieldFirstResponder()
         
         // print("头像点击事件")
         
-        myActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        myActionSheet?.addAction(UIAlertAction(title: "拍照", style: .Default, handler: {(UIAlertAction) in
-            dispatch_async(dispatch_get_main_queue(), {
+        myActionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        myActionSheet?.addAction(UIAlertAction(title: "拍照", style: .default, handler: {(UIAlertAction) in
+            DispatchQueue.main.async(execute: {
                 self.takePhoto()
             })
             }))
         
-        myActionSheet?.addAction(UIAlertAction(title: "从相册获取", style: .Default, handler: {(UIAlertAction) in
-            dispatch_async(dispatch_get_main_queue(), {
+        myActionSheet?.addAction(UIAlertAction(title: "从相册获取", style: .default, handler: {(UIAlertAction) in
+            DispatchQueue.main.async(execute: {
                 self.LocalPhoto()
             })
             }))
         
-        myActionSheet?.addAction(UIAlertAction(title: "取消", style: .Cancel, handler:nil))
+        myActionSheet?.addAction(UIAlertAction(title: "取消", style: .cancel, handler:nil))
         
         let vc = responderVC()
-        vc!.presentViewController(myActionSheet!, animated: true, completion: nil)
+        vc!.present(myActionSheet!, animated: true, completion: nil)
     }
     
     // MARK:选择性别
-    @IBAction func sexBtnClick(sender: UIButton) {
+    @IBAction func sexBtnClick(_ sender: UIButton) {
         
         resignTextFieldFirstResponder()
         
@@ -623,16 +647,16 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         case 11:
             manImg.image = UIImage.init(named: "ic_yuan_purple")
             womanImg.image = UIImage.init(named: "ic_yuan")
-            manBtn.selected = true
-            manBtn.tintColor = UIColor.clearColor()
-            womanBtn.selected = false
+            manBtn.isSelected = true
+            manBtn.tintColor = UIColor.clear
+            womanBtn.isSelected = false
             sexFinishStr = "1"
         case 12:
             manImg.image = UIImage.init(named: "ic_yuan")
             womanImg.image = UIImage.init(named: "ic_yuan_purple")
-            manBtn.selected = false
-            womanBtn.selected = true
-            womanBtn.tintColor = UIColor.clearColor()
+            manBtn.isSelected = false
+            womanBtn.isSelected = true
+            womanBtn.tintColor = UIColor.clear
             sexFinishStr = "0"
             
         default:
@@ -641,7 +665,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     }
     
     // MARK:选择求职状态
-    @IBAction func jobStatusBtnClick(sender: UIButton) {
+    @IBAction func jobStatusBtnClick(_ sender: UIButton) {
         
         resignTextFieldFirstResponder()
         
@@ -651,10 +675,10 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             leaveJobImg.image = UIImage.init(named: "ic_yuan")
             undergraduateImg.image = UIImage.init(named: "ic_yuan")
             
-            onJobBtn.selected = true
-            onJobBtn.tintColor = UIColor.clearColor()
-            leaveJobBtn.selected = false
-            undergraduateBtn.selected = false
+            onJobBtn.isSelected = true
+            onJobBtn.tintColor = UIColor.clear
+            leaveJobBtn.isSelected = false
+            undergraduateBtn.isSelected = false
             
             jobStatusStr = "在职"
             
@@ -663,10 +687,10 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             leaveJobImg.image = UIImage.init(named: "ic_yuan_purple")
             undergraduateImg.image = UIImage.init(named: "ic_yuan")
             
-            onJobBtn.selected = false
-            leaveJobBtn.selected = true
-            leaveJobBtn.tintColor = UIColor.clearColor()
-            undergraduateBtn.selected = false
+            onJobBtn.isSelected = false
+            leaveJobBtn.isSelected = true
+            leaveJobBtn.tintColor = UIColor.clear
+            undergraduateBtn.isSelected = false
             
             jobStatusStr = "离职"
             
@@ -675,10 +699,10 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             leaveJobImg.image = UIImage.init(named: "ic_yuan")
             undergraduateImg.image = UIImage.init(named: "ic_yuan_purple")
             
-            onJobBtn.selected = false
-            leaveJobBtn.selected = false
-            undergraduateBtn.selected = true
-            undergraduateBtn.tintColor = UIColor.clearColor()
+            onJobBtn.isSelected = false
+            leaveJobBtn.isSelected = false
+            undergraduateBtn.isSelected = true
+            undergraduateBtn.tintColor = UIColor.clear
             
             jobStatusStr = "在校生"
             
@@ -700,25 +724,25 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         appearance.shadowOpacity = 0.9
         appearance.shadowRadius = 25
         appearance.animationduration = 0.25
-        appearance.textColor = .darkGrayColor()
+        appearance.textColor = .darkGray
         //		appearance.textFont = UIFont(name: "Georgia", size: 14)
     }
     
-    @IBAction func saveResumeCilcked(sender: AnyObject) {
+    @IBAction func saveResumeCilcked(_ sender: AnyObject) {
         
         if alreadyHasResume {
             // 修改简历
-            let alert = UIAlertController(title: "确认修改简历？", message: "修改简历会覆盖原简历，确认修改？", preferredStyle: .Alert)
-            UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "确认修改简历？", message: "修改简历会覆盖原简历，确认修改？", preferredStyle: .alert)
+            UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true, completion: nil)
             
-            let replyAction = UIAlertAction(title: "修改", style: .Default, handler: { (action) in
+            let replyAction = UIAlertAction(title: "修改", style: .default, handler: { (action) in
                 self.coverBtn.removeFromSuperview()
-                self.saveResumeBtn.setTitle("保存简历", forState: .Normal)
+                self.saveResumeBtn.setTitle("保存简历", for: UIControlState())
                 self.alreadyHasResume = false
             })
             alert.addAction(replyAction)
             
-            let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (action) in
+            let cancelAction = UIAlertAction(title: "取消", style: .default, handler: { (action) in
             })
             alert.addAction(cancelAction)
         }else{
@@ -728,49 +752,49 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             
             //        if delegate != nil {
 //            if (headerBtn.selected && nameTF.text != "" && (manBtn.selected || womanBtn.selected) && birthBtn.selected && eduBtn.selected && homeBtn.selected && expBtn.selected && professionalBtn.selected && salaryBtn.selected && (onJobBtn.selected || leaveJobBtn.selected || undergraduateBtn.selected) && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected && targetCityBtn.selected && expectedSalaryBtn.selected && expectedPositionBtn.selected)||changeResume {
-            if (nameTF.text != "" && eduBtn.selected &&  professionalBtn.selected && telTF.text != "" && mailTF.text != "" && jobTimeBtn.selected &&   expectedPositionBtn.selected)||changeResume {
+            if (nameTF.text != "" && eduBtn.isSelected &&  professionalBtn.isSelected && telTF.text != "" && mailTF.text != "" && jobTimeBtn.isSelected &&   expectedPositionBtn.isSelected)||changeResume {
                 
                 if !PhoneNumberIsValidated(telTF.text!) {
                     var messageStr = "请填写正确的电话号码"
                     
                     if telTF.text!.hasPrefix("0") {
                         messageStr = "请填写正确的电话号码\n区号与座机号之间用-隔开"
-                    }else if 7 <= telTF.text!.characters.count && telTF.text!.characters.count <= 8 && telTF.text?.stringByTrimmingCharactersInSet(NSCharacterSet.decimalDigitCharacterSet()).characters.count <= 0 {
+                    }else if 7 <= telTF.text!.characters.count && telTF.text!.characters.count <= 8 && telTF.text?.trimmingCharacters(in: CharacterSet.decimalDigits).characters.count <= 0 {
                         messageStr = "请填写正确的电话号码\n（包含区号）"
                     }
                     
-                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString(messageStr, comment: "empty message"), preferredStyle: .Alert)
-                    let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString(messageStr, comment: "empty message"), preferredStyle: .alert)
+                    let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: nil)
                     alertController.addAction(doneAction)
                     
                     let vc = responderVC()
-                    vc!.presentViewController(alertController, animated: true, completion: nil)
+                    vc!.present(alertController, animated: true, completion: nil)
                     return
                 }
                 if !EmailIsValidated(mailTF.text!) {
-                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的邮箱地址", comment: "empty message"), preferredStyle: .Alert)
-                    let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的邮箱地址", comment: "empty message"), preferredStyle: .alert)
+                    let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: nil)
                     alertController.addAction(doneAction)
                     
                     let vc = responderVC()
-                    vc!.presentViewController(alertController, animated: true, completion: nil)
+                    vc!.present(alertController, animated: true, completion: nil)
                     return
                 }
                 
-                let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+                let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
                 //                hud.mode = MBProgressHUDMode.Text;
-                hud.labelText = changeResume ? "正在修改":"正在发布"
-                hud.margin = 10.0
-                hud.removeFromSuperViewOnHide = true
+                hud?.labelText = changeResume ? "正在修改":"正在发布"
+                hud?.margin = 10.0
+                hud?.removeFromSuperViewOnHide = true
                 
-                if headerBtn.selected {
-                    uploadHeader(hud)
+                if headerBtn.isSelected {
+                    uploadHeader(hud!)
                 }else{
                     
                     if changeResume {
-                        changeResume(hud, type: 2)
+                        changeResume(hud!, type: 2)
                     }else{
-                        changeResume(hud, type: 1)
+                        changeResume(hud!, type: 1)
                     }
                 }
 //                if headerBtn.selected {
@@ -780,29 +804,29 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
 //                }
                 
             }else{
-                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善简历信息", comment: "empty message"), preferredStyle: .Alert)
-                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善简历信息", comment: "empty message"), preferredStyle: .alert)
+                let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: nil)
                 alertController.addAction(doneAction)
                 
                 let vc = responderVC()
-                vc!.presentViewController(alertController, animated: true, completion: nil)
+                vc!.present(alertController, animated: true, completion: nil)
                 
             }
         }
     }
     
-    func uploadHeader(hud:MBProgressHUD) {
+    func uploadHeader(_ hud:MBProgressHUD) {
         let data = UIImageJPEGRepresentation(headerImage, 0.1)!
-        let dateFormatter = NSDateFormatter()
+        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyyMMddHHmmss"
-        let dateStr = dateFormatter.stringFromDate(NSDate())
+        let dateStr = dateFormatter.string(from: Date())
         imageName = "avatar" + dateStr + QCLoginUserInfo.currentInfo.userid
         
-        ConnectModel.uploadWithImageName(imageName, imageData: data, URL: "\(PARK_URL_Header)uploadavatar") {(data) in
-            dispatch_async(dispatch_get_main_queue(), {
-                let result = Http(JSONDecoder(data))
+        ConnectModel.upload(withImageName: imageName, imageData: data, url: "\(PARK_URL_Header)uploadavatar") {(data) in
+            DispatchQueue.main.async(execute: {
+                let result = Http(JSONDecoder(data as AnyObject))
                 if result.status != nil {
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         if result.status! == "success"{
 //                            self.mainHelper.changeUserAvatar(result.data!, handle: { (success, response) in
 //                                if success {
@@ -816,7 +840,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                             }
                         }else{
 //                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
-                            hud.mode = MBProgressHUDMode.Text;
+                            hud.mode = MBProgressHUDMode.text;
                             hud.labelText = "图片上传失败"
 //                            hud.margin = 10.0
 //                            hud.removeFromSuperViewOnHide = true
@@ -830,12 +854,12 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     }
     
     // MARK:发布简历
-    func uploadResume(hud:MBProgressHUD) {
+    func uploadResume(_ hud:MBProgressHUD) {
         HSNurseStationHelper().postForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName+".png", name: nameTF.text!, experience: dropDownFinishDic["exp"]!, sex: sexFinishStr, birthday:"\(birthFinishArr[0])-\(birthFinishArr[1])-\(birthFinishArr[2])", certificate:dropDownFinishDic["professional"]!, education:dropDownFinishDic["edu"]! , address:"\(homeFinishArr[0])-\(homeFinishArr[1])-\(homeFinishArr[2])", jobstate:jobStatusStr, currentsalary:dropDownFinishDic["salary"]!, phone:telTF.text!, email:mailTF.text!, hiredate:dropDownFinishDic["jobTime"]!, wantcity:"\(targetCityFinishArr[0])-\(targetCityFinishArr[1])", wantsalary:dropDownFinishDic["expectedSalary"]!, wantposition:dropDownFinishDic["expectedPosition"]!, description:selfEvaluate.text!, handle: { (success, response) in
             if success {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     //                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
+                    hud.mode = MBProgressHUDMode.text;
                     hud.labelText = "发布成功"
                     //                            hud.margin = 10.0
                     //                            hud.removeFromSuperViewOnHide = true
@@ -843,29 +867,29 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                     // print(success)
                     
 //                    self.delegate?.saveResumeBtnClicked()
-                    let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
+                    let tabBar = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
                     let selfNav = tabBar.selectedViewController as? UINavigationController
-                    selfNav?.popViewControllerAnimated(true)
+                    selfNav?.popViewController(animated: true)
                 })
             }else {
                 hud.hide(true)
-                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .Alert)
-                let doneAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .alert)
+                let doneAction = UIAlertAction(title: "重试", style: .default, handler: { (action) in
                     self.uploadResume(hud)
                 })
                 alertController.addAction(doneAction)
                 
-                let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
                 alertController.addAction(cancelAction)
                 
                 let vc = self.responderVC()
-                vc!.presentViewController(alertController, animated: true, completion: nil)
+                vc!.present(alertController, animated: true, completion: nil)
             }
         })
     }
     
     // MARK: 修改/发布 简历
-    func changeResume(hud:MBProgressHUD, type:Int) {
+    func changeResume(_ hud:MBProgressHUD, type:Int) {
         HSNurseStationHelper().changeForum(
             QCLoginUserInfo.currentInfo.userid,
             avatar:imageName == "" ? "":imageName+".png",
@@ -887,18 +911,18 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             type:type,
             handle: { (success, response) in
             if success {
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     //                            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
                     if type == 1 {
                         
-                        hud.mode = MBProgressHUDMode.Text;
+                        hud.mode = MBProgressHUDMode.text;
                         hud.labelText = "发布成功"
                         hud.hide(true, afterDelay: 1)
 
                         let result = response as! addScore_ReadingInformationDataModel
                         self.showScoreTips(result.event, score: result.score)
                     }else{
-                        hud.mode = MBProgressHUDMode.Text;
+                        hud.mode = MBProgressHUDMode.text;
                         hud.labelText = "修改成功"
                         hud.hide(true, afterDelay: 1)
                     }
@@ -907,76 +931,76 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                     // print(success)
                     
                     //                    self.delegate?.saveResumeBtnClicked()
-                    let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
+                    let tabBar = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
                     let selfNav = tabBar.selectedViewController as? UINavigationController
-                    selfNav?.popViewControllerAnimated(true)
+                    selfNav?.popViewController(animated: true)
                 })
             }else {
                 hud.hide(true)
-                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .Alert)
-                let doneAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .alert)
+                let doneAction = UIAlertAction(title: "重试", style: .default, handler: { (action) in
                     self.changeResume(hud,type: type)
                 })
                 alertController.addAction(doneAction)
                 
-                let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+                let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
                 alertController.addAction(cancelAction)
                 
                 let vc = self.responderVC()
-                vc!.presentViewController(alertController, animated: true, completion: nil)
+                vc!.present(alertController, animated: true, completion: nil)
             }
         })
     }
     // MARK: 显示积分提示
-    func showScoreTips(name:String, score:String) {
-        let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
-        hud.opacity = 0.3
-        hud.margin = 10
-        hud.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
-        hud.mode = .CustomView
-        let customView = UIImageView(frame: CGRectMake(0, 0, WIDTH*0.8, WIDTH*0.8*238/537))
+    func showScoreTips(_ name:String, score:String) {
+        let hud = MBProgressHUD.showAdded(to: self, animated: true)
+        hud?.opacity = 0.3
+        hud?.margin = 10
+        hud?.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
+        hud?.mode = .customView
+        let customView = UIImageView(frame: CGRect(x: 0, y: 0, width: WIDTH*0.8, height: WIDTH*0.8*238/537))
         customView.image = UIImage(named: "scorePopImg.png")
-        let titLab = UILabel(frame: CGRectMake(
-            CGRectGetWidth(customView.frame)*351/537,
-            CGRectGetHeight(customView.frame)*30/238,
-            CGRectGetWidth(customView.frame)*174/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let titLab = UILabel(frame: CGRect(
+            x: customView.frame.width*351/537,
+            y: customView.frame.height*30/238,
+            width: customView.frame.width*174/537,
+            height: customView.frame.height*50/238))
         titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
-        titLab.textAlignment = .Left
-        titLab.font = UIFont.systemFontOfSize(16)
+        titLab.textAlignment = .left
+        titLab.font = UIFont.systemFont(ofSize: 16)
         titLab.text = name
         titLab.adjustsFontSizeToFitWidth = true
         customView.addSubview(titLab)
         
-        let scoreLab = UILabel(frame: CGRectMake(
-            CGRectGetWidth(customView.frame)*351/537,
-            CGRectGetHeight(customView.frame)*100/238,
-            CGRectGetWidth(customView.frame)*174/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let scoreLab = UILabel(frame: CGRect(
+            x: customView.frame.width*351/537,
+            y: customView.frame.height*100/238,
+            width: customView.frame.width*174/537,
+            height: customView.frame.height*50/238))
         scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
         
-        scoreLab.textAlignment = .Left
-        scoreLab.font = UIFont.systemFontOfSize(24)
+        scoreLab.textAlignment = .left
+        scoreLab.font = UIFont.systemFont(ofSize: 24)
         scoreLab.text = "+\(score)"
         scoreLab.adjustsFontSizeToFitWidth = true
         scoreLab.sizeToFit()
         customView.addSubview(scoreLab)
         
-        let jifenLab = UILabel(frame: CGRectMake(
-            CGRectGetMaxX(scoreLab.frame)+5,
-            CGRectGetHeight(customView.frame)*100/238,
-            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-5-CGRectGetWidth(customView.frame)*13/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let jifenLab = UILabel(frame: CGRect(
+            x: scoreLab.frame.maxX+5,
+            y: customView.frame.height*100/238,
+            width: customView.frame.width-scoreLab.frame.maxX-5-customView.frame.width*13/537,
+            height: customView.frame.height*50/238))
         jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
-        jifenLab.textAlignment = .Center
-        jifenLab.font = UIFont.systemFontOfSize(16)
+        jifenLab.textAlignment = .center
+        jifenLab.font = UIFont.systemFont(ofSize: 16)
         jifenLab.text = "护士币"
         jifenLab.adjustsFontSizeToFitWidth = true
         jifenLab.center.y = scoreLab.center.y
         customView.addSubview(jifenLab)
         
-        hud.customView = customView
-        hud.hide(true, afterDelay: 3)
+        hud?.customView = customView
+        hud?.hide(true, afterDelay: 3)
     }
 
     
@@ -1002,33 +1026,33 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
 //    }
     
     // MARK:选择出生日期
-    @IBAction func birthBtnClick(sender: AnyObject) {
+    @IBAction func birthBtnClick(_ sender: AnyObject) {
         
         picker = DatePickerView.getShareInstance()
-        picker!.textColor = UIColor.redColor()
-        picker!.showWithDate(NSDate())
+        picker!.textColor = UIColor.red
+        picker!.showWithDate(Date())
         picker?.block = {
-            (date:NSDate)->() in
-            let formatter = NSDateFormatter()
+            (date:Date)->() in
+            let formatter = DateFormatter()
             formatter.dateFormat = "yyyy-MM-dd"
-            let string = formatter.stringFromDate(date)
+            let string = formatter.string(from: date)
 //            let range:Range = string.rangeOfString(" ")!
 //            let time = string.substringToIndex(range.endIndex)
-            let timeArr = string.componentsSeparatedByString("-")
+            let timeArr = string.components(separatedBy: "-")
             
             self.birth_year_Lab.text = timeArr.first
             self.birth_month_Lab.text = timeArr[1]
             self.birth_day_Lab.text = timeArr.last
             
-            self.birthBtn.selected = true
-            self.birthBtn.tintColor = UIColor.clearColor()
+            self.birthBtn.isSelected = true
+            self.birthBtn.tintColor = UIColor.clear
             
             self.birthFinishArr = [timeArr[0],timeArr[1],timeArr[2]]
         }
     }
     
     // MARK:选择居住地
-    @IBAction func homeBtnClick(sender: AnyObject) {
+    @IBAction func homeBtnClick(_ sender: AnyObject) {
         
         // print("点击居住地")
         // 初始化
@@ -1036,8 +1060,8 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         // 设置是否显示区县等，默认为false不显示
         pick.showTown = true
-        pick.pickArray = homeArray // 设置第一次加载时需要跳转到相对应的地址
-        pick.show((UIApplication.sharedApplication().keyWindow)!)
+        pick.pickArray = homeArray as NSArray? // 设置第一次加载时需要跳转到相对应的地址
+        pick.show((UIApplication.shared.keyWindow)!)
         
         // 选择完成之后回调
         pick.selectAdress { (dressArray) in
@@ -1051,27 +1075,27 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             self.homeLab_3.text =  (dressArray[2] as! String)
             
             self.homeLab_1.sizeToFit()
-            self.homeImg_1.frame.origin.x = CGRectGetMaxX(self.homeLab_1.frame)+5
+            self.homeImg_1.frame.origin.x = self.homeLab_1.frame.maxX+5
             
-            self.homeLab_2.frame.origin.x = CGRectGetMaxX(self.homeImg_1.frame)+5
+            self.homeLab_2.frame.origin.x = self.homeImg_1.frame.maxX+5
             self.homeLab_2.adjustsFontSizeToFitWidth = true
             self.homeLab_2.sizeToFit()
-            self.homeImg_2.frame.origin.x = CGRectGetMaxX(self.homeLab_2.frame)+5
+            self.homeImg_2.frame.origin.x = self.homeLab_2.frame.maxX+5
             
-            self.homeLab_3.frame.origin.x = CGRectGetMaxX(self.homeImg_2.frame)+5
+            self.homeLab_3.frame.origin.x = self.homeImg_2.frame.maxX+5
             self.homeLab_3.adjustsFontSizeToFitWidth = true
             self.homeLab_3.sizeToFit()
-            self.homeImg_3.frame.origin.x = CGRectGetMaxX(self.homeLab_3.frame)+5
+            self.homeImg_3.frame.origin.x = self.homeLab_3.frame.maxX+5
             
-            self.homeBtn.selected = true
-            self.homeBtn.tintColor = UIColor.clearColor()
+            self.homeBtn.isSelected = true
+            self.homeBtn.tintColor = UIColor.clear
             
             self.homeFinishArr = [self.homeLab_1.text!,self.homeLab_2.text!,self.homeLab_3.text!]
         }
     }
 
     // MARK:选择目标城市
-    @IBAction func targetCityBtnClick(sender: AnyObject) {
+    @IBAction func targetCityBtnClick(_ sender: AnyObject) {
     
         // print("点击目标城市")
         // 初始化
@@ -1079,8 +1103,8 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         // 设置是否显示区县等，默认为false不显示
         pick.showTown = false
-        pick.pickArray = targetCityArray // 设置第一次加载时需要跳转到相对应的地址
-        pick.show((UIApplication.sharedApplication().keyWindow)!)
+        pick.pickArray = targetCityArray as NSArray? // 设置第一次加载时需要跳转到相对应的地址
+        pick.show((UIApplication.shared.keyWindow)!)
         
         // 选择完成之后回调
         pick.selectAdress { (dressArray) in
@@ -1093,15 +1117,15 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
             self.targetCityLab_2.text =  (dressArray[1] as! String)
             
             self.targetCityLab_1.sizeToFit()
-            self.targetCityImg_1.frame.origin.x = CGRectGetMaxX(self.targetCityLab_1.frame)+5
+            self.targetCityImg_1.frame.origin.x = self.targetCityLab_1.frame.maxX+5
             
-            self.targetCityLab_2.frame.origin.x = CGRectGetMaxX(self.targetCityImg_1.frame)+5
+            self.targetCityLab_2.frame.origin.x = self.targetCityImg_1.frame.maxX+5
             self.targetCityLab_2.adjustsFontSizeToFitWidth = true
             self.targetCityLab_2.sizeToFit()
-            self.targetCityImg_2.frame.origin.x = CGRectGetMaxX(self.targetCityLab_2.frame)+5
+            self.targetCityImg_2.frame.origin.x = self.targetCityLab_2.frame.maxX+5
         
-            self.targetCityBtn.selected = true
-            self.targetCityBtn.tintColor = UIColor.clearColor()
+            self.targetCityBtn.isSelected = true
+            self.targetCityBtn.tintColor = UIColor.clear
             
             self.targetCityFinishArr = [self.targetCityLab_1.text!,self.targetCityLab_2.text!]
 
@@ -1158,23 +1182,23 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
 //    
     func responderVC() -> (UIViewController?) {
         var temp:AnyObject
-        temp = nextResponder()!
-        while ((temp.isKindOfClass(UIViewController)) != true) {
-            temp = temp.nextResponder()!
+        temp = next!
+        while !(temp is UIViewController) {
+            temp = temp.next!!
         }
         return temp as? UIViewController
     }
 
     func takePhoto(){
         
-        let sourceType = UIImagePickerControllerSourceType.Camera
+        let sourceType = UIImagePickerControllerSourceType.camera
         if UIImagePickerController.isSourceTypeAvailable(sourceType) {
             let picker = UIImagePickerController()
             picker.delegate = self
             picker.allowsEditing = true
             picker.sourceType = sourceType
             let vc = responderVC()
-            vc!.presentViewController(picker, animated: true, completion: nil)
+            vc!.present(picker, animated: true, completion: nil)
         }else{
             // print("无法打开相机")
         }
@@ -1182,14 +1206,14 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
 
     func LocalPhoto(){
         let picker = UIImagePickerController()
-        picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
         picker.delegate = self
         picker.allowsEditing = true
         let vc = responderVC()
-        vc!.presentViewController(picker, animated: true, completion: nil)
+        vc!.present(picker, animated: true, completion: nil)
     }
 
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         let type = info[UIImagePickerControllerMediaType] as! String
         if type != "public.image" {
@@ -1201,28 +1225,28 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
         headerImg.image = headerImage
         
-        headerLab.hidden = true
+        headerLab.isHidden = true
         
-        headerBtn.selected = true
-        headerBtn.tintColor = UIColor.clearColor()
+        headerBtn.isSelected = true
+        headerBtn.tintColor = UIColor.clear
         
-        picker.dismissViewControllerAnimated(true, completion: nil)
+        picker.dismiss(animated: true, completion: nil)
     }
 
     // MARK: 监控键盘弹起落下
     var keyboardHeight:CGFloat = 0.0
     var flag = true // 防止键盘弹起方法走两次
     
-    func keyboardWillAppear(notification: NSNotification) {
+    func keyboardWillAppear(_ notification: Notification) {
         
         // 获取键盘信息
         let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
         
-        let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
+        let keyboardheight:CGFloat = ((keyboardinfo as AnyObject).cgRectValue.size.height)
         // print(selfEvaluate.isFirstResponder(),flag)
 //        if selfEvaluate.isFirstResponder() {
         
-            UIView.animateWithDuration(0.3) {
+            UIView.animate(withDuration: 0.3, animations: {
 //                self.myScrollView.contentOffset = CGPoint.init(x: 0, y: self.myScrollView.contentSize.height-self.myScrollView.frame.size.height+keyboardheight)
 //                self.myScrollView.frame = CGRectMake(self.myScrollView.frame.origin.x, self.myScrollView.frame.origin.y, self.myScrollView.frame.size.width, self.myScrollView.frame.size.height-keyboardheight)
                 self.myScrollView.frame.size.height = HEIGHT-keyboardheight-64
@@ -1233,7 +1257,7 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                 }
                 self.keyboardHeight = keyboardheight
                 self.flag = false
-            }
+            }) 
 //        }
         
         // print("键盘弹起")
@@ -1241,23 +1265,23 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
         
     }
     
-    func keyboardWillDisappear(notification:NSNotification){
+    func keyboardWillDisappear(_ notification:Notification){
         
 //        if self.myScrollView.frame.size.height<=HEIGHT-64-keyboardHeight {
 
-            UIView.animateWithDuration(0.3) {
+            UIView.animate(withDuration: 0.3, animations: {
     //            self.myScrollview.contentOffset = CGPoint.init(x: 0, y: self.myScrollview.contentSize.height-self.myScrollview.frame.size.height)
 
 //                self.myScrollView.frame.size.height = self.myScrollView.frame.size.height+self.keyboardHeight
                 self.myScrollView.frame.size.height = HEIGHT-64
                 self.flag = true
-            }
+            }) 
 //        }
         // print("键盘落下")
     }
 
     //MARK:UITextViewDelegate
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         if (textView.text == "") {
             selfEvaluateLab.text = "请填写自我介绍的内容"
         }else{

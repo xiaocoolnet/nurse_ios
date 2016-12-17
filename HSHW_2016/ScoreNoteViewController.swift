@@ -22,27 +22,27 @@ class ScoreNoteViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         // 线
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
 
         // webview
         webView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-65)
-        let url = NSURL(string: urlStr)
-        let request = NSURLRequest(URL: url!)
-        webView.loadRequest(request)
+        let url = URL(string: urlStr)
+        let request = URLRequest(url: url!)
+        webView.load(request)
         
         self.view.addSubview(webView)
         
-        webView.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.New, context: nil)
-        webView.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.New, context: nil)
+        webView.addObserver(self, forKeyPath: "estimatedProgress", options: NSKeyValueObservingOptions.new, context: nil)
+        webView.addObserver(self, forKeyPath: "title", options: NSKeyValueObservingOptions.new, context: nil)
 
         progressView.frame = CGRect(x: 0, y: 0, width: WIDTH, height: 1)
         self.view.addSubview(progressView)
         
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         if keyPath == "title" {
             self.title = self.webView.title
         }else if keyPath == "estimatedProgress" {
@@ -50,13 +50,13 @@ class ScoreNoteViewController: UIViewController {
         }
         
         if object as! NSObject == self.webView && keyPath! == "estimatedProgress" {
-            let newprogress = change![NSKeyValueChangeNewKey] as! Double
+            let newprogress = change![NSKeyValueChangeKey.newKey] as! Double
             
             if newprogress == 1 {
-                self.progressView.hidden = true
+                self.progressView.isHidden = true
                 self.progressView.setProgress(0, animated: false)
             }else {
-                self.progressView.hidden = false
+                self.progressView.isHidden = false
                 self.progressView.setProgress(Float(newprogress), animated: false)
             }
         }
@@ -67,7 +67,7 @@ class ScoreNoteViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
         webView.removeObserver(self, forKeyPath: "estimatedProgress")

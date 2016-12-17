@@ -15,23 +15,23 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
     
 //    var pagingMenuController:PagingMenuController?
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 圈子")
+        BaiduMobStat.default().pageviewStart(withName: "护士站 圈子")
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 圈子")
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子")
     }
     
     
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.hidden = false
-        self.tabBarController?.tabBar.hidden = false
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidLoad() {
@@ -75,8 +75,8 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
                 return 5
             }
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: text, color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
-                return .Text(title: title)
+                let title = MenuItemText(text: text, color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+                return .text(title: title)
             }
         }
         
@@ -85,19 +85,19 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
             var textArray = [String]()
             
             var backgroundColor: UIColor {
-                return UIColor.clearColor()
+                return UIColor.clear
             }
             var selectedBackgroundColor: UIColor {
-                return UIColor.clearColor()
+                return UIColor.clear
             }
             var height: CGFloat {
                 return 44
             }
             var displayMode: MenuDisplayMode {
-                return .SegmentedControl
+                return .segmentedControl
             }
             var focusMode: MenuFocusMode {
-                return .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+                return .underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
             }
             var itemsOptions: [MenuItemViewCustomizable] {
                 
@@ -120,17 +120,17 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
             }
             var componentType: ComponentType {
                 
-                return .All(menuOptions: MenuOptions.init(textArray: itemTextArray), pagingControllers: viewControllers)
+                return .all(menuOptions: MenuOptions.init(textArray: itemTextArray), pagingControllers: viewControllers)
             }
         }
         
         let options = PagingMenuOptions.init(viewControllers: [discoverController,mineController], itemTextArray: ["发现","我的"])
         let pagingMenuController = PagingMenuController(options: options)
-        pagingMenuController.view.frame = CGRectMake(0, 1, WIDTH, HEIGHT-45)
+        pagingMenuController.view.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-45)
         
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
-        pagingMenuController.didMoveToParentViewController(self)
+        pagingMenuController.didMove(toParentViewController: self)
     }
     
 }

@@ -26,30 +26,30 @@ class OnlineTextTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        titleImg.frame = CGRectMake(10, 10, 40, 40)
-        titleLable.frame = CGRectMake(57, 15, WIDTH / 3, 30)
-        titleLable.font = UIFont.systemFontOfSize(18)
-        startBtn.frame = CGRectMake(WIDTH-10-WIDTH/4, 15, WIDTH/4, 30)
+        titleImg.frame = CGRect(x: 10, y: 10, width: 40, height: 40)
+        titleLable.frame = CGRect(x: 57, y: 15, width: WIDTH / 3, height: 30)
+        titleLable.font = UIFont.systemFont(ofSize: 18)
+        startBtn.frame = CGRect(x: WIDTH-10-WIDTH/4, y: 15, width: WIDTH/4, height: 30)
 //        startBtn.setTitle("开始考试", forState: .Normal)
-        startBtn.setTitleColor(COLOR, forState: .Normal)
+        startBtn.setTitleColor(COLOR, for: UIControlState())
         startBtn.layer.cornerRadius = 15
-        startBtn.layer.borderColor = COLOR.CGColor
+        startBtn.layer.borderColor = COLOR.cgColor
         startBtn.layer.borderWidth = 1
         
-        let rightOfNum = UILabel(frame: CGRectMake(startBtn.frame.origin.x-30, 10, 25, 40))
-        rightOfNum.font = UIFont.systemFontOfSize(12)
-        rightOfNum.textAlignment = .Center
-        rightOfNum.textColor = UIColor.grayColor()
+        let rightOfNum = UILabel(frame: CGRect(x: startBtn.frame.origin.x-30, y: 10, width: 25, height: 40))
+        rightOfNum.font = UIFont.systemFont(ofSize: 12)
+        rightOfNum.textAlignment = .center
+        rightOfNum.textColor = UIColor.gray
         rightOfNum.text = "道题"
         
-        numLable.frame = CGRectMake(rightOfNum.frame.origin.x-35, 10, 35, 40)
-        numLable.font = UIFont.systemFontOfSize(15)
-        numLable.textAlignment = .Center
+        numLable.frame = CGRect(x: rightOfNum.frame.origin.x-35, y: 10, width: 35, height: 40)
+        numLable.font = UIFont.systemFont(ofSize: 15)
+        numLable.textAlignment = .center
         
-        let leftOfNum = UILabel(frame: CGRectMake(numLable.frame.origin.x-10, 10, 15, 40))
-        leftOfNum.font = UIFont.systemFontOfSize(12)
-        leftOfNum.textAlignment = .Center
-        leftOfNum.textColor = UIColor.grayColor()
+        let leftOfNum = UILabel(frame: CGRect(x: numLable.frame.origin.x-10, y: 10, width: 15, height: 40))
+        leftOfNum.font = UIFont.systemFont(ofSize: 12)
+        leftOfNum.textAlignment = .center
+        leftOfNum.textColor = UIColor.gray
         leftOfNum.text = "共"
         
         self.addSubview(titleImg)
@@ -65,7 +65,7 @@ class OnlineTextTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

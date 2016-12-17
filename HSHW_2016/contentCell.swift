@@ -18,9 +18,9 @@ class contentCell: UITableViewCell{
         for subView in contentWebView!.subviews
         {
             let v = subView
-            if v.isKindOfClass(UIScrollView.self) == true
+            if v.isKind(of: UIScrollView.self) == true
             {
-                (v as! UIScrollView).scrollEnabled = false
+                (v as! UIScrollView).isScrollEnabled = false
                 (v as! UIScrollView).alwaysBounceVertical = false
                 
                 (v as! UIScrollView).showsHorizontalScrollIndicator = false
@@ -28,13 +28,13 @@ class contentCell: UITableViewCell{
             }
         }
     }
-    func loadRequestUrl(requestUrl:NSURL){
+    func loadRequestUrl(_ requestUrl:URL){
 //        contentWebView.scalesPageToFit = true
-        contentWebView.loadRequest(NSURLRequest(URL: requestUrl))
+        contentWebView.loadRequest(URLRequest(url: requestUrl))
     }
  
 //
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

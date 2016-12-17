@@ -33,41 +33,41 @@ class UserPostTableViewCell: UITableViewCell {
         for view in self.contentView.subviews {
             view.removeFromSuperview()
         }
-        titImage.frame = CGRectMake(10, 20, 30, 30)
+        titImage.frame = CGRect(x: 10, y: 20, width: 30, height: 30)
         titImage.layer.cornerRadius = 15
         titImage.clipsToBounds = true
-        titLab.frame = CGRectMake(45, 20, WIDTH/3, 30)
-        titLab.font = UIFont.systemFontOfSize(12)
-        timeLab.frame = CGRectMake(WIDTH-100, 20, 90, 30)
-        timeLab.textColor = UIColor.grayColor()
-        timeLab.textAlignment = .Right
-        timeLab.font = UIFont.systemFontOfSize(10)
-        titTit.frame = CGRectMake(10, 60, WIDTH-20, 20)
-        titTit.font = UIFont.systemFontOfSize(14)
-        contant.frame = CGRectMake(10, 85, WIDTH-20, 35)
-        contant.font = UIFont.systemFontOfSize(12)
-        contant.textColor = UIColor.grayColor()
+        titLab.frame = CGRect(x: 45, y: 20, width: WIDTH/3, height: 30)
+        titLab.font = UIFont.systemFont(ofSize: 12)
+        timeLab.frame = CGRect(x: WIDTH-100, y: 20, width: 90, height: 30)
+        timeLab.textColor = UIColor.gray
+        timeLab.textAlignment = .right
+        timeLab.font = UIFont.systemFont(ofSize: 10)
+        titTit.frame = CGRect(x: 10, y: 60, width: WIDTH-20, height: 20)
+        titTit.font = UIFont.systemFont(ofSize: 14)
+        contant.frame = CGRect(x: 10, y: 85, width: WIDTH-20, height: 35)
+        contant.font = UIFont.systemFont(ofSize: 12)
+        contant.textColor = UIColor.gray
         contant.numberOfLines = 0
-        from.frame = CGRectMake(10, 125, 25, 16)
-        from.font = UIFont.systemFontOfSize(12)
-        from.textColor = UIColor.grayColor()
+        from.frame = CGRect(x: 10, y: 125, width: 25, height: 16)
+        from.font = UIFont.systemFont(ofSize: 12)
+        from.textColor = UIColor.gray
         from.text = "来自"
-        zanNum.frame = CGRectMake(WIDTH-80, 125, 30, 16)
-        zanNum.font = UIFont.systemFontOfSize(10)
-        zanNum.textColor = UIColor.grayColor()
-        zanNum.textAlignment = .Left
-        comment.frame = CGRectMake(WIDTH-40, 125, 30, 16)
-        comment.font = UIFont.systemFontOfSize(10)
-        comment.textColor = UIColor.grayColor()
-        comment.textAlignment = .Right
-        fromRoom.frame = CGRectMake(40, 122, WIDTH/3, 22)
-        fromRoom.font = UIFont.systemFontOfSize(13)
+        zanNum.frame = CGRect(x: WIDTH-80, y: 125, width: 30, height: 16)
+        zanNum.font = UIFont.systemFont(ofSize: 10)
+        zanNum.textColor = UIColor.gray
+        zanNum.textAlignment = .left
+        comment.frame = CGRect(x: WIDTH-40, y: 125, width: 30, height: 16)
+        comment.font = UIFont.systemFont(ofSize: 10)
+        comment.textColor = UIColor.gray
+        comment.textAlignment = .right
+        fromRoom.frame = CGRect(x: 40, y: 122, width: WIDTH/3, height: 22)
+        fromRoom.font = UIFont.systemFont(ofSize: 13)
         fromRoom.textColor = COLOR
-        zanBtn.frame = CGRectMake(WIDTH-96, 125, 16, 16)
-        zanBtn.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
-        conBtn.frame = CGRectMake(WIDTH-51, 127, 18, 12)
-        conBtn.setImage(UIImage(named: "ic_eye_gray.png"), forState: .Normal)
-        let line = UILabel(frame: CGRectMake(0, 159.5, WIDTH, 0.5))
+        zanBtn.frame = CGRect(x: WIDTH-96, y: 125, width: 16, height: 16)
+        zanBtn.setImage(UIImage(named: "ic_like_gray.png"), for: UIControlState())
+        conBtn.frame = CGRect(x: WIDTH-51, y: 127, width: 18, height: 12)
+        conBtn.setImage(UIImage(named: "ic_eye_gray.png"), for: UIControlState())
+        let line = UILabel(frame: CGRect(x: 0, y: 159.5, width: WIDTH, height: 0.5))
         line.backgroundColor = GREY
         
         self.addSubview(line)
@@ -89,7 +89,7 @@ class UserPostTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

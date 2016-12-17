@@ -16,22 +16,22 @@ class QuestionViewController: UIViewController {
 //    let threeView = FiftyThousandExamViewController()
 ////    let threeView = QuestionBankViewController()
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("学习 "+(self.title ?? "")!)
+        BaiduMobStat.default().pageviewStart(withName: "学习 "+(self.title ?? "")!)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("学习 "+(self.title ?? "")!)
+        BaiduMobStat.default().pageviewEnd(withName: "学习 "+(self.title ?? "")!)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.hidden = false
-        self.tabBarController?.tabBar.hidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidLoad() {
@@ -44,12 +44,12 @@ class QuestionViewController: UIViewController {
 //        self.view.addSubview(line)
 //        self.view.backgroundColor = UIColor.whiteColor()
         
-        let line2 = UILabel(frame: CGRectMake(0, 40, WIDTH, 1))
+        let line2 = UILabel(frame: CGRect(x: 0, y: 40, width: WIDTH, height: 1))
         line2.backgroundColor = COLOR
         self.view.addSubview(line2)
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
 //        oneView.title = "护士资格"
 //        oneView.term_id = "130"
 //        twoView.title = "初级护师"
@@ -78,36 +78,36 @@ class QuestionViewController: UIViewController {
         
         struct MenuItem1: MenuItemViewCustomizable {
             
-            private var horizontalMargin: CGFloat = 5
+            fileprivate var horizontalMargin: CGFloat = 5
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "护士资格", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
-                return .Text(title: title)
+                let title = MenuItemText(text: "护士资格", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+                return .text(title: title)
             }
         }
         struct MenuItem2: MenuItemViewCustomizable {
-            private var horizontalMargin: CGFloat = 5
+            fileprivate var horizontalMargin: CGFloat = 5
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "初级护师", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
-                return .Text(title: title)
+                let title = MenuItemText(text: "初级护师", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+                return .text(title: title)
             }
         }
         
         struct MenuItem3: MenuItemViewCustomizable {
-            private var horizontalMargin: CGFloat = 5
+            fileprivate var horizontalMargin: CGFloat = 5
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "主管护师", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
-                return .Text(title: title)
+                let title = MenuItemText(text: "主管护师", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+                return .text(title: title)
             }
         }
         
         struct MenuOptions: MenuViewCustomizable {
             
-            private var backgroundColor: UIColor = UIColor.clearColor()
-            private var selectedBackgroundColor: UIColor = UIColor.clearColor()
-            private var displayMode: MenuDisplayMode = .SegmentedControl
-            private var height: CGFloat = 40
+            fileprivate var backgroundColor: UIColor = UIColor.clear
+            fileprivate var selectedBackgroundColor: UIColor = UIColor.clear
+            fileprivate var displayMode: MenuDisplayMode = .segmentedControl
+            fileprivate var height: CGFloat = 40
             
-            private var focusMode: MenuFocusMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+            fileprivate var focusMode: MenuFocusMode = .underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
             
             var itemsOptions: [MenuItemViewCustomizable] {
                 return [MenuItem1(), MenuItem2(), MenuItem3()]
@@ -115,7 +115,7 @@ class QuestionViewController: UIViewController {
         }
         
         struct PagingMenuOptions: PagingMenuControllerCustomizable {
-            private var scrollEnabled: Bool = false
+            fileprivate var scrollEnabled: Bool = false
             var componentType: ComponentType {
                 
                 let oneView = FiftyThousandExamViewController()
@@ -129,17 +129,17 @@ class QuestionViewController: UIViewController {
                 threeView.title = "主管护师"
                 threeView.term_id = "132"
                 
-                return .All(menuOptions: MenuOptions(), pagingControllers: [oneView,twoView,threeView])
+                return .all(menuOptions: MenuOptions(), pagingControllers: [oneView,twoView,threeView])
             }
         }
         
         let options = PagingMenuOptions()
         let pagingMenuController = PagingMenuController(options: options)
-        pagingMenuController.view.frame = CGRectMake(0, 1, WIDTH, HEIGHT-1)
+        pagingMenuController.view.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-1)
         
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
-        pagingMenuController.didMoveToParentViewController(self)
+        pagingMenuController.didMove(toParentViewController: self)
     }
 }
 

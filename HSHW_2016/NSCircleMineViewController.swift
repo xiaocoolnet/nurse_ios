@@ -10,7 +10,7 @@ import UIKit
 
 class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
-    let rootTableView = UITableView(frame: CGRect.zero, style: .Grouped)
+    let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
     var cellNameArray1 = ["我的贴子","认证","管理圈子"]
     var cellImageNameArray1 = ["我的贴子","认证","管理圈子"]
@@ -29,33 +29,33 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 圈子 我的")
+        BaiduMobStat.default().pageviewStart(withName: "护士站 圈子 我的")
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 圈子 我的")
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 我的")
     }
     
     // MARK: - 设置子视图
     func setSubview() {
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
         self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
-        rootTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65-45-49)
-        rootTableView.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
+        rootTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-65-45-49)
+        rootTableView.backgroundColor = UIColor.white
         
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
-        rootTableView.registerClass(NSCircleHomeTableViewCell.self, forCellReuseIdentifier: "circleHomeCell")
+        rootTableView.register(NSCircleHomeTableViewCell.self, forCellReuseIdentifier: "circleHomeCell")
         
         //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
         //        rootTableView.mj_header.beginRefreshing()
@@ -82,8 +82,8 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
 //        let searchLab = UILabel(frame: CGRect(x: 8, y: 10, width: WIDTH-16, height: 35))
         
         let search = UISearchBar(frame: CGRect(x: 8, y: 10, width: WIDTH-16, height: 35))
-        search.barTintColor = UIColor.whiteColor()
-        search.searchBarStyle = .Minimal
+        search.barTintColor = UIColor.white
+        search.searchBarStyle = .minimal
 //        search.layer.cornerRadius = 6
 //        search.layer.borderWidth = 1/UIScreen.mainScreen().scale
 //        search.layer.borderColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
@@ -97,38 +97,38 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     // MARK: - UISearchBarDelegate
-    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.showsCancelButton = true
         return true
     }
     
-    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
         searchBar.showsCancelButton = false
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.text = ""
         searchBar.resignFirstResponder()
         searchBar.showsCancelButton = false
     }
         
     // MARK: - UItableViewdatasource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("circleHomeCell", forIndexPath: indexPath) as! NSCircleHomeTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "circleHomeCell", for: indexPath) as! NSCircleHomeTableViewCell
         
-        cell.selectionStyle = .None
-        cell.accessoryType = .DisclosureIndicator
+        cell.selectionStyle = .none
+        cell.accessoryType = .disclosureIndicator
         
         if indexPath.section == 0 {
             cell.setCellWith(cellNameArray1[indexPath.row], imageName: cellImageNameArray1[indexPath.row], noteStr: nil)
@@ -141,16 +141,16 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - UITableViewDelegate
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return 44
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 14
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.001
     }
     
@@ -177,7 +177,7 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
     //        return footerView
     //    }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 14))
         headerView.backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -185,7 +185,7 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
         return headerView
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("帖子详情")
         
         switch (indexPath.section,indexPath.row) {

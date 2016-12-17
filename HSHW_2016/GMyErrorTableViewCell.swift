@@ -29,14 +29,14 @@ class GMyErrorTableViewCell: UITableViewCell {
 //        indexLab.frame = CGRectMake(10, 10, 50, 50)
 //        indexLab.textColor = UIColor.darkGrayColor()
         
-        titImg.frame = CGRectMake(8, 25, 25, 30)
+        titImg.frame = CGRect(x: 8, y: 25, width: 25, height: 30)
         titImg.image = UIImage.init(named: "ic_note")
 //        titImg.frame = CGRectMake(70, 10, 50, 50)
 //        titImg.layer.cornerRadius = 25
 //        titImg.clipsToBounds = true
         
-        titleLab.frame = CGRectMake(75+50+15, 15, WIDTH - 150, 50)
-        titleLab.font = UIFont.systemFontOfSize(14)
+        titleLab.frame = CGRect(x: 75+50+15, y: 15, width: WIDTH - 150, height: 50)
+        titleLab.font = UIFont.systemFont(ofSize: 14)
         titleLab.numberOfLines = 0
         
 //        self.addSubview(indexLab)
@@ -51,7 +51,7 @@ class GMyErrorTableViewCell: UITableViewCell {
             
             titleLab.text = fansModel?.post_title
             titleLab.sizeToFit()
-            titleLab.frame = CGRectMake(CGRectGetMaxX(titImg.frame)+15, 15, WIDTH-CGRectGetMaxX(titImg.frame)-30, 50)
+            titleLab.frame = CGRect(x: titImg.frame.maxX+15, y: 15, width: WIDTH-titImg.frame.maxX-30, height: 50)
         }
         
     }
@@ -61,7 +61,7 @@ class GMyErrorTableViewCell: UITableViewCell {
             
             titleLab.text = fanModel?.title
             titleLab.sizeToFit()
-            titleLab.frame = CGRectMake(CGRectGetMaxX(titImg.frame)+15, 15, WIDTH-CGRectGetMaxX(titImg.frame)-30, 50)
+            titleLab.frame = CGRect(x: titImg.frame.maxX+15, y: 15, width: WIDTH-titImg.frame.maxX-30, height: 50)
             
         }
         
@@ -72,7 +72,7 @@ class GMyErrorTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

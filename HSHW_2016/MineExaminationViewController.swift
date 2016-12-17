@@ -20,9 +20,9 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
     let focusTableView = UITableView()
     var navigationBarLineView = UIView()
     
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.hidden = false
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     override func viewDidLoad() {
@@ -30,17 +30,17 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
         self.title = "收藏试题"
         
         // 线
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         
         // 每日一练列表
-        fansTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65)
-        fansTableView.backgroundColor = UIColor.clearColor()
-        fansTableView.registerClass(GMyErrorTableViewCell.self, forCellReuseIdentifier: "cell")
+        fansTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-65)
+        fansTableView.backgroundColor = UIColor.clear
+        fansTableView.register(GMyErrorTableViewCell.self, forCellReuseIdentifier: "cell")
         fansTableView.rowHeight = 70
         fansTableView.tag = 410
         fansTableView.delegate = self
@@ -53,16 +53,16 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
     }
     
 
-    private var fansListArray:Array<xamInfo> = []
+    fileprivate var fansListArray:Array<xamInfo> = []
     
     // 加载数据_做题记录
     func loadData_Exampaper() {
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //        hud.mode = MBProgressHUDMode.Text;
-        hud.labelText = "正在获取收藏试题"
-        hud.margin = 10.0
-        hud.removeFromSuperViewOnHide = true
+        hud?.labelText = "正在获取收藏试题"
+        hud?.margin = 10.0
+        hud?.removeFromSuperViewOnHide = true
         
         helper.getCollectionInfoWith("2") { (success, response) in
             
@@ -70,27 +70,27 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
                 self.fansListArray = response as! Array<xamInfo>
                 self.fansTableView.reloadData()
             }else{
-                if String((response ?? "")!) == "no data" {
+                if String(describing: response) == "no data" {
                     self.fansListArray = response as! Array<xamInfo>
                     self.fansTableView.reloadData()
                 }
             }
             
-            hud.hide(true, afterDelay: 1)
+            hud?.hide(true, afterDelay: 1)
         }
         
     }
     
     // MARK: tableView 代理方法
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
             return fansListArray.count
 
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! GMyErrorTableViewCell
-        cell.selectionStyle = .None
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! GMyErrorTableViewCell
+        cell.selectionStyle = .none
 //        cell.inde = indexPath.row
         
 //        if tableView.tag == 410 {
@@ -101,7 +101,7 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        print(indexPath.row)
         
         let userPageVC = GMyExaminationViewController()
@@ -128,36 +128,36 @@ class MineExaminationViewController: UIViewController, UITableViewDelegate, UITa
 //        self.navigationController?.pushViewController(userPageVC, animated: true)
     }
     
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return UITableViewCellEditingStyle.Delete
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.delete
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.Delete {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
             //        获取选中删除行索引值
             let row = indexPath.row
             //        通过获取的索引值删除数组中的值
             
             let newsInfo = self.fansListArray[row]
             
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud?.margin = 10.0
+            hud?.removeFromSuperViewOnHide = true
             
             HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.questionid, type: "2", handle: { (success, response) in
                 if success {
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "取消收藏成功"
-                    hud.hide(true, afterDelay: 0.5)
+                    hud?.mode = MBProgressHUDMode.text;
+                    hud?.labelText = "取消收藏成功"
+                    hud?.hide(true, afterDelay: 0.5)
                     
-                    self.fansListArray.removeAtIndex(row)
+                    self.fansListArray.remove(at: row)
                     
                     //        删除单元格的某一行时，在用动画效果实现删除过程
-                    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                    tableView.deleteRows(at: [indexPath], with: .automatic)
                 }else{
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = String((response ?? "")!)
-                    hud.hide(true, afterDelay: 1)
+                    hud?.mode = MBProgressHUDMode.text;
+                    hud?.labelText = String(describing: response)
+                    hud?.hide(true, afterDelay: 1)
                 }
             })
         }

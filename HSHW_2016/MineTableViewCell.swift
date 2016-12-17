@@ -24,18 +24,18 @@ class MineTableViewCell: UITableViewCell {
         for view in self.contentView.subviews {
             view.removeFromSuperview()
         }
-        titImage.frame = CGRectMake(10, 10, 40, 40)
-        titLab.frame = CGRectMake(57, 15, WIDTH/2, 30)
-        titLab.font = UIFont.systemFontOfSize(18)
+        titImage.frame = CGRect(x: 10, y: 10, width: 40, height: 40)
+        titLab.frame = CGRect(x: 57, y: 15, width: WIDTH/2, height: 30)
+        titLab.font = UIFont.systemFont(ofSize: 18)
         
-        numLab.frame = CGRectMake(WIDTH-25-8, 17.5, 25, 25)
-        numLab.backgroundColor = UIColor.redColor()
+        numLab.frame = CGRect(x: WIDTH-25-8, y: 17.5, width: 25, height: 25)
+        numLab.backgroundColor = UIColor.red
         numLab.layer.cornerRadius = 12.5
         numLab.clipsToBounds = true
-        numLab.textAlignment = .Center
-        numLab.textColor = UIColor.whiteColor()
-        numLab.font = UIFont.systemFontOfSize(15)
-        numLab.hidden = true
+        numLab.textAlignment = .center
+        numLab.textColor = UIColor.white
+        numLab.font = UIFont.systemFont(ofSize: 15)
+        numLab.isHidden = true
 //        if recruit_user_updateNum > 99 {
 //            numLab.text = "99+"
 //        }else{
@@ -53,7 +53,7 @@ class MineTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

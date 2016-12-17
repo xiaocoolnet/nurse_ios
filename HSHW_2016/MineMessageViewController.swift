@@ -15,10 +15,10 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
     var dataSource = Array<NewsInfo>()
     var readMessageArray = Array<ReadMessageData>()
     
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.hidden = false
-        self.tabBarController?.tabBar.hidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = true
         
         self.getDate()
     }
@@ -28,55 +28,55 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
 //        line.backgroundColor = COLOR
 //        self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "全设为已读", style: .Done, target: self, action: #selector(setAlreadyRead))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "全设为已读", style: .done, target: self, action: #selector(setAlreadyRead))
         
-        myTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-20)
+        myTableView.frame = CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT-20)
 //        myTableView.bounces = false
         myTableView.backgroundColor = RGREY
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.registerClass(MineMessageTableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.register(MineMessageTableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(myTableView)
         myTableView.rowHeight = 80
         
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(getDate))
 
         
-        let lineView = UIView.init(frame: CGRectMake(0, 0, WIDTH, 1))
+        let lineView = UIView.init(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         lineView.backgroundColor = COLOR
         self.view.addSubview(lineView)
         
         // Do any additional setup after loading the view.
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! MineMessageTableViewCell
-        cell.selectionStyle = .None
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MineMessageTableViewCell
+        cell.selectionStyle = .none
         let model = self.dataSource[indexPath.row]
         
         
-        cell.imgBtn.frame = CGRectMake(10, 10, 60, 60)
+        cell.imgBtn.frame = CGRect(x: 10, y: 10, width: 60, height: 60)
         
-        cell.titleLable.frame = CGRectMake(85, 10, WIDTH-10-85, 30)
+        cell.titleLable.frame = CGRect(x: 85, y: 10, width: WIDTH-10-85, height: 30)
         
-        cell.nameLable.frame = CGRectMake(85, 40, WIDTH*(WIDTH - 105)/375, 30)
+        cell.nameLable.frame = CGRect(x: 85, y: 40, width: WIDTH*(WIDTH - 105)/375, height: 30)
         
-        cell.timeLable.frame = CGRectMake(WIDTH - 130, 10, 120, 30)
+        cell.timeLable.frame = CGRect(x: WIDTH - 130, y: 10, width: 120, height: 30)
         
         cell.titleLable.text = model.post_title
         cell.titleLable.sizeToFit()
 //        cell.titleLable.frame.size.width = WIDTH - cell.timeLable.frame.size.width-10-10-85
         
-        cell.timeLable.text = model.post_modified?.componentsSeparatedByString(" ").first
+        cell.timeLable.text = model.post_modified?.components(separatedBy: " ").first
         cell.timeLable.sizeToFit()
         cell.timeLable.frame.origin.x = WIDTH - cell.timeLable.frame.size.width-10
-        cell.timeLable.frame.origin.y = CGRectGetMaxY(cell.titleLable.frame)+8
+        cell.timeLable.frame.origin.y = cell.titleLable.frame.maxY+8
 //        cell.timeLable.center.y = cell.titleLable.center.y
         
 //        cell.nameLable.text = model.post_excerpt
@@ -84,16 +84,16 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
             cell.imgBtn.image = UIImage.init(named: "ic_lan.png")
         }else{
-            cell.imgBtn.sd_setImageWithURL(NSURL(string:DomainName+"data/upload/"+(model.thumbArr.first?.url ?? "")!), placeholderImage: UIImage.init(named: "ic_lan.png"))
+            cell.imgBtn.sd_setImage(with: URL(string:DomainName+"data/upload/"+(model.thumbArr.first?.url ?? "")!), placeholderImage: UIImage.init(named: "ic_lan.png"))
         }
         
-        if CGRectGetMaxY(cell.timeLable.frame)-8 >= cell.imgBtn.frame.size.height {
-            cell.imgBtn.frame.origin.y = (CGRectGetMaxY(cell.timeLable.frame)+8 - cell.imgBtn.frame.size.height)/2.0
-            cell.small.frame = CGRectMake(CGRectGetMaxX(cell.imgBtn.frame)-5, CGRectGetMinY(cell.imgBtn.frame)-5, 10, 10)
+        if cell.timeLable.frame.maxY-8 >= cell.imgBtn.frame.size.height {
+            cell.imgBtn.frame.origin.y = (cell.timeLable.frame.maxY+8 - cell.imgBtn.frame.size.height)/2.0
+            cell.small.frame = CGRect(x: cell.imgBtn.frame.maxX-5, y: cell.imgBtn.frame.minY-5, width: 10, height: 10)
 
         }else{
             cell.imgBtn.frame.origin.y = 8
-            cell.small.frame = CGRectMake(CGRectGetMaxX(cell.imgBtn.frame)-5, CGRectGetMinY(cell.imgBtn.frame)-5, 10, 10)
+            cell.small.frame = CGRect(x: cell.imgBtn.frame.maxX-5, y: cell.imgBtn.frame.minY-5, width: 10, height: 10)
 
         }
         
@@ -101,28 +101,28 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         
         for readMessage in self.readMessageArray {
             if readMessage.refid == model.message_id {
-                cell.small.setBackgroundImage(nil, forState: .Normal)
+                cell.small.setBackgroundImage(nil, for: UIControlState())
                 flag = false
             }
         }
         if flag {
-            cell.small.setBackgroundImage(UIImage(named: "ic_xin.png"), forState: .Normal)
+            cell.small.setBackgroundImage(UIImage(named: "ic_xin.png"), for: UIControlState())
         }
         
         
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let model = self.dataSource[indexPath.row]
         
         let url = PARK_URL_Header+"setMessageread"
         let param = ["userid":QCLoginUserInfo.currentInfo.userid,"refid":model.message_id]
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 
 //        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-            UIApplication.sharedApplication().applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber > 1 ? UIApplication.sharedApplication().applicationIconBadgeNumber - 1:0
+            UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber > 1 ? UIApplication.shared.applicationIconBadgeNumber - 1:0
             unreadNum -= 1
         }
         
@@ -133,48 +133,48 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         
         self.navigationController?.pushViewController(next, animated: true)
     }
-    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return .Delete
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return .delete
     }
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
 //        if editingStyle == .Delete {
 //            print("删除")
 //        }
     }
     
-    func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! MineMessageTableViewCell
+        let cell = tableView.cellForRow(at: indexPath) as! MineMessageTableViewCell
         
         // 设置删除按钮
-        let deleteRowAction = UITableViewRowAction(style: .Default, title: "删除") { (action, indexPath) in
+        let deleteRowAction = UITableViewRowAction(style: .default, title: "删除") { (action, indexPath) in
             print("删除")
             
-            let alert = UIAlertController(title: "", message: "确定删除该消息？", preferredStyle: .Alert)
-            self.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "", message: "确定删除该消息？", preferredStyle: .alert)
+            self.present(alert, animated: true, completion: nil)
             
-            let sureAction = UIAlertAction(title: "确定", style: .Default, handler: { (action) in
+            let sureAction = UIAlertAction(title: "确定", style: .default, handler: { (action) in
                 
                 let model = self.dataSource[indexPath.row]
                 
                 let url = PARK_URL_Header+"delMySystemMessag"
                 let param = ["userid":QCLoginUserInfo.currentInfo.userid,"refid":model.message_id]
-                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 
 //                Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
                     
                     let status = HSStatusModel(JSONDecoder(json!))
                     if status.status == "success" {
                         
-                        UIApplication.sharedApplication().applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber > 1 ? UIApplication.sharedApplication().applicationIconBadgeNumber - 1:0
+                        UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber > 1 ? UIApplication.shared.applicationIconBadgeNumber - 1:0
                         
                         //                    let cell = tableView.cellForRowAtIndexPath(indexPath) as! MineMessageTableViewCell
                         //                    cell.small.setBackgroundImage(nil, forState: .Normal)
                         
-                        self.dataSource.removeAtIndex(indexPath.row)
+                        self.dataSource.remove(at: indexPath.row)
                         self.myTableView.reloadData()
                     }else{
                         
@@ -184,28 +184,28 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
             })
             alert.addAction(sureAction)
             
-            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (action) in
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
                 tableView.setEditing(false, animated: true)
             })
             alert.addAction(cancelAction)
         }
         
         // 设置已读按钮
-        let readRowAction = UITableViewRowAction(style: .Normal, title: "标为已读") { (action, indexPath) in
+        let readRowAction = UITableViewRowAction(style: .normal, title: "标为已读") { (action, indexPath) in
             print("标为已读")
             
             let model = self.dataSource[indexPath.row]
             
             let url = PARK_URL_Header+"setMessageread"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid,"refid":model.message_id]
-            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 
 //            Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
-                UIApplication.sharedApplication().applicationIconBadgeNumber = UIApplication.sharedApplication().applicationIconBadgeNumber > 1 ? UIApplication.sharedApplication().applicationIconBadgeNumber - 1:0
+                UIApplication.shared.applicationIconBadgeNumber = UIApplication.shared.applicationIconBadgeNumber > 1 ? UIApplication.shared.applicationIconBadgeNumber - 1:0
                 unreadNum -= 1
                 
-                let cell = tableView.cellForRowAtIndexPath(indexPath) as! MineMessageTableViewCell
-                cell.small.setBackgroundImage(nil, forState: .Normal)
+                let cell = tableView.cellForRow(at: indexPath) as! MineMessageTableViewCell
+                cell.small.setBackgroundImage(nil, for: UIControlState())
                 
                 tableView.setEditing(false, animated: true)
                 
@@ -221,33 +221,33 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     // Linux时间戳转标准时间
-    func timeStampToString(timeStamp:String)->String {
+    func timeStampToString(_ timeStamp:String)->String {
         
         let string = NSString(string: timeStamp)
         
-        let timeSta:NSTimeInterval = string.doubleValue
-        let dfmatter = NSDateFormatter()
+        let timeSta:TimeInterval = string.doubleValue
+        let dfmatter = DateFormatter()
         dfmatter.dateFormat="yyyy-MM-dd"
         
-        let date = NSDate(timeIntervalSince1970: timeSta)
+        let date = Date(timeIntervalSince1970: timeSta)
         
         // print(dfmatter.stringFromDate(date))
-        return dfmatter.stringFromDate(date)
+        return dfmatter.string(from: date)
     }
 
     func setAlreadyRead(){
         
-        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要将所有消息设为已读吗？", comment: "empty message"), preferredStyle: .Alert)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要将所有消息设为已读吗？", comment: "empty message"), preferredStyle: .alert)
+        self.present(alertController, animated: true, completion: nil)
         
-        let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
+        let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: { (doneAction) in
             
-            UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+            UIApplication.shared.applicationIconBadgeNumber = 0
             unreadNum = 0
 
             let url = PARK_URL_Header+"setMessageread"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
                 
                 self.getDate()
 //                self.myTableView.reloadData()
@@ -256,7 +256,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         })
         alertController.addAction(doneAction)
         
-        let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
+        let cancelAction = UIAlertAction(title: "取消", style: .default, handler: { (cancelAction) in
             return
         })
         alertController.addAction(cancelAction)
@@ -270,7 +270,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         
         let url = PARK_URL_Header+"getsystemmessage_new"
         let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             flag += 1
             if self.myTableView.mj_header.isRefreshing() && flag == 2 {
                 self.myTableView.mj_header.endRefreshing()
@@ -284,12 +284,12 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
                 // print("状态是")
                 // print(status.status)
                 if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud?.mode = MBProgressHUDMode.text;
                     //hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    hud?.margin = 10.0
+                    hud?.removeFromSuperViewOnHide = true
+                    hud?.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
                     // print(status)
@@ -305,7 +305,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
         
         let url_read = PARK_URL_Header+"getMessagereadlist"
         let param_read = ["userid":QCLoginUserInfo.currentInfo.userid]
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url_read, Parameter: param_read) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url_read, Parameter: param_read as [String : AnyObject]?) { (json, error) in
 
 //        Alamofire.request(.GET, url_read, parameters: param_read).response { request, response, json, error in
             
@@ -331,7 +331,7 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
 //                    hud.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
-                    self.readMessageArray = (status.data ?? [ReadMessageData]())!
+                    self.readMessageArray = (status.data )
                     self.myTableView .reloadData()
                 }
             }
@@ -340,9 +340,9 @@ class MineMessageViewController: UIViewController, UITableViewDelegate, UITableV
     }
     
     // MARK:MineMessDetailViewController delegate
-    func refreshSmallImagte(indexPath: NSIndexPath) {
-        let cell = self.myTableView.cellForRowAtIndexPath(indexPath) as! MineMessageTableViewCell
-        cell.small.hidden = true
+    func refreshSmallImagte(_ indexPath: IndexPath) {
+        let cell = self.myTableView.cellForRow(at: indexPath) as! MineMessageTableViewCell
+        cell.small.isHidden = true
         
     }
 

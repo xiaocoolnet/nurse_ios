@@ -7,6 +7,30 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 //import Alamofire
 
 class AcademicTableViewCell: UITableViewCell {
@@ -34,44 +58,44 @@ class AcademicTableViewCell: UITableViewCell {
         for view in self.contentView.subviews {
             view.removeFromSuperview()
         }
-        titImage.frame = CGRectMake(10, 10, WIDTH-20, (WIDTH-20)*0.5)
-        titImage.contentMode = .ScaleAspectFill
+        titImage.frame = CGRect(x: 10, y: 10, width: WIDTH-20, height: (WIDTH-20)*0.5)
+        titImage.contentMode = .scaleAspectFill
         titImage.clipsToBounds = true
         
-        titLab.frame = CGRectMake(10, (WIDTH-20)*0.5+15, WIDTH-20, 20)
-        titLab.font = UIFont.systemFontOfSize(14)
+        titLab.frame = CGRect(x: 10, y: (WIDTH-20)*0.5+15, width: WIDTH-20, height: 20)
+        titLab.font = UIFont.systemFont(ofSize: 14)
         titLab.numberOfLines = 0
         
-        conNum.frame = CGRectMake(WIDTH-80, (WIDTH-20)*0.5+36, 60, 20)
-        conNum.font = UIFont.systemFontOfSize(12)
-        conNum.textColor = UIColor.grayColor()
+        conNum.frame = CGRect(x: WIDTH-80, y: (WIDTH-20)*0.5+36, width: 60, height: 20)
+        conNum.font = UIFont.systemFont(ofSize: 12)
+        conNum.textColor = UIColor.gray
         
-        comBtn.frame = CGRectMake(WIDTH-100, (WIDTH-20)*0.5+40, 20, 20)
-        comBtn.setImage(UIImage(named: "ic_collect_nor"), forState: .Normal)
-        comBtn.setImage(UIImage(named: "ic_collect_sel"), forState: .Selected)
+        comBtn.frame = CGRect(x: WIDTH-100, y: (WIDTH-20)*0.5+40, width: 20, height: 20)
+        comBtn.setImage(UIImage(named: "ic_collect_nor"), for: UIControlState())
+        comBtn.setImage(UIImage(named: "ic_collect_sel"), for: .selected)
 //        comBtn.backgroundColor = UIColor.redColor()
         
-        timeLab.frame = CGRectMake(30, (WIDTH-20)*0.5+40, 100, 20)
-        timeLab.font = UIFont.systemFontOfSize(14)
-        timeLab.textColor = UIColor.grayColor()
+        timeLab.frame = CGRect(x: 30, y: (WIDTH-20)*0.5+40, width: 100, height: 20)
+        timeLab.font = UIFont.systemFont(ofSize: 14)
+        timeLab.textColor = UIColor.gray
         
-        timeBtn.frame = CGRectMake(10, (WIDTH-20)*0.5+42, 12, 12)
+        timeBtn.frame = CGRect(x: 10, y: (WIDTH-20)*0.5+42, width: 12, height: 12)
 //        timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
         
-        hitsLab.frame = CGRectMake(30, (WIDTH-20)*0.5+40, 100, 20)
-        hitsLab.font = UIFont.systemFontOfSize(12)
-        hitsLab.textColor = UIColor.grayColor()
+        hitsLab.frame = CGRect(x: 30, y: (WIDTH-20)*0.5+40, width: 100, height: 20)
+        hitsLab.font = UIFont.systemFont(ofSize: 12)
+        hitsLab.textColor = UIColor.gray
         
-        hitsBtn.frame = CGRectMake(10, (WIDTH-20)*0.5+40, 13, 9)
+        hitsBtn.frame = CGRect(x: 10, y: (WIDTH-20)*0.5+40, width: 13, height: 9)
         //        timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
         
-        zanNum.frame = CGRectMake(WIDTH-30, (WIDTH-20)*0.5+38, 30, 20)
-        zanNum.font = UIFont.systemFontOfSize(12)
-        zanNum.textColor = UIColor.grayColor()
-        zanNum.textAlignment = .Left
-        aca_zan.frame = CGRectMake(WIDTH-50, (WIDTH-20)*0.5+42, 14, 14)
-        aca_zan.setImage(UIImage(named:"ic_like_gray"), forState: UIControlState.Normal)
-        aca_zan.setImage(UIImage(named:"ic_like_sel"), forState: UIControlState.Selected)
+        zanNum.frame = CGRect(x: WIDTH-30, y: (WIDTH-20)*0.5+38, width: 30, height: 20)
+        zanNum.font = UIFont.systemFont(ofSize: 12)
+        zanNum.textColor = UIColor.gray
+        zanNum.textAlignment = .left
+        aca_zan.frame = CGRect(x: WIDTH-50, y: (WIDTH-20)*0.5+42, width: 14, height: 14)
+        aca_zan.setImage(UIImage(named:"ic_like_gray"), for: UIControlState())
+        aca_zan.setImage(UIImage(named:"ic_like_sel"), for: UIControlState.selected)
 //        aca_zan.addTarget(self, action: #selector(AcademicViewController.click1(_:)), forControlEvents: .TouchUpInside)
 //      zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
 //      zan.setBackgroundImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
@@ -90,8 +114,8 @@ class AcademicTableViewCell: UITableViewCell {
     
     var newsInfo:NewsInfo?{
         didSet {
-            aca_zan.selected = false
-            comBtn.selected = false
+            aca_zan.isSelected = false
+            comBtn.isSelected = false
             if (newsInfo?.thumbArr.count > 0) {
                 
                 let photoUrl:String = DomainName+"data/upload/"+(newsInfo!.thumbArr.first?.url)!
@@ -100,7 +124,7 @@ class AcademicTableViewCell: UITableViewCell {
                 if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                     self.titImage.image = UIImage.init(named: "defaultImage.png")
                 }else{
-                    self.titImage.sd_setImageWithURL(NSURL.init(string: photoUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
+                    self.titImage.sd_setImage(with: URL.init(string: photoUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
                 }
                 //            titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
             }else{
@@ -110,10 +134,10 @@ class AcademicTableViewCell: UITableViewCell {
             titLab.frame.size.height = calculateHeight(titLab.text!, size: 14, width: WIDTH-20)
             //        cell.conNum.text = newsInfo.recommended
             
-            timeBtn.setBackgroundImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
+            timeBtn.setBackgroundImage(UIImage(named: "ic_time_purple.png"), for: UIControlState())
 
-            timeLab.frame.origin.y = CGRectGetMaxY(titLab.frame)+4
-            let time:Array = (newsInfo!.post_modified!.componentsSeparatedByString(" "))
+            timeLab.frame.origin.y = titLab.frame.maxY+4
+            let time:Array = (newsInfo!.post_modified!.components(separatedBy: " "))
             timeLab.text = time[0]
 //            let hashValue = newsInfo.likes.count.hashValue
 //            print(hashValue)
@@ -121,11 +145,11 @@ class AcademicTableViewCell: UITableViewCell {
 //                aca_zan.selected = true
 //            }
             if newsInfo?.favorites_add == "1" {
-                comBtn.selected = true
+                comBtn.isSelected = true
             }
             for obj in newsInfo!.likes {
                 if obj.userid == QCLoginUserInfo.currentInfo.userid {
-                    aca_zan.selected = true
+                    aca_zan.isSelected = true
                 }
             }
             
@@ -151,8 +175,8 @@ class AcademicTableViewCell: UITableViewCell {
     
     var academicNewsInfo:NewsInfo?{
         didSet {
-            aca_zan.selected = false
-            comBtn.selected = false
+            aca_zan.isSelected = false
+            comBtn.isSelected = false
             if (academicNewsInfo?.thumbArr.count > 0) {
                 
                 let photoUrl:String = DomainName+"data/upload/"+(academicNewsInfo!.thumbArr.first?.url)!
@@ -161,7 +185,7 @@ class AcademicTableViewCell: UITableViewCell {
                 if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                     self.titImage.image = UIImage.init(named: "defaultImage.png")
                 }else{
-                    self.titImage.sd_setImageWithURL(NSURL.init(string: photoUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
+                    self.titImage.sd_setImage(with: URL.init(string: photoUrl), placeholderImage: UIImage.init(named: "defaultImage.png"))
                 }
                 
                 //            titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "2.png"))
@@ -171,8 +195,8 @@ class AcademicTableViewCell: UITableViewCell {
             titLab.text = academicNewsInfo!.post_title
             titLab.frame.size.height = calculateHeight(titLab.text!, size: 14, width: WIDTH-20)
             //        cell.conNum.text = academicNewsInfo.recommended
-            hitsBtn.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
-            hitsLab.frame.origin.y = CGRectGetMaxY(titLab.frame)+4
+            hitsBtn.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), for: UIControlState())
+            hitsLab.frame.origin.y = titLab.frame.maxY+4
             hitsLab.text = "\((academicNewsInfo?.post_hits)!) 人看过"
             hitsBtn.center.y = hitsLab.center.y
             //            let hashValue = academicNewsInfo.likes.count.hashValue
@@ -183,7 +207,7 @@ class AcademicTableViewCell: UITableViewCell {
             
             for obj in academicNewsInfo!.likes {
                 if obj.userid == QCLoginUserInfo.currentInfo.userid {
-                    aca_zan.selected = true
+                    aca_zan.isSelected = true
                 }
             }
             
@@ -193,7 +217,7 @@ class AcademicTableViewCell: UITableViewCell {
 //                }
 //            }
             if academicNewsInfo?.favorites_add == "1" {
-                comBtn.selected = true
+                comBtn.isSelected = true
             }
             
             //            print("\(hashValue)")
@@ -214,7 +238,7 @@ class AcademicTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

@@ -37,7 +37,7 @@ class NSCircleHomeTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
@@ -45,17 +45,17 @@ class NSCircleHomeTableViewCell: UITableViewCell {
     
     func setSubViews() {
         
-        iconImg.contentMode = .ScaleAspectFit
+        iconImg.contentMode = .scaleAspectFit
         iconImg.clipsToBounds = true
-        iconImg.frame = CGRectMake(8, 11, 22, 22)
+        iconImg.frame = CGRect(x: 8, y: 11, width: 22, height: 22)
         
-        titleLab.font = UIFont.systemFontOfSize(18)
-        titleLab.textColor = UIColor.blackColor()
-        titleLab.textAlignment = .Left
+        titleLab.font = UIFont.systemFont(ofSize: 18)
+        titleLab.textColor = UIColor.black
+        titleLab.textAlignment = .left
         
-        noteLab.font = UIFont.systemFontOfSize(12)
+        noteLab.font = UIFont.systemFont(ofSize: 12)
         noteLab.textColor = UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1)
-        noteLab.textAlignment = .Right
+        noteLab.textAlignment = .right
     }
         
 //    func setCellWith(name:String) {
@@ -65,11 +65,11 @@ class NSCircleHomeTableViewCell: UITableViewCell {
 //        self.noteLab.text =
 //        
 //    }
-    func setCellWith(name:String, imageName:String, noteStr:String?, isNetImage:Bool = false) {
+    func setCellWith(_ name:String, imageName:String, noteStr:String?, isNetImage:Bool = false) {
         
         if isNetImage {
             
-            self.iconImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+imageName), placeholderImage: nil)
+            self.iconImg.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+imageName), placeholderImage: nil)
         }else{
             
             self.iconImg.image = UIImage(named: imageName)
@@ -77,10 +77,10 @@ class NSCircleHomeTableViewCell: UITableViewCell {
         self.titleLab.text = name
         
         if noteStr == nil {
-            self.noteLab.hidden = true
+            self.noteLab.isHidden = true
             titleLab.frame = CGRect(x: 38, y: 0, width: WIDTH-38-38, height: 44)
         }else{
-            self.noteLab.hidden = false
+            self.noteLab.isHidden = false
             self.noteLab.text = noteStr
             self.titleLab.sizeToFit()
             titleLab.frame = CGRect(x: 38, y: 0, width: self.titleLab.frame.width, height: 44)

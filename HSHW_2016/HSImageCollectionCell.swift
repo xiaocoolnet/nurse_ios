@@ -14,7 +14,7 @@ class HSImageCollectionCell: UICollectionViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        deleteBtn.userInteractionEnabled = false
+        deleteBtn.isUserInteractionEnabled = false
         // Initialization code
     }
 }

@@ -14,13 +14,13 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     let scrollView = UIScrollView()
     let pageControl = SMPageControl()
     var imageArr = Array<NewsInfo>()
-    var timer = NSTimer()
+    var timer = Timer()
     var times = Int()
     let employment = UIView()
     let employmentMessage = UIView()
-    let resumeDetail = NSBundle.mainBundle().loadNibNamed("HSFindPersonDetailView", owner: nil, options: nil).first as! HSFindPersonDetailView
-    let sendPostion = NSBundle.mainBundle().loadNibNamed("PostVacancies", owner: nil, options: nil).first as! PostVacancies
-    let sendResume = NSBundle.mainBundle().loadNibNamed("HSPostResumeView", owner: nil, options: nil).first as! HSPostResumeView
+    let resumeDetail = Bundle.main.loadNibNamed("HSFindPersonDetailView", owner: nil, options: nil)?.first as! HSFindPersonDetailView
+    let sendPostion = Bundle.main.loadNibNamed("PostVacancies", owner: nil, options: nil)?.first as! PostVacancies
+    let sendResume = Bundle.main.loadNibNamed("HSPostResumeView", owner: nil, options: nil)?.first as! HSPostResumeView
     var jobDataSource:Array<JobModel>?
     var currentJobModel:JobModel?
     var CVDataSource:Array<CVModel>?
@@ -44,19 +44,19 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
 //    weak var superViewController:NurseStationViewController?
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 招聘 " + (self.title ?? "")!)
+        BaiduMobStat.default().pageviewStart(withName: "护士站 招聘 " + (self.title ?? "")!)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 招聘 " + (self.title ?? "")!)
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 招聘 " + (self.title ?? "")!)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
     }
@@ -67,14 +67,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             
 //            self.setFiltrateItem_findJob()
             self.setSlideView()
-            myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65-45-49)
+            myTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-65-45-49)
 //            myTableView.frame = CGRectMake(0, 38, WIDTH, HEIGHT-110-37)
 
 
         }else{
             
 //            self.setFiltrateItem_findPerson()
-            myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65-45-49)
+            myTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-65-45-49)
 //            myTableView.frame = CGRectMake(0, 38, WIDTH, HEIGHT-110-37)
 
 
@@ -108,14 +108,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         // 学历
         let eduBtn = UIButton()
         eduBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-        eduBtn.setTitle("学历", forState: UIControlState())
+        eduBtn.setTitle("学历", for: UIControlState())
         
         // 学历 下拉
         eduDrop.anchorView = eduBtn
         
         eduDrop.bottomOffset = CGPoint(x: 0, y: 37)
         eduDrop.width = WIDTH
-        eduDrop.direction = .Bottom
+        eduDrop.direction = .bottom
         
         eduDrop.dataSource = self.eduDataSource
         
@@ -123,21 +123,21 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         eduDrop.selectionAction = { (index, item) in
             
             self.myTableView.mj_header.beginRefreshing()
-            eduBtn.setTitle(item, forState: UIControlState())
+            eduBtn.setTitle(item, for: UIControlState())
             
         }
         
         // 工作经验
         let expBtn = UIButton()
         expBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-        expBtn.setTitle("工作经验", forState: UIControlState())
+        expBtn.setTitle("工作经验", for: UIControlState())
         
         // 工作经验 下拉
         expDrop.anchorView = expBtn
         
         expDrop.bottomOffset = CGPoint(x: 0, y: 37)
         expDrop.width = WIDTH
-        expDrop.direction = .Bottom
+        expDrop.direction = .bottom
         
         expDrop.dataSource = self.expDataSource
         
@@ -145,21 +145,21 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         expDrop.selectionAction = { (index, item) in
             
             self.myTableView.mj_header.beginRefreshing()
-            expBtn.setTitle(item, forState: UIControlState())
+            expBtn.setTitle(item, for: UIControlState())
             
         }
         
         // 职称
         let certificateBtn = UIButton()
         certificateBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-        certificateBtn.setTitle("职称", forState: UIControlState())
+        certificateBtn.setTitle("职称", for: UIControlState())
         
         // 职称 下拉
         certificateDrop.anchorView = certificateBtn
         
         certificateDrop.bottomOffset = CGPoint(x: 0, y: 37)
         certificateDrop.width = WIDTH
-        certificateDrop.direction = .Bottom
+        certificateDrop.direction = .bottom
         
         certificateDrop.dataSource = self.certificateDataSource
         
@@ -167,17 +167,17 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         certificateDrop.selectionAction = { (index, item) in
             
             self.myTableView.mj_header.beginRefreshing()
-            certificateBtn.setTitle(item, forState: UIControlState())
+            certificateBtn.setTitle(item, for: UIControlState())
             
         }
         
         // 选择菜单
-        let segChoose = LFLUISegmentedControl.segmentWithFrame(CGRectMake(0, 1, WIDTH, 37), titleArray: [eduBtn,expBtn,certificateBtn], defaultSelect: 0)
-        segChoose.tag = 101
-        segChoose.lineColor(COLOR)
-        segChoose.titleColor(UIColor.blackColor(), selectTitleColor: COLOR, backGroundColor: UIColor.whiteColor(), titleFontSize: 14)
-        segChoose.delegate = self
-        self.view.addSubview(segChoose)
+        let segChoose = LFLUISegmentedControl.segment(withFrame: CGRect(x: 0, y: 1, width: WIDTH, height: 37), titleArray: [eduBtn,expBtn,certificateBtn], defaultSelect: 0)
+        segChoose?.tag = 101
+        segChoose?.lineColor(COLOR)
+        segChoose?.titleColor(UIColor.black, selectTitleColor: COLOR, backGroundColor: UIColor.white, titleFontSize: 14)
+        segChoose?.delegate = self
+        self.view.addSubview(segChoose!)
     }
     
     // 工作地点
@@ -198,19 +198,19 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         // 工作地点
         addressBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-        addressBtn.setTitle("北京市-北京市", forState: UIControlState())
+        addressBtn.setTitle("北京市-北京市", for: UIControlState())
         
         // 薪资
         let expBtn = UIButton()
         expBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-        expBtn.setTitle("薪资", forState: UIControlState())
+        expBtn.setTitle("薪资", for: UIControlState())
         
         // 薪资 下拉
         salaryDrop.anchorView = expBtn
         
         salaryDrop.bottomOffset = CGPoint(x: 0, y: 37)
         salaryDrop.width = WIDTH
-        salaryDrop.direction = .Bottom
+        salaryDrop.direction = .bottom
         
         salaryDrop.dataSource = self.salaryDataSource
         
@@ -218,21 +218,21 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         salaryDrop.selectionAction = { (index, item) in
             
             self.myTableView.mj_header.beginRefreshing()
-            expBtn.setTitle(item, forState: UIControlState())
+            expBtn.setTitle(item, for: UIControlState())
             
         }
         
         // 职位
         let certificateBtn = UIButton()
         certificateBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-        certificateBtn.setTitle("职位", forState: UIControlState())
+        certificateBtn.setTitle("职位", for: UIControlState())
         
         // 职位 下拉
         jobTypeDrop.anchorView = certificateBtn
         
         jobTypeDrop.bottomOffset = CGPoint(x: 0, y: 37)
         jobTypeDrop.width = WIDTH
-        jobTypeDrop.direction = .Bottom
+        jobTypeDrop.direction = .bottom
         
         jobTypeDrop.dataSource = self.jobTypeDataSource
         
@@ -240,17 +240,17 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         jobTypeDrop.selectionAction = { (index, item) in
             
             self.myTableView.mj_header.beginRefreshing()
-            certificateBtn.setTitle(item, forState: UIControlState())
+            certificateBtn.setTitle(item, for: UIControlState())
             
         }
         
         // 选择菜单
-        let segChoose = LFLUISegmentedControl.segmentWithFrame(CGRectMake(0, 1, WIDTH, 37), titleArray: [addressBtn,expBtn,certificateBtn], defaultSelect: 0)
-        segChoose.tag = 102
-        segChoose.lineColor(COLOR)
-        segChoose.titleColor(UIColor.blackColor(), selectTitleColor: COLOR, backGroundColor: UIColor.whiteColor(), titleFontSize: 14)
-        segChoose.delegate = self
-        self.view.addSubview(segChoose)
+        let segChoose = LFLUISegmentedControl.segment(withFrame: CGRect(x: 0, y: 1, width: WIDTH, height: 37), titleArray: [addressBtn,expBtn,certificateBtn], defaultSelect: 0)
+        segChoose?.tag = 102
+        segChoose?.lineColor(COLOR)
+        segChoose?.titleColor(UIColor.black, selectTitleColor: COLOR, backGroundColor: UIColor.white, titleFontSize: 14)
+        segChoose?.delegate = self
+        self.view.addSubview(segChoose!)
     }
     
     var targetCityArray = ["北京市","北京市"]
@@ -263,22 +263,22 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         // 设置是否显示区县等，默认为false不显示
         pick.showTown = false
-        pick.pickArray = targetCityArray // 设置第一次加载时需要跳转到相对应的地址
-        pick.show((UIApplication.sharedApplication().keyWindow)!)
+        pick.pickArray = targetCityArray as NSArray? // 设置第一次加载时需要跳转到相对应的地址
+        pick.show((UIApplication.shared.keyWindow)!)
         
         // 选择完成之后回调
         pick.selectAdress { (dressArray) in
             
             self.targetCityArray = dressArray as! Array<String>
             
-            self.addressBtn.setTitle("\(self.targetCityArray[0])-\(self.targetCityArray[1])", forState: .Normal)
+            self.addressBtn.setTitle("\(self.targetCityArray[0])-\(self.targetCityArray[1])", for: UIControlState())
             
             self.myTableView.mj_header.beginRefreshing()
             
         }
     }
     
-    func uisegumentSelectionChange(selection: Int, segmentTag: Int) {
+    func uisegumentSelectionChange(_ selection: Int, segmentTag: Int) {
         
         if segmentTag == 101 {
             
@@ -305,49 +305,49 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     func updateSlideImage(){
         
         for subView in self.scrollView.subviews {
-            if subView.isKindOfClass(UIImageView) {
+            if subView.isKind(of: UIImageView.self) {
                 subView.removeFromSuperview()
             }
         }
         
         let margin:CGFloat = 4
         pageControl.numberOfPages = self.imageArr.count
-        pageControl.frame = CGRectMake(
-            WIDTH-margin-pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)-margin*CGFloat(self.imageArr.count-1),
-            WIDTH*190/375-25,
-            pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)+margin*CGFloat(self.imageArr.count-1),
-            25)
+        pageControl.frame = CGRect(
+            x: WIDTH-margin-pageControl.rect(forPageIndicator: 0).width*CGFloat(self.imageArr.count)-margin*CGFloat(self.imageArr.count-1),
+            y: WIDTH*190/375-25,
+            width: pageControl.rect(forPageIndicator: 0).width*CGFloat(self.imageArr.count)+margin*CGFloat(self.imageArr.count-1),
+            height: 25)
         pageControl.indicatorMargin = margin
         pageControl.currentPage = 0
         
-        for (i,slideImage) in self.imageArr.enumerate() {
+        for (i,slideImage) in self.imageArr.enumerated() {
             
             let  imageView = UIImageView()
-            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*190/375)
+            imageView.frame = CGRect(x: CGFloat(i)*WIDTH, y: 0, width: WIDTH, height: WIDTH*190/375)
             imageView.tag = i+1
             // TODO:JUDGE WIFI
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
 //            if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || slideImage.thumbArr.count == 0 {
                 imageView.image = UIImage.init(named: "defaultImage.png")
             }else{
-                imageView.sd_setImageWithURL(NSURL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
+                imageView.sd_setImage(with: URL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
             }
             
-            let bottom = UIView(frame: CGRectMake(0, WIDTH*190/375-25, WIDTH, 25))
-            bottom.backgroundColor = UIColor.grayColor()
+            let bottom = UIView(frame: CGRect(x: 0, y: WIDTH*190/375-25, width: WIDTH, height: 25))
+            bottom.backgroundColor = UIColor.gray
             bottom.alpha = 0.5
             imageView.addSubview(bottom)
             
-            let titLab = UILabel(frame: CGRectMake(10, WIDTH*190/375-25, CGRectGetMinX(pageControl.frame)-10, 25))
-            titLab.font = UIFont.systemFontOfSize(13)
-            titLab.textColor = UIColor.whiteColor()
+            let titLab = UILabel(frame: CGRect(x: 10, y: WIDTH*190/375-25, width: pageControl.frame.minX-10, height: 25))
+            titLab.font = UIFont.systemFont(ofSize: 13)
+            titLab.textColor = UIColor.white
             titLab.adjustsFontSizeToFitWidth = true
             titLab.text = slideImage.post_title
             titLab.tag = i+1
             imageView.addSubview(titLab)
             
             //为图片视图添加点击事件
-            imageView.userInteractionEnabled = true
+            imageView.isUserInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
             //            手指头
             tap.numberOfTapsRequired = 1
@@ -357,8 +357,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             self.scrollView.addSubview(imageView)
         }
         
-        scrollView.contentSize = CGSizeMake(CGFloat(self.imageArr.count)*WIDTH, 0)
-        scrollView.contentOffset = CGPointMake(0, 0)
+        scrollView.contentSize = CGSize(width: CGFloat(self.imageArr.count)*WIDTH, height: 0)
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)
         
     }
     
@@ -374,7 +374,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
 
                 if success {
                     self.jobPager += 1
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.jobDataSource = response as? Array<JobModel> ?? []
                         self.myTableView.reloadData()
                         
@@ -385,21 +385,22 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.myTableView.mj_header.endRefreshing()
                     }
                 }else{
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.myTableView.mj_header.endRefreshing()
                         
-                        if String((response ?? "")!) == "no data" {
+                        
+                        if String(describing: response) == "no data" {
                             self.jobDataSource = Array<JobModel>()
                             self.myTableView.reloadData()
                         }else{
                             
-                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                            hud.mode = MBProgressHUDMode.Text;
-                            hud.labelText = "获取招聘信息失败"
-                            hud.detailsLabelText = String((response ?? "")!)
-                            hud.margin = 10.0
-                            hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 1)
+                            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                            hud?.mode = MBProgressHUDMode.text;
+                            hud?.labelText = "获取招聘信息失败"
+                            hud?.detailsLabelText = String(describing: response)
+                            hud?.margin = 10.0
+                            hud?.removeFromSuperViewOnHide = true
+                            hud?.hide(true, afterDelay: 1)
                         }
                         
                     })
@@ -413,7 +414,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     let imageArr = response as! Array<NewsInfo>
                     self.imageArr = imageArr.count>=5 ? Array(imageArr[0...slideImageListMaxNum-1]):imageArr
                     
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.updateSlideImage()
                         self.myTableView.reloadData()
                     })
@@ -423,22 +424,22 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.myTableView.mj_header.endRefreshing()
                     }
                 }else{
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.myTableView.mj_header.endRefreshing()
                         
-                        if String((response ?? "")!) == "no data" {
+                        if (String(describing: response) ?? "")! == "no data" {
                             self.imageArr = Array<NewsInfo>()
                             self.updateSlideImage()
                             self.myTableView.reloadData()
                         }else{
                             
-                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                            hud.mode = MBProgressHUDMode.Text;
-                            hud.labelText = "轮播图获取失败"
-                            hud.detailsLabelText = String((response ?? "")!)
-                            hud.margin = 10.0
-                            hud.removeFromSuperViewOnHide = true
-                            hud.hide(true, afterDelay: 1)
+                            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                            hud?.mode = MBProgressHUDMode.text;
+                            hud?.labelText = "轮播图获取失败"
+                            hud?.detailsLabelText = (String(describing: response) ?? "")!
+                            hud?.margin = 10.0
+                            hud?.removeFromSuperViewOnHide = true
+                            hud?.hide(true, afterDelay: 1)
                         }
                         
                     })
@@ -448,7 +449,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             
             HSNurseStationHelper().getCVList((eduDrop.selectedItem ?? "")!, experience: (expDrop.selectedItem ?? "")!, certificate: (certificateDrop.selectedItem ?? "")!, pager: String(resumePager), handle: { (success, response) in
 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     if !success {
                         return
                     }
@@ -489,7 +490,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 
                 if success {
                     self.jobPager += 1
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         
                         for jobModel in (response as? Array<JobModel> ?? []) {
                             self.jobDataSource?.append(jobModel)
@@ -501,7 +502,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                 }else{
                     
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.myTableView.mj_footer.endRefreshingWithNoMoreData()
                         
                     })
@@ -512,7 +513,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             
             HSNurseStationHelper().getCVList((eduDrop.selectedItem ?? "")!, experience: (expDrop.selectedItem ?? "")!, certificate: (certificateDrop.selectedItem ?? "")!, pager: String(resumePager), handle: { (success, response) in
 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     if !success {
                         self.myTableView.mj_footer.endRefreshingWithNoMoreData()
                         return
@@ -550,13 +551,13 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
-    func getDictionaryList(type:String, key:String) {
+    func getDictionaryList(_ type:String, key:String) {
         
         let url = PARK_URL_Header+"getDictionaryList"
         
         let param = ["type":type]
 
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 
             if(error != nil){
                 
@@ -626,18 +627,18 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
 
     
     func configureUI(){
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         //        myTableView.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
-        myTableView.backgroundColor = UIColor.whiteColor()
+        myTableView.backgroundColor = UIColor.white
         myTableView.tag = 0
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "identifier")
-        myTableView.registerClass(RecruitTableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "identifier")
+        myTableView.register(RecruitTableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
         myTableView.mj_header.beginRefreshing()
         
@@ -649,31 +650,31 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         myTableView.rowHeight = 142
         
         let posted = UIButton()
-        posted.frame = CGRectMake(WIDTH-70 , HEIGHT-230, 50, 50)
-        posted.setImage(UIImage(named: "ic_edit.png"), forState: .Normal)
-        posted.addTarget(self, action: #selector(RecruitmentViewController.postedTheView), forControlEvents: .TouchUpInside)
+        posted.frame = CGRect(x: WIDTH-70 , y: HEIGHT-230, width: 50, height: 50)
+        posted.setImage(UIImage(named: "ic_edit.png"), for: UIControlState())
+        posted.addTarget(self, action: #selector(RecruitmentViewController.postedTheView), for: .touchUpInside)
         self.view.addSubview(posted)
         posted.becomeFirstResponder()
     }
     
     func setSlideView() {
-        let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*190/375))
+        let one = UIView(frame: CGRect(x: 0, y: 1, width: WIDTH, height: WIDTH*190/375))
         self.view.addSubview(one)
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(scroll), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(scroll), userInfo: nil, repeats: true)
         
-        scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*190/375)
+        scrollView.frame = CGRect(x: 0, y: 0,width: WIDTH, height: WIDTH*190/375)
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.pagingEnabled = true
+        scrollView.isPagingEnabled = true
         scrollView.delegate = self
         scrollView.tag = 1000
         
-        scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
-        scrollView.contentOffset = CGPointMake(0, 0)
+        scrollView.contentSize = CGSize(width: 4*WIDTH, height: 0)
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)
         one.addSubview(scrollView)
         
-        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*190/375-25, 80, 25)
-        pageControl.pageIndicatorTintColor = UIColor.whiteColor()
+        pageControl.frame = CGRect(x: WIDTH-80, y: WIDTH*190/375-25, width: 80, height: 25)
+        pageControl.pageIndicatorTintColor = UIColor.white
         pageControl.currentPageIndicatorTintColor = COLOR
         pageControl.numberOfPages = self.imageArr.count
         pageControl.currentPage = 0
@@ -684,31 +685,31 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     //    发布招聘信息
     func makeEmployment() {
-        employment.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-154.5)
-        employment.backgroundColor = UIColor.whiteColor()
+        employment.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-154.5)
+        employment.backgroundColor = UIColor.white
         self.view.addSubview(employment)
         
-        let tackBtn = UIButton(frame: CGRectMake(WIDTH*15/375, employment.bounds.size.height-WIDTH*65/375, WIDTH*345/375, WIDTH*45/375))
+        let tackBtn = UIButton(frame: CGRect(x: WIDTH*15/375, y: employment.bounds.size.height-WIDTH*65/375, width: WIDTH*345/375, height: WIDTH*45/375))
         tackBtn.layer.cornerRadius = WIDTH*22.5/375
-        tackBtn.layer.borderColor = COLOR.CGColor
+        tackBtn.layer.borderColor = COLOR.cgColor
         tackBtn.layer.borderWidth = 1
-        tackBtn.setTitle("提交", forState: .Normal)
-        tackBtn.setTitleColor(COLOR, forState: .Normal)
-        tackBtn.addTarget(self, action: #selector(self.takeThePost), forControlEvents: .TouchUpInside)
+        tackBtn.setTitle("提交", for: UIControlState())
+        tackBtn.setTitleColor(COLOR, for: UIControlState())
+        tackBtn.addTarget(self, action: #selector(self.takeThePost), for: .touchUpInside)
         employment.addSubview(tackBtn)
     }
     //  简历详情
     func lookResumeDetail(){
-        resumeDetail.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
+        resumeDetail.frame = CGRect(x: 0, y: 0.5, width: WIDTH, height: HEIGHT-154.5)
         self.view.addSubview(resumeDetail)
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 160
     }
     
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if showType == 1 {
             return jobDataSource?.count ?? 0
@@ -717,26 +718,26 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!RecruitTableViewCell
-        cell.selectionStyle = .None
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)as!RecruitTableViewCell
+        cell.selectionStyle = .none
         if showType == 1 {
             cell.showforJobModel(jobDataSource![indexPath.row])
             cell.delivery.tag = indexPath.row
             btnTag = cell.delivery.tag
-            cell.delivery.addTarget(self, action: #selector(self.resumeOnline(_:)), forControlEvents: .TouchUpInside)
+            cell.delivery.addTarget(self, action: #selector(self.resumeOnline(_:)), for: .touchUpInside)
         }else{
             cell.showforCVModel(CVDataSource![indexPath.row])
             cell.delivery.tag = indexPath.row
             btnTag = cell.delivery.tag
-            cell.delivery.addTarget(self, action: #selector(self.invited(_:)), forControlEvents: .TouchUpInside)
+            cell.delivery.addTarget(self, action: #selector(self.invited(_:)), for: .touchUpInside)
         }
         
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // print(indexPath.row)
         if tableView.tag == 0 {
             if showType == 1 {
@@ -761,11 +762,11 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     // MARK:邀请面试
-    func invited(btn:UIButton) {
+    func invited(_ btn:UIButton) {
         inviteJob(self.CVDataSource![btn.tag])
     }
     
-    func inviteJob(model:CVModel) {
+    func inviteJob(_ model:CVModel) {
         // print("邀请面试")
         
         // MARK:要求登录
@@ -775,26 +776,26 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         if QCLoginUserInfo.currentInfo.usertype == "1" {
             
-            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是个人用户，不能发布面试邀请", comment: "empty message"), preferredStyle: .Alert)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是个人用户，不能发布面试邀请", comment: "empty message"), preferredStyle: .alert)
+            self.present(alertController, animated: true, completion: nil)
             
-            let cancelAction = UIAlertAction(title: "好的", style: .Cancel, handler: { (action) in
+            let cancelAction = UIAlertAction(title: "好的", style: .cancel, handler: { (action) in
                 return
             })
             alertController.addAction(cancelAction)
         }else{
             let url = PARK_URL_Header+"getMyPublishJobList"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
                 if(error != nil){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud?.mode = MBProgressHUDMode.text;
 
-                    hud.labelText = "网络错误，请稍后再试"
+                    hud?.labelText = "网络错误，请稍后再试"
                     //hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    hud?.margin = 10.0
+                    hud?.removeFromSuperViewOnHide = true
+                    hud?.hide(true, afterDelay: 1)
                 }else{
                     let status = MineJobModel(JSONDecoder(json!))
                     if(status.status == "success"){
@@ -802,15 +803,15 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                         self.inviteJob_1(model, status: status)
                         
                     }else if(status.status == "error"){
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
+                        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                        hud?.mode = MBProgressHUDMode.text;
                         if status.data == nil {
-                            hud.labelText = "您还没有发布职位，请先发布职位"
+                            hud?.labelText = "您还没有发布职位，请先发布职位"
                         }
                         //hud.labelText = status.errorData
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                        hud?.margin = 10.0
+                        hud?.removeFromSuperViewOnHide = true
+                        hud?.hide(true, afterDelay: 1)
                     }
                 }
                 
@@ -818,41 +819,41 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     
-    func inviteJob_1(model:CVModel, status:MineJobModel) {
+    func inviteJob_1(_ model:CVModel, status:MineJobModel) {
         let arr = MineJobList(status.data!)
         
-        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请选择您要邀请的职位", comment: "empty message"), preferredStyle: .Alert)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请选择您要邀请的职位", comment: "empty message"), preferredStyle: .alert)
+        self.present(alertController, animated: true, completion: nil)
         
         for job in arr.objectlist {
-            let doneAction = UIAlertAction(title: job.title, style: .Default, handler: { (cancelAction) in
+            let doneAction = UIAlertAction(title: job.title, style: .default, handler: { (cancelAction) in
                 
-                let inviteHud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                inviteHud.labelText = "正在获取邀请状态"
-                inviteHud.removeFromSuperViewOnHide = true
-                inviteHud.margin = 10.0
+                let inviteHud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                inviteHud?.labelText = "正在获取邀请状态"
+                inviteHud?.removeFromSuperViewOnHide = true
+                inviteHud?.margin = 10.0
                 
                 HSNurseStationHelper().InviteJob_judge(model.userid, companyid: QCLoginUserInfo.currentInfo.userid, jobid: job.id) { (success, response) in
                     
                     if success {
-                        inviteHud.hide(true)
-                        if String((response ?? "")!) == "1" {
+                        inviteHud?.hide(true)
+                        if String(describing: response) == "1" {
                             
-                            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已邀请过 \(model.name) 面试该职位，无需再次邀请", comment: "empty message"), preferredStyle: .Alert)
-                            self.presentViewController(alertController, animated: true, completion: nil)
-                            let doneAction = UIAlertAction(title: "好的", style: .Default, handler: nil)
+                            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已邀请过 \(model.name) 面试该职位，无需再次邀请", comment: "empty message"), preferredStyle: .alert)
+                            self.present(alertController, animated: true, completion: nil)
+                            let doneAction = UIAlertAction(title: "好的", style: .default, handler: nil)
                             alertController.addAction(doneAction)
                         }else{
                             
-                            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要向 \(model.name) 发送邀请吗？", comment: "empty message"), preferredStyle: .Alert)
-                            self.presentViewController(alertController, animated: true, completion: nil)
+                            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要向 \(model.name) 发送邀请吗？", comment: "empty message"), preferredStyle: .alert)
+                            self.present(alertController, animated: true, completion: nil)
                             
-                            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (cancelAction) in
+                            let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: { (cancelAction) in
                                 
-                                let sendInviteHud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                sendInviteHud.labelText = "正在发送邀请"
-                                sendInviteHud.removeFromSuperViewOnHide = true
-                                sendInviteHud.margin = 10.0
+                                let sendInviteHud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                                sendInviteHud?.labelText = "正在发送邀请"
+                                sendInviteHud?.removeFromSuperViewOnHide = true
+                                sendInviteHud?.margin = 10.0
                                 
                                 let url = PARK_URL_Header+"InviteJob"
                                 let param = [
@@ -860,31 +861,31 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                     "jobid":job.id,
                                     "companyid":QCLoginUserInfo.currentInfo.userid
                                 ]
-                                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+                                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
                                     // print(request)
                                     if(error != nil){
-                                        sendInviteHud.mode = MBProgressHUDMode.Text;
-                                        sendInviteHud.labelText = "发送邀请失败 \(error?.domain)"
-                                        sendInviteHud.hide(true, afterDelay: 1)
+                                        sendInviteHud?.mode = MBProgressHUDMode.text;
+                                        sendInviteHud?.labelText = "发送邀请失败 \(error?.localizedDescription)"
+                                        sendInviteHud?.hide(true, afterDelay: 1)
                                     }else{
                                         let result = Http(JSONDecoder(json!))
                                         if(result.status == "success"){
                                             //  菊花加载
                                             //                                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                            sendInviteHud.mode = MBProgressHUDMode.Text;
-                                            sendInviteHud.labelText = "发送邀请成功"
+                                            sendInviteHud?.mode = MBProgressHUDMode.text;
+                                            sendInviteHud?.labelText = "发送邀请成功"
                                             //                                    hud.margin = 10.0
                                             //                                    hud.removeFromSuperViewOnHide = true
-                                            sendInviteHud.hide(true, afterDelay: 1)
+                                            sendInviteHud?.hide(true, afterDelay: 1)
                                             // print(111111)
                                         }else{
                                             //  菊花加载
                                             //                                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                            sendInviteHud.mode = MBProgressHUDMode.Text;
-                                            sendInviteHud.labelText = "发送邀请失败"
+                                            sendInviteHud?.mode = MBProgressHUDMode.text;
+                                            sendInviteHud?.labelText = "发送邀请失败"
                                             //                                    hud.margin = 10.0
                                             //                                    hud.removeFromSuperViewOnHide = true
-                                            sendInviteHud.hide(true, afterDelay: 1)
+                                            sendInviteHud?.hide(true, afterDelay: 1)
                                             // print(2222222)
                                         }
                                     }
@@ -893,15 +894,15 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                             })
                             alertController.addAction(doneAction)
                             
-                            let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
+                            let cancelAction = UIAlertAction(title: "取消", style: .default, handler: { (cancelAction) in
                                 return
                             })
                             alertController.addAction(cancelAction)
                         }
                     }else{
-                        inviteHud.mode = MBProgressHUDMode.Text
-                        inviteHud.labelText = "获取邀请状态失败"
-                        inviteHud.hide(true, afterDelay: 1)
+                        inviteHud?.mode = MBProgressHUDMode.text
+                        inviteHud?.labelText = "获取邀请状态失败"
+                        inviteHud?.hide(true, afterDelay: 1)
                     }
                 }
             })
@@ -910,14 +911,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         
         
-        let cancelAction = UIAlertAction(title: "取消", style: .Destructive, handler: { (cancelAction) in
+        let cancelAction = UIAlertAction(title: "取消", style: .destructive, handler: { (cancelAction) in
             return
         })
         alertController.addAction(cancelAction)
     }
     
     // MARK: 投递简历
-    func resumeOnline(btn:UIButton) {
+    func resumeOnline(_ btn:UIButton) {
         
         // MARK:要求登录
         if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
@@ -926,46 +927,46 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         
         if QCLoginUserInfo.currentInfo.usertype == "2" {
             
-            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是企业用户，不能投递简历", comment: "empty message"), preferredStyle: .Alert)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是企业用户，不能投递简历", comment: "empty message"), preferredStyle: .alert)
+            self.present(alertController, animated: true, completion: nil)
             
-            let cancelAction = UIAlertAction(title: "好的", style: .Cancel, handler: { (action) in
+            let cancelAction = UIAlertAction(title: "好的", style: .cancel, handler: { (action) in
                 return
             })
             alertController.addAction(cancelAction)
         }else{
             
-            let resumeHud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            resumeHud.labelText = "正在获取简历信息"
-            resumeHud.removeFromSuperViewOnHide = true
-            resumeHud.margin = 10.0
+            let resumeHud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            resumeHud?.labelText = "正在获取简历信息"
+            resumeHud?.removeFromSuperViewOnHide = true
+            resumeHud?.margin = 10.0
             
             HSNurseStationHelper().getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
                 if success {
                     
                     // 判断是否已投递简历
-                    resumeHud.labelText = "正在获取简历投递状态"
+                    resumeHud?.labelText = "正在获取简历投递状态"
                     
                     HSNurseStationHelper().ApplyJob_judge(QCLoginUserInfo.currentInfo.userid, companyid: self.jobDataSource![btn.tag].companyid, jobid: self.jobDataSource![btn.tag].id, handle: { (success, response) in
                         if success {
-                            resumeHud.hide(true)
-                            if String((response ?? "")!) == "1" {
-                                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已投递过该职位，无需再次投递", comment: "empty message"), preferredStyle: .Alert)
-                                self.presentViewController(alertController, animated: true, completion: nil)
-                                let doneAction = UIAlertAction(title: "好的", style: .Default, handler: nil)
+                            resumeHud?.hide(true)
+                            if String(describing: response) == "1" {
+                                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您已投递过该职位，无需再次投递", comment: "empty message"), preferredStyle: .alert)
+                                self.present(alertController, animated: true, completion: nil)
+                                let doneAction = UIAlertAction(title: "好的", style: .default, handler: nil)
                                 alertController.addAction(doneAction)
                             }else{
                                 
                                 // print("投递简历")
-                                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
-                                self.presentViewController(alertController, animated: true, completion: nil)
+                                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .alert)
+                                self.present(alertController, animated: true, completion: nil)
                                 
-                                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
+                                let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: { (doneAction) in
                                     
-                                    let applyJobHud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                    applyJobHud.labelText = "正在投递简历"
-                                    applyJobHud.removeFromSuperViewOnHide = true
-                                    applyJobHud.margin = 10.0
+                                    let applyJobHud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                                    applyJobHud?.labelText = "正在投递简历"
+                                    applyJobHud?.removeFromSuperViewOnHide = true
+                                    applyJobHud?.margin = 10.0
                                     
                                     let url = PARK_URL_Header+"ApplyJob"
                                     let param = [
@@ -973,7 +974,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                         "jobid":self.jobDataSource![btn.tag].id,
                                         "companyid":self.jobDataSource![btn.tag].companyid
                                     ]
-                                    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+                                    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
                                         // print(request)
                                         if(error != nil){
                                             
@@ -982,20 +983,20 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                             if(result.status == "success"){
                                                 //  菊花加载
                                                 //                                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                                applyJobHud.mode = MBProgressHUDMode.Text;
-                                                applyJobHud.labelText = "投递简历成功"
+                                                applyJobHud?.mode = MBProgressHUDMode.text;
+                                                applyJobHud?.labelText = "投递简历成功"
                                                 //                                            hud.margin = 10.0
                                                 //                                            hud.removeFromSuperViewOnHide = true
-                                                applyJobHud.hide(true, afterDelay: 1)
+                                                applyJobHud?.hide(true, afterDelay: 1)
                                                 // print(111111)
                                             }else{
                                                 //  菊花加载
                                                 //                                            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                                applyJobHud.mode = MBProgressHUDMode.Text;
-                                                applyJobHud.labelText = "投递简历失败"
+                                                applyJobHud?.mode = MBProgressHUDMode.text;
+                                                applyJobHud?.labelText = "投递简历失败"
                                                 //                                            hud.margin = 10.0
                                                 //                                            hud.removeFromSuperViewOnHide = true
-                                                applyJobHud.hide(true, afterDelay: 1)
+                                                applyJobHud?.hide(true, afterDelay: 1)
                                                 // print(2222222)
                                             }
                                         }
@@ -1005,40 +1006,40 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                                 })
                                 alertController.addAction(doneAction)
                                 
-                                let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
+                                let cancelAction = UIAlertAction(title: "取消", style: .default, handler: { (cancelAction) in
                                     return
                                 })
                                 alertController.addAction(cancelAction)
                             }
                         }else{
-                            resumeHud.mode = MBProgressHUDMode.Text
-                            resumeHud.labelText = "获取简历投递状态失败"
-                            resumeHud.hide(true, afterDelay: 1)
+                            resumeHud?.mode = MBProgressHUDMode.text
+                            resumeHud?.labelText = "获取简历投递状态失败"
+                            resumeHud?.hide(true, afterDelay: 1)
                         }
                     })
                     
                     
                 }else{
-                    if String((response ?? "")!) == "no data" {
+                    if String(describing: response) == "no data" {
                         
-                        dispatch_async(dispatch_get_main_queue(), {
-                            resumeHud.hide(true)
-                            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您还没有简历，请上传简历后投递？", comment: "empty message"), preferredStyle: .Alert)
-                            self.presentViewController(alertController, animated: true, completion: nil)
-                            let doneAction = UIAlertAction(title: "现在就去", style: .Default, handler: { (action) in
+                        DispatchQueue.main.async(execute: {
+                            resumeHud?.hide(true)
+                            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您还没有简历，请上传简历后投递？", comment: "empty message"), preferredStyle: .alert)
+                            self.present(alertController, animated: true, completion: nil)
+                            let doneAction = UIAlertAction(title: "现在就去", style: .default, handler: { (action) in
                                 self.postedTheView()
                             })
                             alertController.addAction(doneAction)
                             
-                            let cancelAction = UIAlertAction(title: "先不投了", style: .Cancel, handler: { (action) in
+                            let cancelAction = UIAlertAction(title: "先不投了", style: .cancel, handler: { (action) in
                                 
                             })
                             alertController.addAction(cancelAction)
                         })
                     }else{
-                        resumeHud.mode = MBProgressHUDMode.Text
-                        resumeHud.labelText = "获取简历信息失败"
-                        resumeHud.hide(true, afterDelay: 1)
+                        resumeHud?.mode = MBProgressHUDMode.text
+                        resumeHud?.labelText = "获取简历信息失败"
+                        resumeHud?.hide(true, afterDelay: 1)
                     }
                 }
             }
@@ -1061,10 +1062,10 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             
             if QCLoginUserInfo.currentInfo.usertype == "1" {
                 
-                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是个人用户，不能发布招聘信息", comment: "empty message"), preferredStyle: .Alert)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是个人用户，不能发布招聘信息", comment: "empty message"), preferredStyle: .alert)
+                self.present(alertController, animated: true, completion: nil)
                 
-                let cancelAction = UIAlertAction(title: "好的", style: .Cancel, handler: { (action) in
+                let cancelAction = UIAlertAction(title: "好的", style: .cancel, handler: { (action) in
                     return
                 })
                 alertController.addAction(cancelAction)
@@ -1079,10 +1080,10 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             
             if QCLoginUserInfo.currentInfo.usertype == "2" {
                 
-                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是企业用户，不能编辑简历", comment: "empty message"), preferredStyle: .Alert)
-                self.presentViewController(alertController, animated: true, completion: nil)
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("您是企业用户，不能编辑简历", comment: "empty message"), preferredStyle: .alert)
+                self.present(alertController, animated: true, completion: nil)
                 
-                let cancelAction = UIAlertAction(title: "好的", style: .Cancel, handler: { (action) in
+                let cancelAction = UIAlertAction(title: "好的", style: .cancel, handler: { (action) in
                     return
                 })
                 alertController.addAction(cancelAction)
@@ -1115,17 +1116,17 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
 //    }
     
     func takeThePost() {
-        UIView.animateWithDuration(0.3) {
-            self.employment.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-154.5)
-        }
+        UIView.animate(withDuration: 0.3, animations: {
+            self.employment.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-154.5)
+        }) 
     }
     
     func takeTheResume() {
         
-        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .Alert)
-        self.presentViewController(alertController, animated: true, completion: nil)
+        let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("你确定要投递该职位吗？", comment: "empty message"), preferredStyle: .alert)
+        self.present(alertController, animated: true, completion: nil)
         
-        let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: { (doneAction) in
+        let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: { (doneAction) in
             
             let model = self.currentJobModel
             let url = PARK_URL_Header+"ApplyJob"
@@ -1134,35 +1135,35 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 "jobid":model!.id,
                 "companyid" :model!.companyid
             ]
-            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
                 // print(request)
                 if(error != nil){
                     //  菊花加载
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "投递简历失败（error）"
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud?.mode = MBProgressHUDMode.text;
+                    hud?.labelText = "投递简历失败（error）"
+                    hud?.margin = 10.0
+                    hud?.removeFromSuperViewOnHide = true
+                    hud?.hide(true, afterDelay: 1)
                 }else{
                     let result = Http(JSONDecoder(json!))
                     if(result.status == "success"){
                         //  菊花加载
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "投递简历成功"
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = "投递简历成功"
+                        hud?.margin = 10.0
+                        hud?.removeFromSuperViewOnHide = true
+                        hud?.hide(true, afterDelay: 1)
                         // print(111111)
                     }else{
                         //  菊花加载
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "投递简历失败"
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = "投递简历失败"
+                        hud?.margin = 10.0
+                        hud?.removeFromSuperViewOnHide = true
+                        hud?.hide(true, afterDelay: 1)
                         // print(2222222)
                     }
                 }
@@ -1170,20 +1171,20 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         })
         alertController.addAction(doneAction)
         
-        let cancelAction = UIAlertAction(title: "取消", style: .Default, handler: { (cancelAction) in
+        let cancelAction = UIAlertAction(title: "取消", style: .default, handler: { (cancelAction) in
             return
         })
         alertController.addAction(cancelAction)
     }
     
     //MARK:delegate-find
-    func sendInvite(model:CVModel){
+    func sendInvite(_ model:CVModel){
         inviteJob(model)
     }
     func hiddenResumeDetail() {
-        UIView.animateWithDuration(0.2) {
-            self.resumeDetail.frame = CGRectMake(WIDTH, 0.5, WIDTH, HEIGHT-154.5)
-        }
+        UIView.animate(withDuration: 0.2, animations: {
+            self.resumeDetail.frame = CGRect(x: WIDTH, y: 0.5, width: WIDTH, height: HEIGHT-154.5)
+        }) 
         self.resumeDetail.removeFromSuperview()
     }
     //MARK:delegate-find
@@ -1195,7 +1196,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
 //    }
     
     // MARK:图片点击事件
-    func tapAction(tap:UIGestureRecognizer) {
+    func tapAction(_ tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
         // print("这是第\(Int(imageView.tag))张图片")
@@ -1222,15 +1223,15 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if scrollView.tag == 1000 {
             pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
             //        timer.fireDate = NSDate.distantPast()
-            timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView.tag == 1000 {
             var offsetX:CGFloat = self.scrollView.contentOffset.x
             offsetX = offsetX + (self.scrollView.frame.size.width * 0.5)
@@ -1239,7 +1240,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
     }
     //开始拖拽时
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         //            timer.fireDate = NSDate.distantFuture()
         if scrollView.tag == 1000 {
             timer.invalidate()

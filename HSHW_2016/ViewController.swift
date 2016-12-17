@@ -56,11 +56,11 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     var finishHandle:TimerHandle?
     weak var delegate:ViewControllerDelegate?
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
         //UIApplication.sharedApplication().backgroundRefreshStatus = true
-                navigationController?.navigationBar.hidden = hasBackBarButtonItem
+                navigationController?.navigationBar.isHidden = hasBackBarButtonItem
     }
     
     override func viewDidLoad() {
@@ -68,86 +68,86 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         //  添加一个导航控制器
         //  获取验证码倒计时
         processHandle = {(timeInterVal) in
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 //    self.acquire.backgroundColor = COLOR
-                self.acquire.userInteractionEnabled = false
+                self.acquire.isUserInteractionEnabled = false
                 let btnTitle = String(timeInterVal) + "秒后重新获取"
-                self.acquire.titleLabel?.font = UIFont.systemFontOfSize(12)
-                self.acquire.setTitleColor(COLOR, forState: .Normal)
-                self.acquire.setTitle(btnTitle, forState: .Normal)
+                self.acquire.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+                self.acquire.setTitleColor(COLOR, for: UIControlState())
+                self.acquire.setTitle(btnTitle, for: UIControlState())
                 self.gain.text = nil
             })
         }
         //  获取验证码
         finishHandle = {(timeInterVal) in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.acquire.userInteractionEnabled = true
+            DispatchQueue.main.async(execute: {
+                self.acquire.isUserInteractionEnabled = true
                 // self.acquire.backgroundColor = COLOR
-                self.acquire.setTitleColor(COLOR, forState: .Normal)
-                self.acquire.setTitle("获取验证码", forState: .Normal)
+                self.acquire.setTitleColor(COLOR, for: UIControlState())
+                self.acquire.setTitle("获取验证码", for: UIControlState())
                 self.gain.text = nil
             })
         }
         
         // Do any additional setup after loading the view, typically from a nib.
         logVM = LoginModel()
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         //        self.view.backgroundColor = COLOR
         
-        if navigationController?.navigationBarHidden == true {
-            scrollView.frame = CGRectMake(0, -20, WIDTH, HEIGHT-49+20)
+        if navigationController?.isNavigationBarHidden == true {
+            scrollView.frame = CGRect(x: 0, y: -20, width: WIDTH, height: HEIGHT-49+20)
         }else{
-            scrollView.frame = CGRectMake(0, -20-64, WIDTH, HEIGHT-49+20)
+            scrollView.frame = CGRect(x: 0, y: -20-64, width: WIDTH, height: HEIGHT-49+20)
         }
         
         scrollView.backgroundColor = COLOR
-        scrollView.contentSize = CGSizeMake(0, 0)
+        scrollView.contentSize = CGSize(width: 0, height: 0)
         scrollView.showsVerticalScrollIndicator = false
         scrollView.bounces = false
         self.view.addSubview(scrollView)
         // print(HEIGHT)
         
-        backView.frame = CGRectMake(0, 0, WIDTH, WIDTH*333/375)
+        backView.frame = CGRect(x: 0, y: 0, width: WIDTH, height: WIDTH*333/375)
         backView.backgroundColor = COLOR
         scrollView.addSubview(backView)
-        LOGO.frame = CGRectMake(WIDTH*109/375, WIDTH*107/375, WIDTH*157/375, WIDTH*155/375)
+        LOGO.frame = CGRect(x: WIDTH*109/375, y: WIDTH*107/375, width: WIDTH*157/375, height: WIDTH*155/375)
         LOGO.image = UIImage(named: "LOGO.png")
         scrollView.addSubview(LOGO)
         let btnTit:[String] = ["登录","注册"]
         click = true
         //  登录按钮
-        btnOne.frame = CGRectMake(0, WIDTH*333/375-45, WIDTH/2, 45)
-        btnOne.titleLabel?.font = UIFont.systemFontOfSize(18)
-        btnOne.setTitle(btnTit[0], forState: .Normal)
-        btnOne.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        btnOne.addTarget(self, action: #selector(self.loginTheView), forControlEvents: .TouchUpInside)
+        btnOne.frame = CGRect(x: 0, y: WIDTH*333/375-45, width: WIDTH/2, height: 45)
+        btnOne.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        btnOne.setTitle(btnTit[0], for: UIControlState())
+        btnOne.setTitleColor(UIColor.white, for: UIControlState())
+        btnOne.addTarget(self, action: #selector(self.loginTheView), for: .touchUpInside)
         backView.addSubview(btnOne)
         //  注册按钮
-        btnTwo.frame = CGRectMake(WIDTH/2, WIDTH*333/375-45, WIDTH/2, 45)
-        btnTwo.titleLabel?.font = UIFont.systemFontOfSize(18)
-        btnTwo.setTitle(btnTit[1], forState: .Normal)
-        btnTwo.setTitleColor(GREY, forState: .Normal)
-        btnTwo.addTarget(self, action: #selector(self.registerTheView), forControlEvents: .TouchUpInside)
+        btnTwo.frame = CGRect(x: WIDTH/2, y: WIDTH*333/375-45, width: WIDTH/2, height: 45)
+        btnTwo.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        btnTwo.setTitle(btnTit[1], for: UIControlState())
+        btnTwo.setTitleColor(GREY, for: UIControlState())
+        btnTwo.addTarget(self, action: #selector(self.registerTheView), for: .touchUpInside)
         backView.addSubview(btnTwo)
         
         self.loginView()
         self.registerView()
         
-        line.frame = CGRectMake(0, WIDTH*333/375-4, WIDTH/2, 4)
+        line.frame = CGRect(x: 0, y: WIDTH*333/375-4, width: WIDTH/2, height: 4)
         line.backgroundColor = UIColor(red: 250/255.0, green: 118/255.0, blue: 210/255.0, alpha: 1.0)
         scrollView.addSubview(line)
         
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(self.keyBoardChangFrame(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyBoardChangFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         autoLogin()
         
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         if delegate != nil {
             delegate?.viewcontrollerDesmiss()
         }
@@ -158,13 +158,13 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         
         
         
-        btnOne.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        btnTwo.setTitleColor(GREY, forState: .Normal)
-        UIView.animateWithDuration(0.2) {
-            self.line.frame = CGRectMake(0, WIDTH*333/375-4, WIDTH/2, 4)
-            self.register.frame = CGRectMake(WIDTH, WIDTH*333/375, WIDTH, HEIGHT-WIDTH*333/375)
-            self.login.frame = CGRectMake(0, WIDTH*333/375, WIDTH, HEIGHT-WIDTH*333/375)
-        }
+        btnOne.setTitleColor(UIColor.white, for: UIControlState())
+        btnTwo.setTitleColor(GREY, for: UIControlState())
+        UIView.animate(withDuration: 0.2, animations: {
+            self.line.frame = CGRect(x: 0, y: WIDTH*333/375-4, width: WIDTH/2, height: 4)
+            self.register.frame = CGRect(x: WIDTH, y: WIDTH*333/375, width: WIDTH, height: HEIGHT-WIDTH*333/375)
+            self.login.frame = CGRect(x: 0, y: WIDTH*333/375, width: WIDTH, height: HEIGHT-WIDTH*333/375)
+        }) 
         password.resignFirstResponder()
         yanzheng.resignFirstResponder()
         phoneNum.resignFirstResponder()
@@ -173,109 +173,109 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     //  注册界面
     func registerTheView() {
         // print("注册")
-        btnOne.setTitleColor(GREY, forState: .Normal)
-        btnTwo.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        UIView.animateWithDuration(0.2) {
-            self.line.frame = CGRectMake(WIDTH/2, WIDTH*333/375-4, WIDTH/2, 4)
-            self.register.frame = CGRectMake(0, WIDTH*333/375, WIDTH, HEIGHT-WIDTH*333/375)
-            self.login.frame = CGRectMake(-WIDTH, WIDTH*333/375, WIDTH, HEIGHT-WIDTH*333/375)
-        }
+        btnOne.setTitleColor(GREY, for: UIControlState())
+        btnTwo.setTitleColor(UIColor.white, for: UIControlState())
+        UIView.animate(withDuration: 0.2, animations: {
+            self.line.frame = CGRect(x: WIDTH/2, y: WIDTH*333/375-4, width: WIDTH/2, height: 4)
+            self.register.frame = CGRect(x: 0, y: WIDTH*333/375, width: WIDTH, height: HEIGHT-WIDTH*333/375)
+            self.login.frame = CGRect(x: -WIDTH, y: WIDTH*333/375, width: WIDTH, height: HEIGHT-WIDTH*333/375)
+        }) 
         phoneNumber.resignFirstResponder()
         passwordNumber.resignFirstResponder()
     }
     
     //  KVO（通知中心）监测键盘
-    func keyBoardChangFrame(info:NSNotification) {
+    func keyBoardChangFrame(_ info:Notification) {
         let infoDic = info.userInfo
-        let keyBoardRect = infoDic!["UIKeyboardFrameEndUserInfoKey"]?.CGRectValue()
+        let keyBoardRect = (infoDic!["UIKeyboardFrameEndUserInfoKey"] as AnyObject).cgRectValue
         let keyBoardTranslate = CGFloat((keyBoardRect?.origin.y)!-HEIGHT)
         
         var rect:CGRect = self.view.frame
         //        rect.origin.y = keyBoardTranslate
         
-        if navigationController?.navigationBarHidden == true {
+        if navigationController?.isNavigationBarHidden == true {
             rect.origin.y = keyBoardTranslate
         }else{
             rect.origin.y = keyBoardTranslate+64
         }
         
-        UIView.animateWithDuration(0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             
             self.view.frame = rect
-        }
+        }) 
     }
     
     //  登录界面UI的搭建
     func loginView() {
         
-        login.frame = CGRectMake(0, WIDTH*333/375, WIDTH, HEIGHT-WIDTH*333/375)
-        login.backgroundColor = UIColor.whiteColor()
+        login.frame = CGRect(x: 0, y: WIDTH*333/375, width: WIDTH, height: HEIGHT-WIDTH*333/375)
+        login.backgroundColor = UIColor.white
         scrollView.addSubview(login)
         
-        phoneNumber.frame = CGRectMake(35, WIDTH*40/375, WIDTH-60, WIDTH*50/375)
+        phoneNumber.frame = CGRect(x: 35, y: WIDTH*40/375, width: WIDTH-60, height: WIDTH*50/375)
         phoneNumber.placeholder = "手机号"
-        phoneNumber.font = UIFont.systemFontOfSize(16)
-        phoneNumber.keyboardType = .NumberPad
-        phoneNumber.clearButtonMode = .WhileEditing
-        phoneNumber.returnKeyType = .Next
+        phoneNumber.font = UIFont.systemFont(ofSize: 16)
+        phoneNumber.keyboardType = .numberPad
+        phoneNumber.clearButtonMode = .whileEditing
+        phoneNumber.returnKeyType = .next
         login.addSubview(phoneNumber)
         phoneNumber.delegate = self
         
         for i in 0...1 {
-            let border = UILabel(frame: CGRectMake(25, WIDTH*40/375+WIDTH*60/375*CGFloat(i), WIDTH-50, WIDTH*50/375))
+            let border = UILabel(frame: CGRect(x: 25, y: WIDTH*40/375+WIDTH*60/375*CGFloat(i), width: WIDTH-50, height: WIDTH*50/375))
             border.layer.borderWidth = 1
-            border.layer.borderColor = GREY.CGColor
+            border.layer.borderColor = GREY.cgColor
             login.addSubview(border)
         }
         
-        passwordNumber.frame = CGRectMake(35, WIDTH*100/375, WIDTH-60, WIDTH*50/375)
+        passwordNumber.frame = CGRect(x: 35, y: WIDTH*100/375, width: WIDTH-60, height: WIDTH*50/375)
         passwordNumber.placeholder = "密码"
-        passwordNumber.font = UIFont.systemFontOfSize(16)
-        passwordNumber.secureTextEntry = true
-        let rightView = UIView(frame: CGRectMake(0, 0, 37, 20))
-        let rightBtn = UIButton(frame: CGRectMake(0, 2, 22, 16))
-        rightBtn.setImage(UIImage(named: "btn_eye_sel"), forState: .Selected)
-        rightBtn.setImage(UIImage(named: "btn_eye"), forState: .Normal)
+        passwordNumber.font = UIFont.systemFont(ofSize: 16)
+        passwordNumber.isSecureTextEntry = true
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 37, height: 20))
+        let rightBtn = UIButton(frame: CGRect(x: 0, y: 2, width: 22, height: 16))
+        rightBtn.setImage(UIImage(named: "btn_eye_sel"), for: .selected)
+        rightBtn.setImage(UIImage(named: "btn_eye"), for: UIControlState())
         rightBtn.tag = 101
-        rightBtn.addTarget(self, action: #selector(showOrHiddenPWD(_:)), forControlEvents: .TouchUpInside)
+        rightBtn.addTarget(self, action: #selector(showOrHiddenPWD(_:)), for: .touchUpInside)
         rightView.addSubview(rightBtn)
         passwordNumber.rightView = rightView
-        passwordNumber.rightViewMode = .WhileEditing
-        passwordNumber.returnKeyType = .Done
+        passwordNumber.rightViewMode = .whileEditing
+        passwordNumber.returnKeyType = .done
         login.addSubview(passwordNumber)
         passwordNumber.delegate = self
         
-        loginBtn.frame = CGRectMake(25, WIDTH*180/375, WIDTH-50, WIDTH*50/375)
+        loginBtn.frame = CGRect(x: 25, y: WIDTH*180/375, width: WIDTH-50, height: WIDTH*50/375)
         loginBtn.layer.cornerRadius = WIDTH*25/375
         loginBtn.layer.borderWidth = 1.5
-        loginBtn.layer.borderColor = COLOR.CGColor
-        loginBtn.titleLabel?.font = UIFont.systemFontOfSize(18)
-        loginBtn.setTitle("登录", forState: .Normal)
-        loginBtn.setTitle("", forState: .Highlighted)
-        loginBtn.setTitleColor(COLOR, forState: .Normal)
-        loginBtn.addTarget(self, action: #selector(self.goToMain), forControlEvents: .TouchUpInside)
+        loginBtn.layer.borderColor = COLOR.cgColor
+        loginBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        loginBtn.setTitle("登录", for: UIControlState())
+        loginBtn.setTitle("", for: .highlighted)
+        loginBtn.setTitleColor(COLOR, for: UIControlState())
+        loginBtn.addTarget(self, action: #selector(self.goToMain), for: .touchUpInside)
         login.addSubview(loginBtn)
         
         //  忘记密码的按钮
-        forgetPwdBtn.frame = CGRectMake(25, WIDTH*235/375, WIDTH-50, WIDTH*50/375)
-        forgetPwdBtn.setTitle("忘记密码?", forState: .Normal)
-        forgetPwdBtn.setTitleColor(COLOR, forState: .Normal)
+        forgetPwdBtn.frame = CGRect(x: 25, y: WIDTH*235/375, width: WIDTH-50, height: WIDTH*50/375)
+        forgetPwdBtn.setTitle("忘记密码?", for: UIControlState())
+        forgetPwdBtn.setTitleColor(COLOR, for: UIControlState())
         //  设置字体大小
-        forgetPwdBtn.titleLabel?.font = UIFont.systemFontOfSize(15)
-        forgetPwdBtn.addTarget(self, action: #selector(self.changePassWord), forControlEvents: .TouchUpInside)
+        forgetPwdBtn.titleLabel?.font = UIFont.systemFont(ofSize: 15)
+        forgetPwdBtn.addTarget(self, action: #selector(self.changePassWord), for: .touchUpInside)
         login.addSubview(forgetPwdBtn)
         
         //        scrollView.contentSize = CGSizeMake(WIDTH, CGRectGetMinY(login.frame)+CGRectGetMaxY(forgetPwdBtn.frame)+10-20)
         
     }
     
-    func showOrHiddenPWD(btn:UIButton) {
+    func showOrHiddenPWD(_ btn:UIButton) {
         if btn.tag == 101 {
-            passwordNumber.secureTextEntry = !passwordNumber.secureTextEntry
+            passwordNumber.isSecureTextEntry = !passwordNumber.isSecureTextEntry
         }else{
-            password.secureTextEntry = !password.secureTextEntry
+            password.isSecureTextEntry = !password.isSecureTextEntry
         }
-        btn.selected = !btn.selected
+        btn.isSelected = !btn.isSelected
     }
     
     //  修改密码
@@ -284,56 +284,56 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         //  跳转页面
         let forGetVC = ForgetPasswordController()
         forGetVC.delegate = self
-        forGetVC.flag = (navigationController?.navigationBar.hidden)!
+        forGetVC.flag = (navigationController?.navigationBar.isHidden)!
         self.navigationController?.pushViewController(forGetVC, animated: true)
     }
     
-    func changeNavigation(flag:Bool) {
-        navigationController?.navigationBar.hidden = flag
+    func changeNavigation(_ flag:Bool) {
+        navigationController?.navigationBar.isHidden = flag
     }
     
     //  MARK:注册界面UI的搭建
     func registerView() {
-        register.frame = CGRectMake(WIDTH, WIDTH*333/375, WIDTH, HEIGHT-WIDTH*333/375)
-        register.backgroundColor = UIColor.whiteColor()
+        register.frame = CGRect(x: WIDTH, y: WIDTH*333/375, width: WIDTH, height: HEIGHT-WIDTH*333/375)
+        register.backgroundColor = UIColor.white
         scrollView.addSubview(register)
         
-        phoneNum.frame = CGRectMake(35, WIDTH*15/375, WIDTH-60, WIDTH*50/375)
+        phoneNum.frame = CGRect(x: 35, y: WIDTH*15/375, width: WIDTH-60, height: WIDTH*50/375)
         phoneNum.placeholder = "手机号"
-        phoneNum.font = UIFont.systemFontOfSize(16)
-        phoneNum.keyboardType = .NumberPad
-        phoneNum.clearButtonMode = .WhileEditing
-        phoneNum.returnKeyType = .Next
+        phoneNum.font = UIFont.systemFont(ofSize: 16)
+        phoneNum.keyboardType = .numberPad
+        phoneNum.clearButtonMode = .whileEditing
+        phoneNum.returnKeyType = .next
         register.addSubview(phoneNum)
         phoneNum.delegate = self
         
-        yanzheng.frame = CGRectMake(35, WIDTH*75/375, 150, WIDTH*50/375)
+        yanzheng.frame = CGRect(x: 35, y: WIDTH*75/375, width: 150, height: WIDTH*50/375)
         yanzheng.placeholder = "验证码"
-        yanzheng.font = UIFont.systemFontOfSize(16)
-        yanzheng.returnKeyType = .Next
+        yanzheng.font = UIFont.systemFont(ofSize: 16)
+        yanzheng.returnKeyType = .next
         register.addSubview(yanzheng)
         yanzheng.delegate = self
         
         for i in 0...2 {
-            let border = UILabel(frame: CGRectMake(25, WIDTH*15/375+WIDTH*60/375*CGFloat(i), WIDTH-50, WIDTH*50/375))
+            let border = UILabel(frame: CGRect(x: 25, y: WIDTH*15/375+WIDTH*60/375*CGFloat(i), width: WIDTH-50, height: WIDTH*50/375))
             border.layer.borderWidth = 1
-            border.layer.borderColor = GREY.CGColor
+            border.layer.borderColor = GREY.cgColor
             register.addSubview(border)
         }
         
-        password.frame = CGRectMake(35, WIDTH*135/375, WIDTH-60, WIDTH*50/375)
+        password.frame = CGRect(x: 35, y: WIDTH*135/375, width: WIDTH-60, height: WIDTH*50/375)
         password.placeholder = "密码"
-        password.font = UIFont.systemFontOfSize(16)
-        let rightView = UIView(frame: CGRectMake(0, 0, 37, 20))
-        let rightBtn = UIButton(frame: CGRectMake(0, 2, 22, 16))
-        rightBtn.setImage(UIImage(named: "btn_eye_sel"), forState: .Selected)
-        rightBtn.setImage(UIImage(named: "btn_eye"), forState: .Normal)
+        password.font = UIFont.systemFont(ofSize: 16)
+        let rightView = UIView(frame: CGRect(x: 0, y: 0, width: 37, height: 20))
+        let rightBtn = UIButton(frame: CGRect(x: 0, y: 2, width: 22, height: 16))
+        rightBtn.setImage(UIImage(named: "btn_eye_sel"), for: .selected)
+        rightBtn.setImage(UIImage(named: "btn_eye"), for: UIControlState())
         rightBtn.tag = 102
-        rightBtn.addTarget(self, action: #selector(showOrHiddenPWD(_:)), forControlEvents: .TouchUpInside)
+        rightBtn.addTarget(self, action: #selector(showOrHiddenPWD(_:)), for: .touchUpInside)
         rightView.addSubview(rightBtn)
         password.rightView = rightView
-        password.rightViewMode = .WhileEditing
-        password.returnKeyType = .Done
+        password.rightViewMode = .whileEditing
+        password.returnKeyType = .done
         register.addSubview(password)
         password.delegate = self
         
@@ -342,65 +342,65 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         let margin:CGFloat = 10
         
         // 个人
-        personalBtn.frame = CGRectMake(WIDTH/2.0-margin-btnWidth, CGRectGetMaxY(password.frame)+10, btnWidth, btnHeight)
-        personalBtn.addTarget(self, action: #selector(personalOrBusinessBtnClick(_:)), forControlEvents: .TouchUpInside)
+        personalBtn.frame = CGRect(x: WIDTH/2.0-margin-btnWidth, y: password.frame.maxY+10, width: btnWidth, height: btnHeight)
+        personalBtn.addTarget(self, action: #selector(personalOrBusinessBtnClick(_:)), for: .touchUpInside)
         register.addSubview(personalBtn)
         
-        personalImg.frame = CGRectMake(0, 2, btnHeight-4, btnHeight-4)
+        personalImg.frame = CGRect(x: 0, y: 2, width: btnHeight-4, height: btnHeight-4)
         personalImg.image = UIImage.init(named: "ic_gou_sel")
         personalBtn.addSubview(personalImg)
         
-        personalLab.frame = CGRectMake(btnHeight+5, 0, btnWidth-btnHeight-5, btnHeight)
+        personalLab.frame = CGRect(x: btnHeight+5, y: 0, width: btnWidth-btnHeight-5, height: btnHeight)
         personalLab.textColor = COLOR
-        personalLab.font = UIFont.systemFontOfSize(14)
+        personalLab.font = UIFont.systemFont(ofSize: 14)
         personalLab.text = "个人"
         personalBtn.addSubview(personalLab)
         
         // 企业
-        businessBtn.frame = CGRectMake(WIDTH/2.0+margin, CGRectGetMaxY(password.frame)+10, btnWidth, btnHeight)
-        businessBtn.addTarget(self, action: #selector(personalOrBusinessBtnClick(_:)), forControlEvents: .TouchUpInside)
+        businessBtn.frame = CGRect(x: WIDTH/2.0+margin, y: password.frame.maxY+10, width: btnWidth, height: btnHeight)
+        businessBtn.addTarget(self, action: #selector(personalOrBusinessBtnClick(_:)), for: .touchUpInside)
         register.addSubview(businessBtn)
         
-        businessImg.frame = CGRectMake(0, 2, btnHeight-4, btnHeight-4)
+        businessImg.frame = CGRect(x: 0, y: 2, width: btnHeight-4, height: btnHeight-4)
         businessImg.image = UIImage.init(named: "ic_kuang")
         businessBtn.addSubview(businessImg)
         
-        businessLab.frame = CGRectMake(btnHeight+5, 0, btnWidth-btnHeight-5, btnHeight)
+        businessLab.frame = CGRect(x: btnHeight+5, y: 0, width: btnWidth-btnHeight-5, height: btnHeight)
         businessLab.textColor = GREY
-        businessLab.font = UIFont.systemFontOfSize(14)
+        businessLab.font = UIFont.systemFont(ofSize: 14)
         businessLab.text = "企业"
         businessBtn.addSubview(businessLab)
         
-        gain.frame = CGRectMake(WIDTH-130, WIDTH*75/375+(WIDTH*50/375-30)/2, 95, 30)
+        gain.frame = CGRect(x: WIDTH-130, y: WIDTH*75/375+(WIDTH*50/375-30)/2, width: 95, height: 30)
         gain.text = "获取验证码"
-        gain.font = UIFont.systemFontOfSize(14)
+        gain.font = UIFont.systemFont(ofSize: 14)
         gain.textColor = COLOR
-        gain.textAlignment = .Center
+        gain.textAlignment = .center
         register.addSubview(gain)
         
         //  获取验证码的button
-        acquire.frame = CGRectMake(WIDTH-130, WIDTH*75/375+(WIDTH*50/375-30)/2, 95, 30)
+        acquire.frame = CGRect(x: WIDTH-130, y: WIDTH*75/375+(WIDTH*50/375-30)/2, width: 95, height: 30)
         acquire.layer.cornerRadius = 13
-        acquire.layer.borderColor = COLOR.CGColor
-        acquire.addTarget(self, action: #selector(self.gainTheCard), forControlEvents: .TouchUpInside)
+        acquire.layer.borderColor = COLOR.cgColor
+        acquire.addTarget(self, action: #selector(self.gainTheCard), for: .touchUpInside)
         acquire.layer.borderWidth = 1.5
         register.addSubview(acquire)
         
-        submit.frame = CGRectMake(25, WIDTH*212/375+btnHeight, WIDTH-50, WIDTH*50/375)
+        submit.frame = CGRect(x: 25, y: WIDTH*212/375+btnHeight, width: WIDTH-50, height: WIDTH*50/375)
         submit.layer.cornerRadius = WIDTH*25/375
         submit.layer.borderWidth = 1.5
-        submit.layer.borderColor = COLOR.CGColor
-        submit.titleLabel?.font = UIFont.systemFontOfSize(18)
-        submit.setTitle("提交", forState: .Normal)
-        submit.setTitle("", forState: .Highlighted)
-        submit.setTitleColor(COLOR, forState: .Normal)
-        submit.addTarget(self, action: #selector(self.submitTheUser), forControlEvents: .TouchUpInside)
+        submit.layer.borderColor = COLOR.cgColor
+        submit.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        submit.setTitle("提交", for: UIControlState())
+        submit.setTitle("", for: .highlighted)
+        submit.setTitleColor(COLOR, for: UIControlState())
+        submit.addTarget(self, action: #selector(self.submitTheUser), for: .touchUpInside)
         register.addSubview(submit)
         
         //        scrollView.contentSize = CGSizeMake(WIDTH, CGRectGetMinY(register.frame)+CGRectGetMaxY(submit.frame)+10-20)
     }
     
-    func personalOrBusinessBtnClick(button:UIButton) {
+    func personalOrBusinessBtnClick(_ button:UIButton) {
         if button == personalBtn {
             
             personalImg.image = UIImage.init(named: "ic_gou_sel")
@@ -441,22 +441,22 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
             return
         }
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //            hud.mode = MBProgressHUDMode.Text;
         //        hud.labelText = "正在发送邀请"
-        hud.margin = 10.0
-        hud.removeFromSuperViewOnHide = true
+        hud?.margin = 10.0
+        hud?.removeFromSuperViewOnHide = true
         
         logVM?.comfirmPhoneHasRegister(phoneNum.text!, handle: {(success, response) in
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 //  不管填什么内容都走了这个方法
                 if success {
-                    hud.hide(true)
+                    hud?.hide(true)
                     let alert = UIAlertView(title:"提示信息",message: "手机已注册",delegate: self,cancelButtonTitle: "确定")
                     
                     alert.show()
                 }else{
-                    hud.hide(true)
+                    hud?.hide(true)
                     //  单例进行倒计时
                     TimeManager.shareManager.begainTimerWithKey("register", timeInterval: 30, process: self.processHandle!, finish: self.finishHandle!)
                     self.logVM?.sendMobileCodeWithPhoneNumber(self.phoneNum.text!)
@@ -468,13 +468,13 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     }
     
     // 验证手机号是否正确
-    func validationEmailFormat(string:String) -> Bool {
+    func validationEmailFormat(_ string:String) -> Bool {
         
 //        let mobileRegex = "^((13[0-9])|(147)|(170)|(15[^4,\\D])|(18[0-9]))\\d{8}$"
         let mobileRegex = "(^(13[0-9]|15[0-9]|18[0-9]|17[0-9]|147)\\d{8}$)"
 
         let mobileTest:NSPredicate = NSPredicate(format: "SELF MATCHES %@",mobileRegex)
-        return mobileTest.evaluateWithObject(string)
+        return mobileTest.evaluate(with: string)
         
     }
     
@@ -505,15 +505,15 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         
         logVM?.register(phoneNum.text!,password:password.text!,
                         code:yanzheng.text!,usertype:usertype,devicestate:"1", handle: {(success, response) in
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 if success {
                                     
                                     
                                     
-                                    let alertVC = UIAlertController(title: "提示信息", message: "注册成功", preferredStyle: .Alert)
-                                    self.presentViewController(alertVC, animated: true, completion: nil)
+                                    let alertVC = UIAlertController(title: "提示信息", message: "注册成功", preferredStyle: .alert)
+                                    self.present(alertVC, animated: true, completion: nil)
                                     
-                                    let alertAction = UIAlertAction(title: "确定", style: .Default, handler: { (action) in
+                                    let alertAction = UIAlertAction(title: "确定", style: .default, handler: { (action) in
                                         self.loginWithNum(self.phoneNum.text!, pwd: self.password.text!)
                                         
                                         self.phoneNum.text = nil
@@ -535,59 +535,59 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     }
     
     // MARK: 显示积分提示
-    func showScoreTips(name:String, score:String) {
-        let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-        hud.opacity = 0.3
-        hud.margin = 10
-        hud.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
-        hud.mode = .CustomView
-        let customView = UIImageView(frame: CGRectMake(0, 0, WIDTH*0.8, WIDTH*0.8*238/537))
+    func showScoreTips(_ name:String, score:String) {
+        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
+        hud?.opacity = 0.3
+        hud?.margin = 10
+        hud?.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
+        hud?.mode = .customView
+        let customView = UIImageView(frame: CGRect(x: 0, y: 0, width: WIDTH*0.8, height: WIDTH*0.8*238/537))
         customView.image = UIImage(named: "scorePopImg.png")
-        let titLab = UILabel(frame: CGRectMake(
-            CGRectGetWidth(customView.frame)*351/537,
-            CGRectGetHeight(customView.frame)*30/238,
-            CGRectGetWidth(customView.frame)*174/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let titLab = UILabel(frame: CGRect(
+            x: customView.frame.width*351/537,
+            y: customView.frame.height*30/238,
+            width: customView.frame.width*174/537,
+            height: customView.frame.height*50/238))
         titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
-        titLab.textAlignment = .Left
-        titLab.font = UIFont.systemFontOfSize(16)
+        titLab.textAlignment = .left
+        titLab.font = UIFont.systemFont(ofSize: 16)
         titLab.text = name
         titLab.adjustsFontSizeToFitWidth = true
         customView.addSubview(titLab)
         
-        let scoreLab = UILabel(frame: CGRectMake(
-            CGRectGetWidth(customView.frame)*351/537,
-            CGRectGetHeight(customView.frame)*100/238,
-            CGRectGetWidth(customView.frame)*174/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let scoreLab = UILabel(frame: CGRect(
+            x: customView.frame.width*351/537,
+            y: customView.frame.height*100/238,
+            width: customView.frame.width*174/537,
+            height: customView.frame.height*50/238))
         scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
         
-        scoreLab.textAlignment = .Left
-        scoreLab.font = UIFont.systemFontOfSize(24)
+        scoreLab.textAlignment = .left
+        scoreLab.font = UIFont.systemFont(ofSize: 24)
         scoreLab.text = "+\(score)"
         scoreLab.adjustsFontSizeToFitWidth = true
         scoreLab.sizeToFit()
         customView.addSubview(scoreLab)
         
-        let jifenLab = UILabel(frame: CGRectMake(
-            CGRectGetMaxX(scoreLab.frame)+5,
-            CGRectGetHeight(customView.frame)*100/238,
-            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-5-CGRectGetWidth(customView.frame)*13/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let jifenLab = UILabel(frame: CGRect(
+            x: scoreLab.frame.maxX+5,
+            y: customView.frame.height*100/238,
+            width: customView.frame.width-scoreLab.frame.maxX-5-customView.frame.width*13/537,
+            height: customView.frame.height*50/238))
         jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
-        jifenLab.textAlignment = .Center
-        jifenLab.font = UIFont.systemFontOfSize(16)
+        jifenLab.textAlignment = .center
+        jifenLab.font = UIFont.systemFont(ofSize: 16)
         jifenLab.text = "护士币"
         jifenLab.adjustsFontSizeToFitWidth = true
         jifenLab.center.y = scoreLab.center.y
         customView.addSubview(jifenLab)
         
-        hud.customView = customView
-        hud.hide(true, afterDelay: 3)
+        hud?.customView = customView
+        hud?.hide(true, afterDelay: 3)
     }
     
     //  用来收起键盘
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         phoneNum.resignFirstResponder()
         yanzheng.resignFirstResponder()
         password.resignFirstResponder()
@@ -596,12 +596,12 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         // print("触摸")
     }
     //  键盘完成编辑
-    func textFieldDidBeginEditing(textField: UITextField) {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
         let next = ViewController()
-        next.backView.frame = CGRectMake(0, 0, self.view.bounds.width, 100)
+        next.backView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 100)
     }
     //  成为第一响应
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
         switch textField {
         case phoneNumber:
@@ -623,7 +623,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     //  自动登录
     func autoLogin(){
         
-        let logInfo = NSUserDefaults.standardUserDefaults().objectForKey(LOGINFO_KEY) as? Dictionary<String,String>
+        let logInfo = UserDefaults.standard.object(forKey: LOGINFO_KEY) as? Dictionary<String,String>
         
         if logInfo != nil {
             let usernameStr = logInfo![USER_NAME] ?? ""
@@ -655,16 +655,16 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         loginWithNum(phoneNumber.text!, pwd: passwordNumber.text!)
     }
     // 通过手机号和密码进行登录操作
-    func loginWithNum(num:String,pwd:String){
+    func loginWithNum(_ num:String,pwd:String){
         //   SVProgressHUD.show()
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         
         logVM?.login(num, passwordNumber: pwd, handle: {(success, response) in
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 if success == false {
                     if response != nil {
-                        hud.hide(true)
+                        hud?.hide(true)
                         let string = response as! String
                         if string == "密码错误！" || string == "用户不存在"{
                             let alert = UIAlertView(title:"提示信息",message: string,delegate: self,cancelButtonTitle: "确定")
@@ -681,13 +681,13 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
                     }
                     return
                 }else{
-                    hud.hide(true)
+                    hud?.hide(true)
                     
-                    let ud = NSUserDefaults.standardUserDefaults()
+                    let ud = UserDefaults.standard
                     //  把得到的用户信息存入到沙盒
                     //  得到 useID
-                    ud.setObject([USER_NAME:num,USER_PWD:pwd], forKey: LOGINFO_KEY)
-                    ud.setObject(QCLoginUserInfo.currentInfo.userid, forKey: "userid")
+                    ud.set([USER_NAME:num,USER_PWD:pwd], forKey: LOGINFO_KEY)
+                    ud.set(QCLoginUserInfo.currentInfo.userid, forKey: "userid")
                     //登录成功
                     LOGIN_STATE = true
                     // print(LoginUserInfo)
@@ -698,7 +698,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
             })
     }
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         if alertView.tag == 100 && buttonIndex == 1 {
             self.goToMain()
         }
@@ -723,10 +723,10 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
             
         }
         
-        if previousViewcontroller.isKindOfClass(MineViewController) {
+        if previousViewcontroller.isKind(of: MineViewController.self) {
             self.navigationController?.pushViewController(MineViewController(), animated: true)
         }else{
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }
 
         
@@ -739,7 +739,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
         //            self.presentViewController(vc, animated: true, completion: nil)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         TimeManager.shareManager.taskDic["register"]?.FHandle = nil
         TimeManager.shareManager.taskDic["register"]?.PHandle = nil
         

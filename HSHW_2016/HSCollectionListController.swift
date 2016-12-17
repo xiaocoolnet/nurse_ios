@@ -15,21 +15,21 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
     var helper = HSMineHelper()
     var dataSource = Array<NewsInfo>()
     
-    private var collectListArray:Array<CollectList> = []
-    private var fansListArray:Array<xamInfo> = []
+    fileprivate var collectListArray:Array<CollectList> = []
+    fileprivate var fansListArray:Array<xamInfo> = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
 
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-110)
+        myTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-110)
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData))
         myTableView.mj_header.beginRefreshing()
         self.view.addSubview(myTableView)
         
-        myTableView.backgroundColor = UIColor.whiteColor()
+        myTableView.backgroundColor = UIColor.white
         
 //        loadData()
     }
@@ -38,12 +38,12 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
     func loadData() {
         if collectionType == 1 {
             
-            myTableView.registerNib(UINib(nibName:"HSArticleCollectCell",bundle: nil), forCellReuseIdentifier: "cell")
+            myTableView.register(UINib(nibName:"HSArticleCollectCell",bundle: nil), forCellReuseIdentifier: "cell")
             
             //返回json
             helper.getCollectionInfoWithType("1", handle: { (success, response) in
                 if success {
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
 //                        let list =  newsInfoModel(response as! JSONDecoder).data
                         self.dataSource = newsInfoModel(response as! JSONDecoder).data
                         self.myTableView.reloadData()
@@ -55,7 +55,7 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
             })
         } else if collectionType == 2 {
             
-            myTableView.registerClass(GHSExamCollectTableViewCell.self, forCellReuseIdentifier: "cell")
+            myTableView.register(GHSExamCollectTableViewCell.self, forCellReuseIdentifier: "cell")
 
             helper.getCollectionInfoWith("2") { (success, response) in
                 self.fansListArray = response as! Array<xamInfo>
@@ -70,12 +70,12 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
 
     // MARK: - Table view data source
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if collectionType == 2 {
             // print(fansListArray.count)
             return fansListArray.count
@@ -85,16 +85,16 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
         }
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if collectionType == 1 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell")
-            cell?.selectionStyle = .None
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
+            cell?.selectionStyle = .none
             (cell as! HSArticleCollectCell).showforModel(dataSource[indexPath.row] )
             return cell!
 
         }else if collectionType == 2 {
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! GHSExamCollectTableViewCell
-            cell.selectionStyle = .None
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! GHSExamCollectTableViewCell
+            cell.selectionStyle = .none
 //            cell.inde = indexPath.row
             
             cell.showforModel(fansListArray[indexPath.row])
@@ -107,7 +107,7 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
 
         }else {
             
-            let cell = tableView.dequeueReusableCellWithIdentifier("cell")
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell")
             
             return cell!
         }
@@ -118,7 +118,7 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
 //            return cell!
 //        }
     }
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if collectionType == 1{
             if dataSource.count > indexPath.row {
                 let next = NewsContantViewController()
@@ -147,7 +147,7 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
 //        }
         
     }
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if collectionType == 1 {
             return 56
         }else if collectionType == 2{
@@ -159,12 +159,12 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
         return 0
     }
     
-    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return UITableViewCellEditingStyle.Delete
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.delete
     }
     
-    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == UITableViewCellEditingStyle.Delete {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
             //        获取选中删除行索引值
             let row = indexPath.row
             //        通过获取的索引值删除数组中的值
@@ -172,48 +172,48 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
                 
                 let newsInfo = self.dataSource[row] 
                 
-                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                hud.margin = 10.0
-                hud.removeFromSuperViewOnHide = true
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud?.margin = 10.0
+                hud?.removeFromSuperViewOnHide = true
                 
                 HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", handle: { (success, response) in
                     if success {
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "取消收藏成功"
-                        hud.hide(true, afterDelay: 0.5)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = "取消收藏成功"
+                        hud?.hide(true, afterDelay: 0.5)
                         
-                        self.dataSource.removeAtIndex(row)
+                        self.dataSource.remove(at: row)
                         
                         //        删除单元格的某一行时，在用动画效果实现删除过程
-                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
                     }else{
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = String((response ?? "")!)
-                        hud.hide(true, afterDelay: 1)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = String(describing: response)
+                        hud?.hide(true, afterDelay: 1)
                     }
                 })
             }else{
                 
                 let newsInfo = self.fansListArray[row]
                 
-                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                hud.margin = 10.0
-                hud.removeFromSuperViewOnHide = true
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud?.margin = 10.0
+                hud?.removeFromSuperViewOnHide = true
                 
                 HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.questionid, type: "2", handle: { (success, response) in
                     if success {
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "取消收藏成功"
-                        hud.hide(true, afterDelay: 0.5)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = "取消收藏成功"
+                        hud?.hide(true, afterDelay: 0.5)
                         
-                        self.fansListArray.removeAtIndex(row)
+                        self.fansListArray.remove(at: row)
                         
                         //        删除单元格的某一行时，在用动画效果实现删除过程
-                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                        tableView.deleteRows(at: [indexPath], with: .automatic)
                     }else{
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = String((response ?? "")!)
-                        hud.hide(true, afterDelay: 1)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = String(describing: response)
+                        hud?.hide(true, afterDelay: 1)
                     }
                 })
             }

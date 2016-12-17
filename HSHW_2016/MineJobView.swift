@@ -45,7 +45,7 @@ class MineJobList: JSONJoy {
         }
     }
     
-    func append(list: [MineJobInfo]){
+    func append(_ list: [MineJobInfo]){
         self.objectlist = list + self.objectlist
     }
     
@@ -81,7 +81,7 @@ class MineJobInfo: JSONJoy {
         certificate = decoder["certificate"].string ?? ""
         address = decoder["address"].string ?? ""
         salary = decoder["salary"].string ?? ""
-        salary =  salary.stringByReplacingOccurrencesOfString("&lt;", withString: "<")
+        salary =  salary.replacingOccurrences(of: "&lt;", with: "<")
         welfare = decoder["welfare"].string ?? ""
         count = decoder["count"].string ?? ""
         description = decoder["description"].string ?? ""

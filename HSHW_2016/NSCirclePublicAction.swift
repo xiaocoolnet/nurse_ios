@@ -28,18 +28,18 @@ class NSCirclePublicAction: NSObject {
         
         let bgView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT))
         bgView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
-        bgView.addTarget(self, action: #selector(alertCancel(_:)), forControlEvents: .TouchUpInside)
-        UIApplication.sharedApplication().keyWindow?.addSubview(bgView)
+        bgView.addTarget(self, action: #selector(alertCancel(_:)), for: .touchUpInside)
+        UIApplication.shared.keyWindow?.addSubview(bgView)
         
         let alert = UIView(frame: CGRect(x: WIDTH*0.06, y: HEIGHT, width: WIDTH*0.88, height: 0))
-        alert.backgroundColor = UIColor.whiteColor()
+        alert.backgroundColor = UIColor.white
         alert.layer.cornerRadius = 8
         bgView.addSubview(alert)
         
-        let titleLab = UILabel(frame: CGRect(x: 0, y: 20, width: alert.frame.width, height: UIFont.systemFontOfSize(18).lineHeight))
-        titleLab.font = UIFont.systemFontOfSize(18)
-        titleLab.textAlignment = .Center
-        titleLab.textColor = UIColor.blackColor()
+        let titleLab = UILabel(frame: CGRect(x: 0, y: 20, width: alert.frame.width, height: UIFont.systemFont(ofSize: 18).lineHeight))
+        titleLab.font = UIFont.systemFont(ofSize: 18)
+        titleLab.textAlignment = .center
+        titleLab.textColor = UIColor.black
         titleLab.text = "请告诉我们您举报的理由"
         alert.addSubview(titleLab)
         
@@ -49,7 +49,7 @@ class NSCirclePublicAction: NSObject {
         var buttonX:CGFloat = 58
         var buttonY = titleLab.frame.maxY+25
         
-        for (i,buttonTitle) in getReportArray().enumerate() {
+        for (i,buttonTitle) in getReportArray().enumerated() {
             switch i {
             case 0:
                 buttonX = 58
@@ -84,61 +84,61 @@ class NSCirclePublicAction: NSObject {
             
             let button = UIButton(frame: CGRect(x: buttonX, y: buttonY, width: buttonWidth, height: buttonHeight))
             button.tag = 1000+i
-            button.titleLabel?.font = UIFont.systemFontOfSize(buttonFontSize)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: buttonFontSize)
             button.titleLabel?.adjustsFontSizeToFitWidth = true
             button.layer.cornerRadius = 3
-            button.layer.borderColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
-            button.layer.borderWidth = 1/UIScreen.mainScreen().scale
+            button.layer.borderColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).cgColor
+            button.layer.borderWidth = 1/UIScreen.main.scale
             
-            button.setTitleColor(UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), forState: .Normal)
-            button.setTitleColor(UIColor.whiteColor(), forState: .Selected)
+            button.setTitleColor(UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), for: UIControlState())
+            button.setTitleColor(UIColor.white, for: .selected)
             
-            button.setTitle(buttonTitle, forState: .Normal)
+            button.setTitle(buttonTitle, for: UIControlState())
             
-            button.backgroundColor = i == 0 ? COLOR:UIColor.clearColor()
-            button.selected = i == 0 ? true:false
+            button.backgroundColor = i == 0 ? COLOR:UIColor.clear
+            button.isSelected = i == 0 ? true:false
             
-            button.addTarget(self, action: #selector(chooseReportType(_:)), forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(chooseReportType(_:)), for: .touchUpInside)
             
             alert.addSubview(button)
             
         }
         
         let reportBtn = UIButton(frame: CGRect(x: 35, y: buttonY+buttonHeight+35, width: alert.frame.width-70, height: 40))
-        reportBtn.titleLabel?.font = UIFont.systemFontOfSize(18)
+        reportBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         reportBtn.layer.cornerRadius = 6
-        reportBtn.setTitle("确认举报", forState: .Normal)
+        reportBtn.setTitle("确认举报", for: UIControlState())
         
-        reportBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        reportBtn.setTitleColor(UIColor.white, for: UIControlState())
         reportBtn.backgroundColor = COLOR
         
-        reportBtn.addTarget(self, action: #selector(sureReportBtnClick(_:)), forControlEvents: .TouchUpInside)
+        reportBtn.addTarget(self, action: #selector(sureReportBtnClick(_:)), for: .touchUpInside)
         
         alert.addSubview(reportBtn)
         
         alert.frame.size.height = reportBtn.frame.maxY+25
         
-        UIView.animateWithDuration(animateWithDuration) {
+        UIView.animate(withDuration: animateWithDuration, animations: {
             
             alert.frame.origin.y = (HEIGHT-alert.frame.size.height)/2.0
-        }
+        }) 
     }
     
     // MARK: - 选择举报理由
-    class func chooseReportType(typeBtn:UIButton) {
+    class func chooseReportType(_ typeBtn:UIButton) {
         
         for subView in (typeBtn.superview?.subviews ?? [UIView]())! {
             if subView.tag >= 1000 && subView.tag <= 2000 {
                 if subView is UIButton {
                     let button = subView as! UIButton
-                    button.selected = false
-                    button.backgroundColor = UIColor.clearColor()
+                    button.isSelected = false
+                    button.backgroundColor = UIColor.clear
                     
                 }
             }
         }
         
-        typeBtn.selected = true
+        typeBtn.isSelected = true
         typeBtn.backgroundColor = COLOR
         
         //        reportType = reportArray[typeBtn.tag-1000]
@@ -148,12 +148,12 @@ class NSCirclePublicAction: NSObject {
     }
     
     // MARK: - 确认举报
-    class func sureReportBtnClick(rewardBtn:UIButton) {
+    class func sureReportBtnClick(_ rewardBtn:UIButton) {
 
         for subView in (rewardBtn.superview?.subviews ?? [UIView]())! {
             if (subView.tag >= 1000 && subView.tag <= 2000) && subView is UIButton {
                 let button = subView as! UIButton
-                if button.selected {
+                if button.isSelected {
                     
                     print(button.tag,getReportArray()[button.tag-1000])
                     alertCancel(rewardBtn)
@@ -170,24 +170,24 @@ class NSCirclePublicAction: NSObject {
         
         let bgView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT))
         bgView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
-        bgView.addTarget(self, action: #selector(alertCancel(_:)), forControlEvents: .TouchUpInside)
-        UIApplication.sharedApplication().keyWindow?.addSubview(bgView)
+        bgView.addTarget(self, action: #selector(alertCancel(_:)), for: .touchUpInside)
+        UIApplication.shared.keyWindow?.addSubview(bgView)
         
         let alert = UIView(frame: CGRect(x: WIDTH*0.06, y: HEIGHT, width: WIDTH*0.88, height: 0))
-        alert.backgroundColor = UIColor.whiteColor()
+        alert.backgroundColor = UIColor.white
         alert.layer.cornerRadius = 8
         bgView.addSubview(alert)
         
-        let titleLab = UILabel(frame: CGRect(x: 0, y: 20, width: alert.frame.width, height: UIFont.systemFontOfSize(18).lineHeight))
-        titleLab.font = UIFont.systemFontOfSize(18)
-        titleLab.textAlignment = .Center
-        titleLab.textColor = UIColor.blackColor()
+        let titleLab = UILabel(frame: CGRect(x: 0, y: 20, width: alert.frame.width, height: UIFont.systemFont(ofSize: 18).lineHeight))
+        titleLab.font = UIFont.systemFont(ofSize: 18)
+        titleLab.textAlignment = .center
+        titleLab.textColor = UIColor.black
         titleLab.text = "好的文章，就是要打赏"
         alert.addSubview(titleLab)
         
-        let noteLab = UILabel(frame: CGRect(x: 0, y: titleLab.frame.maxY+8, width: alert.frame.width, height: UIFont.systemFontOfSize(12).lineHeight))
-        noteLab.font = UIFont.systemFontOfSize(12)
-        noteLab.textAlignment = .Center
+        let noteLab = UILabel(frame: CGRect(x: 0, y: titleLab.frame.maxY+8, width: alert.frame.width, height: UIFont.systemFont(ofSize: 12).lineHeight))
+        noteLab.font = UIFont.systemFont(ofSize: 12)
+        noteLab.textAlignment = .center
         noteLab.textColor = UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1)
         noteLab.text = "可用护士币：1324"
         alert.addSubview(noteLab)
@@ -195,61 +195,61 @@ class NSCirclePublicAction: NSObject {
         let buttonWidth:CGFloat = 50
         let buttonMargin = (alert.frame.width-70-buttonWidth*4)/3.0
         
-        for (i,buttonTitle) in getRewardArray().enumerate() {
+        for (i,buttonTitle) in getRewardArray().enumerated() {
             
             let button = UIButton(frame: CGRect(x: 35+(buttonWidth+buttonMargin)*CGFloat(i), y: noteLab.frame.maxY+25, width: buttonWidth, height: buttonWidth))
             button.tag = 1000+i
-            button.titleLabel?.font = UIFont.systemFontOfSize(buttonFontSize)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: buttonFontSize)
             button.layer.cornerRadius = buttonWidth/2.0
-            button.setTitle(buttonTitle, forState: .Normal)
+            button.setTitle(buttonTitle, for: UIControlState())
             
-            button.setTitleColor(UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), forState: .Normal)
-            button.setTitleColor(UIColor.whiteColor(), forState: .Selected)
+            button.setTitleColor(UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), for: UIControlState())
+            button.setTitleColor(UIColor.white, for: .selected)
             
             button.backgroundColor = i == 0 ? COLOR:UIColor(red: 229/255.0, green: 229/255.0, blue: 229/255.0, alpha: 1)
-            button.selected = i == 0 ? true:false
+            button.isSelected = i == 0 ? true:false
             
-            button.addTarget(self, action: #selector(chooseRewardCount(_:)), forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(chooseRewardCount(_:)), for: .touchUpInside)
             
             alert.addSubview(button)
             
         }
         
         let rewardBtn = UIButton(frame: CGRect(x: 35, y: noteLab.frame.maxY+25+buttonWidth+25, width: alert.frame.width-70, height: 40))
-        rewardBtn.titleLabel?.font = UIFont.systemFontOfSize(18)
+        rewardBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         rewardBtn.layer.cornerRadius = 6
-        rewardBtn.setTitle("打赏", forState: .Normal)
+        rewardBtn.setTitle("打赏", for: UIControlState())
         
-        rewardBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        rewardBtn.setTitleColor(UIColor.white, for: UIControlState())
         rewardBtn.backgroundColor = COLOR
         
-        rewardBtn.addTarget(self, action: #selector(sureRewardBtnClick(_:)), forControlEvents: .TouchUpInside)
+        rewardBtn.addTarget(self, action: #selector(sureRewardBtnClick(_:)), for: .touchUpInside)
         
         alert.addSubview(rewardBtn)
         
         alert.frame.size.height = rewardBtn.frame.maxY+25
         
-        UIView.animateWithDuration(animateWithDuration) {
+        UIView.animate(withDuration: animateWithDuration, animations: {
             
             alert.frame.origin.y = (HEIGHT-alert.frame.size.height)/2.0
-        }
+        }) 
     }
     
     // MARK: - 选择打赏护士币数量
-    class func chooseRewardCount(countBtn:UIButton) {
+    class func chooseRewardCount(_ countBtn:UIButton) {
         
         for subView in (countBtn.superview?.subviews ?? [UIView]())! {
             if subView.tag >= 1000 && subView.tag <= 2000 {
                 if subView is UIButton {
                     let button = subView as! UIButton
-                    button.selected = false
+                    button.isSelected = false
                     button.backgroundColor = UIColor(red: 229/255.0, green: 229/255.0, blue: 229/255.0, alpha: 1)
                     
                 }
             }
         }
         
-        countBtn.selected = true
+        countBtn.isSelected = true
         countBtn.backgroundColor = COLOR
         
 //        rewardCount = rewardArray[countBtn.tag-1000]
@@ -259,12 +259,12 @@ class NSCirclePublicAction: NSObject {
     }
     
     // MARK: - 确认打赏
-    class func sureRewardBtnClick(rewardBtn:UIButton) {
+    class func sureRewardBtnClick(_ rewardBtn:UIButton) {
 
         for subView in (rewardBtn.superview?.subviews ?? [UIView]())! {
             if (subView.tag >= 1000 && subView.tag <= 2000) && subView is UIButton {
                 let button = subView as! UIButton
-                if button.selected {
+                if button.isSelected {
                     
                     print(button.tag,getRewardArray()[button.tag-1000])
                     alertCancel(rewardBtn)
@@ -278,45 +278,45 @@ class NSCirclePublicAction: NSObject {
     class func showSheet(with buttonTitleArray:[String], buttonTitleColorArray:[UIColor]) {
         
         let buttonFontSize:CGFloat = 15
-        let buttonTitleDefaultColor = UIColor.blackColor()
+        let buttonTitleDefaultColor = UIColor.black
         let animateWithDuration = 0.3
         
         let bgView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT))
         bgView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
-        bgView.addTarget(self, action: #selector(alertCancel(_:)), forControlEvents: .TouchUpInside)
-        UIApplication.sharedApplication().keyWindow?.addSubview(bgView)
+        bgView.addTarget(self, action: #selector(alertCancel(_:)), for: .touchUpInside)
+        UIApplication.shared.keyWindow?.addSubview(bgView)
         
         let alert = UIView(frame: CGRect(x: 0, y: HEIGHT, width: WIDTH, height: 0))
-        alert.backgroundColor = UIColor.whiteColor()
+        alert.backgroundColor = UIColor.white
         bgView.addSubview(alert)
         
-        for (i,buttonTitle) in buttonTitleArray.enumerate() {
+        for (i,buttonTitle) in buttonTitleArray.enumerated() {
             let button = UIButton(frame: CGRect(x: 0, y: 44*CGFloat(i), width: WIDTH, height: 44))
             button.tag = 100+i
-            button.titleLabel?.font = UIFont.systemFontOfSize(buttonFontSize)
-            button.setTitle(buttonTitle, forState: .Normal)
+            button.titleLabel?.font = UIFont.systemFont(ofSize: buttonFontSize)
+            button.setTitle(buttonTitle, for: UIControlState())
             
-            button.setTitleColor((i<buttonTitleColorArray.count ? buttonTitleColorArray[i]:buttonTitleDefaultColor), forState: .Normal)
+            button.setTitleColor((i<buttonTitleColorArray.count ? buttonTitleColorArray[i]:buttonTitleDefaultColor), for: UIControlState())
             if i == buttonTitleArray.count-1 {
-                button.addTarget(self, action: #selector(alertCancel(_:)), forControlEvents: .TouchUpInside)
+                button.addTarget(self, action: #selector(alertCancel(_:)), for: .touchUpInside)
             }else{
-                button.addTarget(self, action: #selector(alertActionClick(_:)), forControlEvents: .TouchUpInside)
+                button.addTarget(self, action: #selector(alertActionClick(_:)), for: .touchUpInside)
             }
             alert.addSubview(button)
             
-            let line = UIView(frame: CGRect(x: 0, y: button.frame.height-1/UIScreen.mainScreen().scale, width: button.frame.width, height: 1/UIScreen.mainScreen().scale))
-            line.backgroundColor = UIColor.lightGrayColor()
+            let line = UIView(frame: CGRect(x: 0, y: button.frame.height-1/UIScreen.main.scale, width: button.frame.width, height: 1/UIScreen.main.scale))
+            line.backgroundColor = UIColor.lightGray
             button.addSubview(line)
         }
         
-        UIView.animateWithDuration(animateWithDuration) {
+        UIView.animate(withDuration: animateWithDuration, animations: {
             
             alert.frame = CGRect(x: 0, y: HEIGHT-44*CGFloat(buttonTitleArray.count), width: WIDTH, height: 44*CGFloat(buttonTitleArray.count))
-        }
+        }) 
     }
     
     // MARK: - 弹出 sheet 点击选项
-    class func alertActionClick(action:UIButton) {
+    class func alertActionClick(_ action:UIButton) {
         print(action.tag)
         
         if action.currentTitle == "举报" {
@@ -324,15 +324,15 @@ class NSCirclePublicAction: NSObject {
             self.showReportAlert()
         }else if action.currentTitle == "删除" {
             alertCancel(action)
-            self.showSheet(with: ["删除帖子","取消"], buttonTitleColorArray: [UIColor.blackColor(),UIColor.lightGrayColor()])
+            self.showSheet(with: ["删除帖子","取消"], buttonTitleColorArray: [UIColor.black,UIColor.lightGray])
         }else if action.currentTitle == "删除帖子" {
             alertCancel(action)
             print("删除帖子")
         }
     }
     
-    class func alertCancel(action:UIView) {
-        if action.superview == UIApplication.sharedApplication().keyWindow {
+    class func alertCancel(_ action:UIView) {
+        if action.superview == UIApplication.shared.keyWindow {
             action.removeFromSuperview()
         }else{
             alertCancel(action.superview!)

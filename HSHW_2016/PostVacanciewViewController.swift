@@ -13,24 +13,24 @@ class PostVacanciewViewController: UIViewController {
 
     var postView = PostVacancies()
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 招聘 " + (self.title ?? "")!)
+        BaiduMobStat.default().pageviewStart(withName: "护士站 招聘 " + (self.title ?? "")!)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 招聘 " + (self.title ?? "")!)
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 招聘 " + (self.title ?? "")!)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.hidden = false
-        self.tabBarController?.tabBar.hidden = true
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = true
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,12 +38,12 @@ class PostVacanciewViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.title = "发布招聘"
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        postView = NSBundle.mainBundle().loadNibNamed("PostVacancies", owner: nil, options: nil).first as! PostVacancies
-        postView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-64)
+        postView = Bundle.main.loadNibNamed("PostVacancies", owner: nil, options: nil)?.first as! PostVacancies
+        postView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-64)
         self.view.addSubview(postView)
         
         getCompanyCertify()
@@ -51,22 +51,22 @@ class PostVacanciewViewController: UIViewController {
     
     func getCompanyCertify() {
         
-        let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-        hud.labelText = "正在获取企业信息"
-        hud.removeFromSuperViewOnHide = true
+        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
+        hud?.labelText = "正在获取企业信息"
+        hud?.removeFromSuperViewOnHide = true
         // MARK: 获取企业认证状态
         HSMineHelper().getCompanyCertify({ (success, response) in
             
-            print("1234567890====== \(String((response ?? "")!))")
+            print("1234567890====== \((String(describing: response) ?? "")!)")
             if success {
-                hud.mode = MBProgressHUDMode.Text
-                hud.labelText = "获取企业信息成功"
+                hud?.mode = MBProgressHUDMode.text
+                hud?.labelText = "获取企业信息成功"
                 let companyInfo = response as! CompanyInfo
                 
 //                print(companyInfo.status)
                 if companyInfo.status == "1" {
                     
-                    hud.hide(true, afterDelay: 0.5)
+                    hud?.hide(true, afterDelay: 0.5)
                     
                     self.postView.alreadyCertify = true
                     
@@ -78,25 +78,25 @@ class PostVacanciewViewController: UIViewController {
                 }else{
                     self.postView.alreadyCertify = false
                     
-                    hud.labelText = "尚未通过企业认证"
-                    hud.hide(true, afterDelay: 1)
+                    hud?.labelText = "尚未通过企业认证"
+                    hud?.hide(true, afterDelay: 1)
 
                 }
                 
             }else{
-                hud.mode = MBProgressHUDMode.Text
-                hud.labelText = "获取企业信息失败"
-                hud.hide(true)
+                hud?.mode = MBProgressHUDMode.text
+                hud?.labelText = "获取企业信息失败"
+                hud?.hide(true)
                 
-                let alert = UIAlertController(title: nil, message: "获取企业信息失败", preferredStyle: .Alert)
-                self.presentViewController(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: nil, message: "获取企业信息失败", preferredStyle: .alert)
+                self.present(alert, animated: true, completion: nil)
                 
-                let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (action) in
-                    self.navigationController?.popViewControllerAnimated(false)
+                let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
+                    self.navigationController?.popViewController(animated: false)
                 })
                 alert.addAction(cancelAction)
                 
-                let replyAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
+                let replyAction = UIAlertAction(title: "重试", style: .default, handler: { (action) in
                     
                     self.getCompanyCertify()
                 })

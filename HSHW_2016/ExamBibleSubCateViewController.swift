@@ -24,16 +24,16 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
     
     let headerScrollView = UIScrollView()
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("学习 "+(self.title ?? "")!)
+        BaiduMobStat.default().pageviewStart(withName: "学习 "+(self.title ?? "")!)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("学习 "+(self.title ?? "")!)
+        BaiduMobStat.default().pageviewEnd(withName: "学习 "+(self.title ?? "")!)
     }
     
     override func viewDidLoad() {
@@ -44,32 +44,32 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     func setSubviews() {
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         if showLineView {
             
-            let line = UIView(frame: CGRectMake(0, 0, WIDTH, 1))
+            let line = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
             line.backgroundColor = COLOR
             line.tag = 10001
             self.view.addSubview(line)
             
-            listTableView.frame = CGRectMake(0, 31, WIDTH, HEIGHT-65-30)
+            listTableView.frame = CGRect(x: 0, y: 31, width: WIDTH, height: HEIGHT-65-30)
         }else{
             
             self.view.viewWithTag(10001)?.removeFromSuperview()
-            listTableView.frame = CGRectMake(0, 30, WIDTH, HEIGHT-64-30)
+            listTableView.frame = CGRect(x: 0, y: 30, width: WIDTH, height: HEIGHT-64-30)
             
         }
         
-        headerScrollView.frame = CGRectMake(0, 0, WIDTH, 30)
+        headerScrollView.frame = CGRect(x: 0, y: 0, width: WIDTH, height: 30)
         headerScrollView.showsHorizontalScrollIndicator = false
         self.view.addSubview(headerScrollView)
         
-        listTableView.backgroundColor = UIColor.clearColor()
+        listTableView.backgroundColor = UIColor.clear
         listTableView.delegate = self
         listTableView.dataSource = self
         self.view.addSubview(listTableView)
-        listTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "cell")
+        listTableView.register(GToutiaoTableViewCell.self, forCellReuseIdentifier: "cell")
         listTableView.tableFooterView = UIView()
         
         listTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
@@ -79,10 +79,10 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
     // MARK: 加载数据
     func loadData_cate() {
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.margin = 10
-        hud.labelText = "正在加载"
-        hud.removeFromSuperViewOnHide = true
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud?.margin = 10
+        hud?.labelText = "正在加载"
+        hud?.removeFromSuperViewOnHide = true
         
         NewsPageHelper().getChannellist(self.term_id) { (success, response) in
             if success {
@@ -102,23 +102,23 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
                 
                 let margin:CGFloat = 5
                 // 选择菜单
-                let segChoose = LFLUISegmentedControl.segmentWithFrame(CGRectMake(0, 0,calculateWidth(str, size: 13, height: 30)+margin*CGFloat(newsCateName.count+1) ,30), titleArray: newsCateName, defaultSelect: 0)
-                segChoose.tag = 101
-                segChoose.lineColor(COLOR)
-                segChoose.titleColor(UIColor.lightGrayColor(), selectTitleColor: COLOR, backGroundColor: UIColor.whiteColor(), titleFontSize: 13)
-                segChoose.delegate = self
-                self.headerScrollView.addSubview(segChoose)
+                let segChoose = LFLUISegmentedControl.segment(withFrame: CGRect(x: 0, y: 0,width: calculateWidth(str, size: 13, height: 30)+margin*CGFloat(newsCateName.count+1) ,height: 30), titleArray: newsCateName, defaultSelect: 0)
+                segChoose?.tag = 101
+                segChoose?.lineColor(COLOR)
+                segChoose?.titleColor(UIColor.lightGray, selectTitleColor: COLOR, backGroundColor: UIColor.white, titleFontSize: 13)
+                segChoose?.delegate = self
+                self.headerScrollView.addSubview(segChoose!)
                 
-                self.headerScrollView.contentSize = CGSizeMake(segChoose.frame.size.width, 0)
+                self.headerScrollView.contentSize = CGSize(width: (segChoose?.frame.size.width)!, height: 0)
                 
                 self.setSubviews()
                 
-                hud.hide(true)
+                hud?.hide(true)
                 
             }else{
-                hud.mode = .Text
-                hud.labelText = "网络错误，请稍后再试"
-                hud.hide(true, afterDelay: 1)
+                hud?.mode = .text
+                hud?.labelText = "网络错误，请稍后再试"
+                hud?.hide(true, afterDelay: 1)
             }
         }
     }
@@ -128,7 +128,7 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
             HSNurseStationHelper().getArticleListWithID(articleID!) {(success, response) in
                 if success {
                     self.newsList = response as? Array<NewsInfo> ?? []
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.listTableView.reloadData()
                     })
                 }
@@ -137,7 +137,7 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
-    func uisegumentSelectionChange(selection: Int, segmentTag: Int) {
+    func uisegumentSelectionChange(_ selection: Int, segmentTag: Int) {
         print(selection)
         
         self.newsList = Array<NewsInfo>()
@@ -147,7 +147,7 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
         self.listTableView.mj_header.beginRefreshing()
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let newsInfo = newsList![indexPath.row]
         
         if newsInfo.thumbArr.count >= 3 {
@@ -168,7 +168,7 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if newsList != nil {
             return newsList!.count
         }else{
@@ -176,12 +176,12 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
         //        let cell = tableView.dequeueReusableCellWithIdentifier("cell") as! GToutiaoTableViewCell
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!GToutiaoTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)as!GToutiaoTableViewCell
         cell.delegate = self
         
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         let newsInfo = self.newsList![indexPath.row]
         if newsInfo.thumbArr.count >= 3 {
             cell.setThreeImgCellWithNewsInfo(newsInfo)
@@ -191,7 +191,7 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //        print(indexPath.row)
         let newsInfo = newsList![indexPath.row]
         //        let next = NewsContantViewController()
@@ -211,7 +211,7 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     // MARK: 点击分类按钮
-    func cateBtnClicked(categoryBtn: UIButton) {
+    func cateBtnClicked(_ categoryBtn: UIButton) {
         let cateDetail = GNewsCateDetailViewController()
         cateDetail.newsType = categoryBtn.tag
         cateDetail.type = 1
@@ -220,7 +220,7 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
     }
     
     // MARK:更新模型
-    func changeModel(newInfo: NewsInfo, andIndex: Int) {
+    func changeModel(_ newInfo: NewsInfo, andIndex: Int) {
         self.newsList![andIndex] = newInfo
         self.listTableView.reloadData()
     }

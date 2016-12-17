@@ -37,10 +37,10 @@ class NSCircleListTableViewCell: UITableViewCell {
         
         joinBtn.layer.cornerRadius = 6
         joinBtn.layer.borderWidth = 1
-        joinBtn.layer.borderColor = COLOR.CGColor
+        joinBtn.layer.borderColor = COLOR.cgColor
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

@@ -4,22 +4,29 @@ HandyJSON is a framework written in Swift which to make converting model objects
 
 Compared with others, the most significant feature of HandyJSON is that it does not need the objects inherit from NSObject(**not using KVC but reflection**), neither implements a 'mapping' function(**use pointer to achieve property assignment**).
 
-[![Build Status](https://travis-ci.org/alibaba/HandyJSON.svg?branch=master_for_swift_2x)](https://travis-ci.org/alibaba/HandyJSON)
-[![Codecov branch](https://img.shields.io/codecov/c/github/alibaba/HandyJSON/master_for_swift_2x.svg?style=flat)](https://codecov.io/gh/alibaba/HandyJSON/branch/master)
+[![Build Status](https://travis-ci.org/alibaba/HandyJSON.svg?branch=master)](https://travis-ci.org/alibaba/HandyJSON)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Cocoapods Version](https://img.shields.io/cocoapods/v/HandyJSON.svg?style=flat)](http://cocoadocs.org/docsets/HandyJSON)
+[![Cocoapods Platform](https://img.shields.io/cocoapods/p/HandyJSON.svg?style=flat)](http://cocoadocs.org/docsets/HandyJSON)
+[![Codecov branch](https://img.shields.io/codecov/c/github/alibaba/HandyJSON/master.svg?style=flat)](https://codecov.io/gh/alibaba/HandyJSON/branch/master)
+
+## [中文文档](http://www.jianshu.com/p/cbed87d8656d)
 
 ## Sample Code
 
 ### Deserialization
 
 ```
-struct Animal: HandyJSON {
+class Animal: HandyJSON {
     var name: String?
     var height: Double?
+
+    init() {}
 }
 
 let json = "{\"name\": \"Tom\", \"height\": 25.0}"
 
-if let cat = JSONDeserializer<Animal>.deserializeFrom(json) {
+if let cat = JSONDeserializer<Animal>.deserializeFrom(json: json) {
     print(cat)
 }
 ```
@@ -39,8 +46,8 @@ class Animal {
 
 let cat = Animal(name: "cat", height: 25.0)
 
-print(JSONSerializer.serializeToJSON(cat)!)
-print(JSONSerializer.serializeToJSON(cat, prettify: true)!)
+print(JSONSerializer.serializeToJSON(object: cat)!)
+print(JSONSerializer.serializeToJSON(object: cat, prettify: true)!)
 ```
 
 # Content
@@ -49,9 +56,12 @@ print(JSONSerializer.serializeToJSON(cat, prettify: true)!)
 - [Requirements](#requirements)
 - [Installation](#installation)
     - [Cocoapods](#cocoapods)
+    - [Carthage](#carthage)
+    - [Manually](#manually)
 - [Deserialization](#deserialization)
     - [The Basics](#the-basics)
-    - [Optional, ImplicitlyUnwrappedOptional, Collectiones and so on](optional-implicitlyunwrappedoptional-collectiones-and-so-on)
+    - [Support Struct](#support-struct)
+    - [Optional, ImplicitlyUnwrappedOptional, Collections and so on](#optional-implicitlyunwrappedoptional-collections-and-so-on)
     - [Designated Path](#designated-path)
     - [Composition Object](#composition-object)
     - [Inheritance Object](#inheritance-object)
@@ -65,11 +75,13 @@ print(JSONSerializer.serializeToJSON(cat, prettify: true)!)
 
 # Features
 
-* Serialize/Deserialize Object/JSON to/From JSON/Object (classes and structs)
+* Serialize/Deserialize Object/JSON to/From JSON/Object
+
+* Naturally use object property name for mapping, no need to specify a mapping relationship
 
 * Support almost all types in Swift
 
-* Naturally use object property name for mapping, no need to specify a mapping relationship
+* Support struct
 
 * Custom transformations for mapping
 
@@ -77,18 +89,24 @@ print(JSONSerializer.serializeToJSON(cat, prettify: true)!)
 
 # Requirements
 
-* iOS 8.0+
+* iOS 8.0+/OSX 10.9+/watchOS 2.0+/tvOS 9.0+
 
-* Swift 2.3+
+* Swift 2.3+ / Swift 3.0+
 
 # Installation
 
+**To use with Swift 2.x using == 0.4.0**
+
+**To use with Swift 3.x using >= 1.2.0**
+
+For Legacy Swift support, take a look at the [swift2 branch](https://github.com/alibaba/HandyJSON/tree/master_for_swift_2x).
+
 ## Cocoapods
 
-Add the following lines to your podfile:
+Add the following line to your `Podfile`:
 
 ```
-pod 'HandyJSON', '~> 0.3.0'
+pod 'HandyJSON', '~> 1.2.0'
 ```
 
 Then, run the following command:
@@ -96,6 +114,37 @@ Then, run the following command:
 ```
 $ pod install
 ```
+
+## Carthage
+
+You can add a dependency on `HandyJSON` by adding the following line to your `Cartfile`:
+
+```
+github "alibaba/HandyJSON" ~> 1.2.0
+```
+
+## Manually
+
+You can integrate `HandyJSON` into your project manually by doing the following steps:
+
+* Open up `Terminal`, `cd` into your top-level project directory, and add `HandyJSON` as a submodule:
+
+```
+git init && git submodule add https://github.com/alibaba/HandyJSON.git
+```
+
+* Open the new `HandyJSON` folder, drag the `HandyJSON.xcodeproj` into the `Project Navigator` of your project.
+
+* Select your application project in the `Project Navigator`, open the `General` panel in the right window.
+
+* Click on the `+` button under the `Embedded Binaries` section.
+
+* You will see two different `HandyJSON.xcodeproj` folders each with four different versions of the HandyJSON.framework nested inside a Products folder.
+> It does not matter which Products folder you choose from, but it does matter which HandyJSON.framework you choose.
+
+* Select one of the four `HandyJSON.framework` which matches the platform your Application should run on.
+
+* Congratulations!
 
 # Deserialization
 
@@ -116,12 +165,14 @@ class Animal: HandyJSON {
 
 let jsonString = "{\"name\":\"cat\",\"id\":\"12345\",\"num\":180}"
 
-if let animal = JSONDeserializer<Animal>.deserializeFrom(jsonString) {
+if let animal = JSONDeserializer<Animal>.deserializeFrom(json: jsonString) {
     print(animal)
 }
 ```
 
-For struct, since the compiler privide a default empty initializer, we use if for free.
+## Support Struct
+
+For struct, since the compiler provide a default empty initializer, we use it for free.
 
 ```
 struct Animal: HandyJSON {
@@ -132,7 +183,7 @@ struct Animal: HandyJSON {
 
 let jsonString = "{\"name\":\"cat\",\"id\":\"12345\",\"num\":180}"
 
-if let animal = JSONDeserializer<Animal>.deserializeFrom(jsonString) {
+if let animal = JSONDeserializer<Animal>.deserializeFrom(json: jsonString) {
     print(animal)
 }
 ```
@@ -144,18 +195,20 @@ But also notice that, if you have a designated initializer to override the defau
 'HandyJSON' support classes/structs composed of `optional`, `implicitlyUnwrappedOptional`, `array`, `dictionary`, `objective-c base type`, `nested type` etc. properties.
 
 ```
-struct Cat: HandyJSON {
+class Cat: HandyJSON {
     var id: Int64!
     var name: String!
     var friend: [String]?
     var weight: Double?
     var alive: Bool = true
     var color: NSString?
+
+    init() {}
 }
 
 let jsonString = "{\"id\":1234567,\"name\":\"Kitty\",\"friend\":[\"Tom\",\"Jack\",\"Lily\",\"Black\"],\"weight\":15.34,\"alive\":false,\"color\":\"white\"}"
 
-if let cat = JSONDeserializer<Cat>.deserializeFrom(jsonString) {
+if let cat = JSONDeserializer<Cat>.deserializeFrom(json: jsonString) {
     print(cat)
 }
 ```
@@ -165,14 +218,16 @@ if let cat = JSONDeserializer<Cat>.deserializeFrom(jsonString) {
 `HandyJSON` supports deserialization from designated path of JSON.
 
 ```
-struct Cat: HandyJSON {
+class Cat: HandyJSON {
     var id: Int64!
     var name: String!
+
+    init() {}
 }
 
 let jsonString = "{\"code\":200,\"msg\":\"success\",\"data\":{\"cat\":{\"id\":12345,\"name\":\"Kitty\"}}}"
 
-if let cat = JSONDeserializer<Cat>.deserializeFrom(jsonString, designatedPath: "data.cat") {
+if let cat = JSONDeserializer<Cat>.deserializeFrom(json: jsonString, designatedPath: "data.cat") {
     print(cat.name)
 }
 ```
@@ -182,20 +237,24 @@ if let cat = JSONDeserializer<Cat>.deserializeFrom(jsonString, designatedPath: "
 Notice that all the properties of a class/struct need to deserialized should be type conformed to `HandyJSON`.
 
 ```
-struct Component: HandyJSON {
+class Component: HandyJSON {
     var aInt: Int?
     var aString: String?
+
+    init() {}
 }
 
-struct Composition: HandyJSON {
+class Composition: HandyJSON {
     var aInt: Int?
     var comp1: Component?
     var comp2: Component?
+
+    init() {}
 }
 
 let jsonString = "{\"num\":12345,\"comp1\":{\"aInt\":1,\"aString\":\"aaaaa\"},\"comp2\":{\"aInt\":2,\"aString\":\"bbbbb\"}}"
 
-if let composition = JSONDeserializer<Composition>.deserializeFrom(jsonString) {
+if let composition = JSONDeserializer<Composition>.deserializeFrom(json: jsonString) {
     print(composition)
 }
 ```
@@ -221,7 +280,7 @@ class Cat: Animal {
 
 let jsonString = "{\"id\":12345,\"color\":\"black\",\"name\":\"cat\"}"
 
-if let cat = JSONDeserializer<Cat>.deserializeFrom(jsonString) {
+if let cat = JSONDeserializer<Cat>.deserializeFrom(json: jsonString) {
     print(cat)
 }
 ```
@@ -240,19 +299,19 @@ class Cat: HandyJSON {
 
     func mapping(mapper: HelpingMapper) {
         // specify 'cat_id' field in json map to 'id' property in object
-        mapper.specify(&id, name: "cat_id")
+        mapper.specify(property: &id, name: "cat_id")
 
         // specify 'parent' field in json parse as following to 'parent' property in object
-        mapper.specify(&parent) {
-            let parentName = $0.characters.split{$0 == "/"}.map(String.init)
-            return (parentName[0], parentName[1])
-        }
+        mapper.specify(property: &parent, converter: { (rawString) -> (String, String) in
+            let parentNames = rawString.characters.split{$0 == "/"}.map(String.init)
+            return (parentNames[0], parentNames[1])
+        })
     }
 }
 
 let jsonString = "{\"cat_id\":12345,\"name\":\"Kitty\",\"parent\":\"Tom/Lily\"}"
 
-if let cat = JSONDeserializer<Cat>.deserializeFrom(jsonString) {
+if let cat = JSONDeserializer<Cat>.deserializeFrom(json: jsonString) {
     print(cat)
 }
 ```
@@ -291,8 +350,8 @@ class Animal {
 }
 
 let cat = Animal(name: "cat", height: 30)
-print(JSONSerializer.serializeToJSON(cat)!)
-print(JSONSerializer.serializeToJSON(cat, prettify: true)!)
+print(JSONSerializer.serializeToJSON(object: cat)!)
+print(JSONSerializer.serializeToJSON(object: cat, prettify: true)!)
 ```
 
 ## Complex Object
@@ -326,12 +385,18 @@ student.name = "Jack"
 student.gender = .Female
 student.subjects = [Subject(id: 1, name: "math"), Subject(id: 2, name: "English"), Subject(id: 3, name: "Philosophy")]
 
-print(JSONSerializer.serializeToJSON(student)!)
-print(JSONSerializer.serializeToJSON(student, prettify: true)!)
+print(JSONSerializer.serializeToJSON(object: student)!)
+print(JSONSerializer.serializeToJSON(object: student, prettify: true)!)
 ```
 
-# Compatibility
+# To Do
 
-* Pass tests on 32bit/64bit simulator/real device
+* More testcases
 
-* Pass tests on iOS 8.0+/9.0+/10.0+
+* Improve error handling
+
+* <del>Support non-object (such as basic type, array, dictionany) type deserializing directly</del> (will not support)
+
+# License
+
+HandyJSON is released under the Apache License, Version 2.0. See LICENSE for details.

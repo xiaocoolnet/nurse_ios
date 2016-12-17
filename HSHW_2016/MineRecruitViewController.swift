@@ -16,18 +16,18 @@ class MineRecruitViewController: UIViewController, PagingMenuControllerDelegate 
     let twoView = MineRecViewController()
     var threeView = CompanyAuthViewController()
 
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.hidden = false
-        self.tabBarController?.tabBar.hidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = true
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         oneView.title = "收到的简历"
         oneView.type = 2
@@ -62,27 +62,27 @@ class MineRecruitViewController: UIViewController, PagingMenuControllerDelegate 
             var text = ""
             
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: text, color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(16), selectedFont: UIFont.systemFontOfSize(16))
-                return .Text(title: title)
+                let title = MenuItemText(text: text, color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 16), selectedFont: UIFont.systemFont(ofSize: 16))
+                return .text(title: title)
             }
         }
         
         struct MenuOptions: MenuViewCustomizable {
             
             var backgroundColor: UIColor {
-                return UIColor.clearColor()
+                return UIColor.clear
             }
             var selectedBackgroundColor: UIColor {
-                return UIColor.clearColor()
+                return UIColor.clear
             }
             var height: CGFloat {
                 return 44
             }
             var displayMode: MenuDisplayMode {
-                return .SegmentedControl
+                return .segmentedControl
             }
             var focusMode: MenuFocusMode {
-                return .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+                return .underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
             }
             
             var itemsOptions: [MenuItemViewCustomizable] {
@@ -98,18 +98,18 @@ class MineRecruitViewController: UIViewController, PagingMenuControllerDelegate 
             
             var componentType: ComponentType {
                 
-                return .All(menuOptions: MenuOptions(), pagingControllers: viewControllers)
+                return .all(menuOptions: MenuOptions(), pagingControllers: viewControllers)
             }
         }
         
         let options = PagingMenuOptions.init(viewControllers: [oneView,twoView,threeView])
         let pagingMenuController = PagingMenuController(options: options)
         pagingMenuController.delegate = self
-        pagingMenuController.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
+        pagingMenuController.view.frame = CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT)
         
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
-        pagingMenuController.didMoveToParentViewController(self)
+        pagingMenuController.didMove(toParentViewController: self)
         
     }
     
@@ -118,30 +118,30 @@ class MineRecruitViewController: UIViewController, PagingMenuControllerDelegate 
     }
     
     func showRightBtn(){
-        let rightButton = UIButton(type: .Custom)
-        rightButton.frame = CGRectMake(0, 0, 50, 30)
-        rightButton.setTitle("返回", forState: .Normal)
-        rightButton.setTitleColor(COLOR, forState: .Normal)
-        rightButton.addTarget(self, action: #selector(rightBarButtonClicked), forControlEvents: .TouchUpInside)
+        let rightButton = UIButton(type: .custom)
+        rightButton.frame = CGRect(x: 0, y: 0, width: 50, height: 30)
+        rightButton.setTitle("返回", for: UIControlState())
+        rightButton.setTitleColor(COLOR, for: UIControlState())
+        rightButton.addTarget(self, action: #selector(rightBarButtonClicked), for: .touchUpInside)
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: rightButton)
     }
 
-    func willMoveToPageMenuController(menuController: UIViewController, previousMenuController: UIViewController) {
+    func willMoveToPageMenuController(_ menuController: UIViewController, previousMenuController: UIViewController) {
         
         if menuController == self.threeView {
             print("this is companyAuth page")
             
-            let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-            hud.labelText = "正在获取企业认证状态"
-            hud.removeFromSuperViewOnHide = true
+            let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
+            hud?.labelText = "正在获取企业认证状态"
+            hud?.removeFromSuperViewOnHide = true
             // MARK: 获取企业认证状态
             HSMineHelper().getCompanyCertify({ (success, response) in
                 
-                print("1234567890====== \(String((response ?? "")!))")
+                print("1234567890====== \(String(describing: response))")
                 if success {
-                    hud.mode = MBProgressHUDMode.Text
-                    hud.labelText = "获取企业认证状态成功"
-                    hud.hide(true, afterDelay: 0.5)
+                    hud?.mode = MBProgressHUDMode.text
+                    hud?.labelText = "获取企业认证状态成功"
+                    hud?.hide(true, afterDelay: 0.5)
                     let companyInfo = response as! CompanyInfo
                     switch companyInfo.status! {
                         case "-1":
@@ -157,20 +157,20 @@ class MineRecruitViewController: UIViewController, PagingMenuControllerDelegate 
                         break
                     }
                 }else{
-                    hud.mode = MBProgressHUDMode.Text
-                    hud.labelText = "获取企业认证状态失败"
-                    hud.hide(true)
+                    hud?.mode = MBProgressHUDMode.text
+                    hud?.labelText = "获取企业认证状态失败"
+                    hud?.hide(true)
                     
-                    let alert = UIAlertController(title: nil, message: "获取企业认证状态失败", preferredStyle: .Alert)
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    let alert = UIAlertController(title: nil, message: "获取企业认证状态失败", preferredStyle: .alert)
+                    self.present(alert, animated: true, completion: nil)
                     
-                    let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (action) in
+                    let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
 //                        self.presentViewController(previousMenuController, animated: true, completion: nil)
 //                        self.willMoveToPageMenuController(previousMenuController, previousMenuController: menuController)
                     })
                     alert.addAction(cancelAction)
                     
-                    let replyAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
+                    let replyAction = UIAlertAction(title: "重试", style: .default, handler: { (action) in
                         self.willMoveToPageMenuController(menuController, previousMenuController: previousMenuController)
                     })
                     alert.addAction(replyAction)

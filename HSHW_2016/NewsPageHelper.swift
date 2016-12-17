@@ -10,7 +10,7 @@ import UIKit
 import MBProgressHUD
 class NewsPageHelper: NSObject {
     
-    func collectionNews(refid:String,type:String,title:String,description:String,handle:ResponseBlock){
+    func collectionNews(_ refid:String,type:String,title:String,description:String,handle:@escaping ResponseBlock){
         
         let url = PARK_URL_Header+"addfavorite"
         let param = [
@@ -20,7 +20,7 @@ class NewsPageHelper: NSObject {
             "title":title,
             "description":description
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
                 
@@ -29,10 +29,10 @@ class NewsPageHelper: NSObject {
                 // print("状态是")
                 // print(result.status)
                 if(result.status == "error"){
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
                 if(result.status == "success"){
-                    handle(success: true, response:result.data)
+                    handle(true, result.data as AnyObject?)
                 }
             }
             
@@ -41,26 +41,26 @@ class NewsPageHelper: NSObject {
     }
     
     // 获取分类列表
-    func getChannellist(id:String,handle:ResponseBlock) {
+    func getChannellist(_ id:String,handle:@escaping ResponseBlock) {
         let url = PARK_URL_Header+"getChannellist"
         let param = [
                 "parentid":id
             ];
         
         
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: nil)
+                handle(false, nil)
             }else{
                 let result = GNewsCateModel(JSONDecoder(json!))
                 // print("状态是")
                 // print(result.status)
                 if(result.status == "error"){
-                    handle(success: true, response: Array<GNewsCate>())
+                    handle(true, Array<GNewsCate>() as AnyObject?)
                 }
                 if(result.status == "success"){
-                    handle(success: true, response:result.data)
+                    handle(true, result.data as AnyObject?)
                 }
             }
             
@@ -69,51 +69,51 @@ class NewsPageHelper: NSObject {
     }
     
     // 添加积分——阅读资讯
-    func addScore_ReadingInformation(remarks:String, handle:ResponseBlock){
+    func addScore_ReadingInformation(_ remarks:String, handle:@escaping ResponseBlock){
         
         let url = PARK_URL_Header+"addScore_ReadingInformation"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,
             "remarks":remarks
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: "网络错误")
+                handle(false, "网络错误" as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 // print("状态是")
                 // print(result.status)
                 if(result.status == "error"){
-                    handle(success: false, response: "阅读资讯加积分到上限值")
+                    handle(false, "阅读资讯加积分到上限值" as AnyObject?)
                 }
                 if(result.status == "success"){
-                    handle(success: true, response:result.data)
+                    handle(true, result.data)
                 }
             }
         }
     }
     
     // 添加积分——分享
-    func addScore_fenxiang(handle:ResponseBlock){
+    func addScore_fenxiang(_ handle:@escaping ResponseBlock){
         
         let url = PARK_URL_Header+"addScore_fenxiang"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: "网络错误")
+                handle(false, "网络错误" as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 // print("状态是")
                 // print(result.status)
                 if(result.status == "error"){
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
                 if(result.status == "success"){
-                    handle(success: true, response:result.data)
+                    handle(true, result.data)
                 }
             }
         }

@@ -8,20 +8,44 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 import Foundation
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class JSONDecoder {
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
+
+open class JSONDecoder {
     var value: AnyObject?
     
     ///return the value raw
-    public var rawValue: AnyObject? {
+    open var rawValue: AnyObject? {
         return value
     }
     ///print the description of the JSONDecoder
-    public var description: String {
+    open var description: String {
         return self.print()
     }
     ///convert the value to a String
-    public var string: String? {
+    open var string: String? {
         return value as? String
         
 //        var str = value as? String
@@ -33,29 +57,29 @@ public class JSONDecoder {
 //        return str
     }
     ///convert the value to an Int
-    public var integer: Int? {
+    open var integer: Int? {
         return value as? Int
     }
     ///convert the value to an UInt
-    public var unsigned: UInt? {
+    open var unsigned: UInt? {
         return value as? UInt
     }
     ///convert the value to a Double
-    public var double: Double? {
+    open var double: Double? {
         return value as? Double
     }
     ///convert the value to a float
-    public var float: Float? {
+    open var float: Float? {
         return value as? Float
     }
     ///convert the value to an NSNumber
-    public var number: NSNumber? {
+    open var number: NSNumber? {
         return value as? NSNumber
     }
     ///treat the value as a bool
-    public var bool: Bool {
+    open var bool: Bool {
         if let str = self.string {
-            let lower = str.lowercaseString
+            let lower = str.lowercased()
             if lower == "true" || Int(lower) > 0 {
                 return true
             }
@@ -69,19 +93,19 @@ public class JSONDecoder {
         return false
     }
     //get  the value if it is an error
-    public var error: NSError? {
+    open var error: NSError? {
         return value as? NSError
     }
     //get  the value if it is a dictionary
-    public var dictionary: Dictionary<String,JSONDecoder>? {
+    open var dictionary: Dictionary<String,JSONDecoder>? {
         return value as? Dictionary<String,JSONDecoder>
     }
     //get  the value if it is an array
-    public var array: Array<JSONDecoder>? {
+    open var array: Array<JSONDecoder>? {
         return value as? Array<JSONDecoder>
     }
     //pull the raw values out of an array
-    public func getArray<T>(inout collect: Array<T>?) {
+    open func getArray<T>(_ collect: inout Array<T>?) {
         if let array = value as? Array<JSONDecoder> {
             if collect == nil {
                 collect = Array<T>()
@@ -94,7 +118,7 @@ public class JSONDecoder {
         }
     }
     ///pull the raw values out of a dictionary.
-    public func getDictionary<T>(inout collect: Dictionary<String,T>?) {
+    open func getDictionary<T>(_ collect: inout Dictionary<String,T>?) {
         if let dictionary = value as? Dictionary<String,JSONDecoder> {
             if collect == nil {
                 collect = Dictionary<String,T>()
@@ -109,10 +133,11 @@ public class JSONDecoder {
     ///the init that converts everything to something nice
     public init(_ raw: AnyObject) {
         var rawObject: AnyObject = raw
-        if let data = rawObject as? NSData {
+        if let data = rawObject as? Data {
             var response: AnyObject?
             do {
-                try response = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions())
+                try response = JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments) as AnyObject
+//                try response = JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions())
                 rawObject = response!
             }
             catch let error as NSError {
@@ -122,22 +147,23 @@ public class JSONDecoder {
         }
         if let array = rawObject as? NSArray {
             var collect = [JSONDecoder]()
-            for val: AnyObject in array {
-                collect.append(JSONDecoder(val))
+            for val in array {
+                let val2 = val as AnyObject
+                collect.append(JSONDecoder(val2))
             }
-            value = collect
+            value = collect as AnyObject?
         } else if let dict = rawObject as? NSDictionary {
             var collect = Dictionary<String,JSONDecoder>()
             for (key,val) in dict {
-                collect[key as! String] = JSONDecoder(val)
+                collect[key as! String] = JSONDecoder(val as AnyObject)
             }
-            value = collect
+            value = collect as AnyObject?
         } else {
             value = rawObject
         }
     }
     ///Array access support
-    public subscript(index: Int) -> JSONDecoder {
+    open subscript(index: Int) -> JSONDecoder {
         get {
             if let array = self.value as? NSArray {
                 if array.count > index {
@@ -148,10 +174,10 @@ public class JSONDecoder {
         }
     }
     ///Dictionary access support
-    public subscript(key: String) -> JSONDecoder {
+    open subscript(key: String) -> JSONDecoder {
         get {
             if let dict = self.value as? NSDictionary {
-                if let value: AnyObject = dict[key] {
+                if let value: AnyObject = dict.value(forKey: key) as AnyObject? {
                     return value as! JSONDecoder
                 }
             }
@@ -159,25 +185,25 @@ public class JSONDecoder {
         }
     }
     ///private method to create an error
-    func createError(text: String) -> NSError {
+    func createError(_ text: String) -> NSError {
         return NSError(domain: "JSONJoy", code: 1002, userInfo: [NSLocalizedDescriptionKey: text]);
     }
     
     ///print the decoder in a JSON format. Helpful for debugging.
-    public func print() -> String {
+    open func print() -> String {
         if let arr = self.array {
             var str = "["
             for decoder in arr {
                 str += decoder.print() + ","
             }
-            str.removeAtIndex(str.endIndex.advancedBy(-1))
+            str.remove(at: str.characters.index(str.endIndex, offsetBy: -1))
             return str + "]"
         } else if let dict = self.dictionary {
             var str = "{"
             for (key, decoder) in dict {
                 str += "\"\(key)\": \(decoder.print()),"
             }
-            str.removeAtIndex(str.endIndex.advancedBy(-1))
+            str.remove(at: str.characters.index(str.endIndex, offsetBy: -1))
             return str + "}"
         }
         if value != nil {

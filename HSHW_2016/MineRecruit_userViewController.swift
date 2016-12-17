@@ -14,18 +14,18 @@ class MineRecruit_userViewController: UIViewController,PagingMenuControllerDeleg
     let oneView = ChildsViewController()
     let twoView = editResumeViewController()
     
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.hidden = false
-        self.tabBarController?.tabBar.hidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = true
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         oneView.title = "面试邀请"
         oneView.type = 1
@@ -60,27 +60,27 @@ class MineRecruit_userViewController: UIViewController,PagingMenuControllerDeleg
             var text = ""
             
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: text, color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(16), selectedFont: UIFont.systemFontOfSize(16))
-                return .Text(title: title)
+                let title = MenuItemText(text: text, color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 16), selectedFont: UIFont.systemFont(ofSize: 16))
+                return .text(title: title)
             }
         }
         
         struct MenuOptions: MenuViewCustomizable {
                         
             var backgroundColor: UIColor {
-                return UIColor.clearColor()
+                return UIColor.clear
             }
             var selectedBackgroundColor: UIColor {
-                return UIColor.clearColor()
+                return UIColor.clear
             }
             var height: CGFloat {
                 return 44
             }
             var displayMode: MenuDisplayMode {
-                return .SegmentedControl
+                return .segmentedControl
             }
             var focusMode: MenuFocusMode {
-                return .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+                return .underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
             }
             
             var itemsOptions: [MenuItemViewCustomizable] {
@@ -96,24 +96,24 @@ class MineRecruit_userViewController: UIViewController,PagingMenuControllerDeleg
             
             var componentType: ComponentType {
                 
-                return .All(menuOptions: MenuOptions(), pagingControllers: viewControllers)
+                return .all(menuOptions: MenuOptions(), pagingControllers: viewControllers)
             }
         }
         
         let options = PagingMenuOptions.init(viewControllers: [oneView,twoView])
         let pagingMenuController = PagingMenuController(options: options)
         pagingMenuController.delegate = self
-        pagingMenuController.view.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
+        pagingMenuController.view.frame = CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT)
         
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
-        pagingMenuController.didMoveToParentViewController(self)
+        pagingMenuController.didMove(toParentViewController: self)
     }
     
-    func willMoveToPageMenuController(menuController: UIViewController, previousMenuController: UIViewController) {
+    func willMoveToPageMenuController(_ menuController: UIViewController, previousMenuController: UIViewController) {
         if menuController == twoView {
             
-            NSNotificationCenter.defaultCenter().postNotificationName("willMoveToEditResumeViewController", object: nil)
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "willMoveToEditResumeViewController"), object: nil)
         }
     }
 

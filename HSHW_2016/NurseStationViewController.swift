@@ -17,28 +17,28 @@ class NurseStationViewController: UIViewController {
     let circleController = HSNSCircleHomeViewController()
     let RecVC = HSZRecruitmentHome()
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("护士站")
+        BaiduMobStat.default().pageviewStart(withName: "护士站")
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("护士站")
+        BaiduMobStat.default().pageviewEnd(withName: "护士站")
     }
     
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.tabBarController?.tabBar.hidden = false
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
@@ -50,9 +50,9 @@ class NurseStationViewController: UIViewController {
         
         segment = UISegmentedControl(items: ["圈子","招聘"])
         navigationItem.titleView = segment
-        navigationItem.titleView?.frame = CGRectMake(WIDTH / 2 - 75, 15, 150, 30)
+        navigationItem.titleView?.frame = CGRect(x: WIDTH / 2 - 75, y: 15, width: 150, height: 30)
         segment?.selectedSegmentIndex = 0
-        segment?.addTarget(self, action: #selector(selectorSegment), forControlEvents: UIControlEvents.ValueChanged)
+        segment?.addTarget(self, action: #selector(selectorSegment), for: UIControlEvents.valueChanged)
         
         view.addSubview(circleController.view)
         currentVCIndex = 0
@@ -77,7 +77,7 @@ class NurseStationViewController: UIViewController {
 //        navigationItem.leftBarButtonItem = nil
 //    }
     
-    @IBAction func selectorSegment(sender: UISegmentedControl) {
+    @IBAction func selectorSegment(_ sender: UISegmentedControl) {
 
         if sender.selectedSegmentIndex == 0 {
             if currentVCIndex == 0 {
@@ -88,14 +88,14 @@ class NurseStationViewController: UIViewController {
 ////                (RecVC.pagingMenuController!.currentViewController as! RecruitmentViewController).saveResumeBtnClicked()
 //            }
             
-            self.transitionFromViewController(RecVC, toViewController: circleController, duration: 0, options: .TransitionNone, animations: nil, completion: {(Bool) in
+            self.transition(from: RecVC, to: circleController, duration: 0, options: UIViewAnimationOptions(), animations: nil, completion: {(Bool) in
                 self.currentVCIndex = 0
             })
         }else{
             if currentVCIndex == 1{
                 return
             }
-            self.transitionFromViewController(circleController, toViewController: RecVC, duration: 0, options: .TransitionNone, animations: nil, completion: {(Bool) in
+            self.transition(from: circleController, to: RecVC, duration: 0, options: UIViewAnimationOptions(), animations: nil, completion: {(Bool) in
                 self.currentVCIndex = 1
             })
         }

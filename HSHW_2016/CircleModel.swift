@@ -25,9 +25,9 @@ class CommunityModel: HandyJSON {
     
     required init() {}
     
-    func mapping(mapper: HelpingMapper) {
+    func mapping(_ mapper: HelpingMapper) {
         // 指定 JSON中的`cat_id`字段映射到Model中的`id`字段
-        mapper.specify(&community_id, name: "id")
+        mapper.specify(property: &community_id, name: "id")
         //        mapper.specify(property: &forum_id, name: "id")
         
         //        // 指定JSON中的`parent`字段解析为Model中的`parent`字段
@@ -73,10 +73,10 @@ class ForumModel: HandyJSON {
     
     required init() {}
     
-    func mapping(mapper: HelpingMapper) {
+    func mapping(_ mapper: HelpingMapper) {
         // 指定 JSON中的`cat_id`字段映射到Model中的`id`字段
         
-        mapper.specify(&forum_id, name: "id")
+        mapper.specify(property: &forum_id, name: "id")
         
 //        // 指定JSON中的`parent`字段解析为Model中的`parent`字段
 //        // 因为(String, String)?是一个元组，既不是基本类型，也不服从`HandyJSON`协议，所以需要自己实现解析过程

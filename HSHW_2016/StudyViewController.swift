@@ -16,7 +16,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     let pageControl = SMPageControl()
 //    var picArr = Array<String>()
 //    var titArr = Array<String>()
-    var timer = NSTimer()
+    var timer = Timer()
     var times = Int()
 //    var requestHelper = NewsPageHelper()
     var newsList = Array<NewsInfo>()
@@ -28,33 +28,33 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     let titLabArrTwo:[String] = ["临床护理","50项护理操作","考试宝典"]
     let titImgArrTwo:[String] = ["ic_hushi.png","ic_zhen.png","ic_book.png"]
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("学习")
+        BaiduMobStat.default().pageviewStart(withName: "学习")
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("学习")
+        BaiduMobStat.default().pageviewEnd(withName: "学习")
     }
     
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.tabBarController?.tabBar.hidden = false
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.tabBarController?.tabBar.isHidden = false
                 
         myTableView.reloadData()
         
         HSNurseStationHelper().getArticleListWithID("95") { (success, response) in
             if success {
                 self.hulibu_newsArray = response as! Array<NewsInfo>
-                let hulibu_originalNewsUpdateTime = NSUserDefaults.standardUserDefaults().stringForKey(HULIBU_ORIGINALNEWSUPDATETIME)
+                let hulibu_originalNewsUpdateTime = UserDefaults.standard.string(forKey: HULIBU_ORIGINALNEWSUPDATETIME)
                 if hulibu_originalNewsUpdateTime == nil {
                     hulibu_updateNum = self.hulibu_newsArray.count
                 }else{
                     
-                    for (i,newsInfo) in self.hulibu_newsArray.enumerate() {
+                    for (i,newsInfo) in self.hulibu_newsArray.enumerated() {
                         if newsInfo.post_modified == hulibu_originalNewsUpdateTime {
                             hulibu_updateNum = i
                             break
@@ -70,32 +70,32 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         super.viewDidLoad()
         self.view.backgroundColor = COLOR
 //        NSUserDefaults.standardUserDefaults().removeObjectForKey(HULIBU_ORIGINALNEWSUPDATETIME)
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-60)
+        myTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-60)
         myTableView.backgroundColor = RGREY
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.registerClass(MineTableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.register(MineTableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(myTableView)
-        myTableView.separatorStyle = .None
+        myTableView.separatorStyle = .none
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         myTableView.mj_header.beginRefreshing()
         
-        let one = UIView(frame: CGRectMake(0, 1, WIDTH, WIDTH*188/375))
+        let one = UIView(frame: CGRect(x: 0, y: 1, width: WIDTH, height: WIDTH*188/375))
         self.view.addSubview(one)
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(scroll), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(scroll), userInfo: nil, repeats: true)
         
-        scrollView.frame = CGRectMake(0, 0,WIDTH, WIDTH*188/375)
+        scrollView.frame = CGRect(x: 0, y: 0,width: WIDTH, height: WIDTH*188/375)
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.pagingEnabled = true
+        scrollView.isPagingEnabled = true
         scrollView.delegate = self
         
-        scrollView.contentSize = CGSizeMake(4*WIDTH, 0)
-        scrollView.contentOffset = CGPointMake(0, 0)
+        scrollView.contentSize = CGSize(width: 4*WIDTH, height: 0)
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)
         one.addSubview(scrollView)
         
-        pageControl.frame = CGRectMake(WIDTH-80, WIDTH*188/375-25, 80, 25)
-        pageControl.pageIndicatorTintColor = UIColor.whiteColor()
+        pageControl.frame = CGRect(x: WIDTH-80, y: WIDTH*188/375-25, width: 80, height: 25)
+        pageControl.pageIndicatorTintColor = UIColor.white
         pageControl.currentPageIndicatorTintColor = COLOR
         pageControl.numberOfPages = self.imageArr.count
         pageControl.currentPage = 0
@@ -118,13 +118,13 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         HSNurseStationHelper().getArticleListWithID("95") { (success, response) in
             if success {
                 self.hulibu_newsArray = response as! Array<NewsInfo>
-                let hulibu_originalNewsUpdateTime = NSUserDefaults.standardUserDefaults().stringForKey(HULIBU_ORIGINALNEWSUPDATETIME)
+                let hulibu_originalNewsUpdateTime = UserDefaults.standard.string(forKey: HULIBU_ORIGINALNEWSUPDATETIME)
                 if hulibu_originalNewsUpdateTime == nil {
 //                    NSUserDefaults.standardUserDefaults().setValue(self.hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
                     hulibu_updateNum = self.hulibu_newsArray.count
                 }else{
                     
-                    for (i,newsInfo) in self.hulibu_newsArray.enumerate() {
+                    for (i,newsInfo) in self.hulibu_newsArray.enumerated() {
                         if newsInfo.post_modified == hulibu_originalNewsUpdateTime {
                             hulibu_updateNum = i
                             self.myTableView.reloadData()
@@ -148,7 +148,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 let imageArr = response as! Array<NewsInfo>
                 self.imageArr = imageArr.count>=5 ? Array(imageArr[0...slideImageListMaxNum-1]):imageArr
 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.updateSlideImage()
                     self.myTableView.reloadData()
                 })
@@ -156,22 +156,22 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 
                 self.myTableView.mj_header.endRefreshing()
             }else{
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.myTableView.mj_header.endRefreshing()
                     
-                    if String((response ?? "")!) == "no data" {
+                    if String(describing: response) == "no data" {
                         self.imageArr = Array<NewsInfo>()
                         self.updateSlideImage()
                         self.myTableView.reloadData()
                     }else{
                         
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "轮播图获取失败"
-                        hud.detailsLabelText = String((response ?? "")!)
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = "轮播图获取失败"
+                        hud?.detailsLabelText = String(describing: response)
+                        hud?.margin = 10.0
+                        hud?.removeFromSuperViewOnHide = true
+                        hud?.hide(true, afterDelay: 1)
                     }
                     
                 })
@@ -182,49 +182,49 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     func updateSlideImage(){
         
         for subView in self.scrollView.subviews {
-            if subView.isKindOfClass(UIImageView) {
+            if subView.isKind(of: UIImageView.self) {
                 subView.removeFromSuperview()
             }
         }
         
         let margin:CGFloat = 4
         pageControl.numberOfPages = self.imageArr.count
-        pageControl.frame = CGRectMake(
-            WIDTH-margin-pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)-margin*CGFloat(self.imageArr.count-1),
-            WIDTH*188/375-25,
-            pageControl.rectForPageIndicator(0).width*CGFloat(self.imageArr.count)+margin*CGFloat(self.imageArr.count-1),
-            25)
+        pageControl.frame = CGRect(
+            x: WIDTH-margin-pageControl.rect(forPageIndicator: 0).width*CGFloat(self.imageArr.count)-margin*CGFloat(self.imageArr.count-1),
+            y: WIDTH*188/375-25,
+            width: pageControl.rect(forPageIndicator: 0).width*CGFloat(self.imageArr.count)+margin*CGFloat(self.imageArr.count-1),
+            height: 25)
         pageControl.indicatorMargin = margin
         pageControl.currentPage = 0
         
-        for (i,slideImage) in self.imageArr.enumerate() {
+        for (i,slideImage) in self.imageArr.enumerated() {
             
             let  imageView = UIImageView()
-            imageView.frame = CGRectMake(CGFloat(i)*WIDTH, 0, WIDTH, WIDTH*188/375)
+            imageView.frame = CGRect(x: CGFloat(i)*WIDTH, y: 0, width: WIDTH, height: WIDTH*188/375)
             imageView.tag = i+1
             // TODO:JUDGE WIFI
             if  (!NurseUtil.net.isWifi() && loadPictureOnlyWiFi) && slideImage.thumbArr.count == 0 {
 //            if  (!(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi) || slideImage.thumbArr.count == 0 {
                 imageView.image = UIImage.init(named: "defaultImage.png")
             }else{
-                imageView.sd_setImageWithURL(NSURL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
+                imageView.sd_setImage(with: URL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
             }
             
-            let bottom = UIView(frame: CGRectMake(0, WIDTH*188/375-25, WIDTH, 25))
-            bottom.backgroundColor = UIColor.grayColor()
+            let bottom = UIView(frame: CGRect(x: 0, y: WIDTH*188/375-25, width: WIDTH, height: 25))
+            bottom.backgroundColor = UIColor.gray
             bottom.alpha = 0.5
             imageView.addSubview(bottom)
             
-            let titLab = UILabel(frame: CGRectMake(10, WIDTH*188/375-25, CGRectGetMinX(pageControl.frame)-10, 25))
-            titLab.font = UIFont.systemFontOfSize(13)
-            titLab.textColor = UIColor.whiteColor()
+            let titLab = UILabel(frame: CGRect(x: 10, y: WIDTH*188/375-25, width: pageControl.frame.minX-10, height: 25))
+            titLab.font = UIFont.systemFont(ofSize: 13)
+            titLab.textColor = UIColor.white
             titLab.adjustsFontSizeToFitWidth = true
             titLab.text = slideImage.post_title
             titLab.tag = i+1
             imageView.addSubview(titLab)
             
             //为图片视图添加点击事件
-            imageView.userInteractionEnabled = true
+            imageView.isUserInteractionEnabled = true
             let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapAction(_:)))
             //            手指头
             tap.numberOfTapsRequired = 1
@@ -234,15 +234,15 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             self.scrollView.addSubview(imageView)
         }
         
-        scrollView.contentSize = CGSizeMake(CGFloat(self.imageArr.count)*WIDTH, 0)
-        scrollView.contentOffset = CGPointMake(0, 0)
+        scrollView.contentSize = CGSize(width: CGFloat(self.imageArr.count)*WIDTH, height: 0)
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)
         
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             return 1
         }else if section == 1 {
@@ -256,35 +256,35 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         }
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 10
     }
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let view = UIView()
-        view.backgroundColor = UIColor.clearColor()
+        view.backgroundColor = UIColor.clear
         return view
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MineTableViewCell
-        cell.selectionStyle = .None
-        cell.accessoryType = .DisclosureIndicator
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)as!MineTableViewCell
+        cell.selectionStyle = .none
+        cell.accessoryType = .disclosureIndicator
         cell.accessoryView = nil
 
         if indexPath.section == 0 {
-            cell.titImage.setImage(UIImage(named: "ic_wirte"), forState: .Normal)
+            cell.titImage.setImage(UIImage(named: "ic_wirte"), for: UIControlState())
             cell.titLab.text = "护理部「智库」"
 
             if hulibu_updateNum > 0 {
-                cell.accessoryType = .None
+                cell.accessoryType = .none
                 let numLab = UILabel()
-                numLab.frame = CGRectMake(0, 0, 25, 25)
-                numLab.backgroundColor = UIColor.redColor()
+                numLab.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
+                numLab.backgroundColor = UIColor.red
                 numLab.layer.cornerRadius = 12.5
                 numLab.clipsToBounds = true
-                numLab.textAlignment = .Center
-                numLab.textColor = UIColor.whiteColor()
-                numLab.font = UIFont.systemFontOfSize(15)
+                numLab.textAlignment = .center
+                numLab.textColor = UIColor.white
+                numLab.font = UIFont.systemFont(ofSize: 15)
                 if hulibu_updateNum > 99 {
                     numLab.text = "99+"
                 }else{
@@ -296,9 +296,9 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 cell.accessoryView = nil
             }
         }else if indexPath.section == 1 {
-            cell.titImage.setImage(UIImage(named: titImgArr[indexPath.row]), forState: .Normal)
+            cell.titImage.setImage(UIImage(named: titImgArr[indexPath.row]), for: UIControlState())
             cell.titLab.text = titLabArr[indexPath.row]
-            let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
+            let line = UILabel(frame: CGRect(x: 55, y: 59.5, width: WIDTH-55, height: 0.5))
 //            line.backgroundColor = UIColor.grayColor()
             line.backgroundColor = UIColor(red: 200/255.0, green: 200/255.0, blue: 200/255.0, alpha: 1.0)
             
@@ -307,12 +307,12 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 line.removeFromSuperview()
             }
         }else if indexPath.section == 2 {
-            cell.titImage.setImage(UIImage(named: "ic_plane.png"), forState: .Normal)
+            cell.titImage.setImage(UIImage(named: "ic_plane.png"), for: UIControlState())
             cell.titLab.text = "出国考试"
         }else if indexPath.section == 3 {
-            cell.titImage.setImage(UIImage(named: titImgArrTwo[indexPath.row]), forState: .Normal)
+            cell.titImage.setImage(UIImage(named: titImgArrTwo[indexPath.row]), for: UIControlState())
             cell.titLab.text = titLabArrTwo[indexPath.row]
-            let line = UILabel(frame: CGRectMake(55, 59.5, WIDTH-55, 0.5))
+            let line = UILabel(frame: CGRect(x: 55, y: 59.5, width: WIDTH-55, height: 0.5))
 //            line.backgroundColor = UIColor.grayColor()
             line.backgroundColor = UIColor(red: 199/255.0, green: 199/255.0, blue: 204/255.0, alpha: 1.0)
             
@@ -321,13 +321,13 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
                 line.removeFromSuperview()
             }
         }else{
-            cell.titImage.setImage(UIImage(named: "ic_benzi.png"), forState: .Normal)
+            cell.titImage.setImage(UIImage(named: "ic_benzi.png"), for: UIControlState())
             cell.titLab.text = "护理论文"
         }
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if indexPath.section == 0 {
             print("学习-护理部点击事件")
@@ -335,7 +335,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
             hulibu_updateNum = 0
 //            hulibu_alreadyRead = true
             
-            NSUserDefaults.standardUserDefaults().setValue(hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
+            UserDefaults.standard.setValue(hulibu_newsArray.first?.post_modified, forKey: HULIBU_ORIGINALNEWSUPDATETIME)
 
             
             let noteVC = AllStudyViewController()
@@ -417,7 +417,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         }
     }
     // MARK:图片点击事件
-    func tapAction(tap:UIGestureRecognizer) {
+    func tapAction(_ tap:UIGestureRecognizer) {
         var imageView = UIImageView()
         imageView = tap.view as! UIImageView
         print("这是第\(Int(imageView.tag))张图片")
@@ -430,7 +430,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
     }
     
     func pageNext() {
-        scrollView.contentOffset = CGPointMake(WIDTH*CGFloat(pageControl.currentPage), 0)
+        scrollView.contentOffset = CGPoint(x: WIDTH*CGFloat(pageControl.currentPage), y: 0)
     }
     
 //    func scroll(){
@@ -454,20 +454,20 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
         scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
     }
     
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
         //        timer.fireDate = NSDate.distantPast()
-        timer = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         var offsetX:CGFloat = self.scrollView.contentOffset.x
         offsetX = offsetX + (self.scrollView.frame.size.width * 0.5)
         let page:Int = Int(offsetX)/Int(self.scrollView.frame.size.width)
         pageControl.currentPage = page
     }
     //开始拖拽时
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         //            timer.fireDate = NSDate.distantFuture()
         timer.invalidate()
     }

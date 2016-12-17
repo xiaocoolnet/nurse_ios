@@ -45,7 +45,7 @@ class NewsList: JSONJoy {
         }
     }
     
-    func append(list: [NewsInfo]){
+    func append(_ list: [NewsInfo]){
         self.objectlist = list + self.objectlist
     }
     
@@ -172,7 +172,7 @@ class NewsInfo: JSONJoy{
             }
         }
     }
-    func addpend(list: [LikeInfo]){
+    func addpend(_ list: [LikeInfo]){
         self.likes = list + self.likes
     }
    
@@ -238,7 +238,7 @@ class LikeList: JSONJoy {
         }
     }
     
-    func append(list: [LikeInfo]){
+    func append(_ list: [LikeInfo]){
         self.objectlist = list + self.objectlist
     }
 }

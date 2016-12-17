@@ -16,28 +16,28 @@ class NewsViewController: UIViewController {
     let threeView = TouTiaoViewController()
     let fourView = AcademicViewController()
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("新闻")
+        BaiduMobStat.default().pageviewStart(withName: "新闻")
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("新闻")
+        BaiduMobStat.default().pageviewEnd(withName: "新闻")
     }
     
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.hidden = true
-        self.tabBarController?.tabBar.hidden = false
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.navigationController?.navigationBar.isHidden = true
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         oneView.title = "头条"
         oneView.newsId = "4"
         oneView.slideImageId = "108"
@@ -76,8 +76,8 @@ class NewsViewController: UIViewController {
                 return 5
             }
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: text, color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
-                return .Text(title: title)
+                let title = MenuItemText(text: text, color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+                return .text(title: title)
             }
         }
         
@@ -86,19 +86,19 @@ class NewsViewController: UIViewController {
             var itemTextArray = [String]()
             
             var backgroundColor: UIColor {
-                return UIColor.clearColor()
+                return UIColor.clear
             }
             var selectedBackgroundColor: UIColor {
-                return UIColor.clearColor()
+                return UIColor.clear
             }
             var height: CGFloat {
                 return 44
             }
             var displayMode: MenuDisplayMode {
-                return .SegmentedControl
+                return .segmentedControl
             }
             var focusMode: MenuFocusMode {
-                return .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+                return .underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
             }
             var itemsOptions: [MenuItemViewCustomizable] {
                 
@@ -121,17 +121,17 @@ class NewsViewController: UIViewController {
             }
             var componentType: ComponentType {
                 
-                return .All(menuOptions: MenuOptions.init(itemTextArray: itemTextArray), pagingControllers: viewControllers)
+                return .all(menuOptions: MenuOptions.init(itemTextArray: itemTextArray), pagingControllers: viewControllers)
             }
         }
         
         let options = PagingMenuOptions.init(viewControllers: [oneView,twoView,threeView,fourView], itemTextArray: ["头条","护理界","健康","学术会议"])
         let pagingMenuController = PagingMenuController(options: options)
-        pagingMenuController.view.frame = CGRectMake(0, 20, WIDTH, HEIGHT-64)
+        pagingMenuController.view.frame = CGRect(x: 0, y: 20, width: WIDTH, height: HEIGHT-64)
         
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
-        pagingMenuController.didMoveToParentViewController(self)
+        pagingMenuController.didMove(toParentViewController: self)
     
     }
 }

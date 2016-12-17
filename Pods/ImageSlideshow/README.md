@@ -1,113 +1,105 @@
-# ImageSlideshow
+# 🖼 ImageSlideshow
 
-[![CI Status](http://img.shields.io/travis/zvonicek/ImageSlideshow.svg?style=flat)](https://travis-ci.org/zvonicek/ImageSlideshow)
+**Swift image slideshow with circular scrolling, timer and full screen viewer**
+
+[![Build Status](https://www.bitrise.io/app/9aaf3e552f3a575c.svg?token=AjiVckTN9ItQtJs873mYMw&branch=master)](https://www.bitrise.io/app/9aaf3e552f3a575c)
 [![Version](https://img.shields.io/cocoapods/v/ImageSlideshow.svg?style=flat)](http://cocoapods.org/pods/ImageSlideshow)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![License](https://img.shields.io/cocoapods/l/ImageSlideshow.svg?style=flat)](http://cocoapods.org/pods/ImageSlideshow)
 [![Platform](https://img.shields.io/cocoapods/p/ImageSlideshow.svg?style=flat)](http://cocoapods.org/pods/ImageSlideshow)
 
-# ImageSlideshow
-
-iOS / Swift image slideshow with circular scrolling, timer and full screen viewer.
-
 ![](http://cl.ly/image/2v193I0G0h0Z/ImageSlideshow2.gif)
 
-This component is under development. Description and brief documentation will follow with future versions. The API will be subject of change.
-
-Roadmap for 1.0:
-- ~~Create test project~~
-- ~~Create CocoaPod~~
-- Fix initial bugs
-- Polish API
-- Write brief documentation
-- *InputSource* subclass for *Alamofire* (yay!)
-
-## Usage
+## 📱 Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## Requirements
+## 🔧 Installation
 
-## Installation
-
+### CocoaPods
 ImageSlideshow is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'ImageSlideshow', '~> 0.2.2'
+pod 'ImageSlideshow', '~> 1.0.0'
 ```
 
-## Usage
+### Carthage
+To integrate ImageSlideshow into your Xcode project using Carthage, specify it in your Cartfile: 
 
-You can instantiate Slideshow either in Storyboard / Interface Builder, or in code. 
+```ruby
+github "zvonicek/ImageSlideshow" "1.0.0"
+```
+
+###  Swift 2.3 and Swift 3 support
+
+Version 1.0 supports Swift 3. For Swift 2.2 and Swift 2.3 compatible code use version 0.6 or branch *swift-2.3*. 
+
+
+## 🔨 How to use
+
+Add ImageSlideshow view to your view hiearchy either in Interface Builder or in code. 
 
 ### Loading images
 
-Images can be set by calling ```setImageInputs``` method on ```ImageSlideshow``` instance. Argument is an array of *InputSource*s. By default you may use ```ImageSource``` which takes ```UIImage```, but you can easily subclass ```InputSource``` and support your own input source. 
+Set images by using ```setImageInputs``` method on ```ImageSlideshow``` instance with an array of *InputSource*s. By default you can use ```ImageSource``` which takes ```UIImage``` or few other *InputSource*s for most popular networking libraries. You can also create your own input source by implementing ```InputSource``` protocol.
+
+| Library                                                       | InputSource name | Pod                               |
+| ------------------------------------------------------------- |:----------------:| ---------------------------------:|
+| [AlamofireImage](https://github.com/Alamofire/AlamofireImage) | AlamofireSource  | `pod "ImageSlideshow/Alamofire"`  |
+| [AFNetworking](https://github.com/AFNetworking/AFNetworking)  | AFURLSource      | `pod "ImageSlideshow/AFURL"`      |
+| [SDWebImage](https://github.com/rs/SDWebImage)                | SDWebImageSource | `pod "ImageSlideshow/SDWebImage"` |
+| [Kingfisher](https://github.com/onevcat/Kingfisher)           | KingfisherSource | `pod "ImageSlideshow/Kingfisher"` |
+
 
 ```swift
-slideshow.setImageInputs([ImageSource(image: UIImage(named: "myImage"))!, ImageSource(image: UIImage(named: "myImage2"))!,])
-```
-
-There is one more *InputSource* available in *AFURL* subspec allowing to load image from URL using *AFNetworking*. To use this add the AFURL subspec below the original *ImageSlideshow* pod:
-
-```ruby
-pod "ImageSlideshow/AFURL"
-``` 
-
-It is then possible to load image from URL by calling
-
-```swift
-AFURLSource(url: "https://upload.wikimedia.org/wikipedia/commons/d/d5/Trencin_hdr_001.jpg")
+slideshow.setImageInputs([
+  ImageSource(image: UIImage(named: "myImage"))!, 
+  ImageSource(image: UIImage(named: "myImage2"))!,
+  AlamofireSource(urlString: "https://images.unsplash.com/photo-1432679963831-2dab49187847?w=1080"),
+  KingfisherSource(urlString: "https://images.unsplash.com/photo-1432679963831-2dab49187847?w=1080")
+])
 ```
 
 ### Configuration
 
-It is possible to configure behaviour by setting numerous properties: 
+Behaviour is configurable by those properties:
 
 - ```slideshowInterval``` - in case you want automatic slideshow, set up the interval between sliding to next picture
 - ```zoomEnabled``` - enables zooming
 - ```circular``` - enables circular scrolling
 - ```pageControlPosition``` - configures position of UIPageControll (hidden, inside scroll view or under scroll view)
+- ```contentScaleMode``` - configures the scaling (UIViewContentMode.ScaleAspectFit by default)
+- ```draggingEnabled``` - enables dragging
+- ```currentPageChanged``` - closure called on page change
+- ```preload``` - image preloading configuration (all images are preloaded by default)
 
 ### Full Screen view
 
-As seen on sample image and example project, you may also use full-scren view. For now there is a need to present the controller manually. 
+There is also a possibility to open full-screen image view using attached `FullScreenSlideshowViewController`. The simplest way is to call:
 
 ```swift
-var transitionDelegate: ZoomAnimatedTransitioningDelegate?
-
 override func viewDidLoad() {
-  ...
-  let gestureRecognizer = UITapGestureRecognizer(target: self, action: "openFullScreen")
+  let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.didTap))
   slideshow.addGestureRecognizer(gestureRecognizer)
 }
 
-func click() {
-  let ctr = FullScreenSlideshowViewController()
-  // called when full-screen VC dismissed and used to set the page to our original slideshow
-  ctr.pageSelected = {(page: Int) in
-    self.slideshow.setScrollViewPage(page, animated: false)
-  }
-  
-  // set the initial page
-  ctr.initialPage = slideshow.scrollViewPage
-  // set the inputs
-  ctr.inputs = slideshow.images
-  self.transitionDelegate = ZoomAnimatedTransitioningDelegate(slideshowView: slideshow);
-  ctr.transitioningDelegate = self.transitionDelegate!
-  self.presentViewController(ctr, animated: true, completion: nil)
+func didTap() {
+  slideshow.presentFullScreenController(from: self)
 }
 ```
 
-## Author
+`FullScreenSlideshowViewController` can also be instantiated and configured manually if more advanced behavior is needed.
 
-Petr Zvoníček, zvonicek@gmail.com
+## 👤 Author
 
-## License
+Petr Zvoníček
+
+## 📄 License
 
 ImageSlideshow is available under the MIT license. See the LICENSE file for more info.
 
-### References
+## 👀 References
 
 Inspired by projects: 
 - https://github.com/gonzalezreal/Vertigo

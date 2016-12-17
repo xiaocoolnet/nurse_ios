@@ -29,26 +29,26 @@ class MinePostTableViewCell: UITableViewCell {
         for view in self.contentView.subviews {
             view.removeFromSuperview()
         }
-        title.frame = CGRectMake(15, 16, WIDTH-55, 20)
-        title.font = UIFont.systemFontOfSize(14)
-        one.frame = CGRectMake(WIDTH-35, 26, 20, 20)
-        one.setImage(UIImage(named: "ic_you.png"), forState: .Normal)
-        timeLab.frame = CGRectMake(15, 40, 80, 20)
-        timeLab.font = UIFont.systemFontOfSize(10)
+        title.frame = CGRect(x: 15, y: 16, width: WIDTH-55, height: 20)
+        title.font = UIFont.systemFont(ofSize: 14)
+        one.frame = CGRect(x: WIDTH-35, y: 26, width: 20, height: 20)
+        one.setImage(UIImage(named: "ic_you.png"), for: UIControlState())
+        timeLab.frame = CGRect(x: 15, y: 40, width: 80, height: 20)
+        timeLab.font = UIFont.systemFont(ofSize: 10)
         timeLab.textColor = GREY
-        conLab.frame = CGRectMake(117, 40, 50, 20)
-        conLab.font = UIFont.systemFontOfSize(10)
+        conLab.frame = CGRect(x: 117, y: 40, width: 50, height: 20)
+        conLab.font = UIFont.systemFont(ofSize: 10)
         conLab.textColor = GREY
-        zanNum.frame = CGRectMake(177, 40, 50, 20)
-        zanNum.font = UIFont.systemFontOfSize(10)
+        zanNum.frame = CGRect(x: 177, y: 40, width: 50, height: 20)
+        zanNum.font = UIFont.systemFont(ofSize: 10)
         zanNum.textColor = GREY
-        time.frame = CGRectMake(15, 46.5, 8, 7)
-        time.setBackgroundImage(UIImage(named: "ic_time_gray@.png"), forState: .Normal)
-        conImg.frame = CGRectMake(105, 47, 9, 6)
-        conImg.setBackgroundImage(UIImage(named: "ic_eye_gray.png"), forState: .Normal)
-        zanImg.frame = CGRectMake(167, 46.5, 7, 7)
-        zanImg.setBackgroundImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
-        let line = UILabel(frame: CGRectMake(0, 71.5, WIDTH, 0.5))
+        time.frame = CGRect(x: 15, y: 46.5, width: 8, height: 7)
+        time.setBackgroundImage(UIImage(named: "ic_time_gray@.png"), for: UIControlState())
+        conImg.frame = CGRect(x: 105, y: 47, width: 9, height: 6)
+        conImg.setBackgroundImage(UIImage(named: "ic_eye_gray.png"), for: UIControlState())
+        zanImg.frame = CGRect(x: 167, y: 46.5, width: 7, height: 7)
+        zanImg.setBackgroundImage(UIImage(named: "ic_like_gray.png"), for: UIControlState())
+        let line = UILabel(frame: CGRect(x: 0, y: 71.5, width: WIDTH, height: 0.5))
         line.backgroundColor = GREY
         
         self.addSubview(line)
@@ -66,7 +66,7 @@ class MinePostTableViewCell: UITableViewCell {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

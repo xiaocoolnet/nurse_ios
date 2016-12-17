@@ -236,7 +236,6 @@
 		F63B3A6F1D2F953600C5B2CF /* HSStateEditResumeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63B3A6E1D2F953600C5B2CF /* HSStateEditResumeController.swift */; };
 		F63BE1EF1D0546F9008292AC /* NewsPageHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63BE1EE1D0546F9008292AC /* NewsPageHelper.swift */; };
 		F63E198D1D17E10E001BDE8A /* HSZRecruitmentHome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */; };
-		F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */; };
 		F64C9ABE1D3B85620041E360 /* HSMineHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9ABD1D3B85620041E360 /* HSMineHelper.swift */; };
 		F64C9AC01D3B9BFC0041E360 /* ChildsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9ABF1D3B9BFC0041E360 /* ChildsViewController.swift */; };
 		F64C9AC21D3B9C0B0041E360 /* MineRecViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F64C9AC11D3B9C0B0041E360 /* MineRecViewController.swift */; };
@@ -562,7 +561,6 @@
 		F63B3A6E1D2F953600C5B2CF /* HSStateEditResumeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSStateEditResumeController.swift; sourceTree = "<group>"; };
 		F63BE1EE1D0546F9008292AC /* NewsPageHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsPageHelper.swift; sourceTree = "<group>"; };
 		F63E198B1D17E10E001BDE8A /* HSZRecruitmentHome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZRecruitmentHome.swift; sourceTree = "<group>"; };
-		F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSZSliderMenuView.swift; sourceTree = "<group>"; };
 		F64C9ABD1D3B85620041E360 /* HSMineHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineHelper.swift; sourceTree = "<group>"; };
 		F64C9ABF1D3B9BFC0041E360 /* ChildsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChildsViewController.swift; sourceTree = "<group>"; };
 		F64C9AC11D3B9C0B0041E360 /* MineRecViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineRecViewController.swift; sourceTree = "<group>"; };
@@ -1072,7 +1070,6 @@
 				F605F0C01D2266B100769299 /* HSFindPersonDetailView.swift */,
 				F605F0BE1D22564300769299 /* HSFindPersonDetailView.xib */,
 				18ADDDEE1CE9995700557FFE /* PostTableViewCell.swift */,
-				F63E198F1D17F121001BDE8A /* HSZSliderMenuView.swift */,
 				185102E11CED612E00F797EE /* UserPostTableViewCell.swift */,
 				180482EE1CEDF54200BF716C /* RecruitTableViewCell.swift */,
 				F631470C1D1A2BEE005103C9 /* HSComOpenHeader.swift */,
@@ -1554,13 +1551,16 @@
 					183B84F11CE5BFDC00709235 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = G5639ZVPC9;
+						LastSwiftMigration = 0820;
 					};
 					183B85051CE5BFDC00709235 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 183B84F11CE5BFDC00709235;
 					};
 					183B85101CE5BFDC00709235 = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0820;
 						TestTargetID = 183B84F11CE5BFDC00709235;
 					};
 				};
@@ -1697,7 +1697,6 @@
 				0DB467AC1D4C8600009AE2AD /* MJRefreshComponent.m in Sources */,
 				1F0FDFF01D697C24005DDB80 /* RankTableViewCell.swift in Sources */,
 				F605F0C11D2266B100769299 /* HSFindPersonDetailView.swift in Sources */,
-				F63E19901D17F121001BDE8A /* HSZSliderMenuView.swift in Sources */,
 				183B86711CE5CF9500709235 /* JSONJoy.swift in Sources */,
 				180482EF1CEDF54200BF716C /* RecruitTableViewCell.swift in Sources */,
 				181E0D251CEBF83200E34A7F /* FansViewController.swift in Sources */,
@@ -2082,6 +2081,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5f386403-0635-4c16-8aff-6635526a2e56";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
@@ -2129,6 +2129,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "5f386403-0635-4c16-8aff-6635526a2e56";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/HSHW_2016/HSHW_2016-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
@@ -2141,6 +2142,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "www.xiaoku.com.HSHW-2016Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HSHW_2016.app/HSHW_2016";
 			};
 			name = Debug;
@@ -2153,6 +2155,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "www.xiaoku.com.HSHW-2016Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HSHW_2016.app/HSHW_2016";
 			};
 			name = Release;
@@ -2164,6 +2167,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "www.xiaoku.com.HSHW-2016UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = HSHW_2016;
 			};
 			name = Debug;
@@ -2175,6 +2179,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "www.xiaoku.com.HSHW-2016UITests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = HSHW_2016;
 			};
 			name = Release;

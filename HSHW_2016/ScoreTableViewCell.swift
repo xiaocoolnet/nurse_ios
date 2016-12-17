@@ -17,26 +17,26 @@ class ScoreTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        let scoreImg = UIImageView(frame: CGRectMake(5/75*WIDTH, 35/1380.0*HEIGHT, 5/75*WIDTH, 4/75*WIDTH))
+        let scoreImg = UIImageView(frame: CGRect(x: 5/75*WIDTH, y: 35/1380.0*HEIGHT, width: 5/75*WIDTH, height: 4/75*WIDTH))
         scoreImg.image = UIImage(named: "score")
         self.contentView.addSubview(scoreImg)
         
-        nameLab.frame = CGRectMake(CGRectGetMaxX(scoreImg.frame)+3/750.0*WIDTH, 35/1380.0*HEIGHT, 1/3.0*WIDTH, 35/1380.0*HEIGHT)
+        nameLab.frame = CGRect(x: scoreImg.frame.maxX+3/750.0*WIDTH, y: 35/1380.0*HEIGHT, width: 1/3.0*WIDTH, height: 35/1380.0*HEIGHT)
         nameLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
-        nameLab.font = UIFont.systemFontOfSize(18)
-        nameLab.textAlignment = .Left
+        nameLab.font = UIFont.systemFont(ofSize: 18)
+        nameLab.textAlignment = .left
         self.contentView.addSubview(nameLab)
         
-        scoreLab.frame = CGRectMake(CGRectGetMaxX(nameLab.frame), CGRectGetMinY(nameLab.frame), 304/750.0*WIDTH, 3/138.0*HEIGHT)
+        scoreLab.frame = CGRect(x: nameLab.frame.maxX, y: nameLab.frame.minY, width: 304/750.0*WIDTH, height: 3/138.0*HEIGHT)
         scoreLab.textColor = COLOR
-        scoreLab.font = UIFont.systemFontOfSize(18)
-        scoreLab.textAlignment = .Right
+        scoreLab.font = UIFont.systemFont(ofSize: 18)
+        scoreLab.textAlignment = .right
         self.contentView.addSubview(scoreLab)
         
-        timeLab.frame = CGRectMake(CGRectGetMaxX(nameLab.frame), CGRectGetMaxY(scoreLab.frame), 304/750.0*WIDTH, 18/1380.0*HEIGHT)
+        timeLab.frame = CGRect(x: nameLab.frame.maxX, y: scoreLab.frame.maxY, width: 304/750.0*WIDTH, height: 18/1380.0*HEIGHT)
         timeLab.textColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
-        timeLab.font = UIFont.systemFontOfSize(10)
-        timeLab.textAlignment = .Right
+        timeLab.font = UIFont.systemFont(ofSize: 10)
+        timeLab.textAlignment = .right
         self.contentView.addSubview(timeLab)
         
     }
@@ -50,7 +50,7 @@ class ScoreTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

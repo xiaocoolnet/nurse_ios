@@ -37,7 +37,7 @@ class QCLoginUserInfo {
     
     
     static let currentInfo = QCLoginUserInfo()
-    private init() {
+    fileprivate init() {
         
     }
 }

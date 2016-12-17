@@ -39,7 +39,7 @@ class HSStateCommentCell: UITableViewCell {
         // Initialization code
         louzhuLab.layer.cornerRadius = 2
         louzhuLab.layer.borderWidth = 1
-        louzhuLab.layer.borderColor = COLOR.CGColor
+        louzhuLab.layer.borderColor = COLOR.cgColor
         
     }
     
@@ -50,12 +50,12 @@ class HSStateCommentCell: UITableViewCell {
             
             HSMineHelper().getUserInfo((commentModel?.userid)!) { (success, response) in
                 let model = response as! HSFansAndFollowModel
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
 
                     if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
-                        self.headerBtn.setImage(UIImage.init(named: "img_head_nor"), forState: .Normal)
+                        self.headerBtn.setImage(UIImage.init(named: "img_head_nor"), for: UIControlState())
                     }else{
-                        self.headerBtn.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+(model.photo)), forState: .Normal, placeholderImage: UIImage.init(named: "img_head_nor"))
+                        self.headerBtn.sd_setImage(with: URL.init(string: SHOW_IMAGE_HEADER+(model.photo)), for: UIControlState(), placeholderImage: UIImage.init(named: "img_head_nor"))
                     }
                     self.positionLab.text = model.major
                     self.levelLab.text = String(format: "Lv.%02d", Int(model.level)!)
@@ -78,7 +78,7 @@ class HSStateCommentCell: UITableViewCell {
     
 
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

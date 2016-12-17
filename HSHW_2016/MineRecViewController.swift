@@ -21,45 +21,45 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 0.5))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 0.5))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-115)
-        myTableView.backgroundColor = UIColor.clearColor()
+        myTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-115)
+        myTableView.backgroundColor = UIColor.clear
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.separatorStyle = .None
-        myTableView.registerClass(MineJobTableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.separatorStyle = .none
+        myTableView.register(MineJobTableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(myTableView)
         
         myTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(getDate))
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         self.getDate()
 
         // Do any additional setup after loading the view.
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return 165
     }
     
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.objectlist.count
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!MineJobTableViewCell
-        cell.selectionStyle = .None
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)as!MineJobTableViewCell
+        cell.selectionStyle = .none
         let model = self.dataSource.objectlist[indexPath.row]
         cell.showforJobModel(model)
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let model = self.dataSource.objectlist[indexPath.row]
         let vc = MineRecDetailsViewController()
         vc.currentJobModel = model
@@ -80,16 +80,16 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
     func getDate(){
             let url = PARK_URL_Header+"getMyPublishJobList"
             let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
                 if(error != nil){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud?.mode = MBProgressHUDMode.text;
                    
-                    hud.labelText = "网络错误，请稍后再试"
+                    hud?.labelText = "网络错误，请稍后再试"
                     //hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    hud?.margin = 10.0
+                    hud?.removeFromSuperViewOnHide = true
+                    hud?.hide(true, afterDelay: 1)
                 }else{
                     let status = MineJobModel(JSONDecoder(json!))
                     
@@ -99,15 +99,15 @@ class MineRecViewController: UIViewController, UITableViewDelegate, UITableViewD
                         self.myTableView .reloadData()
                         // print(status.data)
                     }else if(status.status == "error"){
-                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
+                        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                        hud?.mode = MBProgressHUDMode.text;
                         if status.data == nil {
-                            hud.labelText = "您还没有发布职位，请先发布职位"
+                            hud?.labelText = "您还没有发布职位，请先发布职位"
                         }
                         //hud.labelText = status.errorData
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                        hud?.margin = 10.0
+                        hud?.removeFromSuperViewOnHide = true
+                        hud?.hide(true, afterDelay: 1)
                     }
                 }
                 if self.myTableView.mj_header.isRefreshing() {

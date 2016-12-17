@@ -37,7 +37,7 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
 
         helper.getUserInfo(userid) { (success, response) in
             self.userInfo = (response as! HSFansAndFollowModel)
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.title = self.userInfo?.name
                 self.setTableHeaderView()
             })
@@ -47,7 +47,7 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
         // TODO: type 是什么意思
         HSNurseStationHelper().getList(userid, type: "1", isHot: false) { (success, response) in
             self.dataSource = response as? Array<PostModel> ?? []
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.userTableView.reloadData()
             })
         }
@@ -60,28 +60,28 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
     func setSubviews() {
         
         // 导航栏
-        let rightBtn = UIButton.init(frame: CGRectMake(0, 0, 80, 44))
-        rightBtn.addTarget(self, action: #selector(rightBarButtonClick), forControlEvents: .TouchUpInside)
+        let rightBtn = UIButton.init(frame: CGRect(x: 0, y: 0, width: 80, height: 44))
+        rightBtn.addTarget(self, action: #selector(rightBarButtonClick), for: .touchUpInside)
         
-        let rightImg = UIImageView.init(frame: CGRectMake(0, 12, 12, 20))
+        let rightImg = UIImageView.init(frame: CGRect(x: 0, y: 12, width: 12, height: 20))
         rightImg.image = UIImage(named: "ic_back")
-        rightImg.userInteractionEnabled = true
+        rightImg.isUserInteractionEnabled = true
         rightBtn.addSubview(rightImg)
         
-        let rightLab = UILabel.init(frame: CGRectMake(20, 7, 60, 30))
+        let rightLab = UILabel.init(frame: CGRect(x: 20, y: 7, width: 60, height: 30))
         rightLab.textColor = COLOR
         rightLab.text = "返回"
         rightBtn.addSubview(rightLab)
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: rightBtn)
         
-        let shareBtn:UIButton = UIButton.init(frame: CGRectMake(0, 7, 30, 30))
-        shareBtn.setImage(UIImage.init(named: "ic_fenxiang"), forState: UIControlState.Normal)
+        let shareBtn:UIButton = UIButton.init(frame: CGRect(x: 0, y: 7, width: 30, height: 30))
+        shareBtn.setImage(UIImage.init(named: "ic_fenxiang"), for: UIControlState())
         self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: shareBtn)
         
         // 主 tableView
-        userTableView = UITableView.init(frame: CGRectMake(0, 0, WIDTH, HEIGHT-64), style: .Grouped)
-        userTableView.registerNib(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
+        userTableView = UITableView.init(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT-64), style: .grouped)
+        userTableView.register(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
         userTableView.rowHeight = UITableViewAutomaticDimension
         userTableView.delegate = self
 //        userTableView.dataSource = self
@@ -89,20 +89,20 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
     }
     
     func rightBarButtonClick() {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     // 设置 tableView HeaderView
     func setTableHeaderView() {
             if self.userInfo != nil {
                 
-                let bgImageView = UIImageView.init(frame: CGRectMake(0, 0, WIDTH, WIDTH*0.9))
-                bgImageView.userInteractionEnabled = true
+                let bgImageView = UIImageView.init(frame: CGRect(x: 0, y: 0, width: WIDTH, height: WIDTH*0.9))
+                bgImageView.isUserInteractionEnabled = true
                 
                 // 创建渐变色图层
                 let gradientLayer = CAGradientLayer.init()
-                gradientLayer.frame = CGRectMake(0, 0, WIDTH, WIDTH*0.9)
-                gradientLayer.colors = [UIColor.init(red: 186/255.0, green: 125/255.0, blue: 126/255.0, alpha: 1).CGColor,UIColor.init(red: 140/255.0, green: 20/255.0, blue: 139/255.0, alpha: 1).CGColor]
+                gradientLayer.frame = CGRect(x: 0, y: 0, width: WIDTH, height: WIDTH*0.9)
+                gradientLayer.colors = [UIColor.init(red: 186/255.0, green: 125/255.0, blue: 126/255.0, alpha: 1).cgColor,UIColor.init(red: 140/255.0, green: 20/255.0, blue: 139/255.0, alpha: 1).cgColor]
                 // 设置渐变方向（0-1）
                 gradientLayer.startPoint = CGPoint(x: 0, y: 0)
                 gradientLayer.endPoint = CGPoint(x: 0, y: 1)
@@ -113,44 +113,44 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
                 bgImageView.layer.addSublayer(gradientLayer)
                 
                 // 头像
-                headerView = UIImageView.init(frame: CGRectMake(WIDTH/3.0, 30, WIDTH/3.0, WIDTH/3.0))
-                headerView.backgroundColor = UIColor.cyanColor()
+                headerView = UIImageView.init(frame: CGRect(x: WIDTH/3.0, y: 30, width: WIDTH/3.0, height: WIDTH/3.0))
+                headerView.backgroundColor = UIColor.cyan
                 let str = SHOW_IMAGE_HEADER+(userInfo?.photo)!
                 
                 if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                     headerView.image = UIImage.init(named: "defaultImage.png")
                 }else{
-                    headerView.sd_setImageWithURL(NSURL.init(string: str), placeholderImage: UIImage.init(named: "defaultImage.png"))
+                    headerView.sd_setImage(with: URL.init(string: str), placeholderImage: UIImage.init(named: "defaultImage.png"))
                 }
 //                headerView.sd_setImageWithURL(NSURL.init(string: str))
                 headerView.layer.cornerRadius = WIDTH/6.0
                 headerView.clipsToBounds = true
                 headerView.layer.borderWidth = 3
-                headerView.layer.borderColor = UIColor.whiteColor().CGColor
+                headerView.layer.borderColor = UIColor.white.cgColor
                 print(str)
                 
                 bgImageView.addSubview(headerView)
                 
                 // 用户名
-                nameLabel = UILabel.init(frame: CGRectMake(self.view.center.x, CGRectGetMaxY(headerView.frame)+30, 100, 30))
-                nameLabel.textColor = UIColor.whiteColor()
+                nameLabel = UILabel.init(frame: CGRect(x: self.view.center.x, y: headerView.frame.maxY+30, width: 100, height: 30))
+                nameLabel.textColor = UIColor.white
                 nameLabel.text = userInfo!.name
                 nameLabel.sizeToFit()
-                nameLabel.frame = CGRectMake((WIDTH-nameLabel.frame.size.width)/2.0-10, nameLabel.frame.origin.y, nameLabel.frame.size.width, nameLabel.frame.size.height)
+                nameLabel.frame = CGRect(x: (WIDTH-nameLabel.frame.size.width)/2.0-10, y: nameLabel.frame.origin.y, width: nameLabel.frame.size.width, height: nameLabel.frame.size.height)
                 bgImageView.addSubview(nameLabel)
                 
                 // 等级
-                let leavel = UIButton.init(frame: CGRectMake(CGRectGetMaxX(nameLabel.frame)+2, CGRectGetMinY(nameLabel.frame), 18, 20))
-                leavel.setBackgroundImage(UIImage.init(named: "ic_shield_yellow.png"), forState: .Normal)
-                leavel.titleLabel?.font = UIFont.systemFontOfSize(9)
-                leavel.setTitleColor(UIColor.yellowColor(), forState: .Normal)
-                leavel.setTitle(userInfo?.level, forState: .Normal)
+                let leavel = UIButton.init(frame: CGRect(x: nameLabel.frame.maxX+2, y: nameLabel.frame.minY, width: 18, height: 20))
+                leavel.setBackgroundImage(UIImage.init(named: "ic_shield_yellow.png"), for: UIControlState())
+                leavel.titleLabel?.font = UIFont.systemFont(ofSize: 9)
+                leavel.setTitleColor(UIColor.yellow, for: UIControlState())
+                leavel.setTitle(userInfo?.level, for: UIControlState())
                 bgImageView.addSubview(leavel)
                 
                 // 简介
-                noteLab = UILabel.init(frame: CGRectMake(0, CGRectGetMaxY(leavel.frame)+20, WIDTH, 50))
+                noteLab = UILabel.init(frame: CGRect(x: 0, y: leavel.frame.maxY+20, width: WIDTH, height: 50))
                 noteLab.numberOfLines = 0
-                noteLab.textAlignment = NSTextAlignment.Center
+                noteLab.textAlignment = NSTextAlignment.center
                 noteLab.textColor = UIColor.init(red: 248/255.0, green: 122/255.0, blue: 215/255.0, alpha: 1)
                 
                 var sex:String = "未知"
@@ -164,27 +164,27 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
                 bgImageView.addSubview(noteLab)
                 
                 // 关注按钮
-                focusBtn = UIButton.init(frame: CGRectMake(WIDTH/4.0, CGRectGetMaxY(noteLab.frame)+20, WIDTH/2.0, 50))
+                focusBtn = UIButton.init(frame: CGRect(x: WIDTH/4.0, y: noteLab.frame.maxY+20, width: WIDTH/2.0, height: 50))
                 focusBtn.layer.borderWidth = 1
-                focusBtn.layer.borderColor = UIColor.whiteColor().CGColor
+                focusBtn.layer.borderColor = UIColor.white.cgColor
                 focusBtn.layer.cornerRadius = 25
-                focusBtn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-                focusBtn.setTitle("关注Ta", forState: .Normal)
-                focusBtn.setTitle("已关注", forState: .Selected)
+                focusBtn.setTitleColor(UIColor.white, for: UIControlState())
+                focusBtn.setTitle("关注Ta", for: UIControlState())
+                focusBtn.setTitle("已关注", for: .selected)
                 var flag = true
                 for obj in focusArray {
                     if obj.id == userid {
-                        focusBtn.selected = true
+                        focusBtn.isSelected = true
                         flag = false
                     }
                 }
                 if flag {
-                    focusBtn.selected = false
+                    focusBtn.isSelected = false
                 }
-                focusBtn.addTarget(self, action: #selector(followBtnClick(_:)), forControlEvents: .TouchUpInside)
+                focusBtn.addTarget(self, action: #selector(followBtnClick(_:)), for: .touchUpInside)
                 bgImageView.addSubview(focusBtn)
                 
-                bgImageView.frame = CGRectMake(0, 0, WIDTH, CGRectGetMaxY(focusBtn.frame)+20)
+                bgImageView.frame = CGRect(x: 0, y: 0, width: WIDTH, height: focusBtn.frame.maxY+20)
                 
                 self.userTableView.tableHeaderView = bgImageView
                 
@@ -193,8 +193,8 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
     }
     
     // 关注按钮 点击事件
-    func followBtnClick(followBtn:UIButton) {
-        if followBtn.selected {
+    func followBtnClick(_ followBtn:UIButton) {
+        if followBtn.isSelected {
 
                 let alert = UIAlertView.init(title: "取消关注？", message: "确定要取消关注 \((self.userInfo?.name)!) 吗？", delegate: self, cancelButtonTitle: "不再关注", otherButtonTitles: "点错了")
                 alert.tag = 4000
@@ -202,11 +202,11 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
         }else{
             helper.addFavorite(QCLoginUserInfo.currentInfo.userid, refid: (userInfo?.userid)!, type: "6", title: "", description: "") { (success, response) in
                 if success {
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         
                         let alert = UIAlertView.init(title: "关注成功", message: "成功关注 \((self.userInfo?.name)!)", delegate: nil, cancelButtonTitle: "确定")
                         alert.show()
-                        followBtn.selected = true
+                        followBtn.isSelected = true
                         
                     })
                 }
@@ -215,18 +215,18 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
     }
     
     // alertView delegate
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         if alertView.tag == 4000 {
             
             if buttonIndex == 0 {
                 
                 helper.cancelFavorite((userInfo?.userid)!, refid: (userInfo?.object_id)!, type: "6", handle: { (success, response) in
                     
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
 //                        print("--===   ",success)
                     let alert = UIAlertView.init(title: "已成功取消关注", message: "已成功取消关注 \((self.userInfo?.name)!)", delegate: nil, cancelButtonTitle: "确定")
                     alert.show()
-                    self.focusBtn.selected = false
+                    self.focusBtn.isSelected = false
                     })
                 })
             }
@@ -235,11 +235,11 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
     }
     
     // MARK: tableView 代理方法
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(_ tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dataSource.count
     }
     
@@ -252,34 +252,34 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
 //        return cell
 //    }
     
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return 140
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let bgView = UIView.init(frame: CGRectMake(0, 0, WIDTH, 40))
-        bgView.backgroundColor = UIColor.whiteColor()
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let bgView = UIView.init(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 40))
+        bgView.backgroundColor = UIColor.white
         
-        let label = UILabel.init(frame: CGRectMake(20, 10, WIDTH-40, 28))
+        let label = UILabel.init(frame: CGRect(x: 20, y: 10, width: WIDTH-40, height: 28))
         label.textColor = UIColor.init(red: 145/255.0, green: 0, blue: 105/255.0, alpha: 1)
         label.text = "他的帖子"
         bgView.addSubview(label)
         
-        let lineView = UIView.init(frame: CGRectMake(20, CGRectGetMaxY(label.frame), CGRectGetWidth(label.frame), 2))
+        let lineView = UIView.init(frame: CGRect(x: 20, y: label.frame.maxY, width: label.frame.width, height: 2))
         lineView.backgroundColor = UIColor.init(red: 145/255.0, green: 0, blue: 105/255.0, alpha: 1)
         bgView.addSubview(lineView)
         
         return bgView
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
     
-    func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if dataSource.count == 0 {
-            let noReply:UILabel = UILabel.init(frame: CGRectMake(0, 0, WIDTH, 200))
-            noReply.textAlignment = NSTextAlignment.Center
+            let noReply:UILabel = UILabel.init(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 200))
+            noReply.textAlignment = NSTextAlignment.center
             noReply.text = "暂无帖子"
             return noReply
         }else{
@@ -288,7 +288,7 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
         
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if dataSource.count == 0 {
             return 200
         }else{

@@ -19,47 +19,47 @@ class RankTableViewCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        indexBtn.frame = CGRectMake(5/75*WIDTH, 21/1380.0*HEIGHT, 5/75*WIDTH, 68/1380.0*HEIGHT)
-        indexBtn.enabled = false
-        indexBtn.setTitleColor(COLOR, forState: .Normal)
+        indexBtn.frame = CGRect(x: 5/75*WIDTH, y: 21/1380.0*HEIGHT, width: 5/75*WIDTH, height: 68/1380.0*HEIGHT)
+        indexBtn.isEnabled = false
+        indexBtn.setTitleColor(COLOR, for: UIControlState())
         self.contentView.addSubview(indexBtn)
        
-        scoreImg.frame = CGRectMake(CGRectGetMaxX(indexBtn.frame)+22/750.0*WIDTH, 20/1380.0*HEIGHT, 70/1380.0*HEIGHT, 70/1380.0*HEIGHT)
+        scoreImg.frame = CGRect(x: indexBtn.frame.maxX+22/750.0*WIDTH, y: 20/1380.0*HEIGHT, width: 70/1380.0*HEIGHT, height: 70/1380.0*HEIGHT)
         scoreImg.layer.cornerRadius = scoreImg.frame.size.width/2.0
         scoreImg.clipsToBounds = true
         self.contentView.addSubview(scoreImg)
         
-        nameLab.frame = CGRectMake(
-            CGRectGetMaxX(scoreImg.frame)+10/750.0*WIDTH,
-            35/1380.0*HEIGHT,
-            540/750.0*WIDTH-CGRectGetMaxX(scoreImg.frame)+10/750.0*WIDTH,
-            35/1380.0*HEIGHT)
+        nameLab.frame = CGRect(
+            x: scoreImg.frame.maxX+10/750.0*WIDTH,
+            y: 35/1380.0*HEIGHT,
+            width: 540/750.0*WIDTH-scoreImg.frame.maxX+10/750.0*WIDTH,
+            height: 35/1380.0*HEIGHT)
         nameLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
-        nameLab.font = UIFont.systemFontOfSize(18)
+        nameLab.font = UIFont.systemFont(ofSize: 18)
         nameLab.adjustsFontSizeToFitWidth = true
-        nameLab.textAlignment = .Left
+        nameLab.textAlignment = .left
         self.contentView.addSubview(nameLab)
         
-        scoreLab.frame = CGRectMake(
-            CGRectGetMaxX(nameLab.frame),
-            CGRectGetMinY(nameLab.frame),
-            670/750.0*WIDTH-CGRectGetMaxX(nameLab.frame),
-            3/138.0*HEIGHT)
+        scoreLab.frame = CGRect(
+            x: nameLab.frame.maxX,
+            y: nameLab.frame.minY,
+            width: 670/750.0*WIDTH-nameLab.frame.maxX,
+            height: 3/138.0*HEIGHT)
         scoreLab.textColor = COLOR
-        scoreLab.font = UIFont.systemFontOfSize(18)
+        scoreLab.font = UIFont.systemFont(ofSize: 18)
         scoreLab.adjustsFontSizeToFitWidth = true
-        scoreLab.textAlignment = .Right
+        scoreLab.textAlignment = .right
         self.contentView.addSubview(scoreLab)
         
-        timeLab.frame = CGRectMake(
-            CGRectGetMaxX(nameLab.frame),
-            CGRectGetMaxY(scoreLab.frame),
-            670/750.0*WIDTH-CGRectGetMaxX(nameLab.frame),
-            18/1380.0*HEIGHT)
+        timeLab.frame = CGRect(
+            x: nameLab.frame.maxX,
+            y: scoreLab.frame.maxY,
+            width: 670/750.0*WIDTH-nameLab.frame.maxX,
+            height: 18/1380.0*HEIGHT)
         timeLab.textColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
-        timeLab.font = UIFont.systemFontOfSize(10)
+        timeLab.font = UIFont.systemFont(ofSize: 10)
         timeLab.adjustsFontSizeToFitWidth = true
-        timeLab.textAlignment = .Right
+        timeLab.textAlignment = .right
         self.contentView.addSubview(timeLab)
         
     }
@@ -73,7 +73,7 @@ class RankTableViewCell: UITableViewCell {
         // Initialization code
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

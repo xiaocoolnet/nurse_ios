@@ -1,43 +1,43 @@
 PODS:
-  - AFNetworking (3.0.4):
-    - AFNetworking/NSURLSession (= 3.0.4)
-    - AFNetworking/Reachability (= 3.0.4)
-    - AFNetworking/Security (= 3.0.4)
-    - AFNetworking/Serialization (= 3.0.4)
-    - AFNetworking/UIKit (= 3.0.4)
-  - AFNetworking/NSURLSession (3.0.4):
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.0.4)
-  - AFNetworking/Security (3.0.4)
-  - AFNetworking/Serialization (3.0.4)
-  - AFNetworking/UIKit (3.0.4):
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - BmobSDK (1.7.2)
-  - HandyJSON (0.4.0)
-  - ImageSlideshow (0.2.3):
-    - ImageSlideshow/Core (= 0.2.3)
-  - ImageSlideshow/Core (0.2.3)
+  - HandyJSON (1.2.1)
+  - ImageSlideshow (1.0.0):
+    - ImageSlideshow/Core (= 1.0.0)
+  - ImageSlideshow/Core (1.0.0)
   - MBProgressHUD (0.9.2)
   - MOBFoundation (2.0.1)
-  - PagingMenuController (1.2.0)
-  - SDWebImage (3.7.5):
-    - SDWebImage/Core (= 3.7.5)
-  - SDWebImage/Core (3.7.5)
-  - SwiftyJSON (2.3.2)
+  - PagingMenuController (1.4.0)
+  - SDWebImage (3.8.2):
+    - SDWebImage/Core (= 3.8.2)
+  - SDWebImage/Core (3.8.2)
+  - SwiftyJSON (3.1.3)
   - WeiboSDK (3.1.4)
 
 DEPENDENCIES:
-  - AFNetworking (~> 3.0.1)
+  - AFNetworking (~> 3.1.0)
   - BmobSDK
-  - HandyJSON (~> 0.4.0)
-  - ImageSlideshow (~> 0.2.2)
+  - HandyJSON (~> 1.2.1)
+  - ImageSlideshow (~> 1.0.0)
   - MBProgressHUD
   - MOBFoundation
-  - PagingMenuController (~> 1.2.0)
-  - SDWebImage (~> 3.7.3)
-  - SwiftyJSON
+  - PagingMenuController (~> 1.4.0)
+  - SDWebImage (~> 3.8)
+  - SwiftyJSON (~> 3.1.1)
   - WeiboSDK (from `https://github.com/sinaweibosdk/weibo_ios_sdk.git`)
 
 EXTERNAL SOURCES:
@@ -50,17 +50,17 @@ CHECKOUT OPTIONS:
     :git: https://github.com/sinaweibosdk/weibo_ios_sdk.git
 
 SPEC CHECKSUMS:
-  AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   BmobSDK: e188cb31d6a8417ab668aee821da227d7512b865
-  HandyJSON: 92708e8790347978ac6568c25e316d5be6256d8b
-  ImageSlideshow: 2895e62777c2ea36f56d948723b3586a12a89756
+  HandyJSON: c20190bca46cc6e7fb87073df63ecbe90770a7b0
+  ImageSlideshow: 2787e10e202b79ecf5348a205c539fcc5bb8e62b
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MOBFoundation: a42168392e216fc56cbcbdfc3d5dcb3bbce5ef87
-  PagingMenuController: a2ee82351f712be10ff31e59c11221a04fcc8a73
-  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
-  SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
+  PagingMenuController: 79a9ce7472839d9afd0a6b879af6132822644a47
+  SDWebImage: 098e97e6176540799c27e804c96653ee0833d13c
+  SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
   WeiboSDK: bceab625ec59b7039ba721cc4ba9f5868804f63e
 
-PODFILE CHECKSUM: bb168ec54ae07f6e41605096a5d94a5dbe01ec6f
+PODFILE CHECKSUM: d0c11a7754bab11ecd044b9da3d1f10e2de99640
 
 COCOAPODS: 1.0.1

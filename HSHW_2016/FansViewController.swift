@@ -24,10 +24,10 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     var navigationBarLineView = UIView()
     
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.hidden = false
-        self.tabBarController?.tabBar.hidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = true
     }
 
     override func viewDidLoad() {
@@ -38,24 +38,24 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         setTitleView()
 
         // 线
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         // 总滚动视图
-        myScrollView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-115)
-        myScrollView.contentSize = CGSizeMake(WIDTH*2.0, HEIGHT-115)
-        myScrollView.pagingEnabled = true
+        myScrollView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-115)
+        myScrollView.contentSize = CGSize(width: WIDTH*2.0, height: HEIGHT-115)
+        myScrollView.isPagingEnabled = true
         myScrollView.showsHorizontalScrollIndicator = false
         myScrollView.delegate = self
         self.view.addSubview(myScrollView)
         
         // 我的粉丝列表
-        fansTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-115)
-        fansTableView.backgroundColor = UIColor.clearColor()
-        fansTableView.registerClass(FansTableViewCell.self, forCellReuseIdentifier: "cell")
+        fansTableView.frame = CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT-115)
+        fansTableView.backgroundColor = UIColor.clear
+        fansTableView.register(FansTableViewCell.self, forCellReuseIdentifier: "cell")
         fansTableView.rowHeight = 70
         fansTableView.tag = 410
         fansTableView.delegate = self
@@ -63,44 +63,44 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         myScrollView.addSubview(fansTableView)
         
         // 我的关注列表
-        focusTableView.frame = CGRectMake(WIDTH, 0, WIDTH, HEIGHT-115)
-        focusTableView.backgroundColor = UIColor.clearColor()
-        focusTableView.registerClass(FansTableViewCell.self, forCellReuseIdentifier: "cell")
+        focusTableView.frame = CGRect(x: WIDTH, y: 0, width: WIDTH, height: HEIGHT-115)
+        focusTableView.backgroundColor = UIColor.clear
+        focusTableView.register(FansTableViewCell.self, forCellReuseIdentifier: "cell")
         focusTableView.rowHeight = 70
         focusTableView.tag = 411
         focusTableView.delegate = self
         focusTableView.dataSource = self
         myScrollView.addSubview(focusTableView)
         
-        myScrollView.contentOffset = userType == 0 ? CGPointMake(CGRectGetMinX(self.fansTableView.frame), CGRectGetMinY(self.fansTableView.frame)):CGPointMake(CGRectGetMinX(self.focusTableView.frame), CGRectGetMinY(self.focusTableView.frame))
+        myScrollView.contentOffset = userType == 0 ? CGPoint(x: self.fansTableView.frame.minX, y: self.fansTableView.frame.minY):CGPoint(x: self.focusTableView.frame.minX, y: self.focusTableView.frame.minY)
         
         // Do any additional setup after loading the view.
     }
     
     // 设置 TitleView
     func setTitleView() {
-        let titleBgView = UIView.init(frame: CGRectMake(0, 0, WIDTH/2.0, 44))
+        let titleBgView = UIView.init(frame: CGRect(x: 0, y: 0, width: WIDTH/2.0, height: 44))
         
         // 我的粉丝按钮
-        fansBtn = UIButton.init(frame: CGRectMake(0, 0, CGRectGetWidth(titleBgView.frame)/2.0, CGRectGetHeight(titleBgView.frame)))
-        fansBtn.setTitle("我的粉丝", forState: .Normal)
-        fansBtn.setTitleColor(UIColor.init(red: 157/255.0, green: 158/255.0, blue: 159/255.0, alpha: 1), forState: .Normal)
-        fansBtn.setTitleColor(UIColor.init(red: 145/255.0, green: 0, blue: 105/255.0, alpha: 1), forState: .Selected)
-        fansBtn.addTarget(self, action: #selector(self.fansBtnClick(_:)), forControlEvents: .TouchUpInside)
-        fansBtn.selected = userType==0 ? true:false
+        fansBtn = UIButton.init(frame: CGRect(x: 0, y: 0, width: titleBgView.frame.width/2.0, height: titleBgView.frame.height))
+        fansBtn.setTitle("我的粉丝", for: UIControlState())
+        fansBtn.setTitleColor(UIColor.init(red: 157/255.0, green: 158/255.0, blue: 159/255.0, alpha: 1), for: UIControlState())
+        fansBtn.setTitleColor(UIColor.init(red: 145/255.0, green: 0, blue: 105/255.0, alpha: 1), for: .selected)
+        fansBtn.addTarget(self, action: #selector(self.fansBtnClick(_:)), for: .touchUpInside)
+        fansBtn.isSelected = userType==0 ? true:false
         titleBgView.addSubview(fansBtn)
         
         // 我的关注按钮
-        focusBtn = UIButton.init(frame: CGRectMake(CGRectGetMaxX(fansBtn.frame), 0, CGRectGetWidth(titleBgView.frame)-CGRectGetMaxX(fansBtn.frame), CGRectGetHeight(titleBgView.frame)))
-        focusBtn.setTitle("我的关注", forState: .Normal)
-        focusBtn.setTitleColor(UIColor.init(red: 157/255.0, green: 158/255.0, blue: 159/255.0, alpha: 1), forState: .Normal)
-        focusBtn.setTitleColor(UIColor.init(red: 145/255.0, green: 0, blue: 105/255.0, alpha: 1), forState: .Selected)
-        focusBtn.addTarget(self, action: #selector(self.focusBtnClick(_:)), forControlEvents: .TouchUpInside)
-        focusBtn.selected = userType==1 ? true:false
+        focusBtn = UIButton.init(frame: CGRect(x: fansBtn.frame.maxX, y: 0, width: titleBgView.frame.width-fansBtn.frame.maxX, height: titleBgView.frame.height))
+        focusBtn.setTitle("我的关注", for: UIControlState())
+        focusBtn.setTitleColor(UIColor.init(red: 157/255.0, green: 158/255.0, blue: 159/255.0, alpha: 1), for: UIControlState())
+        focusBtn.setTitleColor(UIColor.init(red: 145/255.0, green: 0, blue: 105/255.0, alpha: 1), for: .selected)
+        focusBtn.addTarget(self, action: #selector(self.focusBtnClick(_:)), for: .touchUpInside)
+        focusBtn.isSelected = userType==1 ? true:false
         titleBgView.addSubview(focusBtn)
         
         // 线
-        navigationBarLineView = UIView.init(frame: CGRectMake(userType == 0 ? CGRectGetMinX(fansBtn.frame):CGRectGetMinX(focusBtn.frame), CGRectGetMaxY(fansBtn.frame)-5, CGRectGetWidth(fansBtn.frame), 5))
+        navigationBarLineView = UIView.init(frame: CGRect(x: userType == 0 ? fansBtn.frame.minX:focusBtn.frame.minX, y: fansBtn.frame.maxY-5, width: fansBtn.frame.width, height: 5))
         navigationBarLineView.backgroundColor = UIColor.init(red: 145/255.0, green: 0, blue: 105/255.0, alpha: 1)
         titleBgView.addSubview(navigationBarLineView)
         
@@ -108,42 +108,42 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     // 我的粉丝按钮 点击事件
-    func fansBtnClick(fineBtn: UIButton) {
-        fineBtn.selected = true
+    func fansBtnClick(_ fineBtn: UIButton) {
+        fineBtn.isSelected = true
         for subView in (fineBtn.superview?.subviews)! {
-            if subView .isKindOfClass(UIButton.classForCoder()) {
+            if subView .isKind(of: UIButton.classForCoder()) {
                 if subView != fineBtn {
-                    (subView as! UIButton).selected = false
+                    (subView as! UIButton).isSelected = false
                 }
             }
             
         }
         
-        UIView.animateWithDuration(0.3) {
-            self.navigationBarLineView.frame = CGRectMake(CGRectGetMinX(fineBtn.frame), CGRectGetMaxY(fineBtn.frame)-5, CGRectGetWidth(fineBtn.frame), 5)
-            self.myScrollView.contentOffset = CGPointMake(CGRectGetMinX(self.fansTableView.frame), CGRectGetMinY(self.fansTableView.frame))
-        }
+        UIView.animate(withDuration: 0.3, animations: {
+            self.navigationBarLineView.frame = CGRect(x: fineBtn.frame.minX, y: fineBtn.frame.maxY-5, width: fineBtn.frame.width, height: 5)
+            self.myScrollView.contentOffset = CGPoint(x: self.fansTableView.frame.minX, y: self.fansTableView.frame.minY)
+        }) 
     }
     
     // 我的关注按钮 点击事件
-    func focusBtnClick(focusBtn: UIButton) {
-        focusBtn.selected = true
+    func focusBtnClick(_ focusBtn: UIButton) {
+        focusBtn.isSelected = true
         for subView in (focusBtn.superview?.subviews)! {
-            if subView .isKindOfClass(UIButton.classForCoder()) {
+            if subView .isKind(of: UIButton.classForCoder()) {
                 if subView != focusBtn {
-                    (subView as! UIButton).selected = false
+                    (subView as! UIButton).isSelected = false
                 }
             }
             
         }
-        UIView.animateWithDuration(0.3) {
-            self.navigationBarLineView.frame = CGRectMake(CGRectGetMinX(focusBtn.frame), CGRectGetMaxY(focusBtn.frame)-5, CGRectGetWidth(focusBtn.frame), 5)
-            self.myScrollView.contentOffset = CGPointMake(CGRectGetMinX(self.focusTableView.frame), CGRectGetMinY(self.focusTableView.frame))
-        }
+        UIView.animate(withDuration: 0.3, animations: {
+            self.navigationBarLineView.frame = CGRect(x: focusBtn.frame.minX, y: focusBtn.frame.maxY-5, width: focusBtn.frame.width, height: 5)
+            self.myScrollView.contentOffset = CGPoint(x: self.focusTableView.frame.minX, y: self.focusTableView.frame.minY)
+        }) 
     }
     
-    private var fansListArray:Array<HSFansAndFollowModel> = []
-    private var focusListArray:Array<HSFansAndFollowModel> = []
+    fileprivate var fansListArray:Array<HSFansAndFollowModel> = []
+    fileprivate var focusListArray:Array<HSFansAndFollowModel> = []
     
     // 加载数据
     func loadData() {
@@ -161,17 +161,17 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     // MARK: tableView 代理方法
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView.tag == 410 {
             return fansListArray.count
         }else{
             return focusListArray.count
         }
     }
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)as!FansTableViewCell
-        cell.selectionStyle = .None
-        cell.accessoryType = .DisclosureIndicator
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)as!FansTableViewCell
+        cell.selectionStyle = .none
+        cell.accessoryType = .disclosureIndicator
 
         if tableView.tag == 410 {
             cell.fansModel = fansListArray[indexPath.row]
@@ -183,7 +183,7 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        print(indexPath.row)
         
         let userPageVC = HSUserPageViewController()
@@ -198,7 +198,7 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     }
     
     // MARK: UIScrollView 代理方法
-    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if scrollView.contentOffset.x == 0 {
             fansBtnClick(fansBtn)
         }else if scrollView.contentOffset.x == WIDTH {

@@ -36,14 +36,14 @@ class MineRecruitTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        ones.frame = CGRectMake(WIDTH-35, 26, 20, 20)
-        ones.setImage(UIImage(named: "ic_you.png"), forState: .Normal)
-        timeLab.frame = CGRectMake(15, 40, 80, 20)
-        timeLab.font = UIFont.systemFontOfSize(10)
+        ones.frame = CGRect(x: WIDTH-35, y: 26, width: 20, height: 20)
+        ones.setImage(UIImage(named: "ic_you.png"), for: UIControlState())
+        timeLab.frame = CGRect(x: 15, y: 40, width: 80, height: 20)
+        timeLab.font = UIFont.systemFont(ofSize: 10)
         timeLab.textColor = GREY
-        time.frame = CGRectMake(15, 46.5, 7, 7)
+        time.frame = CGRect(x: 15, y: 46.5, width: 7, height: 7)
         time.image = UIImage(named: "ic_time_gray@.png")
-        let line = UILabel(frame: CGRectMake(0, 71.5, WIDTH, 0.5))
+        let line = UILabel(frame: CGRect(x: 0, y: 71.5, width: WIDTH, height: 0.5))
         line.backgroundColor = GREY
         
         
@@ -58,84 +58,84 @@ class MineRecruitTableViewCell: UITableViewCell {
         
     }
     
-    func showforCVModel(model:CVModel) {
+    func showforCVModel(_ model:CVModel) {
         timeLab.text = self.timeStampToString(model.create_time)
         timeLab.sizeToFit()
         
-        nameTit.frame = CGRectMake(15, 15, 50, 20)
-        nameTit.font = UIFont.systemFontOfSize(14)
+        nameTit.frame = CGRect(x: 15, y: 15, width: 50, height: 20)
+        nameTit.font = UIFont.systemFont(ofSize: 14)
         nameTit.textColor = COLOR
 
         nameTit.text = model.name
         nameTit.sizeToFit()
-        one.frame =  CGRectMake(15+nameTit.bounds.size.width, 15, 59, 20)
-        one.font = UIFont.systemFontOfSize(14)
-        one.textColor = UIColor.grayColor()
+        one.frame =  CGRect(x: 15+nameTit.bounds.size.width, y: 15, width: 59, height: 20)
+        one.font = UIFont.systemFont(ofSize: 14)
+        one.textColor = UIColor.gray
         one.text = "申请面试"
         one.sizeToFit()
-        job.frame = CGRectMake(15+nameTit.bounds.size.width+one.bounds.size.width, 15, 50, 20)
+        job.frame = CGRect(x: 15+nameTit.bounds.size.width+one.bounds.size.width, y: 15, width: 50, height: 20)
         job.textColor = COLOR
-        job.font = UIFont.systemFontOfSize(14)
+        job.font = UIFont.systemFont(ofSize: 14)
     
         job.text = model.wantposition
         job.sizeToFit()
-        two.frame = CGRectMake(15+nameTit.bounds.size.width+one.bounds.size.width+job.bounds.size.width, 15, 50, 20)
-        two.textColor = UIColor.grayColor()
+        two.frame = CGRect(x: 15+nameTit.bounds.size.width+one.bounds.size.width+job.bounds.size.width, y: 15, width: 50, height: 20)
+        two.textColor = UIColor.gray
         two.text = "的职位"
-        two.font = UIFont.systemFontOfSize(14)
+        two.font = UIFont.systemFont(ofSize: 14)
         two.sizeToFit()
 
     }
     
-    func showforUserModel(model:InvitedInfo) {
+    func showforUserModel(_ model:InvitedInfo) {
         timeLab.text = self.timeStampToString(model.create_time)
         timeLab.sizeToFit()
         
-        nameTit.frame = CGRectMake(15, 15, 50, 20)
-        nameTit.font = UIFont.systemFontOfSize(14)
+        nameTit.frame = CGRect(x: 15, y: 15, width: 50, height: 20)
+        nameTit.font = UIFont.systemFont(ofSize: 14)
         nameTit.textColor = COLOR
         
         nameTit.text = model.companyname
         nameTit.sizeToFit()
-        one.frame =  CGRectMake(15+nameTit.bounds.size.width, 15, 59, 20)
-        one.font = UIFont.systemFontOfSize(14)
-        one.textColor = UIColor.grayColor()
+        one.frame =  CGRect(x: 15+nameTit.bounds.size.width, y: 15, width: 59, height: 20)
+        one.font = UIFont.systemFont(ofSize: 14)
+        one.textColor = UIColor.gray
         one.text = "诚邀您参加面试"
         one.sizeToFit()
-        job.frame = CGRectMake(15+nameTit.bounds.size.width+one.bounds.size.width, 15, 50, 20)
+        job.frame = CGRect(x: 15+nameTit.bounds.size.width+one.bounds.size.width, y: 15, width: 50, height: 20)
         job.textColor = COLOR
-        job.font = UIFont.systemFontOfSize(14)
+        job.font = UIFont.systemFont(ofSize: 14)
         
         job.text = model.title
         job.sizeToFit()
-        two.frame = CGRectMake(15+nameTit.bounds.size.width+one.bounds.size.width+job.bounds.size.width, 15, 50, 20)
-        two.textColor = UIColor.grayColor()
+        two.frame = CGRect(x: 15+nameTit.bounds.size.width+one.bounds.size.width+job.bounds.size.width, y: 15, width: 50, height: 20)
+        two.textColor = UIColor.gray
         two.text = "的职位"
-        two.font = UIFont.systemFontOfSize(14)
+        two.font = UIFont.systemFont(ofSize: 14)
         two.sizeToFit()
         
     }
     
     // Linux时间戳转标准时间
-    func timeStampToString(timeStamp:String)->String {
+    func timeStampToString(_ timeStamp:String)->String {
         
         let string = NSString(string: timeStamp)
         
-        let timeSta:NSTimeInterval = string.doubleValue
-        let dfmatter = NSDateFormatter()
+        let timeSta:TimeInterval = string.doubleValue
+        let dfmatter = DateFormatter()
         dfmatter.dateFormat="yyyy-MM-dd   hh:mm"
         
-        let date = NSDate(timeIntervalSince1970: timeSta)
+        let date = Date(timeIntervalSince1970: timeSta)
         
         //        print(dfmatter.stringFromDate(date))
-        return dfmatter.stringFromDate(date)
+        return dfmatter.string(from: date)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

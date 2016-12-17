@@ -14,10 +14,10 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
     var scoreArray = Array<Ranking_UserModel>()
     let myTableView = UITableView()
     
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.hidden = false
-        self.tabBarController?.tabBar.hidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidLoad() {
@@ -28,45 +28,45 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
         self.title = "个人积分"
         self.view.backgroundColor = COLOR
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "score"), style: .Done, target: self, action: #selector(rankBtnClick))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "score"), style: .done, target: self, action: #selector(rankBtnClick))
                 
 //        scoreArray = [["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"],["name":"积分名称","score":"+2589","time":"2016-07-06"]]
         
-        let cupImage = UIImageView(frame: CGRectMake(0, 0, WIDTH, WIDTH*476/750))
+        let cupImage = UIImageView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: WIDTH*476/750))
         cupImage.image = UIImage(named: "cup")
         self.view.addSubview(cupImage)
         
-        myTableView.frame = CGRectMake(20/750.0*WIDTH, 188/1380.0*HEIGHT, 71/75.0*WIDTH, 778/1380.0*HEIGHT)
-        myTableView.registerClass(ScoreTableViewCell.self, forCellReuseIdentifier: "scoreCell")
+        myTableView.frame = CGRect(x: 20/750.0*WIDTH, y: 188/1380.0*HEIGHT, width: 71/75.0*WIDTH, height: 778/1380.0*HEIGHT)
+        myTableView.register(ScoreTableViewCell.self, forCellReuseIdentifier: "scoreCell")
         myTableView.rowHeight = 110/1380.0*HEIGHT
-        myTableView.backgroundColor = UIColor.whiteColor()
+        myTableView.backgroundColor = UIColor.white
         myTableView.layer.cornerRadius = 3
         myTableView.dataSource = self
         self.view.addSubview(myTableView)
         
         loadData()
         
-        let noteLab = UIButton(frame: CGRectMake(20/750.0*WIDTH, CGRectGetMaxY(myTableView.frame), 71/75.0*WIDTH, 158/1380.0*HEIGHT))
+        let noteLab = UIButton(frame: CGRect(x: 20/750.0*WIDTH, y: myTableView.frame.maxY, width: 71/75.0*WIDTH, height: 158/1380.0*HEIGHT))
         noteLab.titleLabel?.numberOfLines = 0
-        noteLab.titleLabel!.font = UIFont.systemFontOfSize(12)
-        noteLab.titleLabel?.textColor = UIColor.whiteColor()
+        noteLab.titleLabel!.font = UIFont.systemFont(ofSize: 12)
+        noteLab.titleLabel?.textColor = UIColor.white
         
         let descripStr = "  成为中国护士网会员，会享受100余项积分功能和政策。我们会有积分兑换商城，定期会有积分活动，让您真正享受到您的每一份支持都将获得我们的真情回报。点击查看>>"
         let attrStr = NSMutableAttributedString(string: descripStr)
-        attrStr.addAttributes([NSUnderlineStyleAttributeName:NSNumber(integer: NSUnderlineStyle.StyleSingle.rawValue)], range: NSMakeRange(attrStr.length-6, 6))
-        noteLab.setAttributedTitle(attrStr, forState: .Normal)
+        attrStr.addAttributes([NSUnderlineStyleAttributeName:NSNumber(value: NSUnderlineStyle.styleSingle.rawValue as Int)], range: NSMakeRange(attrStr.length-6, 6))
+        noteLab.setAttributedTitle(attrStr, for: UIControlState())
         
-        noteLab.addTarget(self, action: #selector(noteLabClick), forControlEvents: .TouchUpInside)
+        noteLab.addTarget(self, action: #selector(noteLabClick), for: .touchUpInside)
         
         self.view.addSubview(noteLab)
         
-        let shareBtn = UIButton(frame: CGRectMake(20/750.0*WIDTH, CGRectGetMaxY(noteLab.frame), 71/75.0*WIDTH, 84/1380.0*HEIGHT))
+        let shareBtn = UIButton(frame: CGRect(x: 20/750.0*WIDTH, y: noteLab.frame.maxY, width: 71/75.0*WIDTH, height: 84/1380.0*HEIGHT))
         shareBtn.backgroundColor = UIColor(red: 254/255.0, green: 232/255.0, blue: 90/255.0, alpha: 1)
-        shareBtn.setTitle("邀请朋友赚积分", forState: .Normal)
-        shareBtn.setTitleColor(UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1), forState: .Normal)
-        shareBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
+        shareBtn.setTitle("邀请朋友赚积分", for: UIControlState())
+        shareBtn.setTitleColor(UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1), for: UIControlState())
+        shareBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         shareBtn.layer.cornerRadius = 3
-        shareBtn.addTarget(self, action: #selector(shareBtnClick_old), forControlEvents: .TouchUpInside)
+        shareBtn.addTarget(self, action: #selector(shareBtnClick_old), for: .touchUpInside)
         self.view.addSubview(shareBtn)
         
 //        print(myTableView.frame,noteLab.frame,shareBtn.frame)
@@ -83,13 +83,13 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
     // MARK:- 获取数据
     func loadData() {
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.margin = 10.0
-        hud.removeFromSuperViewOnHide = true
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud?.margin = 10.0
+        hud?.removeFromSuperViewOnHide = true
         
         HSMineHelper().getRanking_User { (success, response) in
             if success {
-                hud.hide(true)
+                hud?.hide(true)
                 self.scoreArray = response as! Array<Ranking_UserModel>
                 self.myTableView.reloadData()
             }else{
@@ -98,19 +98,19 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
 //                hud.labelText = response as! String
 //                hud.margin = 10.0
 //                hud.removeFromSuperViewOnHide = true
-                hud.hide(true)
+                hud?.hide(true)
                 
-                let alert = UIAlertController(title: nil, message: "获取个人积分详情失败", preferredStyle: .Alert)
-                self.presentViewController(alert, animated: true, completion: { 
+                let alert = UIAlertController(title: nil, message: "获取个人积分详情失败", preferredStyle: .alert)
+                self.present(alert, animated: true, completion: { 
                     
                 })
                 
-                let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (action) in
+                let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
                     
                 })
                 alert.addAction(cancelAction)
                 
-                let replyAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
+                let replyAction = UIAlertAction(title: "重试", style: .default, handler: { (action) in
                     self.loadData()
                 })
                 alert.addAction(replyAction)
@@ -119,18 +119,18 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
     }
     
     // MARK:- TableView datasource
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return scoreArray.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("scoreCell", forIndexPath: indexPath) as! ScoreTableViewCell
-        cell.selectionStyle = .None
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "scoreCell", for: indexPath) as! ScoreTableViewCell
+        cell.selectionStyle = .none
         
         cell.nameLab.text = scoreArray[indexPath.row].event
         let scoreStr = scoreArray[indexPath.row].score
         
-        cell.scoreLab.text = scoreStr.containsString("-") ? scoreStr:"+"+scoreStr
+        cell.scoreLab.text = scoreStr.contains("-") ? scoreStr:"+"+scoreStr
         cell.timeLab.text = scoreArray[indexPath.row].create_time
         
         return cell
@@ -150,17 +150,17 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
         if QCLoginUserInfo.currentInfo.all_information == "1" {
             collectionNews()
         }else{
-            let alert = UIAlertController(title: nil, message: "请完善个人资料后重试", preferredStyle: .Alert)
-            self.presentViewController(alert, animated: true, completion: {
+            let alert = UIAlertController(title: nil, message: "请完善个人资料后重试", preferredStyle: .alert)
+            self.present(alert, animated: true, completion: {
                 
             })
             
-            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (action) in
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
                 
             })
             alert.addAction(cancelAction)
             
-            let replyAction = UIAlertAction(title: "现在就去", style: .Default, handler: { (action) in
+            let replyAction = UIAlertAction(title: "现在就去", style: .default, handler: { (action) in
                 self.navigationController?.pushViewController(SetDataViewController(), animated: true)
             })
             alert.addAction(replyAction)
@@ -175,13 +175,13 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
         let imageArray = ["ic_share_friendzone","ic_share_wechat","ic_share_qq","ic_share_qzone","ic_share_weibo"]
         let imageNameArray = ["微信朋友圈","微信好友","QQ好友","QQ空间","新浪微博"]
         
-        let bgView = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT))
+        let bgView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT))
         bgView.backgroundColor = UIColor(white: 0.5, alpha: 0.3)
         bgView.tag = 101
-        bgView.addTarget(self, action: #selector(shareViewHide(_:)), forControlEvents: .TouchUpInside)
-        UIApplication.sharedApplication().keyWindow!.addSubview(bgView)
+        bgView.addTarget(self, action: #selector(shareViewHide(_:)), for: .touchUpInside)
+        UIApplication.shared.keyWindow!.addSubview(bgView)
         
-        let bottomView = UIView(frame: CGRectMake(0, CGRectGetMaxY(bgView.frame), WIDTH, HEIGHT*0.4))
+        let bottomView = UIView(frame: CGRect(x: 0, y: bgView.frame.maxY, width: WIDTH, height: HEIGHT*0.4))
         bottomView.backgroundColor = UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
         bgView.addSubview(bottomView)
         
@@ -196,48 +196,48 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
         
         for i in 0...4 {
             
-            let shareBtn_1 = UIButton(frame: CGRectMake(margin*(CGFloat(i%shareBtnCount)+1)+shareBtnWidth*CGFloat(i%shareBtnCount), margin*(CGFloat(i/shareBtnCount)+1)+(shareBtnWidth+margin+labelHeight)*CGFloat(i/shareBtnCount), shareBtnWidth, shareBtnWidth))
+            let shareBtn_1 = UIButton(frame: CGRect(x: margin*(CGFloat(i%shareBtnCount)+1)+shareBtnWidth*CGFloat(i%shareBtnCount), y: margin*(CGFloat(i/shareBtnCount)+1)+(shareBtnWidth+margin+labelHeight)*CGFloat(i/shareBtnCount), width: shareBtnWidth, height: shareBtnWidth))
             shareBtn_1.layer.cornerRadius = shareBtnWidth/2.0
-            shareBtn_1.backgroundColor = UIColor.whiteColor()
-            shareBtn_1.setImage(UIImage(named: imageArray[i]), forState: .Normal)
+            shareBtn_1.backgroundColor = UIColor.white
+            shareBtn_1.setImage(UIImage(named: imageArray[i]), for: UIControlState())
             shareBtn_1.tag = 1000+i
-            shareBtn_1.addTarget(self, action: #selector(shareBtnClick(_:)), forControlEvents: .TouchUpInside)
+            shareBtn_1.addTarget(self, action: #selector(shareBtnClick(_:)), for: .touchUpInside)
             bottomView.addSubview(shareBtn_1)
 //            print(shareBtn_1.frame)
             
-            let shareLab_1 = UILabel(frame: CGRectMake(CGRectGetMinX(shareBtn_1.frame)-margin/2.0, CGRectGetMaxY(shareBtn_1.frame)+margin/2.0, shareBtnWidth+margin, labelHeight))
-            shareLab_1.textColor = UIColor.grayColor()
-            shareLab_1.font = UIFont.systemFontOfSize(12)
-            shareLab_1.textAlignment = .Center
+            let shareLab_1 = UILabel(frame: CGRect(x: shareBtn_1.frame.minX-margin/2.0, y: shareBtn_1.frame.maxY+margin/2.0, width: shareBtnWidth+margin, height: labelHeight))
+            shareLab_1.textColor = UIColor.gray
+            shareLab_1.font = UIFont.systemFont(ofSize: 12)
+            shareLab_1.textAlignment = .center
             shareLab_1.text = imageNameArray[i]
             bottomView.addSubview(shareLab_1)
             
-            labelMaxY = CGRectGetMaxY(shareLab_1.frame)
+            labelMaxY = shareLab_1.frame.maxY
         }
         
-        let line = UIView(frame: CGRectMake(0, labelMaxY+margin, WIDTH, 1))
-        line.backgroundColor = UIColor.lightGrayColor()
+        let line = UIView(frame: CGRect(x: 0, y: labelMaxY+margin, width: WIDTH, height: 1))
+        line.backgroundColor = UIColor.lightGray
         bottomView.addSubview(line)
         
         let cancelBtnHeight = shareBtnWidth*0.8
         
-        let cancelBtn = UIButton(frame: CGRectMake(0, CGRectGetMaxY(line.frame), WIDTH, cancelBtnHeight))
+        let cancelBtn = UIButton(frame: CGRect(x: 0, y: line.frame.maxY, width: WIDTH, height: cancelBtnHeight))
         cancelBtn.backgroundColor = UIColor(red: 248/255.0, green: 248/255.0, blue: 248/255.0, alpha: 1)
-        cancelBtn.setTitleColor(UIColor.blackColor(), forState: .Normal)
-        cancelBtn.setTitle("取消", forState: .Normal)
+        cancelBtn.setTitleColor(UIColor.black, for: UIControlState())
+        cancelBtn.setTitle("取消", for: UIControlState())
         cancelBtn.tag = 102
-        cancelBtn.addTarget(self, action: #selector(shareViewHide(_:)), forControlEvents: .TouchUpInside)
+        cancelBtn.addTarget(self, action: #selector(shareViewHide(_:)), for: .touchUpInside)
         bottomView.addSubview(cancelBtn)
         
-        bottomView.frame.size.height = CGRectGetMaxY(cancelBtn.frame)
+        bottomView.frame.size.height = cancelBtn.frame.maxY
         
-        UIView.animateWithDuration(0.3) {
-            bottomView.frame.origin.y = HEIGHT - CGRectGetMaxY(cancelBtn.frame)
-        }
+        UIView.animate(withDuration: 0.3, animations: {
+            bottomView.frame.origin.y = HEIGHT - cancelBtn.frame.maxY
+        }) 
     }
     
     // 分享视图取消事件
-    func shareViewHide(shareView:UIButton) {
+    func shareViewHide(_ shareView:UIButton) {
         if shareView.tag == 102 {
             shareView.superview!.superview!.removeFromSuperview()
         }else{
@@ -246,7 +246,7 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
     }
     
     // 分享视图分享按钮点击事件
-    func shareBtnClick(shareBtn:UIButton) {
+    func shareBtnClick(_ shareBtn:UIButton) {
         shareBtn.superview!.superview!.removeFromSuperview()
         
         let btn = UIButton()
@@ -271,7 +271,7 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
     
     // MARK:-
     
-    func shareToAddScore(btn:UIButton) {
+    func shareToAddScore(_ btn:UIButton) {
         
         if btn.tag == 0 || btn.tag == 1 {
             
@@ -293,7 +293,7 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
                 req.bText = false
                 req.message = message
                 req.scene = Int32(WXSceneTimeline.rawValue)
-                WXApi.sendReq(req)
+                WXApi.send(req)
                 
             case 1:
                 let message = WXMediaMessage()
@@ -311,7 +311,7 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
                 req.bText = false
                 req.message = message
                 req.scene = Int32(WXSceneSession.rawValue)
-                WXApi.sendReq(req)
+                WXApi.send(req)
                 
             default:
                 break
@@ -332,9 +332,9 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
                 message.text = "\(APP_INVITEFRIEND_TITLE_ZONE)\n\(APP_INVITEFRIEND_DESCRIPTION_ZONE) \(myInviteFriendUrl)"
             }
             let webpage:WBWebpageObject = WBWebpageObject.object() as! WBWebpageObject
-            let dateFormatter = NSDateFormatter()
+            let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyyMMddHHmmss"
-            let dateStr = dateFormatter.stringFromDate(NSDate())
+            let dateStr = dateFormatter.string(from: Date())
             webpage.objectID = "chinanurse\(kAppKey)\(dateStr)"
             webpage.title = APP_INVITEFRIEND_TITLE_ZONE
             webpage.description = APP_INVITEFRIEND_DESCRIPTION_ZONE
@@ -347,39 +347,39 @@ class ScoreViewController: UIViewController,UITableViewDataSource {
             message.mediaObject = webpage
             //            print(message.mediaObject.debugDescription)
             
-            let request = WBSendMessageToWeiboRequest.requestWithMessage(message, authInfo: authRequest, access_token: AppDelegate().wbtoken) as! WBSendMessageToWeiboRequest
+            let request = WBSendMessageToWeiboRequest.request(withMessage: message, authInfo: authRequest, access_token: AppDelegate().wbtoken) as! WBSendMessageToWeiboRequest
             request.userInfo = ["ShareMessageFrom":"NewsContantViewController"]
             
-            WeiboSDK.sendRequest(request)
+            WeiboSDK.send(request)
         }else{
             
             
             if btn.tag == 3 {
-                let newsUrl = NSURL(string: myInviteFriendUrl)
+                let newsUrl = URL(string: myInviteFriendUrl)
                 let title = APP_INVITEFRIEND_TITLE_FREND
                 let description = APP_INVITEFRIEND_DESCRIPTION_FREND
                 
-                var previewImageData = NSData()
+                var previewImageData = Data()
                 
                 let thumbImage = UIImage(named: "appLogo")
                 previewImageData = thumbImage!.compressImage(thumbImage!, maxLength: 32700)!
                 
-                let newsObj = QQApiNewsObject(URL: newsUrl, title: title, description: description, previewImageData: previewImageData, targetContentType: QQApiURLTargetTypeNews)
+                let newsObj = QQApiNewsObject(url: newsUrl, title: title, description: description, previewImageData: previewImageData, targetContentType: QQApiURLTargetTypeNews)
                 let req = SendMessageToQQReq(content: newsObj)
-                QQApiInterface.sendReq(req)
+                QQApiInterface.send(req)
             }else if btn.tag == 4 {
-                let newsUrl = NSURL(string: myInviteFriendUrl)
+                let newsUrl = URL(string: myInviteFriendUrl)
                 let title = APP_INVITEFRIEND_TITLE_ZONE
                 let description = APP_INVITEFRIEND_DESCRIPTION_ZONE
                 
-                var previewImageData = NSData()
+                var previewImageData = Data()
                 
                 let thumbImage = UIImage(named: "appLogo")
                 previewImageData = thumbImage!.compressImage(thumbImage!, maxLength: 32700)!
                 
-                let newsObj = QQApiNewsObject(URL: newsUrl, title: title, description: description, previewImageData: previewImageData, targetContentType: QQApiURLTargetTypeNews)
+                let newsObj = QQApiNewsObject(url: newsUrl, title: title, description: description, previewImageData: previewImageData, targetContentType: QQApiURLTargetTypeNews)
                 let req = SendMessageToQQReq(content: newsObj)
-                QQApiInterface.SendReqToQZone(req)
+                QQApiInterface.sendReq(toQZone: req)
             }
         }
         

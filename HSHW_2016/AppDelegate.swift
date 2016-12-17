@@ -24,29 +24,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
          NSAllowsArbitraryLoads(Boolen):YES
          详情参考本Demo的BaiduMobStatSample-Info.plist文件中的配置
          */
-        let statTracker = BaiduMobStat.defaultStat()
+        let statTracker = BaiduMobStat.default()
 
         // 此处(startWithAppId之前)可以设置初始化的可选参数，具体有哪些参数，可详见BaiduMobStat.h文件，例如：
-        statTracker.shortAppVersion = NSBundle.mainBundle().infoDictionary!["CFBundleShortVersionString"] as! String
+        statTracker?.shortAppVersion = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
 //        statTracker.enableDebugOn = true
         
         // TODO:
 //        statTracker.channelId = "pgyer"
 
-        statTracker.startWithAppId("7f69594569") // 设置您在mtj网站上添加的app的appkey,此处AppId即为应用的appKey
+        statTracker?.start(withAppId: "7f69594569") // 设置您在mtj网站上添加的app的appkey,此处AppId即为应用的appKey
         
     }
     
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         self.startBaiduMobileStat()
         
         if ((launchOptions) != nil) {
             
-            let remoteNotificationDic = launchOptions!["UIApplicationLaunchOptionsRemoteNotificationKey"]
+            let remoteNotificationDic = launchOptions?[UIApplicationLaunchOptionsKey.init("UIApplicationLaunchOptionsRemoteNotificationKey")]
+//            let remoteNotificationDic = launchOptions!["UIApplicationLaunchOptionsRemoteNotificationKey"]
             
-            NSUserDefaults.standardUserDefaults().setValue(remoteNotificationDic, forKey: "recivePushNotification")
+            UserDefaults.standard.setValue(remoteNotificationDic, forKey: "recivePushNotification")
             
 
         }
@@ -63,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         // 点击通知将App从关闭状态启动时，将通知打开回执上报
         CloudPushSDK.handleLaunching(launchOptions)
         
-        Bmob.registerWithAppKey("41294c11c5f9bec7b6a7192142439427")
+        Bmob.register(withAppKey: "41294c11c5f9bec7b6a7192142439427")
         
         WXApi.registerApp("wxdd50558e711439e8")
         
@@ -98,55 +99,55 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
 //            }
 //        }
         
-        NSThread.sleepForTimeInterval(1.0)
+        Thread.sleep(forTimeInterval: 1.0)
         UITabBar.appearance().tintColor = COLOR
-        UITabBar.appearance().backgroundColor = UIColor.whiteColor()
-        UINavigationBar.appearance().barTintColor = UIColor.whiteColor()
+        UITabBar.appearance().backgroundColor = UIColor.white
+        UINavigationBar.appearance().barTintColor = UIColor.white
         UINavigationBar.appearance().tintColor = COLOR
-        UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().isTranslucent = false
         if let barFont = UIFont(name: "ChalkboardSE-Bold", size: 18){
             UINavigationBar.appearance().titleTextAttributes = [
                 NSForegroundColorAttributeName:COLOR,
                 NSFontAttributeName : barFont
             ]
         }
-        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), forBarMetrics: UIBarMetrics.Default)
+        UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), for: UIBarMetrics.default)
         
         return true
     }
     
-    func application(application: UIApplication, handleOpenURL url: NSURL) -> Bool {
+    func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
         let str = url.absoluteString
         if str.hasPrefix("wx") {
-            return WXApi.handleOpenURL(url, delegate: self)
+            return WXApi.handleOpen(url, delegate: self)
         }else if str.hasPrefix("wb"){
-            return WeiboSDK.handleOpenURL(url, delegate: self)
+            return WeiboSDK.handleOpen(url, delegate: self)
         }else{
-            QQApiInterface.handleOpenURL(url, delegate: qqDelegate())
-            return TencentOAuth.HandleOpenURL(url)
+            QQApiInterface.handleOpen(url, delegate: qqDelegate())
+            return TencentOAuth.handleOpen(url)
         }
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         
         let str = url.absoluteString
         if str.hasPrefix("wx") {
-            return WXApi.handleOpenURL(url, delegate: self)
+            return WXApi.handleOpen(url, delegate: self)
         }else if str.hasPrefix("wb"){
-            return WeiboSDK.handleOpenURL(url, delegate: self)
+            return WeiboSDK.handleOpen(url, delegate: self)
         }else{
-            QQApiInterface.handleOpenURL(url, delegate: qqDelegate())
+            QQApiInterface.handleOpen(url, delegate: qqDelegate())
 
-            return TencentOAuth.HandleOpenURL(url)
+            return TencentOAuth.handleOpen(url)
         }
     }
 
     // MARK:- 微博回调
-    func didReceiveWeiboRequest(request: WBBaseRequest!) {
+    func didReceiveWeiboRequest(_ request: WBBaseRequest!) {
         
     }
     
-    func didReceiveWeiboResponse(response: WBBaseResponse!) {
+    func didReceiveWeiboResponse(_ response: WBBaseResponse!) {
 
 //        print(response.isKindOfClass(WBSendMessageToWeiboResponse))
 //        print(response.isKindOfClass(WBAuthorizeResponse))
@@ -155,7 +156,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
 //        print(response.isKindOfClass(WBShareMessageToContactResponse))
 //        print(response.isKindOfClass(WBShareMessageToContactResponse))
 
-        if response.isKindOfClass(WBAuthorizeResponse) {
+        if response.isKind(of: WBAuthorizeResponse.self) {
             
 //            WBShareMessageToContactResponse* shareMessageToContactResponse = (WBShareMessageToContactResponse*)response;
 //            NSString* accessToken = [shareMessageToContactResponse.authResponse accessToken];
@@ -192,26 +193,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
                         //                    hud.removeFromSuperViewOnHide = true
                         //                    hud.hide(true, afterDelay: 1)
                     }else{
-                        let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "分享成功"
-                        print(hud.labelText)
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = "分享成功"
+                        print(hud?.labelText)
+                        hud?.margin = 10.0
+                        hud?.removeFromSuperViewOnHide = true
+                        hud?.hide(true, afterDelay: 1)
                     }
                 })
             }else{
-                let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-                hud.mode = MBProgressHUDMode.Text;
-                hud.labelText = "分享失败"
-                print(hud.labelText)
-                hud.margin = 10.0
-                hud.removeFromSuperViewOnHide = true
-                hud.hide(true, afterDelay: 1)
+                let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
+                hud?.mode = MBProgressHUDMode.text;
+                hud?.labelText = "分享失败"
+                print(hud?.labelText)
+                hud?.margin = 10.0
+                hud?.removeFromSuperViewOnHide = true
+                hud?.hide(true, afterDelay: 1)
             }
             
-        }else if response.isKindOfClass(WBSendMessageToWeiboResponse) {
+        }else if response.isKind(of: WBSendMessageToWeiboResponse.self) {
 
 //            let authorizeResponse:WBSendMessageToWeiboResponse = response as! WBSendMessageToWeiboResponse
 //            self.wbtoken = authorizeResponse.authResponse.accessToken
@@ -237,30 +238,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
                         //                    hud.removeFromSuperViewOnHide = true
                         //                    hud.hide(true, afterDelay: 1)
                     }else{
-                        let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "分享成功"
-                        print(hud.labelText)
-                        hud.margin = 10.0
-                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                        let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = "分享成功"
+                        print(hud?.labelText)
+                        hud?.margin = 10.0
+                        hud?.removeFromSuperViewOnHide = true
+                        hud?.hide(true, afterDelay: 1)
                     }
                 })
             }else{
-                let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-                hud.mode = MBProgressHUDMode.Text;
-                hud.labelText = "分享失败"
-                print(hud.labelText)
-                hud.margin = 10.0
-                hud.removeFromSuperViewOnHide = true
-                hud.hide(true, afterDelay: 1)
+                let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
+                hud?.mode = MBProgressHUDMode.text;
+                hud?.labelText = "分享失败"
+                print(hud?.labelText)
+                hud?.margin = 10.0
+                hud?.removeFromSuperViewOnHide = true
+                hud?.hide(true, afterDelay: 1)
             }
         }
     }
     // MARK:-
     
     
-    func onResp(resp: BaseResp!) {
+    func onResp(_ resp: BaseResp!) {
         
         print(resp.errCode)
         if resp.errCode == 0 {
@@ -280,85 +281,85 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
 //                    hud.removeFromSuperViewOnHide = true
 //                    hud.hide(true, afterDelay: 1)
                 }else{
-                    let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "分享成功"
-                    print(hud.labelText)
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
+                    hud?.mode = MBProgressHUDMode.text;
+                    hud?.labelText = "分享成功"
+                    print(hud?.labelText)
+                    hud?.margin = 10.0
+                    hud?.removeFromSuperViewOnHide = true
+                    hud?.hide(true, afterDelay: 1)
                 }
             })
         }else{
-            let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-            hud.mode = MBProgressHUDMode.Text;
-            hud.labelText = "分享失败"
-            print(hud.labelText)
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 1)
+            let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
+            hud?.mode = MBProgressHUDMode.text;
+            hud?.labelText = "分享失败"
+            print(hud?.labelText)
+            hud?.margin = 10.0
+            hud?.removeFromSuperViewOnHide = true
+            hud?.hide(true, afterDelay: 1)
         }
     }
     
     // MARK: 显示积分提示
-    func showScoreTips(name:String, score:String) {
-        let hud = MBProgressHUD.showHUDAddedTo(self.window, animated: true)
-        hud.opacity = 0.3
-        hud.margin = 10
-        hud.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
-        hud.mode = .CustomView
-        let customView = UIImageView(frame: CGRectMake(0, 0, WIDTH*0.8, WIDTH*0.8*238/537))
+    func showScoreTips(_ name:String, score:String) {
+        let hud = MBProgressHUD.showAdded(to: self.window, animated: true)
+        hud?.opacity = 0.3
+        hud?.margin = 10
+        hud?.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
+        hud?.mode = .customView
+        let customView = UIImageView(frame: CGRect(x: 0, y: 0, width: WIDTH*0.8, height: WIDTH*0.8*238/537))
         customView.image = UIImage(named: "scorePopImg.png")
-        let titLab = UILabel(frame: CGRectMake(
-            CGRectGetWidth(customView.frame)*351/537,
-            CGRectGetHeight(customView.frame)*30/238,
-            CGRectGetWidth(customView.frame)*174/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let titLab = UILabel(frame: CGRect(
+            x: customView.frame.width*351/537,
+            y: customView.frame.height*30/238,
+            width: customView.frame.width*174/537,
+            height: customView.frame.height*50/238))
         titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
-        titLab.textAlignment = .Left
-        titLab.font = UIFont.systemFontOfSize(16)
+        titLab.textAlignment = .left
+        titLab.font = UIFont.systemFont(ofSize: 16)
         titLab.text = name
         titLab.adjustsFontSizeToFitWidth = true
         customView.addSubview(titLab)
         
-        let scoreLab = UILabel(frame: CGRectMake(
-            CGRectGetWidth(customView.frame)*351/537,
-            CGRectGetHeight(customView.frame)*100/238,
-            CGRectGetWidth(customView.frame)*174/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let scoreLab = UILabel(frame: CGRect(
+            x: customView.frame.width*351/537,
+            y: customView.frame.height*100/238,
+            width: customView.frame.width*174/537,
+            height: customView.frame.height*50/238))
         scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
         
-        scoreLab.textAlignment = .Left
-        scoreLab.font = UIFont.systemFontOfSize(24)
+        scoreLab.textAlignment = .left
+        scoreLab.font = UIFont.systemFont(ofSize: 24)
         scoreLab.text = "+\(score)"
         scoreLab.adjustsFontSizeToFitWidth = true
         scoreLab.sizeToFit()
         customView.addSubview(scoreLab)
         
-        let jifenLab = UILabel(frame: CGRectMake(
-            CGRectGetMaxX(scoreLab.frame)+5,
-            CGRectGetHeight(customView.frame)*100/238,
-            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-5-CGRectGetWidth(customView.frame)*13/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let jifenLab = UILabel(frame: CGRect(
+            x: scoreLab.frame.maxX+5,
+            y: customView.frame.height*100/238,
+            width: customView.frame.width-scoreLab.frame.maxX-5-customView.frame.width*13/537,
+            height: customView.frame.height*50/238))
         jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
-        jifenLab.textAlignment = .Center
-        jifenLab.font = UIFont.systemFontOfSize(16)
+        jifenLab.textAlignment = .center
+        jifenLab.font = UIFont.systemFont(ofSize: 16)
         jifenLab.text = "护士币"
         jifenLab.adjustsFontSizeToFitWidth = true
         jifenLab.center.y = scoreLab.center.y
         customView.addSubview(jifenLab)
         
-        hud.customView = customView
-        hud.hide(true, afterDelay: 3)
+        hud?.customView = customView
+        hud?.hide(true, afterDelay: 3)
     }
     
     // MARK:- 阿里云推送
     func initCloudPush() {
         CloudPushSDK.asyncInit("23442294", appSecret: "0f9e9e29d7e6c6d6792183658370b55b") { (res) in
-            if res.success {
+            if (res?.success)! {
                 print("Push SDK init success, deviceId: %@.", CloudPushSDK.getDeviceId())
             }else{
-                print("Push SDK init failed, error: %@", res.error)
+                print("Push SDK init failed, error: %@", res?.error)
             }
         }
     }
@@ -367,36 +368,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
      *
      *    @param     application
      */
-    func registerAPNS(application:UIApplication) {
+    func registerAPNS(_ application:UIApplication) {
         
         // iOS 8 Notifications
-        application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: [UIUserNotificationType.Sound,UIUserNotificationType.Alert,UIUserNotificationType.Badge], categories: nil))
+        application.registerUserNotificationSettings(UIUserNotificationSettings(types: [UIUserNotificationType.sound,UIUserNotificationType.alert,UIUserNotificationType.badge], categories: nil))
         application.registerForRemoteNotifications()
         
     }
     /*
      *  苹果推送注册成功回调，将苹果返回的deviceToken上传到CloudPush服务器
      */
-    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         CloudPushSDK.registerDevice(deviceToken) { (res) in
-            if res.success {
+            if (res?.success)! {
                 print("Register deviceToken success.")
             }else{
-                print("Register deviceToken failed, error: %@", res.error)
+                print("Register deviceToken failed, error: %@", res?.error)
             }
         }
     }
     /*
      *  苹果推送注册失败回调
      */
-    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("didFailToRegisterForRemoteNotificationsWithError %@", error)
     }
     /**
      *	注册推送通道打开监听
      */
     func listenerOnChannelOpened() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onChannelOpened), name: "CCPDidChannelConnectedSuccess", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onChannelOpened), name: NSNotification.Name(rawValue: "CCPDidChannelConnectedSuccess"), object: nil)
     }
     
     
@@ -404,14 +405,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
      *    注册推送消息到来监听
      */
     func registerMessageReceive() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(onMessageReceived(_:)), name: "CCPDidReceiveMessageNotification", object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onMessageReceived(_:)), name: NSNotification.Name(rawValue: "CCPDidReceiveMessageNotification"), object: nil)
     }
     /**
      *	推送通道打开回调
      *
      *	@param 	notification
      */
-    func onChannelOpened(notification:NSNotification) {
+    func onChannelOpened(_ notification:Notification) {
         print("温馨提示:消息通道建立成功")
     }
     /**
@@ -419,17 +420,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
      *
      *    @param     notification
      */
-    func onMessageReceived(notification:NSNotification) {
+    func onMessageReceived(_ notification:Notification) {
         let message = notification.object as! CCPSysMessage
-        let title = NSString(data: message.title, encoding: NSUTF8StringEncoding)
-        let body = NSString(data: message.body, encoding: NSUTF8StringEncoding)
+        let title = NSString(data: message.title, encoding: String.Encoding.utf8.rawValue)
+        let body = NSString(data: message.body, encoding: String.Encoding.utf8.rawValue)
         
         print("Receive message title: %@, content: %@.", title, body);
     }
     /*
      *  App处于启动状态时，通知打开回调
      */
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any]) {
         print("App处于启动状态时，通知打开回调")
         
         // 取得APNS通知内容
@@ -439,28 +440,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         // badge数量
         let badge = aps!["badge"] as? NSInteger
         // 播放声音
-        let sound = aps!.valueForKey("sound") as? NSString
+        let sound = aps!.value(forKey: "sound") as? NSString
         // 取得Extras字段内容
         let Extras = userInfo["Extras"] as? NSString //服务端中Extras字段，key是自己定义的
-        print("content = [%@], badge = [%ld], sound = [%@], Extras = [%@]", content, badge, sound, Extras)
+        print("content = [%@], badge = [%ld], sound = [%@], Extras = [%@]", content as Any, badge, sound, Extras)
         // iOS badge 清0
         application.applicationIconBadgeNumber = application.applicationIconBadgeNumber - (badge ?? 0)!
         
-        if application.applicationState == .Inactive {
+        if application.applicationState == .inactive {
             
             if (userInfo["news"] != nil) {
                 
                 //                [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil
                 //                let data = try?NSJSONSerialization.dataWithJSONObject(userInfo, options: NSJSONWritingOptions.PrettyPrinted)
-                var data2 = NSData()
-                if userInfo["news"]!.isKindOfClass(NSString) {
-                    data2 = (userInfo["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)!
-                }else if userInfo["news"]!.isKindOfClass(NSDictionary) {
-                    data2 = try!NSJSONSerialization.dataWithJSONObject(userInfo["news"] as! NSDictionary, options: NSJSONWritingOptions.PrettyPrinted)
+                var data2 = Data()
+                if (userInfo["news"]! is NSString) {
+                    data2 = (userInfo["news"] as! NSString).data(using: String.Encoding.utf8.rawValue)!
+                }else if (userInfo["news"]! is NSDictionary) {
+                    data2 = try!JSONSerialization.data(withJSONObject: userInfo["news"] as! NSDictionary, options: JSONSerialization.WritingOptions.prettyPrinted)
                 }
                 //                let data = (userInfo["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)
                 
-                let newsInfo =  NewsInfo(JSONDecoder(data2))
+                let newsInfo =  NewsInfo(JSONDecoder(data2 as AnyObject))
                 let next = NewsContantViewController()
                 next.newsInfo = newsInfo
                 
@@ -474,27 +475,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         }else{
             
             
-            let alert = UIAlertController(title: "新通知", message: String(content!), preferredStyle: .Alert)
-            self.window?.rootViewController?.presentViewController(alert, animated: true, completion: nil)
+            let alert = UIAlertController(title: "新通知", message: String(content!), preferredStyle: .alert)
+            self.window?.rootViewController?.present(alert, animated: true, completion: nil)
             
-            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
             alert.addAction(cancelAction)
             
-            let viewAction = UIAlertAction(title: "查看", style: .Default) { (viewAction) in
+            let viewAction = UIAlertAction(title: "查看", style: .default) { (viewAction) in
                 
                 if (userInfo["news"] != nil) {
                     
                     //                [NSJSONSerialization dataWithJSONObject:dic options:NSJSONWritingPrettyPrinted error:nil
                     //                let data = try?NSJSONSerialization.dataWithJSONObject(userInfo, options: NSJSONWritingOptions.PrettyPrinted)
-                    var data2 = NSData()
-                    if userInfo["news"]!.isKindOfClass(NSString) {
-                        data2 = (userInfo["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)!
-                    }else if userInfo["news"]!.isKindOfClass(NSDictionary) {
-                        data2 = try!NSJSONSerialization.dataWithJSONObject(userInfo["news"] as! NSDictionary, options: NSJSONWritingOptions.PrettyPrinted)
+                    var data2 = Data()
+                    if (userInfo["news"]! is NSString) {
+                        data2 = (userInfo["news"] as! NSString).data(using: String.Encoding.utf8.rawValue)!
+                    }else if (userInfo["news"]! is NSDictionary) {
+                        data2 = try!JSONSerialization.data(withJSONObject: userInfo["news"] as! NSDictionary, options: JSONSerialization.WritingOptions.prettyPrinted)
                     }
                     //                let data = (userInfo["news"] as! NSString).dataUsingEncoding(NSUTF8StringEncoding)
                     
-                    let newsInfo =  NewsInfo(JSONDecoder(data2))
+                    let newsInfo =  NewsInfo(JSONDecoder(data2 as AnyObject))
                     let next = NewsContantViewController()
                     next.newsInfo = newsInfo
                     
@@ -511,25 +512,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
     }
     // MARK:-
     
-    func applicationWillResignActive(application: UIApplication) {
+    func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
 
-    func applicationDidEnterBackground(application: UIApplication) {
+    func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
 
-    func applicationWillEnterForeground(application: UIApplication) {
+    func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
     }
 
-    func applicationDidBecomeActive(application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
-    func applicationWillTerminate(application: UIApplication) {
+    func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 

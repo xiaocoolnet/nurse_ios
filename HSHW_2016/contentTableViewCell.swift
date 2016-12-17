@@ -15,11 +15,11 @@ class contentTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        let contentWeb = WKWebView.init(frame: CGRectMake(0, 0, WIDTH, HEIGHT))
-        contentWeb.contentMode = .ScaleAspectFit
+        let contentWeb = WKWebView.init(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT))
+        contentWeb.contentMode = .scaleAspectFit
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

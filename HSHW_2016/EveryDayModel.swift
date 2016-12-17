@@ -73,7 +73,7 @@ class titleList: JSONJoy {
         }
     }
     
-    func append(list: [EveryDayInfo]){
+    func append(_ list: [EveryDayInfo]){
         self.objectlist = list + self.objectlist
     }
     

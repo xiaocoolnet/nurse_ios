@@ -11,7 +11,7 @@ import AFNetworking
 import MBProgressHUD
 
 //  block
-typealias ResponseBlock = (success:Bool,response:AnyObject?)->Void
+typealias ResponseBlock = (_ success:Bool,_ response:AnyObject?)->Void
 
 class LoginModel: NSObject {
     var requestManager:AFHTTPSessionManager?
@@ -21,18 +21,18 @@ class LoginModel: NSObject {
         requestManager?.responseSerializer = AFHTTPResponseSerializer()
     }
     // MARK: - 登录
-    func login(phoneNumber:String,passwordNumber:String,handle:ResponseBlock){
+    func login(_ phoneNumber:String,passwordNumber:String,handle:@escaping ResponseBlock){
 
         //  GET请求
         let paramDic = ["a":"applogin","phone":phoneNumber,"password":passwordNumber]
         
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paramDic) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paramDic as [String : AnyObject]?) { (json, error) in
 
 //        Alamofire.request(.GET, PARK_URL_Header, parameters: paramDic).response { (request, response, json, error) in
             if error != nil {
                 //  请求失败
                 //  闭包传送错误信息
-                handle(success: false,response: "网络错误")
+                handle(false,"网络错误" as AnyObject?)
             }else{
                 let result = LoginUserInfoModel(JSONDecoder(json!))
                 
@@ -45,7 +45,7 @@ class LoginModel: NSObject {
                     QCLoginUserInfo.currentInfo.usertype = (result.data?.user_usertype)!
                 }
                 let responseStr = result.status == "success" ? nil : result.errorData
-                handle(success: result.status == "success",response: responseStr)
+                handle(result.status == "success",responseStr as AnyObject?)
             }
         }
 //        requestManager?.GET(PARK_URL_Header, parameters: paramDic, success: { (NSURLSessionDataTask, AnyObject) in
@@ -72,11 +72,11 @@ class LoginModel: NSObject {
     }
     
     //  MARK - 发送验证码
-    func sendMobileCodeWithPhoneNumber(phoneNumber:String){
+    func sendMobileCodeWithPhoneNumber(_ phoneNumber:String){
         let paramDic = ["a":"SendMobileCode","phone":phoneNumber]
 //        print(phoneNumber)
         
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paramDic) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paramDic as [String : AnyObject]?) { (json, error) in
 
 //        Alamofire.request(.GET, PARK_URL_Header, parameters: paramDic).response { (request, response, json, error) in
             if error != nil {
@@ -97,23 +97,27 @@ class LoginModel: NSObject {
     
     //  MARK - 注册 (需要传入需要注册的几个信息)
     //  phone,password,code,usertype,devicestate
-    func register(phone:String,password:String,
-                  code:String,usertype:String,devicestate:String, handle:ResponseBlock){
+    func register(_ phone:String,password:String,
+                  code:String,usertype:String,devicestate:String, handle:@escaping ResponseBlock){
         let paramDic = ["a":"AppRegister","phone":phone,"password":password,
                         "code":code,"usertype":usertype,"devicestate":devicestate]
         //  进行GET请求
         
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paramDic) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paramDic as [String : AnyObject]?) { (json, error) in
 
 //        Alamofire.request(.GET, PARK_URL_Header, parameters: paramDic).response { (request, response, json, error) in
             if error != nil {
                 //  请求错误的传值
-                handle(success: false,response: "网络错误")
+                handle(false,"网络错误" as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 let responseStr = result.status == "success" ? nil : result.errorData
                 //  闭包传值
-                handle(success: result.status == "success",response: result.status == "success" ? result.data : responseStr)
+                if result.status == "success" {
+                    handle(true, result.data)
+                }else{
+                    handle(false, responseStr as AnyObject?)
+                }
             }
         }
         
@@ -128,18 +132,18 @@ class LoginModel: NSObject {
 //        })
     }
     //验证手机是否已经注册
-    func comfirmPhoneHasRegister(phoneNum:String,handle:ResponseBlock){
+    func comfirmPhoneHasRegister(_ phoneNum:String,handle:@escaping ResponseBlock){
         let paraDic = ["a":"checkphone","phone":phoneNum]
         
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paraDic) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paraDic as [String : AnyObject]?) { (json, error) in
 
 //        Alamofire.request(.GET, PARK_URL_Header, parameters: paraDic).response { (request, response, json, error) in
             if error != nil {
-                handle(success: false,response: "网络错误")
+                handle(false,"网络错误" as AnyObject?)
             }else{
                 let result = Http(JSONDecoder(json!))
                 let responseStr = result.status == "success" ? nil : result.errorData
-                handle(success: result.status == "success",response: responseStr)
+                handle(result.status == "success",responseStr as AnyObject?)
             }
         }
 //        requestManager?.GET(PARK_URL_Header, parameters: paraDic, success: { (task, response) in
@@ -152,19 +156,19 @@ class LoginModel: NSObject {
 //        })
     }
     //  忘记密码
-    func forgetPassword(phone:String,code:String,password:String,handle:ResponseBlock){
+    func forgetPassword(_ phone:String,code:String,password:String,handle:@escaping ResponseBlock){
         let paramDic = ["a":"forgetpwd","phone":phone,"code":code,"password":password]
         
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paramDic) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: PARK_URL_Header, Parameter: paramDic as [String : AnyObject]?) { (json, error) in
 
 //        Alamofire.request(.GET, PARK_URL_Header, parameters: paramDic).response { (request, response, json, error) in
             if error != nil {
-                handle(success: false,response: "网络错误")
+                handle(false,"网络错误" as AnyObject?)
             }else{
                 let result = Http(JSONDecoder(json!))
                 let responseStr = result.status == "success" ? "成功" : result.errorData
                 if responseStr != nil {
-                    handle(success: result.status == "success",response: responseStr)
+                    handle(result.status == "success",responseStr as AnyObject?)
                 }
             }
         }

@@ -12,68 +12,68 @@ import MBProgressHUD
 class HSWebViewDetailController: UIViewController, UIWebViewDelegate {
     
     @IBOutlet weak var netView:UIWebView!
-    var url:NSURL?
+    var url:URL?
     
     var hud = MBProgressHUD()
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("出国百宝箱（第三方） " + (self.title ?? "")!)
+        BaiduMobStat.default().pageviewStart(withName: "出国百宝箱（第三方） " + (self.title ?? "")!)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("出国百宝箱（第三方） " + (self.title ?? "")!)
+        BaiduMobStat.default().pageviewEnd(withName: "出国百宝箱（第三方） " + (self.title ?? "")!)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.hidden = false
+        navigationController?.navigationBar.isHidden = false
         if url != nil {
-            netView.loadRequest(NSURLRequest(URL: url!))
+            netView.loadRequest(URLRequest(url: url!))
             netView.scalesPageToFit = true
             netView.delegate = self
-            hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud = MBProgressHUD.showAdded(to: self.view, animated: true)
             hud.removeFromSuperViewOnHide = true
         }
     }
     
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         
 
         
         return true
     }
-    func webViewDidStartLoad(webView: UIWebView) {
+    func webViewDidStartLoad(_ webView: UIWebView) {
 //        hud.hide(true)
     }
     
-    func webViewDidFinishLoad(webView: UIWebView) {
+    func webViewDidFinishLoad(_ webView: UIWebView) {
         hud.hide(true)
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
+    func webView(_ webView: UIWebView, didFailLoadWithError error: Error) {
         hud.hide(true)
-        if webView.request?.URL?.absoluteString == self.url {
+        if webView.request?.url == self.url {
             
-            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("获取详情失败 \(error.debugDescription)", comment: "empty message"), preferredStyle: .Alert)
-            self.presentViewController(alertController, animated: true, completion: nil)
-            let doneAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
-                self.netView.loadRequest(NSURLRequest(URL: self.url!))
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("获取详情失败 \(error.localizedDescription)", comment: "empty message"), preferredStyle: .alert)
+            self.present(alertController, animated: true, completion: nil)
+            let doneAction = UIAlertAction(title: "重试", style: .default, handler: { (action) in
+                self.netView.loadRequest(URLRequest(url: self.url!))
             })
             alertController.addAction(doneAction)
             
-            let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: { (action) in
-                self.navigationController?.popViewControllerAnimated(true)
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
+                self.navigationController?.popViewController(animated: true)
             })
             alertController.addAction(cancelAction)
         }
 
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         hud.hide(true)
     }
 

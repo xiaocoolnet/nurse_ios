@@ -29,16 +29,16 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         loadData()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 圈子 列表")
+        BaiduMobStat.default().pageviewStart(withName: "护士站 圈子 列表")
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 圈子 列表")
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 列表")
     }
     
     // MARK: - 加载数据
@@ -74,45 +74,45 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - 设置子视图
     func setSubview() {
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
         self.title = "圈子列表"
-        let line1 = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line1 = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line1.backgroundColor = COLOR
         self.view.addSubview(line1)
         
         // MARK: 下拉列表
         circleBtn.frame = CGRect(x: 0, y: 1, width: WIDTH/2, height: 44)
         circleBtn.lb_titleColor = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1.0)
-        circleBtn.titleLabel?.font = UIFont.systemFontOfSize(16)
+        circleBtn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         circleBtn.resetdataCenter(circleArray.first?.first, UIImage(named: "下拉"))
-        circleBtn.addTarget(self, action: #selector(dropDownClick(_:)), forControlEvents: .TouchUpInside)
+        circleBtn.addTarget(self, action: #selector(dropDownClick(_:)), for: .touchUpInside)
         self.view.addSubview(circleBtn)
         
         sortBtn.frame = CGRect(x: WIDTH/2, y: 1, width: WIDTH/2, height: 44)
         sortBtn.lb_titleColor = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1.0)
-        sortBtn.titleLabel?.font = UIFont.systemFontOfSize(16)
+        sortBtn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         sortBtn.resetdataCenter(circleArray.last?.first, UIImage(named: "下拉"))
-        sortBtn.addTarget(self, action: #selector(dropDownClick(_:)), forControlEvents: .TouchUpInside)
+        sortBtn.addTarget(self, action: #selector(dropDownClick(_:)), for: .touchUpInside)
         self.view.addSubview(sortBtn)
         
-        let line2V = UILabel(frame: CGRectMake(WIDTH/2.0, 1, 1/UIScreen.mainScreen().scale, 44))
+        let line2V = UILabel(frame: CGRect(x: WIDTH/2.0, y: 1, width: 1/UIScreen.main.scale, height: 44))
         line2V.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
         self.view.addSubview(line2V)
         
-        let line2H = UILabel(frame: CGRectMake(0, 44, WIDTH, 1/UIScreen.mainScreen().scale))
+        let line2H = UILabel(frame: CGRect(x: 0, y: 44, width: WIDTH, height: 1/UIScreen.main.scale))
         line2H.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
         self.view.addSubview(line2H)
         
-        rootTableView.frame = CGRectMake(0, 45, WIDTH, HEIGHT-65-49-45)
-        rootTableView.backgroundColor = UIColor.whiteColor()
+        rootTableView.frame = CGRect(x: 0, y: 45, width: WIDTH, height: HEIGHT-65-49-45)
+        rootTableView.backgroundColor = UIColor.white
         
         rootTableView.rowHeight = 76
         
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
-        rootTableView.registerNib(UINib(nibName: "NSCircleListTableViewCell", bundle: nil), forCellReuseIdentifier: "circleListCell")
+        rootTableView.register(UINib(nibName: "NSCircleListTableViewCell", bundle: nil), forCellReuseIdentifier: "circleListCell")
         
         //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
         //        rootTableView.mj_header.beginRefreshing()
@@ -124,7 +124,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     // MARK: - 下拉列表点击事件
-    func dropDownClick(dropDownBtn:ImageBtn) {
+    func dropDownClick(_ dropDownBtn:ImageBtn) {
         
         if (self.view.viewWithTag(1234) != nil) {
             circleBtn.resetdataCenter(circleBtn.lb_title.text, UIImage(named: "下拉"))
@@ -141,46 +141,46 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         let bgView = UIButton(frame: CGRect(x: 0, y: dropDownBtn.frame.maxY, width: WIDTH, height: HEIGHT-64-45))
         bgView.tag = 1234
         bgView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
-        bgView.addTarget(self, action: #selector(hideDropDown), forControlEvents: .TouchUpInside)
+        bgView.addTarget(self, action: #selector(hideDropDown), for: .touchUpInside)
         self.view.addSubview(bgView)
 
         
         let dropDownScroolView = UIScrollView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 0))
-        dropDownScroolView.backgroundColor = UIColor.whiteColor()
+        dropDownScroolView.backgroundColor = UIColor.white
         bgView.addSubview(dropDownScroolView)
         
         for i in 0 ..< (dropDownBtn == circleBtn ? circleArray[0].count:circleArray[1].count) {
             
             let img = UIImageView(frame: CGRect(x: 8, y: 44*CGFloat(i), width: 10, height: 44))
-            img.contentMode = .ScaleAspectFit
+            img.contentMode = .scaleAspectFit
             img.clipsToBounds = true
             img.image = UIImage(named: "选择圈子")
             dropDownScroolView.addSubview(img)
             
             let button = UIButton(frame: CGRect(x: 26, y: 44*CGFloat(i), width: WIDTH-26-8, height: 44))
-            button.contentHorizontalAlignment = .Left
-            button.titleLabel?.font = UIFont.systemFontOfSize(18)
-            button.setTitleColor(UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), forState: .Normal)
-            button.setTitleColor(COLOR, forState: .Selected)
+            button.contentHorizontalAlignment = .left
+            button.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+            button.setTitleColor(UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), for: UIControlState())
+            button.setTitleColor(COLOR, for: .selected)
             if dropDownBtn == circleBtn {
                 button.tag = 100+i
 
-                button.setTitle(circleArray[0][i], forState: .Normal)
-                button.selected = circleArray[0][i] == circleBtn.lb_title.text ? true:false
+                button.setTitle(circleArray[0][i], for: UIControlState())
+                button.isSelected = circleArray[0][i] == circleBtn.lb_title.text ? true:false
             }else{
                 button.tag = 200+i
 
-                button.setTitle(circleArray[1][i], forState: .Normal)
-                button.selected = circleArray[1][i] == dropDownBtn.lb_title.text ? true:false
+                button.setTitle(circleArray[1][i], for: UIControlState())
+                button.isSelected = circleArray[1][i] == dropDownBtn.lb_title.text ? true:false
             }
-            button.addTarget(self, action: #selector(dropBtnClick(_:)), forControlEvents: .TouchUpInside)
+            button.addTarget(self, action: #selector(dropBtnClick(_:)), for: .touchUpInside)
             dropDownScroolView.addSubview(button)
             
-            let line = UILabel(frame: CGRectMake(0, 44*CGFloat(i)+44, WIDTH, 1/UIScreen.mainScreen().scale))
+            let line = UILabel(frame: CGRect(x: 0, y: 44*CGFloat(i)+44, width: WIDTH, height: 1/UIScreen.main.scale))
             line.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
             dropDownScroolView.addSubview(line)
             
-            img.hidden = !button.selected
+            img.isHidden = !button.isSelected
             
             dropDownScroolView.contentSize.height = line.frame.maxY
         }
@@ -190,7 +190,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     // MARK: - 隐藏下拉
-    func hideDropDown(button:UIButton) {
+    func hideDropDown(_ button:UIButton) {
         button.removeFromSuperview()
         circleBtn.resetdataCenter(circleBtn.lb_title.text, UIImage(named: "下拉"))
         circleBtn.lb_titleColor = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1.0)
@@ -199,7 +199,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     // MARK: - 点击下拉选项
-    func dropBtnClick(dropBtn:UIButton) {
+    func dropBtnClick(_ dropBtn:UIButton) {
         print(dropBtn.tag)
         
         if dropBtn.tag < 200 {
@@ -217,15 +217,15 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - UItableViewdatasource
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return communityModelArray.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 //        let cell = tableView.dequeueReusableCellWithIdentifier("circleListCell", forIndexPath: indexPath) as! NSCircleListTableViewCell
-        let cell = tableView.dequeueReusableCellWithIdentifier("circleListCell") as! NSCircleListTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "circleListCell") as! NSCircleListTableViewCell
         
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         
         cell.communityModel = communityModelArray[indexPath.row]
 //        cell.setCellWithNewsInfo(forumModelArray[indexPath.section])
@@ -235,7 +235,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - UITableViewDelegate
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("点击圈子")
         
         let circleDetailController = NSCircleDetailViewController()

@@ -51,29 +51,29 @@ enum ResultType {
 }
 
 //创建一个闭包(注:oc中block)
-typealias sendVlesClosure = (AnyObject?, NSError?)->Void
+typealias sendVlesClosure = (AnyObject?, Error?)->Void
 typealias uploadClosure = (AnyObject?, NSError?,Int64?,Int64?,Int64?)->Void
 class NurseUtil: NSObject {
     
     static let net = NurseUtil()
     
-    private let sessionManager = AFHTTPSessionManager()
+    fileprivate let sessionManager = AFHTTPSessionManager()
     
     //网络请求中的GET,Post,DELETE
-    func request(type:RequestType ,URLString:String, Parameter:[String:AnyObject]?, block: sendVlesClosure) {
+    func request(_ type:RequestType ,URLString:String, Parameter:[String:AnyObject]?, block: @escaping sendVlesClosure) {
         
         sessionManager.responseSerializer = AFHTTPResponseSerializer()
         
         switch type {
         case .requestTypeGet:
             
-            sessionManager.GET(URLString, parameters: Parameter, progress: { (progress) in
+            sessionManager.get(URLString, parameters: Parameter, progress: { (progress) in
                 
                 }, success: { (task, responseObject) in
-                    let data = responseObject as! NSData
+                    let data = responseObject as! Data
                     
                     do {
-                        let dic = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
+                        let dic = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
                         
                         block(dic as AnyObject?,nil)
                         
@@ -85,7 +85,6 @@ class NurseUtil: NSObject {
                 }, failure: { (task, error) in
                     block(nil,error)
             })
-            
             
 //            sessionManager.get(URLString, parameters: Parameter, progress: { (progress) in
 //                
@@ -118,13 +117,13 @@ class NurseUtil: NSObject {
             //            })
             
         case .requestTypePost:
-            sessionManager.POST(URLString, parameters: Parameter, progress: { (progress) in
+            sessionManager.post(URLString, parameters: Parameter, progress: { (progress) in
                 
                 }, success: { (task, responseObject) in
-                    let data = responseObject as! NSData
+                    let data = responseObject as! Data
                     
                     do {
-                        let dic = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
+                        let dic = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.allowFragments)
                         
                         block(dic as AnyObject?,nil)
                         
@@ -174,10 +173,10 @@ class NurseUtil: NSObject {
     //
     //    }
     
-    func uploadWithPOST(URLString:String,data: NSData, name: String, fileName: String, mimeType: String,block: (resultType:ResultType) -> Void) {
+    func uploadWithPOST(_ URLString:String,data: Data, name: String, fileName: String, mimeType: String,block: @escaping (_ resultType:ResultType) -> Void) {
         
-        let request = AFHTTPRequestSerializer().multipartFormRequestWithMethod("POST", URLString: URLString, parameters: nil, constructingBodyWithBlock: { (formData) in
-            formData.appendPartWithFileData(data, name: name, fileName: fileName, mimeType: mimeType)
+        let request = AFHTTPRequestSerializer().multipartFormRequest(withMethod: "POST", urlString: URLString, parameters: nil, constructingBodyWith: { (formData) in
+            formData.appendPart(withFileData: data, name: name, fileName: fileName, mimeType: mimeType)
             }, error: nil)
         
 //        let request = AFHTTPRequestSerializer().multipartFormRequest(withMethod: "POST", urlString: URLString, parameters: nil, constructingBodyWith: { (formData) in
@@ -187,17 +186,17 @@ class NurseUtil: NSObject {
         let manager = AFHTTPSessionManager()
         manager.responseSerializer.acceptableContentTypes = (NSSet(object: "image/jpeg") as! Set<String>)
         
-        let uploadTask = manager.uploadTaskWithStreamedRequest(request, progress: { (progress) in
+        let uploadTask = manager.uploadTask(withStreamedRequest: request as URLRequest, progress: { (progress) in
             
         }) { (response, responseObject, error) in
             
             if (error == nil) {
                 
-                block(resultType: .success)
+                block(.success)
                 
             }else{
                 
-                block(resultType: .failure)
+                block(.failure)
                 
             }
             

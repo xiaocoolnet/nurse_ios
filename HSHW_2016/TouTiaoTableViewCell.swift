@@ -7,9 +7,33 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 protocol ToutiaoCateBtnClickedDelegate:NSObjectProtocol {
-    func cateBtnClicked(categoryBtn:UIButton)
+    func cateBtnClicked(_ categoryBtn:UIButton)
 }
 
 class TouTiaoTableViewCell: UITableViewCell {
@@ -52,59 +76,59 @@ class TouTiaoTableViewCell: UITableViewCell {
         self.addSubview(titImage)
         self.addSubview(titSubImg)
 
-        titLab.frame = CGRectMake(10, 9, WIDTH-140, 40)
-        titLab.font = UIFont.systemFontOfSize(17)
+        titLab.frame = CGRect(x: 10, y: 9, width: WIDTH-140, height: 40)
+        titLab.font = UIFont.systemFont(ofSize: 17)
         titLab.numberOfLines = 0
-        heal.frame = CGRectMake(10, titLab.frame.size.height+titLab.frame.origin.y+22, 46, 15)
+        heal.frame = CGRect(x: 10, y: titLab.frame.size.height+titLab.frame.origin.y+22, width: 46, height: 15)
         heal.layer.cornerRadius = 3
-        heal.layer.borderColor = COLOR.CGColor
+        heal.layer.borderColor = COLOR.cgColor
         heal.layer.borderWidth = 0.4
-        heal.titleLabel?.font = UIFont.systemFontOfSize(11)
-        heal.setTitleColor(COLOR, forState: .Normal)
-        heal.addTarget(self, action: #selector(categoryBtnClick(_:)), forControlEvents: .TouchUpInside)
+        heal.titleLabel?.font = UIFont.systemFont(ofSize: 11)
+        heal.setTitleColor(COLOR, for: UIControlState())
+        heal.addTarget(self, action: #selector(categoryBtnClick(_:)), for: .touchUpInside)
         
-        hitsBtn.frame = CGRectMake(62, titLab.frame.size.height+titLab.frame.origin.y+23, 13, 9)
-        hitsBtn.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
+        hitsBtn.frame = CGRect(x: 62, y: titLab.frame.size.height+titLab.frame.origin.y+23, width: 13, height: 9)
+        hitsBtn.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), for: UIControlState())
         
-        hitsNum.frame = CGRectMake(79, titLab.frame.size.height+titLab.frame.origin.y+22, 30, 15)
-        hitsNum.font = UIFont.systemFontOfSize(13)
-        hitsNum.textAlignment = .Left
+        hitsNum.frame = CGRect(x: 79, y: titLab.frame.size.height+titLab.frame.origin.y+22, width: 30, height: 15)
+        hitsNum.font = UIFont.systemFont(ofSize: 13)
+        hitsNum.textAlignment = .left
         hitsNum.textColor = GREY
 
-        zanBtn.frame = CGRectMake(WIDTH-50, (WIDTH-20)*0.5+42, 14, 14)
-        zanBtn.setImage(UIImage(named:"ic_like_gray"), forState: UIControlState.Normal)
-        zanBtn.setImage(UIImage(named:"ic_like_sel"), forState: UIControlState.Selected)
+        zanBtn.frame = CGRect(x: WIDTH-50, y: (WIDTH-20)*0.5+42, width: 14, height: 14)
+        zanBtn.setImage(UIImage(named:"ic_like_gray"), for: UIControlState())
+        zanBtn.setImage(UIImage(named:"ic_like_sel"), for: UIControlState.selected)
 
-        zanNum.frame = CGRectMake(WIDTH-30, (WIDTH-20)*0.5+38, 30, 20)
-        zanNum.font = UIFont.systemFontOfSize(12)
-        zanNum.textColor = UIColor.grayColor()
-        zanNum.textAlignment = .Left
+        zanNum.frame = CGRect(x: WIDTH-30, y: (WIDTH-20)*0.5+38, width: 30, height: 20)
+        zanNum.font = UIFont.systemFont(ofSize: 12)
+        zanNum.textColor = UIColor.gray
+        zanNum.textAlignment = .left
         
-        colBtn.frame = CGRectMake(WIDTH-50, (WIDTH-20)*0.5+42, 14, 14)
-        colBtn.setImage(UIImage(named:"ic_collect_nor"), forState: UIControlState.Normal)
-        colBtn.setImage(UIImage(named:"ic_collect_sel"), forState: UIControlState.Selected)
+        colBtn.frame = CGRect(x: WIDTH-50, y: (WIDTH-20)*0.5+42, width: 14, height: 14)
+        colBtn.setImage(UIImage(named:"ic_collect_nor"), for: UIControlState())
+        colBtn.setImage(UIImage(named:"ic_collect_sel"), for: UIControlState.selected)
         
-        colNum.frame = CGRectMake(WIDTH-30, (WIDTH-20)*0.5+38, 30, 20)
-        colNum.font = UIFont.systemFontOfSize(12)
-        colNum.textColor = UIColor.grayColor()
-        colNum.textAlignment = .Left
+        colNum.frame = CGRect(x: WIDTH-30, y: (WIDTH-20)*0.5+38, width: 30, height: 20)
+        colNum.font = UIFont.systemFont(ofSize: 12)
+        colNum.textColor = UIColor.gray
+        colNum.textAlignment = .left
         
-        titImage.contentMode = .ScaleAspectFill
+        titImage.contentMode = .scaleAspectFill
         titImage.clipsToBounds = true
         
-        titSubImg_1.contentMode = .ScaleAspectFill
+        titSubImg_1.contentMode = .scaleAspectFill
         titSubImg_1.clipsToBounds = true
-        titSubImg_1.frame = CGRectMake(0, 0, (WIDTH-20-margin*2)/3.0, (WIDTH-20-margin*2)/3.0*2/3.0)
+        titSubImg_1.frame = CGRect(x: 0, y: 0, width: (WIDTH-20-margin*2)/3.0, height: (WIDTH-20-margin*2)/3.0*2/3.0)
         titSubImg.addSubview(titSubImg_1)
         
-        titSubImg_2.contentMode = .ScaleAspectFill
+        titSubImg_2.contentMode = .scaleAspectFill
         titSubImg_2.clipsToBounds = true
-        titSubImg_2.frame = CGRectMake((WIDTH-20-margin*2)/3.0+margin, 0, (WIDTH-20-margin*2)/3.0, (WIDTH-20-margin*2)/3.0*2/3.0)
+        titSubImg_2.frame = CGRect(x: (WIDTH-20-margin*2)/3.0+margin, y: 0, width: (WIDTH-20-margin*2)/3.0, height: (WIDTH-20-margin*2)/3.0*2/3.0)
         titSubImg.addSubview(titSubImg_2)
         
-        titSubImg_3.contentMode = .ScaleAspectFill
+        titSubImg_3.contentMode = .scaleAspectFill
         titSubImg_3.clipsToBounds = true
-        titSubImg_3.frame = CGRectMake(((WIDTH-20-margin*2)/3.0+margin)*2, 0, (WIDTH-20-margin*2)/3.0, (WIDTH-20-margin*2)/3.0*2/3.0)
+        titSubImg_3.frame = CGRect(x: ((WIDTH-20-margin*2)/3.0+margin)*2, y: 0, width: (WIDTH-20-margin*2)/3.0, height: (WIDTH-20-margin*2)/3.0*2/3.0)
         titSubImg.addSubview(titSubImg_3)        
     }
     
@@ -112,10 +136,10 @@ class TouTiaoTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setCellWithNewsInfo(newsInfo:NewsInfo) {
+    func setCellWithNewsInfo(_ newsInfo:NewsInfo) {
         self.titLab.text = newsInfo.post_title
 
-        heal.setTitle(newsInfo.term_name, forState: .Normal)
+        heal.setTitle(newsInfo.term_name, for: UIControlState())
         heal.tag = Int(newsInfo.term_id)!
         self.hitsNum.text = setconNumStr(newsInfo.post_hits!)
         self.hitsNum.sizeToFit()
@@ -129,8 +153,8 @@ class TouTiaoTableViewCell: UITableViewCell {
         
         if newsInfo.thumbArr.count == 0 {
             
-            titImage.hidden = true
-            titSubImg.hidden = true
+            titImage.isHidden = true
+            titSubImg.isHidden = true
             
             self.titLab.frame.size.width = WIDTH-20
             
@@ -138,20 +162,20 @@ class TouTiaoTableViewCell: UITableViewCell {
             
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                 
-                titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
+                titImage.frame = CGRect(x: WIDTH-120, y: 10, width: 110, height: 80)
                 self.titImage.image = UIImage.init(named: "defaultImage.png")
                 
-                titImage.hidden = false
-                titSubImg.hidden = true
+                titImage.isHidden = false
+                titSubImg.isHidden = true
             }else{
                 let photoUrl:String = DomainName+"data/upload/"+(newsInfo.thumbArr.first?.url)!
 //                print("TouTiaoTableViewCell   =-=-=-=-=-=-=   ",photoUrl)
                 
-                titImage.frame = CGRectMake(WIDTH-120, 10, 110, 80)
-                self.titImage.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
+                titImage.frame = CGRect(x: WIDTH-120, y: 10, width: 110, height: 80)
+                self.titImage.sd_setImage(with: URL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
                 
-                titImage.hidden = false
-                titSubImg.hidden = true
+                titImage.isHidden = false
+                titSubImg.isHidden = true
                 //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
                 //        titLab.frame.size.height = titleHeight+100
             }
@@ -175,21 +199,21 @@ class TouTiaoTableViewCell: UITableViewCell {
         colBtn.center.y = heal.center.y
         colNum.center.y = heal.center.y
         
-        hitsBtn.frame.origin.x = CGRectGetMaxX(heal.frame)+10
-        hitsNum.frame.origin.x = CGRectGetMaxX(hitsBtn.frame)+5
-        zanBtn.frame.origin.x = CGRectGetMaxX(hitsNum.frame)+10
-        zanNum.frame.origin.x = CGRectGetMaxX(zanBtn.frame)+5
-        colBtn.frame.origin.x = CGRectGetMaxX(zanNum.frame)+10
-        colNum.frame.origin.x = CGRectGetMaxX(colBtn.frame)+5
+        hitsBtn.frame.origin.x = heal.frame.maxX+10
+        hitsNum.frame.origin.x = hitsBtn.frame.maxX+5
+        zanBtn.frame.origin.x = hitsNum.frame.maxX+10
+        zanNum.frame.origin.x = zanBtn.frame.maxX+5
+        colBtn.frame.origin.x = zanNum.frame.maxX+10
+        colNum.frame.origin.x = colBtn.frame.maxX+5
     }
     
-    func setThreeImgCellWithNewsInfo(newsInfo:NewsInfo) {
+    func setThreeImgCellWithNewsInfo(_ newsInfo:NewsInfo) {
         let height = calculateHeight((newsInfo.post_title), size: 17, width: WIDTH-20)
-        self.titLab.frame = CGRectMake(10, 9, WIDTH-20, height)
+        self.titLab.frame = CGRect(x: 10, y: 9, width: WIDTH-20, height: height)
         
         self.titLab.text = newsInfo.post_title
         
-        titSubImg.frame = CGRectMake(10, CGRectGetMaxY(titLab.frame)+10, WIDTH-20, (WIDTH-20-margin*2)/3.0*2/3.0)
+        titSubImg.frame = CGRect(x: 10, y: titLab.frame.maxY+10, width: WIDTH-20, height: (WIDTH-20-margin*2)/3.0*2/3.0)
         
         if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
             
@@ -199,21 +223,21 @@ class TouTiaoTableViewCell: UITableViewCell {
         }else {
             
             let photoUrl_1:String = DomainName+"data/upload/"+(newsInfo.thumbArr[0].url)
-            titSubImg_1.sd_setImageWithURL(NSURL(string:photoUrl_1), placeholderImage: UIImage(named: "defaultImage.png"))
+            titSubImg_1.sd_setImage(with: URL(string:photoUrl_1), placeholderImage: UIImage(named: "defaultImage.png"))
             
             let photoUrl_2:String = DomainName+"data/upload/"+(newsInfo.thumbArr[1].url)
-            titSubImg_2.sd_setImageWithURL(NSURL(string:photoUrl_2), placeholderImage: UIImage(named: "defaultImage.png"))
+            titSubImg_2.sd_setImage(with: URL(string:photoUrl_2), placeholderImage: UIImage(named: "defaultImage.png"))
             
             let photoUrl_3:String = DomainName+"data/upload/"+(newsInfo.thumbArr[2].url)
-            titSubImg_3.sd_setImageWithURL(NSURL(string:photoUrl_3), placeholderImage: UIImage(named: "defaultImage.png"))
+            titSubImg_3.sd_setImage(with: URL(string:photoUrl_3), placeholderImage: UIImage(named: "defaultImage.png"))
         }
         
-        titImage.hidden = true
-        titSubImg.hidden = false
+        titImage.isHidden = true
+        titSubImg.isHidden = false
         
         let healWidth = calculateWidth(newsInfo.term_name, size: 11, height: 15)+5
-        heal.frame = CGRectMake(10, CGRectGetMaxY(titSubImg.frame)+12, healWidth, 15)
-        heal.setTitle(newsInfo.term_name, forState: .Normal)
+        heal.frame = CGRect(x: 10, y: titSubImg.frame.maxY+12, width: healWidth, height: 15)
+        heal.setTitle(newsInfo.term_name, for: UIControlState())
         heal.tag = Int(newsInfo.term_id)!
         
         self.hitsNum.text = setconNumStr(newsInfo.post_hits!)
@@ -230,15 +254,15 @@ class TouTiaoTableViewCell: UITableViewCell {
         colBtn.center.y = heal.center.y
         colNum.center.y = heal.center.y
         
-        hitsBtn.frame.origin.x = CGRectGetMaxX(heal.frame)+10
-        hitsNum.frame.origin.x = CGRectGetMaxX(hitsBtn.frame)+5
-        zanBtn.frame.origin.x = CGRectGetMaxX(hitsNum.frame)+10
-        zanNum.frame.origin.x = CGRectGetMaxX(zanBtn.frame)+5
-        colBtn.frame.origin.x = CGRectGetMaxX(zanNum.frame)+10
-        colNum.frame.origin.x = CGRectGetMaxX(colBtn.frame)+5
+        hitsBtn.frame.origin.x = heal.frame.maxX+10
+        hitsNum.frame.origin.x = hitsBtn.frame.maxX+5
+        zanBtn.frame.origin.x = hitsNum.frame.maxX+10
+        zanNum.frame.origin.x = zanBtn.frame.maxX+5
+        colBtn.frame.origin.x = zanNum.frame.maxX+10
+        colNum.frame.origin.x = colBtn.frame.maxX+5
     }
     
-    func setconNumStr(string:String) -> String {
+    func setconNumStr(_ string:String) -> String {
         
         var conNumStr = "0"
         if Int(string) > 99999 {
@@ -267,7 +291,7 @@ class TouTiaoTableViewCell: UITableViewCell {
         return conNumStr
     }
 
-    func categoryBtnClick(categoryBtn:UIButton) {
+    func categoryBtnClick(_ categoryBtn:UIButton) {
 //        print(categoryBtn.tag)
         
         self.delegate!.cateBtnClicked(categoryBtn)

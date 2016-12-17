@@ -10,7 +10,7 @@ import UIKit
 
 class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    let rootTableView = UITableView(frame: CGRect.zero, style: .Grouped)
+    let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
     var cellNameArray = ["置顶贴","精华贴","申请圈主","取消关注"]
     
@@ -26,16 +26,16 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 圈子 详情")
+        BaiduMobStat.default().pageviewStart(withName: "护士站 圈子 详情")
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 圈子 详情")
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 详情")
     }
     
     // MARK: - 设置子视图
@@ -43,18 +43,18 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         
         self.title = "圈子详情"
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
-        rootTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65)
-        rootTableView.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
+        rootTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-65)
+        rootTableView.backgroundColor = UIColor.white
         
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
-        rootTableView.registerClass(NSCircleHomeTableViewCell.self, forCellReuseIdentifier: "circleHomeCell")
+        rootTableView.register(NSCircleHomeTableViewCell.self, forCellReuseIdentifier: "circleHomeCell")
         
         self.view.addSubview(rootTableView)
         
@@ -62,7 +62,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     // MARK: - 设置头视图
-    func setTableViewHeaderView(unfoldIntroduce:Bool = false) {
+    func setTableViewHeaderView(_ unfoldIntroduce:Bool = false) {
         
         let tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: WIDTH/375*60+20))
         
@@ -74,79 +74,79 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         tableHeaderView.addSubview(img)
         
         let nameLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: img.frame.minY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
-        nameLab.textAlignment = .Left
-        nameLab.font = UIFont.systemFontOfSize(18)
+        nameLab.textAlignment = .left
+        nameLab.font = UIFont.systemFont(ofSize: 18)
         nameLab.textColor = COLOR
         nameLab.text = "急诊科"
         tableHeaderView.addSubview(nameLab)
         
         let countLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: nameLab.frame.maxY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
-        countLab.textAlignment = .Left
-        countLab.font = UIFont.systemFontOfSize(12)
-        countLab.textColor = UIColor.lightGrayColor()
+        countLab.textAlignment = .left
+        countLab.font = UIFont.systemFont(ofSize: 12)
+        countLab.textColor = UIColor.lightGray
         countLab.adjustsFontSizeToFitWidth = true
         countLab.text = "13.5万人 16.5万贴子"
         tableHeaderView.addSubview(countLab)
         
         let joinBtn = UIButton(frame: CGRect(x: WIDTH-88, y: tableHeaderView.frame.height/2.0-15, width: 80, height: 30))
         joinBtn.layer.cornerRadius = 6
-        joinBtn.layer.borderColor = COLOR.CGColor
+        joinBtn.layer.borderColor = COLOR.cgColor
         joinBtn.layer.borderWidth = 1
-        joinBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
-        joinBtn.setTitleColor(COLOR, forState: .Normal)
-        joinBtn.setTitleColor(UIColor.whiteColor(), forState: .Selected)
-        joinBtn.setTitle("加入", forState: .Normal)
-        joinBtn.setTitle("已加入", forState: .Selected)
-        joinBtn.setImage(UIImage(named: "加入"), forState: .Normal)
-        joinBtn.setImage(UIImage(named: "已加入"), forState: .Selected)
+        joinBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        joinBtn.setTitleColor(COLOR, for: UIControlState())
+        joinBtn.setTitleColor(UIColor.white, for: .selected)
+        joinBtn.setTitle("加入", for: UIControlState())
+        joinBtn.setTitle("已加入", for: .selected)
+        joinBtn.setImage(UIImage(named: "加入"), for: UIControlState())
+        joinBtn.setImage(UIImage(named: "已加入"), for: .selected)
         tableHeaderView.addSubview(joinBtn)
         //        joinBtn.backgroundColor = COLOR
         //        joinBtn.selected = true
-        joinBtn.backgroundColor = UIColor.clearColor()
-        joinBtn.selected = false
+        joinBtn.backgroundColor = UIColor.clear
+        joinBtn.isSelected = false
         
-        let line = UIView(frame: CGRect(x: 0, y: img.frame.maxY+img.frame.minY, width: WIDTH, height: 2/UIScreen.mainScreen().scale))
-        line.backgroundColor = UIColor.lightGrayColor()
+        let line = UIView(frame: CGRect(x: 0, y: img.frame.maxY+img.frame.minY, width: WIDTH, height: 2/UIScreen.main.scale))
+        line.backgroundColor = UIColor.lightGray
         tableHeaderView.addSubview(line)
         
         // 圈子介绍
-        let introduceTagLab = UILabel(frame: CGRect(x: 8, y: line.frame.maxY+8, width: WIDTH-16, height: UIFont.systemFontOfSize(14).lineHeight))
-        introduceTagLab.textAlignment = .Left
-        introduceTagLab.font = UIFont.systemFontOfSize(14)
-        introduceTagLab.textColor = UIColor.grayColor()
+        let introduceTagLab = UILabel(frame: CGRect(x: 8, y: line.frame.maxY+8, width: WIDTH-16, height: UIFont.systemFont(ofSize: 14).lineHeight))
+        introduceTagLab.textAlignment = .left
+        introduceTagLab.font = UIFont.systemFont(ofSize: 14)
+        introduceTagLab.textColor = UIColor.gray
         introduceTagLab.text = "圈子介绍"
         tableHeaderView.addSubview(introduceTagLab)
         
-        let introduceBtn = UIButton(frame: CGRect(x: 8, y: introduceTagLab.frame.maxY+8, width: WIDTH-16, height: UIFont.systemFontOfSize(14).lineHeight))
+        let introduceBtn = UIButton(frame: CGRect(x: 8, y: introduceTagLab.frame.maxY+8, width: WIDTH-16, height: UIFont.systemFont(ofSize: 14).lineHeight))
         introduceBtn.titleLabel?.numberOfLines = 0
-        introduceBtn.contentHorizontalAlignment = .Left
-        introduceBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
-        introduceBtn.setTitleColor(UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1), forState: .Normal)
+        introduceBtn.contentHorizontalAlignment = .left
+        introduceBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        introduceBtn.setTitleColor(UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1), for: UIControlState())
 
         let introduceStr:NSString = "儿科是全面研究小儿时期身心发育、保健以及疾病防治的综合医学科学。凡涉及儿童儿科是全面研究小儿时期身心发育、保健以及疾病防治的综合医学科学。凡涉及儿童。"
         let range = NSMakeRange(40, introduceStr.length-40)
-        let cutIntroduceStr = introduceStr.length > 40 ? introduceStr.stringByReplacingCharactersInRange(range, withString: "..."):introduceStr
+        let cutIntroduceStr = introduceStr.length > 40 ? introduceStr.replacingCharacters(in: range, with: "..."):introduceStr as String
         let attrStr = NSMutableAttributedString(string: "    \(cutIntroduceStr) 展开")
-        attrStr.addAttributes([NSForegroundColorAttributeName:UIColor(red: 28/255.0, green: 159/255.0, blue: 227/255.0, alpha: 1),NSUnderlineStyleAttributeName:NSUnderlineStyle.StyleSingle.rawValue], range: NSMakeRange(attrStr.length-2, 2))
+        attrStr.addAttributes([NSForegroundColorAttributeName:UIColor(red: 28/255.0, green: 159/255.0, blue: 227/255.0, alpha: 1),NSUnderlineStyleAttributeName:NSUnderlineStyle.styleSingle.rawValue], range: NSMakeRange(attrStr.length-2, 2))
         
         let attrStrUnfold = NSMutableAttributedString(string: "    \(introduceStr) 收起")
         
-        attrStrUnfold.addAttributes([NSForegroundColorAttributeName:UIColor(red: 28/255.0, green: 159/255.0, blue: 227/255.0, alpha: 1),NSUnderlineStyleAttributeName:NSUnderlineStyle.StyleSingle.rawValue], range: NSMakeRange(attrStrUnfold.length-2, 2))
+        attrStrUnfold.addAttributes([NSForegroundColorAttributeName:UIColor(red: 28/255.0, green: 159/255.0, blue: 227/255.0, alpha: 1),NSUnderlineStyleAttributeName:NSUnderlineStyle.styleSingle.rawValue], range: NSMakeRange(attrStrUnfold.length-2, 2))
         
-        introduceBtn.setAttributedTitle(attrStr, forState: .Normal)
-        introduceBtn.setAttributedTitle(attrStrUnfold, forState: .Selected)
+        introduceBtn.setAttributedTitle(attrStr, for: UIControlState())
+        introduceBtn.setAttributedTitle(attrStrUnfold, for: .selected)
         
-        introduceBtn.selected = unfoldIntroduce
+        introduceBtn.isSelected = unfoldIntroduce
         introduceBtn.frame.size.height = calculateHeight(introduceBtn.currentAttributedTitle!.string, size: 14, width: WIDTH-16)
-        introduceBtn.addTarget(self, action: #selector(introduceBtnClick(_:)), forControlEvents: .TouchUpInside)
+        introduceBtn.addTarget(self, action: #selector(introduceBtnClick(_:)), for: .touchUpInside)
         tableHeaderView.addSubview(introduceBtn)
         
         
         // MARK: - 圈主
-        let managerTagLab = UILabel(frame: CGRect(x: 8, y: introduceBtn.frame.maxY+10, width: WIDTH-16, height: UIFont.systemFontOfSize(14).lineHeight))
-        managerTagLab.textAlignment = .Left
-        managerTagLab.font = UIFont.systemFontOfSize(14)
-        managerTagLab.textColor = UIColor.grayColor()
+        let managerTagLab = UILabel(frame: CGRect(x: 8, y: introduceBtn.frame.maxY+10, width: WIDTH-16, height: UIFont.systemFont(ofSize: 14).lineHeight))
+        managerTagLab.textAlignment = .left
+        managerTagLab.font = UIFont.systemFont(ofSize: 14)
+        managerTagLab.textColor = UIColor.gray
         managerTagLab.text = "圈主"
         tableHeaderView.addSubview(managerTagLab)
         
@@ -156,20 +156,20 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         let margin = (WIDTH-16)/12
         for i in 0 ..< 3 {
             let headerImg = UIImageView(frame: CGRect(x: margin+(margin*4*CGFloat(i)), y: 0, width: margin*2, height: margin*2))
-            headerImg.backgroundColor = UIColor.lightGrayColor()
+            headerImg.backgroundColor = UIColor.lightGray
             headerImg.layer.cornerRadius = margin
             headerImg.clipsToBounds = true
             managerBgView.addSubview(headerImg)
             
-            let nameLab = UILabel(frame: CGRect(x: margin*4*CGFloat(i), y: headerImg.frame.maxY+10, width: margin*4, height: UIFont.systemFontOfSize(12).lineHeight))
-            nameLab.textAlignment = .Center
-            nameLab.font = UIFont.systemFontOfSize(12)
+            let nameLab = UILabel(frame: CGRect(x: margin*4*CGFloat(i), y: headerImg.frame.maxY+10, width: margin*4, height: UIFont.systemFont(ofSize: 12).lineHeight))
+            nameLab.textAlignment = .center
+            nameLab.font = UIFont.systemFont(ofSize: 12)
             nameLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
             nameLab.text = "小丫头妈咪宝贝"
             managerBgView.addSubview(nameLab)
         }
         
-        managerBgView.frame.size.height = margin*2+10+UIFont.systemFontOfSize(12).lineHeight
+        managerBgView.frame.size.height = margin*2+10+UIFont.systemFont(ofSize: 12).lineHeight
         
 //        let introduceLab = UILabel(frame: CGRect(x: 8, y: introduceTagLab.frame.maxY+8, width: WIDTH-16, height: UIFont.systemFontOfSize(14).lineHeight))
 //        introduceLab.numberOfLines = 0
@@ -187,25 +187,25 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     // MARK: - 点击展开按钮
-    func introduceBtnClick(introduceBtn:UIButton) {
-        setTableViewHeaderView(!introduceBtn.selected)
+    func introduceBtnClick(_ introduceBtn:UIButton) {
+        setTableViewHeaderView(!introduceBtn.isSelected)
     }
     
     // MARK: - UItableViewdatasource
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cellNameArray.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCellWithIdentifier("circleHomeCell", forIndexPath: indexPath) as! NSCircleHomeTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "circleHomeCell", for: indexPath) as! NSCircleHomeTableViewCell
         
-        cell.selectionStyle = .None
-        cell.accessoryType = .DisclosureIndicator
+        cell.selectionStyle = .none
+        cell.accessoryType = .disclosureIndicator
         
 //        cell.setCellWithNewsInfo(forumModelArray[indexPath.row])
         cell.setCellWith(cellNameArray[indexPath.row], imageName: cellNameArray[indexPath.row], noteStr: nil)
@@ -215,16 +215,16 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - UITableViewDelegate
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return 44
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 20
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.001
     }
     
@@ -251,7 +251,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     //        return footerView
     //    }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 20))
         headerView.backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -259,7 +259,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         return headerView
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let forumListController = NSCircleForumListViewController()
         forumListController.title = "加精置顶贴子列表"
@@ -267,8 +267,8 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     // 调整 button 图片和文字
-    func initButton(btn:UIButton) {
-        btn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Center//使图片和文字水平居中显示
+    func initButton(_ btn:UIButton) {
+        btn.contentHorizontalAlignment = UIControlContentHorizontalAlignment.center//使图片和文字水平居中显示
         btn.titleEdgeInsets = UIEdgeInsetsMake((btn.imageView!.frame.size.height+btn.titleLabel!.bounds.size.height)/2+8, -btn.imageView!.frame.size.width, 0.0,0.0)//文字距离上边框的距离增加imageView的高度，距离左边框减少imageView的宽度，距离下边框和右边框距离不变
         btn.imageEdgeInsets = UIEdgeInsetsMake(0.0, 0.0,(btn.imageView!.frame.size.height+btn.titleLabel!.bounds.size.height)/2+5, -btn.titleLabel!.bounds.size.width)//图片距离右边框距离减少图片的宽度，其它不边
     }

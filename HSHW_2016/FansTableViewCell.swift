@@ -23,19 +23,19 @@ class FansTableViewCell: UITableViewCell {
         for view in self.contentView.subviews {
             view.removeFromSuperview()
         }
-        titImg.frame = CGRectMake(15, 10, 50, 50)
+        titImg.frame = CGRect(x: 15, y: 10, width: 50, height: 50)
         titImg.layer.cornerRadius = 25
         titImg.clipsToBounds = true
-        titImg.layer.borderColor = UIColor.lightGrayColor().CGColor
+        titImg.layer.borderColor = UIColor.lightGray.cgColor
         titImg.layer.borderWidth = 0.5
         
-        nameLab.frame = CGRectMake(75, 25, 50, 20)
-        nameLab.font = UIFont.systemFontOfSize(15)
+        nameLab.frame = CGRect(x: 75, y: 25, width: 50, height: 20)
+        nameLab.font = UIFont.systemFont(ofSize: 15)
         
-        fansBtn.frame = CGRectMake(75+nameLab.bounds.size.width+5, 26, 19, 18)
-        fansBtn.setBackgroundImage(UIImage(named: "ic_shield_purple.png"), forState: .Normal)
-        fansBtn.titleLabel?.font = UIFont.systemFontOfSize(9)
-        fansBtn.setTitleColor(COLOR, forState: .Normal)
+        fansBtn.frame = CGRect(x: 75+nameLab.bounds.size.width+5, y: 26, width: 19, height: 18)
+        fansBtn.setBackgroundImage(UIImage(named: "ic_shield_purple.png"), for: UIControlState())
+        fansBtn.titleLabel?.font = UIFont.systemFont(ofSize: 9)
+        fansBtn.setTitleColor(COLOR, for: UIControlState())
         
         self.addSubview(titImg)
         self.addSubview(nameLab)
@@ -71,8 +71,8 @@ class FansTableViewCell: UITableViewCell {
         
     }
     
-    private func setUI(model:HSFansAndFollowModel) {
-        dispatch_async(dispatch_get_main_queue(), {
+    fileprivate func setUI(_ model:HSFansAndFollowModel) {
+        DispatchQueue.main.async(execute: {
             
             // TODO: 数据问题 理应删掉model.photo == "21.jpg"
             if model.photo == "" || model.photo == "21.jpg" {
@@ -82,15 +82,15 @@ class FansTableViewCell: UITableViewCell {
                 if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                     self.titImg.image = UIImage.init(named: "img_head_nor")
                 }else{
-                    self.titImg.sd_setImageWithURL(NSURL.init(string: SHOW_IMAGE_HEADER+model.photo), placeholderImage: UIImage.init(named: "img_head_nor"))
+                    self.titImg.sd_setImage(with: URL.init(string: SHOW_IMAGE_HEADER+model.photo), placeholderImage: UIImage.init(named: "img_head_nor"))
                 }
 //                self.titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+model.photo))
             }
             self.nameLab.text = model.name
             self.nameLab.sizeToFit()
             
-            self.fansBtn.frame = CGRectMake(75+self.nameLab.bounds.size.width+5, 26, 19, 18)
-            self.fansBtn.setTitle(model.level, forState: .Normal)
+            self.fansBtn.frame = CGRect(x: 75+self.nameLab.bounds.size.width+5, y: 26, width: 19, height: 18)
+            self.fansBtn.setTitle(model.level, for: UIControlState())
         })
     }
     
@@ -99,7 +99,7 @@ class FansTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

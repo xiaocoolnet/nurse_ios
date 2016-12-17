@@ -12,17 +12,17 @@ class MainCompanyAuthViewController: UIViewController {
 
     var type = 0
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
 //        print("type is \(type)")
         if type == 1 {
-            self.presentViewController(CompanyAuthViewController(), animated: false, completion: nil)
+            self.present(CompanyAuthViewController(), animated: false, completion: nil)
         }
     }
     

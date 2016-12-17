@@ -28,18 +28,18 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate {
     func setSubviews() {
         self.title = "发布贴子"
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "发布"), style: .Done, target: self, action: #selector(postBtnClick))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "发布"), style: .done, target: self, action: #selector(postBtnClick))
         
-        let line1 = UIView(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line1 = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line1.backgroundColor = COLOR
         self.view.addSubview(line1)
         
         // 标题
         titleTextField.frame = CGRect(x: 8, y: 1, width: WIDTH-16, height: 44)
         titleTextField.tag = 101
-        titleTextField.font = UIFont.systemFontOfSize(14)
+        titleTextField.font = UIFont.systemFont(ofSize: 14)
         titleTextField.placeholder = "请填写标题"
         titleTextField.placeholderColor = UIColor(red: 199/255.0, green: 199/255.0, blue: 199/255.0, alpha: 1)
         titleTextField.delegate = self
@@ -49,8 +49,8 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate {
         let inset:CGFloat = max(0, deadSpace/2)
         titleTextField.contentInset = UIEdgeInsetsMake(inset, titleTextField.contentInset.left, inset, titleTextField.contentInset.right)
    
-        let line2 = UIView(frame: CGRect(x: 0, y: titleTextField.frame.maxY, width: WIDTH, height: 1/UIScreen.mainScreen().scale))
-        line2.backgroundColor = UIColor.lightGrayColor()
+        let line2 = UIView(frame: CGRect(x: 0, y: titleTextField.frame.maxY, width: WIDTH, height: 1/UIScreen.main.scale))
+        line2.backgroundColor = UIColor.lightGray
         self.view.addSubview(line2)
         
         // 选择图片、圈子、位置等 底图
@@ -59,21 +59,21 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate {
         
         // 图片
         let imageBtn = UIButton(frame: CGRect(x: 8, y: 10, width: 76, height: 60))
-        imageBtn.setImage(UIImage(named: "插入图片"), forState: .Normal)
+        imageBtn.setImage(UIImage(named: "插入图片"), for: UIControlState())
         toolBgView.addSubview(imageBtn)
         
         // line3
-        let line3 = UIView(frame: CGRect(x: 0, y: imageBtn.frame.maxY+10, width: WIDTH, height: 1/UIScreen.mainScreen().scale))
-        line3.backgroundColor = UIColor.lightGrayColor()
+        let line3 = UIView(frame: CGRect(x: 0, y: imageBtn.frame.maxY+10, width: WIDTH, height: 1/UIScreen.main.scale))
+        line3.backgroundColor = UIColor.lightGray
         toolBgView.addSubview(line3)
         
         // 选择圈子
         let chooseCircleBtn = UIButton(frame: CGRect(x: 0, y: line3.frame.maxY, width: WIDTH, height: 40))
-        chooseCircleBtn.addTarget(self, action: #selector(chooseCircleBtnClick), forControlEvents: .TouchUpInside)
+        chooseCircleBtn.addTarget(self, action: #selector(chooseCircleBtnClick), for: .touchUpInside)
         toolBgView.addSubview(chooseCircleBtn)
         
         let chooseCircleImg = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
-        chooseCircleImg.contentMode = .ScaleAspectFit
+        chooseCircleImg.contentMode = .scaleAspectFit
         chooseCircleImg.clipsToBounds = true
         chooseCircleImg.image = UIImage(named: "选择圈子2")
         chooseCircleBtn.addSubview(chooseCircleImg)
@@ -83,17 +83,17 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate {
         chooseCircleBtn.addSubview(chooseCircleLab)
         
         // line4
-        let line4 = UIView(frame: CGRect(x: chooseCircleLab.frame.minX, y: chooseCircleBtn.frame.maxY, width: WIDTH-chooseCircleLab.frame.minX, height: 1/UIScreen.mainScreen().scale))
-        line4.backgroundColor = UIColor.lightGrayColor()
+        let line4 = UIView(frame: CGRect(x: chooseCircleLab.frame.minX, y: chooseCircleBtn.frame.maxY, width: WIDTH-chooseCircleLab.frame.minX, height: 1/UIScreen.main.scale))
+        line4.backgroundColor = UIColor.lightGray
         toolBgView.addSubview(line4)
         
         // 所在位置
         let addressBtn = UIButton(frame: CGRect(x: 0, y: line4.frame.maxY, width: WIDTH, height: 40))
-        addressBtn.addTarget(self, action: #selector(addressBtnClick), forControlEvents: .TouchUpInside)
+        addressBtn.addTarget(self, action: #selector(addressBtnClick), for: .touchUpInside)
         toolBgView.addSubview(addressBtn)
         
         let addressImg = UIImageView(frame: CGRect(x: 10, y: 10, width: 20, height: 20))
-        addressImg.contentMode = .ScaleAspectFit
+        addressImg.contentMode = .scaleAspectFit
         addressImg.clipsToBounds = true
         addressImg.image = UIImage(named: "所在位置")
         addressBtn.addSubview(addressImg)
@@ -103,8 +103,8 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate {
         addressBtn.addSubview(addresssLab)
         
         // line5
-        let line5 = UIView(frame: CGRect(x: 0, y: addressBtn.frame.maxY, width: WIDTH, height: 1/UIScreen.mainScreen().scale))
-        line5.backgroundColor = UIColor.lightGrayColor()
+        let line5 = UIView(frame: CGRect(x: 0, y: addressBtn.frame.maxY, width: WIDTH, height: 1/UIScreen.main.scale))
+        line5.backgroundColor = UIColor.lightGray
         toolBgView.addSubview(line5)
         
         toolBgView.frame.size.height = line5.frame.maxY
@@ -113,21 +113,21 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate {
         // 内容
         contentTextView.frame = CGRect(x: 8, y: line2.frame.maxY, width: WIDTH-16, height: toolBgView.frame.minY-line2.frame.maxY)
         contentTextView.tag = 102
-        contentTextView.font = UIFont.systemFontOfSize(14)
+        contentTextView.font = UIFont.systemFont(ofSize: 14)
         contentTextView.placeholderColor = UIColor(red: 199/255.0, green: 199/255.0, blue: 199/255.0, alpha: 1)
         contentTextView.placeholder = "对圈子内的朋友说点什么吧"
         contentTextView.delegate = self
         self.view.addSubview(contentTextView)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillAppear(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardDidAppear), name: UIKeyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardDidAppear), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name:UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillDisappear(_:)), name:NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     // MARK: - UITextFieldDelegate
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if text == "\n" && textView.tag == 101 {//判断输入的字是否是回车，即按下return
             //在这里做你响应return键的代码
             return false//这里返回false，就代表return键值失效，即页面上按下return，不会出现换行，如果为yes，则输入页面会换行
@@ -136,29 +136,29 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate {
     }
    
     // MARK: - 获取键盘信息并改变视图
-    func keyboardWillAppear(notification: NSNotification) {
+    func keyboardWillAppear(_ notification: Notification) {
         
         // 获取键盘信息
         let keyboardinfo = notification.userInfo![UIKeyboardFrameEndUserInfoKey]
         
-        let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
+        let keyboardheight:CGFloat = ((keyboardinfo as AnyObject).cgRectValue.size.height)
         
         toolBgView.frame.origin.y = HEIGHT-65-toolBgView.frame.size.height-keyboardheight
         contentTextView.frame.size.height = toolBgView.frame.minY-titleTextField.frame.maxY-1
-        UIView.animateWithDuration(0.3) {
-        }
+        UIView.animate(withDuration: 0.3, animations: {
+        }) 
     }
     
-    func keyboardDidAppear(notification:NSNotification) {
+    func keyboardDidAppear(_ notification:Notification) {
     }
     
-    func keyboardWillDisappear(notification:NSNotification){
+    func keyboardWillDisappear(_ notification:Notification){
         
-        UIView.animateWithDuration(0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             
             self.toolBgView.frame.origin.y = HEIGHT-65-self.toolBgView.frame.size.height
             self.contentTextView.frame.size.height = self.toolBgView.frame.minY-self.titleTextField.frame.maxY-1
-        }
+        }) 
     }
     // MARK: -
     

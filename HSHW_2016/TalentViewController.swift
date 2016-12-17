@@ -15,30 +15,30 @@ class TalentViewController: UIViewController,UITableViewDelegate,UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 0.5))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 0.5))
         line.backgroundColor = GREY
         self.view.addSubview(line)
         
-        self.view.backgroundColor = UIColor.whiteColor()
-        myTableView.frame = CGRectMake(0, 0.5, WIDTH, HEIGHT-154.5)
-        myTableView.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
+        myTableView.frame = CGRect(x: 0, y: 0.5, width: WIDTH, height: HEIGHT-154.5)
+        myTableView.backgroundColor = UIColor.white
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         self.view.addSubview(myTableView)
 
         // Do any additional setup after loading the view.
     }
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section == 0 {
             return 694
         }else if indexPath.section == 1 {
@@ -48,13 +48,13 @@ class TalentViewController: UIViewController,UITableViewDelegate,UITableViewData
         }
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 44
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        cell.selectionStyle = .None
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.selectionStyle = .none
         
         return cell
     }

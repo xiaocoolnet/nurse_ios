@@ -137,7 +137,7 @@ class InvitedList: JSONJoy {
         }
     }
     
-    func append(list: [InvitedInfo]){
+    func append(_ list: [InvitedInfo]){
         self.data = list + self.data
     }
     

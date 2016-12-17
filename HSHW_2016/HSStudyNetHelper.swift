@@ -10,7 +10,7 @@ import UIKit
 
 class HSStudyNetHelper: NSObject {
     //提交考试答案
-    class func sendtestAnswerByType(type:String,count:String,questionlist:String,answerlist:String,handle:ResponseBlock){
+    class func sendtestAnswerByType(_ type:String,count:String,questionlist:String,answerlist:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"SubmitAnswers"
         let param = [
             "type":type,
@@ -20,19 +20,19 @@ class HSStudyNetHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid
         ]
 //        print(param)
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 
 //        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
 //            print(request?.URLString)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let model =  ScoreModel(JSONDecoder(json!))
                 if(model.status == "success"){
 //                    let result = model.data!.allscore
-                    handle(success: true, response: model.data)
+                    handle(true, model.data)
                 }else{
-                    handle(success: false, response: error)
+                    handle(false, error as AnyObject?)
                 }
             }
         }

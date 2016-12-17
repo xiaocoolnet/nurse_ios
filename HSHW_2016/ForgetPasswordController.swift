@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ForgetPasswordDelegate {
-    func changeNavigation(flag:Bool)
+    func changeNavigation(_ flag:Bool)
 }
 
 class ForgetPasswordController: UIViewController {
@@ -52,9 +52,9 @@ class ForgetPasswordController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.lightGrayColor()
+        self.view.backgroundColor = UIColor.lightGray
         //  显示导航控制器
-        self.navigationController?.navigationBar.hidden = false
+        self.navigationController?.navigationBar.isHidden = false
         self.title = "修改密码"
         
         
@@ -71,13 +71,13 @@ class ForgetPasswordController: UIViewController {
     }
     func time(){
         processHandle = {(timeInterVal) in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.checkNumBtn.userInteractionEnabled = false
+            DispatchQueue.main.async(execute: {
+                self.checkNumBtn.isUserInteractionEnabled = false
                 let btnTitle = String(timeInterVal) + "秒后重新获取"
-                self.checkNumBtn.titleLabel?.font = UIFont.systemFontOfSize(12)
-                self.checkNumBtn.setTitleColor(COLOR, forState: .Normal)
+                self.checkNumBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+                self.checkNumBtn.setTitleColor(COLOR, for: UIControlState())
                 
-                self.checkNumBtn.setTitle(btnTitle, forState: .Normal)
+                self.checkNumBtn.setTitle(btnTitle, for: UIControlState())
                 
                 
                 
@@ -85,11 +85,11 @@ class ForgetPasswordController: UIViewController {
         }
         
         finishHandle = {(timeInterVal) in
-            dispatch_async(dispatch_get_main_queue(), {
-                self.checkNumBtn.userInteractionEnabled = true
-                self.checkNumBtn.setTitleColor(COLOR, forState: .Normal)
-                self.checkNumBtn.titleLabel?.font = UIFont.systemFontOfSize(12)
-                self.checkNumBtn.setTitle("获取验证码", forState: .Normal)
+            DispatchQueue.main.async(execute: {
+                self.checkNumBtn.isUserInteractionEnabled = true
+                self.checkNumBtn.setTitleColor(COLOR, for: UIControlState())
+                self.checkNumBtn.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+                self.checkNumBtn.setTitle("获取验证码", for: UIControlState())
             })
         }
         TimeManager.shareManager.taskDic["forget"]?.FHandle = finishHandle
@@ -100,28 +100,28 @@ class ForgetPasswordController: UIViewController {
     func createView(){
         //  创建五个视图
         numView = UIView()
-        numView.frame = CGRectMake(0, 40, 80, 60)
-        numView.backgroundColor = UIColor.whiteColor()
+        numView.frame = CGRect(x: 0, y: 40, width: 80, height: 60)
+        numView.backgroundColor = UIColor.white
         self.view.addSubview(numView)
         
         phoneNumView = UIView()
-        phoneNumView.frame = CGRectMake(81, 40, WIDTH - 81, 60)
-        phoneNumView.backgroundColor = UIColor.whiteColor()
+        phoneNumView.frame = CGRect(x: 81, y: 40, width: WIDTH - 81, height: 60)
+        phoneNumView.backgroundColor = UIColor.white
         self.view.addSubview(phoneNumView)
     
         checkView = UIView()
-        checkView.frame = CGRectMake(0, 101, WIDTH, 60)
-        checkView.backgroundColor = UIColor.whiteColor()
+        checkView.frame = CGRect(x: 0, y: 101, width: WIDTH, height: 60)
+        checkView.backgroundColor = UIColor.white
         self.view.addSubview(checkView)
         
         passWordView = UIView()
-        passWordView.frame = CGRectMake(0, 162, WIDTH, 60)
-        passWordView.backgroundColor = UIColor.whiteColor()
+        passWordView.frame = CGRect(x: 0, y: 162, width: WIDTH, height: 60)
+        passWordView.backgroundColor = UIColor.white
         self.view.addSubview(passWordView)
         
         checkPassView = UIView()
-        checkPassView.frame = CGRectMake(0, 223 , WIDTH, 60)
-        checkPassView.backgroundColor = UIColor.whiteColor()
+        checkPassView.frame = CGRect(x: 0, y: 223 , width: WIDTH, height: 60)
+        checkPassView.backgroundColor = UIColor.white
         self.view.addSubview(checkPassView)
     }
         // MARK: - createUI(创建界面控件)
@@ -129,90 +129,90 @@ class ForgetPasswordController: UIViewController {
 
         //  四个label
         phoneLabel = UILabel()
-        phoneLabel.frame = CGRectMake(20, 15, 60, 30)
+        phoneLabel.frame = CGRect(x: 20, y: 15, width: 60, height: 30)
         phoneLabel.text = "+86"
-        phoneLabel.font = UIFont.systemFontOfSize(16)
+        phoneLabel.font = UIFont.systemFont(ofSize: 16)
         numView.addSubview(phoneLabel)
         
         checkLabel = UILabel()
-        checkLabel.frame = CGRectMake(20, 15, 70, 30)
+        checkLabel.frame = CGRect(x: 20, y: 15, width: 70, height: 30)
         checkLabel.text = "验证码"
-        checkLabel.font = UIFont.systemFontOfSize(16)
+        checkLabel.font = UIFont.systemFont(ofSize: 16)
         checkView.addSubview(checkLabel)
         
         passWordLabel = UILabel()
-        passWordLabel.frame = CGRectMake(20, 15, 70, 30)
+        passWordLabel.frame = CGRect(x: 20, y: 15, width: 70, height: 30)
         passWordLabel.text = "输入密码"
-        passWordLabel.font = UIFont.systemFontOfSize(16)
+        passWordLabel.font = UIFont.systemFont(ofSize: 16)
         passWordView.addSubview(passWordLabel)
         
         passCheckLabel = UILabel()
-        passCheckLabel.frame = CGRectMake(20, 15, 70, 30)
+        passCheckLabel.frame = CGRect(x: 20, y: 15, width: 70, height: 30)
         passCheckLabel.text = "确认密码"
-        passCheckLabel.font = UIFont.systemFontOfSize(16)
+        passCheckLabel.font = UIFont.systemFont(ofSize: 16)
         checkPassView.addSubview(passCheckLabel)
         
         //  四个textFiled
         phoneNumFiled = UITextField()
-        phoneNumFiled.frame = CGRectMake(19, 15, WIDTH * 0.4, 30)
-        phoneNumFiled.font = UIFont.systemFontOfSize(14)
+        phoneNumFiled.frame = CGRect(x: 19, y: 15, width: WIDTH * 0.4, height: 30)
+        phoneNumFiled.font = UIFont.systemFont(ofSize: 14)
         phoneNumFiled.placeholder = "请输入手机号"
         phoneNumView.addSubview(phoneNumFiled)
         
         checkNumFiled = UITextField()
-        checkNumFiled.frame = CGRectMake(100, 15, WIDTH * 0.4, 30)
-        checkNumFiled.font = UIFont.systemFontOfSize(14)
+        checkNumFiled.frame = CGRect(x: 100, y: 15, width: WIDTH * 0.4, height: 30)
+        checkNumFiled.font = UIFont.systemFont(ofSize: 14)
         checkNumFiled.placeholder = "请输入验证码"
         checkView.addSubview(checkNumFiled)
         
         passWordFiled = UITextField()
-        passWordFiled.frame = CGRectMake(100, 15, WIDTH * 0.4, 30)
-        passWordFiled.font = UIFont.systemFontOfSize(14)
+        passWordFiled.frame = CGRect(x: 100, y: 15, width: WIDTH * 0.4, height: 30)
+        passWordFiled.font = UIFont.systemFont(ofSize: 14)
         passWordFiled.placeholder = "请输入密码"
         //  密文输入
-        passWordFiled.secureTextEntry = true
+        passWordFiled.isSecureTextEntry = true
         passWordView.addSubview(passWordFiled)
         
         passNumCheckFiled = UITextField()
-        passNumCheckFiled.frame = CGRectMake(100, 15, WIDTH * 0.4, 30)
-        passNumCheckFiled.font = UIFont.systemFontOfSize(14)
+        passNumCheckFiled.frame = CGRect(x: 100, y: 15, width: WIDTH * 0.4, height: 30)
+        passNumCheckFiled.font = UIFont.systemFont(ofSize: 14)
         passNumCheckFiled.placeholder = "请确认密码"
-        passNumCheckFiled.secureTextEntry = true
+        passNumCheckFiled.isSecureTextEntry = true
         checkPassView.addSubview(passNumCheckFiled)
         
         //  四个button
     
         checkNumBtn = UIButton()
-        checkNumBtn.frame = CGRectMake(WIDTH - 191, 15, 100, 30)
+        checkNumBtn.frame = CGRect(x: WIDTH - 191, y: 15, width: 100, height: 30)
         checkNumBtn.layer.cornerRadius = 13
-        checkNumBtn.layer.borderColor = COLOR.CGColor
+        checkNumBtn.layer.borderColor = COLOR.cgColor
         checkNumBtn.layer.borderWidth = 1.5
-        checkNumBtn.setTitle("获取验证码", forState: .Normal)
-        checkNumBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
-        checkNumBtn.setTitleColor(COLOR, forState: .Normal)
-        checkNumBtn.addTarget(self, action: #selector(self.getCheckNum), forControlEvents: .TouchUpInside)
+        checkNumBtn.setTitle("获取验证码", for: UIControlState())
+        checkNumBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        checkNumBtn.setTitleColor(COLOR, for: UIControlState())
+        checkNumBtn.addTarget(self, action: #selector(self.getCheckNum), for: .touchUpInside)
         phoneNumView.addSubview(checkNumBtn)
         
         showPassWordBtn = UIButton()
-        showPassWordBtn.frame = CGRectMake(WIDTH - 40, 15, 30, 30)
-        showPassWordBtn.setImage(UIImage(named: "btn_eye_sel"), forState: .Normal)
-        showPassWordBtn.setTitleColor(COLOR, forState: .Normal)
-        showPassWordBtn.addTarget(self, action: #selector(self.showPassWord(_:)), forControlEvents: .TouchUpInside)
+        showPassWordBtn.frame = CGRect(x: WIDTH - 40, y: 15, width: 30, height: 30)
+        showPassWordBtn.setImage(UIImage(named: "btn_eye_sel"), for: UIControlState())
+        showPassWordBtn.setTitleColor(COLOR, for: UIControlState())
+        showPassWordBtn.addTarget(self, action: #selector(self.showPassWord(_:)), for: .touchUpInside)
         passWordView.addSubview(showPassWordBtn)
         
         showPassCheckBtn = UIButton()
-        showPassCheckBtn.frame = CGRectMake(WIDTH - 40, 15, 30, 30)
-        showPassCheckBtn.setImage(UIImage(named: "btn_eye_sel"), forState: .Normal)
-        showPassCheckBtn.setTitleColor(COLOR, forState: .Normal)
-        showPassCheckBtn.addTarget(self, action: #selector(self.showCheckPassWord(_:)), forControlEvents: .TouchUpInside)
+        showPassCheckBtn.frame = CGRect(x: WIDTH - 40, y: 15, width: 30, height: 30)
+        showPassCheckBtn.setImage(UIImage(named: "btn_eye_sel"), for: UIControlState())
+        showPassCheckBtn.setTitleColor(COLOR, for: UIControlState())
+        showPassCheckBtn.addTarget(self, action: #selector(self.showCheckPassWord(_:)), for: .touchUpInside)
         checkPassView.addSubview(showPassCheckBtn)
         
         successBtn = UIButton()
-        successBtn.frame = CGRectMake(20, 320, WIDTH - 40, 40)
-        successBtn.setTitle("完成", forState: .Normal)
-        successBtn.setTitleColor(COLOR, forState: .Normal)
-        successBtn.backgroundColor = UIColor.whiteColor()
-        successBtn.addTarget(self, action: #selector(self.changeSuccsee), forControlEvents: .TouchUpInside)
+        successBtn.frame = CGRect(x: 20, y: 320, width: WIDTH - 40, height: 40)
+        successBtn.setTitle("完成", for: UIControlState())
+        successBtn.setTitleColor(COLOR, for: UIControlState())
+        successBtn.backgroundColor = UIColor.white
+        successBtn.addTarget(self, action: #selector(self.changeSuccsee), for: .touchUpInside)
         self.view.addSubview(successBtn)
  
         
@@ -233,7 +233,7 @@ class ForgetPasswordController: UIViewController {
         
         //  [unowned self]什么意思   dispatch_async(dispatch_get_main_queue() 这里为什么需要加一个主线程
         changeVM?.comfirmPhoneHasRegister(phoneNumFiled.text!, handle: {(success, response) in
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 if success {
                     //  2.1成功,验证码传到手机,执行倒计时操作
                     TimeManager.shareManager.begainTimerWithKey("forget", timeInterval: 30, process: self.processHandle!, finish: self.finishHandle!)
@@ -245,24 +245,24 @@ class ForgetPasswordController: UIViewController {
             })
         })
     }
-    func showPassWord(btn:UIButton) {
+    func showPassWord(_ btn:UIButton) {
         //  显示输入密码
-        if passWordFiled.secureTextEntry == true {
-            passWordFiled.secureTextEntry = false
-            btn.setImage(UIImage(named: "btn_eye"), forState: .Normal)
+        if passWordFiled.isSecureTextEntry == true {
+            passWordFiled.isSecureTextEntry = false
+            btn.setImage(UIImage(named: "btn_eye"), for: UIControlState())
         }else{
-            passWordFiled.secureTextEntry = true
-            btn.setImage(UIImage(named: "btn_eye_sel"), forState: .Normal)
+            passWordFiled.isSecureTextEntry = true
+            btn.setImage(UIImage(named: "btn_eye_sel"), for: UIControlState())
         }
     }
-    func showCheckPassWord(btn:UIButton) {
+    func showCheckPassWord(_ btn:UIButton) {
         //  显示确认密码
-        if passNumCheckFiled.secureTextEntry == true {
-            passNumCheckFiled.secureTextEntry = false
-            btn.setImage(UIImage(named: "btn_eye"), forState: .Normal)
+        if passNumCheckFiled.isSecureTextEntry == true {
+            passNumCheckFiled.isSecureTextEntry = false
+            btn.setImage(UIImage(named: "btn_eye"), for: UIControlState())
         }else{
-            passNumCheckFiled.secureTextEntry = true
-            btn.setImage(UIImage(named: "btn_eye_sel"), forState: .Normal)
+            passNumCheckFiled.isSecureTextEntry = true
+            btn.setImage(UIImage(named: "btn_eye_sel"), for: UIControlState())
         }
     }
     func changeSuccsee() {
@@ -287,11 +287,11 @@ class ForgetPasswordController: UIViewController {
                 return
             }
             changeVM?.forgetPassword(phoneNumFiled.text!, code: checkNumFiled.text!, password: passWordFiled.text!, handle: {(success, response) in
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     
                     if success {
                         alert("修改成功", delegate: self)
-                        self.navigationController?.popViewControllerAnimated(true)
+                        self.navigationController?.popViewController(animated: true)
                     }else{
                         let string = response as! String
                         alert(string, delegate: self)
@@ -304,10 +304,10 @@ class ForgetPasswordController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         self.delegate?.changeNavigation(flag)
     }
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         TimeManager.shareManager.taskDic["forget"]?.FHandle = nil
         TimeManager.shareManager.taskDic["forget"]?.PHandle = nil

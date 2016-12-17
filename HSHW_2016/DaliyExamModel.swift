@@ -96,7 +96,7 @@ class ExamInfo: JSONJoy{
             answerlist.append(answerInfo(childs))
         }
     }
-    func append(list: [answerInfo]){
+    func append(_ list: [answerInfo]){
         self.answerlist = list + self.answerlist
     }
 }

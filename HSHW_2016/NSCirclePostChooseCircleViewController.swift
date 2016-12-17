@@ -7,6 +7,19 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 
 class NSCirclePostChooseCircleViewController: UIViewController {
 
@@ -31,11 +44,11 @@ class NSCirclePostChooseCircleViewController: UIViewController {
     func setSubviews() {
         self.title = "选择发布圈子"
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "确定", style: .Done, target: self, action: #selector(sureBtnClick))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "确定", style: .done, target: self, action: #selector(sureBtnClick))
         
-        let line1 = UIView(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line1 = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line1.backgroundColor = COLOR
         self.view.addSubview(line1)
         
@@ -53,16 +66,16 @@ class NSCirclePostChooseCircleViewController: UIViewController {
 
         var cateY:CGFloat = 10
         
-        for (i,circle) in circleArray.enumerate() {
+        for (i,circle) in circleArray.enumerated() {
             
             let cateLab = UILabel(frame: CGRect(x: padding, y: cateY, width: 0, height: 0))
             cateLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
-            cateLab.font = UIFont.systemFontOfSize(14)
+            cateLab.font = UIFont.systemFont(ofSize: 14)
             cateLab.text = circle["cate"] as? String
             cateLab.sizeToFit()
             rootScrollView.addSubview(cateLab)
             
-            let line = UIView(frame: CGRect(x: cateLab.frame.maxX+margin, y: 0, width: WIDTH-(cateLab.frame.maxX+margin)-padding, height: 1/UIScreen.mainScreen().scale))
+            let line = UIView(frame: CGRect(x: cateLab.frame.maxX+margin, y: 0, width: WIDTH-(cateLab.frame.maxX+margin)-padding, height: 1/UIScreen.main.scale))
             line.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
             line.center.y = cateLab.center.y
             rootScrollView.addSubview(line)
@@ -73,21 +86,21 @@ class NSCirclePostChooseCircleViewController: UIViewController {
             var circleBtnY:CGFloat = cateLab.frame.maxY+margin
             let circleBtnHeight:CGFloat = 30
 
-            for (j,subCircle) in (subCircleArray ?? [])!.enumerate() {
+            for (j,subCircle) in (subCircleArray ?? [])!.enumerated() {
                 
                 let circleBtn = UIButton(frame: CGRect(x: circleBtnX, y: circleBtnY, width: calculateWidth(subCircle, size: 14, height: circleBtnHeight)+16, height: circleBtnHeight))
                 circleBtn.tag = (i+1)*1000+j
                 circleBtn.layer.cornerRadius = 3
-                circleBtn.layer.borderColor = COLOR.CGColor
+                circleBtn.layer.borderColor = COLOR.cgColor
                 circleBtn.layer.borderWidth = 1
-                circleBtn.backgroundColor = UIColor.whiteColor()
+                circleBtn.backgroundColor = UIColor.white
                 
-                circleBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
-                circleBtn.setTitleColor(COLOR, forState: .Normal)
-                circleBtn.setTitleColor(UIColor.whiteColor(), forState: .Selected)
+                circleBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+                circleBtn.setTitleColor(COLOR, for: UIControlState())
+                circleBtn.setTitleColor(UIColor.white, for: .selected)
                 
-                circleBtn.setTitle(subCircle, forState: .Normal)
-                circleBtn.addTarget(self, action: #selector(circleBtnClick(_:)), forControlEvents: .TouchUpInside)
+                circleBtn.setTitle(subCircle, for: UIControlState())
+                circleBtn.addTarget(self, action: #selector(circleBtnClick(_:)), for: .touchUpInside)
                 rootScrollView.addSubview(circleBtn)
                 
                 if j+1 < subCircleArray?.count {
@@ -106,21 +119,21 @@ class NSCirclePostChooseCircleViewController: UIViewController {
     }
     
     // MARK: - 点击圈子
-    func circleBtnClick(circleBtn:UIButton) {
+    func circleBtnClick(_ circleBtn:UIButton) {
         print("点击圈子 \(circleBtn.currentTitle)")
         
         for circleView in (circleBtn.superview?.subviews ?? [])! {
             if circleView is UIButton && circleView.tag >= 1000 {
                 let circle = circleView as! UIButton
-                if circle.selected {
-                    circle.selected = false
-                    circle.backgroundColor = UIColor.whiteColor()
+                if circle.isSelected {
+                    circle.isSelected = false
+                    circle.backgroundColor = UIColor.white
                     break
                 }
             }
         }
         
-        circleBtn.selected = true
+        circleBtn.isSelected = true
         circleBtn.backgroundColor = COLOR
         
         selectedCircle = (circleBtn.currentTitle ?? "")!

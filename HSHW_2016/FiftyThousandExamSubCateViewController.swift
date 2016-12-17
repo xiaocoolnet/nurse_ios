@@ -19,16 +19,16 @@ class FiftyThousandExamSubCateViewController: UIViewController, UITableViewDeleg
     
     var data = Array<GNewsCate>()
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("学习 8万题库 "+(self.term_name ?? "")!+(self.title ?? "")!)
+        BaiduMobStat.default().pageviewStart(withName: "学习 8万题库 "+(self.term_name )+(self.title ?? "")!)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("学习 8万题库 "+(self.term_name ?? "")!+(self.title ?? "")!)
+        BaiduMobStat.default().pageviewEnd(withName: "学习 8万题库 "+(self.term_name )+(self.title ?? "")!)
     }
     
     override func viewDidLoad() {
@@ -49,12 +49,12 @@ class FiftyThousandExamSubCateViewController: UIViewController, UITableViewDeleg
                 self.rootTableView.mj_header.endRefreshing()
                 self.rootTableView.reloadData()
             }else{
-                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                hud.mode = .Text
-                hud.margin = 10
-                hud.labelText = "网络错误，请稍后再试"
-                hud.removeFromSuperViewOnHide = true
-                hud.hide(true, afterDelay: 1)
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud?.mode = .text
+                hud?.margin = 10
+                hud?.labelText = "网络错误，请稍后再试"
+                hud?.removeFromSuperViewOnHide = true
+                hud?.hide(true, afterDelay: 1)
             }
         }
     }
@@ -66,16 +66,16 @@ class FiftyThousandExamSubCateViewController: UIViewController, UITableViewDeleg
         
         print(self.term_id)
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         
-        rootTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-64-1)
+        rootTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-64-1)
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
-        rootTableView.tableFooterView = UIView(frame: CGRectZero)
+        rootTableView.tableFooterView = UIView(frame: CGRect.zero)
         
         rootTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData))
         
@@ -85,27 +85,27 @@ class FiftyThousandExamSubCateViewController: UIViewController, UITableViewDeleg
     }
     
     // MARK:- UITableViewDataSource
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.data.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("fiftyThousandExamSubCateCell")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "fiftyThousandExamSubCateCell")
         
         if cell == nil {
-            cell = UITableViewCell(style: .Default, reuseIdentifier: "fiftyThousandExamSubCateCell")
-            cell?.accessoryType = .DisclosureIndicator
-            cell?.selectionStyle = .None
+            cell = UITableViewCell(style: .default, reuseIdentifier: "fiftyThousandExamSubCateCell")
+            cell?.accessoryType = .disclosureIndicator
+            cell?.selectionStyle = .none
         }
         
-        cell?.textLabel?.font = UIFont.systemFontOfSize(18)
+        cell?.textLabel?.font = UIFont.systemFont(ofSize: 18)
         cell?.textLabel?.text = self.data[indexPath.row].name
         
         return cell!
     }
     
     // MARK:- UITableViewDelegate
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let twoView = QuestionBankViewController()
         twoView.hasMenuHeight = false

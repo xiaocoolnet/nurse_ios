@@ -31,23 +31,23 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     var requestManager:AFHTTPSessionManager?
     var newsType:Int?
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("新闻分类页"+(self.title ?? "")!)
+        BaiduMobStat.default().pageviewStart(withName: "新闻分类页"+(self.title ?? "")!)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("新闻分类页"+(self.title ?? "")!)
+        BaiduMobStat.default().pageviewEnd(withName: "新闻分类页"+(self.title ?? "")!)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.navigationController?.navigationBar.hidden = false
-        self.tabBarController?.tabBar.hidden = true
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = true
     }
     
     override func viewDidLoad() {
@@ -58,7 +58,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         self.navigationItem.backBarButtonItem = back
         self.title = name
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
@@ -67,10 +67,10 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     }
     
     func createTableView() {
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-65)
+        myTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-65)
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.registerClass(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
+        myTableView.register(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
         self.view.addSubview(myTableView)
         
         myTableView.rowHeight = 100
@@ -86,7 +86,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         let url = PARK_URL_Header+"getNewslist"
         // print(newsType)
         let param = ["channelid":String(newsType!)]
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 //
 //        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
@@ -96,12 +96,12 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
                 // print("状态是")
                 // print(status.status)
                 if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud?.mode = MBProgressHUDMode.text;
                     //hud.labelText = status.errorData
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    hud?.margin = 10.0
+                    hud?.removeFromSuperViewOnHide = true
+                    hud?.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
                     // print(status)
@@ -132,7 +132,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         let url = PARK_URL_Header+"getNewslist"
         // print(newsType)
         let param = ["channelid":String(newsType!),"pager":String(pager)]
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 //
 //        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
@@ -161,12 +161,12 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         }
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return self.dataSource.count;
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         let newsInfo = self.dataSource.objectlist[indexPath.row]
 
@@ -188,10 +188,10 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("toutiao", forIndexPath: indexPath)as!GToutiaoTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "toutiao", for: indexPath)as!GToutiaoTableViewCell
         cell.type = 2
-        cell.selectionStyle = .None
+        cell.selectionStyle = .none
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         if newsInfo.thumbArr.count >= 3 {
             cell.setThreeImgCellWithNewsInfo(newsInfo)
@@ -201,7 +201,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
@@ -212,7 +212,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     }
     
     // MARK:更新模型
-    func changeModel(newInfo: NewsInfo, andIndex: Int) {
+    func changeModel(_ newInfo: NewsInfo, andIndex: Int) {
         self.dataSource.objectlist[andIndex] = newInfo
         self.myTableView.reloadData()
     }

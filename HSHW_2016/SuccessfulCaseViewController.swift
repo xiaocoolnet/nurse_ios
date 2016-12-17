@@ -26,20 +26,20 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
     
     let headerView = UIView()
     
-    override func viewWillAppear(animated: Bool) {
-        self.tabBarController?.tabBar.hidden = false
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("出国 " + (self.title ?? "")!)
+        BaiduMobStat.default().pageviewStart(withName: "出国 " + (self.title ?? "")!)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("出国 " + (self.title ?? "")!)
+        BaiduMobStat.default().pageviewEnd(withName: "出国 " + (self.title ?? "")!)
     }
     
     override func viewDidLoad() {
@@ -61,11 +61,11 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
             "pager":"1",
             "userid":QCLoginUserInfo.currentInfo.userid,
             "show_fav":"1"
-        ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        ] as [String : Any];
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.myTableView.mj_header.endRefreshing()
                     
                 })
@@ -83,7 +83,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
 //                }
                 if(status.status == "success"){
                     
-                    BmobCloud.callFunctionInBackground("show3rdInfo", withParameters: ["name":"hidden"], block: { (object, error) in
+                    BmobCloud.callFunction(inBackground: "show3rdInfo", withParameters: ["name":"hidden"], block: { (object, error) in
 
                         if object as! String == "show" {
 //                            let time: NSTimeInterval = 1.0
@@ -91,7 +91,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
 //                            
 //                            dispatch_after(delay, dispatch_get_main_queue()) {
 //                            }
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 self.myTableView.mj_header.endRefreshing()
                                 if self.myTableView.tableHeaderView == nil {
                                     if self.myTableView.tableHeaderView == nil {
@@ -102,7 +102,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                                         self.dataSource = NewsList(status.data!)
                                         self.myTableView .reloadData()
                                         
-                                        dispatch_async(dispatch_get_main_queue(), {
+                                        DispatchQueue.main.async(execute: {
                                             self.myTableView.mj_header.endRefreshing()
                                             
                                         })
@@ -114,7 +114,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                             self.dataSource = NewsList(status.data!)
                             self.myTableView .reloadData()
                             
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 self.myTableView.mj_header.endRefreshing()
                                 
                             })
@@ -138,8 +138,8 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
             "pager":String(pager),
             "userid":QCLoginUserInfo.currentInfo.userid,
             "show_fav":"1"
-        ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        ] as [String : Any];
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
                 self.myTableView.mj_footer.endRefreshingWithNoMoreData()
@@ -155,7 +155,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                     self.dataSource.append(NewsList(status.data!).objectlist)
                     self.myTableView .reloadData()
                     
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.myTableView.mj_header.endRefreshing()
                         
                     })
@@ -175,11 +175,11 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
     
     func createTableView() {
         
-        myTableView.frame = CGRectMake(0, 1, WIDTH, HEIGHT-114)
+        myTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-114)
         //        myTableView.backgroundColor = UIColor.whiteColor()
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.registerClass(AcademicTableViewCell.self, forCellReuseIdentifier: "successfulCasecell")
+        myTableView.register(AcademicTableViewCell.self, forCellReuseIdentifier: "successfulCasecell")
         self.view.addSubview(myTableView)
         myTableView.rowHeight = (WIDTH-20)*0.5+63
         
@@ -192,20 +192,20 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
 
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let successfulCaseCell = tableView.dequeueReusableCellWithIdentifier("successfulCasecell", forIndexPath: indexPath)as!AcademicTableViewCell
-        successfulCaseCell.selectionStyle = .None
+        let successfulCaseCell = tableView.dequeueReusableCell(withIdentifier: "successfulCasecell", for: indexPath)as!AcademicTableViewCell
+        successfulCaseCell.selectionStyle = .none
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         successfulCaseCell.newsInfo = newsInfo
         successfulCaseCell.aca_zan.tag = indexPath.row
-        successfulCaseCell.aca_zan.addTarget(self, action: #selector(click1(_:)), forControlEvents: .TouchUpInside)
+        successfulCaseCell.aca_zan.addTarget(self, action: #selector(click1(_:)), for: .touchUpInside)
         successfulCaseCell.comBtn.tag = indexPath.row
-        successfulCaseCell.comBtn.addTarget(self, action: #selector(collectionBtnClick(_:)), forControlEvents: .TouchUpInside)
+        successfulCaseCell.comBtn.addTarget(self, action: #selector(collectionBtnClick(_:)), for: .touchUpInside)
         
         return successfulCaseCell
     }
@@ -213,18 +213,18 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
     // MARK: 设置tableView头视图
     func setheaderView() {
         
-        headerView.frame = CGRectMake(0, 0, WIDTH, WIDTH*281/3*2/375)
+        headerView.frame = CGRect(x: 0, y: 0, width: WIDTH, height: WIDTH*281/3*2/375)
         for i in 0 ... 7 {
             
-            let name = UILabel(frame: CGRectMake(WIDTH/4*CGFloat(i%4), WIDTH*(62+94*CGFloat(i/4))/375, WIDTH/4, 15))
-            name.font = UIFont.systemFontOfSize(12)
-            name.textAlignment = .Center
+            let name = UILabel(frame: CGRect(x: WIDTH/4*CGFloat(i%4), y: WIDTH*(62+94*CGFloat(i/4))/375, width: WIDTH/4, height: 15))
+            name.font = UIFont.systemFont(ofSize: 12)
+            name.textAlignment = .center
             name.text = nameArr[i]
             headerView.addSubview(name)
-            let kindBtn = UIButton(frame: CGRectMake(WIDTH/4*CGFloat(i%4), WIDTH*(15+94*CGFloat(i/4))/375, WIDTH/4, WIDTH/16*3*281/375))
-            kindBtn.setImage(UIImage(named: picArr[i]), forState: .Normal)
+            let kindBtn = UIButton(frame: CGRect(x: WIDTH/4*CGFloat(i%4), y: WIDTH*(15+94*CGFloat(i/4))/375, width: WIDTH/4, height: WIDTH/16*3*281/375))
+            kindBtn.setImage(UIImage(named: picArr[i]), for: UIControlState())
             
-            kindBtn.addTarget(self, action: #selector(selectorCountry), forControlEvents: .TouchUpInside)
+            kindBtn.addTarget(self, action: #selector(selectorCountry), for: .touchUpInside)
             kindBtn.tag = i
             headerView.addSubview(kindBtn)
         }
@@ -238,19 +238,19 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
 //        headerView.addSubview(horizontalLine_2)
         
         for i in 1 ... 3 {
-            let linel = UILabel(frame: CGRectMake(WIDTH/4*CGFloat(i), 0, 0.5, WIDTH*281/3*2/375))
-            linel.backgroundColor = UIColor.grayColor()
+            let linel = UILabel(frame: CGRect(x: WIDTH/4*CGFloat(i), y: 0, width: 0.5, height: WIDTH*281/3*2/375))
+            linel.backgroundColor = UIColor.gray
             headerView.addSubview(linel)
             
-            let horizontalLine_1 = UILabel(frame: CGRectMake(0, WIDTH*281/3*CGFloat(i-1)/375, WIDTH, 0.5))
-            horizontalLine_1.backgroundColor = UIColor.grayColor()
+            let horizontalLine_1 = UILabel(frame: CGRect(x: 0, y: WIDTH*281/3*CGFloat(i-1)/375, width: WIDTH, height: 0.5))
+            horizontalLine_1.backgroundColor = UIColor.gray
             headerView.addSubview(horizontalLine_1)
         }
         
         self.myTableView.tableHeaderView = headerView
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         //        // print(newsInfo.title,newsInfo.term_id)
         let next = NewsContantViewController()
@@ -262,7 +262,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
         self.navigationController?.pushViewController(next, animated: true)
     }
     
-    func collectionBtnClick(collectionBtn:UIButton) {
+    func collectionBtnClick(_ collectionBtn:UIButton) {
         // MARK:要求登录
         if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
             return
@@ -270,20 +270,20 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
         
         let newsInfo = self.dataSource.objectlist[collectionBtn.tag]
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //        hud.mode = MBProgressHUDMode.Text;
-        hud.margin = 10.0
-        hud.removeFromSuperViewOnHide = true
+        hud?.margin = 10.0
+        hud?.removeFromSuperViewOnHide = true
         
-        if collectionBtn.selected {
+        if collectionBtn.isSelected {
             
-            hud.labelText = "正在取消收藏"
+            hud?.labelText = "正在取消收藏"
             
             HSMineHelper().cancelFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", handle: { (success, response) in
                 if success {
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "取消收藏成功"
-                    hud.hide(true, afterDelay: 0.5)
+                    hud?.mode = MBProgressHUDMode.text;
+                    hud?.labelText = "取消收藏成功"
+                    hud?.hide(true, afterDelay: 0.5)
                     
                     //                    for (i,obj) in (newsInfo.favorites).enumerate() {
                     //                        if obj.userid == QCLoginUserInfo.currentInfo.userid {
@@ -297,21 +297,21 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                     
                     self.myTableView.reloadData()
                 }else{
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = String((response ?? "")!)
-                    hud.hide(true, afterDelay: 1)
+                    hud?.mode = MBProgressHUDMode.text;
+                    hud?.labelText = String(describing: response)
+                    hud?.hide(true, afterDelay: 1)
                 }
             })
             
         }else {
             
-            hud.labelText = "正在收藏"
+            hud?.labelText = "正在收藏"
             
             HSMineHelper().addFavorite(QCLoginUserInfo.currentInfo.userid, refid: newsInfo.object_id, type: "1", title: newsInfo.post_title, description: newsInfo.post_excerpt, handle: { (success, response) in
                 if success {
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "收藏成功"
-                    hud.hide(true, afterDelay: 0.5)
+                    hud?.mode = MBProgressHUDMode.text;
+                    hud?.labelText = "收藏成功"
+                    hud?.hide(true, afterDelay: 0.5)
                     
                     //                    let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
                     //                    let model:LikeInfo = LikeInfo.init(JSONDecoder(dic))
@@ -323,15 +323,15 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                     
                     self.myTableView.reloadData()
                 }else{
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = String((response ?? "")!)
-                    hud.hide(true, afterDelay: 3)
+                    hud?.mode = MBProgressHUDMode.text;
+                    hud?.labelText = String(describing: response)
+                    hud?.hide(true, afterDelay: 3)
                 }
             })
         }
     }
     
-    func click1(btn:UIButton){
+    func click1(_ btn:UIButton){
         
         // MARK:要求登录
         if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: false) {
@@ -340,14 +340,14 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
         
         let newsInfo = self.dataSource.objectlist[btn.tag]
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //        hud.mode = MBProgressHUDMode.Text;
-        hud.margin = 10.0
-        hud.removeFromSuperViewOnHide = true
+        hud?.margin = 10.0
+        hud?.removeFromSuperViewOnHide = true
         
-        if btn.selected {
+        if btn.isSelected {
             
-            hud.labelText = "正在取消点赞"
+            hud?.labelText = "正在取消点赞"
             
             let url = PARK_URL_Header+"ResetLike"
             let param = [
@@ -355,7 +355,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                 "type":"1",
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
-            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
                 // print(request)
                 if(error != nil){
                     
@@ -365,20 +365,20 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                     // print(status.status)
                     if(status.status == "error"){
 
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = status.errorData
-                        hud.hide(true, afterDelay: 1)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = status.errorData
+                        hud?.hide(true, afterDelay: 1)
                     }
                     if(status.status == "success"){
                         
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "取消点赞成功"
-                        hud.hide(true, afterDelay: 0.5)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = "取消点赞成功"
+                        hud?.hide(true, afterDelay: 0.5)
                         // print(status.data)
                         
-                        for (i,obj) in (newsInfo.likes).enumerate() {
+                        for (i,obj) in (newsInfo.likes).enumerated() {
                             if obj.userid == QCLoginUserInfo.currentInfo.userid {
-                                newsInfo.likes.removeAtIndex(i)
+                                newsInfo.likes.remove(at: i)
                             }
                         }
                         
@@ -390,7 +390,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
             }
         }else {
             
-            hud.labelText = "正在点赞"
+            hud?.labelText = "正在点赞"
             
             let url = PARK_URL_Header+"SetLike"
             let param = [
@@ -399,7 +399,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                 "type":"1",
                 "userid":QCLoginUserInfo.currentInfo.userid,
                 ];
-            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
                 // print(request)
                 if(error != nil){
                     
@@ -409,18 +409,18 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                     // print(status.status)
                     if(status.status == "error"){
 
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = status.errorData
-                        hud.hide(true, afterDelay: 3)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = status.errorData
+                        hud?.hide(true, afterDelay: 3)
                     }
                     if(status.status == "success"){
                         
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "点赞成功"
-                        hud.hide(true, afterDelay: 0.5)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = "点赞成功"
+                        hud?.hide(true, afterDelay: 0.5)
                         
                         let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
-                        let model:LikeInfo = LikeInfo.init(JSONDecoder(dic))
+                        let model:LikeInfo = LikeInfo.init(JSONDecoder(dic as AnyObject))
                         newsInfo.likes.append(model)
                         self.dataSource.objectlist[btn.tag] = newsInfo
                         
@@ -438,58 +438,58 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     // MARK: 显示积分提示
-    func showScoreTips(name:String, score:String) {
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.opacity = 0.3
-        hud.margin = 10
-        hud.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
-        hud.mode = .CustomView
-        let customView = UIImageView(frame: CGRectMake(0, 0, WIDTH*0.8, WIDTH*0.8*238/537))
+    func showScoreTips(_ name:String, score:String) {
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud?.opacity = 0.3
+        hud?.margin = 10
+        hud?.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
+        hud?.mode = .customView
+        let customView = UIImageView(frame: CGRect(x: 0, y: 0, width: WIDTH*0.8, height: WIDTH*0.8*238/537))
         customView.image = UIImage(named: "scorePopImg.png")
-        let titLab = UILabel(frame: CGRectMake(
-            CGRectGetWidth(customView.frame)*351/537,
-            CGRectGetHeight(customView.frame)*30/238,
-            CGRectGetWidth(customView.frame)*174/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let titLab = UILabel(frame: CGRect(
+            x: customView.frame.width*351/537,
+            y: customView.frame.height*30/238,
+            width: customView.frame.width*174/537,
+            height: customView.frame.height*50/238))
         titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
-        titLab.textAlignment = .Left
-        titLab.font = UIFont.systemFontOfSize(16)
+        titLab.textAlignment = .left
+        titLab.font = UIFont.systemFont(ofSize: 16)
         titLab.text = name
         titLab.adjustsFontSizeToFitWidth = true
         customView.addSubview(titLab)
         
-        let scoreLab = UILabel(frame: CGRectMake(
-            CGRectGetWidth(customView.frame)*351/537,
-            CGRectGetHeight(customView.frame)*100/238,
-            CGRectGetWidth(customView.frame)*174/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let scoreLab = UILabel(frame: CGRect(
+            x: customView.frame.width*351/537,
+            y: customView.frame.height*100/238,
+            width: customView.frame.width*174/537,
+            height: customView.frame.height*50/238))
         scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
         
-        scoreLab.textAlignment = .Left
-        scoreLab.font = UIFont.systemFontOfSize(24)
+        scoreLab.textAlignment = .left
+        scoreLab.font = UIFont.systemFont(ofSize: 24)
         scoreLab.text = "+\(score)"
         scoreLab.adjustsFontSizeToFitWidth = true
         scoreLab.sizeToFit()
         customView.addSubview(scoreLab)
         
-        let jifenLab = UILabel(frame: CGRectMake(
-            CGRectGetMaxX(scoreLab.frame)+5,
-            CGRectGetHeight(customView.frame)*100/238,
-            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-5-CGRectGetWidth(customView.frame)*13/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let jifenLab = UILabel(frame: CGRect(
+            x: scoreLab.frame.maxX+5,
+            y: customView.frame.height*100/238,
+            width: customView.frame.width-scoreLab.frame.maxX-5-customView.frame.width*13/537,
+            height: customView.frame.height*50/238))
         jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
-        jifenLab.textAlignment = .Center
-        jifenLab.font = UIFont.systemFontOfSize(16)
+        jifenLab.textAlignment = .center
+        jifenLab.font = UIFont.systemFont(ofSize: 16)
         jifenLab.text = "护士币"
         jifenLab.adjustsFontSizeToFitWidth = true
         jifenLab.center.y = scoreLab.center.y
         customView.addSubview(jifenLab)
         
-        hud.customView = customView
-        hud.hide(true, afterDelay: 3)
+        hud?.customView = customView
+        hud?.hide(true, afterDelay: 3)
     }
     
-    func upDateUI(status:NSArray){
+    func upDateUI(_ status:NSArray){
         // print("更新UI")
         // print(status)
         //        if num == 2 {
@@ -498,48 +498,48 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
         //            self.GetData()
         //        }
         self.myTableView.reloadData()
-        let indexPath = NSIndexPath.init(forRow: status[0] as! Int, inSection: 0)
-        let cell = self.myTableView.cellForRowAtIndexPath(indexPath)as! AcademicTableViewCell
+        let indexPath = IndexPath.init(row: status[0] as! Int, section: 0)
+        let cell = self.myTableView.cellForRow(at: indexPath)as! AcademicTableViewCell
         if status[1] as! String=="1" {
-            cell.aca_zan.setImage(UIImage(named: "ic_like_sel"), forState: .Normal)
+            cell.aca_zan.setImage(UIImage(named: "ic_like_sel"), for: UIControlState())
         }else{
-            cell.aca_zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
+            cell.aca_zan.setImage(UIImage(named: "ic_like_gray.png"), for: UIControlState())
         }
         
     }
     
     //  MARK:- 点击出国百宝箱 功能
-    func selectorCountry(btn:UIButton) {
+    func selectorCountry(_ btn:UIButton) {
         // print(btn.tag)
         let vc = HSWebViewDetailController(nibName: "HSWebViewDetailController", bundle: nil)
-        vc.navigationController?.navigationBar.hidden = false
+        vc.navigationController?.navigationBar.isHidden = false
         if btn.tag == 0 {
             //            vc.url = NSURL(string: "http://fanyi.youdao.com")
-            vc.url = NSURL(string: "http://m.youdao.com/translate?vendor=fanyi.web")
+            vc.url = URL(string: "http://m.youdao.com/translate?vendor=fanyi.web")
             vc.title = "翻译"
         }else if btn.tag == 1{
-            vc.url = NSURL(string: "http://www.boc.cn/sourcedb/whpj")
+            vc.url = URL(string: "http://www.boc.cn/sourcedb/whpj")
             vc.title = "汇率"
         }else if btn.tag == 2{
-            vc.url = NSURL(string: "http://time.123cha.com")
+            vc.url = URL(string: "http://time.123cha.com")
             vc.title = "时差"
         }else if btn.tag == 3{
-            vc.url = NSURL(string: "http://www.chsi.com.cn/xlcx")
+            vc.url = URL(string: "http://www.chsi.com.cn/xlcx")
             vc.title = "学历查询"
         }else if btn.tag == 4{
-            vc.url = NSURL(string: "http://www.weather.com.cn")
+            vc.url = URL(string: "http://www.weather.com.cn")
             vc.title = "天气查询"
         }else if btn.tag == 5{
-            vc.url = NSURL(string: "http://map.baidu.com")
+            vc.url = URL(string: "http://map.baidu.com")
             vc.title = "地图查询"
         }else if btn.tag == 6{
-            vc.url = NSURL(string: "http://flight.qunar.com")
+            vc.url = URL(string: "http://flight.qunar.com")
             vc.title = "机票查询"
         }else if btn.tag == 7{
-            vc.url = NSURL(string: "http://m.ctrip.com/html5/")
+            vc.url = URL(string: "http://m.ctrip.com/html5/")
             vc.title = "酒店"
         }else if btn.tag == 8{
-            vc.url = NSURL(string: "http://baidu.com")
+            vc.url = URL(string: "http://baidu.com")
             vc.title = "签证"
         }
         navigationController?.pushViewController(vc, animated: true)
@@ -547,7 +547,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
     }
     
     // MARK:更新模型
-    func changeModel(newInfo: NewsInfo, andIndex: Int) {
+    func changeModel(_ newInfo: NewsInfo, andIndex: Int) {
         self.dataSource.objectlist[andIndex] = newInfo
         self.myTableView.reloadData()
     }

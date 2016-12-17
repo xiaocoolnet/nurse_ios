@@ -76,9 +76,9 @@ class CVModel: JSONJoy {
         address = decoder["address"].string ?? ""
         
         currentsalary = decoder["currentsalary"].string ?? ""
-        currentsalary = currentsalary.stringByReplacingOccurrencesOfString("&lt;", withString: "<")
-        currentsalary = currentsalary.stringByReplacingOccurrencesOfString("&gt;", withString: ">")
-        currentsalary = currentsalary.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
+        currentsalary = currentsalary.replacingOccurrences(of: "&lt;", with: "<")
+        currentsalary = currentsalary.replacingOccurrences(of: "&gt;", with: ">")
+        currentsalary = currentsalary.replacingOccurrences(of: "&amp;", with: "&")
         
         certificate = decoder["certificate"].string ?? ""
         count = decoder["count"].string ?? ""
@@ -98,8 +98,8 @@ class CVModel: JSONJoy {
         create_time = decoder["create_time"].string ?? ""
         
         wantsalary = decoder["wantsalary"].string ?? ""
-        wantsalary = wantsalary.stringByReplacingOccurrencesOfString("&lt;", withString: "<")
-        wantsalary = wantsalary.stringByReplacingOccurrencesOfString("&gt;", withString: ">")
-        wantsalary = wantsalary.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
+        wantsalary = wantsalary.replacingOccurrences(of: "&lt;", with: "<")
+        wantsalary = wantsalary.replacingOccurrences(of: "&gt;", with: ">")
+        wantsalary = wantsalary.replacingOccurrences(of: "&amp;", with: "&")
     }
 }

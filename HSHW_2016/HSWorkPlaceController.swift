@@ -13,20 +13,20 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
     var newsList:Array<NewsInfo>?
     var articleID:String?
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 招聘 " + (self.title ?? "")!)
+        BaiduMobStat.default().pageviewStart(withName: "护士站 招聘 " + (self.title ?? "")!)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 招聘 " + (self.title ?? "")!)
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 招聘 " + (self.title ?? "")!)
     }
     
     override func viewDidLoad() {
-        listTableView.registerClass(TouTiaoTableViewCell.self, forCellReuseIdentifier: "zhichangbaodiancell")
+        listTableView.register(TouTiaoTableViewCell.self, forCellReuseIdentifier: "zhichangbaodiancell")
         listTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         listTableView.mj_header.beginRefreshing()
         
@@ -34,7 +34,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
         
         listTableView.tableFooterView = UIView()
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
     }
@@ -49,7 +49,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
             "userid":QCLoginUserInfo.currentInfo.userid,
             "show_fav":"1"
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 
 //        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             //            print(request)
@@ -62,12 +62,12 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
                 }
                 if (status.status == "success") {
                     self.newsList = NewsList(status.data!).objectlist
-                    dispatch_async(dispatch_get_main_queue(), {
+                    DispatchQueue.main.async(execute: {
                         self.listTableView.reloadData()
                     })
                 }
             }
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 self.listTableView.mj_header.endRefreshing()
             })
             
@@ -88,7 +88,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
                     self.newsList?.append(element)
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.listTableView.reloadData()
                     self.pager += 1
                 })
@@ -97,7 +97,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
                 
             }else{
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     
                     self.listTableView.mj_footer.endRefreshingWithNoMoreData()
                     
@@ -106,7 +106,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
         }
     }
 
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let newsInfo = newsList![indexPath.row]
         
 //        let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
@@ -138,7 +138,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
 
     }
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if newsList != nil {
             return newsList!.count
         }else{
@@ -146,9 +146,9 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
         }
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell{
-        let cell = tableView.dequeueReusableCellWithIdentifier("zhichangbaodiancell") as! TouTiaoTableViewCell
-        cell.selectionStyle = .None
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        let cell = tableView.dequeueReusableCell(withIdentifier: "zhichangbaodiancell") as! TouTiaoTableViewCell
+        cell.selectionStyle = .none
         cell.delegate = self
         let newsInfo = self.newsList![indexPath.row]
 //        print(newsInfo.thumbArr.count)
@@ -160,7 +160,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
         return cell
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        print(indexPath.row)
         let newsInfo = newsList![indexPath.row]
         let next = NewsContantViewController()
@@ -172,7 +172,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     // MARK: 点击分类按钮
-    func cateBtnClicked(categoryBtn: UIButton) {
+    func cateBtnClicked(_ categoryBtn: UIButton) {
         let cateDetail = GNewsCateDetailViewController()
         cateDetail.newsType = categoryBtn.tag
         cateDetail.type = 1
@@ -182,7 +182,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     // MARK:更新模型
-    func changeModel(newInfo: NewsInfo, andIndex: Int) {
+    func changeModel(_ newInfo: NewsInfo, andIndex: Int) {
         self.newsList![andIndex] = newInfo
         self.listTableView.reloadData()
     }

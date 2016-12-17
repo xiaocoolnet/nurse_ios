@@ -17,12 +17,12 @@ enum PortType{
 //定义协议改变Label内容
 protocol ChangeWordDelegate:NSObjectProtocol{
     //回调方法
-    func changeWord(controller:HSStateEditResumeController,string:String)
+    func changeWord(_ controller:HSStateEditResumeController,string:String)
 }
 
 class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    private static let _shareInstance = HSStateEditResumeController()
+    fileprivate static let _shareInstance = HSStateEditResumeController()
     class func getShareInstance()-> HSStateEditResumeController{
         return _shareInstance;
     }
@@ -43,23 +43,23 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
         self.view.backgroundColor = COLOR
         // Do any additional setup after loading the view.
         
-        myTableView.frame = CGRectMake(0, 0, WIDTH, HEIGHT-108)
-        myTableView.backgroundColor = UIColor.whiteColor()
+        myTableView.frame = CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT-108)
+        myTableView.backgroundColor = UIColor.white
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.bounces = false
         self.view.addSubview(myTableView)
         
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dateSource.objectlist.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell  {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath)
-        cell.selectionStyle = .None
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell  {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.selectionStyle = .none
         
         let eduInfo  = self.dateSource.objectlist[indexPath.row]
         cell.textLabel?.text = eduInfo.name
@@ -67,16 +67,16 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // print(1111)
         let eduInfo = self.dateSource.objectlist[indexPath.row]
         QCLoginUserInfo.currentInfo.education = eduInfo.name
         delegate?.changeWord(self, string: eduInfo.name)
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popViewController(animated: true)
         // print(eduInfo.name)
     }
     
-    func dataGet(portType:PortType){
+    func dataGet(_ portType:PortType){
         
         let url = PARK_URL_Header+"getDictionaryList"
         var param = ["type":"1"]
@@ -102,7 +102,7 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
         }
         // print(param)
         
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 
 //        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
             if(error != nil){
@@ -112,11 +112,11 @@ class HSStateEditResumeController: UIViewController, UITableViewDelegate, UITabl
                 // print("状态是")
                 // print(status.status)
                 if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud?.mode = MBProgressHUDMode.text;
+                    hud?.margin = 10.0
+                    hud?.removeFromSuperViewOnHide = true
+                    hud?.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
                     // print(status)

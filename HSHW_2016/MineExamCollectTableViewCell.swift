@@ -25,18 +25,18 @@ class MineExamCollectTableViewCell: UITableViewCell {
             view.removeFromSuperview()
         }
         
-        titImg.frame = CGRectMake(10, 10, 50, 50)
+        titImg.frame = CGRect(x: 10, y: 10, width: 50, height: 50)
 //        titImg.layer.cornerRadius = 25
 //        titImg.clipsToBounds = true
         
-        titleLab.frame = CGRectMake(75, 10, 150, 50)
-        titleLab.font = UIFont.systemFontOfSize(16)
+        titleLab.frame = CGRect(x: 75, y: 10, width: 150, height: 50)
+        titleLab.font = UIFont.systemFont(ofSize: 16)
         
-        timeLab.frame = CGRectMake(WIDTH - 80 - 20, 10, 100, 50)
-        timeLab.textColor = UIColor.darkGrayColor()
-        timeLab.font = UIFont.systemFontOfSize(14)
+        timeLab.frame = CGRect(x: WIDTH - 80 - 20, y: 10, width: 100, height: 50)
+        timeLab.textColor = UIColor.darkGray
+        timeLab.font = UIFont.systemFont(ofSize: 14)
         
-        let line = UILabel(frame: CGRectMake(0, 69.5, WIDTH, 0.5))
+        let line = UILabel(frame: CGRect(x: 0, y: 69.5, width: WIDTH, height: 0.5))
         line.backgroundColor = GREY
         
         self.addSubview(titImg)
@@ -70,18 +70,18 @@ class MineExamCollectTableViewCell: UITableViewCell {
     }
     
     // Linux时间戳转标准时间
-    func timeStampToString(timeStamp:String)->String {
+    func timeStampToString(_ timeStamp:String)->String {
         
         let string = NSString(string: timeStamp)
         
-        let timeSta:NSTimeInterval = string.doubleValue
-        let dfmatter = NSDateFormatter()
+        let timeSta:TimeInterval = string.doubleValue
+        let dfmatter = DateFormatter()
         dfmatter.dateFormat="yyyy-MM-dd"
         
-        let date = NSDate(timeIntervalSince1970: timeSta)
+        let date = Date(timeIntervalSince1970: timeSta)
         
 //        print(dfmatter.stringFromDate(date))
-        return dfmatter.stringFromDate(date)
+        return dfmatter.string(from: date)
     }
     
 
@@ -91,7 +91,7 @@ class MineExamCollectTableViewCell: UITableViewCell {
     }
 
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

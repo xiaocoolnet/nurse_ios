@@ -36,7 +36,7 @@ class NSCircleDetailTopTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
@@ -44,55 +44,55 @@ class NSCircleDetailTopTableViewCell: UITableViewCell {
     
     func setSubViews() {
         
-        topImg.contentMode = .ScaleAspectFill
+        topImg.contentMode = .scaleAspectFill
         topImg.clipsToBounds = true
-        topImg.frame = CGRectMake(8, 8, 14, 14)
+        topImg.frame = CGRect(x: 8, y: 8, width: 14, height: 14)
         topImg.image = UIImage(named: "置顶")
         self.addSubview(topImg)
         
-        bestImg.contentMode = .ScaleAspectFill
+        bestImg.contentMode = .scaleAspectFill
         bestImg.clipsToBounds = true
-        bestImg.frame = CGRectMake(27, 8, 14, 14)
+        bestImg.frame = CGRect(x: 27, y: 8, width: 14, height: 14)
         bestImg.image = UIImage(named: "加精")
         self.addSubview(bestImg)
         
-        titleLab.font = UIFont.systemFontOfSize(titleSize)
-        titleLab.textColor = UIColor.blackColor()        
+        titleLab.font = UIFont.systemFont(ofSize: titleSize)
+        titleLab.textColor = UIColor.black        
         
     }
     
-    private let titleSize:CGFloat = 14
+    fileprivate let titleSize:CGFloat = 14
     
-    func setCellWithNewsInfo(forum:ForumModel) {
+    func setCellWithNewsInfo(_ forum:ForumModel) {
         
         var titleX:CGFloat = 8
         
         if forum.istop == "1" {
-            topImg.hidden = false
-            topImg.frame = CGRectMake(8, 8, 14, 14)
+            topImg.isHidden = false
+            topImg.frame = CGRect(x: 8, y: 8, width: 14, height: 14)
             titleX = 30
         }else{
-            topImg.hidden = true
+            topImg.isHidden = true
         }
         
         if forum.isbest == "1" {
-            bestImg.hidden = false
+            bestImg.isHidden = false
             
             if forum.istop == "1" {
-                topImg.hidden = false
-                bestImg.frame = CGRectMake(27, 8, 14, 14)
+                topImg.isHidden = false
+                bestImg.frame = CGRect(x: 27, y: 8, width: 14, height: 14)
                 titleX = 49
             }else{
-                topImg.hidden = true
-                bestImg.frame = CGRectMake(8, 8, 14, 14)
+                topImg.isHidden = true
+                bestImg.frame = CGRect(x: 8, y: 8, width: 14, height: 14)
                 titleX = 30
             }
         }else{
-            bestImg.hidden = true
+            bestImg.isHidden = true
         }
         
 //        let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16-110-8)
-        self.titleLab.frame = CGRectMake(titleX, 0, WIDTH-8-titleX, 30)
+        self.titleLab.frame = CGRect(x: titleX, y: 0, width: WIDTH-8-titleX, height: 30)
         
         self.titleLab.text = forum.title
         

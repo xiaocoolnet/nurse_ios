@@ -16,7 +16,7 @@ class MineMessageTableViewCell: UITableViewCell {
     let imgBtn = UIImageView()
     let small = UIButton()
     
-    var indexPath:NSIndexPath = NSIndexPath()
+    var indexPath:IndexPath = IndexPath()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,23 +32,23 @@ class MineMessageTableViewCell: UITableViewCell {
 //        imgBtn.frame = CGRectMake(10, 10, 60, 60)
         imgBtn.layer.cornerRadius = 6
         imgBtn.clipsToBounds = true
-        imgBtn.contentMode = .ScaleAspectFill
+        imgBtn.contentMode = .scaleAspectFill
         
 //        small.frame = CGRectMake(CGRectGetMaxX(imgBtn.frame)-5, CGRectGetMinY(imgBtn.frame)-5, 10, 10)
         
 //        titleLable.frame = CGRectMake(85, 10, WIDTH-10-85, 30)
-        titleLable.font = UIFont.systemFontOfSize(17)
+        titleLable.font = UIFont.systemFont(ofSize: 17)
         titleLable.numberOfLines = 0
-        titleLable.textColor = UIColor.blackColor()
+        titleLable.textColor = UIColor.black
         
 //        nameLable.frame = CGRectMake(85, 40, WIDTH*(WIDTH - 105)/375, 30)
-        nameLable.font = UIFont.systemFontOfSize(16)
+        nameLable.font = UIFont.systemFont(ofSize: 16)
         nameLable.textColor = GREY
         
 //        timeLable.frame = CGRectMake(WIDTH - 130, 10, 120, 30)
-        timeLable.font = UIFont.systemFontOfSize(16)
+        timeLable.font = UIFont.systemFont(ofSize: 16)
         timeLable.textColor = GREY
-        timeLable.textAlignment = NSTextAlignment.Right
+        timeLable.textAlignment = NSTextAlignment.right
 
 //        let line = UILabel(frame: CGRectMake(0, 80, WIDTH, 0.5))
 //        line.backgroundColor = GREY
@@ -66,7 +66,7 @@ class MineMessageTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

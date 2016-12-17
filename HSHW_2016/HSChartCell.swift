@@ -116,8 +116,8 @@ class HSChartCell: UITableViewCell {
 ////                }
                 
                 
-                chartView = NSBundle.mainBundle().loadNibNamed("CFLineChartView", owner: nil, options: nil).last as? CFLineChartView
-                chartView!.frame = CGRectMake(0, 0, chartLineView.frame.size.width, chartLineView.frame.size.height)
+                chartView = Bundle.main.loadNibNamed("CFLineChartView", owner: nil, options: nil)?.last as? CFLineChartView
+                chartView!.frame = CGRect(x: 0, y: 0, width: chartLineView.frame.size.width, height: chartLineView.frame.size.height)
                 chartView?.selfConfigure()
                 
                 chartView?.xValues = xValues
@@ -128,7 +128,7 @@ class HSChartCell: UITableViewCell {
                 chartView!.isShowPoint = true
                 chartView!.isShowPillar = false
                 chartView!.isShowValue = false
-                chartView!.drawChartWithLineChartType(LineChartType.Straight, pointType: PointType.Circel)
+                chartView!.drawChart(with: LineChartType.straight, pointType: PointType.circel)
                 chartLineView.addSubview(chartView!)
             }
         }
@@ -153,18 +153,18 @@ class HSChartCell: UITableViewCell {
     }
     
     // Linux时间戳转标准时间
-    func timeStampToString(timeStamp:String)->String {
+    func timeStampToString(_ timeStamp:String)->String {
         
         let string = NSString(string: timeStamp)
         
-        let timeSta:NSTimeInterval = string.doubleValue
-        let dfmatter = NSDateFormatter()
+        let timeSta:TimeInterval = string.doubleValue
+        let dfmatter = DateFormatter()
         dfmatter.dateFormat="MM-dd"
         
-        let date = NSDate(timeIntervalSince1970: timeSta)
+        let date = Date(timeIntervalSince1970: timeSta)
         
 //        print(dfmatter.stringFromDate(date))
-        return dfmatter.stringFromDate(date)
+        return dfmatter.string(from: date)
     }
     
     override func awakeFromNib() {
@@ -172,7 +172,7 @@ class HSChartCell: UITableViewCell {
 
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

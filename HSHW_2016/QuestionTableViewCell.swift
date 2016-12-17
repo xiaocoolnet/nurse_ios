@@ -31,36 +31,36 @@ class QuestionTableViewCell: UITableViewCell {
         for view in self.contentView.subviews {
             view.removeFromSuperview()
         }
-        titImage.frame = CGRectMake(10, 20, 25, 35)
-        titImage.setImage(UIImage(named: "ic_wirte.png"), forState: .Normal)
-        titLab.frame = CGRectMake(40, 18, WIDTH-45, 18)
-        titLab.font = UIFont.systemFontOfSize(14)
+        titImage.frame = CGRect(x: 10, y: 20, width: 25, height: 35)
+        titImage.setImage(UIImage(named: "ic_wirte.png"), for: UIControlState())
+        titLab.frame = CGRect(x: 40, y: 18, width: WIDTH-45, height: 18)
+        titLab.font = UIFont.systemFont(ofSize: 14)
         titLab.numberOfLines = 0
 //        titLeb.frame = CGRectMake(40, 40, WIDTH/2, 17)
 //        titLeb.font = UIFont.systemFontOfSize(14)
-        eyeImage.frame = CGRectMake(40, 21, 12, 8)
-        eyeImage.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
+        eyeImage.frame = CGRect(x: 40, y: 21, width: 12, height: 8)
+        eyeImage.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), for: UIControlState())
         
-        hitsNum.frame = CGRectMake(57, 40, 35, 17)
-        hitsNum.font = UIFont.systemFontOfSize(12)
-        hitsNum.textColor = UIColor.grayColor()
+        hitsNum.frame = CGRect(x: 57, y: 40, width: 35, height: 17)
+        hitsNum.font = UIFont.systemFont(ofSize: 12)
+        hitsNum.textColor = UIColor.gray
         
-        likeImage.frame = CGRectMake(WIDTH-60, 43, 10, 10)
+        likeImage.frame = CGRect(x: WIDTH-60, y: 43, width: 10, height: 10)
 //        conImage.setImage(UIImage(named: "ic_collect_sel.png"), forState: .Normal)
-        likeImage.setBackgroundImage(UIImage(named: "ic_like_sel.png"), forState: .Selected)
-        likeImage.setBackgroundImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
+        likeImage.setBackgroundImage(UIImage(named: "ic_like_sel.png"), for: .selected)
+        likeImage.setBackgroundImage(UIImage(named: "ic_like_gray.png"), for: UIControlState())
         
-        zanNum.frame = CGRectMake(WIDTH-40, 16, 35, 18)
-        zanNum.font = UIFont.systemFontOfSize(12)
-        zanNum.textColor = UIColor.grayColor()
+        zanNum.frame = CGRect(x: WIDTH-40, y: 16, width: 35, height: 18)
+        zanNum.font = UIFont.systemFont(ofSize: 12)
+        zanNum.textColor = UIColor.gray
         
-        colBtn.frame = CGRectMake(WIDTH-100, (WIDTH-20)*0.5+40, 20, 20)
-        colBtn.setImage(UIImage(named: "ic_collect_nor"), forState: .Normal)
-        colBtn.setImage(UIImage(named: "ic_collect_sel"), forState: .Selected)
+        colBtn.frame = CGRect(x: WIDTH-100, y: (WIDTH-20)*0.5+40, width: 20, height: 20)
+        colBtn.setImage(UIImage(named: "ic_collect_nor"), for: UIControlState())
+        colBtn.setImage(UIImage(named: "ic_collect_sel"), for: .selected)
         
-        colNum.frame = CGRectMake(WIDTH-80, (WIDTH-20)*0.5+36, 60, 20)
-        colNum.font = UIFont.systemFontOfSize(12)
-        colNum.textColor = UIColor.grayColor()
+        colNum.frame = CGRect(x: WIDTH-80, y: (WIDTH-20)*0.5+36, width: 60, height: 20)
+        colNum.font = UIFont.systemFont(ofSize: 12)
+        colNum.textColor = UIColor.gray
 //        let line = UILabel(frame: CGRectMake(0, 74.5, WIDTH, 0.5))
 //        line.backgroundColor = GREY
 //        
@@ -78,18 +78,18 @@ class QuestionTableViewCell: UITableViewCell {
     var newsInfo:NewsInfo? {
         didSet {
             
-            likeImage.selected = false
-            colBtn.selected = false
+            likeImage.isSelected = false
+            colBtn.isSelected = false
             
             let height = calculateHeight((newsInfo?.post_title)!, size: 14, width: WIDTH-45)
             self.titLab.text = newsInfo?.post_title
             self.titLab.frame.size.height = height
             
-            self.eyeImage.frame.origin.y = CGRectGetMaxY(self.titLab.frame)+10
+            self.eyeImage.frame.origin.y = self.titLab.frame.maxY+10
             
             self.hitsNum.text = "\((newsInfo?.post_hits)!) 人学习"
             self.hitsNum.sizeToFit()
-            self.hitsNum.frame.origin.x = CGRectGetMaxX(self.eyeImage.frame)+5
+            self.hitsNum.frame.origin.x = self.eyeImage.frame.maxX+5
             self.hitsNum.center.y = self.eyeImage.center.y
             
             self.colNum.text = "\((newsInfo?.favorites_count ?? "0")!)"
@@ -105,18 +105,18 @@ class QuestionTableViewCell: UITableViewCell {
             self.zanNum.frame.origin.x = colBtn.frame.origin.x-10-self.zanNum.frame.size.width
             self.zanNum.center.y = self.eyeImage.center.y
             
-            self.likeImage.frame.origin.x = CGRectGetMinX(zanNum.frame)-5-self.likeImage.frame.size.width
+            self.likeImage.frame.origin.x = zanNum.frame.minX-5-self.likeImage.frame.size.width
             self.likeImage.center.y = self.eyeImage.center.y
             
             
             for obj in newsInfo!.likes {
                 if obj.userid == QCLoginUserInfo.currentInfo.userid {
-                    likeImage.selected = true
+                    likeImage.isSelected = true
                 }
             }
             
             if newsInfo?.favorites_add == "1" {
-                colBtn.selected = true
+                colBtn.isSelected = true
             }
 //            for obj in newsInfo!.favorites {
 //                if obj.userid == QCLoginUserInfo.currentInfo.userid {
@@ -130,7 +130,7 @@ class QuestionTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

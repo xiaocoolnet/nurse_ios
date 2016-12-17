@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 import SwiftyJSON
 
-let WIDTH = UIScreen.mainScreen().bounds.size.width
-let HEIGHT = UIScreen.mainScreen().bounds.size.height
+let WIDTH = UIScreen.main.bounds.size.width
+let HEIGHT = UIScreen.main.bounds.size.height
 let COLOR = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 1.0)
 let GREY = UIColor(red: 158/255.0, green: 158/255.0, blue: 158/255.0, alpha: 1.0)
 let RGREY = UIColor(red: 242/255.0, green: 242/255.0, blue: 242/255.0, alpha: 1.0)
@@ -53,31 +53,31 @@ let APP_INVITEFRIEND_DESCRIPTION_ZONE = "成为中国护士网会员，会享受
 let APP_INVITEFRIEND_DESCRIPTION_FREND = "邀请护士好友加入中国护士网，赚积分赢大奖，OPPO、VIVO更多大奖等你拿>>"
 let APP_INVITEFRIEND_URL = "\(DomainName)index.php?g=Score&m=Score&a=scorepengyou&userid="
 //var myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
-var myInviteFriendUrl = NSUserDefaults.standardUserDefaults().stringForKey("myInviteFriendUrl") ?? APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
+var myInviteFriendUrl = UserDefaults.standard.string(forKey: "myInviteFriendUrl") ?? APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
 
 var loadPictureOnlyWiFi = false
 var canLookTel = false
 
 //let ZAN_URL_Header = "http://wxt.xiaocool.net/index.php?g=apps&m=index&a="
 
-func calculateHeight(string:String,size:CGFloat,width:  CGFloat) -> CGFloat {
-    let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+func calculateHeight(_ string:String,size:CGFloat,width:  CGFloat) -> CGFloat {
+    let options : NSStringDrawingOptions = NSStringDrawingOptions.usesLineFragmentOrigin
     //let screenBounds:CGRect = UIScreen.mainScreen().bounds
-    let boundingRect = String(string).boundingRectWithSize(CGSizeMake(width, 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(size)], context: nil)
+    let boundingRect = String(string).boundingRect(with: CGSize(width: width, height: 0), options: options, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: size)], context: nil)
 //    print(boundingRect.height)
     return boundingRect.height
 }
 
-func calculateWidth(string:String,size:CGFloat,height:  CGFloat) -> CGFloat {
-    let options : NSStringDrawingOptions = NSStringDrawingOptions.UsesLineFragmentOrigin
+func calculateWidth(_ string:String,size:CGFloat,height:  CGFloat) -> CGFloat {
+    let options : NSStringDrawingOptions = NSStringDrawingOptions.usesLineFragmentOrigin
     //let screenBounds:CGRect = UIScreen.mainScreen().bounds
-    let boundingRect = String(string).boundingRectWithSize(CGSizeMake(0, height), options: options, attributes: [NSFontAttributeName:UIFont.systemFontOfSize(size)], context: nil)
+    let boundingRect = String(string).boundingRect(with: CGSize(width: 0, height: height), options: options, attributes: [NSFontAttributeName:UIFont.systemFont(ofSize: size)], context: nil)
 
     return boundingRect.width
 }
 
 
-typealias TimerHandle = (timeInterVal:Int)->Void
+typealias TimerHandle = (_ timeInterVal:Int)->Void
 
 //计时器类
 class TimeManager{
@@ -85,9 +85,9 @@ class TimeManager{
     
     //两行代码创建一个单例
     static let shareManager = TimeManager()
-    private init() {
+    fileprivate init() {
     }
-    func begainTimerWithKey(key:String,timeInterval:Float,process:TimerHandle,finish:TimerHandle){
+    func begainTimerWithKey(_ key:String,timeInterval:Float,process:@escaping TimerHandle,finish:@escaping TimerHandle){
         if taskDic.count > 20 {
             print("任务太多")
             return
@@ -111,19 +111,19 @@ class TimeTask :NSObject{
     var leftTime:Float = 0
     var totolTime:Float = 0
     var backgroundID:UIBackgroundTaskIdentifier?
-    var timer:NSTimer?
+    var timer:Timer?
     
-    func configureWithTime(myKey:String,time:Float,processHandle:TimerHandle,finishHandle:TimerHandle) -> TimeTask {
-        backgroundID = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler(nil)
+    func configureWithTime(_ myKey:String,time:Float,processHandle:@escaping TimerHandle,finishHandle:@escaping TimerHandle) -> TimeTask {
+        backgroundID = UIApplication.shared.beginBackgroundTask(expirationHandler: nil)
         key = myKey
         totolTime = time
         leftTime = totolTime
         FHandle = finishHandle
         PHandle = processHandle
-        timer = NSTimer(timeInterval: 1.0, target: self, selector:#selector(sendHandle), userInfo: nil, repeats: true)
+        timer = Timer(timeInterval: 1.0, target: self, selector:#selector(sendHandle), userInfo: nil, repeats: true)
         
         //将timer源写入runloop中被监听，commonMode-滑动不停止
-        NSRunLoop.currentRunLoop().addTimer(self.timer!, forMode: NSRunLoopCommonModes)
+        RunLoop.current.add(self.timer!, forMode: RunLoopMode.commonModes)
         return self
     }
     
@@ -131,13 +131,13 @@ class TimeTask :NSObject{
         leftTime -= 1
         if leftTime > 0 {
             if PHandle != nil {
-                PHandle!(timeInterVal:Int(leftTime))
+                PHandle!(Int(leftTime))
             }
         }else{
             timer?.invalidate()
-            TimeManager.shareManager.taskDic.removeValueForKey(key!)
+            TimeManager.shareManager.taskDic.removeValue(forKey: key!)
             if FHandle != nil {
-                FHandle!(timeInterVal: 0)
+                FHandle!(0)
             }
         }
     }
@@ -145,7 +145,7 @@ class TimeTask :NSObject{
 
 }
 
-func requiredLogin(nav:UINavigationController?, previousViewController:UIViewController, hiddenNavigationBar:Bool) -> Bool{
+func requiredLogin(_ nav:UINavigationController?, previousViewController:UIViewController, hiddenNavigationBar:Bool) -> Bool{
     
     print(LOGIN_STATE)
     
@@ -168,56 +168,56 @@ func requiredLogin(nav:UINavigationController?, previousViewController:UIViewCon
 }
 
 // MARK:检测是否收藏 type: 1 新闻  2 考试  4 论坛帖子  5招聘  6用户
-func checkHadFavorite(refid:String, type:String, handle:ResponseBlock){
+func checkHadFavorite(_ refid:String, type:String, handle:@escaping ResponseBlock){
     let url = PARK_URL_Header+"CheckHadFavorite"
     let param = [
         "userid":QCLoginUserInfo.currentInfo.userid,
         "type":type,
         "refid":refid
     ];
-    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 
 //    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
 //        print(request)
         if(error != nil){
-            handle(success: false, response: error?.description)
+            handle(false, error?.localizedDescription as AnyObject?)
         }else{
             let result = JSONDecoder(json!)["status"].string ?? ""
             if(result == "success"){
-                handle(success: true, response: nil)
+                handle(true, nil)
             }else{
-                handle(success: false, response: nil)
+                handle(false, nil)
             }
         }
     }
 }
 // MARK:检测是否点赞 type: 1 新闻  2 论坛
-func checkHadLike(id:String, type:String, handle:ResponseBlock){
+func checkHadLike(_ id:String, type:String, handle:@escaping ResponseBlock){
     let url = PARK_URL_Header+"CheckHadLike"
     let param = [
         "userid":QCLoginUserInfo.currentInfo.userid,
         "type":type,
         "id":id
     ];
-    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 
 //    Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in
 //        print(request)
         if(error != nil){
-            handle(success: false, response: error?.description)
+            handle(false, error?.localizedDescription as AnyObject?)
         }else{
             let result = JSONDecoder(json!)["status"].string ?? ""
             if(result == "success"){
-                handle(success: true, response: nil)
+                handle(true, nil)
             }else{
-                handle(success: false, response: nil)
+                handle(false, nil)
             }
         }
     }
 }
 
 //  提示框
-func alert(message:String,delegate:AnyObject){
+func alert(_ message:String,delegate:AnyObject){
     let alert = UIAlertView(title: "提示信息", message: message, delegate: delegate, cancelButtonTitle: "确定")
     alert.show()
 }
@@ -247,7 +247,7 @@ func getInvitedUrl() {
 //    }
 }
 
-func getShareNewsUrl(originalUrlStr:String) {
+func getShareNewsUrl(_ originalUrlStr:String) {
     
     myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
 
@@ -272,13 +272,13 @@ func getShareNewsUrl(originalUrlStr:String) {
 }
 
 enum ValidatedType {
-    case Email
-    case PhoneNumber
+    case email
+    case phoneNumber
 }
 func ValidateText(validatedType type: ValidatedType, validateString: String) -> Bool {
     do {
         let pattern: String
-        if type == ValidatedType.Email {
+        if type == ValidatedType.email {
             pattern = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$"
         }
         else {
@@ -287,19 +287,19 @@ func ValidateText(validatedType type: ValidatedType, validateString: String) -> 
 //        (^(13[0-9]|15[0-9]|18[0-9]|17[0-9]|147)\d{8}$)|(^(0\d{2})-(\d{8})$)|(^(0\d{3})-(\d{7,8})$)|(^(0\d{2})-(\d{8})-(\d+)$)|(^(0\d{3})-(\d{7,8})-(\d+)$)
 //        (^(0\d{2})-(\d{8})$)|(^(0\d{3})-(\d{7})$)|(^(0\d{2})-(\d{8})-(\d+)$)|(^(0\d{3})-(\d{7})-(\d+)$)
         
-        let regex: NSRegularExpression = try NSRegularExpression(pattern: pattern, options: NSRegularExpressionOptions.CaseInsensitive)
-        let matches = regex.matchesInString(validateString, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, validateString.characters.count))
+        let regex: NSRegularExpression = try NSRegularExpression(pattern: pattern, options: NSRegularExpression.Options.caseInsensitive)
+        let matches = regex.matches(in: validateString, options: NSRegularExpression.MatchingOptions.reportProgress, range: NSMakeRange(0, validateString.characters.count))
         return matches.count > 0
     }
     catch {
         return false
     }
 }
-func EmailIsValidated(vStr: String) -> Bool {
-    return ValidateText(validatedType: ValidatedType.Email, validateString: vStr)
+func EmailIsValidated(_ vStr: String) -> Bool {
+    return ValidateText(validatedType: ValidatedType.email, validateString: vStr)
 }
-func PhoneNumberIsValidated(vStr: String) -> Bool {
-    return ValidateText(validatedType: ValidatedType.PhoneNumber, validateString: vStr)
+func PhoneNumberIsValidated(_ vStr: String) -> Bool {
+    return ValidateText(validatedType: ValidatedType.phoneNumber, validateString: vStr)
 }
 
 

@@ -8,6 +8,30 @@
 
 import UIKit
 import MBProgressHUD
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
 
 protocol PostVacanciesDelegate:NSObjectProtocol{
     func clickedSendBtn()
@@ -92,8 +116,8 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     var alreadyCertify = true {
         didSet {
             if alreadyCertify {
-                coverView.frame = CGRectMake(0, 90, WIDTH, 45*4)
-                coverView.addTarget(self, action: #selector(coverBtnClick), forControlEvents: .TouchUpInside)
+                coverView.frame = CGRect(x: 0, y: 90, width: WIDTH, height: 45*4)
+                coverView.addTarget(self, action: #selector(coverBtnClick), for: .touchUpInside)
                 self.myScrollview.addSubview(coverView)
                 
             }else{
@@ -104,19 +128,19 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     
     func coverBtnClick() {
         // 重新认证
-        let alert = UIAlertController(title: "您已进行企业认证", message: "如需修改企业信息，请到我的招聘中重新认证", preferredStyle: .Alert)
-        UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController(alert, animated: true, completion: nil)
+        let alert = UIAlertController(title: "您已进行企业认证", message: "如需修改企业信息，请到我的招聘中重新认证", preferredStyle: .alert)
+        UIApplication.shared.keyWindow?.rootViewController!.present(alert, animated: true, completion: nil)
         
-        let doneAction = UIAlertAction(title: "确定", style: .Default, handler: nil)
+        let doneAction = UIAlertAction(title: "确定", style: .default, handler: nil)
         alert.addAction(doneAction)
         
 
     }
    
-    @IBAction func sendBtnClicked(sender: AnyObject) {
+    @IBAction func sendBtnClicked(_ sender: AnyObject) {
         //        if delegate != nil {
         
-        if postNameField.text != "" && firmNameField.text != "" && resumeFeild.text != "" && linkmanField.text != "" && phoneField.text != "" && workplaceBtn.selected && detailPlaceTF.text != "" && positionBtn.selected && conditionBtn.selected &&  expBtn.selected && treatmentBtn.selected && personBtn.selected && moneyBtn.selected && requestField.text != "" {
+        if postNameField.text != "" && firmNameField.text != "" && resumeFeild.text != "" && linkmanField.text != "" && phoneField.text != "" && workplaceBtn.isSelected && detailPlaceTF.text != "" && positionBtn.isSelected && conditionBtn.isSelected &&  expBtn.isSelected && treatmentBtn.isSelected && personBtn.isSelected && moneyBtn.isSelected && requestField.text != "" {
             
             
             if !PhoneNumberIsValidated(phoneField.text!) {
@@ -125,48 +149,48 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
                 
                 if phoneField.text!.hasPrefix("0") {
                     messageStr = "请填写正确的电话号码\n区号与座机号之间用-隔开"
-                }else if 7 <= phoneField.text!.characters.count && phoneField.text!.characters.count <= 8 && phoneField.text?.stringByTrimmingCharactersInSet(NSCharacterSet.decimalDigitCharacterSet()).characters.count <= 0 {
+                }else if 7 <= phoneField.text!.characters.count && phoneField.text!.characters.count <= 8 && phoneField.text?.trimmingCharacters(in: CharacterSet.decimalDigits).characters.count <= 0 {
                     messageStr = "请填写正确的电话号码\n（包含区号）"
                 }
                 
                 
                 
-                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString(messageStr, comment: "empty message"), preferredStyle: .Alert)
-                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString(messageStr, comment: "empty message"), preferredStyle: .alert)
+                let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: nil)
                 alertController.addAction(doneAction)
                 
-                UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
+                UIApplication.shared.keyWindow?.rootViewController!.present(alertController, animated: true, completion: nil)
 
                 return
             }
             if !EmailIsValidated(mailboxField.text!) {
-                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的邮箱地址", comment: "empty message"), preferredStyle: .Alert)
-                let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+                let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请填写正确的邮箱地址", comment: "empty message"), preferredStyle: .alert)
+                let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: nil)
                 alertController.addAction(doneAction)
                 
-                UIApplication.sharedApplication().keyWindow?.rootViewController!.presentViewController(alertController, animated: true, completion: nil)
+                UIApplication.shared.keyWindow?.rootViewController!.present(alertController, animated: true, completion: nil)
 
                 return
             }
 
             
-            let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
+            let hud = MBProgressHUD.showAdded(to: self, animated: true)
             //                hud.mode = MBProgressHUDMode.Text;
-            hud.labelText = "正在提交"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 1)
+            hud?.labelText = "正在提交"
+            hud?.margin = 10.0
+            hud?.removeFromSuperViewOnHide = true
+            hud?.hide(true, afterDelay: 1)
             
             HSNurseStationHelper().publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, linkman: linkmanField.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionLab.text!, education: conditionLab.text!, experience: expLab.text!, welfare: treatmentLab.text!, address: placeLab_1.text!+"-"+placeLab_2.text!+"-"+placeLab_3.text!+" "+detailPlaceTF.text!, count: personLab.text!, salary: moneyLab.text!, description: requestField.text) { (success, response) in
                 // print(success)
                 
                 if success {
                     
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = "提交成功"
-                    hud.hide(true, afterDelay: 1)
+                    hud?.mode = MBProgressHUDMode.text;
+                    hud?.labelText = "提交成功"
+                    hud?.hide(true, afterDelay: 1)
                     
-                    self.selfNav?.popViewControllerAnimated(true)
+                    self.selfNav?.popViewController(animated: true)
                     //                        self.delegate?.clickedSendBtn()
                     
                     
@@ -197,18 +221,18 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
                     self.requestField.text = nil
                     self.requestLabel.text = "职位要求"
                 }else {
-                    hud.hide(true)
-                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .Alert)
-                    let doneAction = UIAlertAction(title: "重试", style: .Default, handler: { (action) in
+                    hud?.hide(true)
+                    let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("网络错误，请重试", comment: "empty message"), preferredStyle: .alert)
+                    let doneAction = UIAlertAction(title: "重试", style: .default, handler: { (action) in
                         self.sendBtnClicked(sender)
                     })
                     alertController.addAction(doneAction)
                     
-                    let cancelAction = UIAlertAction(title: "取消", style: .Cancel, handler: nil)
+                    let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: nil)
                     alertController.addAction(cancelAction)
                     
                     let vc = self.responderVC()
-                    vc!.presentViewController(alertController, animated: true, completion: nil)
+                    vc!.present(alertController, animated: true, completion: nil)
                 }
                 
             }
@@ -248,21 +272,21 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             //                    mailboxField.layer.cornerRadius = 2
             //                }
             
-            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善招聘信息", comment: "empty message"), preferredStyle: .Alert)
-            let doneAction = UIAlertAction(title: "确定", style: .Cancel, handler: nil)
+            let alertController = UIAlertController(title: NSLocalizedString("", comment: "Warn"), message: NSLocalizedString("请完善招聘信息", comment: "empty message"), preferredStyle: .alert)
+            let doneAction = UIAlertAction(title: "确定", style: .cancel, handler: nil)
             alertController.addAction(doneAction)
             
             let vc = responderVC()
-            vc!.presentViewController(alertController, animated: true, completion: nil)
+            vc!.present(alertController, animated: true, completion: nil)
         }
 
     }
     
     func responderVC() -> (UIViewController?) {
         var temp:AnyObject
-        temp = nextResponder()!
-        while ((temp.isKindOfClass(UIViewController)) != true) {
-            temp = temp.nextResponder()!
+        temp = next!
+        while ((temp is UIViewController) != true) {
+            temp = temp.next!!
         }
         return temp as? UIViewController
     }
@@ -273,11 +297,11 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         // 设置下拉列表样式
         customizeDropDown()
         
-        sendBtn.layer.borderColor = COLOR.CGColor
+        sendBtn.layer.borderColor = COLOR.cgColor
         sendBtn.layer.borderWidth = 1
         sendBtn.layer.cornerRadius = sendBtn.frame.height/2
         
-        bordView.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
+        bordView.layer.borderColor = UIColor.init(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).cgColor
         bordView.layer.borderWidth = 1
         
         
@@ -295,12 +319,12 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         //        dropDownDic = ["position":["职位1","职位2"],"condition":["条件1","条件2"],"treatment":["福利1","福利2"],"person":["人数1","人数2"],"money":["薪资1","薪资2"]]
         //        setDropDownMenu()
         
-        if (UIApplication.sharedApplication().keyWindow != nil) {
+        if (UIApplication.shared.keyWindow != nil) {
             
-            let tabBar = UIApplication.sharedApplication().keyWindow?.rootViewController as! UITabBarController
+            let tabBar = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
             selfNav = tabBar.selectedViewController as? UINavigationController
             
-            mainHud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
+            mainHud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
             mainHud.labelText = "正在获取招聘信息"
             mainHud.removeFromSuperViewOnHide = true
         }
@@ -312,14 +336,14 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         getDictionaryList("11", key: "money")
         getDictionaryList("15", key: "experience")
         
-        firmNameField.borderStyle = .None
-        resumeFeild.borderStyle = .None
-        linkmanField.borderStyle = .None
-        phoneField.borderStyle = .None
-        mailboxField.borderStyle = .None
-        postNameField.borderStyle = .None
+        firmNameField.borderStyle = .none
+        resumeFeild.borderStyle = .none
+        linkmanField.borderStyle = .none
+        phoneField.borderStyle = .none
+        mailboxField.borderStyle = .none
+        postNameField.borderStyle = .none
         
-        detailPlaceTF.borderStyle = .None
+        detailPlaceTF.borderStyle = .none
         
         
         //        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(HSPostDetailViewController.keyboardWillAppear(_:)), name: UIKeyboardWillShowNotification, object: nil)
@@ -333,7 +357,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
 
     }
     
-    func getDictionaryList(type:String, key:String) {
+    func getDictionaryList(_ type:String, key:String) {
         
         dropDownDic[key] = Array<String>()
         
@@ -341,7 +365,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         let param = ["type":type]
         // print(param)
         
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             self.getDicCheckFlag += 1
             // print("self.getDicCheckFlag  ===  ",self.getDicCheckFlag)
             if(error != nil){
@@ -388,7 +412,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     // MARK: 获取企业认证状态
     func getCompanyStatus() {
         HSMineHelper().getCompanyCertify { (success, response) in
-            // print("1234567890====== \(String((response ?? "")!))")
+            // print("1234567890====== \(String(describing: response))")
             if success {
 //                hud.mode = MBProgressHUDMode.Text
 //                hud.labelText = "获取企业认证状态成功"
@@ -435,7 +459,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         
         positionDrop.bottomOffset = CGPoint(x: 0, y: positionBtn.bounds.height)
         positionDrop.width = 200
-        positionDrop.direction = .Bottom
+        positionDrop.direction = .bottom
         
         positionDrop.dataSource = dropDownDic["position"]!
 //        self.positionLab.text = dropDownDic["position"]?.first
@@ -449,7 +473,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             self.positionLab.text = item
             self.positionLab.sizeToFit()
             self.positionLab.center.y = self.positionBtn.center.y
-            self.positionImg.frame.origin.x = CGRectGetMaxX(self.positionLab.frame)+5
+            self.positionImg.frame.origin.x = self.positionLab.frame.maxX+5
             
 //            self.eduLab.text = item
 //            self.eduLab.sizeToFit()
@@ -463,7 +487,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         
         coditionDrop.bottomOffset = CGPoint(x: 0, y: conditionBtn.bounds.height)
         coditionDrop.width = 200
-        coditionDrop.direction = .Bottom
+        coditionDrop.direction = .bottom
         
         coditionDrop.dataSource = dropDownDic["condition"]!
 //        self.conditionLab.text = dropDownDic["condition"]?.first
@@ -474,11 +498,11 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         // 下拉列表选中后的回调方法
         coditionDrop.selectionAction = { (index, item) in
             
-            self.conditionBtn.selected = true
+            self.conditionBtn.isSelected = true
             self.conditionLab.text = item
             self.conditionLab.sizeToFit()
             self.conditionLab.center.y = self.conditionBtn.center.y
-            self.conditionImg.frame.origin.x = CGRectGetMaxX(self.conditionLab.frame)+5
+            self.conditionImg.frame.origin.x = self.conditionLab.frame.maxX+5
         }
         
         // 经验
@@ -486,7 +510,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         
         expDrop.bottomOffset = CGPoint(x: 0, y: expBtn.bounds.height)
         expDrop.width = 200
-        expDrop.direction = .Bottom
+        expDrop.direction = .bottom
         
         expDrop.dataSource = dropDownDic["experience"]!
         //        self.conditionLab.text = dropDownDic["condition"]?.first
@@ -497,11 +521,11 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         // 下拉列表选中后的回调方法
         expDrop.selectionAction = { (index, item) in
             
-            self.expBtn.selected = true
+            self.expBtn.isSelected = true
             self.expLab.text = item
             self.expLab.sizeToFit()
             self.expLab.center.y = self.expBtn.center.y
-            self.expImg.frame.origin.x = CGRectGetMaxX(self.expLab.frame)+5
+            self.expImg.frame.origin.x = self.expLab.frame.maxX+5
         }
 
         // 福利待遇
@@ -509,7 +533,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         
         treatmentDrop.bottomOffset = CGPoint(x: 0, y: treatmentBtn.bounds.height)
         treatmentDrop.width = 200
-        treatmentDrop.direction = .Bottom
+        treatmentDrop.direction = .bottom
         
         treatmentDrop.dataSource = dropDownDic["treatment"]!
 //        self.treatmentLab.text = dropDownDic["treatment"]?.first
@@ -520,12 +544,12 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         // 下拉列表选中后的回调方法
         treatmentDrop.selectionAction = { (index, item) in
             
-            self.treatmentBtn.selected = true
+            self.treatmentBtn.isSelected = true
             
             self.treatmentLab.text = item
             self.treatmentLab.sizeToFit()
             self.treatmentLab.center.y = self.treatmentBtn.center.y
-            self.treatmentImg.frame.origin.x = CGRectGetMaxX(self.treatmentLab.frame)+5
+            self.treatmentImg.frame.origin.x = self.treatmentLab.frame.maxX+5
         }
         
         // 招聘人数
@@ -533,7 +557,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         
         personDrop.bottomOffset = CGPoint(x: 0, y: personBtn.bounds.height)
         personDrop.width = 200
-        personDrop.direction = .Bottom
+        personDrop.direction = .bottom
         
         personDrop.dataSource = dropDownDic["person"]!
 //        self.personLab.text = dropDownDic["person"]?.first
@@ -544,12 +568,12 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         // 下拉列表选中后的回调方法
         personDrop.selectionAction = { (index, item) in
             
-            self.personBtn.selected = true
+            self.personBtn.isSelected = true
             
             self.personLab.text = item
             self.personLab.sizeToFit()
             self.personLab.center.y = self.personBtn.center.y
-            self.personImg.frame.origin.x = CGRectGetMaxX(self.personLab.frame)+5
+            self.personImg.frame.origin.x = self.personLab.frame.maxX+5
         }
         
         // 薪资待遇
@@ -557,7 +581,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         
         moneyDrop.bottomOffset = CGPoint(x: 0, y: moneyBtn.bounds.height)
         moneyDrop.width = 200
-        moneyDrop.direction = .Bottom
+        moneyDrop.direction = .bottom
         
         moneyDrop.dataSource = dropDownDic["money"]!
 //        self.moneyLab.text = dropDownDic["money"]?.first
@@ -568,12 +592,12 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         // 下拉列表选中后的回调方法
         moneyDrop.selectionAction = { (index, item) in
             
-            self.moneyBtn.selected = true
+            self.moneyBtn.isSelected = true
             
             self.moneyLab.text = item
             self.moneyLab.sizeToFit()
             self.moneyLab.center.y = self.moneyBtn.center.y
-            self.moneyImg.frame.origin.x = CGRectGetMaxX(self.moneyLab.frame)+5
+            self.moneyImg.frame.origin.x = self.moneyLab.frame.maxX+5
         }
         
         mainHud.hide(true)
@@ -592,11 +616,11 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         appearance.shadowOpacity = 0.9
         appearance.shadowRadius = 25
         appearance.animationduration = 0.25
-        appearance.textColor = .darkGrayColor()
+        appearance.textColor = .darkGray
         //		appearance.textFont = UIFont(name: "Georgia", size: 14)
     }
 
-    @IBAction func workplaceBtnClick(sender: AnyObject) {
+    @IBAction func workplaceBtnClick(_ sender: AnyObject) {
 
         
         postNameField.resignFirstResponder()
@@ -615,7 +639,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         pick.showTown=true
         pick.pickArray=array // 设置第一次加载时需要跳转到相对应的地址
 
-        pick.show((UIApplication.sharedApplication().keyWindow)!)
+        pick.show((UIApplication.shared.keyWindow)!)
         // 选择完成之后回调
         pick.selectAdress { (dressArray) in
             
@@ -632,22 +656,22 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             
             self.placeLab_1.sizeToFit()
             self.placeLab_1.center.y = self.placeImg_1.center.y
-            self.placeImg_1.frame.origin.x = CGRectGetMaxX(self.placeLab_1.frame)+5
+            self.placeImg_1.frame.origin.x = self.placeLab_1.frame.maxX+5
             
             
-            self.placeLab_2.frame.origin.x = CGRectGetMaxX(self.placeImg_1.frame)+5
+            self.placeLab_2.frame.origin.x = self.placeImg_1.frame.maxX+5
 //            self.placeLab_2.adjustsFontSizeToFitWidth = true
             self.placeLab_2.sizeToFit()
             self.placeLab_2.center.y = self.placeLab_1.center.y
-            self.placeImg_2.frame.origin.x = CGRectGetMaxX(self.placeLab_2.frame)+5
+            self.placeImg_2.frame.origin.x = self.placeLab_2.frame.maxX+5
             
-            self.placeLab_3.frame.origin.x = CGRectGetMaxX(self.placeImg_2.frame)+5
+            self.placeLab_3.frame.origin.x = self.placeImg_2.frame.maxX+5
 //            self.placeLab_3.adjustsFontSizeToFitWidth = true
             self.placeLab_3.sizeToFit()
             self.placeLab_3.center.y = self.placeLab_1.center.y
-            self.placeImg_3.frame.origin.x = CGRectGetMaxX(self.placeLab_3.frame)+5
+            self.placeImg_3.frame.origin.x = self.placeLab_3.frame.maxX+5
             
-            (sender as! UIButton).selected = true
+            (sender as! UIButton).isSelected = true
         }
         
     }
@@ -686,63 +710,63 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
 //    }
 
     
-    @IBAction func positionBtnClick(sender: AnyObject) {
+    @IBAction func positionBtnClick(_ sender: AnyObject) {
         
         resignTextFieldFirstResponder()
 
 //        listShow(sender as! UIView, andType: PortType.position)
         positionDrop.show()
-        positionBtn.selected = true
-        positionBtn.tintColor = UIColor.clearColor()
+        positionBtn.isSelected = true
+        positionBtn.tintColor = UIColor.clear
     }
     
-    @IBAction func conditionBtnClick(sender: AnyObject) {
+    @IBAction func conditionBtnClick(_ sender: AnyObject) {
         
         resignTextFieldFirstResponder()
 
 //        listShow(sender as! UIView, andType: PortType.condition)
         coditionDrop.show()
-        conditionBtn.selected = true
-        conditionBtn.tintColor = UIColor.clearColor()
+        conditionBtn.isSelected = true
+        conditionBtn.tintColor = UIColor.clear
     }
     
-    @IBAction func expBtnClick(sender: AnyObject) {
+    @IBAction func expBtnClick(_ sender: AnyObject) {
         
         resignTextFieldFirstResponder()
         
         //        listShow(sender as! UIView, andType: PortType.condition)
         expDrop.show()
-        expBtn.selected = true
-        expBtn.tintColor = UIColor.clearColor()
+        expBtn.isSelected = true
+        expBtn.tintColor = UIColor.clear
     }
-    @IBAction func treatmentBtnClick(sender: AnyObject) {
+    @IBAction func treatmentBtnClick(_ sender: AnyObject) {
         
         resignTextFieldFirstResponder()
 
 //        listShow(sender as! UIView, andType: PortType.welfare)
         treatmentDrop.show()
-        treatmentBtn.selected = true
-        treatmentBtn.tintColor = UIColor.clearColor()
+        treatmentBtn.isSelected = true
+        treatmentBtn.tintColor = UIColor.clear
     }
     
-    @IBAction func personBtnClick(sender: AnyObject) {
+    @IBAction func personBtnClick(_ sender: AnyObject) {
         
         resignTextFieldFirstResponder()
 
 //        listShow(sender as! UIView, andType: PortType.number)
         personDrop.show()
-        personBtn.selected = true
-        personBtn.tintColor = UIColor.clearColor()
+        personBtn.isSelected = true
+        personBtn.tintColor = UIColor.clear
     }
     
-    @IBAction func moneyBtnClick(sender: AnyObject) {
+    @IBAction func moneyBtnClick(_ sender: AnyObject) {
         
         resignTextFieldFirstResponder()
         
 //        listShow(sender as! UIView, andType: PortType.money)
         moneyDrop.show()
-        moneyBtn.selected = true
-        moneyBtn.tintColor = UIColor.clearColor()
+        moneyBtn.isSelected = true
+        moneyBtn.tintColor = UIColor.clear
     }
     
     // 放弃textField的第一响应
@@ -763,10 +787,10 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     
     var portType: PortType = .defaut
     
-    func listShow(onView:UIView, andType type:PortType) {
+    func listShow(_ onView:UIView, andType type:PortType) {
         portType = type
         dataGet(type)
-        bgView.frame = CGRectMake(0, 0, WIDTH, HEIGHT)
+        bgView.frame = CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT)
         self.myScrollview.addSubview(bgView)
         
 //        chooseTableView = UITableView.init(frame: CGRectMake(CGRectGetMinX(onView.frame)+20, CGRectGetMaxY(onView.superview!.frame), CGRectGetWidth(onView.frame)-20, 108), style: .Plain)
@@ -835,7 +859,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
 //        }
 //    }
     
-    func dataGet(portType:PortType){
+    func dataGet(_ portType:PortType){
         
         let url = PARK_URL_Header+"getDictionaryList"
         var param = ["type":"1"]
@@ -856,7 +880,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         }
         // print(param)
         
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             if(error != nil){
                 
             }else{
@@ -864,11 +888,11 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
                 // print("状态是")
                 // print(status.status)
                 if(status.status == "error"){
-                    let hud = MBProgressHUD.showHUDAddedTo(self, animated: true)
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1)
+                    let hud = MBProgressHUD.showAdded(to: self, animated: true)
+                    hud?.mode = MBProgressHUDMode.text;
+                    hud?.margin = 10.0
+                    hud?.removeFromSuperViewOnHide = true
+                    hud?.hide(true, afterDelay: 1)
                 }
                 if(status.status == "success"){
                     // print(status)
@@ -888,22 +912,22 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     var keyboardHeight:CGFloat = 0.0
     var flag = true // 防止键盘弹起方法走两次
     
-    func keyboardWillAppear(notification: NSNotification) {
+    func keyboardWillAppear(_ notification: Notification) {
         
         // 获取键盘信息
         let keyboardinfo = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]
         
-        let keyboardheight:CGFloat = (keyboardinfo?.CGRectValue.size.height)!
-        if requestField.isFirstResponder() && flag {
+        let keyboardheight:CGFloat = ((keyboardinfo as AnyObject).cgRectValue.size.height)
+        if requestField.isFirstResponder && flag {
             
-            UIView.animateWithDuration(0.3) {
+            UIView.animate(withDuration: 0.3, animations: {
                 //                self.myScrollView.contentOffset = CGPoint.init(x: 0, y: self.myScrollView.contentSize.height-self.myScrollView.frame.size.height+keyboardheight)
                 //                self.myScrollView.frame = CGRectMake(self.myScrollView.frame.origin.x, self.myScrollView.frame.origin.y, self.myScrollView.frame.size.width, self.myScrollView.frame.size.height-keyboardheight)
                 self.myScrollview.frame.size.height = self.myScrollview.frame.size.height-keyboardheight
                 self.myScrollview.contentOffset.y = self.myScrollview.contentSize.height-self.myScrollview.frame.size.height
                 self.keyboardHeight = keyboardheight
                 self.flag = false
-            }
+            }) 
         }
         
         // print("键盘弹起")
@@ -911,23 +935,23 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         
     }
     
-    func keyboardWillDisappear(notification:NSNotification){
+    func keyboardWillDisappear(_ notification:Notification){
         
         if self.myScrollview.frame.size.height<=HEIGHT-64-keyboardHeight {
             
-            UIView.animateWithDuration(0.3) {
+            UIView.animate(withDuration: 0.3, animations: {
                 //            self.myScrollview.contentOffset = CGPoint.init(x: 0, y: self.myScrollview.contentSize.height-self.myScrollview.frame.size.height)
                 
                 self.myScrollview.frame.size.height = self.myScrollview.frame.size.height+self.keyboardHeight
                 self.flag = true
-            }
+            }) 
         }
         // print("键盘落下")
     }
 
     
     //MARK:UITextViewDelegate
-    func textViewDidChange(textView: UITextView) {
+    func textViewDidChange(_ textView: UITextView) {
         if (textView.text == "") {
             requestLabel.text = "职位要求"
         }else{

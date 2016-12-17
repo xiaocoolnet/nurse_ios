@@ -12,7 +12,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     
     let scrollView = UIScrollView()
     let pageControl = UIPageControl()
-    var timer = NSTimer()
+    var timer = Timer()
     
     let choose:[String] = ["A、消化道症状","B、胃液分析","C、胃镜检查","D、血清学检查","E、胃肠X线检查"]
     let picArr:[String] = ["btn_arrow_left.png","btn_arrow_right.png","ic_fenlei.png","btn_eye.png","btn_collect.png"]
@@ -26,7 +26,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     var time = UILabel()
     let grayBack = UIView()
     var hear = Bool()
-    var timeNow = NSTimer()
+    var timeNow = Timer()
     var hour : Int = 0
     var minute:Int = 0
     var second:Int = 0
@@ -54,7 +54,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     var startPage = 0
     var questionCount = "100"
     var hasChooseIndex = NSMutableArray()
-    let touch = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT-54))
+    let touch = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT-54))
     
     let number = UILabel()
     var num = 1
@@ -64,20 +64,20 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     
     var type = ""
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("学习 "+(self.title ?? "")!)
+        BaiduMobStat.default().pageviewStart(withName: "学习 "+(self.title ?? "")!)
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("学习 "+(self.title ?? "")!)
+        BaiduMobStat.default().pageviewEnd(withName: "学习 "+(self.title ?? "")!)
     }
     
-    override func viewWillAppear(animated: Bool) {
-        self.tabBarController?.tabBar.hidden = true
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = true
         self.getData()
     }
     
@@ -86,15 +86,15 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         
 //        self.title = "在线考试"
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 1))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
-        let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: #selector(takeUpTheTest))
+        let rightBtn = UIBarButtonItem(title: "提交", style: .done, target: self, action: #selector(takeUpTheTest))
         navigationItem.rightBarButtonItem = rightBtn
         
-                self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_back_big"), style: .Done, target: self, action: #selector(clickBackBarButton))
+                self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_back_big"), style: .done, target: self, action: #selector(clickBackBarButton))
         
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor.white
         self.isSubmit  = false
         collection = false
         // Do any additional setup after loading the view.
@@ -105,21 +105,21 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         
         if (hour != 0 || minute != 0 || second != 0) && !isSubmit {
             
-            let alertController = UIAlertController(title: "时间尚未结束", message: "是否退出？", preferredStyle: .Alert)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            let alertController = UIAlertController(title: "时间尚未结束", message: "是否退出？", preferredStyle: .alert)
+            self.present(alertController, animated: true, completion: nil)
             
-            let cancelAction = UIAlertAction(title: "是", style: .Cancel) { (cancelAction) in
-                self.navigationController?.popViewControllerAnimated(true)
+            let cancelAction = UIAlertAction(title: "是", style: .cancel) { (cancelAction) in
+                self.navigationController?.popViewController(animated: true)
             }
             alertController.addAction(cancelAction)
             
-            let answerAction = UIAlertAction(title: "否", style: .Default){
+            let answerAction = UIAlertAction(title: "否", style: .default){
                 (cancelAction) in
                 
             }
             alertController.addAction(answerAction)
         }else{
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popViewController(animated: true)
         }
 //        else{
 //            let alertController = UIAlertController(title: "尚未提交", message: "是否提交？", preferredStyle: .Alert)
@@ -140,7 +140,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     
     func submit(){
 //        if isSubmit == false {
-            let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: #selector(self.takeUpTheTest))
+            let rightBtn = UIBarButtonItem(title: "提交", style: .done, target: self, action: #selector(self.takeUpTheTest))
             navigationItem.rightBarButtonItem = rightBtn
 //        }else if isSubmit == true {
 //            let rightBtn = UIBarButtonItem(title: "提交", style: .Done, target: self, action: nil)
@@ -149,24 +149,24 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     }
 
     
-    override func viewWillDisappear(animated: Bool) {
-        if timeNow.valid {
+    override func viewWillDisappear(_ animated: Bool) {
+        if timeNow.isValid {
             timeNow.invalidate()
         }
         if over == false {
-            UIView.animateWithDuration(0.3, animations: {
-                self.questBack_uncommit.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
-                self.questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.questBack_uncommit.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-119)
+                self.questBack.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-119)
             })
-            btnOne.setImage(UIImage(named: picArr[2]), forState: .Normal)
+            btnOne.setImage(UIImage(named: picArr[2]), for: UIControlState())
             TitQues.textColor = GREY
             over = true
         }
     }
     
     func getData(){
-        let user = NSUserDefaults.standardUserDefaults()
-        let uid = user.stringForKey("userid")
+        let user = UserDefaults.standard
+        let uid = user.string(forKey: "userid")
         let url = PARK_URL_Header+"getDaliyExamList"
         let param = [
             "userid":uid,
@@ -174,19 +174,19 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             "count":questionCount
         ]
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
 //        hud.mode = MBProgressHUDMode.Text;
-        hud.labelText = "正在获取试题详情"
-        hud.margin = 10.0
-        hud.removeFromSuperViewOnHide = true
+        hud?.labelText = "正在获取试题详情"
+        hud?.margin = 10.0
+        hud?.removeFromSuperViewOnHide = true
         
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String]) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String] as [String : AnyObject]?) { (json, error) in
 
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 if(error != nil){
-                    hud.mode = MBProgressHUDMode.Text;
-                    hud.labelText = error?.localizedDescription
-                    hud.hide(true, afterDelay: 1)
+                    hud?.mode = MBProgressHUDMode.text;
+                    hud?.labelText = error?.localizedDescription
+                    hud?.hide(true, afterDelay: 1)
                 }else{
                     let status = EveryDayModel(JSONDecoder(json!))
                     // print("状态是")
@@ -197,15 +197,15 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                         self.dataSource = DaliyExamList(status.data!).objectlist
                         // print(self.dataSource.count)
                         
-                        hud.hide(true, afterDelay: 1)
+                        hud?.hide(true, afterDelay: 1)
 
                         if self.dataSource.count == 0 {
-                            hud.mode = MBProgressHUDMode.Text;
-                            hud.labelText = "尚无试题"
-                            hud.hide(true, afterDelay: 1)
+                            hud?.mode = MBProgressHUDMode.text;
+                            hud?.labelText = "尚无试题"
+                            hud?.hide(true, afterDelay: 1)
                             
                         }else{
-                            hud.hide(true, afterDelay: 1)
+                            hud?.hide(true, afterDelay: 1)
                         
                             self.createScrollerView()
                             self.AnswerView()
@@ -218,11 +218,11 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
 
                     }else{
                         //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = status.errorData
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = status.errorData
                         //                        hud.margin = 10.0
                         //                        hud.removeFromSuperViewOnHide = true
-                        hud.hide(true, afterDelay: 1)
+                        hud?.hide(true, afterDelay: 1)
                     }
                 }
             })
@@ -231,7 +231,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     
     func timeDow()
     {
-        timeNow = NSTimer.scheduledTimerWithTimeInterval(1.0, target:self, selector: #selector(OnLineViewController.updateTime), userInfo: nil, repeats: true)
+        timeNow = Timer.scheduledTimer(timeInterval: 1.0, target:self, selector: #selector(OnLineViewController.updateTime), userInfo: nil, repeats: true)
     }
     
     func updateTime()
@@ -333,29 +333,29 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
 //            hud.removeFromSuperViewOnHide = true
 //            hud.hide(true, afterDelay: 1)
             
-            let alertController = UIAlertController(title: "时间到", message: "尚未答题", preferredStyle: .Alert)
-            self.presentViewController(alertController, animated: true, completion: nil)
+            let alertController = UIAlertController(title: "时间到", message: "尚未答题", preferredStyle: .alert)
+            self.present(alertController, animated: true, completion: nil)
             
-            let cancelAction = UIAlertAction(title: "退出", style: .Cancel) { (cancelAction) in
-                self.navigationController?.popViewControllerAnimated(true)
+            let cancelAction = UIAlertAction(title: "退出", style: .cancel) { (cancelAction) in
+                self.navigationController?.popViewController(animated: true)
             }
             alertController.addAction(cancelAction)
             
-            let answerAction = UIAlertAction(title: "答案解析", style: .Default){
+            let answerAction = UIAlertAction(title: "答案解析", style: .default){
                 (cancelAction) in
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     
                     //                            let btn = UIButton()
                     //                            btn.tag = 4
                     self.bottomBtnClick(self.btnTwo)
                     
-                    let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-                    hud.mode = MBProgressHUDMode.Text
-                    hud.labelText = "点击 < 答案 > 按钮即可查看答案"
-                    hud.margin = 10.0
-                    hud.removeFromSuperViewOnHide = true
-                    hud.hide(true, afterDelay: 1.5)
+                    let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
+                    hud?.mode = MBProgressHUDMode.text
+                    hud?.labelText = "点击 < 答案 > 按钮即可查看答案"
+                    hud?.margin = 10.0
+                    hud?.removeFromSuperViewOnHide = true
+                    hud?.hide(true, afterDelay: 1.5)
                 })
             }
             alertController.addAction(answerAction)
@@ -363,70 +363,70 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             return
         }
         
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         //        hud.mode = MBProgressHUDMode.;
-        hud.labelText = "时间到"
-        hud.detailsLabelText = "正在提交..."
-        hud.margin = 10.0
-        hud.removeFromSuperViewOnHide = true
+        hud?.labelText = "时间到"
+        hud?.detailsLabelText = "正在提交..."
+        hud?.margin = 10.0
+        hud?.removeFromSuperViewOnHide = true
         
         HSStudyNetHelper.sendtestAnswerByType("2", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
             
             if(success){
-                dispatch_async(dispatch_get_main_queue(), {
-                    hud.hide(true)
+                DispatchQueue.main.async(execute: {
+                    hud?.hide(true)
                     self.navigationItem.rightBarButtonItem = nil
                     let result = response as! ScoreDataModel
                     
-                    var time: NSTimeInterval = 0.0
+                    var time: TimeInterval = 0.0
                     if result.event != "" {
                         self.showScoreTips(result.event, score: result.score)
                         time = 3.0
                     }
                     
-                    let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(time * Double(NSEC_PER_SEC)))
+                    let delay = DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                     
-                    dispatch_after(delay, dispatch_get_main_queue()) {
+                    DispatchQueue.main.asyncAfter(deadline: delay) {
                         
-                        let alertController = UIAlertController(title: "提交成功", message: "得分\(result.allscore)", preferredStyle: .Alert)
-                        self.presentViewController(alertController, animated: true, completion: nil)
+                        let alertController = UIAlertController(title: "提交成功", message: "得分\(result.allscore)", preferredStyle: .alert)
+                        self.present(alertController, animated: true, completion: nil)
                         
-                        let cancelAction = UIAlertAction(title: "退出", style: .Cancel) { (cancelAction) in
-                            self.navigationController?.popViewControllerAnimated(true)
+                        let cancelAction = UIAlertAction(title: "退出", style: .cancel) { (cancelAction) in
+                            self.navigationController?.popViewController(animated: true)
                         }
                         alertController.addAction(cancelAction)
                         
-                        let answerAction = UIAlertAction(title: "答案解析", style: .Default){
+                        let answerAction = UIAlertAction(title: "答案解析", style: .default){
                             (cancelAction) in
                             
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 
                                 //                            let btn = UIButton()
                                 //                            btn.tag = 4
                                 self.bottomBtnClick(self.btnTwo)
                                 
-                                let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-                                hud.mode = MBProgressHUDMode.Text
-                                hud.labelText = "点击 < 答案 > 按钮即可查看答案"
-                                hud.margin = 10.0
-                                hud.removeFromSuperViewOnHide = true
-                                hud.hide(true, afterDelay: 1.5)
+                                let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
+                                hud?.mode = MBProgressHUDMode.text
+                                hud?.labelText = "点击 < 答案 > 按钮即可查看答案"
+                                hud?.margin = 10.0
+                                hud?.removeFromSuperViewOnHide = true
+                                hud?.hide(true, afterDelay: 1.5)
                             })
                         }
                         alertController.addAction(answerAction)
                     }
                 })
             }else{
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     
-                    hud.hide(false)
+                    hud?.hide(false)
                     
-                    let hud2 = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud2.mode = MBProgressHUDMode.Text;
-                    hud2.labelText = "提交失败，请稍后再试"
-                    hud2.margin = 10.0
-                    hud2.removeFromSuperViewOnHide = true
-                    hud2.hide(true, afterDelay: 2)
+                    let hud2 = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud2?.mode = MBProgressHUDMode.text;
+                    hud2?.labelText = "提交失败，请稍后再试"
+                    hud2?.margin = 10.0
+                    hud2?.removeFromSuperViewOnHide = true
+                    hud2?.hide(true, afterDelay: 2)
                 })
             }
             // print(response)
@@ -435,55 +435,55 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     
 
     // MARK: 显示积分提示
-    func showScoreTips(name:String, score:String) {
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.opacity = 0.3
-        hud.margin = 10
-        hud.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
-        hud.mode = .CustomView
-        let customView = UIImageView(frame: CGRectMake(0, 0, WIDTH*0.8, WIDTH*0.8*238/537))
+    func showScoreTips(_ name:String, score:String) {
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud?.opacity = 0.3
+        hud?.margin = 10
+        hud?.color = UIColor(red: 145/255.0, green: 26/255.0, blue: 107/255.0, alpha: 0.3)
+        hud?.mode = .customView
+        let customView = UIImageView(frame: CGRect(x: 0, y: 0, width: WIDTH*0.8, height: WIDTH*0.8*238/537))
         customView.image = UIImage(named: "scorePopImg.png")
-        let titLab = UILabel(frame: CGRectMake(
-            CGRectGetWidth(customView.frame)*351/537,
-            CGRectGetHeight(customView.frame)*30/238,
-            CGRectGetWidth(customView.frame)*174/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let titLab = UILabel(frame: CGRect(
+            x: customView.frame.width*351/537,
+            y: customView.frame.height*30/238,
+            width: customView.frame.width*174/537,
+            height: customView.frame.height*50/238))
         titLab.textColor = UIColor(red: 140/255.0, green: 39/255.0, blue: 90/255.0, alpha: 1)
-        titLab.textAlignment = .Left
-        titLab.font = UIFont.systemFontOfSize(16)
+        titLab.textAlignment = .left
+        titLab.font = UIFont.systemFont(ofSize: 16)
         titLab.text = name
         titLab.adjustsFontSizeToFitWidth = true
         customView.addSubview(titLab)
         
-        let scoreLab = UILabel(frame: CGRectMake(
-            CGRectGetWidth(customView.frame)*351/537,
-            CGRectGetHeight(customView.frame)*100/238,
-            CGRectGetWidth(customView.frame)*174/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let scoreLab = UILabel(frame: CGRect(
+            x: customView.frame.width*351/537,
+            y: customView.frame.height*100/238,
+            width: customView.frame.width*174/537,
+            height: customView.frame.height*50/238))
         scoreLab.textColor = UIColor(red: 252/255.0, green: 13/255.0, blue: 27/255.0, alpha: 1)
         
-        scoreLab.textAlignment = .Left
-        scoreLab.font = UIFont.systemFontOfSize(24)
+        scoreLab.textAlignment = .left
+        scoreLab.font = UIFont.systemFont(ofSize: 24)
         scoreLab.text = "+\(score)"
         scoreLab.adjustsFontSizeToFitWidth = true
         scoreLab.sizeToFit()
         customView.addSubview(scoreLab)
         
-        let jifenLab = UILabel(frame: CGRectMake(
-            CGRectGetMaxX(scoreLab.frame)+5,
-            CGRectGetHeight(customView.frame)*100/238,
-            CGRectGetWidth(customView.frame)-CGRectGetMaxX(scoreLab.frame)-5-CGRectGetWidth(customView.frame)*13/537,
-            CGRectGetHeight(customView.frame)*50/238))
+        let jifenLab = UILabel(frame: CGRect(
+            x: scoreLab.frame.maxX+5,
+            y: customView.frame.height*100/238,
+            width: customView.frame.width-scoreLab.frame.maxX-5-customView.frame.width*13/537,
+            height: customView.frame.height*50/238))
         jifenLab.textColor = UIColor(red: 107/255.0, green: 106/255.0, blue: 106/255.0, alpha: 1)
-        jifenLab.textAlignment = .Center
-        jifenLab.font = UIFont.systemFontOfSize(16)
+        jifenLab.textAlignment = .center
+        jifenLab.font = UIFont.systemFont(ofSize: 16)
         jifenLab.text = "护士币"
         jifenLab.adjustsFontSizeToFitWidth = true
         jifenLab.center.y = scoreLab.center.y
         customView.addSubview(jifenLab)
         
-        hud.customView = customView
-        hud.hide(true, afterDelay: 3)
+        hud?.customView = customView
+        hud?.hide(true, afterDelay: 3)
     }
 
 
@@ -495,35 +495,35 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         // print(self.rightAnswer)
         
         let labelArray = ["已答","未答","当前题"]
-        questBack_uncommit.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
-        questBack_uncommit.backgroundColor = UIColor.whiteColor()
+        questBack_uncommit.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-119)
+        questBack_uncommit.backgroundColor = UIColor.white
         over = true
         var window = UIWindow()
-        window = ((UIApplication.sharedApplication().delegate?.window)!)!
+        window = ((UIApplication.shared.delegate?.window)!)!
         window.addSubview(questBack_uncommit)
-        let big = UIView(frame: CGRectMake(0, 44, WIDTH, HEIGHT-163))
+        let big = UIView(frame: CGRect(x: 0, y: 44, width: WIDTH, height: HEIGHT-163))
         big.backgroundColor = COLOR
         questBack_uncommit.addSubview(big)
-        let smart = UIScrollView(frame: CGRectMake(10, 10, WIDTH-20, HEIGHT-183))
-        smart.backgroundColor = UIColor.whiteColor()
+        let smart = UIScrollView(frame: CGRect(x: 10, y: 10, width: WIDTH-20, height: HEIGHT-183))
+        smart.backgroundColor = UIColor.white
         smart.layer.cornerRadius = 5
         big.addSubview(smart)
         for i in 0..<3 {
             let view = UIView()
-            view.frame = CGRectMake(WIDTH/3 * CGFloat(i), 5, WIDTH/3, WIDTH*30/375)
+            view.frame = CGRect(x: WIDTH/3 * CGFloat(i), y: 5, width: WIDTH/3, height: WIDTH*30/375)
             let circleView = UIView()
 //            circleView.frame = CGRectMake(10, 10, WIDTH*10/375, WIDTH*10/375)
-            circleView.frame = CGRectMake((view.frame.size.width-WIDTH*110/375)/2.0, 10, WIDTH*10/375, WIDTH*10/375)
+            circleView.frame = CGRect(x: (view.frame.size.width-WIDTH*110/375)/2.0, y: 10, width: WIDTH*10/375, height: WIDTH*10/375)
             circleView.layer.cornerRadius = 0.5*WIDTH*10/375
             let label = UILabel()
-            label.frame = CGRectMake(circleView.frame.origin.x+circleView.frame.size.width+3, 5, WIDTH*100/375, WIDTH*20/375)
+            label.frame = CGRect(x: circleView.frame.origin.x+circleView.frame.size.width+3, y: 5, width: WIDTH*100/375, height: WIDTH*20/375)
             label.text = labelArray[i]
             if i==0 {
-                circleView.backgroundColor = UIColor.greenColor()
+                circleView.backgroundColor = UIColor.green
             }else if i==1{
-                circleView.backgroundColor = UIColor.grayColor()
+                circleView.backgroundColor = UIColor.gray
             }else{
-                circleView.backgroundColor = UIColor.purpleColor()
+                circleView.backgroundColor = UIColor.purple
             }
             view.addSubview(circleView)
             view.addSubview(label)
@@ -540,45 +540,45 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             let appviewx:CGFloat = margin+(margin+smartWidth/CGFloat(self.totalloc))*CGFloat(loc)
             let appviewy:CGFloat = margin+(margin+90) * CGFloat(row)
             let view = UIView()
-            view.frame = CGRectMake(appviewx, appviewy, smartWidth/CGFloat(self.totalloc), WIDTH*90/375)
-            let number = UIButton(type: .Custom)
+            view.frame = CGRect(x: appviewx, y: appviewy, width: smartWidth/CGFloat(self.totalloc), height: WIDTH*90/375)
+            let number = UIButton(type: .custom)
             let tihao = j+1
             number.tag = tihao
-            number.addTarget(self, action: #selector(answerBtnClicked), forControlEvents: .TouchUpInside)
-            number.setTitle(String(tihao), forState: .Normal)
-            number.frame = CGRectMake(10, 10, view.frame.size.width-30, view.frame.size.width-30)
-            number.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            number.addTarget(self, action: #selector(answerBtnClicked), for: .touchUpInside)
+            number.setTitle(String(tihao), for: UIControlState())
+            number.frame = CGRect(x: 10, y: 10, width: view.frame.size.width-30, height: view.frame.size.width-30)
+            number.setTitleColor(UIColor.black, for: UIControlState())
             number.layer.cornerRadius = 0.5 * (view.frame.size.width-30)
             number.clipsToBounds = true
             
             if j==self.pageControl.currentPage {
-                number.backgroundColor = UIColor.purpleColor()
-                number.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                number.backgroundColor = UIColor.purple
+                number.setTitleColor(UIColor.white, for: UIControlState())
             }
             
             let circleView = UIView()
-            circleView.frame = CGRectMake(0, number.frame.origin.y+number.frame.size.height+10, WIDTH*10/375, WIDTH*10/375)
+            circleView.frame = CGRect(x: 0, y: number.frame.origin.y+number.frame.size.height+10, width: WIDTH*10/375, height: WIDTH*10/375)
             circleView.center.x = number.center.x
             circleView.layer.cornerRadius = 0.5*WIDTH*10/375
-            circleView.backgroundColor = UIColor.grayColor()
-            cirecleArray.addObject(circleView)
+            circleView.backgroundColor = UIColor.gray
+            cirecleArray.add(circleView)
             view.addSubview(number)
             view.addSubview(circleView)
             smart.addSubview(view)
             smart.bounces = false
-            smart.contentSize = CGSizeMake(smart.frame.width,view.frame.maxY)
+            smart.contentSize = CGSize(width: smart.frame.width,height: view.frame.maxY)
         }
         
         if myChoose.count != 0 {
-            for i in 0..<self.myChoose.endIndex {
+            for i in self.myChoose.indices.suffix(from: 0) {
                 let myCircleView = cirecleArray[i] as! UIView
                 if Int(self.myChoose[i])==Int(self.rightAnswer[i] as! NSNumber) {
-                    myCircleView.backgroundColor =  UIColor.greenColor()
+                    myCircleView.backgroundColor =  UIColor.green
                 }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber)&&Int(self.myChoose[i]) != 0 {
-                    myCircleView.backgroundColor = UIColor.greenColor()
+                    myCircleView.backgroundColor = UIColor.green
 //                    myCircleView.backgroundColor = UIColor.redColor()
                 }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber)&&Int(self.myChoose[i]) == 0{
-                    myCircleView.backgroundColor = UIColor.grayColor()
+                    myCircleView.backgroundColor = UIColor.gray
                 }
             }
         }
@@ -590,36 +590,36 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         // print(self.rightAnswer)
         
         let labelArray = ["答对","答错","未答","当前题"]
-        questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
-        questBack.backgroundColor = UIColor.whiteColor()
+        questBack.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-119)
+        questBack.backgroundColor = UIColor.white
         over = true
         var window = UIWindow()
-        window = ((UIApplication.sharedApplication().delegate?.window)!)!
+        window = ((UIApplication.shared.delegate?.window)!)!
         window.addSubview(questBack)
-        let big = UIView(frame: CGRectMake(0, 44, WIDTH, HEIGHT-163))
+        let big = UIView(frame: CGRect(x: 0, y: 44, width: WIDTH, height: HEIGHT-163))
         big.backgroundColor = COLOR
         questBack.addSubview(big)
-        let smart = UIScrollView(frame: CGRectMake(10, 10, WIDTH-20, HEIGHT-183))
-        smart.backgroundColor = UIColor.whiteColor()
+        let smart = UIScrollView(frame: CGRect(x: 10, y: 10, width: WIDTH-20, height: HEIGHT-183))
+        smart.backgroundColor = UIColor.white
         smart.layer.cornerRadius = 5
         big.addSubview(smart)
         for i in 0..<4 {
             let view = UIView()
-            view.frame = CGRectMake(WIDTH/4 * CGFloat(i), 5, WIDTH/4, WIDTH*30/375)
+            view.frame = CGRect(x: WIDTH/4 * CGFloat(i), y: 5, width: WIDTH/4, height: WIDTH*30/375)
             let circleView = UIView()
-            circleView.frame = CGRectMake(10, 10, WIDTH*10/375, WIDTH*10/375)
+            circleView.frame = CGRect(x: 10, y: 10, width: WIDTH*10/375, height: WIDTH*10/375)
             circleView.layer.cornerRadius = 0.5*WIDTH*10/375
             let label = UILabel()
-            label.frame = CGRectMake(circleView.frame.origin.x+circleView.frame.size.width+3, 5, WIDTH*100/375, WIDTH*20/375)
+            label.frame = CGRect(x: circleView.frame.origin.x+circleView.frame.size.width+3, y: 5, width: WIDTH*100/375, height: WIDTH*20/375)
             label.text = labelArray[i]
             if i==0 {
-                circleView.backgroundColor = UIColor.greenColor()
+                circleView.backgroundColor = UIColor.green
             }else if i==1{
-                circleView.backgroundColor = UIColor.redColor()
+                circleView.backgroundColor = UIColor.red
             }else if i==2{
-                circleView.backgroundColor = UIColor.grayColor()
+                circleView.backgroundColor = UIColor.gray
             }else{
-                circleView.backgroundColor = UIColor.purpleColor()
+                circleView.backgroundColor = UIColor.purple
             }
             view.addSubview(circleView)
             view.addSubview(label)
@@ -636,44 +636,44 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             let appviewx:CGFloat = margin+(margin+smartWidth/CGFloat(self.totalloc))*CGFloat(loc)
             let appviewy:CGFloat = margin+(margin+90) * CGFloat(row)
             let view = UIView()
-            view.frame = CGRectMake(appviewx, appviewy, smartWidth/CGFloat(self.totalloc), WIDTH*90/375)
-            let number = UIButton(type: .Custom)
+            view.frame = CGRect(x: appviewx, y: appviewy, width: smartWidth/CGFloat(self.totalloc), height: WIDTH*90/375)
+            let number = UIButton(type: .custom)
             let tihao = j+1
             number.tag = tihao
-            number.addTarget(self, action: #selector(answerBtnClicked), forControlEvents: .TouchUpInside)
-            number.setTitle(String(tihao), forState: .Normal)
-            number.frame = CGRectMake(10, 10, view.frame.size.width-30, view.frame.size.width-30)
-            number.setTitleColor(UIColor.blackColor(), forState: .Normal)
+            number.addTarget(self, action: #selector(answerBtnClicked), for: .touchUpInside)
+            number.setTitle(String(tihao), for: UIControlState())
+            number.frame = CGRect(x: 10, y: 10, width: view.frame.size.width-30, height: view.frame.size.width-30)
+            number.setTitleColor(UIColor.black, for: UIControlState())
             number.layer.cornerRadius = 0.5 * (view.frame.size.width-30)
             number.clipsToBounds = true
             
             if j==self.pageControl.currentPage {
-                number.backgroundColor = UIColor.purpleColor()
-                number.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+                number.backgroundColor = UIColor.purple
+                number.setTitleColor(UIColor.white, for: UIControlState())
             }
             
             let circleView = UIView()
-            circleView.frame = CGRectMake(0, number.frame.origin.y+number.frame.size.height+10, WIDTH*10/375, WIDTH*10/375)
+            circleView.frame = CGRect(x: 0, y: number.frame.origin.y+number.frame.size.height+10, width: WIDTH*10/375, height: WIDTH*10/375)
             circleView.center.x = number.center.x
             circleView.layer.cornerRadius = 0.5*WIDTH*10/375
-            circleView.backgroundColor = UIColor.grayColor()
-            cirecleArray.addObject(circleView)
+            circleView.backgroundColor = UIColor.gray
+            cirecleArray.add(circleView)
             view.addSubview(number)
             view.addSubview(circleView)
             smart.addSubview(view)
             smart.bounces = false
-            smart.contentSize = CGSizeMake(smart.frame.width,view.frame.maxY)
+            smart.contentSize = CGSize(width: smart.frame.width,height: view.frame.maxY)
         }
         
         if myChoose.count != 0 {
-            for i in 0..<self.myChoose.endIndex {
+            for i in self.myChoose.indices.suffix(from: 0) {
                 let myCircleView = cirecleArray[i] as! UIView
                 if Int(self.myChoose[i])==Int(self.rightAnswer[i] as! NSNumber) {
-                    myCircleView.backgroundColor =  UIColor.greenColor()
+                    myCircleView.backgroundColor =  UIColor.green
                 }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber)&&Int(self.myChoose[i]) != 0 {
-                    myCircleView.backgroundColor = UIColor.redColor()
+                    myCircleView.backgroundColor = UIColor.red
                 }else if Int(self.myChoose[i]) != Int(self.rightAnswer[i] as! NSNumber)&&Int(self.myChoose[i]) == 0{
-                    myCircleView.backgroundColor = UIColor.grayColor()
+                    myCircleView.backgroundColor = UIColor.gray
                 }
             }
         }
@@ -688,7 +688,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         
         if rightAnswer.count <= pageControl.currentPage {
             for _ in rightAnswer.count-1...pageControl.currentPage {
-                rightAnswer.addObject(9)
+                rightAnswer.add(9)
             }
         }
         
@@ -701,49 +701,49 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 break
             }
         }
-        grayBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-54)
-        grayBack.backgroundColor = UIColor.clearColor()
+        grayBack.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-54)
+        grayBack.backgroundColor = UIColor.clear
         hear = true
         var window = UIWindow()
-        window = ((UIApplication.sharedApplication().delegate?.window)!)!
+        window = ((UIApplication.shared.delegate?.window)!)!
         window.addSubview(grayBack)
         
-        touch.backgroundColor = UIColor.grayColor()
+        touch.backgroundColor = UIColor.gray
         touch.alpha = 0.4
-        touch.addTarget(self, action: #selector(self.touchUp), forControlEvents: .TouchUpInside)
+        touch.addTarget(self, action: #selector(self.touchUp), for: .touchUpInside)
         grayBack.addSubview(touch)
         
         for view in backeView.subviews {
             view.removeFromSuperview()
         }
-        backeView.frame = CGRectMake(0, HEIGHT-54-WIDTH*260/375, WIDTH, WIDTH*260/375)
-        backeView.backgroundColor = UIColor.whiteColor()
+        backeView.frame = CGRect(x: 0, y: HEIGHT-54-WIDTH*260/375, width: WIDTH, height: WIDTH*260/375)
+        backeView.backgroundColor = UIColor.white
         grayBack.addSubview(backeView)
         
-        let line = UILabel(frame: CGRectMake(10, WIDTH*48/375, WIDTH-20, 2))
+        let line = UILabel(frame: CGRect(x: 10, y: WIDTH*48/375, width: WIDTH-20, height: 2))
         line.backgroundColor = COLOR
         backeView.addSubview(line)
         
-        let answer = UILabel(frame: CGRectMake(WIDTH/2-40, WIDTH*10/375, 80, WIDTH*38/375))
-        answer.font = UIFont.systemFontOfSize(18)
+        let answer = UILabel(frame: CGRect(x: WIDTH/2-40, y: WIDTH*10/375, width: 80, height: WIDTH*38/375))
+        answer.font = UIFont.systemFont(ofSize: 18)
         answer.textColor = COLOR
-        answer.textAlignment = .Center
+        answer.textAlignment = .center
         answer.text = "参考答案"
         backeView.addSubview(answer)
         let labelArray = ["您的答案","正确答案","题目难度"]
         for i in 0..<3 {
             let view = UIView()
             //  view.backgroundColor = UIColor.redColor()
-            view.frame = CGRectMake(WIDTH*60/375+(WIDTH*90/375)*CGFloat(i), line.frame.origin.y+12, WIDTH*80/375, WIDTH*70/375)
+            view.frame = CGRect(x: WIDTH*60/375+(WIDTH*90/375)*CGFloat(i), y: line.frame.origin.y+12, width: WIDTH*80/375, height: WIDTH*70/375)
             backeView.addSubview(view)
             let answer = UILabel()
-            answer.font = UIFont.systemFontOfSize(25)
-            answer.textAlignment = NSTextAlignment.Center
-            answer.frame = CGRectMake(0, 0, view.frame.size.width, view.frame.size.height-30)
+            answer.font = UIFont.systemFont(ofSize: 25)
+            answer.textAlignment = NSTextAlignment.center
+            answer.frame = CGRect(x: 0, y: 0, width: view.frame.size.width, height: view.frame.size.height-30)
             answer.textColor = COLOR
             let label = UILabel()
-            label.frame = CGRectMake(0, view.frame.size.height-30, view.frame.size.width, 20)
-            label.textColor = UIColor.grayColor()
+            label.frame = CGRect(x: 0, y: view.frame.size.height-30, width: view.frame.size.width, height: 20)
+            label.textColor = UIColor.gray
             label.text = labelArray[i]
             if i==0 {
                 // print(self.myChoose)
@@ -755,7 +755,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 }else{
                     let isanswer = 64 + myChoose[self.pageControl.currentPage]
                     let asc:UniChar = UInt16(isanswer)
-                    let chara:Character = Character(UnicodeScalar(asc))
+                    let chara:Character = Character(UnicodeScalar(asc)!)
                     var string = ""
                     string.append(chara)
                     answer.text = string
@@ -767,7 +767,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 // print(self.rightAnswer[self.pageControl.currentPage])
                 let isanswer = 64 + (self.rightAnswer[self.pageControl.currentPage] as! Int)
                 let asc:UniChar = UInt16(isanswer)
-                let chara:Character = Character(UnicodeScalar(asc))
+                let chara:Character = Character(UnicodeScalar(asc)!)
                 var string = ""
                 string.append(chara)
                 answer.text = string
@@ -781,17 +781,17 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 // let imageView = UIImageView()
                 for i in 0..<3 {
                     let imageView = UIImageView()
-                    imageView.frame = CGRectMake(answer.frame.size.width/2-answer.frame.size.height/2+CGFloat(i)*answer.frame.size.height/3, 5, answer.frame.size.height/3, answer.frame.size.height/3)
+                    imageView.frame = CGRect(x: answer.frame.size.width/2-answer.frame.size.height/2+CGFloat(i)*answer.frame.size.height/3, y: 5, width: answer.frame.size.height/3, height: answer.frame.size.height/3)
                     imageView.image = UIImage(named:"ic_collect" )
                     answer.addSubview(imageView)
-                    imageArray.addObject(imageView)
+                    imageArray.add(imageView)
                 }
                 for i in 0..<2 {
                     let imageView1 = UIImageView()
-                    imageView1.frame = CGRectMake(answer.frame.size.width/2-answer.frame.size.height/2+answer.frame.size.height/6+CGFloat(i)*answer.frame.size.height/3, 5+answer.frame.size.height/3, answer.frame.size.height/3, answer.frame.size.height/3)
+                    imageView1.frame = CGRect(x: answer.frame.size.width/2-answer.frame.size.height/2+answer.frame.size.height/6+CGFloat(i)*answer.frame.size.height/3, y: 5+answer.frame.size.height/3, width: answer.frame.size.height/3, height: answer.frame.size.height/3)
                     imageView1.image = UIImage(named:"ic_collect" )
                     answer.addSubview(imageView1)
-                    imageArray.addObject(imageView1)
+                    imageArray.add(imageView1)
                 }
                 for i in 0..<difficultyValue {
                     let imageView = imageArray[i] as! UIImageView
@@ -804,50 +804,50 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         
         //答案解析
         let analysis = UILabel()
-        analysis.frame = CGRectMake(10, line.frame.origin.y+12+WIDTH*70/375+10, WIDTH*100/375, WIDTH*20/375)
+        analysis.frame = CGRect(x: 10, y: line.frame.origin.y+12+WIDTH*70/375+10, width: WIDTH*100/375, height: WIDTH*20/375)
         analysis.text = "答案解析:"
         analysis.textColor = COLOR
         //      analysis.backgroundColor = UIColor.redColor()
         backeView.addSubview(analysis)
         let analysisContent = UILabel()
-        analysisContent.textColor = UIColor.grayColor()
+        analysisContent.textColor = UIColor.gray
         analysisContent.text = examInfo.post_description
         analysisContent.numberOfLines = 0
-        analysisContent.font = UIFont.systemFontOfSize(15)
+        analysisContent.font = UIFont.systemFont(ofSize: 15)
         //      analysisContent.backgroundColor = UIColor.greenColor()
         let height: CGFloat = calculateHeight(examInfo.post_description!, size: 15, width:backeView.frame.size.width-20)
         // print(height)
-        analysisContent.frame = CGRectMake(10, analysis.frame.size.height+analysis.frame.origin.y, backeView.frame.size.width-20, height)
+        analysisContent.frame = CGRect(x: 10, y: analysis.frame.size.height+analysis.frame.origin.y, width: backeView.frame.size.width-20, height: height)
         if height > WIDTH*20/375 {
-            backeView.frame = CGRectMake(0, HEIGHT-54-WIDTH*260/375-(height-WIDTH*20/375), WIDTH, WIDTH*260/375+(height-WIDTH*20/375))
+            backeView.frame = CGRect(x: 0, y: HEIGHT-54-WIDTH*260/375-(height-WIDTH*20/375), width: WIDTH, height: WIDTH*260/375+(height-WIDTH*20/375))
         }
         backeView.addSubview(analysisContent)
     }
     // MARK:    底部视图
     func backBottomView() {
-        let backView = UIView(frame: CGRectMake(0, HEIGHT-118, WIDTH, 54))
-        backView.backgroundColor = UIColor.whiteColor()
+        let backView = UIView(frame: CGRect(x: 0, y: HEIGHT-118, width: WIDTH, height: 54))
+        backView.backgroundColor = UIColor.white
         self.view.addSubview(backView)
         
-        let line = UILabel(frame: CGRectMake(0, 0, WIDTH, 0.5))
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 0.5))
         line.backgroundColor = GREY
         backView.addSubview(line)
         
-        let left = UIButton(frame: CGRectMake(10, 13, 28, 28))
-        left.setBackgroundImage(UIImage(named: picArr[0]), forState: .Normal)
+        let left = UIButton(frame: CGRect(x: 10, y: 13, width: 28, height: 28))
+        left.setBackgroundImage(UIImage(named: picArr[0]), for: UIControlState())
         left.tag = 1
-        left.addTarget(self, action: #selector(self.bottomBtnClick(_:)), forControlEvents: .TouchUpInside)
+        left.addTarget(self, action: #selector(self.bottomBtnClick(_:)), for: .touchUpInside)
         backView.addSubview(left)
-        let right = UIButton(frame: CGRectMake(WIDTH-38, 13, 28, 28))
-        right.setBackgroundImage(UIImage(named: picArr[1]), forState: .Normal)
+        let right = UIButton(frame: CGRect(x: WIDTH-38, y: 13, width: 28, height: 28))
+        right.setBackgroundImage(UIImage(named: picArr[1]), for: UIControlState())
         right.tag = 2
-        right.addTarget(self, action: #selector(self.bottomBtnClick(_:)), forControlEvents: .TouchUpInside)
+        right.addTarget(self, action: #selector(self.bottomBtnClick(_:)), for: .touchUpInside)
         backView.addSubview(right)
         for i in 0...2 {
-            let btn = UIButton(frame: CGRectMake(WIDTH/5*1.5+CGFloat(i)*(WIDTH/5-11), 9, 22, 22))
+            let btn = UIButton(frame: CGRect(x: WIDTH/5*1.5+CGFloat(i)*(WIDTH/5-11), y: 9, width: 22, height: 22))
             btn.tag = i+3
-            btn.setImage(UIImage(named: picArr[i+2]), forState: .Normal)
-            btn.addTarget(self, action: #selector(self.bottomBtnClick(_:)), forControlEvents: .TouchUpInside)
+            btn.setImage(UIImage(named: picArr[i+2]), for: UIControlState())
+            btn.addTarget(self, action: #selector(self.bottomBtnClick(_:)), for: .touchUpInside)
             backView.addSubview(btn)
             if btn.tag == 3 {
                 btnOne = btn
@@ -855,11 +855,11 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             if btn.tag == 4 {
                 btnTwo = btn
             }
-            let tit = UILabel(frame: CGRectMake(WIDTH/5*1.5+CGFloat(i)*(WIDTH/5-11)-4, 35, 30, 10))
-            tit.font = UIFont.systemFontOfSize(10)
+            let tit = UILabel(frame: CGRect(x: WIDTH/5*1.5+CGFloat(i)*(WIDTH/5-11)-4, y: 35, width: 30, height: 10))
+            tit.font = UIFont.systemFont(ofSize: 10)
             tit.textColor = GREY
             tit.tag = i+3
-            tit.textAlignment = .Center
+            tit.textAlignment = .center
             tit.text = picName[i]
             backView.addSubview(tit)
             if tit.tag == 4 {
@@ -877,16 +877,16 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     // MARK: 答题区
     func createScrollerView() {
         
-        let bgView = UIView(frame: CGRectMake(0, 1,WIDTH, HEIGHT-119))
+        let bgView = UIView(frame: CGRect(x: 0, y: 1,width: WIDTH, height: HEIGHT-119))
         self.view.addSubview(bgView)
 
-        let backGound = UIView(frame: CGRectMake(0, 0, WIDTH,44))
+        let backGound = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH,height: 44))
         
-        let dan = UIImageView(frame: CGRectMake(10, 16, 12, 12))
+        let dan = UIImageView(frame: CGRect(x: 10, y: 16, width: 12, height: 12))
         dan.image = UIImage(named: "ic_choice.png")
         backGound.addSubview(dan)
-        let danxuan = UILabel(frame: CGRectMake(24, 12.5, 40, 17))
-        danxuan.font = UIFont.systemFontOfSize(18)
+        let danxuan = UILabel(frame: CGRect(x: 24, y: 12.5, width: 40, height: 17))
+        danxuan.font = UIFont.systemFont(ofSize: 18)
         danxuan.text = "单选题"
         danxuan.sizeToFit()
         backGound.addSubview(danxuan)
@@ -896,41 +896,41 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
 //        tit.text = "（A1，2分）"
 //        tit.sizeToFit()
 //        backGound.addSubview(tit)
-        time.frame = CGRectMake(WIDTH-75, 16, 75, 12)
+        time.frame = CGRect(x: WIDTH-75, y: 16, width: 75, height: 12)
 //        time.tag = 10+i
         //time.backgroundColor = UIColor.redColor()
-        time.font = UIFont.systemFontOfSize(14)
+        time.font = UIFont.systemFont(ofSize: 14)
         //time.textAlignment = .Right
         time.textColor = COLOR
         time.text = String.init(format: "%02d:%02d:%02d", hour,minute,second)
         //time.sizeToFit()
         backGound.addSubview(time)
-        let timelab = UILabel(frame: CGRectMake(CGRectGetMinX(time.frame)-75, 15, 71, 12))
+        let timelab = UILabel(frame: CGRect(x: time.frame.minX-75, y: 15, width: 71, height: 12))
         // let timelab = UILabel(frame: CGRectMake(WIDTH-time.bounds.size.width-83, 15, 71, 12))
         // timelab.backgroundColor = UIColor.greenColor()
-        timelab.font = UIFont.systemFontOfSize(12)
+        timelab.font = UIFont.systemFont(ofSize: 12)
         timelab.textColor = GREY
         timelab.text = "剩余答题时间："
-        timelab.textAlignment = .Right
+        timelab.textAlignment = .right
         timelab.sizeToFit()
-        timelab.frame.origin.x = CGRectGetMinX(time.frame)-timelab.frame.size.width
+        timelab.frame.origin.x = time.frame.minX-timelab.frame.size.width
         timelab.center.y = time.center.y
         backGound.addSubview(timelab)
         
         bgView.addSubview(backGound)
         
         let backView = UIImageView()
-        backView.userInteractionEnabled = true
+        backView.isUserInteractionEnabled = true
         
-        backView.frame = CGRectMake(0, 45, WIDTH, HEIGHT-64-49-1-44)//背景
+        backView.frame = CGRect(x: 0, y: 45, width: WIDTH, height: HEIGHT-64-49-1-44)//背景
         //            backView.backgroundColor = COLOR
         
         backView.image = UIImage.init(named: "ic_exam_backgroundImage")
 //        backView.tag = i+1
         bgView.addSubview(backView)
         
-        scrollView.frame = CGRectMake(0, 45,WIDTH, HEIGHT-64-49-1-44)
-        scrollView.pagingEnabled = true
+        scrollView.frame = CGRect(x: 0, y: 45,width: WIDTH, height: HEIGHT-64-49-1-44)
+        scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.delegate = self
@@ -939,8 +939,8 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         for  i in 0 ..< self.dataSource.count {
             let examInfo = self.dataSource[i]
             let contentScrollView :UIScrollView = UIScrollView.init()
-            contentScrollView.frame = CGRectMake(CGFloat(i)*WIDTH+10, 10, WIDTH-20, HEIGHT-64-49-1-44-10-50)
-            contentScrollView.backgroundColor = UIColor.whiteColor()
+            contentScrollView.frame = CGRect(x: CGFloat(i)*WIDTH+10, y: 10, width: WIDTH-20, height: HEIGHT-64-49-1-44-10-50)
+            contentScrollView.backgroundColor = UIColor.white
             contentScrollView.layer.cornerRadius = 5
  
 //            let back = UIView(frame: CGRectMake(WIDTH+10, 54, WIDTH-20, HEIGHT-221))//白色答题区域
@@ -948,10 +948,10 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
 //            back.layer.cornerRadius = 5
             
             //问题
-            let question = UILabel(frame: CGRectMake(WIDTH*20/375, WIDTH*15/375, contentScrollView.bounds.size.width-WIDTH*38/375, 40))
+            let question = UILabel(frame: CGRect(x: WIDTH*20/375, y: WIDTH*15/375, width: contentScrollView.bounds.size.width-WIDTH*38/375, height: 40))
             question.numberOfLines = 0
-            question.textAlignment = .Natural
-            question.font = UIFont.systemFontOfSize(14)
+            question.textAlignment = .natural
+            question.font = UIFont.systemFont(ofSize: 14)
             question.text = examInfo.post_title
             question.sizeToFit()
             contentScrollView.addSubview(question)
@@ -962,43 +962,43 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 var string = ""
                 let ascInt:Int = 65+j
                 let asc:UniChar = UInt16(ascInt)
-                let chara:Character = Character(UnicodeScalar(asc))
+                let chara:Character = Character(UnicodeScalar(asc)!)
                 string.append(chara)
                 
-                let btn = UIButton(type: .Custom)
+                let btn = UIButton(type: .custom)
                 let answerInfo = examInfo.answerlist[j]
                 let height:CGFloat = calculateHeight(string+"、"+answerInfo.answer_title, size: 17, width: WIDTH*314/375-10)
                 if j>0 {
                     // print(j)
                     // print(heightArray)
-                    btn.frame =  CGRectMake(
-                        WIDTH*21/375,
-                        10+(CGFloat(heightArray[j-1] as! NSNumber))*CGFloat(1),
-                        WIDTH*314/375,
-                        height+10)
+                    btn.frame =  CGRect(
+                        x: WIDTH*21/375,
+                        y: 10+(CGFloat(heightArray[j-1] as! NSNumber))*CGFloat(1),
+                        width: WIDTH*314/375,
+                        height: height+10)
                 }else{
-                    btn.frame = CGRectMake(
-                        WIDTH*21/375,
-                        5+question.frame.size.height+question.frame.origin.y+(15+WIDTH*46/375)*CGFloat(0),
-                        WIDTH*314/375,
-                        height+10)
+                    btn.frame = CGRect(
+                        x: WIDTH*21/375,
+                        y: 5+question.frame.size.height+question.frame.origin.y+(15+WIDTH*46/375)*CGFloat(0),
+                        width: WIDTH*314/375,
+                        height: height+10)
                 }
                 
-                btn.setTitle(string+"、"+answerInfo.answer_title, forState: .Normal)
+                btn.setTitle(string+"、"+answerInfo.answer_title, for: UIControlState())
                 btn.sizeToFit()
-                heightArray.addObject(btn.frame.size.height+btn.frame.origin.y)
+                heightArray.add(btn.frame.size.height+btn.frame.origin.y)
 
-                btn.backgroundColor = UIColor.cyanColor()
+                btn.backgroundColor = UIColor.cyan
                 
                 //选项按钮
                 btn.tag = j+1
                 btn.layer.cornerRadius = 10
-                btn.layer.borderColor = COLOR.CGColor
+                btn.layer.borderColor = COLOR.cgColor
                 btn.layer.borderWidth = 1
-                btn.addTarget(self, action: #selector(self.pleaseChooseOne(_:)), forControlEvents: .TouchUpInside)
-                btn.setTitleColor(COLOR, forState: .Normal)
-                btn.contentHorizontalAlignment = .Left;
-                btn.titleLabel?.font = UIFont.systemFontOfSize(17)
+                btn.addTarget(self, action: #selector(self.pleaseChooseOne(_:)), for: .touchUpInside)
+                btn.setTitleColor(COLOR, for: UIControlState())
+                btn.contentHorizontalAlignment = .left;
+                btn.titleLabel?.font = UIFont.systemFont(ofSize: 17)
                 btn.titleLabel?.numberOfLines = 0
                 btn.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
                 //back.addSubview(btn)
@@ -1009,89 +1009,89 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 
                 var AllHeight = CGFloat()
                 AllHeight = CGFloat(heightArray.lastObject as! NSNumber)
-                contentScrollView.contentSize = CGSizeMake(0, AllHeight+10*CGFloat(examInfo.answerlist.count-1))
+                contentScrollView.contentSize = CGSize(width: 0, height: AllHeight+10*CGFloat(examInfo.answerlist.count-1))
             }
 //            scrollView.addSubview(backGound)
 //            scrollView.addSubview(backView)
             scrollView.addSubview(contentScrollView)
         }
         
-        scrollView.contentSize = CGSizeMake(CGFloat(self.dataSource.count)*self.view.frame.size.width, 0)
-        scrollView.contentOffset = CGPointMake(0, 0)
+        scrollView.contentSize = CGSize(width: CGFloat(self.dataSource.count)*self.view.frame.size.width, height: 0)
+        scrollView.contentOffset = CGPoint(x: 0, y: 0)
         bgView.addSubview(scrollView)
-        let ques = UILabel(frame: CGRectMake(WIDTH/2-80, HEIGHT-146, 80, 12))
-        ques.font = UIFont.systemFontOfSize(12)
-        ques.textAlignment = .Right
+        let ques = UILabel(frame: CGRect(x: WIDTH/2-80, y: HEIGHT-146, width: 80, height: 12))
+        ques.font = UIFont.systemFont(ofSize: 12)
+        ques.textAlignment = .right
         ques.textColor = UIColor(red: 250/255.0, green: 118/255.0, blue: 210/255.0, alpha: 1.0)
         ques.text = "考试进度："
         self.view.addSubview(ques)
-        number.frame = CGRectMake(WIDTH/2+5, HEIGHT-150, 50, 14)
-        number.font = UIFont.systemFontOfSize(16)
-        number.textColor = UIColor.yellowColor()
+        number.frame = CGRect(x: WIDTH/2+5, y: HEIGHT-150, width: 50, height: 14)
+        number.font = UIFont.systemFont(ofSize: 16)
+        number.textColor = UIColor.yellow
         number.text = "1"
 //        number.text = String(scrollView.contentOffset.x/scrollView.frame.size.width)
         number.sizeToFit()
         self.view.addSubview(number)
-        totalNum.frame = CGRectMake(WIDTH/2+5+number.bounds.size.width, HEIGHT-150, 30, 14)
-        totalNum.textColor = UIColor.whiteColor()
-        totalNum.font = UIFont.systemFontOfSize(16)
+        totalNum.frame = CGRect(x: WIDTH/2+5+number.bounds.size.width, y: HEIGHT-150, width: 30, height: 14)
+        totalNum.textColor = UIColor.white
+        totalNum.font = UIFont.systemFont(ofSize: 16)
         //        String(self.dataSource.count)
         totalNum.text = " /"+String(self.dataSource.count)
         totalNum.sizeToFit()
         self.view.addSubview(totalNum)
         
-        pageControl.frame = CGRectMake(0, HEIGHT-167, WIDTH, 48)
-        pageControl.pageIndicatorTintColor = UIColor.redColor()
+        pageControl.frame = CGRect(x: 0, y: HEIGHT-167, width: WIDTH, height: 48)
+        pageControl.pageIndicatorTintColor = UIColor.red
         //        pageControl.addTarget(self, action: #selector(self.pageContorllerNumber(_:)), forControlEvents: .TouchUpInside)
         pageControl.numberOfPages = self.dataSource.count
         pageControl.currentPage = 0
 
     }
     
-    func pageContorllerNumber(pageControl:UIPageControl) {
+    func pageContorllerNumber(_ pageControl:UIPageControl) {
         let offSetX:CGFloat = CGFloat(pageControl.currentPage) * WIDTH
         scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: true)
     }
     func dismissCard(){
         if over == true {
-            UIView.animateWithDuration(0.3, animations: {
-                self.questBack.frame = CGRectMake(0, 65, WIDTH, HEIGHT-119)
-                self.grayBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-54)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.questBack.frame = CGRect(x: 0, y: 65, width: WIDTH, height: HEIGHT-119)
+                self.grayBack.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-54)
                 self.hear = true
             })
-            btnOne.setImage(UIImage(named: "ic_fenlei_sel.png"), forState: .Normal)
+            btnOne.setImage(UIImage(named: "ic_fenlei_sel.png"), for: UIControlState())
             TitQues.textColor = COLOR
             over = false
         }else{
-            UIView.animateWithDuration(0.3, animations: {
-                self.questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.questBack.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-119)
             })
-            btnOne.setImage(UIImage(named: picArr[2]), forState: .Normal)
+            btnOne.setImage(UIImage(named: picArr[2]), for: UIControlState())
             TitQues.textColor = GREY
             over = true
         }
     }
     func dismissCard_uncommit(){
         if over == true {
-            UIView.animateWithDuration(0.3, animations: {
-                self.questBack_uncommit.frame = CGRectMake(0, 65, WIDTH, HEIGHT-119)
-                self.grayBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-54)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.questBack_uncommit.frame = CGRect(x: 0, y: 65, width: WIDTH, height: HEIGHT-119)
+                self.grayBack.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-54)
                 self.hear = true
             })
-            btnOne.setImage(UIImage(named: "ic_fenlei_sel.png"), forState: .Normal)
+            btnOne.setImage(UIImage(named: "ic_fenlei_sel.png"), for: UIControlState())
             TitQues.textColor = COLOR
             over = false
         }else{
-            UIView.animateWithDuration(0.3, animations: {
-                self.questBack_uncommit.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
+            UIView.animate(withDuration: 0.3, animations: {
+                self.questBack_uncommit.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-119)
             })
-            btnOne.setImage(UIImage(named: picArr[2]), forState: .Normal)
+            btnOne.setImage(UIImage(named: picArr[2]), for: UIControlState())
             TitQues.textColor = GREY
             over = true
         }
     }
 //     MARK:   底部按钮  
-    func bottomBtnClick(btn:UIButton) {
+    func bottomBtnClick(_ btn:UIButton) {
         // print(btn.tag)
         if btn.tag == 1 {
             self.pageControl.currentPage -= 1
@@ -1122,36 +1122,36 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         }else if btn.tag == 4{
             
             if self.num != 2 {
-                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                hud.mode = MBProgressHUDMode.Text;
-                hud.labelText = "没交卷不可以看答案哦"
-                hud.margin = 10.0
-                hud.removeFromSuperViewOnHide = true
-                hud.hide(true, afterDelay: 1)
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud?.mode = MBProgressHUDMode.text;
+                hud?.labelText = "没交卷不可以看答案哦"
+                hud?.margin = 10.0
+                hud?.removeFromSuperViewOnHide = true
+                hud?.hide(true, afterDelay: 1)
                 
                 return
             }
             if hear == true {
                 AnswerView()
-                UIView.animateWithDuration(0.3, animations: {
-                    self.grayBack.frame = CGRectMake(0, 0, WIDTH, HEIGHT-54)
-                    self.questBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
-                    self.questBack_uncommit.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-119)
+                UIView.animate(withDuration: 0.3, animations: {
+                    self.grayBack.frame = CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT-54)
+                    self.questBack.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-119)
+                    self.questBack_uncommit.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-119)
 
                     if btn.tag == 4 {
-                        self.btnOne.setImage(UIImage(named: self.picArr[2]), forState: .Normal)
+                        self.btnOne.setImage(UIImage(named: self.picArr[2]), for: UIControlState())
                         self.TitQues.textColor = GREY
                     }
                     self.over = true
                 })
-                btn.setImage(UIImage(named: "btn_eye_sel.png"), forState: .Normal)
+                btn.setImage(UIImage(named: "btn_eye_sel.png"), for: UIControlState())
                 TitAns.textColor = COLOR
                 hear = false
             }else{
                 
-                UIView.animateWithDuration(0.3, animations: {
+                UIView.animate(withDuration: 0.3, animations: {
                     
-                    self.grayBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-54)
+                    self.grayBack.frame = CGRect(x: 0, y: HEIGHT, width: WIDTH, height: HEIGHT-54)
                     
                     }, completion: { (bool) in
                         if bool {
@@ -1164,7 +1164,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
 //                UIView.animateWithDuration(0.3, animations: {
 //                    self.grayBack.frame = CGRectMake(0, HEIGHT, WIDTH, HEIGHT-54)
 //                })
-                btn.setImage(UIImage(named: picArr[3]), forState: .Normal)
+                btn.setImage(UIImage(named: picArr[3]), for: UIControlState())
                 TitAns.textColor = GREY
                 hear = true
             }
@@ -1178,23 +1178,23 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
             // print(collection)
             // print("收藏")
             let examInfo = self.dataSource[self.pageControl.currentPage]
-            let user = NSUserDefaults.standardUserDefaults()
-            let uid = user.stringForKey("userid")
+            let user = UserDefaults.standard
+            let uid = user.string(forKey: "userid")
             // print(uid)
             if uid==nil {
-                let mainStoryboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-                let vc  = mainStoryboard.instantiateViewControllerWithIdentifier("Login")
+                let mainStoryboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+                let vc  = mainStoryboard.instantiateViewController(withIdentifier: "Login")
                 self.navigationController?.pushViewController(vc, animated: true)
-                btn.setImage(UIImage(named: picArr[4]), forState: .Normal)
+                btn.setImage(UIImage(named: picArr[4]), for: UIControlState())
                 TitCol.textColor = GREY
                 collection = false
             }else if collection == false {
                 
-                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
 //                hud.mode = MBProgressHUDMode.Text;
 //                hud.labelText = status.errorData
-                hud.margin = 10.0
-                hud.removeFromSuperViewOnHide = true
+                hud?.margin = 10.0
+                hud?.removeFromSuperViewOnHide = true
                 
                 let url = PARK_URL_Header+"addfavorite"
                 let param = [
@@ -1205,34 +1205,34 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                     "title":examInfo.post_title,
                     "description":examInfo.post_description
                 ];
-                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String]) { (json, error) in
+                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String] as [String : AnyObject]?) { (json, error) in
 
                     // print(request)
                     if(error != nil){
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "收藏失败"
-                        hud.hide(true, afterDelay: 0.5)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = "收藏失败"
+                        hud?.hide(true, afterDelay: 0.5)
                     }else{
                         let status = Http(JSONDecoder(json!))
                         // print("状态是")
                         // print(status.status)
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             if(status.status == "error"){
 //                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                hud.mode = MBProgressHUDMode.Text;
-                                hud.labelText = status.errorData
+                                hud?.mode = MBProgressHUDMode.text;
+                                hud?.labelText = status.errorData
 //                                hud.margin = 10.0
 //                                hud.removeFromSuperViewOnHide = true
-                                hud.hide(true, afterDelay: 0.5)
+                                hud?.hide(true, afterDelay: 0.5)
                             }
                             if(status.status == "success"){
 //                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                hud.mode = MBProgressHUDMode.Text;
-                                hud.labelText = "收藏成功"
+                                hud?.mode = MBProgressHUDMode.text;
+                                hud?.labelText = "收藏成功"
 //                                hud.margin = 10.0
 //                                hud.removeFromSuperViewOnHide = true
-                                hud.hide(true, afterDelay: 0.5)
-                                btn.setImage(UIImage(named: "btn_collect_sel.png"), forState: .Normal)
+                                hud?.hide(true, afterDelay: 0.5)
+                                btn.setImage(UIImage(named: "btn_collect_sel.png"), for: UIControlState())
                                 self.TitCol.textColor = COLOR
                                 self.collection = true
                                 // print(status.data)
@@ -1241,9 +1241,9 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                     }
                 }
             }else{
-                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                hud.margin = 10.0
-                hud.removeFromSuperViewOnHide = true
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud?.margin = 10.0
+                hud?.removeFromSuperViewOnHide = true
                 let url = PARK_URL_Header+"cancelfavorite"
                 let param = [
                     "refid":examInfo.id,
@@ -1251,34 +1251,34 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                     "userid":uid
                 ];
                 
-                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String]) { (json, error) in
+                NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as? [String:String] as [String : AnyObject]?) { (json, error) in
 
                     // print(request)
                     if(error != nil){
-                        hud.mode = MBProgressHUDMode.Text;
-                        hud.labelText = "取消收藏失败"
-                        hud.hide(true, afterDelay: 0.5)
+                        hud?.mode = MBProgressHUDMode.text;
+                        hud?.labelText = "取消收藏失败"
+                        hud?.hide(true, afterDelay: 0.5)
                     }else{
                         let status = Http(JSONDecoder(json!))
                         // print("状态是")
                         // print(status.status)
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             if(status.status == "error"){
 //                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                hud.mode = MBProgressHUDMode.Text;
-                                hud.labelText = status.errorData
+                                hud?.mode = MBProgressHUDMode.text;
+                                hud?.labelText = status.errorData
 //                                hud.margin = 10.0
 //                                hud.removeFromSuperViewOnHide = true
-                                hud.hide(true, afterDelay: 0.5)
+                                hud?.hide(true, afterDelay: 0.5)
                             }
                             if(status.status == "success"){
 //                                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                                hud.mode = MBProgressHUDMode.Text;
-                                hud.labelText = "取消收藏成功"
+                                hud?.mode = MBProgressHUDMode.text;
+                                hud?.labelText = "取消收藏成功"
 //                                hud.margin = 10.0
 //                                hud.removeFromSuperViewOnHide = true
-                                hud.hide(true, afterDelay: 0.5)
-                                btn.setImage(UIImage(named: self.picArr[4]), forState: .Normal)
+                                hud?.hide(true, afterDelay: 0.5)
+                                btn.setImage(UIImage(named: self.picArr[4]), for: UIControlState())
                                 self.TitCol.textColor = GREY
                                 self.collection = false
                                 // print(status.data)
@@ -1295,35 +1295,35 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         self.bottomBtnClick(btnTwo)
     }
     // 选项
-    func pleaseChooseOne(btn:UIButton) {
-        if hasChooseIndex.containsObject(pageControl.currentPage) {
+    func pleaseChooseOne(_ btn:UIButton) {
+        if hasChooseIndex.contains(pageControl.currentPage) {
             return
         }else{
-            hasChooseIndex.addObject(pageControl.currentPage)
+            hasChooseIndex.add(pageControl.currentPage)
         }
 //        let backView = scrollView.viewWithTag(pageControl.currentPage+110)
 //        let rightBtn = backView?.viewWithTag(rightAnswer[pageControl.currentPage] as! Int)
 //        rightBtn?.backgroundColor = UIColor.greenColor()
 //        if btn.tag != rightBtn?.tag {
         btn.backgroundColor = UIColor.init(red: 159/255.0, green: 43/255.0, blue: 136/255.0, alpha: 1)
-        btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        btn.setTitleColor(UIColor.white, for: UIControlState())
 //        }
         let exam = dataSource[pageControl.currentPage]
         
         if self.pageControl.currentPage+1 > self.myChoose.count {
             if self.pageControl.currentPage>0{
                 for i in self.myChoose.endIndex..<self.pageControl.currentPage {
-                    self.myChoose.insert(0, atIndex: i)
-                    chooseId.insert("0", atIndex: i)
+                    self.myChoose.insert(0, at: i)
+                    chooseId.insert("0", at: i)
                 }
             }
             self.chooseId.append(exam.answerlist[btn.tag-1].id)
             self.myChoose.append(btn.tag)
         }else{
-            self.myChoose.removeAtIndex(pageControl.currentPage)
-            chooseId.removeAtIndex(pageControl.currentPage)
-            self.myChoose.insert(btn.tag, atIndex: pageControl.currentPage)
-            chooseId.insert(exam.answerlist[btn.tag-1].id, atIndex: pageControl.currentPage)
+            self.myChoose.remove(at: pageControl.currentPage)
+            chooseId.remove(at: pageControl.currentPage)
+            self.myChoose.insert(btn.tag, at: pageControl.currentPage)
+            chooseId.insert(exam.answerlist[btn.tag-1].id, at: pageControl.currentPage)
         }
         self.questionCard_uncommit()
         self.questionCard_commit()
@@ -1332,7 +1332,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         self.AnswerView()
     }
     
-    func setControlPage(animate:Bool){
+    func setControlPage(_ animate:Bool){
         let offSetX:CGFloat = CGFloat(pageControl.currentPage) * WIDTH
         scrollView.setContentOffset(CGPoint(x: offSetX,y: 0), animated: animate)
     }
@@ -1356,93 +1356,93 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
                 answerStr += (i==0 ? chooseId[i] : ","+chooseId[i])
             }
         }else{
-            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            hud.mode = MBProgressHUDMode.Text;
-            hud.labelText = "请答题后提交"
-            hud.margin = 10.0
-            hud.removeFromSuperViewOnHide = true
-            hud.hide(true, afterDelay: 1)
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud?.mode = MBProgressHUDMode.text;
+            hud?.labelText = "请答题后提交"
+            hud?.margin = 10.0
+            hud?.removeFromSuperViewOnHide = true
+            hud?.hide(true, afterDelay: 1)
             return
         }
 
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
 //        hud.mode = MBProgressHUDMode.;
-        hud.labelText = "正在提交..."
-        hud.margin = 10.0
-        hud.removeFromSuperViewOnHide = true
+        hud?.labelText = "正在提交..."
+        hud?.margin = 10.0
+        hud?.removeFromSuperViewOnHide = true
         
         HSStudyNetHelper.sendtestAnswerByType("2", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
             
             if(success){
-                dispatch_async(dispatch_get_main_queue(), {
-                    hud.hide(true)
+                DispatchQueue.main.async(execute: {
+                    hud?.hide(true)
                     self.navigationItem.rightBarButtonItem = nil
 
                     let result = response as! ScoreDataModel
                     
-                    var time: NSTimeInterval = 0.0
+                    var time: TimeInterval = 0.0
                     if result.event != "" {
                         self.showScoreTips(result.event, score: result.score)
                         time = 3.0
                     }
                     
-                    let delay = dispatch_time(DISPATCH_TIME_NOW, Int64(time * Double(NSEC_PER_SEC)))
+                    let delay = DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                     
-                    dispatch_after(delay, dispatch_get_main_queue()) {
+                    DispatchQueue.main.asyncAfter(deadline: delay) {
                         
-                        let alertController = UIAlertController(title: "提交成功", message: "得分\(result.allscore)", preferredStyle: .Alert)
-                        self.presentViewController(alertController, animated: true, completion: nil)
+                        let alertController = UIAlertController(title: "提交成功", message: "得分\(result.allscore)", preferredStyle: .alert)
+                        self.present(alertController, animated: true, completion: nil)
                         
-                        let cancelAction = UIAlertAction(title: "退出", style: .Cancel) { (cancelAction) in
-                            self.navigationController?.popViewControllerAnimated(true)
+                        let cancelAction = UIAlertAction(title: "退出", style: .cancel) { (cancelAction) in
+                            self.navigationController?.popViewController(animated: true)
                         }
                         alertController.addAction(cancelAction)
                         
-                        let answerAction = UIAlertAction(title: "答案解析", style: .Default){
+                        let answerAction = UIAlertAction(title: "答案解析", style: .default){
                             (cancelAction) in
                             
-                            dispatch_async(dispatch_get_main_queue(), {
+                            DispatchQueue.main.async(execute: {
                                 
                                 //                            let btn = UIButton()
                                 //                            btn.tag = 4
                                 self.bottomBtnClick(self.btnTwo)
                                 
-                                let hud = MBProgressHUD.showHUDAddedTo(UIApplication.sharedApplication().keyWindow, animated: true)
-                                hud.mode = MBProgressHUDMode.Text
-                                hud.labelText = "点击 < 答案 > 按钮即可查看答案"
-                                hud.margin = 10.0
-                                hud.removeFromSuperViewOnHide = true
-                                hud.hide(true, afterDelay: 1.5)
+                                let hud = MBProgressHUD.showAdded(to: UIApplication.shared.keyWindow, animated: true)
+                                hud?.mode = MBProgressHUDMode.text
+                                hud?.labelText = "点击 < 答案 > 按钮即可查看答案"
+                                hud?.margin = 10.0
+                                hud?.removeFromSuperViewOnHide = true
+                                hud?.hide(true, afterDelay: 1.5)
                             })
                         }
                         alertController.addAction(answerAction)
                     }
                 })
             }else{
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
 
-                    hud.hide(false)
+                    hud?.hide(false)
                     
-                    let hud2 = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    hud2.mode = MBProgressHUDMode.Text;
-                    hud2.labelText = "提交失败，请稍后再试"
-                    hud2.margin = 10.0
-                    hud2.removeFromSuperViewOnHide = true
-                    hud2.hide(true, afterDelay: 2)
+                    let hud2 = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud2?.mode = MBProgressHUDMode.text;
+                    hud2?.labelText = "提交失败，请稍后再试"
+                    hud2?.margin = 10.0
+                    hud2?.removeFromSuperViewOnHide = true
+                    hud2?.hide(true, afterDelay: 2)
                 })
             }
             // print(response)
         }
     }
     
-    func answerBtnClicked(btn:UIButton) {
-        btn.backgroundColor = UIColor.purpleColor()
-        btn.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+    func answerBtnClicked(_ btn:UIButton) {
+        btn.backgroundColor = UIColor.purple
+        btn.setTitleColor(UIColor.white, for: UIControlState())
         pageControl.currentPage = btn.tag - 1
         pageContorllerNumber(pageControl)
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if Int(scrollView.contentOffset.x)/Int(WIDTH) != pageControl.currentPage {
             pageControl.currentPage = Int(scrollView.contentOffset.x)/Int(WIDTH)
             number.text = "\(self.pageControl.currentPage+1)"

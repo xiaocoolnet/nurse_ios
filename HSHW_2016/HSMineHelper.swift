@@ -9,15 +9,15 @@ import UIKit
 
 class HSMineHelper: NSObject {
     //获取个人资料
-    func getPersonalInfo(handle:ResponseBlock){
+    func getPersonalInfo(_ handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"getuserinfo"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = LoginUserInfoModel(JSONDecoder(json!))
                 // print("状态是")
@@ -26,7 +26,7 @@ class HSMineHelper: NSObject {
                     QCLoginUserInfo.currentInfo.avatar = result.data?.user_avatar ?? ""
                     QCLoginUserInfo.currentInfo.userName = result.data?.user_name ?? ""
                     QCLoginUserInfo.currentInfo.level = result.data?.user_level ?? ""
-                    QCLoginUserInfo.currentInfo.sex = result.data!.user_sex ?? ""
+                    QCLoginUserInfo.currentInfo.sex = result.data!.user_sex 
                     QCLoginUserInfo.currentInfo.fansCount = result.data?.user_fanscount ?? "0"
                     QCLoginUserInfo.currentInfo.attentionCount = result.data?.user_followcount ?? "0"
                     QCLoginUserInfo.currentInfo.score = result.data?.user_score ?? "0"
@@ -45,301 +45,301 @@ class HSMineHelper: NSObject {
                     QCLoginUserInfo.currentInfo.usertype = result.data?.user_usertype ?? ""
                     QCLoginUserInfo.currentInfo.all_information = result.data?.all_information ?? ""
                     // print("=-=-=-=-=-=-"+String(QCLoginUserInfo.currentInfo.email))
-                    handle(success: true, response: nil)
+                    handle(true, nil)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     //修改昵称
-    func changeUserName(niceName:String,handle:ResponseBlock){
+    func changeUserName(_ niceName:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"UpdateUserName"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"nicename":niceName
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     
                     if result.errorData == "Name repetition" {
-                        handle(success: false, response: "用户名重复")
+                        handle(false, "用户名重复" as AnyObject?)
                     }else{
                         
                         self.getPersonalInfo({ (success, response) in
                             
                         })
-                        handle(success: true, response: result.data)
+                        handle(true, result.data)
                     }
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
 
     }
     //修改真实姓名
-    func changeUserRealName(realName:String,handle:ResponseBlock){
+    func changeUserRealName(_ realName:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"UpdateUserRealName"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"realname":realName
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: result.data)
+                    handle(true, result.data)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
         
     }
     //上传图片
-    func uploadImageWithData(imageData:NSData,imageName:String,handle:ResponseBlock){
+    func uploadImageWithData(_ imageData:Data,imageName:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"uploadavatar"
         let param = ["POST":imageData]
-        NurseUtil.net.request(RequestType.requestTypePost, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypePost, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 
 //        Alamofire.request(.POST, url, parameters: param).response { request, response, json, error in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: nil)
+                    handle(true, nil)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     //修改头像
-    func changeUserAvatar(avatar:String,handle:ResponseBlock) {
+    func changeUserAvatar(_ avatar:String,handle:@escaping ResponseBlock) {
         let url = PARK_URL_Header+"UpdateUserAvatar"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"avatar":avatar
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: result.data)
+                    handle(true, result.data)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     //修改性别
-    func changeUserSex(sex:String,handle:ResponseBlock){
+    func changeUserSex(_ sex:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"UpdateUserSex"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"sex":sex
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: result.data)
+                    handle(true, result.data)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     //修改手机号
-    func changePhoneNumber(phoneNumber:String,handle:ResponseBlock){
+    func changePhoneNumber(_ phoneNumber:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"UpdateUserPhone"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"phone":phoneNumber
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: result.data)
+                    handle(true, result.data)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     //修改邮箱
-    func changeEmail(email:String,handle:ResponseBlock){
+    func changeEmail(_ email:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"UpdateUserEmail"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"email":email
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: result.data)
+                    handle(true, result.data)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     //修改生日
-    func changeBirthday(birthday:String,handle:ResponseBlock){
+    func changeBirthday(_ birthday:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"UpdateUserBirthday"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,
             "birthday":birthday
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: result.data)
+                    handle(true, result.data)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     //修改地址
-    func changeAddress(address:String,handle:ResponseBlock){
+    func changeAddress(_ address:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"UpdateUserAddress"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"address":address
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: result.data)
+                    handle(true, result.data)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     //修改学校
-    func changeSchool(school:String,handle:ResponseBlock){
+    func changeSchool(_ school:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"UpdateUserSchool"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"school":school
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: result.data)
+                    handle(true, result.data)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     //修改专业
-    func changeMajor(major:String,handle:ResponseBlock){
+    func changeMajor(_ major:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"UpdateUserMajor"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"major":major
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: result.data)
+                    handle(true, result.data)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     //修改学历
-    func changeEducation(education:String,handle:ResponseBlock){
+    func changeEducation(_ education:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"UpdateUserEducation"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,"education":education
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = addScore_ReadingInformationModel(JSONDecoder(json!))
                 if(result.status == "success"){
                     self.getPersonalInfo({ (success, response) in
                         
                     })
-                    handle(success: true, response: result.data)
+                    handle(true, result.data)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     
     // 获取粉丝列表 type 1 粉丝  !=1  关注
-    func getFansOrFollowList(type:Int,handle:ResponseBlock){
+    func getFansOrFollowList(_ type:Int,handle:@escaping ResponseBlock){
         
         let url:String
         
@@ -350,176 +350,176 @@ class HSMineHelper: NSObject {
         }
         
         let param = ["userid":QCLoginUserInfo.currentInfo.userid];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = HSMineList(JSONDecoder(json!))
                 if(result.status == "success"){
-                    handle(success: true, response: result.datas)
+                    handle(true, result.datas as AnyObject?)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     
     // 关注/收藏 type:1、新闻、2考试,4论坛帖子,5招聘,6用户
-    func addFavorite(userid:String,refid:String,type:String,title:String,description:String,handle:ResponseBlock){
+    func addFavorite(_ userid:String,refid:String,type:String,title:String,description:String,handle:@escaping ResponseBlock){
         
         let url = PARK_URL_Header+"addfavorite"
         
         let param = ["userid":userid,"refid":refid,"type":type,"title":title,"description":description];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
-                    handle(success: true, response: nil)
+                    handle(true, nil)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     
     // 取消关注/取消收藏 type:1、新闻、2考试,4论坛帖子,5招聘,6用户
-    func cancelFavorite(userid:String,refid:String,type:String,handle:ResponseBlock){
+    func cancelFavorite(_ userid:String,refid:String,type:String,handle:@escaping ResponseBlock){
         
         let url = PARK_URL_Header+"cancelfavorite"
         
         let param = ["userid":userid,"refid":refid,"type":type];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request?.URLString)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
-                    handle(success: true, response: nil)
+                    handle(true, nil)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     
-    func getPersonalInfo_2(userid:String,handle:ResponseBlock){
+    func getPersonalInfo_2(_ userid:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"getuserinfo"
         let param = [
             "userid":userid
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = HSMineList(JSONDecoder(json!))
                 // print("状态是")
                 // print(result.status)
                 if(result.status == "success"){
-                    handle(success: true, response: result.datas)
+                    handle(true, result.datas as AnyObject?)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     
     //获取收藏列表 type: 1 新闻 , 2 考试, 4 帖子
-    func getCollectionInfoWithType(type:String, handle:ResponseBlock){
+    func getCollectionInfoWithType(_ type:String, handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"getfavoritelist"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,
             "type":type
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = Http(JSONDecoder(json!))
                 if(result.status == "success"){
-                    handle(success: true, response: JSONDecoder(json!))
+                    handle(true, JSONDecoder(json!))
                 }else{
-                    handle(success: false, response: "error")
+                    handle(false, "error" as AnyObject?)
                 }
             }
         }
     }
     
     // 获取做题记录 type 1 每日一练 2 在线考试
-    func GetExampaper(userid:String, type:String, handle:ResponseBlock){
+    func GetExampaper(_ userid:String, type:String, handle:@escaping ResponseBlock){
 //        let user = NSUserDefaults.standardUserDefaults()
 //        let uid = user.stringForKey("userid")
         let url = PARK_URL_Header+"GetExampaper"
         
         let param = ["userid":userid,"type":type];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 
                 let result = HSGTestModel(JSONDecoder(json!))
                 // print("状态是")
                 // print(result.status)
                 if(result.status == "success"){
-                    handle(success: true, response: result.datas)
+                    handle(true, result.datas as AnyObject?)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     
     // 获取错题集 type 1 每日一练 2 在线考试
-    func GetErrorExampaper(userid:String, type:String, handle:ResponseBlock){
+    func GetErrorExampaper(_ userid:String, type:String, handle:@escaping ResponseBlock){
         //        let user = NSUserDefaults.standardUserDefaults()
         //        let uid = user.stringForKey("userid")
         let url = PARK_URL_Header+"GetMyErrorExampaper"
         
         let param = ["userid":userid,"type":type];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 
                 let result = GHSErrorExamModel(JSONDecoder(json!))
                 // print("状态是")
                 // print(result.status)
                 if(result.status == "success"){
-                    handle(success: true, response: result.datas)
+                    handle(true, result.datas as AnyObject?)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
     
     // 获取收藏试题
-    func GetCollectList(userid:String, type:String, handle:ResponseBlock){
+    func GetCollectList(_ userid:String, type:String, handle:@escaping ResponseBlock){
     
         let url = PARK_URL_Header+"getfavoritelist"
         
         let param = ["userid":userid,"type":type];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 
                 let result = CollectModel(JSONDecoder(json!))
                 // print("状态是")
                 // print(result.status)
                 if(result.status == "success"){
-                    handle(success: true, response: result.datas)
+                    handle(true, result.datas as AnyObject?)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
@@ -527,48 +527,48 @@ class HSMineHelper: NSObject {
 
 
     // 获取用户信息
-    func getUserInfo(userid:String,handle:ResponseBlock){
+    func getUserInfo(_ userid:String,handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"getuserinfo"
         let param = [
             "userid":userid
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = HSUserInfoModel(JSONDecoder(json!))
                 // print("状态是")
                 // print(result.status)
                 if(result.status == "success"){
-                    handle(success: true, response: result.datas)
+                    handle(true, result.datas)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
     }
 
     //获取收藏记录列表 
-    func getCollectionInfoWith(type:String, handle:ResponseBlock){
+    func getCollectionInfoWith(_ type:String, handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"getfavoritelist"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,
             "type":type
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 
                 let result = HSErrorExamModel(JSONDecoder(json!))
                 // print("状态是")
                 // print(result.status)
                 if(result.status == "success"){
-                    handle(success: true, response: result.datas)
+                    handle(true, result.datas as AnyObject?)
                 }else{
-                    handle(success: false, response: result.errorData)
+                    handle(false, result.errorData as AnyObject?)
                 }
             }
         }
@@ -576,7 +576,7 @@ class HSMineHelper: NSObject {
     }
     
     // MARK: 发布企业认证
-    func updataCompanyCertifyWith(companyname:String, companyinfo:String, create_time:String, phone:String, email:String, linkman:String, license:String, handle:ResponseBlock){
+    func updataCompanyCertifyWith(_ companyname:String, companyinfo:String, create_time:String, phone:String, email:String, linkman:String, license:String, handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"UpdataCompanyCertify"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,
@@ -589,17 +589,17 @@ class HSMineHelper: NSObject {
             "license":license
             
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let status = HSStatusModel(JSONDecoder(json!))
 
                 if(status.status == "success"){
-                    handle(success: true, response: nil)
+                    handle(true, nil)
                 }else{
-                    handle(success: false, response: nil)
+                    handle(false, nil)
                 }
 //                do {
 //                    
@@ -626,25 +626,25 @@ class HSMineHelper: NSObject {
     }
     
     // MARK: 获取企业认证状态
-    func getCompanyCertify(handle:ResponseBlock){
+    func getCompanyCertify(_ handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"getCompanyCertify"
         let param = [
             "userid":QCLoginUserInfo.currentInfo.userid,
         ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: "获取企业认证状态失败")
+                handle(false, "获取企业认证状态失败" as AnyObject?)
             }else{
                 let result = CompanyInfoStatus(JSONDecoder(json!))
                 // print(result.status)
                 if(result.status == "success"){
-                    handle(success: true, response: result.data)
+                    handle(true, result.data)
                 }else{
                     let dic = ["status":"0"]
-                    let model:CompanyInfo = CompanyInfo.init(JSONDecoder(dic))
+                    let model:CompanyInfo = CompanyInfo.init(JSONDecoder(dic as AnyObject))
                     
-                    handle(success: true, response: model)
+                    handle(true, model)
                 }
 //
 //                do {
@@ -666,7 +666,7 @@ class HSMineHelper: NSObject {
     }
     
     // MARK: 获取积分排行榜
-    func getRankingList(handle:ResponseBlock){
+    func getRankingList(_ handle:@escaping ResponseBlock){
         
         let url = PARK_URL_Header+"getRankingList"
         
@@ -675,21 +675,21 @@ class HSMineHelper: NSObject {
 
 //        Alamofire.request(.GET, url).response { (request, response, json, error) in
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = RankList(JSONDecoder(json!))
                 // print(result.status)
                 if(result.status == "success"){
-                    handle(success: true, response: result.data)
+                    handle(true, result.data as AnyObject?)
                 }else{
-                    handle(success: false, response: "获取积分排行榜失败")
+                    handle(false, "获取积分排行榜失败" as AnyObject?)
                 }
             }
         }
     }
     
     // MARK: 获取个人积分详情
-    func getRanking_User(handle:ResponseBlock){
+    func getRanking_User(_ handle:@escaping ResponseBlock){
         
         let url = PARK_URL_Header+"getRanking_User"
         
@@ -697,18 +697,18 @@ class HSMineHelper: NSObject {
             "userid":QCLoginUserInfo.currentInfo.userid,
             ];
         
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 //
 //        Alamofire.request(.GET, url, parameters: param).response { (request, response, json, error) in
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 let result = Ranking_User(JSONDecoder(json!))
                 // print(result.status)
                 if(result.status == "success"){
-                    handle(success: true, response: result.data)
+                    handle(true, result.data as AnyObject?)
                 }else{
-                    handle(success: false, response: "获取个人积分详情失败")
+                    handle(false, "获取个人积分详情失败" as AnyObject?)
                 }
             }
         }
@@ -723,7 +723,7 @@ class HSMineHelper: NSObject {
 //        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
 //            // print(request)
 //            if(error != nil){
-//                handle(success: false, response: error?.description)
+//                handle(success: false, response: error?.localizedDescription)
 //            }else{
 //                
 //                let result = examData(JSONDecoder(json!))
@@ -739,53 +739,53 @@ class HSMineHelper: NSObject {
 //    }
     
     // 获取折线图数据
-    func GetLineChartData(handle:ResponseBlock){
+    func GetLineChartData(_ handle:@escaping ResponseBlock){
         
         let url = PARK_URL_Header+"GetLineChartData"
         
         let param = ["userid":QCLoginUserInfo.currentInfo.userid];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 
                 let result = LineChartData(JSONDecoder(json!))
                 
                 if(result.status == "success"){
-                    handle(success: true, response: result.data)
+                    handle(true, result.data)
                 }else{
-                    handle(success: false, response: nil)
+                    handle(false, nil)
                 }
             }
         }
     }
     
     // 获取综合正确率
-    func getSynAccuracy(handle:ResponseBlock){
+    func getSynAccuracy(_ handle:@escaping ResponseBlock){
         
         let url = PARK_URL_Header+"getSynAccuracy"
         
         let param = ["userid":QCLoginUserInfo.currentInfo.userid];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 
                 let result = SynAccuracy(JSONDecoder(json!))
                 
                 if(result.status == "success"){
-                    handle(success: true, response: result.data)
+                    handle(true, result.data)
                 }else{
-                    handle(success: false, response: nil)
+                    handle(false, nil)
                 }
             }
         }
     }
     
     // 意见反馈
-    func addfeedback(content:String, devicestate:String, handle:ResponseBlock){
+    func addfeedback(_ content:String, devicestate:String, handle:@escaping ResponseBlock){
         
         let url = PARK_URL_Header+"addfeedback"
         
@@ -794,33 +794,33 @@ class HSMineHelper: NSObject {
             "content":content,
             "devicestate":devicestate
         ]
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 
                 let result = Http(JSONDecoder(json!))
                 
                 if(result.status == "success"){
-                    handle(success: true, response: nil)
+                    handle(true, nil)
                 }else{
-                    handle(success: false, response: nil)
+                    handle(false, nil)
                 }
             }
         }
     }
     
     // 获取已意见反馈 包括系统回复列表
-    func getfeedbackList(handle:ResponseBlock){
+    func getfeedbackList(_ handle:@escaping ResponseBlock){
         
         let url = PARK_URL_Header+"getfeedbackList"
         
         let param = ["userid":QCLoginUserInfo.currentInfo.userid];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             // print(request)
             if(error != nil){
-                handle(success: false, response: error?.description)
+                handle(false, error?.localizedDescription as AnyObject?)
             }else{
                 
                 let result = Http(JSONDecoder(json!))
@@ -828,9 +828,9 @@ class HSMineHelper: NSObject {
                 if(result.status == "success"){
                     
                     let feedbackList = FeedbackList(JSONDecoder(json!))
-                    handle(success: true, response: feedbackList.data)
+                    handle(true, feedbackList.data as AnyObject?)
                 }else{
-                    handle(success: false, response: nil)
+                    handle(false, nil)
                 }
             }
         }

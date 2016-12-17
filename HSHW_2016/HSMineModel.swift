@@ -227,7 +227,7 @@ class xamInfo: JSONJoy{
             answers.append(AnswersInfo(childs))
         }
     }
-    func append(list: [AnswersInfo]){
+    func append(_ list: [AnswersInfo]){
         self.answers_2 = list + self.answers_2
         self.answers = list + self.answers
     }
@@ -426,13 +426,13 @@ class RankModel: JSONJoy {
         photo = decoder["photo"].string ?? ""
         
         let timeStr = NSString(string: decoder["time"].string ?? "")
-        let timeSta:NSTimeInterval = timeStr.doubleValue
-        let dfmatter = NSDateFormatter()
+        let timeSta:TimeInterval = timeStr.doubleValue
+        let dfmatter = DateFormatter()
         dfmatter.dateFormat="yyyy-MM-dd"
         
-        let date = NSDate(timeIntervalSince1970: timeSta)
+        let date = Date(timeIntervalSince1970: timeSta)
         
-        time = dfmatter.stringFromDate(date)
+        time = dfmatter.string(from: date)
     }
 
 }
@@ -471,13 +471,13 @@ class Ranking_UserModel: JSONJoy {
 //        create_time = decoder["create_time"].string ?? ""
         
         let timeStr = NSString(string: decoder["create_time"].string ?? "")
-        let timeSta:NSTimeInterval = timeStr.doubleValue
-        let dfmatter = NSDateFormatter()
+        let timeSta:TimeInterval = timeStr.doubleValue
+        let dfmatter = DateFormatter()
         dfmatter.dateFormat="yyyy-MM-dd"
         
-        let date = NSDate(timeIntervalSince1970: timeSta)
+        let date = Date(timeIntervalSince1970: timeSta)
         
-        create_time = dfmatter.stringFromDate(date)
+        create_time = dfmatter.string(from: date)
     }
     
 }

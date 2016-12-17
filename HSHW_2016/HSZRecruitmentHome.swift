@@ -18,26 +18,26 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
     
 //    var pagingMenuController:PagingMenuController?
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
 //        findJob.superViewController = superViewController ?? nil
 //        findPersonnel.superViewController = superViewController ?? nil
         
-        BaiduMobStat.defaultStat().pageviewStartWithName("护士站 招聘")
+        BaiduMobStat.default().pageviewStart(withName: "护士站 招聘")
     }
     
-    override func viewDidDisappear(animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.defaultStat().pageviewEndWithName("护士站 招聘")
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 招聘")
     }
    
     
-    override func viewWillAppear(animated: Bool) {
-        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        self.navigationController?.navigationBar.hidden = false
-        self.tabBarController?.tabBar.hidden = false
+    override func viewWillAppear(_ animated: Bool) {
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+        self.navigationController?.navigationBar.isHidden = false
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     override func viewDidLoad() {
@@ -92,37 +92,37 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
         
         struct MenuItem1: MenuItemViewCustomizable {
             
-            private var horizontalMargin: CGFloat = 5
+            fileprivate var horizontalMargin: CGFloat = 5
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "找工作", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
-                return .Text(title: title)
+                let title = MenuItemText(text: "找工作", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+                return .text(title: title)
             }
         }
         struct MenuItem2: MenuItemViewCustomizable {
-            private var horizontalMargin: CGFloat = 5
+            fileprivate var horizontalMargin: CGFloat = 5
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "找人才", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
-                return .Text(title: title)
+                let title = MenuItemText(text: "找人才", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+                return .text(title: title)
             }
         }
         
         struct MenuItem3: MenuItemViewCustomizable {
             
-            private var horizontalMargin: CGFloat = 5
+            fileprivate var horizontalMargin: CGFloat = 5
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "职场宝典", color: UIColor.lightGrayColor(), selectedColor: COLOR, font: UIFont.systemFontOfSize(18), selectedFont: UIFont.systemFontOfSize(18))
-                return .Text(title: title)
+                let title = MenuItemText(text: "职场宝典", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+                return .text(title: title)
             }
         }
        
         struct MenuOptions: MenuViewCustomizable {
             
-            private var backgroundColor: UIColor = UIColor.clearColor()
-            private var selectedBackgroundColor: UIColor = UIColor.clearColor()
-            private var displayMode: MenuDisplayMode = .SegmentedControl
-            private var height: CGFloat = 44
+            fileprivate var backgroundColor: UIColor = UIColor.clear
+            fileprivate var selectedBackgroundColor: UIColor = UIColor.clear
+            fileprivate var displayMode: MenuDisplayMode = .segmentedControl
+            fileprivate var height: CGFloat = 44
             
-            private var focusMode: MenuFocusMode = .Underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+            fileprivate var focusMode: MenuFocusMode = .underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
             
             var itemsOptions: [MenuItemViewCustomizable] {
                 return [MenuItem1(), MenuItem2(), MenuItem3()]
@@ -138,17 +138,17 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
             }
             var componentType: ComponentType {
                 
-                return .All(menuOptions: MenuOptions(), pagingControllers: viewcontrollers)
+                return .all(menuOptions: MenuOptions(), pagingControllers: viewcontrollers)
             }
         }
         
         let options = PagingMenuOptions.init(viewcontrollers: [findJob,findPersonnel,workPlace!])
         let pagingMenuController = PagingMenuController(options: options)
-        pagingMenuController.view.frame = CGRectMake(0, 1, WIDTH, HEIGHT-45)
+        pagingMenuController.view.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-45)
         
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
-        pagingMenuController.didMoveToParentViewController(self)
+        pagingMenuController.didMove(toParentViewController: self)
         
         
     }
@@ -160,7 +160,7 @@ class HSZRecruitmentHome: UIViewController, PagingMenuControllerDelegate {
 //        findPersonnel.rightBarButtonClicked()
 //    }
     
-    func willMoveToPageMenuController(menuController: UIViewController, previousMenuController: UIViewController) {
+    func willMoveToPageMenuController(_ menuController: UIViewController, previousMenuController: UIViewController) {
 //        if previousMenuController == findJob {
 //            findJob.saveResumeBtnClicked()
 //        }else if previousMenuController == findPersonnel {
