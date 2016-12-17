@@ -7,6 +7,30 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class NSCircleDetailTableViewCell: UITableViewCell {
     
@@ -64,7 +88,7 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
@@ -76,70 +100,70 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         imgBtn.layer.cornerRadius = 17.5
         imgBtn.clipsToBounds = true
         
-        nameLab.font = UIFont.systemFontOfSize(12)
-        nameLab.textColor = UIColor.blackColor()
+        nameLab.font = UIFont.systemFont(ofSize: 12)
+        nameLab.textColor = UIColor.black
         
-        positionLab.font = UIFont.systemFontOfSize(8)
-        positionLab.textColor = UIColor.whiteColor()
+        positionLab.font = UIFont.systemFont(ofSize: 8)
+        positionLab.textColor = UIColor.white
 //        positionLab.backgroundColor = COLOR
-        positionLab.layer.backgroundColor = COLOR.CGColor
-        positionLab.textAlignment = .Center
+        positionLab.layer.backgroundColor = COLOR.cgColor
+        positionLab.textAlignment = .center
         
-        timeLab.font = UIFont.systemFontOfSize(10)
-        timeLab.textColor = UIColor.lightGrayColor()
+        timeLab.font = UIFont.systemFont(ofSize: 10)
+        timeLab.textColor = UIColor.lightGray
         
-        levelLab.font = UIFont.systemFontOfSize(10)
+        levelLab.font = UIFont.systemFont(ofSize: 10)
         levelLab.textColor = COLOR
         
-        titleLab.font = UIFont.systemFontOfSize(titleSize)
-        titleLab.textColor = UIColor.blackColor()
+        titleLab.font = UIFont.systemFont(ofSize: titleSize)
+        titleLab.textColor = UIColor.black
         titleLab.numberOfLines = 0
         
-        contantLab.font = UIFont.systemFontOfSize(contentSize)
-        contantLab.textColor = UIColor.grayColor()
+        contantLab.font = UIFont.systemFont(ofSize: contentSize)
+        contantLab.textColor = UIColor.gray
         contantLab.numberOfLines = 2
         
-        likeBtn.setImage(UIImage(named: "赞"), forState: .Normal)
-        likeBtn.titleLabel?.font = UIFont.systemFontOfSize(10)
-        likeBtn.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+        likeBtn.setImage(UIImage(named: "赞"), for: UIControlState())
+        likeBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        likeBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
         
-        comBtn.setImage(UIImage(named: "评论"), forState: .Normal)
-        comBtn.titleLabel?.font = UIFont.systemFontOfSize(10)
-        comBtn.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+        comBtn.setImage(UIImage(named: "评论"), for: UIControlState())
+        comBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        comBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
         
-        addressBtn.setImage(UIImage(named: "发帖位置"), forState: .Normal)
-        addressBtn.titleLabel?.font = UIFont.systemFontOfSize(10)
-        addressBtn.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+        addressBtn.setImage(UIImage(named: "发帖位置"), for: UIControlState())
+        addressBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        addressBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
         
-        moreBtn.setTitle("···", forState: .Normal)
-        moreBtn.titleLabel?.font = UIFont.systemFontOfSize(18)
+        moreBtn.setTitle("···", for: UIControlState())
+        moreBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         moreBtn.layer.cornerRadius = 2
-        moreBtn.setTitleColor(UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), forState: .Normal)
+        moreBtn.setTitleColor(UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), for: UIControlState())
         moreBtn.backgroundColor = UIColor(red: 235/255.0, green: 235/255.0, blue: 235/255.0, alpha: 1)
         
-        titleImg.contentMode = .ScaleAspectFill
+        titleImg.contentMode = .scaleAspectFill
         titleImg.clipsToBounds = true
         
-        titSubImg_1.contentMode = .ScaleAspectFill
+        titSubImg_1.contentMode = .scaleAspectFill
         titSubImg_1.clipsToBounds = true
-        titSubImg_1.frame = CGRectMake(0, 0, (WIDTH-20-margin*2)/3.0, (WIDTH-20-margin*2)/3.0*2/3.0)
+        titSubImg_1.frame = CGRect(x: 0, y: 0, width: (WIDTH-20-margin*2)/3.0, height: (WIDTH-20-margin*2)/3.0*2/3.0)
         titSubImg.addSubview(titSubImg_1)
         
-        titSubImg_2.contentMode = .ScaleAspectFill
+        titSubImg_2.contentMode = .scaleAspectFill
         titSubImg_2.clipsToBounds = true
-        titSubImg_2.frame = CGRectMake((WIDTH-20-margin*2)/3.0+margin, 0, (WIDTH-20-margin*2)/3.0, (WIDTH-20-margin*2)/3.0*2/3.0)
+        titSubImg_2.frame = CGRect(x: (WIDTH-20-margin*2)/3.0+margin, y: 0, width: (WIDTH-20-margin*2)/3.0, height: (WIDTH-20-margin*2)/3.0*2/3.0)
         titSubImg.addSubview(titSubImg_2)
         
-        titSubImg_3.contentMode = .ScaleAspectFill
+        titSubImg_3.contentMode = .scaleAspectFill
         titSubImg_3.clipsToBounds = true
-        titSubImg_3.frame = CGRectMake(((WIDTH-20-margin*2)/3.0+margin)*2, 0, (WIDTH-20-margin*2)/3.0, (WIDTH-20-margin*2)/3.0*2/3.0)
+        titSubImg_3.frame = CGRect(x: ((WIDTH-20-margin*2)/3.0+margin)*2, y: 0, width: (WIDTH-20-margin*2)/3.0, height: (WIDTH-20-margin*2)/3.0*2/3.0)
         titSubImg.addSubview(titSubImg_3)
     }
     
-    private let titleSize:CGFloat = 14
-    private let contentSize:CGFloat = 12
+    fileprivate let titleSize:CGFloat = 14
+    fileprivate let contentSize:CGFloat = 12
     
-    func setCellWithNewsInfo(forum:ForumModel) {
+    func setCellWithNewsInfo(_ forum:ForumModel) {
         
         
         
@@ -168,7 +192,7 @@ class NSCircleDetailTableViewCell: UITableViewCell {
             conNumStr = forum.hits
         }
         
-        imgBtn.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+"avatar20161116173819639.png"), forState: .Normal)
+        imgBtn.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+"avatar20161116173819639.png"), for: UIControlState())
         
         nameLab.text = "小丫头妈咪宝贝"
         nameLab.frame = CGRect(x: imgBtn.frame.maxX+8, y: 10, width: calculateWidth("小丫头妈咪宝贝", size: 12, height: 17), height: 17)
@@ -192,26 +216,26 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         
         if forum.photo.count == 0 {
             
-            titleImg.hidden = true
-            titSubImg.hidden = true
+            titleImg.isHidden = true
+            titSubImg.isHidden = true
             
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
-            self.titleLab.frame = CGRectMake(8, forumMinY, WIDTH-16, height)
+            self.titleLab.frame = CGRect(x: 8, y: forumMinY, width: WIDTH-16, height: height)
             
             self.titleLab.text = forum.title
             
             var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
+            if contentHeight >= UIFont.systemFont(ofSize: contentSize).lineHeight*3 {
+                contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
-            self.contantLab.frame = CGRectMake(8, self.titleLab.frame.maxY+8, WIDTH-16, contentHeight)
+            self.contantLab.frame = CGRect(x: 8, y: self.titleLab.frame.maxY+8, width: WIDTH-16, height: contentHeight)
             
             self.contantLab.text = forum.content
             
-            likeBtn.setTitle(forum.like, forState: .Normal)
-            comBtn.setTitle(forum.hits, forState: .Normal)
+            likeBtn.setTitle(forum.like, for: UIControlState())
+            comBtn.setTitle(forum.hits, for: UIControlState())
             // TODO:
-            addressBtn.setTitle(QCLoginUserInfo.currentInfo.address, forState: .Normal)
+            addressBtn.setTitle(QCLoginUserInfo.currentInfo.address, for: UIControlState())
 
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: contantLab.frame.maxY+8)
@@ -225,33 +249,33 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         }else if forum.photo.count < 3 {
             
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16-110-8)
-            self.titleLab.frame = CGRectMake(8, forumMinY, WIDTH-16-110-8, height)
+            self.titleLab.frame = CGRect(x: 8, y: forumMinY, width: WIDTH-16-110-8, height: height)
             
             self.titleLab.text = forum.title
             
             var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16-110-8)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
+            if contentHeight >= UIFont.systemFont(ofSize: contentSize).lineHeight*3 {
+                contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
-            self.contantLab.frame = CGRectMake(8, self.titleLab.frame.maxY+8, WIDTH-16-110-8, contentHeight)
+            self.contantLab.frame = CGRect(x: 8, y: self.titleLab.frame.maxY+8, width: WIDTH-16-110-8, height: contentHeight)
             
             self.contantLab.text = forum.content
             
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                 
-                titleImg.frame = CGRectMake(WIDTH-110-8, forumMinY+8, 110, 80)
+                titleImg.frame = CGRect(x: WIDTH-110-8, y: forumMinY+8, width: 110, height: 80)
                 self.titleImg.image = UIImage.init(named: "defaultImage.png")
                 
-                titleImg.hidden = false
-                titSubImg.hidden = true
+                titleImg.isHidden = false
+                titSubImg.isHidden = true
             }else{
                 let photoUrl:String = DomainName+"data/upload/"+(forum.photo.first!.url ?? "")!
                 
-                titleImg.frame = CGRectMake(WIDTH-110-8, forumMinY+8, 110, 80)
-                self.titleImg.sd_setImageWithURL(NSURL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
+                titleImg.frame = CGRect(x: WIDTH-110-8, y: forumMinY+8, width: 110, height: 80)
+                self.titleImg.sd_setImage(with: URL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
                 
-                titleImg.hidden = false
-                titSubImg.hidden = true
+                titleImg.isHidden = false
+                titSubImg.isHidden = true
                 //        let titleHeight:CGFloat = calculateHeight(newsInfo.post_title!, size: 16, width: WIDTH-140)
                 //        titLab.frame.size.height = titleHeight+100
             }
@@ -266,10 +290,10 @@ class NSCircleDetailTableViewCell: UITableViewCell {
                 titleImg.frame.origin.y = forumMinY
             }
             
-            likeBtn.setTitle(forum.like, forState: .Normal)
-            comBtn.setTitle(forum.hits, forState: .Normal)
+            likeBtn.setTitle(forum.like, for: UIControlState())
+            comBtn.setTitle(forum.hits, for: UIControlState())
             // TODO:
-            addressBtn.setTitle(QCLoginUserInfo.currentInfo.address, forState: .Normal)
+            addressBtn.setTitle(QCLoginUserInfo.currentInfo.address, for: UIControlState())
             
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: max(titleImg.frame.maxY+8, contantLab.frame.maxY+8))
@@ -283,19 +307,19 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         }else{
             
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
-            self.titleLab.frame = CGRectMake(8, forumMinY, WIDTH-16, height)
+            self.titleLab.frame = CGRect(x: 8, y: forumMinY, width: WIDTH-16, height: height)
             
             self.titleLab.text = forum.title
             
             var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
-            if contentHeight >= UIFont.systemFontOfSize(contentSize).lineHeight*3 {
-                contentHeight = UIFont.systemFontOfSize(contentSize).lineHeight*2
+            if contentHeight >= UIFont.systemFont(ofSize: contentSize).lineHeight*3 {
+                contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
-            self.contantLab.frame = CGRectMake(8, self.titleLab.frame.maxY+8, WIDTH-16, contentHeight)
+            self.contantLab.frame = CGRect(x: 8, y: self.titleLab.frame.maxY+8, width: WIDTH-16, height: contentHeight)
             
             self.contantLab.text = forum.content
             
-            titSubImg.frame = CGRectMake(8, contantLab.frame.maxY+8, WIDTH-16, (WIDTH-16-margin*2)/3.0*2/3.0)
+            titSubImg.frame = CGRect(x: 8, y: contantLab.frame.maxY+8, width: WIDTH-16, height: (WIDTH-16-margin*2)/3.0*2/3.0)
             
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                 
@@ -305,22 +329,22 @@ class NSCircleDetailTableViewCell: UITableViewCell {
             }else {
                 
                 let photoUrl_1:String = DomainName+"data/upload/"+(forum.photo[0].url)
-                titSubImg_1.sd_setImageWithURL(NSURL(string:photoUrl_1), placeholderImage: UIImage(named: "defaultImage.png"))
+                titSubImg_1.sd_setImage(with: URL(string:photoUrl_1), placeholderImage: UIImage(named: "defaultImage.png"))
                 
                 let photoUrl_2:String = DomainName+"data/upload/"+(forum.photo[1].url)
-                titSubImg_2.sd_setImageWithURL(NSURL(string:photoUrl_2), placeholderImage: UIImage(named: "defaultImage.png"))
+                titSubImg_2.sd_setImage(with: URL(string:photoUrl_2), placeholderImage: UIImage(named: "defaultImage.png"))
                 
                 let photoUrl_3:String = DomainName+"data/upload/"+(forum.photo[2].url)
-                titSubImg_3.sd_setImageWithURL(NSURL(string:photoUrl_3), placeholderImage: UIImage(named: "defaultImage.png"))
+                titSubImg_3.sd_setImage(with: URL(string:photoUrl_3), placeholderImage: UIImage(named: "defaultImage.png"))
             }
             
-            titleImg.hidden = true
-            titSubImg.hidden = false
+            titleImg.isHidden = true
+            titSubImg.isHidden = false
             
-            likeBtn.setTitle(forum.like, forState: .Normal)
-            comBtn.setTitle(forum.hits, forState: .Normal)
+            likeBtn.setTitle(forum.like, for: UIControlState())
+            comBtn.setTitle(forum.hits, for: UIControlState())
             // TODO:
-            addressBtn.setTitle(QCLoginUserInfo.currentInfo.address, forState: .Normal)
+            addressBtn.setTitle(QCLoginUserInfo.currentInfo.address, for: UIControlState())
             
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: titSubImg.frame.maxY+8)
