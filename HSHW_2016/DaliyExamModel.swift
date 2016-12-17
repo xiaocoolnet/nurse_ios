@@ -8,34 +8,34 @@
 
 import Foundation
 
-class DaliyExamModel:JSONJoy {
-    var status:String?
-    var data: JSONDecoder?
-    var array : Array<JSONDecoder>?
-    var errorData:String?
-    init(){
-    }
-    required init(_ decoder:JSONDecoder){
-        
-        status = decoder["status"].string
-        if status == "success" {
-            data = decoder["data"]
-        }else{
-            errorData = decoder["data"].string
-        }
-    }
-}
-class HSTestModel:JSONJoy {
-    var status:String
-    var data = Array<testExamList>()
-    
-    required init(_ decoder: JSONDecoder) {
-        status = decoder["status"].string ?? ""
-        for childs:JSONDecoder in decoder["data"].array ?? [] {
-            data.append(testExamList(childs))
-        }
-    }
-}
+//class DaliyExamModel:JSONJoy {
+//    var status:String?
+//    var data: JSONDecoder?
+//    var array : Array<JSONDecoder>?
+//    var errorData:String?
+//    init(){
+//    }
+//    required init(_ decoder:JSONDecoder){
+//        
+//        status = decoder["status"].string
+//        if status == "success" {
+//            data = decoder["data"]
+//        }else{
+//            errorData = decoder["data"].string
+//        }
+//    }
+//}
+//class HSTestModel:JSONJoy {
+//    var status:String
+//    var data = Array<testExamList>()
+//    
+//    required init(_ decoder: JSONDecoder) {
+//        status = decoder["status"].string ?? ""
+//        for childs:JSONDecoder in decoder["data"].array ?? [] {
+//            data.append(testExamList(childs))
+//        }
+//    }
+//}
 class testExamList:JSONJoy {
     var id:String
     var userid:String
@@ -103,29 +103,29 @@ class ExamInfo: JSONJoy{
 
 
 
-class answerList: JSONJoy {
-    var status:String?
-    var objectlist: [answerInfo]
-    
-    var count: Int{
-        return self.objectlist.count
-    }
-    init(){
-        objectlist = Array<answerInfo>()
-    }
-    required init(_ decoder: JSONDecoder) {
-        
-        objectlist = Array<answerInfo>()
-        for childs: JSONDecoder in decoder.array!{
-            objectlist.append(answerInfo(childs))
-        }
-    }
-    
-    func append(list: [answerInfo]){
-        self.objectlist = list + self.objectlist
-    }
-    
-}
+//class answerList: JSONJoy {
+//    var status:String?
+//    var objectlist: [answerInfo]
+//    
+//    var count: Int{
+//        return self.objectlist.count
+//    }
+//    init(){
+//        objectlist = Array<answerInfo>()
+//    }
+//    required init(_ decoder: JSONDecoder) {
+//        
+//        objectlist = Array<answerInfo>()
+//        for childs: JSONDecoder in decoder.array!{
+//            objectlist.append(answerInfo(childs))
+//        }
+//    }
+//    
+//    func append(list: [answerInfo]){
+//        self.objectlist = list + self.objectlist
+//    }
+//    
+//}
 
 class answerInfo: JSONJoy {
     

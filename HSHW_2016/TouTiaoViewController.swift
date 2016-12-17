@@ -261,35 +261,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
                     
                 })
             }
-        }
-        
-        //        let slideTypeId = Int(newsId)!-1
-        //        requestHelper.getSlideImages(String(slideTypeId)) { [unowned self] (success, response) in
-        //            if success {
-        //                print(response)
-        //                self.imageArr = response as! Array<PhotoInfo>
-        ////                for imageInfo in self.imageArr {
-        ////                    self.picArr.append(IMAGE_URL_HEADER + imageInfo.picUrl)
-        ////                    self.titArr.append(imageInfo.name)
-        ////                    //                    self.titArr.append(imageInfo)
-        //                    dispatch_async(dispatch_get_main_queue(), {
-        //                        self.updateSlideImage()
-        //                        self.myTableView.reloadData()
-        //                    })
-        ////                }
-        //                self.GetDate()
-        //            }else{
-        //                self.myTableView.mj_header.endRefreshing()
-        //
-        //                let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        //                hud.mode = MBProgressHUDMode.Text;
-        //                hud.labelText = String((response ?? "")!)
-        //                hud.margin = 10.0
-        //                hud.removeFromSuperViewOnHide = true
-        //                hud.hide(true, afterDelay: 1)
-        //            }
-        //        }
-        
+        }        
     }
     
     

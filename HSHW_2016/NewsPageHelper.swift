@@ -10,29 +10,29 @@ import UIKit
 import MBProgressHUD
 class NewsPageHelper: NSObject {
     
-    // 获取新闻轮播图片
-    func getSlideImages(typeid:String, handle:ResponseBlock){
-        let url = PARK_URL_Header+"getslidelist"
-        let param = [
-            "typeid":typeid
-        ];
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
-            // print(request)
-            if(error != nil){
-                handle(success: false, response: error?.description)
-            }else{
-                let result = PhotoList(JSONDecoder(json!))
-                // print("状态是")
-                // print(result.status)
-                if(result.status == "success"){
-                    handle(success: true, response: result.datas)
-                }else{
-                    handle(success: false, response: result.errorData)
-                }
-            }
-        }
-
-    }
+//    // 获取新闻轮播图片
+//    func getSlideImages(typeid:String, handle:ResponseBlock){
+//        let url = PARK_URL_Header+"getslidelist"
+//        let param = [
+//            "typeid":typeid
+//        ];
+//        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//            // print(request)
+//            if(error != nil){
+//                handle(success: false, response: error?.description)
+//            }else{
+//                let result = PhotoList(JSONDecoder(json!))
+//                // print("状态是")
+//                // print(result.status)
+//                if(result.status == "success"){
+//                    handle(success: true, response: result.datas)
+//                }else{
+//                    handle(success: false, response: result.errorData)
+//                }
+//            }
+//        }
+//
+//    }
     
     
     func getData(channelid:String,handle:ResponseBlock) {

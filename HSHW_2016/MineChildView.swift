@@ -27,82 +27,82 @@ class ChildModel: JSONJoy{
     }
 }
 
-class ChildList: JSONJoy {
-    var status:String?
-    var objectlist: [ChildInfo]
-    
-    var count: Int{
-        return self.objectlist.count
-    }
-    init(){
-        objectlist = Array<ChildInfo>()
-    }
-    required init(_ decoder: JSONDecoder) {
-        
-        objectlist = Array<ChildInfo>()
-        for childs: JSONDecoder in decoder.array!{
-            objectlist.append(ChildInfo(childs))
-        }
-    }
-    
-    func append(list: [ChildInfo]){
-        self.objectlist = list + self.objectlist
-    }
-    
-}
+//class ChildList: JSONJoy {
+//    var status:String?
+//    var objectlist: [ChildInfo]
+//    
+//    var count: Int{
+//        return self.objectlist.count
+//    }
+//    init(){
+//        objectlist = Array<ChildInfo>()
+//    }
+//    required init(_ decoder: JSONDecoder) {
+//        
+//        objectlist = Array<ChildInfo>()
+//        for childs: JSONDecoder in decoder.array!{
+//            objectlist.append(ChildInfo(childs))
+//        }
+//    }
+//    
+//    func append(list: [ChildInfo]){
+//        self.objectlist = list + self.objectlist
+//    }
+//    
+//}
 
-class ChildInfo: JSONJoy {
-    
-    var id:String
-    var userid:String
-    var name:String
-    var sex:String
-    var avatar:String
-    var birthday:String
-    var experience:String
-    var address:String
-    var education:String
-    var wantposition:String
-    var certificate:String
-    var currentsalary:String
-    var count:String
-    var description:String
-    var linkman:String
-    var phone:String
-    var title:String
-    var jobstate:String
-    var email:String
-    var hiredate:String
-    var wantcity:String
-    var wantsalary:String
-    
-    required init(_ decoder:JSONDecoder){
-        id = decoder["id"].string ?? ""
-        userid = decoder["userid"].string ?? ""
-        name = decoder["name"].string ?? ""
-        sex = decoder["sex"].string ?? ""
-        avatar = decoder["avatar"].string ?? ""
-        birthday = decoder["birthday"].string ?? ""
-        address = decoder["address"].string ?? ""
-        currentsalary = decoder["currentsalary"].string ?? ""
-        certificate = decoder["certificate"].string ?? ""
-        count = decoder["count"].string ?? ""
-        description = decoder["description"].string ?? ""
-        linkman = decoder["linkman"].string ?? ""
-        phone = decoder["phone"].string ?? ""
-        education = decoder["education"].string ?? ""
-        experience = decoder["experience"].string ?? ""
-        title = decoder["title"].string ?? ""
-        jobstate = decoder["jobstate"].string ?? ""
-        wantposition = decoder["wantposition"].string ?? ""
-        description = decoder["description"].string ?? ""
-        email = decoder["email"].string ?? ""
-        phone = decoder["phone"].string ?? ""
-        hiredate = decoder["hiredate"].string ?? ""
-        wantcity = decoder["wantcity"].string ?? ""
-        wantsalary = decoder["wantsalary"].string ?? ""
-    }
-}
+//class ChildInfo: JSONJoy {
+//    
+//    var id:String
+//    var userid:String
+//    var name:String
+//    var sex:String
+//    var avatar:String
+//    var birthday:String
+//    var experience:String
+//    var address:String
+//    var education:String
+//    var wantposition:String
+//    var certificate:String
+//    var currentsalary:String
+//    var count:String
+//    var description:String
+//    var linkman:String
+//    var phone:String
+//    var title:String
+//    var jobstate:String
+//    var email:String
+//    var hiredate:String
+//    var wantcity:String
+//    var wantsalary:String
+//    
+//    required init(_ decoder:JSONDecoder){
+//        id = decoder["id"].string ?? ""
+//        userid = decoder["userid"].string ?? ""
+//        name = decoder["name"].string ?? ""
+//        sex = decoder["sex"].string ?? ""
+//        avatar = decoder["avatar"].string ?? ""
+//        birthday = decoder["birthday"].string ?? ""
+//        address = decoder["address"].string ?? ""
+//        currentsalary = decoder["currentsalary"].string ?? ""
+//        certificate = decoder["certificate"].string ?? ""
+//        count = decoder["count"].string ?? ""
+//        description = decoder["description"].string ?? ""
+//        linkman = decoder["linkman"].string ?? ""
+//        phone = decoder["phone"].string ?? ""
+//        education = decoder["education"].string ?? ""
+//        experience = decoder["experience"].string ?? ""
+//        title = decoder["title"].string ?? ""
+//        jobstate = decoder["jobstate"].string ?? ""
+//        wantposition = decoder["wantposition"].string ?? ""
+//        description = decoder["description"].string ?? ""
+//        email = decoder["email"].string ?? ""
+//        phone = decoder["phone"].string ?? ""
+//        hiredate = decoder["hiredate"].string ?? ""
+//        wantcity = decoder["wantcity"].string ?? ""
+//        wantsalary = decoder["wantsalary"].string ?? ""
+//    }
+//}
 
 class InvitedModel: JSONJoy{
     var status:String?
