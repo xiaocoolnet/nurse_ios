@@ -43,7 +43,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
     var count:Int = 13
     var timeNow:NSTimer!
     var timeText:String?
-    var helper = HSStudyNetHelper()
+//    var HSStudyNetHelper() = HSStudyNetHelper()
     var questionCount = "10"
     var hasChooseIndex = NSMutableArray()
     
@@ -868,7 +868,7 @@ class OnlineExaminationViewController: UIViewController,UIScrollViewDelegate {
             }
         }
         
-        helper.sendtestAnswerByType("2", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
+        HSStudyNetHelper.sendtestAnswerByType("2", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
             if(success){
                 let result = response as! ScoreDataModel
                 dispatch_async(dispatch_get_main_queue(), {

@@ -45,7 +45,7 @@ class GOnlineExamViewController: UIViewController,UIScrollViewDelegate {
     var count:Int = 13
     var timeNow:NSTimer!
     var timeText:String?
-    var helper = HSStudyNetHelper()
+//    var helper = HSStudyNetHelper()
     var questionCount = "10"
     let touch = UIButton(frame: CGRectMake(0, 0, WIDTH, HEIGHT-54))
 
@@ -897,7 +897,7 @@ class GOnlineExamViewController: UIViewController,UIScrollViewDelegate {
             }
         }
         
-        helper.sendtestAnswerByType("2", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
+        HSStudyNetHelper.sendtestAnswerByType("2", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
             if(success){
                 let result = response as! ScoreDataModel
                 dispatch_async(dispatch_get_main_queue(), {

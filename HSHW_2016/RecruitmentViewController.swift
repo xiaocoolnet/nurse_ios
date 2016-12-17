@@ -26,7 +26,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     var currentJobModel:JobModel?
     var CVDataSource:Array<CVModel>?
     
-    var requestHelper = NewsPageHelper()
+//    var requestHelper = NewsPageHelper()
     
     var strId = "1"
     

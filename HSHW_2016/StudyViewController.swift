@@ -18,7 +18,7 @@ class StudyViewController: UIViewController,UITableViewDelegate,UITableViewDataS
 //    var titArr = Array<String>()
     var timer = NSTimer()
     var times = Int()
-    var requestHelper = NewsPageHelper()
+//    var requestHelper = NewsPageHelper()
     var newsList = Array<NewsInfo>()
     var imageArr = Array<NewsInfo>()
     

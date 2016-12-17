@@ -43,7 +43,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 //    var isCollect:Bool = false
 //    var dataSource = NewsList()
     var commentArray = [commentDataModel]()
-    var helper = NewsPageHelper()
+//    var NewsPageHelper() = NewsPageHelper()
     let zan = UIButton(frame: CGRectMake(WIDTH*148/375, WIDTH*80/375, WIDTH*80/375, WIDTH*80/375))
     var finishLoad = false
     var tagNum = 0
@@ -497,7 +497,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         }else{
             
-            helper.collectionNews(newsInfo!.object_id,type: type as String, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt) { (success, response) in
+            NewsPageHelper().collectionNews(newsInfo!.object_id,type: type as String, title: (newsInfo?.post_title)!, description: newsInfo!.post_excerpt) { (success, response) in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
                         self.collectBtn.selected = true
@@ -829,7 +829,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let webCell = tableView.dequeueReusableCellWithIdentifier("webView") as! contentCell
                 if webFlag {
                     
-                    helper.addScore_ReadingInformation((newsInfo?.object_id)!, handle: { (success, response) in
+                    NewsPageHelper().addScore_ReadingInformation((newsInfo?.object_id)!, handle: { (success, response) in
                         if success || String((response ?? "")!) == "阅读资讯加积分到上限值"{
                             
                             let url = NSURL(string:NewsInfo_Header+(self.newsInfo?.object_id)!)

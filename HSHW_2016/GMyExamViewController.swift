@@ -43,8 +43,8 @@ class GMyExamViewController: UIViewController, UIScrollViewDelegate {
     var isSubmit = Bool()
     var minute : Int = 1
     var count:Int = 13
-    var helper = HSStudyNetHelper()
-    var mineHelper = HSMineHelper()
+//    var helper = HSStudyNetHelper()
+//    var mineHelper = HSMineHelper()
     
     var questionCount = "10"
     

@@ -50,7 +50,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
     let rightAnswer = NSMutableArray()//正确答案
     var myChoose = Array<Int>() //已选答案
     var chooseId = Array<String>() //已选择的答案ID
-    var helper = HSStudyNetHelper()
+//    var HSStudyNetHelper() = HSStudyNetHelper()
     var startPage = 0
     var questionCount = "100"
     var hasChooseIndex = NSMutableArray()
@@ -370,7 +370,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         hud.margin = 10.0
         hud.removeFromSuperViewOnHide = true
         
-        helper.sendtestAnswerByType("2", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
+        HSStudyNetHelper.sendtestAnswerByType("2", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
             
             if(success){
                 dispatch_async(dispatch_get_main_queue(), {
@@ -1371,7 +1371,7 @@ class OnLineViewController: UIViewController,UIScrollViewDelegate {
         hud.margin = 10.0
         hud.removeFromSuperViewOnHide = true
         
-        helper.sendtestAnswerByType("2", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
+        HSStudyNetHelper.sendtestAnswerByType("2", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
             
             if(success){
                 dispatch_async(dispatch_get_main_queue(), {

@@ -21,7 +21,7 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
     var currentJobModel:JobModel?
     var CVDataSource:Array<CVModel>?
     
-    var requestHelper = NewsPageHelper()
+//    var requestHelper = NewsPageHelper()
     
     var strId = "1"
     

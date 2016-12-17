@@ -39,7 +39,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
     let rightAnswer = NSMutableArray()//正确答案
     var myChoose = Array<Int>() //已选答案
     var chooseId = Array<String>() //已选择的答案ID
-    var helper = HSStudyNetHelper()
+//    var HSStudyNetHelper() = HSStudyNetHelper()
     var startPage = 0
     var questionCount = "10"
     var hasChooseIndex = NSMutableArray()
@@ -890,7 +890,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
         hud.margin = 10.0
         hud.removeFromSuperViewOnHide = true
         
-        helper.sendtestAnswerByType("1", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
+        HSStudyNetHelper.sendtestAnswerByType("1", count: String(dataSource.count), questionlist: idStr, answerlist: answerStr) { (success, response) in
             if(success){
                 dispatch_async(dispatch_get_main_queue(), {
                     hud.hide(true)

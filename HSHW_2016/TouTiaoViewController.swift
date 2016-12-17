@@ -20,7 +20,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     var timer = NSTimer()
     var dataSource = Array<NewsInfo>()
     //    var likedataSource = LikeList()
-    var requestHelper = NewsPageHelper()
+//    var requestHelper = NewsPageHelper()
     
     internal var newsId = String()
     var slideImageId = String()

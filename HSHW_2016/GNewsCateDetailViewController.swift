@@ -22,7 +22,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     var picArr = Array<String>()
     var dataSource = NewsList()
 //    var likedataSource = LikeList()
-    var requestHelper = NewsPageHelper()
+//    var requestHelper = NewsPageHelper()
     
     internal var newsId = String()
     internal var post_title=String()

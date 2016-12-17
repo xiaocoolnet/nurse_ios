@@ -10,7 +10,7 @@ import UIKit
 
 class HSStudyNetHelper: NSObject {
     //提交考试答案
-    func sendtestAnswerByType(type:String,count:String,questionlist:String,answerlist:String,handle:ResponseBlock){
+    class func sendtestAnswerByType(type:String,count:String,questionlist:String,answerlist:String,handle:ResponseBlock){
         let url = PARK_URL_Header+"SubmitAnswers"
         let param = [
             "type":type,
