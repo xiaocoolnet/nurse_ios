@@ -23,7 +23,6 @@ class NSPersonalInfoDetailViewController: UIViewController, HSFindPersonDetailVi
 //    let sendPostion = NSBundle.mainBundle().loadNibNamed("PostVacancies", owner: nil, options: nil).first as! PostVacancies
     let sendResume = NSBundle.mainBundle().loadNibNamed("HSPostResumeView", owner: nil, options: nil).first as! HSPostResumeView
     //    var employmentdataSource=NSMutableArray()
-    let jobHelper = HSNurseStationHelper()
     var jobDataSource:Array<JobModel>?
     var currentJobModel:JobModel?
     var CVDataSource:Array<CVModel>?
@@ -225,7 +224,7 @@ class NSPersonalInfoDetailViewController: UIViewController, HSFindPersonDetailVi
                 inviteHud.removeFromSuperViewOnHide = true
                 inviteHud.margin = 10.0
                 
-                self.jobHelper.InviteJob_judge(model.userid, companyid: QCLoginUserInfo.currentInfo.userid, jobid: job.id) { (success, response) in
+                HSNurseStationHelper().InviteJob_judge(model.userid, companyid: QCLoginUserInfo.currentInfo.userid, jobid: job.id) { (success, response) in
                     
                     if success {
                         inviteHud.hide(true)

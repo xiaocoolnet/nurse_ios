@@ -21,7 +21,6 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     let resumeDetail = NSBundle.mainBundle().loadNibNamed("HSFindPersonDetailView", owner: nil, options: nil).first as! HSFindPersonDetailView
     let sendPostion = NSBundle.mainBundle().loadNibNamed("PostVacancies", owner: nil, options: nil).first as! PostVacancies
     let sendResume = NSBundle.mainBundle().loadNibNamed("HSPostResumeView", owner: nil, options: nil).first as! HSPostResumeView
-    let jobHelper = HSNurseStationHelper()
     var jobDataSource:Array<JobModel>?
     var currentJobModel:JobModel?
     var CVDataSource:Array<CVModel>?
@@ -371,7 +370,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             
             var flag = 0
             
-            jobHelper.getJobList((self.addressBtn.currentTitle ?? "")!, salary: (self.salaryDrop.selectedItem ?? "")!, jobtype: (self.jobTypeDrop.selectedItem ?? "")!, pager: String(jobPager), handle: { (success, response) in
+            HSNurseStationHelper().getJobList((self.addressBtn.currentTitle ?? "")!, salary: (self.salaryDrop.selectedItem ?? "")!, jobtype: (self.jobTypeDrop.selectedItem ?? "")!, pager: String(jobPager), handle: { (success, response) in
 
                 if success {
                     self.jobPager += 1
@@ -447,7 +446,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             }
         } else if showType == 2 {
             
-            jobHelper.getCVList((eduDrop.selectedItem ?? "")!, experience: (expDrop.selectedItem ?? "")!, certificate: (certificateDrop.selectedItem ?? "")!, pager: String(resumePager), handle: { (success, response) in
+            HSNurseStationHelper().getCVList((eduDrop.selectedItem ?? "")!, experience: (expDrop.selectedItem ?? "")!, certificate: (certificateDrop.selectedItem ?? "")!, pager: String(resumePager), handle: { (success, response) in
 
                 dispatch_async(dispatch_get_main_queue(), {
                     if !success {
@@ -486,7 +485,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     func loadData_pullUp(){
         if showType == 1 {
             
-            jobHelper.getJobList((self.addressBtn.currentTitle ?? "")!, salary: (self.salaryDrop.selectedItem ?? "")!, jobtype: (self.jobTypeDrop.selectedItem ?? "")!, pager: String(jobPager), handle: { (success, response) in
+            HSNurseStationHelper().getJobList((self.addressBtn.currentTitle ?? "")!, salary: (self.salaryDrop.selectedItem ?? "")!, jobtype: (self.jobTypeDrop.selectedItem ?? "")!, pager: String(jobPager), handle: { (success, response) in
                 
                 if success {
                     self.jobPager += 1
@@ -511,7 +510,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             
         } else if showType == 2 {
             
-            jobHelper.getCVList((eduDrop.selectedItem ?? "")!, experience: (expDrop.selectedItem ?? "")!, certificate: (certificateDrop.selectedItem ?? "")!, pager: String(resumePager), handle: { (success, response) in
+            HSNurseStationHelper().getCVList((eduDrop.selectedItem ?? "")!, experience: (expDrop.selectedItem ?? "")!, certificate: (certificateDrop.selectedItem ?? "")!, pager: String(resumePager), handle: { (success, response) in
 
                 dispatch_async(dispatch_get_main_queue(), {
                     if !success {
@@ -833,7 +832,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 inviteHud.removeFromSuperViewOnHide = true
                 inviteHud.margin = 10.0
                 
-                self.jobHelper.InviteJob_judge(model.userid, companyid: QCLoginUserInfo.currentInfo.userid, jobid: job.id) { (success, response) in
+                HSNurseStationHelper().InviteJob_judge(model.userid, companyid: QCLoginUserInfo.currentInfo.userid, jobid: job.id) { (success, response) in
                     
                     if success {
                         inviteHud.hide(true)
@@ -941,13 +940,13 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             resumeHud.removeFromSuperViewOnHide = true
             resumeHud.margin = 10.0
             
-            jobHelper.getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
+            HSNurseStationHelper().getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
                 if success {
                     
                     // 判断是否已投递简历
                     resumeHud.labelText = "正在获取简历投递状态"
                     
-                    self.jobHelper.ApplyJob_judge(QCLoginUserInfo.currentInfo.userid, companyid: self.jobDataSource![btn.tag].companyid, jobid: self.jobDataSource![btn.tag].id, handle: { (success, response) in
+                    HSNurseStationHelper().ApplyJob_judge(QCLoginUserInfo.currentInfo.userid, companyid: self.jobDataSource![btn.tag].companyid, jobid: self.jobDataSource![btn.tag].id, handle: { (success, response) in
                         if success {
                             resumeHud.hide(true)
                             if String((response ?? "")!) == "1" {

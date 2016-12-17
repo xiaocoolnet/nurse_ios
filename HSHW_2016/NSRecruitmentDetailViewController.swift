@@ -16,7 +16,6 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
     let employment = UIView()
     let employmentMessage = UIView()
 //    let sendPostion = NSBundle.mainBundle().loadNibNamed("PostVacancies", owner: nil, options: nil).first as! PostVacancies
-    let jobHelper = HSNurseStationHelper()
     var jobDataSource:Array<JobModel>?
     var currentJobModel:JobModel?
     var CVDataSource:Array<CVModel>?
@@ -352,13 +351,13 @@ class NSRecruitmentDetailViewController: UIViewController,UIScrollViewDelegate {
             resumeHud.removeFromSuperViewOnHide = true
             resumeHud.margin = 10.0
             
-            jobHelper.getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
+            HSNurseStationHelper().getResumeInfo(QCLoginUserInfo.currentInfo.userid) { (success, response) in
                 if success {
                     
                     // 判断是否已投递简历
                     resumeHud.labelText = "正在获取简历投递状态"
                     
-                    self.jobHelper.ApplyJob_judge(QCLoginUserInfo.currentInfo.userid, companyid: self.jobDataSource![btn.tag].companyid, jobid: self.jobDataSource![btn.tag].id, handle: { (success, response) in
+                    HSNurseStationHelper().ApplyJob_judge(QCLoginUserInfo.currentInfo.userid, companyid: self.jobDataSource![btn.tag].companyid, jobid: self.jobDataSource![btn.tag].id, handle: { (success, response) in
                         if success {
                             resumeHud.hide(true)
                             if String((response ?? "")!) == "1" {

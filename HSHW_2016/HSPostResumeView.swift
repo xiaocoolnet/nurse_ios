@@ -262,15 +262,6 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
     var homeArray = Array<String>()
     var targetCityArray = Array<String>()
     
-//    var vc = HSEditResumeViewController()
-//    var next = HSEditResumeViewController()
-//    var nextVC = HSEditResumeViewController()
-//    var VC = HSEditResumeViewController()
-//
-//    let help = HSNurseStationHelper()
-//    let userid = QCLoginUserInfo.currentInfo.userid
-//    let picurl = ""
-//
     var imageName = String()
     
     var getDicFlag = 0
@@ -797,24 +788,6 @@ class HSPostResumeView: UIView, UIImagePickerControllerDelegate, UINavigationCon
                 vc!.presentViewController(alertController, animated: true, completion: nil)
                 
             }
-            //        }
-            
-            //        if sexLable.text != "" && nameTextFeild.text != "" && birthBtn.titleLabel?.text != "" && educationBtn.titleLabel?.text != "" && placeBtn.titleLabel?.text != "" && phoneField.text != "" && entryTimeBtn.titleLabel?.text != "" && targetCityBtn.titleLabel?.text != "" && expectPostBtn.titleLabel?.text != "" && expectPayBtn.titleLabel?.text != ""{
-            //
-            //            HSNurseStationHelper().postForum(QCLoginUserInfo.currentInfo.userid, avatar:imageName, name: nameTextFeild.text!, experience: workLab.text!, sex: sexLable.text!, birthday:(brith_year.text!+brith_month.text!+brith_day.text!), marital:eduLable.text! , address:placeLab_1.text!+placeLab_2.text!+placeLab_3.text!, jobstate:jobStatusLab.text!, currentsalary:salaryLab.text!, phone:phoneField.text!, email:mailboxField.text!, hiredate:timeLab.text!, wantcity:targetCity_1_Lab.text!+targetCity_2_Lab.text!+targetCity_3_Lab.text!, wantsalary:expectSalaryLab.text!, wantposition:expectPostionLab.text!, description:selfEvaluate.text, handle: { (success, response) in
-            //                if success {
-            //                    dispatch_async(dispatch_get_main_queue(), {
-            //                        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            //                        hud.mode = MBProgressHUDMode.Text;
-            //                        hud.labelText = "发布成功"
-            //                        hud.margin = 10.0
-            //                        hud.removeFromSuperViewOnHide = true
-            //                        hud.hide(true, afterDelay: 1)
-            //                        // print(success)
-            //                    })
-            //                }
-            //            })
-            //        }
         }
     }
     

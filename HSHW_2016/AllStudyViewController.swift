@@ -12,7 +12,7 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
     
     let listTableView = UITableView()
     
-    var helper = HSNurseStationHelper()
+//    var HSNurseStationHelper() = HSNurseStationHelper()
     var newsList:Array<NewsInfo>?
     var articleID:String?
     
@@ -68,7 +68,7 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
         
         if articleID != nil {
             pager = 1
-            helper.getArticleListWithID(articleID!, pager:String(pager)) { (success, response) in
+            HSNurseStationHelper().getArticleListWithID(articleID!, pager:String(pager)) { (success, response) in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
                         self.pager += 1
@@ -88,7 +88,7 @@ class AllStudyViewController: UIViewController, UITableViewDelegate, UITableView
     func loadData_pullUp() {
         
         if articleID != nil {
-            helper.getArticleListWithID(articleID!, pager: String(pager)) { (success, response) in
+            HSNurseStationHelper().getArticleListWithID(articleID!, pager: String(pager)) { (success, response) in
                 if success {
                     
                     dispatch_async(dispatch_get_main_queue(), {

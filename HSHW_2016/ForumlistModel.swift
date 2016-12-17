@@ -7,52 +7,52 @@
 
 import Foundation
 
-class ForumlistModel: JSONJoy {
-    var status:String?
-    var datas = Array<PostModel>()
-    var errorData:String?
-    var datastring:String?
-    
-    required init(_ decoder:JSONDecoder){
-        status = decoder["status"].string
-        if status == "success"{
-  
-            for childs:JSONDecoder in decoder["data"].array ?? [] {
-                datas.append(PostModel(childs))
-            }
-        }else{
-            errorData = decoder["data"].string
-        }
-    }
-}
+//class ForumlistModel: JSONJoy {
+//    var status:String?
+//    var datas = Array<PostModel>()
+//    var errorData:String?
+//    var datastring:String?
+//    
+//    required init(_ decoder:JSONDecoder){
+//        status = decoder["status"].string
+//        if status == "success"{
+//  
+//            for childs:JSONDecoder in decoder["data"].array ?? [] {
+//                datas.append(PostModel(childs))
+//            }
+//        }else{
+//            errorData = decoder["data"].string
+//        }
+//    }
+//}
 
-class ForumTypes: JSONJoy {
-    var status:String?
-    var datas = Array<ForumTypeModel>()
-    var errorData:String?
-    
-    required init(_ decoder:JSONDecoder){
-        status = decoder["status"].string
-        if status == "success"{
-            for childs:JSONDecoder in decoder["data"].array! {
-                datas.append(ForumTypeModel(childs))
-            }
-        }else{
-            errorData = decoder["data"].string
-        }
-    }
-}
+//class ForumTypes: JSONJoy {
+//    var status:String?
+//    var datas = Array<ForumTypeModel>()
+//    var errorData:String?
+//    
+//    required init(_ decoder:JSONDecoder){
+//        status = decoder["status"].string
+//        if status == "success"{
+//            for childs:JSONDecoder in decoder["data"].array! {
+//                datas.append(ForumTypeModel(childs))
+//            }
+//        }else{
+//            errorData = decoder["data"].string
+//        }
+//    }
+//}
 
-class ForumTypeModel: JSONJoy {
-    
-    var term_id:String
-    var name:String
-    
-    required init(_ decoder:JSONDecoder){
-        term_id = decoder["term_id"].string ?? ""
-        name = decoder["name"].string ?? ""
-    }
-}
+//class ForumTypeModel: JSONJoy {
+//    
+//    var term_id:String
+//    var name:String
+//    
+//    required init(_ decoder:JSONDecoder){
+//        term_id = decoder["term_id"].string ?? ""
+//        name = decoder["name"].string ?? ""
+//    }
+//}
 
 //class ForumModel: JSONJoy {
 //    
@@ -88,22 +88,22 @@ class ForumTypeModel: JSONJoy {
 //    }
 //}
 
-class PostlistModel: JSONJoy {
-    var status:String?
-    var datas:PostModel?
-    var errorData:String?
-    var datastring:String?
-    
-    required init(_ decoder:JSONDecoder){
-        status = decoder["status"].string
-        if status == "success"{
-            
-            datas = PostModel(decoder["data"])
-        }else{
-            errorData = decoder["data"].string
-        }
-    }
-}
+//class PostlistModel: JSONJoy {
+//    var status:String?
+//    var datas:PostModel?
+//    var errorData:String?
+//    var datastring:String?
+//    
+//    required init(_ decoder:JSONDecoder){
+//        status = decoder["status"].string
+//        if status == "success"{
+//            
+//            datas = PostModel(decoder["data"])
+//        }else{
+//            errorData = decoder["data"].string
+//        }
+//    }
+//}
 
 //class PostCollectListModel: JSONJoy {
 //    var status:String?

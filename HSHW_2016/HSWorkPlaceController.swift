@@ -10,7 +10,6 @@ import UIKit
 
 class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDataSource,ToutiaoCateBtnClickedDelegate,changeModelDelegate {
     @IBOutlet weak var listTableView:UITableView!
-    var helper = HSNurseStationHelper()
     var newsList:Array<NewsInfo>?
     var articleID:String?
     
@@ -39,20 +38,6 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
         line.backgroundColor = COLOR
         self.view.addSubview(line)
     }
-    
-//    func loadData() {
-//        if articleID != nil {
-//            helper.getArticleListWithID(articleID!) {[unowned self] (success, response) in
-//                if success {
-//                    self.newsList = response as? Array<NewsInfo> ?? []
-//                    dispatch_async(dispatch_get_main_queue(), {
-//                        self.listTableView.reloadData()
-//                        self.listTableView.mj_header.endRefreshing()
-//                    })
-//                }
-//            }
-//        }
-//    }
     
     func loadData(){
         

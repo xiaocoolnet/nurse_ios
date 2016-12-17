@@ -21,7 +21,7 @@ class ChildsViewController: UIViewController,UITableViewDelegate,UITableViewData
     var num = 1
     var currentJobModel:InvitedInfo?
     var CVDataSource:Array<CVModel>?
-    let jobHelper = HSNurseStationHelper()
+//    let jobHelper = HSNurseStationHelper()
     var dataSource = Array<CVModel>()
     var myInvitedList = InvitedList()
     

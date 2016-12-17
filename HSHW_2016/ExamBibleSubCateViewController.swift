@@ -13,7 +13,6 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
     
     let listTableView = UITableView()
     
-    var helper = HSNurseStationHelper()
     var newsList:Array<NewsInfo>?
     var articleID:String?
     
@@ -126,7 +125,7 @@ class ExamBibleSubCateViewController: UIViewController, UITableViewDelegate, UIT
     func loadData() {
         
         if articleID != nil {
-            helper.getArticleListWithID(articleID!) {(success, response) in
+            HSNurseStationHelper().getArticleListWithID(articleID!) {(success, response) in
                 if success {
                     self.newsList = response as? Array<NewsInfo> ?? []
                     dispatch_async(dispatch_get_main_queue(), {

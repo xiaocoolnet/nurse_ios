@@ -201,66 +201,6 @@ class HSNurseStationHelper: NSObject {
         }
     }
     
-    //获取论坛帖子列表
-    func getForumList(type:String,isHot:Bool,handle:ResponseBlock){
-        let url = PARK_URL_Header+"getbbspostlist"
-        var param = ["type":type]
-        if isHot {
-            param["ishot"] = "1"
-        }
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
-            if(error != nil){
-                handle(success: false, response: error?.description)
-            }else{
-                let result = ForumlistModel(JSONDecoder(json!))
-                if(result.status == "success"){
-                    handle(success: true, response: result.datas)
-                }else{
-                    handle(success: false, response: nil)
-                }
-            }
-        }
-    }
-    //获取论坛帖子详情
-    func showPostInfo(id:String,handle:ResponseBlock){
-        let url = PARK_URL_Header+"showpostinfo"
-        let param = ["id":id]
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
-            if(error != nil){
-                handle(success: false, response: error?.description)
-            }else{
-                let result = PostlistModel(JSONDecoder(json!))
-                // print(result.datas)
-                if(result.status == "success"){
-                    handle(success: true, response: result.datas)
-                }else{
-                    handle(success: false, response: nil)
-                }
-            }
-        }
-    }
-    //发布帖子
-    func postForumCard(typid:String,title:String,content:String,picurl:String, handle:ResponseBlock){
-        let url = PARK_URL_Header+"addbbsposts"
-        let param = ["userid":QCLoginUserInfo.currentInfo.userid,"typeid":typid,"title":title,"content":content,"picurl":picurl]
-        // print(param)
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
-            
-            // print(response)
-            if(error != nil){
-                handle(success: false, response: error?.description)
-            }else{
-                let result = Http(JSONDecoder(json!))
-                // print(result)
-                if(result.status == "success"){
-                    handle(success: true, response: nil)
-                }else{
-                    handle(success: false, response: nil)
-                }
-            }
-        }
-    }
-    
     //添加评论
     func setComment(id:String,content:String,type:String,photo:String, handle:ResponseBlock){
         
@@ -278,24 +218,6 @@ class HSNurseStationHelper: NSObject {
                     handle(success: true, response: result.data)
                 }else{
                     handle(success: false, response: nil)
-                }
-            }
-        }
-    }
-    
-    //获取论坛分类
-    func getBBSTypeData(handle:ResponseBlock){
-        let url = PARK_URL_Header+"getbbstype"
-        
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: nil) { (json, error) in
-
-//        Alamofire.request(.GET, url, parameters: nil).response { request, response, json, error in
-            if(error != nil){
-                handle(success: false, response: error?.description)
-            }else{
-                let result = ForumTypes(JSONDecoder(json!))
-                if(result.status == "success"){
-                    handle(success: true, response: result.datas)
                 }
             }
         }
@@ -429,51 +351,23 @@ class HSNurseStationHelper: NSObject {
     
     //获取我的帖子列表
     func getList(userid:String,type:String,isHot:Bool,handle:ResponseBlock){
-        let url = PARK_URL_Header+"getbbspostlist"
-        var param = ["type":type,"userid":userid]
-        if isHot {
-            param["ishot"] = "1"
-        }
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
-            if(error != nil){
-                handle(success: false, response: error?.description)
-            }else{
-                let result = ForumlistModel(JSONDecoder(json!))
-                if(result.status == "success"){
-                    handle(success: true, response: result.datas)
-                }else{
-                    handle(success: false, response: nil)
-                }
-            }
-        }
-    }
-    //收藏帖子
-    func collectionForum(refid:String,title:String,description:String,handle:ResponseBlock){
-        let url = PARK_URL_Header+"addfavorite"
-        let param = [
-            "userid":QCLoginUserInfo.currentInfo.userid,
-            "type":"4",
-            "refid":refid,
-            "title":title,
-            "description":description
-        ];
-        
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
-            
-            if(error != nil){
-            }else{
-                let result = Http(JSONDecoder(json!))
-                // print("状态是")
-                // print(result.status)
-                if(result.status == "error"){
-                    handle(success: false, response: result.errorData)
-                }
-                if(result.status == "success"){
-                    handle(success: true, response:result.data)
-                }
-            }
-            
-        }
+//        let url = PARK_URL_Header+"getbbspostlist"
+//        var param = ["type":type,"userid":userid]
+//        if isHot {
+//            param["ishot"] = "1"
+//        }
+//        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+//            if(error != nil){
+//                handle(success: false, response: error?.description)
+//            }else{
+//                let result = ForumlistModel(JSONDecoder(json!))
+//                if(result.status == "success"){
+//                    handle(success: true, response: result.datas)
+//                }else{
+//                    handle(success: false, response: nil)
+//                }
+//            }
+//        }
     }
     
     // 设置点击量

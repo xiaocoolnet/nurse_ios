@@ -21,7 +21,6 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
     var userid:String = "578"
     
     var helper = HSMineHelper()
-    var hszHelper = HSNurseStationHelper()
     
     var userInfo:HSFansAndFollowModel?
     
@@ -46,7 +45,7 @@ class HSUserPageViewController: UIViewController,UITableViewDelegate,UIAlertView
         }
         
         // TODO: type 是什么意思
-        hszHelper.getList(userid, type: "1", isHot: false) { (success, response) in
+        HSNurseStationHelper().getList(userid, type: "1", isHot: false) { (success, response) in
             self.dataSource = response as? Array<PostModel> ?? []
             dispatch_async(dispatch_get_main_queue(), {
                 self.userTableView.reloadData()

@@ -45,7 +45,6 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
     var moneyDrop = DropDown()
     @IBOutlet weak var requestField: UITextView!
     @IBOutlet weak var requestLabel: UILabel!
-    let helper = HSNurseStationHelper()
     var selfNav:UINavigationController?
     
     @IBOutlet weak var placeLab_1: UILabel!
@@ -158,7 +157,7 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             hud.removeFromSuperViewOnHide = true
             hud.hide(true, afterDelay: 1)
             
-            helper.publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, linkman: linkmanField.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionLab.text!, education: conditionLab.text!, experience: expLab.text!, welfare: treatmentLab.text!, address: placeLab_1.text!+"-"+placeLab_2.text!+"-"+placeLab_3.text!+" "+detailPlaceTF.text!, count: personLab.text!, salary: moneyLab.text!, description: requestField.text) { (success, response) in
+            HSNurseStationHelper().publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, linkman: linkmanField.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionLab.text!, education: conditionLab.text!, experience: expLab.text!, welfare: treatmentLab.text!, address: placeLab_1.text!+"-"+placeLab_2.text!+"-"+placeLab_3.text!+" "+detailPlaceTF.text!, count: personLab.text!, salary: moneyLab.text!, description: requestField.text) { (success, response) in
                 // print(success)
                 
                 if success {
@@ -256,16 +255,6 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
             let vc = responderVC()
             vc!.presentViewController(alertController, animated: true, completion: nil)
         }
-        //        }
-        
-//        // print(firmNameField.text!,resumeFeild.text!,phoneField.text!,mailboxField.text!,postNameField.text!,"1",conditionBtn.currentTitle!,treatmentBtn.currentTitle!,workplaceBtn.currentTitle!,personBtn.currentTitle!,moneyBtn.currentTitle!,requestField.text)
-        
-//        if firmNameField.text != "" && resumeFeild.text != "" && phoneField.text != "" && postNameField.text != "" && conditionBtn.currentTitle != "" && treatmentBtn.currentTitle != "" && workplaceBtn.currentTitle != "" && personBtn.currentTitle != "" && moneyBtn.currentTitle != "" {
-//
-//            helper.publishJob(firmNameField.text!, companyinfo: resumeFeild.text!, phone: phoneField.text!, email: mailboxField.text!, title: postNameField.text!, jobtype: positionLab.text!, education: conditionLab.text!, welfare: treatmentLab.text!, address: placeLab_1.text!+placeLab_2.text!+placeLab_3.text!, count: personLab.text!, salary: moneyLab.text!, description: requestField.text) { (success, response) in
-//                // print(success)
-//           }
-//        }
 
     }
     
