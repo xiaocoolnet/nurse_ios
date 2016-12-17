@@ -948,8 +948,6 @@
 			isa = PBXGroup;
 			children = (
 				185408691CE6C7E500DFBA7C /* Controller */,
-				185408681CE6C7E300DFBA7C /* Model */,
-				185408671CE6C7E100DFBA7C /* View */,
 			);
 			name = GoingAbroad;
 			sourceTree = "<group>";
@@ -1053,20 +1051,6 @@
 				1F0D06B41DDAFAAF00A00CB5 /* GOnlineViewController.swift */,
 			);
 			name = Controller;
-			sourceTree = "<group>";
-		};
-		185408671CE6C7E100DFBA7C /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = View;
-			sourceTree = "<group>";
-		};
-		185408681CE6C7E300DFBA7C /* Model */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Model;
 			sourceTree = "<group>";
 		};
 		185408691CE6C7E500DFBA7C /* Controller */ = {

@@ -53,7 +53,6 @@ class GMyExaminationViewController: UIViewController,UIScrollViewDelegate {
     
     var segment:UISegmentedControl?
     var currentVCIndex:Int = 0
-//    let infoqwe = GExamInfo()
     var a  = NSInteger()
     
     

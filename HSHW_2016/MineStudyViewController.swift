@@ -167,8 +167,6 @@ class MineStudyViewController: UIViewController,UITableViewDelegate,UITableViewD
 //                    examVC.type = btn.tag
 //            HSMineHelper().GetErrorExampaper("1", type: "1") { (success, response) in
                 let examVC = GMyErrorViewController()
-//                examVC.type = 2
-//                examVC.dataSource = response as! Array<GExamInfo>
                 self.navigationController?.pushViewController(examVC, animated: true)
 //            }
         case 3:

@@ -105,24 +105,24 @@ class PostlistModel: JSONJoy {
     }
 }
 
-class PostCollectListModel: JSONJoy {
-    var status:String?
-    var datas = Array<PostModel>()
-    var errorData:String?
-    var datastring:String?
-    
-    required init(_ decoder:JSONDecoder){
-        status = decoder["status"].string
-        if status == "success"{
-            for child:JSONDecoder in decoder["data"].array ?? [] {
-                datas.append(PostModel(child))
-            }
-//            datas = PostModel(decoder["data"])
-        }else{
-            errorData = decoder["data"].string
-        }
-    }
-}
+//class PostCollectListModel: JSONJoy {
+//    var status:String?
+//    var datas = Array<PostModel>()
+//    var errorData:String?
+//    var datastring:String?
+//    
+//    required init(_ decoder:JSONDecoder){
+//        status = decoder["status"].string
+//        if status == "success"{
+//            for child:JSONDecoder in decoder["data"].array ?? [] {
+//                datas.append(PostModel(child))
+//            }
+////            datas = PostModel(decoder["data"])
+//        }else{
+//            errorData = decoder["data"].string
+//        }
+//    }
+//}
 
 class PostModel: JSONJoy {
     

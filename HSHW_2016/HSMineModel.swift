@@ -176,28 +176,28 @@ class GTestExamList:JSONJoy {
 
 // Model 做题记录（data（question））
 // Model 错题集（data）
-class GExamInfo: JSONJoy{
-    var questionid:String?
-    var post_title:String?
-    var post_description:String?
-    var post_difficulty:String?
-    var answer:String?
-    var answers = Array<GAnswersInfo>()
-    
-    required init(_ decoder: JSONDecoder){
-        questionid = decoder["questionid"].string ?? ""
-        post_title = decoder["post_title"].string ?? ""
-        post_difficulty = decoder["post_difficulty"].string ?? ""
-        post_description = decoder["post_description"].string ?? ""
-        answer = decoder["answer"].string ?? ""
-        for childs: JSONDecoder in decoder["answers"].array!{
-            answers.append(GAnswersInfo(childs))
-        }
-    }
-    func append(list: [GAnswersInfo]){
-        self.answers = list + self.answers
-    }
-}
+//class GExamInfo: JSONJoy{
+//    var questionid:String?
+//    var post_title:String?
+//    var post_description:String?
+//    var post_difficulty:String?
+//    var answer:String?
+//    var answers = Array<GAnswersInfo>()
+//    
+//    required init(_ decoder: JSONDecoder){
+//        questionid = decoder["questionid"].string ?? ""
+//        post_title = decoder["post_title"].string ?? ""
+//        post_difficulty = decoder["post_difficulty"].string ?? ""
+//        post_description = decoder["post_description"].string ?? ""
+//        answer = decoder["answer"].string ?? ""
+//        for childs: JSONDecoder in decoder["answers"].array!{
+//            answers.append(GAnswersInfo(childs))
+//        }
+//    }
+//    func append(list: [GAnswersInfo]){
+//        self.answers = list + self.answers
+//    }
+//}
 
 // Model 错题集（data）
 class xamInfo: JSONJoy{
@@ -236,23 +236,23 @@ class xamInfo: JSONJoy{
 }
 
 // Model 做题记录（data（question（answers）））
-// Model 错题集（data（answers））
-class GAnswersInfo: JSONJoy {
-    
-    var title:String
-    var isanswer :String
-    var id :String
-    var questionid:String
-    var listorder:String
-    
-    required init(_ decoder: JSONDecoder){
-        title = decoder["title"].string ?? ""
-        isanswer = decoder["isanswer"].string ?? ""
-        id = decoder["id"].string ?? ""
-        questionid = decoder["questionid"].string ?? ""
-        listorder = decoder["listorder"].string ?? ""
-    }
-}
+//// Model 错题集（data（answers））
+//class GAnswersInfo: JSONJoy {
+//    
+//    var title:String
+//    var isanswer :String
+//    var id :String
+//    var questionid:String
+//    var listorder:String
+//    
+//    required init(_ decoder: JSONDecoder){
+//        title = decoder["title"].string ?? ""
+//        isanswer = decoder["isanswer"].string ?? ""
+//        id = decoder["id"].string ?? ""
+//        questionid = decoder["questionid"].string ?? ""
+//        listorder = decoder["listorder"].string ?? ""
+//    }
+//}
 
 // Model 错题集（data（answers））
 class AnswersInfo: JSONJoy {

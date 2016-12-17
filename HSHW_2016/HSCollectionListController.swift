@@ -66,24 +66,6 @@ class HSCollectionListController: UIViewController, UITableViewDelegate, UITable
                 }
             }
         }
-//        else if collectionType == 3 {
-//            
-//            myTableView.registerNib(UINib(nibName: "HSComTableCell",bundle: nil), forCellReuseIdentifier: "cell")
-//            
-//            helper.getCollectionInfoWithType("4", handle: { (success, response) in
-//                if success {
-//                    dispatch_async(dispatch_get_main_queue(), {
-//                        let list = PostCollectListModel(response as! JSONDecoder)
-//                        self.dataSource.addObjectsFromArray(list.datas)
-//                        self.myTableView.reloadData()
-//                    })
-//                }
-//                
-//                if self.myTableView.mj_header.isRefreshing(){
-//                    self.myTableView.mj_header.endRefreshing()
-//                }
-//            })
-//        }
     }
 
     // MARK: - Table view data source

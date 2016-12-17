@@ -8,24 +8,24 @@
 
 import Foundation
 
-class ChildModel: JSONJoy{
-    var status:String?
-    var data: JSONDecoder?
-    var array : Array<JSONDecoder>?
-    var errorData:String?
-    init(){
-    }
-    required init(_ decoder:JSONDecoder){
-        
-        status = decoder["status"].string
-        if status == "success" {
-            data = decoder["data"]
-        }
-        else{
-            errorData = decoder["data"].string
-        }
-    }
-}
+//class ChildModel: JSONJoy{
+//    var status:String?
+//    var data: JSONDecoder?
+//    var array : Array<JSONDecoder>?
+//    var errorData:String?
+//    init(){
+//    }
+//    required init(_ decoder:JSONDecoder){
+//        
+//        status = decoder["status"].string
+//        if status == "success" {
+//            data = decoder["data"]
+//        }
+//        else{
+//            errorData = decoder["data"].string
+//        }
+//    }
+//}
 
 //class ChildList: JSONJoy {
 //    var status:String?
