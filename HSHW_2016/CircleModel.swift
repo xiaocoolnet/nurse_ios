@@ -9,6 +9,141 @@
 import UIKit
 import HandyJSON
 
+// 圈子列表
+class CommunityListModel: HandyJSON {
+    var status = ""
+    var data = [CommunityListDataModel]()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+
+class CommunityListDataModel: HandyJSON {
+    var id = ""
+    var community_name = ""
+    var photo = ""
+    var description = ""
+    var best = ""
+    var create_time = ""
+    var hot = ""
+    var term_id = ""
+    var term_name = ""
+    var f_count = ""
+    var person_num = ""
+    var join = ""
+    
+    required init() {}
+}
+
+// 贴子列表
+class ForumListModel: HandyJSON {
+    var status = ""
+    var data = [ForumListDataModel]()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+
+class ForumListDataModel: HandyJSON {
+    var id = ""// 帖子id
+    var community_id = ""// 圈子的id
+    var userid = ""
+    var title = ""// 标题
+    var create_time = ""
+    var content = ""// 内容
+    var description = ""// 介绍
+    var review_time = ""// 回复时间
+    var photo = [String]()// 帖子图片
+    var hits = ""// 点击数
+    var like = ""// 点赞数
+    var istop = ""// 是否置顶
+    var isbest = ""// 是否精华
+    var isreward = ""// 是否打赏
+    var user_photo = ""// 用户头像
+    var level = ""// 用户的等级
+    var comments_count = ""// 评论数量
+    var add_like = ""// 判断我是否点赞
+    var community_name = ""// 圈子名称
+    var community_photo = ""// 圈子照片
+    var c_master = ""// 发帖人是否是圈主:1是,0不
+
+    required init() {}
+}
+
+// 圈主列表
+class MasterListModel: HandyJSON {
+    var status = ""
+    var data = [MasterListDataModel]()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+
+class MasterListDataModel: HandyJSON {
+    var userid = ""
+    var community_id = ""// 圈子id
+    var power = ""//
+    var create_time = ""//
+    var user_name = ""// 圈主姓名
+    var user_photo = ""// 圈主头像
+    
+    required init() {}
+}
+
+// 判断是否为圈主
+class JudgeMasterModel: HandyJSON {
+    var status = ""
+    var data = ""
+    
+    required init() {}
+}
+
+// 判断是否加入圈子
+class JudgeCommunityModel: HandyJSON {
+    var status = ""
+    var data = JudgeCommunityDataModel()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        mapper.exclude(property: &errorData)
+    }
+}
+class JudgeCommunityDataModel: HandyJSON {
+    var userid = ""
+    var community_id = ""
+    var power = ""
+    var create_time = ""
+    
+    required init() {}
+}
+
+
+
+
+
+
+
+
 class CommunityModel: HandyJSON {
     
     var community_id = ""

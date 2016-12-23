@@ -60,7 +60,7 @@ class NurseUtil: NSObject {
     fileprivate let sessionManager = AFHTTPSessionManager()
     
     //网络请求中的GET,Post,DELETE
-    func request(_ type:RequestType ,URLString:String, Parameter:[String:AnyObject]?, block: @escaping sendVlesClosure) {
+    func request(_ type:RequestType ,URLString:String, Parameter:[String:Any]?, block: @escaping sendVlesClosure) {
         
         sessionManager.responseSerializer = AFHTTPResponseSerializer()
         
@@ -77,9 +77,9 @@ class NurseUtil: NSObject {
                         
                         block(dic as AnyObject?,nil)
                         
-                    }catch {
-                        print("json 解析失败")
-                        block(nil,nil)
+                    }catch let error  {
+                        print("json 解析失败",error)
+                        block(nil,error)
                         
                     }
                 }, failure: { (task, error) in

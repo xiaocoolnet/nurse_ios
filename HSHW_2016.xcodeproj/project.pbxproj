@@ -154,6 +154,7 @@
 		1F3912681E00E5CA00A26FDE /* NSCircleCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3912661E00E5CA00A26FDE /* NSCircleCommentTableViewCell.swift */; };
 		1F3912691E00E5CA00A26FDE /* NSCircleCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3912671E00E5CA00A26FDE /* NSCircleCommentTableViewCell.xib */; };
 		1F39126B1E0147CC00A26FDE /* NSCirclePublicAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F39126A1E0147CC00A26FDE /* NSCirclePublicAction.swift */; };
+		1F402CBA1E0A245B00667853 /* CircleNetUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F402CB91E0A245B00667853 /* CircleNetUtil.swift */; };
 		1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */; };
 		1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */; };
 		1F54B60C1DB706E400AAA5A6 /* NSRecruitmentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54B60B1DB706E300AAA5A6 /* NSRecruitmentDetailViewController.swift */; };
@@ -468,6 +469,7 @@
 		1F3912661E00E5CA00A26FDE /* NSCircleCommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleCommentTableViewCell.swift; sourceTree = "<group>"; };
 		1F3912671E00E5CA00A26FDE /* NSCircleCommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSCircleCommentTableViewCell.xib; sourceTree = "<group>"; };
 		1F39126A1E0147CC00A26FDE /* NSCirclePublicAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCirclePublicAction.swift; sourceTree = "<group>"; };
+		1F402CB91E0A245B00667853 /* CircleNetUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleNetUtil.swift; sourceTree = "<group>"; };
 		1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayModel.swift; sourceTree = "<group>"; };
 		1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaliyExamModel.swift; sourceTree = "<group>"; };
 		1F54B60B1DB706E300AAA5A6 /* NSRecruitmentDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSRecruitmentDetailViewController.swift; sourceTree = "<group>"; };
@@ -856,7 +858,7 @@
 				185408601CE6C75100DFBA7C /* News */,
 				1854085D1CE6C69300DFBA7C /* Study */,
 				1854085E1CE6C69500DFBA7C /* GoingAbroad */,
-				1854085F1CE6C69900DFBA7C /* NurseStation */,
+				1854085F1CE6C69900DFBA7C /* NurseStation（护士站） */,
 				18A6BAC21CE5F96D00B6B1FD /* Mine */,
 				1854085C1CE6C68D00DFBA7C /* LoginAndRegister */,
 				183B84F51CE5BFDC00709235 /* AppDelegate.swift */,
@@ -953,14 +955,14 @@
 			name = GoingAbroad;
 			sourceTree = "<group>";
 		};
-		1854085F1CE6C69900DFBA7C /* NurseStation */ = {
+		1854085F1CE6C69900DFBA7C /* NurseStation（护士站） */ = {
 			isa = PBXGroup;
 			children = (
 				185408781CE6C8B600DFBA7C /* NurseStationViewController.swift */,
-				1F1C1B251DF64B5F0051F638 /* Circle */,
+				1F1C1B251DF64B5F0051F638 /* Circle(圈子) */,
 				1F1C1B271DF64B9F0051F638 /* Recruit */,
 			);
-			name = NurseStation;
+			name = "NurseStation（护士站）";
 			sourceTree = "<group>";
 		};
 		185408601CE6C75100DFBA7C /* News */ = {
@@ -1250,14 +1252,14 @@
 			path = openSDK1.7.2;
 			sourceTree = "<group>";
 		};
-		1F1C1B251DF64B5F0051F638 /* Circle */ = {
+		1F1C1B251DF64B5F0051F638 /* Circle(圈子) */ = {
 			isa = PBXGroup;
 			children = (
 				1F1C1B311DF68DE40051F638 /* Model */,
 				1F1C1B2E1DF686B20051F638 /* View */,
 				1F1C1B261DF64B6A0051F638 /* Controller */,
 			);
-			name = Circle;
+			name = "Circle(圈子)";
 			sourceTree = "<group>";
 		};
 		1F1C1B261DF64B6A0051F638 /* Controller */ = {
@@ -1301,6 +1303,7 @@
 			isa = PBXGroup;
 			children = (
 				1F1C1B321DF68E310051F638 /* CircleModel.swift */,
+				1F402CB91E0A245B00667853 /* CircleNetUtil.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1809,6 +1812,7 @@
 				F64C9AC81D3B9C3F0041E360 /* MineChildView.swift in Sources */,
 				189849B41CE812CB007B37B4 /* TouTiaoTableViewCell.swift in Sources */,
 				F6D02CDB1D07A46800353557 /* NewsSourceCell.swift in Sources */,
+				1F402CBA1E0A245B00667853 /* CircleNetUtil.swift in Sources */,
 				F66216871D1E228B0099AD0E /* HSCVListModel.swift in Sources */,
 				1F1B7F311D66F1CA009910DF /* qqDelegate.swift in Sources */,
 				F64C9AC01D3B9BFC0041E360 /* ChildsViewController.swift in Sources */,

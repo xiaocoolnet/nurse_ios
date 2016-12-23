@@ -12,7 +12,7 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
     
     let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
-    var forumModelArray = [ForumModel]()
+    var forumModelArray = [ForumListDataModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +72,7 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
         
         forum4.photo = [photo1,photo2,photo3]
         
-        forumModelArray = [forum1,forum2,forum3,forum4]
+//        forumModelArray = [forum1,forum2,forum3,forum4]
         
         self.rootTableView.reloadData()
     }
@@ -129,7 +129,7 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
         
         cell.selectionStyle = .none
         
-        cell.setCellWithNewsInfo(forumModelArray[indexPath.section])
+        cell.setCellWith(forumModelArray[indexPath.section])
         
         cell.moreBtn.tag = 100+indexPath.row
         cell.moreBtn.addTarget(self, action: #selector(moreBtnClick(_:)), for: .touchUpInside)

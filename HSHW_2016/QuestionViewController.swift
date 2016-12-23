@@ -11,10 +11,10 @@ import PagingMenuController
 
 class QuestionViewController: UIViewController {
     
-//    let oneView = FiftyThousandExamViewController()
-//    let twoView = FiftyThousandExamViewController()
-//    let threeView = FiftyThousandExamViewController()
-////    let threeView = QuestionBankViewController()
+    let oneView = FiftyThousandExamViewController()
+    let twoView = FiftyThousandExamViewController()
+    let threeView = FiftyThousandExamViewController()
+//    let threeView = QuestionBankViewController()
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -50,12 +50,12 @@ class QuestionViewController: UIViewController {
         self.view.backgroundColor = UIColor.white
         
         self.view.backgroundColor = UIColor.white
-//        oneView.title = "护士资格"
-//        oneView.term_id = "130"
-//        twoView.title = "初级护师"
-//        twoView.term_id = "131"
-//        threeView.title = "主管护师"
-//        threeView.term_id = "132"
+        oneView.title = "护士资格"
+        oneView.term_id = "130"
+        twoView.title = "初级护师"
+        twoView.term_id = "131"
+        threeView.title = "主管护师"
+        threeView.term_id = "132"
 //        let viewControllers = [oneView,twoView,threeView]
 //        let options = PagingMenuOptions()
 //        options.scrollEnabled = false
@@ -76,64 +76,94 @@ class QuestionViewController: UIViewController {
 //        view.addSubview(pagingMenuController.view)
 //        pagingMenuController.didMoveToParentViewController(self)
         
-        struct MenuItem1: MenuItemViewCustomizable {
+        struct MenuItem: MenuItemViewCustomizable {
             
-            fileprivate var horizontalMargin: CGFloat = 5
+            var text = ""
+            
+            var horizontalMargin: CGFloat {
+                return 5
+            }
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "护士资格", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+                let title = MenuItemText(text: text, color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
                 return .text(title: title)
             }
         }
-        struct MenuItem2: MenuItemViewCustomizable {
-            fileprivate var horizontalMargin: CGFloat = 5
-            var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "初级护师", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
-                return .text(title: title)
-            }
-        }
-        
-        struct MenuItem3: MenuItemViewCustomizable {
-            fileprivate var horizontalMargin: CGFloat = 5
-            var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "主管护师", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
-                return .text(title: title)
-            }
-        }
+//        struct MenuItem2: MenuItemViewCustomizable {
+//            fileprivate var horizontalMargin: CGFloat = 5
+//            var displayMode: MenuItemDisplayMode {
+//                let title = MenuItemText(text: "初级护师", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+//                return .text(title: title)
+//            }
+//        }
+//        
+//        struct MenuItem3: MenuItemViewCustomizable {
+//            fileprivate var horizontalMargin: CGFloat = 5
+//            var displayMode: MenuItemDisplayMode {
+//                let title = MenuItemText(text: "主管护师", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 18), selectedFont: UIFont.systemFont(ofSize: 18))
+//                return .text(title: title)
+//            }
+//        }
         
         struct MenuOptions: MenuViewCustomizable {
             
-            fileprivate var backgroundColor: UIColor = UIColor.clear
-            fileprivate var selectedBackgroundColor: UIColor = UIColor.clear
-            fileprivate var displayMode: MenuDisplayMode = .segmentedControl
-            fileprivate var height: CGFloat = 40
+            var menuItemTextArray = [String]()
             
-            fileprivate var focusMode: MenuFocusMode = .underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+            var backgroundColor: UIColor {
+                return UIColor.clear
+            }
+            var selectedBackgroundColor: UIColor {
+                return UIColor.clear
+            }
+            var height: CGFloat {
+                return 40
+            }
+            var displayMode: MenuDisplayMode {
+                return .segmentedControl
+            }
+            var focusMode: MenuFocusMode {
+                return .underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+            }
             
             var itemsOptions: [MenuItemViewCustomizable] {
-                return [MenuItem1(), MenuItem2(), MenuItem3()]
+                
+                var menuArray = [MenuItemViewCustomizable]()
+                for menuItemText in menuItemTextArray {
+                    menuArray.append(MenuItem.init(text: menuItemText))
+                }
+                
+                return menuArray
             }
         }
         
         struct PagingMenuOptions: PagingMenuControllerCustomizable {
-            fileprivate var scrollEnabled: Bool = false
+            
+            var viewcontrollers = [UIViewController]()
+            
+            var isScrollEnabled: Bool {
+                return false
+            }
             var componentType: ComponentType {
                 
-                let oneView = FiftyThousandExamViewController()
-                let twoView = FiftyThousandExamViewController()
-                let threeView = FiftyThousandExamViewController()
+//                let oneView = FiftyThousandExamViewController()
+//                let twoView = FiftyThousandExamViewController()
+//                let threeView = FiftyThousandExamViewController()
+//                
+//                oneView.title = "护士资格"
+//                oneView.term_id = "130"
+//                twoView.title = "初级护师"
+//                twoView.term_id = "131"
+//                threeView.title = "主管护师"
+//                threeView.term_id = "132"
+                var menuArray = [String]()
+                for view in viewcontrollers {
+                    menuArray.append(view.title!)
+                }
                 
-                oneView.title = "护士资格"
-                oneView.term_id = "130"
-                twoView.title = "初级护师"
-                twoView.term_id = "131"
-                threeView.title = "主管护师"
-                threeView.term_id = "132"
-                
-                return .all(menuOptions: MenuOptions(), pagingControllers: [oneView,twoView,threeView])
+                return .all(menuOptions: MenuOptions.init(menuItemTextArray: menuArray), pagingControllers: viewcontrollers)
             }
         }
         
-        let options = PagingMenuOptions()
+        let options = PagingMenuOptions.init(viewcontrollers: [oneView,twoView,threeView])
         let pagingMenuController = PagingMenuController(options: options)
         pagingMenuController.view.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-1)
         

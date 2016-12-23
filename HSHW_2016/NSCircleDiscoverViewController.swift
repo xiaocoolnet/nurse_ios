@@ -12,7 +12,8 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
 
     let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
-    var forumModelArray = [ForumModel]()
+    var forumModelArray = [ForumListDataModel]()
+    var communityModelArray = [CommunityListDataModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,43 +39,22 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     }
     
     func loadData() {
-        let forum1 = ForumModel()
-        forum1.title = "1请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum1.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum1.like = "2254"
-        forum1.hits = "2255"
         
-        let forum2 = ForumModel()
-        forum2.title = "2请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum2.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum2.like = "2254"
-        forum2.hits = "2255"
-        let photo1 = photoModel()
-        photo1.url = "20161202/5840e94624cb0.jpg"
-        forum2.photo = [photo1]
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "1") { (success, response) in
+            if success {
+                self.forumModelArray = response as! [ForumListDataModel]
+                self.rootTableView.reloadData()
+            }
+            self.rootTableView.mj_header.endRefreshing()
+        }
         
-        let forum3 = ForumModel()
-        forum3.title = "3请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum3.content = "从期望薪资可以从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可...从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum3.like = "2254"
-        forum3.hits = "2255"
-        let photo2 = photoModel()
-        photo2.url = "20161130/583eb4efc6dad.jpg"
-        let photo3 = photoModel()
-        photo3.url = "20161129/583ce3b933d98.jpg"
-        forum3.photo = [photo2,photo3]
-        
-        let forum4 = ForumModel()
-        forum4.title = "4请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum4.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum4.like = "2254"
-        forum4.hits = "2255"
-
-        forum4.photo = [photo1,photo2,photo3]
-        
-        forumModelArray = [forum1,forum2,forum3,forum4]
-        
-        self.rootTableView.reloadData()
+        CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: "", best: "", hot: "1", pager: "1") { (success, response) in
+            if success {
+                self.communityModelArray = response as! [CommunityListDataModel]
+                self.setTableViewHeaderView()
+            }
+        }
+       
     }
     
     // MARK: - 设置子视图
@@ -93,8 +73,8 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         
         rootTableView.register(NSCircleDiscoverTableViewCell.self, forCellReuseIdentifier: "circleDiscoverCell")
 
-//        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
-//        rootTableView.mj_header.beginRefreshing()
+        rootTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
+        rootTableView.mj_header.beginRefreshing()
         
 //        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
         
@@ -158,9 +138,8 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         
         let btn2Width = WIDTH/375*100
         var btn2Height:CGFloat = 0
-        let btn2NameArray = ["儿科","内科","外科","妇产科","急诊科","灌水吐槽"]
-        
-        for (i,circleName) in btn2NameArray.enumerated() {
+
+        for (i,communityModel) in communityModelArray.enumerated() {
             let btn2 = UIButton(frame: CGRect(x: 8+(btn2Width+8)*CGFloat(i), y: 0, width: btn2Width, height: 0))
             btn2.tag = 200+i
 
@@ -170,13 +149,16 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             
             let img = UIImageView(frame: CGRect(x: 0, y: 0, width: btn2Width, height: WIDTH/375*72))
             img.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
+            img.contentMode = .center
+            img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+communityModel.photo), placeholderImage: nil)
             btn2.addSubview(img)
             
             let nameLab = UILabel(frame: CGRect(x: 0, y: img.frame.maxY, width: btn2Width, height: WIDTH/375*22))
             nameLab.textAlignment = .left
             nameLab.font = UIFont.systemFont(ofSize: 14)
             nameLab.textColor = COLOR
-            nameLab.text = circleName
+            nameLab.text = communityModel.community_name
+            nameLab.adjustsFontSizeToFitWidth = true
             btn2.addSubview(nameLab)
             
             let countLab = UILabel(frame: CGRect(x: 0, y: nameLab.frame.maxY, width: btn2Width, height: WIDTH/375*15))
@@ -184,7 +166,19 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             countLab.font = UIFont.systemFont(ofSize: 10)
             countLab.textColor = UIColor.lightGray
             countLab.adjustsFontSizeToFitWidth = true
-            countLab.text = "13.5万人 16.5万贴子"
+            var personNum = "\(communityModel.person_num)人"
+            
+            if NSString(string: communityModel.person_num).doubleValue >= 10000 {
+                personNum = NSString(format: "%.2f万人", NSString(string: communityModel.person_num).doubleValue/10000.0) as String
+            }
+            
+            var forumNum = "\(communityModel.f_count)贴子"
+            
+            if NSString(string: communityModel.f_count).doubleValue >= 10000 {
+                forumNum = NSString(format: "%.2f万贴子", NSString(string: communityModel.f_count).doubleValue/10000.0) as String
+            }
+            
+            countLab.text = "\(personNum) \(forumNum)"
             btn2.addSubview(countLab)
             
             btn2.frame.size.height = countLab.frame.maxY
@@ -194,7 +188,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             
         }
         
-        btn2ScrollView.contentSize = CGSize(width: 8+(btn2Width+8)*CGFloat(btn2NameArray.count), height: 0)
+        btn2ScrollView.contentSize = CGSize(width: 8+(btn2Width+8)*CGFloat(communityModelArray.count), height: 0)
 
         
         tableHeaderView.frame.size.height = recommendLab.frame.maxY+btn2Height+8
@@ -209,11 +203,13 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             print("精选圈子")
             let circleListController = NSCircleListViewController()
             circleListController.hidesBottomBarWhenPushed = true
+            circleListController.best = "1"
             self.navigationController?.pushViewController(circleListController, animated: true)
         case 101:
             print("热门圈子")
             let circleListController = NSCircleListViewController()
             circleListController.hidesBottomBarWhenPushed = true
+            circleListController.hot = "1"
             self.navigationController?.pushViewController(circleListController, animated: true)
         case 102:
             print("全部圈子")
@@ -231,6 +227,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         print("点击热门圈子推荐 之 \(btn2.tag-200)")
         
         let circleDetailController = NSCircleDetailViewController()
+        circleDetailController.communityModel = communityModelArray[btn2.tag-200]
         circleDetailController.hidesBottomBarWhenPushed = true
         self.navigationController?.pushViewController(circleDetailController, animated: true)
 
@@ -250,7 +247,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
 
         cell.selectionStyle = .none
         
-        cell.setCellWithNewsInfo(forumModelArray[indexPath.section])
+        cell.setCell(with: forumModelArray[indexPath.section])
         
         return cell
     }
@@ -315,13 +312,18 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 35))
         footerView.addTarget(self, action: #selector(footerViewClick), for: .touchUpInside)
         
+        let img = UIImageView(frame: CGRect(x: 8, y: 5, width: 25, height: 25))
+        img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModelArray[section].community_photo), placeholderImage: nil)
+        img.contentMode = .scaleAspectFit
+        img.clipsToBounds = true
+        footerView.addSubview(img)
+        
         let nameBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 30))
-        nameBtn.setImage(UIImage(named: "精华贴"), for: UIControlState())
         nameBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         nameBtn.setTitleColor(COLOR, for: UIControlState())
-        nameBtn.setTitle("内科", for: UIControlState())
+        nameBtn.setTitle(forumModelArray[section].community_name, for: UIControlState())
         nameBtn.sizeToFit()
-        nameBtn.frame.origin = CGPoint(x: 8, y: (35-nameBtn.frame.height)/2.0)
+        nameBtn.frame.origin = CGPoint(x: img.frame.maxX+5, y: (35-nameBtn.frame.height)/2.0)
         footerView.addSubview(nameBtn)
         
         let comeinLab = UILabel(frame: CGRect(x: nameBtn.frame.maxX, y: 0, width: WIDTH-nameBtn.frame.maxX-8, height: 35))

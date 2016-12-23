@@ -10,11 +10,15 @@ import UIKit
 
 class NSCircleListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    var term_id = ""// 父类的分类id,全部则传0
+    var best = ""// best(选精1,不0)
+    var hot = ""// hot(热门1,不0)
+    
     let circleBtn = ImageBtn()
     let sortBtn = ImageBtn()
     
     let rootTableView = UITableView()
-    var communityModelArray = [CommunityModel]()
+    var communityModelArray = [CommunityListDataModel]()
     
     let circleArray = [["全部圈子","交流","护士站","考试"],["智能排序","排序1","排序2","排序3"]]
     
@@ -26,7 +30,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         //        self.view.backgroundColor = UIColor.cyanColor()
         self.setSubview()
         
-        loadData()
+//        loadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -43,33 +47,17 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - 加载数据
     func loadData() {
-        let forum1 = CommunityModel()
-        forum1.community_name = "儿科"
-        forum1.description = "儿科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..."
         
-        let forum2 = CommunityModel()
-        forum2.community_name = "内科"
-        forum2.description = "内科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..."
-        
-        let forum3 = CommunityModel()
-        forum3.community_name = "外科"
-        forum3.description = "外科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..."
-        
-        let forum4 = CommunityModel()
-        forum4.community_name = "妇产科"
-        forum4.description = "妇产科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..."
-        
-        let forum5 = CommunityModel()
-        forum5.community_name = "急诊科"
-        forum5.description = "急诊科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..."
-        
-        let forum6 = CommunityModel()
-        forum6.community_name = "灌水吐槽"
-        forum6.description = "儿科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..."
-        
-        communityModelArray = [forum1,forum2,forum3,forum4,forum5,forum6]
-        
-        self.rootTableView.reloadData()
+        CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: term_id, best: best, hot: hot, pager: "1") { (success, response) in
+            if success {
+                self.communityModelArray = response as! [CommunityListDataModel]
+                self.rootTableView.reloadData()
+            }else{
+                print("获取圈子列表失败")
+            }
+            
+            self.rootTableView.mj_header.endRefreshing()
+        }
     }
     
     // MARK: - 设置子视图
@@ -114,8 +102,9 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         
         rootTableView.register(UINib(nibName: "NSCircleListTableViewCell", bundle: nil), forCellReuseIdentifier: "circleListCell")
         
+        rootTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData))
         //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
-        //        rootTableView.mj_header.beginRefreshing()
+        rootTableView.mj_header.beginRefreshing()
         
         //        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
         

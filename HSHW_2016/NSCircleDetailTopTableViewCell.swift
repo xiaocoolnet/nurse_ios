@@ -63,7 +63,7 @@ class NSCircleDetailTopTableViewCell: UITableViewCell {
     
     fileprivate let titleSize:CGFloat = 14
     
-    func setCellWithNewsInfo(_ forum:ForumModel) {
+    func setCellWith(_ forum:ForumListDataModel) {
         
         var titleX:CGFloat = 8
         

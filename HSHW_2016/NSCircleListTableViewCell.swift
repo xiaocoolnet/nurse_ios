@@ -22,10 +22,15 @@ class NSCircleListTableViewCell: UITableViewCell {
     @IBOutlet weak var joinBtn: UIButton!
     
     
-    var communityModel = CommunityModel() {
+    var communityModel = CommunityListDataModel() {
         didSet {
             self.nameLab.text = communityModel.community_name
+            self.countLab.text = "\(communityModel.person_num)万人 \(communityModel.f_count)贴子"
             self.descriptionLab.text = communityModel.description
+            self.photoImg.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+communityModel.photo), placeholderImage: nil)
+            self.joinBtn.isSelected = communityModel.join == "1" ? true:false
+//            self.joinBtn.isSelected = true
+            self.joinBtn.backgroundColor = self.joinBtn.isSelected ? COLOR:UIColor.white
         }
     }
     

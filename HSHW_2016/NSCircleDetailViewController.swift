@@ -10,12 +10,15 @@ import UIKit
 
 class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    var communityModel = CommunityListDataModel()
+    
     let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
-    var forumModelArray = [ForumModel]()
-    var forumBestOrTopModelArray = [ForumModel]()
+    var forumModelArray = [ForumListDataModel]()
+    var forumBestOrTopModelArray = [ForumListDataModel]()
 
-    var communityModel = CommunityModel()
+    var isMaster = false
+    var isJoin = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,90 +44,41 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     func loadData() {
-        let forum1 = ForumModel()
-        forum1.title = "1请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum1.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum1.like = "2254"
-        forum1.hits = "2255"
         
-        let forum2 = ForumModel()
-        forum2.title = "2请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum2.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum2.like = "2254"
-        forum2.hits = "2255"
-        let photo1 = photoModel()
-        photo1.url = "20161202/5840e94624cb0.jpg"
-        forum2.photo = [photo1]
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, isbest: "", istop: "", pager: "1") { (success, response) in
+            if success {
+                self.forumModelArray = response as! [ForumListDataModel]
+                self.rootTableView.reloadData()
+            }
+        }
         
-        let forum3 = ForumModel()
-        forum3.title = "3请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum3.content = "从期望薪资可以从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可...从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum3.like = "2254"
-        forum3.hits = "2255"
-        let photo2 = photoModel()
-        photo2.url = "20161130/583eb4efc6dad.jpg"
-        let photo3 = photoModel()
-        photo3.url = "20161129/583ce3b933d98.jpg"
-        forum3.photo = [photo2,photo3]
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, isbest: "", istop: "1", pager: "1") { (success, response) in
+            if success {
+                self.forumBestOrTopModelArray = response as! [ForumListDataModel]
+                self.rootTableView.reloadData()
+            }
+        }
         
-        let forum4 = ForumModel()
-        forum4.title = "4请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum4.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum4.like = "2254"
-        forum4.hits = "2255"
-        
-        forum4.photo = [photo1,photo2,photo3]
-        
-        forumModelArray = [forum1,forum2,forum3,forum4]
-        
-        loadData2()
-        
-        self.rootTableView.reloadData()
-    }
-    
-    func loadData2() {
-        let forum1 = ForumModel()
-        forum1.title = "1请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum1.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum1.like = "2254"
-        forum1.hits = "2255"
-        forum1.istop = "1"
-        
-        let forum2 = ForumModel()
-        forum2.title = "2请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum2.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum2.like = "2254"
-        forum2.hits = "2255"
-        let photo1 = photoModel()
-        photo1.url = "20161202/5840e94624cb0.jpg"
-        forum2.photo = [photo1]
-        forum2.isbest = "1"
-        
-        let forum3 = ForumModel()
-        forum3.title = "3请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum3.content = "从期望薪资可以从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可...从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum3.like = "2254"
-        forum3.hits = "2255"
-        let photo2 = photoModel()
-        photo2.url = "20161130/583eb4efc6dad.jpg"
-        let photo3 = photoModel()
-        photo3.url = "20161129/583ce3b933d98.jpg"
-        forum3.photo = [photo2,photo3]
-        forum3.istop = "1"
-        forum3.isbest = "1"
-        
-        let forum4 = ForumModel()
-        forum4.title = "4请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum4.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum4.like = "2254"
-        forum4.hits = "2255"
-        forum4.istop = "1"
-        forum4.isbest = "1"
-        forum4.isreward = "1"
-
-        forum4.photo = [photo1,photo2,photo3]
-        
-        forumBestOrTopModelArray = [forum1,forum2,forum3,forum4]
+        CircleNetUtil.judge_apply_community(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id) { (success, response) in
+            if success {
+                if (response as! String) == "yes" {
+                    self.isMaster = true
+                }else{
+                    self.isMaster = false
+                }
+            }
+        }
+      
+        CircleNetUtil.judge_Community(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id) { (success, response) in
+            if success {
+                if (response as? String) == "no" {
+                    self.isJoin = false
+                }else{
+                    self.isJoin = true
+                }
+                self.setTableViewHeaderView()
+            }
+        }
     }
     
     // MARK: - 设置子视图
@@ -179,13 +133,15 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
         // 圈子
         let img = UIImageView(frame: CGRect(x: 8, y: 10, width: btn2Width, height: WIDTH/375*60))
         img.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
+        img.contentMode = .center
+        img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+communityModel.photo), placeholderImage: nil)
         tableHeaderView.addSubview(img)
         
         let nameLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: img.frame.minY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
         nameLab.textAlignment = .left
         nameLab.font = UIFont.systemFont(ofSize: 18)
         nameLab.textColor = COLOR
-        nameLab.text = "儿科"
+        nameLab.text = communityModel.community_name
         tableHeaderView.addSubview(nameLab)
         
         let countLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: nameLab.frame.maxY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
@@ -193,7 +149,19 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
         countLab.font = UIFont.systemFont(ofSize: 12)
         countLab.textColor = UIColor.lightGray
         countLab.adjustsFontSizeToFitWidth = true
-        countLab.text = "13.5万人 16.5万贴子"
+        var personNum = "\(communityModel.person_num)人"
+        
+        if NSString(string: communityModel.person_num).doubleValue >= 10000 {
+            personNum = NSString(format: "%.2f万人", NSString(string: communityModel.person_num).doubleValue/10000.0) as String
+        }
+        
+        var forumNum = "\(communityModel.f_count)贴子"
+        
+        if NSString(string: communityModel.f_count).doubleValue >= 10000 {
+            forumNum = NSString(format: "%.2f万贴子", NSString(string: communityModel.f_count).doubleValue/10000.0) as String
+        }
+        
+        countLab.text = "\(personNum) \(forumNum)"
         tableHeaderView.addSubview(countLab)
         
         let joinBtn = UIButton(frame: CGRect(x: WIDTH-88, y: tableHeaderView.frame.height/2.0-15, width: 80, height: 30))
@@ -213,14 +181,32 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
 //        joinBtn.selected = true
         joinBtn.backgroundColor = UIColor.white
 //        joinBtn.selected = false
+        
+        if isJoin {
+            joinBtn.backgroundColor = COLOR
+            joinBtn.isSelected = true
+        }else{
+            joinBtn.backgroundColor = UIColor.white
+            joinBtn.isSelected = false
+        }
 
         rootTableView.tableHeaderView = tableHeaderView
     }
     
     // MARK: - 加入按钮点击事件
     func joinBtnClick(_ joinBtn:UIButton) {
-        joinBtn.isSelected = !joinBtn.isSelected
-        joinBtn.backgroundColor = joinBtn.isSelected ? COLOR:UIColor.white
+        
+        
+        if isJoin {
+            
+        }else{
+            CircleNetUtil.addCommunity(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, handle: { (success, response) in
+                if success {
+                    joinBtn.isSelected = !joinBtn.isSelected
+                    joinBtn.backgroundColor = joinBtn.isSelected ? COLOR:UIColor.white
+                }
+            })
+        }
 
     }
     
@@ -233,8 +219,20 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     func moreBtnClick(_ moreBtn:UIButton) {
         print(moreBtn.tag)
         
-        let labelTextArray = ["加精","置顶","删除","取消"]
-        let labelTextColorArray = [COLOR,COLOR,UIColor.black,UIColor.lightGray]
+        
+        var labelTextArray = ["加精","置顶","删除","取消"]
+        var labelTextColorArray = [COLOR,COLOR,UIColor.black,UIColor.lightGray]
+        
+        if isMaster {
+            labelTextArray = ["加精","置顶","删除","取消"]
+            labelTextColorArray = [COLOR,COLOR,UIColor.black,UIColor.lightGray]
+        }else if QCLoginUserInfo.currentInfo.userid == self.forumModelArray[moreBtn.tag-100].userid {
+            labelTextArray = ["删除","取消"]
+            labelTextColorArray = [UIColor.black,UIColor.lightGray]
+        }else{
+            labelTextArray = ["举报","取消"]
+            labelTextColorArray = [UIColor.black,UIColor.lightGray]
+        }
         
         NSCirclePublicAction.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray)
         
@@ -259,7 +257,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
             
             cell.selectionStyle = .none
             
-            cell.setCellWithNewsInfo(forumBestOrTopModelArray[indexPath.row])
+            cell.setCellWith(forumBestOrTopModelArray[indexPath.row])
             
             return cell
         }
@@ -267,7 +265,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
         
         cell.selectionStyle = .none
         
-        cell.setCellWithNewsInfo(forumModelArray[indexPath.row])
+        cell.setCellWith(forumModelArray[indexPath.row])
         
         cell.moreBtn.tag = 100+indexPath.row
         cell.moreBtn.addTarget(self, action: #selector(moreBtnClick(_:)), for: .touchUpInside)
