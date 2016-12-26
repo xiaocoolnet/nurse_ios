@@ -18,9 +18,11 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     let sortBtn = ImageBtn()
     
     let rootTableView = UITableView()
+    var communityCateDataArray = [CommunityCateDataModel]()
+
     var communityModelArray = [CommunityListDataModel]()
     
-    let circleArray = [["全部圈子","交流","护士站","考试"],["智能排序","排序1","排序2","排序3"]]
+    var circleArray = [["全部圈子"],["智能排序","排序1","排序2","排序3"]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +50,18 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: - 加载数据
     func loadData() {
         
+        CircleNetUtil.getChannellist(parentid: "281") { (success, response) in
+            if success {
+                self.communityCateDataArray = response as! [CommunityCateDataModel]
+                
+                self.circleArray[0] = ["全部圈子"]
+                
+                for communityCateData in self.communityCateDataArray {
+                    self.circleArray[0].append(communityCateData.name)
+                }                
+            }
+        }
+        
         CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: term_id, best: best, hot: hot, pager: "1") { (success, response) in
             if success {
                 self.communityModelArray = response as! [CommunityListDataModel]
@@ -69,6 +83,29 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         line1.backgroundColor = COLOR
         self.view.addSubview(line1)
         
+        rootTableView.frame = CGRect(x: 0, y: 45, width: WIDTH, height: HEIGHT-65-49-45)
+        rootTableView.backgroundColor = UIColor.white
+        
+        rootTableView.rowHeight = 76
+        
+        rootTableView.delegate = self
+        rootTableView.dataSource = self
+        
+        rootTableView.register(UINib(nibName: "NSCircleListTableViewCell", bundle: nil), forCellReuseIdentifier: "circleListCell")
+        
+        rootTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData))
+        //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
+        rootTableView.mj_header.beginRefreshing()
+        
+        //        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
+        
+        self.view.addSubview(rootTableView)
+        
+        self.setDropDown()
+    }
+    
+    // MARK: - 设置下拉列表
+    func setDropDown() {
         // MARK: 下拉列表
         circleBtn.frame = CGRect(x: 0, y: 1, width: WIDTH/2, height: 44)
         circleBtn.lb_titleColor = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1.0)
@@ -91,25 +128,6 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         let line2H = UILabel(frame: CGRect(x: 0, y: 44, width: WIDTH, height: 1/UIScreen.main.scale))
         line2H.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
         self.view.addSubview(line2H)
-        
-        rootTableView.frame = CGRect(x: 0, y: 45, width: WIDTH, height: HEIGHT-65-49-45)
-        rootTableView.backgroundColor = UIColor.white
-        
-        rootTableView.rowHeight = 76
-        
-        rootTableView.delegate = self
-        rootTableView.dataSource = self
-        
-        rootTableView.register(UINib(nibName: "NSCircleListTableViewCell", bundle: nil), forCellReuseIdentifier: "circleListCell")
-        
-        rootTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData))
-        //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
-        rootTableView.mj_header.beginRefreshing()
-        
-        //        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
-        
-        self.view.addSubview(rootTableView)
-        
     }
     
     // MARK: - 下拉列表点击事件
@@ -195,6 +213,24 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
             
             circleBtn.resetdataCenter(dropBtn.currentTitle, UIImage(named: "下拉"))
             circleBtn.lb_titleColor = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1.0)
+            
+            if dropBtn.tag == 100 {
+                self.term_id = ""
+            }else{
+                self.term_id = self.communityCateDataArray[dropBtn.tag-100-1].term_id
+            }
+            
+            self.loadData()
+//            CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: term_id, best: best, hot: hot, pager: "1") { (success, response) in
+//                if success {
+//                    self.communityModelArray = response as! [CommunityListDataModel]
+//                    self.rootTableView.reloadData()
+//                }else{
+//                    print("获取圈子列表失败")
+//                }
+//                
+//                self.rootTableView.mj_header.endRefreshing()
+//            }
         }else{
             
             sortBtn.resetdataCenter(dropBtn.currentTitle, UIImage(named: "下拉"))
@@ -229,6 +265,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         
         let circleDetailController = NSCircleDetailViewController()
         circleDetailController.hidesBottomBarWhenPushed = true
+        circleDetailController.communityModel = communityModelArray[indexPath.row]
         self.navigationController?.pushViewController(circleDetailController, animated: true)
     }
     

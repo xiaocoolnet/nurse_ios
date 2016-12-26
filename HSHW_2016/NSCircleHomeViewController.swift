@@ -10,11 +10,16 @@ import UIKit
 
 class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    var communityModel = CommunityListDataModel()
+    var isJoin = false
+
     let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
     var cellNameArray = ["置顶贴","精华贴","申请圈主","取消关注"]
     
-    var communityModel = CommunityModel()
+    var masterListModelArray = [MasterListDataModel]()
+
+//    var communityModel = CommunityModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +28,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         
         //        self.view.backgroundColor = UIColor.cyanColor()
         self.setSubview()
-        
+        self.loadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -36,6 +41,16 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidDisappear(animated)
         
         BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 详情")
+    }
+    
+    // MARK: - 加载数据
+    func loadData() {
+        CircleNetUtil.getMasterList(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, pager: "") { (success, response) in
+            if success {
+                self.masterListModelArray = response as! [MasterListDataModel]
+                self.setTableViewHeaderView()
+            }
+        }
     }
     
     // MARK: - 设置子视图
@@ -58,7 +73,6 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         
         self.view.addSubview(rootTableView)
         
-        self.setTableViewHeaderView()
     }
     
     // MARK: - 设置头视图
@@ -71,13 +85,15 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         // 圈子
         let img = UIImageView(frame: CGRect(x: 8, y: 10, width: btn2Width, height: WIDTH/375*60))
         img.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
+        img.contentMode = .center
+        img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+communityModel.photo), placeholderImage: nil)
         tableHeaderView.addSubview(img)
         
         let nameLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: img.frame.minY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
         nameLab.textAlignment = .left
         nameLab.font = UIFont.systemFont(ofSize: 18)
         nameLab.textColor = COLOR
-        nameLab.text = "急诊科"
+        nameLab.text = communityModel.community_name
         tableHeaderView.addSubview(nameLab)
         
         let countLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: nameLab.frame.maxY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
@@ -85,7 +101,19 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         countLab.font = UIFont.systemFont(ofSize: 12)
         countLab.textColor = UIColor.lightGray
         countLab.adjustsFontSizeToFitWidth = true
-        countLab.text = "13.5万人 16.5万贴子"
+        var personNum = "\(communityModel.person_num)人"
+        
+        if NSString(string: communityModel.person_num).doubleValue >= 10000 {
+            personNum = NSString(format: "%.2f万人", NSString(string: communityModel.person_num).doubleValue/10000.0) as String
+        }
+        
+        var forumNum = "\(communityModel.f_count)贴子"
+        
+        if NSString(string: communityModel.f_count).doubleValue >= 10000 {
+            forumNum = NSString(format: "%.2f万贴子", NSString(string: communityModel.f_count).doubleValue/10000.0) as String
+        }
+        
+        countLab.text = "\(personNum) \(forumNum)"
         tableHeaderView.addSubview(countLab)
         
         let joinBtn = UIButton(frame: CGRect(x: WIDTH-88, y: tableHeaderView.frame.height/2.0-15, width: 80, height: 30))
@@ -99,11 +127,20 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         joinBtn.setTitle("已加入", for: .selected)
         joinBtn.setImage(UIImage(named: "加入"), for: UIControlState())
         joinBtn.setImage(UIImage(named: "已加入"), for: .selected)
+        joinBtn.addTarget(self, action: #selector(joinBtnClick(_:)), for: .touchUpInside)
         tableHeaderView.addSubview(joinBtn)
         //        joinBtn.backgroundColor = COLOR
         //        joinBtn.selected = true
-        joinBtn.backgroundColor = UIColor.clear
-        joinBtn.isSelected = false
+        joinBtn.backgroundColor = UIColor.white
+        //        joinBtn.selected = false
+        
+        if isJoin {
+            joinBtn.backgroundColor = COLOR
+            joinBtn.isSelected = true
+        }else{
+            joinBtn.backgroundColor = UIColor.white
+            joinBtn.isSelected = false
+        }
         
         let line = UIView(frame: CGRect(x: 0, y: img.frame.maxY+img.frame.minY, width: WIDTH, height: 2/UIScreen.main.scale))
         line.backgroundColor = UIColor.lightGray
@@ -123,7 +160,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         introduceBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         introduceBtn.setTitleColor(UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1), for: UIControlState())
 
-        let introduceStr:NSString = "儿科是全面研究小儿时期身心发育、保健以及疾病防治的综合医学科学。凡涉及儿童儿科是全面研究小儿时期身心发育、保健以及疾病防治的综合医学科学。凡涉及儿童。"
+        let introduceStr:NSString = communityModel.description as NSString
         let range = NSMakeRange(40, introduceStr.length-40)
         let cutIntroduceStr = introduceStr.length > 40 ? introduceStr.replacingCharacters(in: range, with: "..."):introduceStr as String
         let attrStr = NSMutableAttributedString(string: "    \(cutIntroduceStr) 展开")
@@ -159,14 +196,21 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
             headerImg.backgroundColor = UIColor.lightGray
             headerImg.layer.cornerRadius = margin
             headerImg.clipsToBounds = true
+            
             managerBgView.addSubview(headerImg)
             
             let nameLab = UILabel(frame: CGRect(x: margin*4*CGFloat(i), y: headerImg.frame.maxY+10, width: margin*4, height: UIFont.systemFont(ofSize: 12).lineHeight))
             nameLab.textAlignment = .center
             nameLab.font = UIFont.systemFont(ofSize: 12)
             nameLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
-            nameLab.text = "小丫头妈咪宝贝"
             managerBgView.addSubview(nameLab)
+            
+            if i < self.masterListModelArray.count {
+                headerImg.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+self.masterListModelArray[i].user_photo), placeholderImage: nil)
+                nameLab.text = self.masterListModelArray[i].user_name
+            }else{
+                nameLab.text = "还有空位哦~"
+            }
         }
         
         managerBgView.frame.size.height = margin*2+10+UIFont.systemFont(ofSize: 12).lineHeight
@@ -184,6 +228,30 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         tableHeaderView.frame.size.height = managerBgView.frame.maxY+10
         
         rootTableView.tableHeaderView = tableHeaderView
+    }
+    
+    // MARK: - 加入按钮点击事件
+    func joinBtnClick(_ joinBtn:UIButton) {
+        
+        
+        if isJoin {
+            CircleNetUtil.delJoinCommunity(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, handle: { (success, response) in
+                if success {
+                    joinBtn.isSelected = !joinBtn.isSelected
+                    joinBtn.backgroundColor = joinBtn.isSelected ? COLOR:UIColor.white
+                    self.isJoin = !self.isJoin
+                }
+            })
+        }else{
+            CircleNetUtil.addCommunity(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, handle: { (success, response) in
+                if success {
+                    joinBtn.isSelected = !joinBtn.isSelected
+                    joinBtn.backgroundColor = joinBtn.isSelected ? COLOR:UIColor.white
+                    self.isJoin = !self.isJoin
+                }
+            })
+        }
+        
     }
     
     // MARK: - 点击展开按钮

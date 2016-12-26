@@ -175,32 +175,52 @@ class NurseUtil: NSObject {
     
     func uploadWithPOST(_ URLString:String,data: Data, name: String, fileName: String, mimeType: String,block: @escaping (_ resultType:ResultType) -> Void) {
         
-        let request = AFHTTPRequestSerializer().multipartFormRequest(withMethod: "POST", urlString: URLString, parameters: nil, constructingBodyWith: { (formData) in
-            formData.appendPart(withFileData: data, name: name, fileName: fileName, mimeType: mimeType)
-            }, error: nil)
+//        let request = AFHTTPRequestSerializer().multipartFormRequest(withMethod: "POST", urlString: URLString, parameters: nil, constructingBodyWith: { (formData) in
+//            formData.appendPart(withFileData: data, name: name, fileName: fileName, mimeType: mimeType)
+//            }, error: nil)
         
 //        let request = AFHTTPRequestSerializer().multipartFormRequest(withMethod: "POST", urlString: URLString, parameters: nil, constructingBodyWith: { (formData) in
 //            formData.appendPart(withFileData: data, name: name, fileName: fileName, mimeType: mimeType)
 //            }, error: nil)
         //        let manager = AFURLSessionManager(sessionConfiguration: URLSessionConfiguration.default)
         let manager = AFHTTPSessionManager()
-        manager.responseSerializer.acceptableContentTypes = (NSSet(object: "image/jpeg") as! Set<String>)
-        
-        let uploadTask = manager.uploadTask(withStreamedRequest: request as URLRequest, progress: { (progress) in
+//        [NSSetsetWithObjects:@"application/json",
+//         @"text/html",
+//            @"image/jpeg",
+//            @"image/png",
+//            @"application/octet-stream",
+//            @"text/json",
+//            nil];
+        manager.responseSerializer.acceptableContentTypes = (NSSet(objects: "text/html","image/jpeg","image/png","application/octet-stream","text/json") as! Set<String>)
+        manager.requestSerializer = AFJSONRequestSerializer.init()
+
+        manager.post(URLString, parameters: nil, constructingBodyWith: { (formData) in
             
-        }) { (response, responseObject, error) in
+            formData.appendPart(withFileData: data, name: name, fileName: fileName, mimeType: mimeType)
+        }, progress: { (progress) in
             
-            if (error == nil) {
-                
-                block(.success)
-                
-            }else{
-                
-                block(.failure)
-                
-            }
-            
+            print(progress.completedUnitCount,progress.totalUnitCount)
+        }, success: { (task, responseObject) in
+            block(.success)
+        }) { (task, error) in
+            block(.failure)
         }
+        
+//        let uploadTask = manager.uploadTask(withStreamedRequest: request as URLRequest, progress: { (progress) in
+//            print(progress.completedUnitCount,progress.totalUnitCount)
+//        }) { (response, responseObject, error) in
+//            
+//            if (error == nil) {
+//                
+//                block(.success)
+//                
+//            }else{
+//                
+//                block(.failure)
+//                
+//            }
+//            
+//        }
 //        let uploadTask = manager.uploadTask(withStreamedRequest: request as URLRequest, progress: { (uploadProgress) in
 //            
 //            
@@ -219,7 +239,7 @@ class NurseUtil: NSObject {
 //        }
         
         
-        uploadTask.resume()
+//        uploadTask.resume()
         
         
         

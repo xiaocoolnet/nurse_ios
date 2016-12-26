@@ -108,7 +108,7 @@ class NSCircleCommentTableViewCell: UITableViewCell {
             positionLab.layer.cornerRadius = positionLab.frame.height/2.0
             positionLab.layer.backgroundColor = COLOR.cgColor
 
-            timeLab.text = self.updateTime((commentModel?.add_time)!)
+            timeLab.text = updateTime((commentModel?.add_time)!)
             
             contentLab.text = commentModel?.content
             
@@ -225,43 +225,6 @@ class NSCircleCommentTableViewCell: UITableViewCell {
         
         //        print(dfmatter.stringFromDate(date))
         return dfmatter.string(from: date)
-    }
-    
-    // MARK: - 时间戳转 “天前”
-    func updateTime(_ time:String) -> String {
-        // 获取当前时时间戳
-        let currentTime = Date().timeIntervalSince1970
-        // 创建时间
-        let createTime = NSString(string: time).doubleValue
-        // 时间差
-        let second = currentTime - createTime
-        
-        if (second<60) {
-            return "\(second)秒前"
-        }
-        // 秒转分钟
-        let minutes = Int(second)/60
-        if (minutes<60) {
-            return "\(minutes)分钟前"
-        }
-        // 秒转小时
-        let hours = Int(second)/3600
-        if (hours<24) {
-            return "\(hours)小时前"
-        }
-        //秒转天数
-        let days = Int(second)/3600/24
-        if (days < 30) {
-            return "\(days)天前"
-        }
-        //秒转月
-        let months = Int(second)/3600/24/30
-        if (months < 12) {
-            return "\(months)月前"
-        }
-        //秒转年
-        let years = Int(second)/3600/24/30/12;
-        return "\(years)年前"
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

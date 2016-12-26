@@ -186,7 +186,7 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        print(indexPath.row)
         
-        let userPageVC = HSUserPageViewController()
+        let userPageVC = NSCircleUserInfoViewController()
         if tableView.tag == 410 {
             userPageVC.userid = fansListArray[indexPath.row].object_id
         }else if tableView.tag == 411{

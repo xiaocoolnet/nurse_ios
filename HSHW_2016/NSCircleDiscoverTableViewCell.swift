@@ -199,10 +199,8 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
                 titleImg.isHidden = false
                 titSubImg.isHidden = true
             }else{
-                // TODO:
-                let photoUrl:String = "http://app.chinanurse.cn/uploads/microblog/"+(forum.photo.first! )
 
-//                let photoUrl:String = SHOW_IMAGE_HEADER+(forum.photo.components(separatedBy: ",").first! )
+                let photoUrl:String = SHOW_IMAGE_HEADER+forum.photo.first!
                 
                 titleImg.frame = CGRect(x: WIDTH-110-8, y: 10, width: 110, height: 80)
                 self.titleImg.sd_setImage(with: URL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
@@ -249,13 +247,13 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
                 titSubImg_3.image = UIImage(named: "defaultImage.png")
             }else {
                 
-                let photoUrl_1:String = DomainName+"data/upload/"+(forum.photo[0])
+                let photoUrl_1:String = SHOW_IMAGE_HEADER+forum.photo[0]
                 titSubImg_1.sd_setImage(with: URL(string:photoUrl_1), placeholderImage: UIImage(named: "defaultImage.png"))
                 
-                let photoUrl_2:String = DomainName+"data/upload/"+(forum.photo[1])
+                let photoUrl_2:String = SHOW_IMAGE_HEADER+forum.photo[1]
                 titSubImg_2.sd_setImage(with: URL(string:photoUrl_2), placeholderImage: UIImage(named: "defaultImage.png"))
                 
-                let photoUrl_3:String = DomainName+"data/upload/"+(forum.photo[2])
+                let photoUrl_3:String = SHOW_IMAGE_HEADER+forum.photo[2]
                 titSubImg_3.sd_setImage(with: URL(string:photoUrl_3), placeholderImage: UIImage(named: "defaultImage.png"))
             }
             

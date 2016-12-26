@@ -20,6 +20,10 @@ fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+protocol ChooseCircleDelegate {
+    func chooseCircle(circle:PublishCommunityDataCommunityModel)
+}
+
 
 class NSCirclePostChooseCircleViewController: UIViewController {
 
@@ -30,7 +34,11 @@ class NSCirclePostChooseCircleViewController: UIViewController {
         ["cate":"考试","circle":["护士资格","初级护师","主管护师（中级）","副主任护师","主任护师","专升本","护理硕士研究生","护理博士站"]],
     ]
     
-    var selectedCircle = ""
+    var communityModelArray = [PublishCommunityDataModel]()
+
+    var selectedCircle = PublishCommunityDataCommunityModel()
+    
+    var delegate:ChooseCircleDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +46,15 @@ class NSCirclePostChooseCircleViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         setSubviews()
+        self.loadData()
+    }
+    
+    func loadData() {
+        
+        CircleNetUtil.getPublishCommunity(userid: QCLoginUserInfo.currentInfo.userid, parentid: "281") { (success, response) in
+            self.communityModelArray = response as! [PublishCommunityDataModel]
+            self.setCircleList()
+        }
     }
     
     // MARK: - 设置子视图
@@ -52,7 +69,6 @@ class NSCirclePostChooseCircleViewController: UIViewController {
         line1.backgroundColor = COLOR
         self.view.addSubview(line1)
         
-        setCircleList()
     }
     
     // MARK: - 设置圈子列表
@@ -66,12 +82,12 @@ class NSCirclePostChooseCircleViewController: UIViewController {
 
         var cateY:CGFloat = 10
         
-        for (i,circle) in circleArray.enumerated() {
+        for (i,circle) in communityModelArray.enumerated() {
             
             let cateLab = UILabel(frame: CGRect(x: padding, y: cateY, width: 0, height: 0))
             cateLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
             cateLab.font = UIFont.systemFont(ofSize: 14)
-            cateLab.text = circle["cate"] as? String
+            cateLab.text = circle.name
             cateLab.sizeToFit()
             rootScrollView.addSubview(cateLab)
             
@@ -80,15 +96,15 @@ class NSCirclePostChooseCircleViewController: UIViewController {
             line.center.y = cateLab.center.y
             rootScrollView.addSubview(line)
             
-            let subCircleArray = circle["circle"] as? [String]
+            let subCircleArray = circle.community
             
             var circleBtnX:CGFloat = padding
             var circleBtnY:CGFloat = cateLab.frame.maxY+margin
             let circleBtnHeight:CGFloat = 30
 
-            for (j,subCircle) in (subCircleArray ?? [])!.enumerated() {
+            for (j,subCircle) in subCircleArray.enumerated() {
                 
-                let circleBtn = UIButton(frame: CGRect(x: circleBtnX, y: circleBtnY, width: calculateWidth(subCircle, size: 14, height: circleBtnHeight)+16, height: circleBtnHeight))
+                let circleBtn = UIButton(frame: CGRect(x: circleBtnX, y: circleBtnY, width: calculateWidth(subCircle.community_name, size: 14, height: circleBtnHeight)+16, height: circleBtnHeight))
                 circleBtn.tag = (i+1)*1000+j
                 circleBtn.layer.cornerRadius = 3
                 circleBtn.layer.borderColor = COLOR.cgColor
@@ -99,12 +115,12 @@ class NSCirclePostChooseCircleViewController: UIViewController {
                 circleBtn.setTitleColor(COLOR, for: UIControlState())
                 circleBtn.setTitleColor(UIColor.white, for: .selected)
                 
-                circleBtn.setTitle(subCircle, for: UIControlState())
+                circleBtn.setTitle(subCircle.community_name, for: UIControlState())
                 circleBtn.addTarget(self, action: #selector(circleBtnClick(_:)), for: .touchUpInside)
                 rootScrollView.addSubview(circleBtn)
                 
-                if j+1 < subCircleArray?.count {
-                    let nextBtnWidth = calculateWidth(subCircleArray![j+1], size: 14, height: circleBtnHeight)+16
+                if j+1 < subCircleArray.count {
+                    let nextBtnWidth = calculateWidth(subCircleArray[j+1].community_name, size: 14, height: circleBtnHeight)+16
                     if circleBtn.frame.maxX+margin+nextBtnWidth <= WIDTH-padding {
                         circleBtnX = circleBtn.frame.maxX+margin
                     }else{
@@ -136,12 +152,16 @@ class NSCirclePostChooseCircleViewController: UIViewController {
         circleBtn.isSelected = true
         circleBtn.backgroundColor = COLOR
         
-        selectedCircle = (circleBtn.currentTitle ?? "")!
+        selectedCircle = self.communityModelArray[circleBtn.tag/1000-1].community[circleBtn.tag%1000]
+//        selectedCircle = (circleBtn.currentTitle ?? "")!
     }
     
     // MARK: - 点击确定按钮
     func sureBtnClick() {
-        print("点击确定按钮  选择的圈子是  \(selectedCircle)")
+        print("点击确定按钮  选择的圈子是  \(selectedCircle.community_name)")
+        self.delegate?.chooseCircle(circle: selectedCircle)
+        
+        _ = self.navigationController?.popViewController(animated: true)
     }
     
     override func didReceiveMemoryWarning() {

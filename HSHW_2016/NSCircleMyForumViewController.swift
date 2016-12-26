@@ -110,7 +110,7 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
         let labelTextArray = ["删除","取消"]
         let labelTextColorArray = [UIColor.black,UIColor.lightGray]
         
-        NSCirclePublicAction.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray)
+//        NSCirclePublicAction.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray)
         
     }
     

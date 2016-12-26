@@ -310,7 +310,8 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 35))
-        footerView.addTarget(self, action: #selector(footerViewClick), for: .touchUpInside)
+        footerView.tag = 100 + section
+        footerView.addTarget(self, action: #selector(footerViewClick(footerBtn:)), for: .touchUpInside)
         
         let img = UIImageView(frame: CGRect(x: 8, y: 5, width: 25, height: 25))
         img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModelArray[section].community_photo), placeholderImage: nil)
@@ -349,15 +350,17 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         
         let forumDetailController = NSCircleForumDetailViewController()
         forumDetailController.hidesBottomBarWhenPushed = true
+        forumDetailController.forumDataModel = forumModelArray[indexPath.section]
         self.navigationController?.pushViewController(forumDetailController, animated: true)
     }
     
     // footerView 点击事件
-    func footerViewClick()  {
+    func footerViewClick(footerBtn:UIButton)  {
         print("进入圈子")
         
         let circleDetailController = NSCircleDetailViewController()
         circleDetailController.hidesBottomBarWhenPushed = true
+        circleDetailController.communityId = self.forumModelArray[footerBtn.tag-100].community_id
         self.navigationController?.pushViewController(circleDetailController, animated: true)
     }
     

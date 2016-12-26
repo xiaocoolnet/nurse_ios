@@ -9,10 +9,47 @@
 import UIKit
 import HandyJSON
 
+// 圈子分类
+class CommunityCateModel: HandyJSON {
+    var status = ""
+    var data = [CommunityCateDataModel]()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+class CommunityCateDataModel: HandyJSON {
+    var term_id = ""
+    var name = ""
+    
+    required init() {}
+    
+}
+
 // 圈子列表
 class CommunityListModel: HandyJSON {
     var status = ""
     var data = [CommunityListDataModel]()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+
+// 圈子详情
+class CommunityInfoModel: HandyJSON {
+    var status = ""
+    var data = CommunityListDataModel()
     var errorData = ""
     
     required init() {}
@@ -137,9 +174,70 @@ class JudgeCommunityDataModel: HandyJSON {
     required init() {}
 }
 
+// 获取帖子详情
+class ForumInfoModel: HandyJSON {
+    var status = ""
+    var data = ForumInfoDataModel()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+class ForumInfoDataModel: HandyJSON {
+    var tid = ""
+    var community_id = ""
+    var userid = ""
+    var title = ""
+    var create_time = ""
+    var content = ""
+    var description = ""
+    var status = ""
+    var review_time = ""
+    var photo = [String]()
+    var hits = ""
+    var like = ""
+    var istop = ""
+    var isbest = ""
+    var isreward = ""
+    var add_like = ""
+    var favorites = ""
+    var favorites_add = ""
+    
+    required init() {}
+}
 
-
-
+// 选择发布圈子
+class PublishCommunityModel: HandyJSON {
+    var status = ""
+    var data = [PublishCommunityDataModel]()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+class PublishCommunityDataModel: HandyJSON {
+    var term_id = ""
+    var name = ""
+    var community = [PublishCommunityDataCommunityModel]()
+    
+    required init() {}
+}
+class PublishCommunityDataCommunityModel: HandyJSON {
+    var id = ""
+    var community_name = ""
+    
+    required init() {}
+}
 
 
 

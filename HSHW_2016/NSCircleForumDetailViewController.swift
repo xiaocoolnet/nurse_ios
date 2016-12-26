@@ -8,20 +8,24 @@
 
 import UIKit
 import MBProgressHUD
+import SDWebImage
 
 class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
     
     let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
-    var forumModelArray = [ForumModel]()
 //    var forumBestOrTopModelArray = [ForumModel]()
-    
-    var forumModel = ForumModel()
-    
-    var communityModel = CommunityModel()
+    var forumDataModel = ForumListDataModel()
+    var forumModel = ForumInfoDataModel()
+
+    var forumModel_old = ForumModel()
     
     var forumCommentArray = [ForumCommentDataModel]()
     
+    var isMaster = false
+    
+    var imageHeigthArray = [CGFloat]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,56 +51,50 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     
     func loadData() {
         
-        let photo1 = photoModel()
-        photo1.url = "20161202/5840e94624cb0.jpg"
-        let photo2 = photoModel()
-        photo2.url = "20161130/583eb4efc6dad.jpg"
-        let photo3 = photoModel()
-        photo3.url = "20161129/583ce3b933d98.jpg"
+        CircleNetUtil.getForumInfo(userid: QCLoginUserInfo.currentInfo.userid, tid: forumDataModel.id) { (success, response) in
+            if success {
+                self.forumModel = response as! ForumInfoDataModel
+                for _ in self.forumModel.photo {
+                    self.imageHeigthArray.append(0)
+                }
+                
+                self.rootTableView.reloadData()
+            }
+        }
         
-        
-        forumModel.title = "请问各位同行，职场新手如何‘谈薪’才合适？"
-        forumModel.content = "　　儿科学属临床医学的二级学科，研究对象是自胎儿至青春期的儿童。它是一门研究小儿生长发育规律、提高小儿身心健康水平和疾病防治质量的医学科学。\n    1、学科研究范围：儿科学研究从胎儿到青春期儿童有关促进生理及心理健康成长和疾病的防治。目前有儿童保健、新生儿学、呼吸、心血管、血液、肾脏、神经、内分泌与代谢、免疫感染与消化、急救以及小儿外科等专业。每个专业学科又和基础医学某些学科有密切联系，如生理、生化、病理、遗传以及分子生物学等。\n    2、课程设置：基础理论课：生理学，病理学，生物化学，分子生物学，免疫学，医学遗传学，医学统计学，临床流行病学，电子计算机应用以及与研究课题有关的基础医学课程。\n    专业课：儿科学与研究课题有关的内科各专业课程。\n儿科学主要相关学科：内科学、外科学，神经病学，妇产科学，传染病学等。"
-        forumModel.like = "1136"
-        forumModel.hits = "151"
-        forumModel.istop = "1"
-        forumModel.isbest = "1"
-        forumModel.isreward = "1"
-        
-        forumModel.photo = [photo1,photo2,photo3]
-        
-        let comment1 = ForumCommentDataModel()
-        comment1.userid = "639"
-        comment1.content = "谢谢您"
-        comment1.major = "护士"
-        comment1.cid = ""
-        
-        let childComment1 = ForumChildCommentDataModel()
-        childComment1.userid = "617"
-        childComment1.content = "自作自受，和谁也不能和他最近的人啊。还有就是他弟弟也不怎么样。"
-        childComment1.add_time = ""
-        childComment1.major = ""
-        childComment1.userlevel = ""
-        childComment1.username = "树友322j"
-        childComment1.photo = ""
-        childComment1.type = ""
-        childComment1.pid = ""
-        childComment1.cid = ""
-        comment1.child_comments = [childComment1]
-        
-        comment1.userlevel = "5"
-        comment1.username = "小丫头妈咪宝贝"
-        comment1.photo = "avatar20161210111815639.png"
-        comment1.refid = ""
-        comment1.type = ""
-        comment1.add_time = "1471762340"
-        
-        let comment2 = ForumCommentDataModel()
-        comment2.userid = "617"
-        comment2.content = "中国护士网圈子功能上线，欢迎大家测试使用~"
-        comment2.major = "学生"
-        comment2.cid = ""
-        
+        CircleNetUtil.judge_apply_community(userid: QCLoginUserInfo.currentInfo.userid, cid: forumDataModel.community_id) { (success, response) in
+            if success {
+                if (response as! String) == "yes" {
+                    self.isMaster = true
+                }else{
+                    self.isMaster = false
+                }
+            }
+        }
+//        let photo1 = photoModel()
+//        photo1.url = "20161202/5840e94624cb0.jpg"
+//        let photo2 = photoModel()
+//        photo2.url = "20161130/583eb4efc6dad.jpg"
+//        let photo3 = photoModel()
+//        photo3.url = "20161129/583ce3b933d98.jpg"
+//        
+//        
+//        forumModel_old.title = "请问各位同行，职场新手如何‘谈薪’才合适？"
+//        forumModel_old.content = "　　儿科学属临床医学的二级学科，研究对象是自胎儿至青春期的儿童。它是一门研究小儿生长发育规律、提高小儿身心健康水平和疾病防治质量的医学科学。\n    1、学科研究范围：儿科学研究从胎儿到青春期儿童有关促进生理及心理健康成长和疾病的防治。目前有儿童保健、新生儿学、呼吸、心血管、血液、肾脏、神经、内分泌与代谢、免疫感染与消化、急救以及小儿外科等专业。每个专业学科又和基础医学某些学科有密切联系，如生理、生化、病理、遗传以及分子生物学等。\n    2、课程设置：基础理论课：生理学，病理学，生物化学，分子生物学，免疫学，医学遗传学，医学统计学，临床流行病学，电子计算机应用以及与研究课题有关的基础医学课程。\n    专业课：儿科学与研究课题有关的内科各专业课程。\n儿科学主要相关学科：内科学、外科学，神经病学，妇产科学，传染病学等。"
+//        forumModel_old.like = "1136"
+//        forumModel_old.hits = "151"
+//        forumModel_old.istop = "1"
+//        forumModel_old.isbest = "1"
+//        forumModel_old.isreward = "1"
+//        
+//        forumModel_old.photo = [photo1,photo2,photo3]
+//        
+//        let comment1 = ForumCommentDataModel()
+//        comment1.userid = "639"
+//        comment1.content = "谢谢您"
+//        comment1.major = "护士"
+//        comment1.cid = ""
+//        
 //        let childComment1 = ForumChildCommentDataModel()
 //        childComment1.userid = "617"
 //        childComment1.content = "自作自受，和谁也不能和他最近的人啊。还有就是他弟弟也不怎么样。"
@@ -108,18 +106,44 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
 //        childComment1.type = ""
 //        childComment1.pid = ""
 //        childComment1.cid = ""
-//        comment2.child_comments = [childComment1]
-        
-        comment2.userlevel = "6"
-        comment2.username = "小丫头妈咪宝贝6小丫头妈咪宝贝"
-        comment2.photo = "avatar20161210111815639.png"
-        comment2.refid = ""
-        comment2.type = ""
-        comment2.add_time = "1471865340"
-        
-        self.forumCommentArray = [comment1,comment2]
-
-        self.rootTableView.reloadData()
+//        comment1.child_comments = [childComment1]
+//        
+//        comment1.userlevel = "5"
+//        comment1.username = "小丫头妈咪宝贝"
+//        comment1.photo = "avatar20161210111815639.png"
+//        comment1.refid = ""
+//        comment1.type = ""
+//        comment1.add_time = "1471762340"
+//        
+//        let comment2 = ForumCommentDataModel()
+//        comment2.userid = "617"
+//        comment2.content = "中国护士网圈子功能上线，欢迎大家测试使用~"
+//        comment2.major = "学生"
+//        comment2.cid = ""
+//        
+////        let childComment1 = ForumChildCommentDataModel()
+////        childComment1.userid = "617"
+////        childComment1.content = "自作自受，和谁也不能和他最近的人啊。还有就是他弟弟也不怎么样。"
+////        childComment1.add_time = ""
+////        childComment1.major = ""
+////        childComment1.userlevel = ""
+////        childComment1.username = "树友322j"
+////        childComment1.photo = ""
+////        childComment1.type = ""
+////        childComment1.pid = ""
+////        childComment1.cid = ""
+////        comment2.child_comments = [childComment1]
+//        
+//        comment2.userlevel = "6"
+//        comment2.username = "小丫头妈咪宝贝6小丫头妈咪宝贝"
+//        comment2.photo = "avatar20161210111815639.png"
+//        comment2.refid = ""
+//        comment2.type = ""
+//        comment2.add_time = "1471865340"
+//        
+//        self.forumCommentArray = [comment1,comment2]
+//
+//        self.rootTableView.reloadData()
     }
     
     // MARK: - 设置子视图
@@ -167,6 +191,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         img.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
         img.layer.cornerRadius = 17.5
         img.clipsToBounds = true
+        img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumDataModel.user_photo), placeholderImage: nil)
         tableHeaderView.addSubview(img)
         
         let nameLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: 8, width: calculateWidth("用户名", size: 12, height: 17), height: 17))
@@ -176,31 +201,31 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         nameLab.text = "用户名"
         tableHeaderView.addSubview(nameLab)
         
-        let positionLab = UILabel(frame: CGRect(x: nameLab.frame.maxX+8, y: 0, width: calculateWidth("护士", size: 8, height: 12)+12, height: 12))
+        let positionLab = UILabel(frame: CGRect(x: nameLab.frame.maxX+8, y: 0, width: calculateWidth("认证类型", size: 8, height: 12)+12, height: 12))
         positionLab.font = UIFont.systemFont(ofSize: 8)
         positionLab.textColor = UIColor.white
         positionLab.layer.backgroundColor = COLOR.cgColor
         positionLab.textAlignment = .center
         positionLab.center.y = nameLab.center.y
         positionLab.layer.cornerRadius = 6
-        positionLab.text = "护士"
+        positionLab.text = "认证类型"
         tableHeaderView.addSubview(positionLab)
 
-        let levelLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: nameLab.frame.maxY+1, width: calculateWidth("Lv.35", size: 10, height: 17), height: 17))
+        let levelLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: nameLab.frame.maxY+1, width: calculateWidth("Lv.\(forumDataModel.level)", size: 10, height: 17), height: 17))
         levelLab.font = UIFont.systemFont(ofSize: 10)
         levelLab.textColor = COLOR
         levelLab.textAlignment = .center
-        levelLab.text = "Lv.35"
+        levelLab.text = "Lv.\(forumDataModel.level)"
         tableHeaderView.addSubview(levelLab)
         
         let timeLab = UILabel(frame: CGRect(
-            x: WIDTH-10-calculateWidth("3分钟前", size: 10, height: 17),
+            x: WIDTH-10-calculateWidth(updateTime(forumDataModel.create_time), size: 10, height: 17),
             y: (50-UIFont.systemFont(ofSize: 10).lineHeight)/2.0,
-            width: calculateWidth("3分钟前", size: 10, height: UIFont.systemFont(ofSize: 10).lineHeight),
+            width: calculateWidth(updateTime(forumDataModel.create_time), size: 10, height: UIFont.systemFont(ofSize: 10).lineHeight),
             height: UIFont.systemFont(ofSize: 10).lineHeight))
         timeLab.font = UIFont.systemFont(ofSize: 10)
         timeLab.textColor = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1)
-        timeLab.text = "3分钟前"
+        timeLab.text = updateTime(forumDataModel.create_time)
         tableHeaderView.addSubview(timeLab)
         
         rootTableView.tableHeaderView = tableHeaderView
@@ -436,7 +461,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         if section == 0 {
-            return 2
+            return 2+forumModel.photo.count
         }else if section == 1 {
             if self.forumCommentArray.count == 0 {
                 return 1
@@ -449,6 +474,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         }
     }
     
+    var flag = 0
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
@@ -460,6 +486,8 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                 cell?.selectionStyle = .none
                 cell?.textLabel?.numberOfLines = 0
             }
+            
+            cell?.contentView.viewWithTag(100)?.removeFromSuperview()
             
             switch indexPath.row {
             case 0:
@@ -475,6 +503,23 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                 cell?.textLabel?.text = forumModel.content
                 
             default:
+                
+                let imgView = UIImageView()
+                imgView.tag = 100
+                imgView.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModel.photo[indexPath.row-2]), completed: { (image, error, type, url) in
+                    imgView.frame = CGRect(x: 8, y: 8, width: WIDTH-16, height: (WIDTH-16)*(image?.size.height ?? 0)!/(image?.size.width ?? 1)!)
+                    self.imageHeigthArray[indexPath.row-2] = (WIDTH-16)*(image?.size.height ?? 0)!/(image?.size.width ?? 1)!
+                    
+                    self.flag += 1
+                    
+                    if self.flag == self.imageHeigthArray.count {
+                        self.rootTableView.reloadData()
+                    }
+                    
+
+                })
+                //                imageView.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModel.photo[indexPath.row-2]), placeholderImage: nil)
+                cell?.contentView.addSubview(imgView)
                 break
             }
             
@@ -489,10 +534,25 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             cell.textLabel?.textColor = UIColor.gray
             cell.textLabel?.textAlignment = .center
             
-            cell.nameLab.text = nil
-            cell.contentLab.text = nil
-            cell.timeLab.text = nil
             cell.headerBtn.setImage(nil, for: UIControlState())
+            cell.nameLab.text = nil
+            cell.positionLab.text = nil
+            cell.timeLab.text = nil
+            cell.floorLab.text = nil
+            cell.levelLab.text = nil
+            cell.contentLab.text = nil
+            cell.dateImg.isHidden = true
+            cell.dateLab.text = nil
+            
+            cell.likeImg.isHidden = true
+            cell.likeBtn.isHidden = true
+            
+            cell.deleteBtn.isHidden = true
+            
+            cell.replyBtn.isHidden = true
+            
+            cell.reportBtn.isHidden = true
+            
         }else{
             cell.textLabel?.text = nil
             cell.floorLab.text = "\(self.forumCommentArray.count-indexPath.row)楼"
@@ -512,9 +572,11 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             case 1:
                 return calculateHeight(forumModel.content, size: 14, width: WIDTH-48)+20
             default:
-                break
+                print("-=-=-=-=-=-=-=-=-=-",imageHeigthArray[indexPath.row-2])
+
+                return imageHeigthArray[indexPath.row-2]+16
+                
             }
-            return 0
         }
         if self.forumCommentArray.count == 0 {
             return 100
@@ -563,10 +625,16 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             collectBtn.addTarget(self, action: #selector(collectBtnClick(_:)), for: .touchUpInside)
             contentView.addSubview(collectBtn)
             
+            if forumModel.favorites_add == "1" {
+                collectBtn.isSelected = true
+            }else {
+                collectBtn.isSelected = false
+            }
+            
             let collectNumLab = UILabel(frame: CGRect(x: collectBtn.frame.maxX+8, y: 0, width: 0, height: 0))
             collectNumLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
             collectNumLab.font = UIFont.systemFont(ofSize: 14)
-            collectNumLab.text = forumModel.hits
+            collectNumLab.text = forumModel.favorites
             collectNumLab.sizeToFit()
             collectNumLab.center.y = collectBtn.center.y
             contentView.addSubview(collectNumLab)
@@ -575,10 +643,15 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             likeBtn.tag = 101
             likeBtn.layer.cornerRadius = 15
 //            likeBtn.layer.backgroundColor = UIColor(red: 244/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1).CGColor
-            //                likeBtn.setImage(UIImage(named: "点赞（默认）"), forState: .Normal)
+            likeBtn.setImage(UIImage(named: "点赞（默认）"), for: .normal)
             likeBtn.setImage(UIImage(named: "点赞"), for: UIControlState())
             likeBtn.addTarget(self, action: #selector(likeBtnClick(_:)), for: .touchUpInside)
             contentView.addSubview(likeBtn)
+            if forumModel.add_like == "1" {
+                likeBtn.isSelected = true
+            }else {
+                likeBtn.isSelected = false
+            }
             
             let likeNumLab = UILabel(frame: CGRect(x: likeBtn.frame.maxX+8, y: 0, width: 0, height: 0))
             likeNumLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
@@ -596,6 +669,12 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             rewardBtn.setImage(UIImage(named: "打赏"), for: .selected)
             rewardBtn.addTarget(self, action: #selector(rewardBtnClick(_:)), for: .touchUpInside)
             contentView.addSubview(rewardBtn)
+            
+            if forumModel.isreward == "1" {
+                rewardBtn.isSelected = true
+            }else {
+                rewardBtn.isSelected = false
+            }
             
             let rewardNumLab = UILabel(frame: CGRect(x: rewardBtn.frame.maxX+8, y: 0, width: 0, height: 0))
             rewardNumLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
@@ -639,30 +718,49 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("点击cell")
         
-        replyTextField.placeholder = "回复\(self.forumCommentArray[indexPath.row].username)"
-        replyTextField.becomeFirstResponder()
+        if indexPath.section == 1 && self.forumCommentArray.count > 0 {
+            
+            replyTextField.placeholder = "回复\(self.forumCommentArray[indexPath.row].username)"
+            replyTextField.becomeFirstResponder()
+        }
     }
     
     // MARK: - 举报 按钮点击事件
     func reportBtnClick(_ reportBtn:UIButton) {
         print("举报 按钮点击事件",reportBtn.tag)
         
-        NSCirclePublicAction.showReportAlert()
+        self.showReportAlert(with: self.forumModel.tid)
     }
     
     // MARK: - moreBtnClick
     func moreBtnClick(_ moreBtn:UIButton) {
         print(moreBtn.tag)
         
+        var labelTextArray = [String]()
+        var labelTextColorArray = [UIColor]()
+        
+        if isMaster {
+            labelTextArray = ["加精","置顶","删除","取消"]
+            labelTextColorArray = [COLOR,COLOR,UIColor.black,UIColor.lightGray]
+        }else if QCLoginUserInfo.currentInfo.userid == forumDataModel.userid {
+            labelTextArray = ["删除","取消"]
+            labelTextColorArray = [UIColor.black,UIColor.lightGray]
+        }else{
+            labelTextArray = ["举报","取消"]
+            labelTextColorArray = [UIColor.black,UIColor.lightGray]
+        }
+        
+        self.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray, forumId: self.forumModel.tid)
+
         
         //        let alert =
 //        let labelTextArray = ["加精","置顶","删除","取消"]
 //        let labelTextColorArray = [COLOR,COLOR,UIColor.blackColor(),UIColor.lightGrayColor()]
-
-        let labelTextArray = ["举报","取消"]
-        let labelTextColorArray = [UIColor.black,UIColor.lightGray]
-
-        NSCirclePublicAction.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray)
+//
+//        let labelTextArray = ["举报","取消"]
+//        let labelTextColorArray = [UIColor.black,UIColor.lightGray]
+//
+//        NSCirclePublicAction.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray)
         
     }
     
@@ -677,10 +775,350 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     func rewardBtnClick(_ rewardBtn:UIButton) {
         print("3")
         
-        NSCirclePublicAction.showAlert()
+        self.showAlert()
     }
     
+    // MARK: - 数据
+    func getReportArray() -> [String] {
+        let reportArray = ["诽谤辱骂","淫秽色情","垃圾广告","血腥暴力","欺诈（酒托、话费托等行为）","违法行为（涉毒、暴恐、违禁品等行为）"]
+        return reportArray
+    }
+    func getRewardArray() -> [String] {
+        let rewardArray = ["1","2","5","10"]
+        return rewardArray
+    }
     
+    // MARK: - 显示举报弹窗
+    func showReportAlert(with forumId:String) {
+        
+        let buttonFontSize:CGFloat = 14
+        let animateWithDuration = 0.3
+        
+        let bgView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT))
+        bgView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
+        bgView.addTarget(self, action: #selector(alertCancel(_:)), for: .touchUpInside)
+        UIApplication.shared.keyWindow?.addSubview(bgView)
+        
+        let alert = UIView(frame: CGRect(x: WIDTH*0.06, y: HEIGHT, width: WIDTH*0.88, height: 0))
+        alert.backgroundColor = UIColor.white
+        alert.layer.cornerRadius = 8
+        bgView.addSubview(alert)
+        
+        let titleLab = UILabel(frame: CGRect(x: 0, y: 20, width: alert.frame.width, height: UIFont.systemFont(ofSize: 18).lineHeight))
+        titleLab.font = UIFont.systemFont(ofSize: 18)
+        titleLab.textAlignment = .center
+        titleLab.textColor = UIColor.black
+        titleLab.text = "请告诉我们您举报的理由"
+        alert.addSubview(titleLab)
+        
+        let buttonHeight:CGFloat = 30
+        let buttonMargin:CGFloat = 10
+        var buttonWidth:CGFloat = (alert.frame.width-116-buttonMargin)/2.0
+        var buttonX:CGFloat = 58
+        var buttonY = titleLab.frame.maxY+25
+        
+        for (i,buttonTitle) in getReportArray().enumerated() {
+            switch i {
+            case 0:
+                buttonX = 58
+                buttonWidth = 125
+                
+            case 1:
+                buttonX = 58+(buttonWidth+buttonMargin)
+                buttonWidth = 125
+                
+            case 2:
+                buttonY = buttonY+buttonHeight+buttonMargin
+                buttonX = 58
+                buttonWidth = 125
+                
+            case 3:
+                buttonX = 58+(buttonWidth+buttonMargin)
+                buttonWidth = 125
+                
+            case 4:
+                buttonY = buttonY+buttonHeight+buttonMargin
+                buttonX = 58
+                buttonWidth = alert.frame.width-116
+                
+            case 5:
+                buttonY = buttonY+buttonHeight+buttonMargin
+                buttonX = 58
+                buttonWidth = alert.frame.width-116
+                
+            default:
+                break
+            }
+            
+            let button = UIButton(frame: CGRect(x: buttonX, y: buttonY, width: buttonWidth, height: buttonHeight))
+            button.tag = 1000+i
+            button.titleLabel?.font = UIFont.systemFont(ofSize: buttonFontSize)
+            button.titleLabel?.adjustsFontSizeToFitWidth = true
+            button.layer.cornerRadius = 3
+            button.layer.borderColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).cgColor
+            button.layer.borderWidth = 1/UIScreen.main.scale
+            
+            button.setTitleColor(UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), for: UIControlState())
+            button.setTitleColor(UIColor.white, for: .selected)
+            
+            button.setTitle(buttonTitle, for: UIControlState())
+            
+            button.backgroundColor = i == 0 ? COLOR:UIColor.clear
+            button.isSelected = i == 0 ? true:false
+            
+            button.addTarget(self, action: #selector(chooseReportType(_:)), for: .touchUpInside)
+            
+            alert.addSubview(button)
+            
+        }
+        
+        let reportBtn = UIButton(frame: CGRect(x: 35, y: buttonY+buttonHeight+35, width: alert.frame.width-70, height: 40))
+        reportBtn.tag = NSString(string: forumId).integerValue
+        reportBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        reportBtn.layer.cornerRadius = 6
+        reportBtn.setTitle("确认举报", for: UIControlState())
+        
+        reportBtn.setTitleColor(UIColor.white, for: UIControlState())
+        reportBtn.backgroundColor = COLOR
+        
+        reportBtn.addTarget(self, action: #selector(sureReportBtnClick(_:)), for: .touchUpInside)
+        
+        alert.addSubview(reportBtn)
+        
+        alert.frame.size.height = reportBtn.frame.maxY+25
+        
+        UIView.animate(withDuration: animateWithDuration, animations: {
+            
+            alert.frame.origin.y = (HEIGHT-alert.frame.size.height)/2.0
+        })
+    }
+    
+    // MARK: - 选择举报理由
+    func chooseReportType(_ typeBtn:UIButton) {
+        
+        for subView in (typeBtn.superview?.subviews ?? [UIView]())! {
+            if subView.tag >= 1000 && subView.tag <= 2000 {
+                if subView is UIButton {
+                    let button = subView as! UIButton
+                    button.isSelected = false
+                    button.backgroundColor = UIColor.clear
+                    
+                }
+            }
+        }
+        
+        typeBtn.isSelected = true
+        typeBtn.backgroundColor = COLOR
+        
+        //        reportType = reportArray[typeBtn.tag-1000]
+        //        print(reportType)
+        print(getReportArray()[typeBtn.tag-1000])
+        
+    }
+    
+    // MARK: - 确认举报
+    func sureReportBtnClick(_ rewardBtn:UIButton) {
+        
+        for subView in (rewardBtn.superview?.subviews ?? [UIView]())! {
+            if (subView.tag >= 1000 && subView.tag <= 2000) && subView is UIButton {
+                let button = subView as! UIButton
+                if button.isSelected {
+                    
+                    print(button.tag,getReportArray()[button.tag-1000])
+                    CircleNetUtil.addReport(userid: QCLoginUserInfo.currentInfo.userid, t_id: String(rewardBtn.tag), score: getReportArray()[button.tag-1000], handle: { (success, response) in
+                        
+                        self.alertCancel(rewardBtn)
+                    })
+                }
+            }
+        }
+    }
+    
+    // MARK: - 显示打赏弹窗
+    func showAlert() {
+        
+        let buttonFontSize:CGFloat = 24
+        let animateWithDuration = 0.3
+        
+        let bgView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT))
+        bgView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
+        bgView.addTarget(self, action: #selector(alertCancel(_:)), for: .touchUpInside)
+        UIApplication.shared.keyWindow?.addSubview(bgView)
+        
+        let alert = UIView(frame: CGRect(x: WIDTH*0.06, y: HEIGHT, width: WIDTH*0.88, height: 0))
+        alert.backgroundColor = UIColor.white
+        alert.layer.cornerRadius = 8
+        bgView.addSubview(alert)
+        
+        let titleLab = UILabel(frame: CGRect(x: 0, y: 20, width: alert.frame.width, height: UIFont.systemFont(ofSize: 18).lineHeight))
+        titleLab.font = UIFont.systemFont(ofSize: 18)
+        titleLab.textAlignment = .center
+        titleLab.textColor = UIColor.black
+        titleLab.text = "好的文章，就是要打赏"
+        alert.addSubview(titleLab)
+        
+        let noteLab = UILabel(frame: CGRect(x: 0, y: titleLab.frame.maxY+8, width: alert.frame.width, height: UIFont.systemFont(ofSize: 12).lineHeight))
+        noteLab.font = UIFont.systemFont(ofSize: 12)
+        noteLab.textAlignment = .center
+        noteLab.textColor = UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1)
+        noteLab.text = "可用护士币：1324"
+        alert.addSubview(noteLab)
+        
+        let buttonWidth:CGFloat = 50
+        let buttonMargin = (alert.frame.width-70-buttonWidth*4)/3.0
+        
+        for (i,buttonTitle) in getRewardArray().enumerated() {
+            
+            let button = UIButton(frame: CGRect(x: 35+(buttonWidth+buttonMargin)*CGFloat(i), y: noteLab.frame.maxY+25, width: buttonWidth, height: buttonWidth))
+            button.tag = 1000+i
+            button.titleLabel?.font = UIFont.systemFont(ofSize: buttonFontSize)
+            button.layer.cornerRadius = buttonWidth/2.0
+            button.setTitle(buttonTitle, for: UIControlState())
+            
+            button.setTitleColor(UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), for: UIControlState())
+            button.setTitleColor(UIColor.white, for: .selected)
+            
+            button.backgroundColor = i == 0 ? COLOR:UIColor(red: 229/255.0, green: 229/255.0, blue: 229/255.0, alpha: 1)
+            button.isSelected = i == 0 ? true:false
+            
+            button.addTarget(self, action: #selector(chooseRewardCount(_:)), for: .touchUpInside)
+            
+            alert.addSubview(button)
+            
+        }
+        
+        let rewardBtn = UIButton(frame: CGRect(x: 35, y: noteLab.frame.maxY+25+buttonWidth+25, width: alert.frame.width-70, height: 40))
+        rewardBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
+        rewardBtn.layer.cornerRadius = 6
+        rewardBtn.setTitle("打赏", for: UIControlState())
+        
+        rewardBtn.setTitleColor(UIColor.white, for: UIControlState())
+        rewardBtn.backgroundColor = COLOR
+        
+        rewardBtn.addTarget(self, action: #selector(sureRewardBtnClick(_:)), for: .touchUpInside)
+        
+        alert.addSubview(rewardBtn)
+        
+        alert.frame.size.height = rewardBtn.frame.maxY+25
+        
+        UIView.animate(withDuration: animateWithDuration, animations: {
+            
+            alert.frame.origin.y = (HEIGHT-alert.frame.size.height)/2.0
+        })
+    }
+    
+    // MARK: - 选择打赏护士币数量
+    func chooseRewardCount(_ countBtn:UIButton) {
+        
+        for subView in (countBtn.superview?.subviews ?? [UIView]())! {
+            if subView.tag >= 1000 && subView.tag <= 2000 {
+                if subView is UIButton {
+                    let button = subView as! UIButton
+                    button.isSelected = false
+                    button.backgroundColor = UIColor(red: 229/255.0, green: 229/255.0, blue: 229/255.0, alpha: 1)
+                    
+                }
+            }
+        }
+        
+        countBtn.isSelected = true
+        countBtn.backgroundColor = COLOR
+        
+        //        rewardCount = rewardArray[countBtn.tag-1000]
+        //        print(rewardCount)
+        print(countBtn.tag-1000)
+        print(getRewardArray()[countBtn.tag-1000])
+    }
+    
+    // MARK: - 确认打赏
+    func sureRewardBtnClick(_ rewardBtn:UIButton) {
+        
+        for subView in (rewardBtn.superview?.subviews ?? [UIView]())! {
+            if (subView.tag >= 1000 && subView.tag <= 2000) && subView is UIButton {
+                let button = subView as! UIButton
+                if button.isSelected {
+                    
+                    print(button.tag,getRewardArray()[button.tag-1000])
+                    alertCancel(rewardBtn)
+                    
+                }
+            }
+        }
+    }
+    
+    // MARK: - 显示加精置顶等弹出 sheet
+    func showSheet(with buttonTitleArray:[String], buttonTitleColorArray:[UIColor], forumId:String) {
+        
+        let buttonFontSize:CGFloat = 15
+        let buttonTitleDefaultColor = UIColor.black
+        let animateWithDuration = 0.3
+        
+        let bgView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT))
+        bgView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
+        bgView.addTarget(self, action: #selector(alertCancel(_:)), for: .touchUpInside)
+        UIApplication.shared.keyWindow?.addSubview(bgView)
+        
+        let alert = UIView(frame: CGRect(x: 0, y: HEIGHT, width: WIDTH, height: 0))
+        alert.backgroundColor = UIColor.white
+        bgView.addSubview(alert)
+        
+        for (i,buttonTitle) in buttonTitleArray.enumerated() {
+            let button = UIButton(frame: CGRect(x: 0, y: 44*CGFloat(i), width: WIDTH, height: 44))
+            
+            button.tag = NSString(string: forumId).integerValue*100+i
+            button.titleLabel?.font = UIFont.systemFont(ofSize: buttonFontSize)
+            button.setTitle(buttonTitle, for: UIControlState())
+            
+            button.setTitleColor((i<buttonTitleColorArray.count ? buttonTitleColorArray[i]:buttonTitleDefaultColor), for: UIControlState())
+            if i == buttonTitleArray.count-1 {
+                button.addTarget(self, action: #selector(alertCancel(_:)), for: .touchUpInside)
+            }else{
+                button.addTarget(self, action: #selector(alertActionClick(_:)), for: .touchUpInside)
+            }
+            alert.addSubview(button)
+            
+            let line = UIView(frame: CGRect(x: 0, y: button.frame.height-1/UIScreen.main.scale, width: button.frame.width, height: 1/UIScreen.main.scale))
+            line.backgroundColor = UIColor.lightGray
+            button.addSubview(line)
+        }
+        
+        UIView.animate(withDuration: animateWithDuration, animations: {
+            
+            alert.frame = CGRect(x: 0, y: HEIGHT-44*CGFloat(buttonTitleArray.count), width: WIDTH, height: 44*CGFloat(buttonTitleArray.count))
+        })
+    }
+    
+    // MARK: - 弹出 sheet 点击选项
+    func alertActionClick(_ action:UIButton) {
+        print(action.tag)
+        
+        if action.currentTitle == "举报" {
+            alertCancel(action)
+            self.showReportAlert(with: String(action.tag/100))
+        }else if action.currentTitle == "删除" {
+            alertCancel(action)
+            self.showSheet(with: ["删除帖子","取消"], buttonTitleColorArray: [UIColor.black,UIColor.lightGray], forumId: String(action.tag/100))
+        }else if action.currentTitle == "删除帖子" {
+            alertCancel(action)
+            print("删除帖子")
+            CircleNetUtil.DeleteForum(tid: String(action.tag/100), handle: { (success, response) in
+                if success {
+                    print("删除帖子成功")
+                    _ = self.navigationController?.popViewController(animated: true)
+                }else{
+                    print("删除帖子失败")
+                }
+            })
+        }
+    }
+    
+    func alertCancel(_ action:UIView) {
+        if action.superview == UIApplication.shared.keyWindow {
+            action.removeFromSuperview()
+        }else{
+            alertCancel(action.superview!)
+        }
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

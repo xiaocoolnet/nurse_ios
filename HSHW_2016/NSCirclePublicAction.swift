@@ -12,17 +12,17 @@ import MBProgressHUD
 class NSCirclePublicAction: NSObject {
     
     // MARK: - 数据
-    class func getReportArray() -> [String] {
+    func getReportArray() -> [String] {
         let reportArray = ["诽谤辱骂","淫秽色情","垃圾广告","血腥暴力","欺诈（酒托、话费托等行为）","违法行为（涉毒、暴恐、违禁品等行为）"]
         return reportArray
     }
-    class func getRewardArray() -> [String] {
+    func getRewardArray() -> [String] {
         let rewardArray = ["1","2","5","10"]
         return rewardArray
     }
     
     // MARK: - 显示举报弹窗
-    class func showReportAlert() {
+    func showReportAlert() {
         
         let buttonFontSize:CGFloat = 14
         let animateWithDuration = 0.3
@@ -126,7 +126,7 @@ class NSCirclePublicAction: NSObject {
     }
     
     // MARK: - 选择举报理由
-    class func chooseReportType(_ typeBtn:UIButton) {
+    func chooseReportType(_ typeBtn:UIButton) {
         
         for subView in (typeBtn.superview?.subviews ?? [UIView]())! {
             if subView.tag >= 1000 && subView.tag <= 2000 {
@@ -149,7 +149,7 @@ class NSCirclePublicAction: NSObject {
     }
     
     // MARK: - 确认举报
-    class func sureReportBtnClick(_ rewardBtn:UIButton) {
+    func sureReportBtnClick(_ rewardBtn:UIButton) {
 
         for subView in (rewardBtn.superview?.subviews ?? [UIView]())! {
             if (subView.tag >= 1000 && subView.tag <= 2000) && subView is UIButton {
@@ -164,7 +164,7 @@ class NSCirclePublicAction: NSObject {
     }
     
     // MARK: - 显示打赏弹窗
-    class func showAlert() {
+    func showAlert() {
         
         let buttonFontSize:CGFloat = 24
         let animateWithDuration = 0.3
@@ -237,7 +237,7 @@ class NSCirclePublicAction: NSObject {
     }
     
     // MARK: - 选择打赏护士币数量
-    class func chooseRewardCount(_ countBtn:UIButton) {
+    func chooseRewardCount(_ countBtn:UIButton) {
         
         for subView in (countBtn.superview?.subviews ?? [UIView]())! {
             if subView.tag >= 1000 && subView.tag <= 2000 {
@@ -260,7 +260,7 @@ class NSCirclePublicAction: NSObject {
     }
     
     // MARK: - 确认打赏
-    class func sureRewardBtnClick(_ rewardBtn:UIButton) {
+    func sureRewardBtnClick(_ rewardBtn:UIButton) {
 
         for subView in (rewardBtn.superview?.subviews ?? [UIView]())! {
             if (subView.tag >= 1000 && subView.tag <= 2000) && subView is UIButton {
@@ -276,7 +276,7 @@ class NSCirclePublicAction: NSObject {
     }
     
     // MARK: - 显示加精置顶等弹出 sheet
-    class func showSheet(with buttonTitleArray:[String], buttonTitleColorArray:[UIColor]) {
+    func showSheet(with buttonTitleArray:[String], buttonTitleColorArray:[UIColor], forumId:String) {
         
         let buttonFontSize:CGFloat = 15
         let buttonTitleDefaultColor = UIColor.black
@@ -293,7 +293,8 @@ class NSCirclePublicAction: NSObject {
         
         for (i,buttonTitle) in buttonTitleArray.enumerated() {
             let button = UIButton(frame: CGRect(x: 0, y: 44*CGFloat(i), width: WIDTH, height: 44))
-            button.tag = 100+i
+            
+            button.tag = NSString(string: forumId).integerValue*100+i
             button.titleLabel?.font = UIFont.systemFont(ofSize: buttonFontSize)
             button.setTitle(buttonTitle, for: UIControlState())
             
@@ -317,7 +318,7 @@ class NSCirclePublicAction: NSObject {
     }
     
     // MARK: - 弹出 sheet 点击选项
-    class func alertActionClick(_ action:UIButton) {
+    func alertActionClick(_ action:UIButton) {
         print(action.tag)
         
         if action.currentTitle == "举报" {
@@ -325,14 +326,21 @@ class NSCirclePublicAction: NSObject {
             self.showReportAlert()
         }else if action.currentTitle == "删除" {
             alertCancel(action)
-            self.showSheet(with: ["删除帖子","取消"], buttonTitleColorArray: [UIColor.black,UIColor.lightGray])
+            self.showSheet(with: ["删除帖子","取消"], buttonTitleColorArray: [UIColor.black,UIColor.lightGray], forumId: String(action.tag/100))
         }else if action.currentTitle == "删除帖子" {
             alertCancel(action)
             print("删除帖子")
+            CircleNetUtil.DeleteForum(tid: String(action.tag/100), handle: { (success, response) in
+                if success {
+                    print("删除帖子成功")
+                }else{
+                    print("删除帖子失败")
+                }
+            })
         }
     }
     
-    class func alertCancel(_ action:UIView) {
+    func alertCancel(_ action:UIView) {
         if action.superview == UIApplication.shared.keyWindow {
             action.removeFromSuperview()
         }else{

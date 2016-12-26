@@ -60,8 +60,6 @@
 		0DB467C41D4CADFA009AE2AD /* CompanyAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB467C21D4CADFA009AE2AD /* CompanyAuthViewController.swift */; };
 		0DB467C51D4CADFA009AE2AD /* CompanyAuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DB467C31D4CADFA009AE2AD /* CompanyAuthViewController.xib */; };
 		0DB7E1901D38B7EC001D7B66 /* HSMineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */; };
-		0DB7E1931D38E468001D7B66 /* HSUserPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB7E1911D38E468001D7B66 /* HSUserPageViewController.swift */; };
-		0DB7E1941D38E468001D7B66 /* HSUserPageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0DB7E1921D38E468001D7B66 /* HSUserPageViewController.xib */; };
 		0DBF54741D406D1900B4B5FB /* GNewsCateDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54731D406D1900B4B5FB /* GNewsCateDetailViewController.swift */; };
 		0DBF54761D406EF500B4B5FB /* GCateTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54751D406EF500B4B5FB /* GCateTableViewCell.swift */; };
 		0DBF54781D40B5CC00B4B5FB /* GToutiaoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF54771D40B5CC00B4B5FB /* GToutiaoTableViewCell.swift */; };
@@ -122,6 +120,7 @@
 		1F0FDFE61D6949F4005DDB80 /* ScoreTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0FDFE51D6949F4005DDB80 /* ScoreTableViewCell.swift */; };
 		1F0FDFEE1D697A1F005DDB80 /* RankViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0FDFED1D697A1F005DDB80 /* RankViewController.swift */; };
 		1F0FDFF01D697C24005DDB80 /* RankTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F0FDFEF1D697C24005DDB80 /* RankTableViewCell.swift */; };
+		1F1524151E10B32C000CCCF9 /* NSCircleUserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1524141E10B32C000CCCF9 /* NSCircleUserInfoViewController.swift */; };
 		1F1A33951D548D7A00F7C20A /* editResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */; };
 		1F1A33961D548D7A00F7C20A /* editResumeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */; };
 		1F1A33981D54952600F7C20A /* PostVacanciewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */; };
@@ -363,8 +362,6 @@
 		0DB467C21D4CADFA009AE2AD /* CompanyAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompanyAuthViewController.swift; sourceTree = "<group>"; };
 		0DB467C31D4CADFA009AE2AD /* CompanyAuthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompanyAuthViewController.xib; sourceTree = "<group>"; };
 		0DB7E18F1D38B7EC001D7B66 /* HSMineModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSMineModel.swift; sourceTree = "<group>"; };
-		0DB7E1911D38E468001D7B66 /* HSUserPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HSUserPageViewController.swift; sourceTree = "<group>"; };
-		0DB7E1921D38E468001D7B66 /* HSUserPageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HSUserPageViewController.xib; sourceTree = "<group>"; };
 		0DBF54731D406D1900B4B5FB /* GNewsCateDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GNewsCateDetailViewController.swift; sourceTree = "<group>"; };
 		0DBF54751D406EF500B4B5FB /* GCateTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCateTableViewCell.swift; sourceTree = "<group>"; };
 		0DBF54771D40B5CC00B4B5FB /* GToutiaoTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GToutiaoTableViewCell.swift; sourceTree = "<group>"; };
@@ -434,6 +431,7 @@
 		1F0FDFE51D6949F4005DDB80 /* ScoreTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreTableViewCell.swift; sourceTree = "<group>"; };
 		1F0FDFED1D697A1F005DDB80 /* RankViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankViewController.swift; sourceTree = "<group>"; };
 		1F0FDFEF1D697C24005DDB80 /* RankTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RankTableViewCell.swift; sourceTree = "<group>"; };
+		1F1524141E10B32C000CCCF9 /* NSCircleUserInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleUserInfoViewController.swift; sourceTree = "<group>"; };
 		1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editResumeViewController.swift; sourceTree = "<group>"; };
 		1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = editResumeViewController.xib; sourceTree = "<group>"; };
 		1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVacanciewViewController.swift; sourceTree = "<group>"; };
@@ -781,8 +779,6 @@
 			isa = PBXGroup;
 			children = (
 				181E0D241CEBF83200E34A7F /* FansViewController.swift */,
-				0DB7E1911D38E468001D7B66 /* HSUserPageViewController.swift */,
-				0DB7E1921D38E468001D7B66 /* HSUserPageViewController.xib */,
 				1F0FDFE11D69384D005DDB80 /* ScoreViewController.swift */,
 				1F0FDFED1D697A1F005DDB80 /* RankViewController.swift */,
 				1F2F55EB1DF003BD00FE037E /* ScoreNoteViewController.swift */,
@@ -1328,6 +1324,7 @@
 				1F2679DD1E03FD4700FF2D25 /* NSCircleListViewController.swift */,
 				1F2679DE1E03FD4700FF2D25 /* NSCirclePostChooseCircleViewController.swift */,
 				1F2679DF1E03FD4700FF2D25 /* NSCirclePostForumViewController.swift */,
+				1F1524141E10B32C000CCCF9 /* NSCircleUserInfoViewController.swift */,
 			);
 			name = "发现";
 			sourceTree = "<group>";
@@ -1601,7 +1598,6 @@
 				0DB467B81D4C8600009AE2AD /* MJRefresh.bundle in Resources */,
 				F632EF131D192F530038AF9D /* HSWorkPlaceController.xib in Resources */,
 				1FFD9ECF1D519C6500951098 /* GHSPostResumeView.xib in Resources */,
-				0DB7E1941D38E468001D7B66 /* HSUserPageViewController.xib in Resources */,
 				0B6FED521D33999700A4488E /* area.plist in Resources */,
 				0DB082E31D49D726004510B1 /* GHSSQCollectionViewCell.xib in Resources */,
 				F6E00DE81D263CC100D023B8 /* HSPostResumeView.xib in Resources */,
@@ -1736,6 +1732,7 @@
 				1F09382E1D77F72700451948 /* HSNewsCommentCell.swift in Sources */,
 				1F879FAC1E026F3B001385CE /* NSCircleForumListTableViewCell.swift in Sources */,
 				0BD429471D3DD3500064B64C /* MineExamCollectTableViewCell.swift in Sources */,
+				1F1524151E10B32C000CCCF9 /* NSCircleUserInfoViewController.swift in Sources */,
 				0DE829DB1D3B52050047FB23 /* GMyExamListViewController.swift in Sources */,
 				1FE6E4C41D536171009E036B /* GHSExamCollectTableViewCell.swift in Sources */,
 				18C0BF991CEB655F003E2886 /* QuestionTableViewCell.swift in Sources */,
@@ -1866,7 +1863,6 @@
 				185408731CE6C87F00DFBA7C /* NewsViewController.swift in Sources */,
 				1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */,
 				181E0D2D1CEBF8A900E34A7F /* MineCollectionViewController.swift in Sources */,
-				0DB7E1931D38E468001D7B66 /* HSUserPageViewController.swift in Sources */,
 				F6342C6F1D391CF100800D8E /* HSChartCell.swift in Sources */,
 				0DBF54781D40B5CC00B4B5FB /* GToutiaoTableViewCell.swift in Sources */,
 				1854088B1CE7133600DFBA7C /* AbroadViewController.swift in Sources */,
