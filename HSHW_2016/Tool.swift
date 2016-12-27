@@ -168,7 +168,7 @@ func requiredLogin(_ nav:UINavigationController?, previousViewController:UIViewC
     return false
 }
 
-// MARK:检测是否收藏 type: 1 新闻  2 考试  4 论坛帖子  5招聘  6用户
+// MARK:检测是否收藏 type: 1 新闻  2 考试  4 论坛贴子  5招聘  6用户
 func checkHadFavorite(_ refid:String, type:String, handle:@escaping ResponseBlock){
     let url = PARK_URL_Header+"CheckHadFavorite"
     let param = [

@@ -29,7 +29,7 @@ class MineCollectionViewController: UIViewController {
 //        articleViewController.collectionType = 1
 //        testViewController.title = "试题"
 //        testViewController.collectionType = 2
-//        ForumViewController.title = "帖子"
+//        ForumViewController.title = "贴子"
 //        ForumViewController.collectionType = 3
 //        
 //        let viewControllers = [articleViewController,testViewController]
@@ -73,7 +73,7 @@ class MineCollectionViewController: UIViewController {
         struct MenuItem3: MenuItemViewCustomizable {
             fileprivate var horizontalMargin: CGFloat = 5
             var displayMode: MenuItemDisplayMode {
-                let title = MenuItemText(text: "帖子", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 16), selectedFont: UIFont.systemFont(ofSize: 16))
+                let title = MenuItemText(text: "贴子", color: UIColor.lightGray, selectedColor: COLOR, font: UIFont.systemFont(ofSize: 16), selectedFont: UIFont.systemFont(ofSize: 16))
                 return .text(title: title)
             }
         }
@@ -104,7 +104,7 @@ class MineCollectionViewController: UIViewController {
                 articleViewController.collectionType = 1
                 testViewController.title = "试题"
                 testViewController.collectionType = 2
-                ForumViewController.title = "帖子"
+                ForumViewController.title = "贴子"
                 ForumViewController.collectionType = 3
                 
                 return .all(menuOptions: MenuOptions(), pagingControllers: [articleViewController,testViewController])

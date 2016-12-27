@@ -16,13 +16,13 @@ class NSCircleMyForumHomeViewController: UIViewController, PagingMenuControllerD
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.default().pageviewStart(withName: "护士站 圈子 我的帖子")
+        BaiduMobStat.default().pageviewStart(withName: "护士站 圈子 我的贴子")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 我的帖子")
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 我的贴子")
     }
     
     

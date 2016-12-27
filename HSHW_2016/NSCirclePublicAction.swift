@@ -326,15 +326,15 @@ class NSCirclePublicAction: NSObject {
             self.showReportAlert()
         }else if action.currentTitle == "删除" {
             alertCancel(action)
-            self.showSheet(with: ["删除帖子","取消"], buttonTitleColorArray: [UIColor.black,UIColor.lightGray], forumId: String(action.tag/100))
-        }else if action.currentTitle == "删除帖子" {
+            self.showSheet(with: ["删除贴子","取消"], buttonTitleColorArray: [UIColor.black,UIColor.lightGray], forumId: String(action.tag/100))
+        }else if action.currentTitle == "删除贴子" {
             alertCancel(action)
-            print("删除帖子")
+            print("删除贴子")
             CircleNetUtil.DeleteForum(tid: String(action.tag/100), handle: { (success, response) in
                 if success {
-                    print("删除帖子成功")
+                    print("删除贴子成功")
                 }else{
-                    print("删除帖子失败")
+                    print("删除贴子失败")
                 }
             })
         }

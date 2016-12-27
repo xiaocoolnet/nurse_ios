@@ -194,22 +194,26 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumDataModel.user_photo), placeholderImage: nil)
         tableHeaderView.addSubview(img)
         
-        let nameLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: 8, width: calculateWidth("用户名", size: 12, height: 17), height: 17))
+        let nameLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: 8, width: calculateWidth(forumDataModel.user_name, size: 12, height: 17), height: 17))
         nameLab.textAlignment = .left
         nameLab.font = UIFont.systemFont(ofSize: 12)
         nameLab.textColor = UIColor.black
-        nameLab.text = "用户名"
+        nameLab.text = forumDataModel.user_name
         tableHeaderView.addSubview(nameLab)
         
-        let positionLab = UILabel(frame: CGRect(x: nameLab.frame.maxX+8, y: 0, width: calculateWidth("认证类型", size: 8, height: 12)+12, height: 12))
+        let positionLab = UILabel(frame: CGRect(x: nameLab.frame.maxX+8, y: 0, width: calculateWidth(forumDataModel.auth_type, size: 8, height: 12)+12, height: 12))
         positionLab.font = UIFont.systemFont(ofSize: 8)
         positionLab.textColor = UIColor.white
         positionLab.layer.backgroundColor = COLOR.cgColor
         positionLab.textAlignment = .center
         positionLab.center.y = nameLab.center.y
         positionLab.layer.cornerRadius = 6
-        positionLab.text = "认证类型"
-        tableHeaderView.addSubview(positionLab)
+        positionLab.text = forumDataModel.auth_type
+        if forumDataModel.auth_type == "" {
+            positionLab.removeFromSuperview()
+        }else{
+            tableHeaderView.addSubview(positionLab)
+        }
 
         let levelLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: nameLab.frame.maxY+1, width: calculateWidth("Lv.\(forumDataModel.level)", size: 10, height: 17), height: 17))
         levelLab.font = UIFont.systemFont(ofSize: 10)
@@ -323,7 +327,14 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                     
                 }
             }
-            return true
+            
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = .text
+            hud.label.text = "正在开发"
+            hud.hide(animated: true, afterDelay: 1)
+            
+            return false
         }else{
             return false
         }
@@ -450,7 +461,10 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     
     // MARK:- tableView header click
     func tableViewHeaderViewClick() {
-        self.navigationController?.pushViewController(NSCircleHomeViewController(), animated: true)
+        
+        let circleUserInfoController = NSCircleUserInfoViewController()
+        circleUserInfoController.userid = forumDataModel.userid
+        self.navigationController?.pushViewController(circleUserInfoController, animated: true)
     }
     
     // MARK: - UItableViewdatasource
@@ -893,7 +907,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         })
     }
     
-    // MARK: - 选择举报理由
+    // MARK: 选择举报理由
     func chooseReportType(_ typeBtn:UIButton) {
         
         for subView in (typeBtn.superview?.subviews ?? [UIView]())! {
@@ -916,7 +930,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         
     }
     
-    // MARK: - 确认举报
+    // MARK: 确认举报
     func sureReportBtnClick(_ rewardBtn:UIButton) {
         
         for subView in (rewardBtn.superview?.subviews ?? [UIView]())! {
@@ -927,6 +941,19 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                     print(button.tag,getReportArray()[button.tag-1000])
                     CircleNetUtil.addReport(userid: QCLoginUserInfo.currentInfo.userid, t_id: String(rewardBtn.tag), score: getReportArray()[button.tag-1000], handle: { (success, response) in
                         
+                        if success {
+                            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                            hud.removeFromSuperViewOnHide = true
+                            hud.mode = .text
+                            hud.label.text = "举报成功"
+                            hud.hide(animated: true, afterDelay: 1)
+                        }else{
+                            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                            hud.removeFromSuperViewOnHide = true
+                            hud.mode = .text
+                            hud.label.text = "举报失败"
+                            hud.hide(animated: true, afterDelay: 1)
+                        }
                         self.alertCancel(rewardBtn)
                     })
                 }
@@ -961,7 +988,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         noteLab.font = UIFont.systemFont(ofSize: 12)
         noteLab.textAlignment = .center
         noteLab.textColor = UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1)
-        noteLab.text = "可用护士币：1324"
+        noteLab.text = "可用护士币：未完成"
         alert.addSubview(noteLab)
         
         let buttonWidth:CGFloat = 50
@@ -991,7 +1018,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         rewardBtn.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         rewardBtn.layer.cornerRadius = 6
         rewardBtn.setTitle("打赏", for: UIControlState())
-        
+
         rewardBtn.setTitleColor(UIColor.white, for: UIControlState())
         rewardBtn.backgroundColor = COLOR
         
@@ -1007,7 +1034,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         })
     }
     
-    // MARK: - 选择打赏护士币数量
+    // MARK: 选择打赏护士币数量
     func chooseRewardCount(_ countBtn:UIButton) {
         
         for subView in (countBtn.superview?.subviews ?? [UIView]())! {
@@ -1030,7 +1057,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         print(getRewardArray()[countBtn.tag-1000])
     }
     
-    // MARK: - 确认打赏
+    // MARK: 确认打赏
     func sureRewardBtnClick(_ rewardBtn:UIButton) {
         
         for subView in (rewardBtn.superview?.subviews ?? [UIView]())! {
@@ -1038,6 +1065,21 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                 let button = subView as! UIButton
                 if button.isSelected {
                     
+                    CircleNetUtil.addReward(to_userid: forumModel.userid, from_userid: QCLoginUserInfo.currentInfo.userid, t_id: forumModel.tid, score: getRewardArray()[button.tag-1000], handle: { (success, response) in
+                        if success {
+                            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                            hud.removeFromSuperViewOnHide = true
+                            hud.mode = .text
+                            hud.label.text = "打赏成功"
+                            hud.hide(animated: true, afterDelay: 1)
+                        }else{
+                            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                            hud.removeFromSuperViewOnHide = true
+                            hud.mode = .text
+                            hud.label.text = "打赏失败"
+                            hud.hide(animated: true, afterDelay: 1)
+                        }
+                    })
                     print(button.tag,getRewardArray()[button.tag-1000])
                     alertCancel(rewardBtn)
                     
@@ -1088,7 +1130,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         })
     }
     
-    // MARK: - 弹出 sheet 点击选项
+    // MARK: 弹出 sheet 点击选项
     func alertActionClick(_ action:UIButton) {
         print(action.tag)
         
@@ -1097,16 +1139,16 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             self.showReportAlert(with: String(action.tag/100))
         }else if action.currentTitle == "删除" {
             alertCancel(action)
-            self.showSheet(with: ["删除帖子","取消"], buttonTitleColorArray: [UIColor.black,UIColor.lightGray], forumId: String(action.tag/100))
-        }else if action.currentTitle == "删除帖子" {
+            self.showSheet(with: ["删除贴子","取消"], buttonTitleColorArray: [UIColor.black,UIColor.lightGray], forumId: String(action.tag/100))
+        }else if action.currentTitle == "删除贴子" {
             alertCancel(action)
-            print("删除帖子")
+            print("删除贴子")
             CircleNetUtil.DeleteForum(tid: String(action.tag/100), handle: { (success, response) in
                 if success {
-                    print("删除帖子成功")
+                    print("删除贴子成功")
                     _ = self.navigationController?.popViewController(animated: true)
                 }else{
-                    print("删除帖子失败")
+                    print("删除贴子失败")
                 }
             })
         }

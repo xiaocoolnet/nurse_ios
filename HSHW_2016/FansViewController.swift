@@ -192,7 +192,7 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }else if tableView.tag == 411{
             userPageVC.userid = focusListArray[indexPath.row].id
         }
-        userPageVC.focusArray = focusListArray
+//        userPageVC.focusArray = focusListArray
         
         self.navigationController?.pushViewController(userPageVC, animated: true)
     }

@@ -161,23 +161,28 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         introduceBtn.setTitleColor(UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1), for: UIControlState())
 
         let introduceStr:NSString = communityModel.description as NSString
-        let range = NSMakeRange(40, introduceStr.length-40)
-        let cutIntroduceStr = introduceStr.length > 40 ? introduceStr.replacingCharacters(in: range, with: "..."):introduceStr as String
-        let attrStr = NSMutableAttributedString(string: "    \(cutIntroduceStr) 展开")
-        attrStr.addAttributes([NSForegroundColorAttributeName:UIColor(red: 28/255.0, green: 159/255.0, blue: 227/255.0, alpha: 1),NSUnderlineStyleAttributeName:NSUnderlineStyle.styleSingle.rawValue], range: NSMakeRange(attrStr.length-2, 2))
+        if introduceStr.length > 40 {
+            
+            let range = NSMakeRange(40, introduceStr.length-40)
+            let cutIntroduceStr = introduceStr.length > 40 ? introduceStr.replacingCharacters(in: range, with: "..."):introduceStr as String
+            let attrStr = NSMutableAttributedString(string: "    \(cutIntroduceStr) 展开")
+            attrStr.addAttributes([NSForegroundColorAttributeName:UIColor(red: 28/255.0, green: 159/255.0, blue: 227/255.0, alpha: 1),NSUnderlineStyleAttributeName:NSUnderlineStyle.styleSingle.rawValue], range: NSMakeRange(attrStr.length-2, 2))
+            
+            let attrStrUnfold = NSMutableAttributedString(string: "    \(introduceStr) 收起")
+            
+            attrStrUnfold.addAttributes([NSForegroundColorAttributeName:UIColor(red: 28/255.0, green: 159/255.0, blue: 227/255.0, alpha: 1),NSUnderlineStyleAttributeName:NSUnderlineStyle.styleSingle.rawValue], range: NSMakeRange(attrStrUnfold.length-2, 2))
+            
+            introduceBtn.setAttributedTitle(attrStr, for: UIControlState())
+            introduceBtn.setAttributedTitle(attrStrUnfold, for: .selected)
+            introduceBtn.isSelected = unfoldIntroduce
+            introduceBtn.frame.size.height = calculateHeight(introduceBtn.currentAttributedTitle!.string, size: 14, width: WIDTH-16)
+            introduceBtn.addTarget(self, action: #selector(introduceBtnClick(_:)), for: .touchUpInside)
+        }else{
+            introduceBtn.setTitle("    \(introduceStr)", for: UIControlState())
+            introduceBtn.frame.size.height = calculateHeight("    \(introduceStr)", size: 14, width: WIDTH-16)
+        }
         
-        let attrStrUnfold = NSMutableAttributedString(string: "    \(introduceStr) 收起")
-        
-        attrStrUnfold.addAttributes([NSForegroundColorAttributeName:UIColor(red: 28/255.0, green: 159/255.0, blue: 227/255.0, alpha: 1),NSUnderlineStyleAttributeName:NSUnderlineStyle.styleSingle.rawValue], range: NSMakeRange(attrStrUnfold.length-2, 2))
-        
-        introduceBtn.setAttributedTitle(attrStr, for: UIControlState())
-        introduceBtn.setAttributedTitle(attrStrUnfold, for: .selected)
-        
-        introduceBtn.isSelected = unfoldIntroduce
-        introduceBtn.frame.size.height = calculateHeight(introduceBtn.currentAttributedTitle!.string, size: 14, width: WIDTH-16)
-        introduceBtn.addTarget(self, action: #selector(introduceBtnClick(_:)), for: .touchUpInside)
         tableHeaderView.addSubview(introduceBtn)
-        
         
         // MARK: - 圈主
         let managerTagLab = UILabel(frame: CGRect(x: 8, y: introduceBtn.frame.maxY+10, width: WIDTH-16, height: UIFont.systemFont(ofSize: 14).lineHeight))

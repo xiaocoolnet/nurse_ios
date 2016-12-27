@@ -92,9 +92,8 @@ class ForumListModel: HandyJSON {
         }
     }
 }
-
 class ForumListDataModel: HandyJSON {
-    var id = ""// 帖子id
+    var id = ""// 贴子id
     var community_id = ""// 圈子的id
     var userid = ""
     var title = ""// 标题
@@ -102,7 +101,7 @@ class ForumListDataModel: HandyJSON {
     var content = ""// 内容
     var description = ""// 介绍
     var review_time = ""// 回复时间
-    var photo = [String]()// 帖子图片
+    var photo = [String]()// 贴子图片
     var hits = ""// 点击数
     var like = ""// 点赞数
     var istop = ""// 是否置顶
@@ -110,11 +109,13 @@ class ForumListDataModel: HandyJSON {
     var isreward = ""// 是否打赏
     var user_photo = ""// 用户头像
     var level = ""// 用户的等级
+    var user_name = ""// 发贴人用户名
     var comments_count = ""// 评论数量
     var add_like = ""// 判断我是否点赞
     var community_name = ""// 圈子名称
     var community_photo = ""// 圈子照片
-    var c_master = ""// 发帖人是否是圈主:1是,0不
+    var c_master = ""// 发贴人是否是圈主:1是,0不
+    var auth_type = ""// 认证类型
 
     required init() {}
 }
@@ -174,7 +175,7 @@ class JudgeCommunityDataModel: HandyJSON {
     required init() {}
 }
 
-// 获取帖子详情
+// 获取贴子详情
 class ForumInfoModel: HandyJSON {
     var status = ""
     var data = ForumInfoDataModel()
@@ -239,8 +240,81 @@ class PublishCommunityDataCommunityModel: HandyJSON {
     required init() {}
 }
 
+// 获取个人认证状态
+class PersonAuthModel: HandyJSON {
+    var status = ""
+    var data = PersonAuthDataModel()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+class PersonAuthDataModel: HandyJSON {
+    var userid = ""
+    var auth_type = ""
+    var auth_company = ""
+    var auth_department = ""
+    var photo = ""
+    var status = ""
+    var create_time = ""
+    
+    required init() {}
+}
+
+// 关注 和 粉丝 的数量
+class FollowFansNumModel: HandyJSON {
+    var status = ""
+    var data = FollowFansNumDataModel()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+
+class FollowFansNumDataModel: HandyJSON {
+    var follows_count = ""// 关注数量
+    var fans_count = ""// 粉丝数量
+    
+    required init() {}
+}
+
+// 贴子列表
+class RewardModel: HandyJSON {
+    var status = ""
+    var data = [RewardDataModel]()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+class RewardDataModel: HandyJSON {
+    var to_userid = ""// 被打赏用户id
+    var from_userid = ""// 发出打赏用户的id
+    var t_id = ""// 贴子id
+    var score = ""// 打赏护士币数
+    var create_time = ""
+    
+    required init() {}
+}
 
 
+
+// MARK: - 下边的没用
 
 class CommunityModel: HandyJSON {
     

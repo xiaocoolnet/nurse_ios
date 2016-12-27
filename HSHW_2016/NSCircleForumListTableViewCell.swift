@@ -41,7 +41,7 @@ class NSCircleForumListTableViewCell: UITableViewCell {
     let timeLab = UILabel()
     let levelLab = UILabel()
     
-    // 帖子信息
+    // 贴子信息
     let titleLab = UILabel()
     let contantLab = UILabel()
     let titleImg = UIImageView()

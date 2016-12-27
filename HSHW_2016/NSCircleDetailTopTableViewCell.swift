@@ -10,7 +10,7 @@ import UIKit
 
 class NSCircleDetailTopTableViewCell: UITableViewCell {
     
-    // 帖子信息
+    // 贴子信息
     let topImg = UIImageView()
     let bestImg = UIImageView()
     let rewardImg = UIImageView()

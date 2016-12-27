@@ -252,8 +252,11 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     // MARK: - moreBtnClick
+    fileprivate var currentForumModel = ForumListDataModel()
     func moreBtnClick(_ moreBtn:UIButton) {
         print(moreBtn.tag)
+        
+        currentForumModel = self.forumModelArray[moreBtn.tag-100]
         
         var labelTextArray = [String]()
         var labelTextColorArray = [UIColor]()
@@ -302,6 +305,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
         
         cell.setCellWith(forumModelArray[indexPath.row])
         
+        cell.imgBtn.tag = 200+indexPath.row
         cell.imgBtn.addTarget(self, action: #selector(userInfoBtnClick(userInfoBtn:)), for: .touchUpInside)
         
         cell.moreBtn.tag = 100+indexPath.row
@@ -312,7 +316,10 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     
     // MARK: - 用户主页按钮点击事件
     func userInfoBtnClick(userInfoBtn:UIButton) {
-        self.navigationController?.pushViewController(NSCircleUserInfoViewController(), animated: true)
+        
+        let circleUserInfoController = NSCircleUserInfoViewController()
+        circleUserInfoController.userid = forumModelArray[userInfoBtn.tag-200].userid
+        self.navigationController?.pushViewController(circleUserInfoController, animated: true)
     }
     
     // MARK: - UITableViewDelegate
@@ -716,13 +723,13 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
             self.showReportAlert(with: String(action.tag/100))
         }else if action.currentTitle == "删除" {
             alertCancel(action)
-            self.showSheet(with: ["删除帖子","取消"], buttonTitleColorArray: [UIColor.black,UIColor.lightGray], forumId: String(action.tag/100))
-        }else if action.currentTitle == "删除帖子" {
+            self.showSheet(with: ["删除贴子","取消"], buttonTitleColorArray: [UIColor.black,UIColor.lightGray], forumId: String(action.tag/100))
+        }else if action.currentTitle == "删除贴子" {
             alertCancel(action)
-            print("删除帖子")
+            print("删除贴子")
             CircleNetUtil.DeleteForum(tid: String(action.tag/100), handle: { (success, response) in
                 if success {
-                    print("删除帖子成功")
+                    print("删除贴子成功")
                     if self.communityId != "" {
                         self.getCommunityInfo()
                     }else{
@@ -730,7 +737,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
                         self.loadData()
                     }
                 }else{
-                    print("删除帖子失败")
+                    print("删除贴子失败")
                 }
             })
         }

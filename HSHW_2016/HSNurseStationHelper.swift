@@ -349,27 +349,6 @@ class HSNurseStationHelper: NSObject {
         }
     }
     
-    //获取我的帖子列表
-    func getList(_ userid:String,type:String,isHot:Bool,handle:ResponseBlock){
-//        let url = PARK_URL_Header+"getbbspostlist"
-//        var param = ["type":type,"userid":userid]
-//        if isHot {
-//            param["ishot"] = "1"
-//        }
-//        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
-//            if(error != nil){
-//                handle(success: false, response: error?.localizedDescription)
-//            }else{
-//                let result = ForumlistModel(JSONDecoder(json!))
-//                if(result.status == "success"){
-//                    handle(success: true, response: result.datas)
-//                }else{
-//                    handle(success: false, response: nil)
-//                }
-//            }
-//        }
-    }
-    
     // 设置点击量
     // userid，object_id（推送消息的id）,type(1简历，2招聘)
     func setHits(_ object_id:String, type:String, handle:@escaping ResponseBlock){

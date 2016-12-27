@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class NSCircleListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    var titleString = ""
     var term_id = ""// 父类的分类id,全部则传0
     var best = ""// best(选精1,不0)
     var hot = ""// hot(热门1,不0)
@@ -38,7 +40,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.default().pageviewStart(withName: "护士站 圈子 列表")
+        BaiduMobStat.default().pageviewStart(withName: "护士站 圈子 列表 \(self.titleString)")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -78,7 +80,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     func setSubview() {
         self.view.backgroundColor = UIColor.white
         
-        self.title = "圈子列表"
+        self.title = titleString
         let line1 = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line1.backgroundColor = COLOR
         self.view.addSubview(line1)
@@ -108,6 +110,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     func setDropDown() {
         // MARK: 下拉列表
         circleBtn.frame = CGRect(x: 0, y: 1, width: WIDTH/2, height: 44)
+        circleBtn.tag = 101
         circleBtn.lb_titleColor = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1.0)
         circleBtn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         circleBtn.resetdataCenter(circleArray.first?.first, UIImage(named: "下拉"))
@@ -115,6 +118,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         self.view.addSubview(circleBtn)
         
         sortBtn.frame = CGRect(x: WIDTH/2, y: 1, width: WIDTH/2, height: 44)
+        sortBtn.tag = 102
         sortBtn.lb_titleColor = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1.0)
         sortBtn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         sortBtn.resetdataCenter(circleArray.last?.first, UIImage(named: "下拉"))
@@ -139,6 +143,15 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
             sortBtn.resetdataCenter(sortBtn.lb_title.text, UIImage(named: "下拉"))
             sortBtn.lb_titleColor = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1.0)
             self.view.viewWithTag(1234)?.removeFromSuperview()
+            return
+        }
+        
+        if dropDownBtn == sortBtn {
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = .text
+            hud.label.text = "功能尚未实现"
+            hud.hide(animated: true, afterDelay: 1.5)
             return
         }
         
@@ -220,17 +233,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
                 self.term_id = self.communityCateDataArray[dropBtn.tag-100-1].term_id
             }
             
-            self.loadData()
-//            CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: term_id, best: best, hot: hot, pager: "1") { (success, response) in
-//                if success {
-//                    self.communityModelArray = response as! [CommunityListDataModel]
-//                    self.rootTableView.reloadData()
-//                }else{
-//                    print("获取圈子列表失败")
-//                }
-//                
-//                self.rootTableView.mj_header.endRefreshing()
-//            }
+            self.rootTableView.mj_header.beginRefreshing()
         }else{
             
             sortBtn.resetdataCenter(dropBtn.currentTitle, UIImage(named: "下拉"))
@@ -238,6 +241,27 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         }
         dropBtn.superview?.superview?.removeFromSuperview()
 
+    }
+    
+    // MARK: - 加入按钮点击事件
+    func joinBtnClick(joinBtn:UIButton) {
+        if joinBtn.isSelected {
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = .text
+            hud.label.text = "您已加入该圈子"
+            hud.hide(animated: true, afterDelay: 1.5)
+            return
+        }else{
+            
+            CircleNetUtil.addCommunity(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModelArray[joinBtn.tag-100].id, handle: { (success, response) in
+                if success {
+                    joinBtn.isSelected = true
+                    joinBtn.backgroundColor = COLOR
+                    self.communityModelArray[joinBtn.tag-100].join = "1"
+                }
+            })
+        }
     }
     
     // MARK: - UItableViewdatasource
@@ -253,6 +277,9 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         cell.selectionStyle = .none
         
         cell.communityModel = communityModelArray[indexPath.row]
+        
+        cell.joinBtn.tag = 100+indexPath.row
+        cell.joinBtn.addTarget(self, action: #selector(joinBtnClick(joinBtn:)), for: .touchUpInside)
 //        cell.setCellWithNewsInfo(forumModelArray[indexPath.section])
         
         return cell
@@ -266,6 +293,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         let circleDetailController = NSCircleDetailViewController()
         circleDetailController.hidesBottomBarWhenPushed = true
         circleDetailController.communityModel = communityModelArray[indexPath.row]
+        circleDetailController.isJoin = communityModelArray[indexPath.row].join == "1" ? true:false
         self.navigationController?.pushViewController(circleDetailController, animated: true)
     }
     

@@ -38,43 +38,17 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func loadData() {
-        let forum1 = ForumModel()
-        forum1.title = "1请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum1.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum1.like = "2254"
-        forum1.hits = "2255"
         
-        let forum2 = ForumModel()
-        forum2.title = "2请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum2.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum2.like = "2254"
-        forum2.hits = "2255"
-        let photo1 = photoModel()
-        photo1.url = "20161202/5840e94624cb0.jpg"
-        forum2.photo = [photo1]
-        
-        let forum3 = ForumModel()
-        forum3.title = "3请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum3.content = "从期望薪资可以从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可...从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum3.like = "2254"
-        forum3.hits = "2255"
-        let photo2 = photoModel()
-        photo2.url = "20161130/583eb4efc6dad.jpg"
-        let photo3 = photoModel()
-        photo3.url = "20161129/583ce3b933d98.jpg"
-        forum3.photo = [photo2,photo3]
-        
-        let forum4 = ForumModel()
-        forum4.title = "4请问各位同行，职场新手如何‘谈薪’才合适？"
-        forum4.content = "从期望薪资可以看出求职者对自己的定位，符合自己能力及潜力的薪资报价，体现的是对自身能力的认可..."
-        forum4.like = "2254"
-        forum4.hits = "2255"
-        
-        forum4.photo = [photo1,photo2,photo3]
-        
-//        forumModelArray = [forum1,forum2,forum3,forum4]
-        
-        self.rootTableView.reloadData()
+        CircleNetUtil.getMyForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "") { (success, response) in
+            if success {
+                self.forumModelArray = response as! [ForumListDataModel]
+                self.rootTableView.reloadData()
+            }
+            
+            if self.rootTableView.mj_header.isRefreshing() {
+                self.rootTableView.mj_header.endRefreshing()
+            }
+        }
     }
     
     // MARK: - 设置子视图
@@ -94,8 +68,8 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
         
         rootTableView.register(NSCircleDetailTableViewCell.self, forCellReuseIdentifier: "circleDetailCell")
         
-        //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
-        //        rootTableView.mj_header.beginRefreshing()
+        rootTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
+        rootTableView.mj_header.beginRefreshing()
         
         //        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
         
@@ -110,7 +84,8 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
         let labelTextArray = ["删除","取消"]
         let labelTextColorArray = [UIColor.black,UIColor.lightGray]
         
-//        NSCirclePublicAction.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray)
+        self.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray, forumId: self.forumModelArray[moreBtn.tag-100].id)
+
         
     }
     
@@ -186,7 +161,7 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 14
+        return 0.0001
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -195,15 +170,21 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 35))
-        footerView.addTarget(self, action: #selector(footerViewClick), for: .touchUpInside)
+        footerView.tag = 100 + section
+        footerView.addTarget(self, action: #selector(footerViewClick(footerBtn:)), for: .touchUpInside)
+        
+        let img = UIImageView(frame: CGRect(x: 8, y: 8, width: 25, height: 19))
+        img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModelArray[section].community_photo), placeholderImage: nil)
+        img.contentMode = .scaleAspectFit
+        img.clipsToBounds = true
+        footerView.addSubview(img)
         
         let nameBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 30))
-        nameBtn.setImage(UIImage(named: "精华帖"), for: UIControlState())
         nameBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         nameBtn.setTitleColor(COLOR, for: UIControlState())
-        nameBtn.setTitle("内科", for: UIControlState())
+        nameBtn.setTitle(forumModelArray[section].community_name, for: UIControlState())
         nameBtn.sizeToFit()
-        nameBtn.frame.origin = CGPoint(x: 8, y: (35-nameBtn.frame.height)/2.0)
+        nameBtn.frame.origin = CGPoint(x: img.frame.maxX+5, y: (35-nameBtn.frame.height)/2.0)
         footerView.addSubview(nameBtn)
         
         let comeinLab = UILabel(frame: CGRect(x: nameBtn.frame.maxX, y: 0, width: WIDTH-nameBtn.frame.maxX-8, height: 35))
@@ -225,24 +206,104 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("帖子详情")
+        print("贴子详情")
         
-        switch (indexPath.section,indexPath.row) {
-        case (0,0):
-            self.navigationController?.pushViewController(NSCircleMyForumHomeViewController(), animated: true)
-        default:
-            break
-        }
+        let circleForumDetailController = NSCircleForumDetailViewController()
+        circleForumDetailController.forumDataModel = forumModelArray[indexPath.section]
+        self.navigationController?.pushViewController(circleForumDetailController, animated: true)
+//        switch (indexPath.section,indexPath.row) {
+//        case (0,0):
+//        default:
+//            break
+//        }
     }
     
     // footerView 点击事件
-    func footerViewClick()  {
+    func footerViewClick(footerBtn:UIButton)  {
         print("进入圈子")
         
         let circleDetailController = NSCircleDetailViewController()
         circleDetailController.hidesBottomBarWhenPushed = true
+        circleDetailController.communityId = forumModelArray[footerBtn.tag-100].community_id
         self.navigationController?.pushViewController(circleDetailController, animated: true)
     }
+    
+    // MARK: - 显示加精置顶等弹出 sheet
+    func showSheet(with buttonTitleArray:[String], buttonTitleColorArray:[UIColor], forumId:String) {
+        
+        let buttonFontSize:CGFloat = 15
+        let buttonTitleDefaultColor = UIColor.black
+        let animateWithDuration = 0.3
+        
+        let bgView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT))
+        bgView.backgroundColor = UIColor(white: 0.5, alpha: 0.5)
+        bgView.addTarget(self, action: #selector(alertCancel(_:)), for: .touchUpInside)
+        UIApplication.shared.keyWindow?.addSubview(bgView)
+        
+        let alert = UIView(frame: CGRect(x: 0, y: HEIGHT, width: WIDTH, height: 0))
+        alert.backgroundColor = UIColor.white
+        bgView.addSubview(alert)
+        
+        for (i,buttonTitle) in buttonTitleArray.enumerated() {
+            let button = UIButton(frame: CGRect(x: 0, y: 44*CGFloat(i), width: WIDTH, height: 44))
+            
+            button.tag = NSString(string: forumId).integerValue*100+i
+            button.titleLabel?.font = UIFont.systemFont(ofSize: buttonFontSize)
+            button.setTitle(buttonTitle, for: UIControlState())
+            
+            button.setTitleColor((i<buttonTitleColorArray.count ? buttonTitleColorArray[i]:buttonTitleDefaultColor), for: UIControlState())
+            if i == buttonTitleArray.count-1 {
+                button.addTarget(self, action: #selector(alertCancel(_:)), for: .touchUpInside)
+            }else{
+                button.addTarget(self, action: #selector(alertActionClick(_:)), for: .touchUpInside)
+            }
+            alert.addSubview(button)
+            
+            let line = UIView(frame: CGRect(x: 0, y: button.frame.height-1/UIScreen.main.scale, width: button.frame.width, height: 1/UIScreen.main.scale))
+            line.backgroundColor = UIColor.lightGray
+            button.addSubview(line)
+        }
+        
+        UIView.animate(withDuration: animateWithDuration, animations: {
+            
+            alert.frame = CGRect(x: 0, y: HEIGHT-44*CGFloat(buttonTitleArray.count), width: WIDTH, height: 44*CGFloat(buttonTitleArray.count))
+        })
+    }
+    
+    // MARK: - 弹出 sheet 点击选项
+    func alertActionClick(_ action:UIButton) {
+        print(action.tag)
+        
+        if action.currentTitle == "删除" {
+            alertCancel(action)
+            self.showSheet(with: ["删除贴子","取消"], buttonTitleColorArray: [UIColor.black,UIColor.lightGray], forumId: String(action.tag/100))
+        }else if action.currentTitle == "删除贴子" {
+            alertCancel(action)
+            print("删除贴子")
+            CircleNetUtil.DeleteForum(tid: String(action.tag/100), handle: { (success, response) in
+                if success {
+                    print("删除贴子成功")
+//                    if self.communityId != "" {
+//                        self.getCommunityInfo()
+//                    }else{
+//                        self.setTableViewHeaderView()
+//                        self.loadData()
+//                    }
+                }else{
+                    print("删除贴子失败")
+                }
+            })
+        }
+    }
+    
+    func alertCancel(_ action:UIView) {
+        if action.superview == UIApplication.shared.keyWindow {
+            action.removeFromSuperview()
+        }else{
+            alertCancel(action.superview!)
+        }
+    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
     
@@ -17,7 +18,10 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
 
     var cellNameArray2 = ["儿科","内科","护士交友"]
     var cellImageNameArray2 = ["avatar20161210111815639.png","avatar2016112316325312354.png","defaultavatar.png"]
-    var cellNoteArray2 = ["1352人参与，5214个帖子","1352人参与，5214个帖子","1352人参与，5214个帖子"]
+    var cellNoteArray2 = ["1352人参与，5214个贴子","1352人参与，5214个贴子","1352人参与，5214个贴子"]
+    
+    var communityList = [CommunityListDataModel]()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +31,12 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
         //        self.view.backgroundColor = UIColor.cyanColor()
         self.setSubview()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.loadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -39,6 +49,20 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
         super.viewDidDisappear(animated)
         
         BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 我的")
+    }
+    
+    // MARK: - 加载数据
+    func loadData() {
+        CircleNetUtil.getMyCommunityList(userid: QCLoginUserInfo.currentInfo.userid, pager: "") { (success, response) in
+            if success {
+                self.communityList = response as! [CommunityListDataModel]
+                self.rootTableView.reloadData()
+            }
+            
+            if self.rootTableView.mj_header.isRefreshing() {
+                self.rootTableView.mj_header.endRefreshing()
+            }
+        }
     }
     
     // MARK: - 设置子视图
@@ -57,8 +81,8 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
         
         rootTableView.register(NSCircleHomeTableViewCell.self, forCellReuseIdentifier: "circleHomeCell")
         
-        //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
-        //        rootTableView.mj_header.beginRefreshing()
+        rootTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
+        rootTableView.mj_header.beginRefreshing()
         
         //        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
         
@@ -98,6 +122,13 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - UISearchBarDelegate
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.removeFromSuperViewOnHide = true
+        hud.mode = .text
+        hud.label.text = "敬请期待"
+        hud.hide(animated: true, afterDelay: 1.5)
+        return false
+        
         searchBar.showsCancelButton = true
         return true
     }
@@ -120,7 +151,12 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        
+        if section == 0 {
+            return 3
+        }else{
+            return self.communityList.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -133,7 +169,21 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
         if indexPath.section == 0 {
             cell.setCellWith(cellNameArray1[indexPath.row], imageName: cellImageNameArray1[indexPath.row], noteStr: nil)
         }else {
-            cell.setCellWith(cellNameArray2[indexPath.row], imageName: cellImageNameArray2[indexPath.row], noteStr: cellNoteArray2[indexPath.row], isNetImage: true)
+            let communityModel = communityList[indexPath.row]
+            var personNum = "\(communityModel.person_num)人"
+            
+            if NSString(string: communityModel.person_num).doubleValue >= 10000 {
+                personNum = NSString(format: "%.2f万人", NSString(string: communityModel.person_num).doubleValue/10000.0) as String
+            }
+            
+            var forumNum = "\(communityModel.f_count)个贴子"
+            
+            if NSString(string: communityModel.f_count).doubleValue >= 10000 {
+                forumNum = NSString(format: "%.2f万个贴子", NSString(string: communityModel.f_count).doubleValue/10000.0) as String
+            }
+
+            cell.setCellWith(communityList[indexPath.row].community_name, imageName: communityList[indexPath.row].photo, noteStr: "\(personNum)参与,\(forumNum)", isNetImage: true)
+//            cell.setCellWith(cellNameArray2[indexPath.row], imageName: cellImageNameArray2[indexPath.row], noteStr: cellNoteArray2[indexPath.row], isNetImage: true)
         }
         
         return cell
@@ -159,7 +209,7 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
     //        footerView.addTarget(self, action: #selector(footerViewClick), forControlEvents: .TouchUpInside)
     //
     //        let nameBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 30))
-    //        nameBtn.setImage(UIImage(named: "精华帖"), forState: .Normal)
+    //        nameBtn.setImage(UIImage(named: "精华贴"), forState: .Normal)
     //        nameBtn.titleLabel?.font = UIFont.systemFontOfSize(14)
     //        nameBtn.setTitleColor(COLOR, forState: .Normal)
     //        nameBtn.setTitle("内科", forState: .Normal)
@@ -186,12 +236,28 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("帖子详情")
+        print("贴子详情")
         
         switch (indexPath.section,indexPath.row) {
         case (0,0):
             self.navigationController?.pushViewController(NSCircleMyForumHomeViewController(), animated: true)
+        case (0,1):
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = .text
+            hud.label.text = "敬请期待"
+            hud.hide(animated: true, afterDelay: 1.5)
+        case (0,2):
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = .text
+            hud.label.text = "敬请期待"
+            hud.hide(animated: true, afterDelay: 1.5)
         default:
+            
+            let circleDetailController = NSCircleDetailViewController()
+            circleDetailController.communityModel = communityList[indexPath.row]
+            self.navigationController?.pushViewController(circleDetailController, animated: true)
             break
         }
     }

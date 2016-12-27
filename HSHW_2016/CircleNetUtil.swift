@@ -43,7 +43,7 @@ class CircleNetUtil: NSObject {
     // MARK: - 获取圈子列表
     //接口地址：a=getCommunityList
     //入参：userid,term_id(父类的分类id,全部则传0),best(选精1,不0),hot(热门1,不0),pager 分页
-    //出参：id,community_name 圈子名称,photo圈子头像,description圈子介绍,best(是否精选),create_time 创建时间,hot 是否热门,term_id 圈子类型id,term_name圈子类型名称,f_count 帖子数量,person_num 人数,join(是否加入该圈子 1已加入，0未加入)
+    //出参：id,community_name 圈子名称,photo圈子头像,description圈子介绍,best(是否精选),create_time 创建时间,hot 是否热门,term_id 圈子类型id,term_name圈子类型名称,f_count 贴子数量,person_num 人数,join(是否加入该圈子 1已加入，0未加入)
     //Demo:http:/nurse.xiaocool.net/index.php?g=apps&m=index&a=getCommunityList
     class func getCommunityList(userid:String, term_id:String, best:String, hot:String, pager:String, handle:@escaping ResponseClouse) {
         let url = PARK_URL_Header+"getCommunityList"
@@ -71,10 +71,10 @@ class CircleNetUtil: NSObject {
         }
     }
     
-    // MARK: - 获取帖子列表
+    // MARK: - 获取贴子列表
     //接口地址：a=getForumList
     //入参：cid(圈子的id),userid,isbest(选精1,不0),istop(置顶1,不0),pager 分页
-    //出参：id(帖子id),community_id(圈子的id),userid,title标题,create_time,content内容,description介绍,review_time(回复时间),photo帖子图片,hits点击数,like点赞数,istop是否置顶,isbest是否精华,isreward是否打赏,user_photo(用户头像),level(用户的等级),comments_count评论数量,add_like判断我是否点赞,term_id(对应的圈子的分类id),term_name(对应的圈子的分类名称),c_master(发帖人是否是圈主:1是,0不)
+    //出参：id(贴子id),community_id(圈子的id),userid,title标题,create_time,content内容,description介绍,review_time(回复时间),photo贴子图片,hits点击数,like点赞数,istop是否置顶,isbest是否精华,isreward是否打赏,user_photo(用户头像),level(用户的等级),comments_count评论数量,add_like判断我是否点赞,term_id(对应的圈子的分类id),term_name(对应的圈子的分类名称),c_master(发贴人是否是圈主:1是,0不)
     //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getForumList&cid=1
     class func getForumList(userid:String, cid:String, isbest:String, istop:String, pager:String, handle:@escaping ResponseClouse) {
         let url = PARK_URL_Header+"getForumList"
@@ -246,10 +246,10 @@ class CircleNetUtil: NSObject {
         }
     }
     
-    // MARK: - 获取帖子详情
+    // MARK: - 获取贴子详情
     //接口地址：a=getForumInfo
     //入参：userid,tid
-    //出参：tid,community_id,userid(发帖人id),title,create_time,content,description,status(帖子状态 0审核拒绝，1通过),review_time审核时间,photo,hits点击数,like点赞数,istop,isbest,isreward(是否打赏 1显示，0不),add_like(判断我是否点赞),favorites(收藏数量),favorites_add(判断我是否收藏)
+    //出参：tid,community_id,userid(发贴人id),title,create_time,content,description,status(贴子状态 0审核拒绝，1通过),review_time审核时间,photo,hits点击数,like点赞数,istop,isbest,isreward(是否打赏 1显示，0不),add_like(判断我是否点赞),favorites(收藏数量),favorites_add(判断我是否收藏)
     //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getForumInfo&userid=603&tid=1
     class func getForumInfo(userid:String, tid:String, handle:@escaping ResponseClouse) {
         let url = PARK_URL_Header+"getForumInfo"
@@ -274,7 +274,7 @@ class CircleNetUtil: NSObject {
         }
     }
     
-    // MARK: - 发布帖子
+    // MARK: - 发布贴子
     //接口地址：a=PublishForum
     //入参：userid,cid,title,content,description,photo
     //出参：data
@@ -306,9 +306,9 @@ class CircleNetUtil: NSObject {
         }
     }
     
-    // MARK: - 删除帖子
+    // MARK: - 删除贴子
     //接口地址：a=DeleteForum
-    //入参：tid 帖子id
+    //入参：tid 贴子id
     //出参：无
     //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=DeleteForum&tid=3
     class func DeleteForum(tid:String, handle:@escaping ResponseClouse) {
@@ -336,7 +336,7 @@ class CircleNetUtil: NSObject {
     
     // MARK: - 添加举报
     //接口地址：a=addReport
-    //入参：userid,t_id(帖子id),score
+    //入参：userid,t_id(贴子id),score
     //出参：userid,t_id,score,create_time
     //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=addReport&userid=603&t_id=1&score=10
     class func addReport(userid:String, t_id:String, score:String, handle:@escaping ResponseClouse) {
@@ -395,7 +395,7 @@ class CircleNetUtil: NSObject {
     // MARK: - 获取圈子详情
     //接口地址：a=getCommunityInfo
     //入参：userid,cid 圈子id
-    //出参：id,community_name 圈子名称,photo圈子头像,description圈子介绍,best(是否精选),create_time 创建时间,hot 是否热门,term_id 圈子类型id,term_name圈子类型名称,f_count 帖子数量,person_num 人数,join(是否加入该圈子 1已加入，0未加入)
+    //出参：id,community_name 圈子名称,photo圈子头像,description圈子介绍,best(是否精选),create_time 创建时间,hot 是否热门,term_id 圈子类型id,term_name圈子类型名称,f_count 贴子数量,person_num 人数,join(是否加入该圈子 1已加入，0未加入)
     //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getCommunityInfo&userid=603&cid=1
     class func getCommunityInfo(userid:String, cid:String, handle:@escaping ResponseClouse) {
         let url = PARK_URL_Header+"getCommunityInfo"
@@ -419,4 +419,148 @@ class CircleNetUtil: NSObject {
             }
         }
     }
+    
+    // MARK: - 获取我加入的圈子
+    //接口地址：a=getMyCommunityList
+    //入参：userid,pager分页从1开始
+    //出参：id,community_name 圈子名称,photo圈子头像,description圈子介绍,best(是否精选),create_time 创建时间,hot 是否热门,term_id 圈子类型id,term_name圈子类型名称,f_count 贴子数量,person_num 人数,join(是否加入该圈子 1已加入，0未加入)
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getMyCommunityList&userid=603&follow_id=597
+    class func getMyCommunityList(userid:String, pager:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"getMyCommunityList"
+        let param = [
+            "userid":userid,
+            "pager":pager
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<CommunityListModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
+
+    // MARK: - 获取 我发的贴子
+    //接口地址：a=getMyForumList
+    //入参：cid(圈子的id),userid,isbest(选精1,不0),istop(置顶1,不0),pager 分页
+    //出参：id(贴子id),community_id(圈子的id),userid,title标题,create_time,content内容,description介绍,review_time(回复时间),photo贴子图片,hits点击数,like点赞数,istop是否置顶,isbest是否精华,isreward是否打赏,user_photo(用户头像),level(用户的等级),comments_count评论数量,add_like判断我是否点赞,community_name(圈子名称),community_photo(圈子照片),c_master(发贴人是否是圈主:1是,0不),user_name,auth_type(认证类型)
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getForumList&cid=1
+    class func getMyForumList(userid:String, cid:String, isbest:String, istop:String, pager:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"getMyForumList"
+        let param = [
+            "userid":userid,
+            "cid":cid,
+            "isbest":isbest,
+            "istop":istop,
+            "pager":pager
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<ForumListModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 获取个人认证状态
+    //接口地址：a=getPersonAuth
+    //入参：userid
+    //出参：userid,auth_type(认证类型 关联字典),auth_company(认证单位),auth_department(工作科室),photo(证件照),status(认证状态 1通过，0拒绝，2认证中),create_time
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getPersonAuth&userid=603
+    class func getPersonAuth(userid:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"getPersonAuth"
+        let param = [
+            "userid":userid
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<PersonAuthModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
+
+    // MARK: - 获取 关注 和 粉丝 的数量
+    //接口地址：a=getFollowFans_num
+    //入参：userid
+    //出参：follows_count 关注的数量,fans_count 粉丝数量
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getFollowFans_num&userid=603
+    class func getFollowFans_num(userid:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"getFollowFans_num"
+        let param = [
+            "userid":userid
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<FollowFansNumModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
+
+    // MARK: - 添加打赏
+    //接口地址：a=addReward
+    //入参：to_userid(被打赏用户id),from_userid(发出打赏用户的id),t_id(贴子id),score
+    //出参：to_userid,from_userid,t_id,score,create_time
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=addReward&from_userid=603&to_userid=597&t_id=1&score=10
+    class func addReward(to_userid:String, from_userid:String, t_id:String, score:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"addReward"
+        let param = [
+            "to_userid":to_userid,
+            "from_userid":from_userid,
+            "t_id":t_id,
+            "score":score
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<RewardModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
+
 }

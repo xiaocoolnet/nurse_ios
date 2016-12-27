@@ -145,7 +145,7 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
         addressBtn.addSubview(addressImg)
         
         let addresssLab = UILabel(frame: CGRect(x: addressImg.frame.maxX+8, y: 0, width: WIDTH-(addressImg.frame.maxX+8)-38, height: 40))
-        addresssLab.text = "所在位置"
+        addresssLab.text = "所在位置（尚未完成）"
         addressBtn.addSubview(addresssLab)
         
         // line5

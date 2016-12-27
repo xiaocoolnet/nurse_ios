@@ -25,7 +25,19 @@ class NSCircleListTableViewCell: UITableViewCell {
     var communityModel = CommunityListDataModel() {
         didSet {
             self.nameLab.text = communityModel.community_name
-            self.countLab.text = "\(communityModel.person_num)万人 \(communityModel.f_count)贴子"
+            
+            var personNum = "\(communityModel.person_num)人"
+            
+            if NSString(string: communityModel.person_num).doubleValue >= 10000 {
+                personNum = NSString(format: "%.2f万人", NSString(string: communityModel.person_num).doubleValue/10000.0) as String
+            }
+            
+            var forumNum = "\(communityModel.f_count)贴子"
+            
+            if NSString(string: communityModel.f_count).doubleValue >= 10000 {
+                forumNum = NSString(format: "%.2f万贴子", NSString(string: communityModel.f_count).doubleValue/10000.0) as String
+            }
+            self.countLab.text = "\(personNum) \(forumNum)"
             self.descriptionLab.text = communityModel.description
             self.photoImg.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+communityModel.photo), placeholderImage: nil)
             self.joinBtn.isSelected = communityModel.join == "1" ? true:false

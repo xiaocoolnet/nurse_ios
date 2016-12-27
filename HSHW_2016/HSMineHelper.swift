@@ -365,7 +365,7 @@ class HSMineHelper: NSObject {
         }
     }
     
-    // 关注/收藏 type:1、新闻、2考试,4论坛帖子,5招聘,6用户
+    // 关注/收藏 type:1、新闻、2考试,4论坛贴子,5招聘,6用户
     func addFavorite(_ userid:String,refid:String,type:String,title:String,description:String,handle:@escaping ResponseBlock){
         
         let url = PARK_URL_Header+"addfavorite"
@@ -386,7 +386,7 @@ class HSMineHelper: NSObject {
         }
     }
     
-    // 取消关注/取消收藏 type:1、新闻、2考试,4论坛帖子,5招聘,6用户
+    // 取消关注/取消收藏 type:1、新闻、2考试,4论坛贴子,5招聘,6用户
     func cancelFavorite(_ userid:String,refid:String,type:String,handle:@escaping ResponseBlock){
         
         let url = PARK_URL_Header+"cancelfavorite"
@@ -429,7 +429,7 @@ class HSMineHelper: NSObject {
         }
     }
     
-    //获取收藏列表 type: 1 新闻 , 2 考试, 4 帖子
+    //获取收藏列表 type: 1 新闻 , 2 考试, 4 贴子
     func getCollectionInfoWithType(_ type:String, handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"getfavoritelist"
         let param = [

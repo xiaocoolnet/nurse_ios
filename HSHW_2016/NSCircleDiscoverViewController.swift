@@ -89,7 +89,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         let tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 50))
         
         var messageBtnMaxY:CGFloat = 0
-        if true {
+        if false {
             let messageCount = "2"
             let messageBtn = UIButton(frame: CGRect(x: 8, y: 10, width: WIDTH-16, height: 35))
             messageBtn.backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -203,18 +203,21 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             print("精选圈子")
             let circleListController = NSCircleListViewController()
             circleListController.hidesBottomBarWhenPushed = true
+            circleListController.titleString = "精选圈子"
             circleListController.best = "1"
             self.navigationController?.pushViewController(circleListController, animated: true)
         case 101:
             print("热门圈子")
             let circleListController = NSCircleListViewController()
             circleListController.hidesBottomBarWhenPushed = true
+            circleListController.titleString = "热门圈子"
             circleListController.hot = "1"
             self.navigationController?.pushViewController(circleListController, animated: true)
         case 102:
             print("全部圈子")
             let circleListController = NSCircleListViewController()
             circleListController.hidesBottomBarWhenPushed = true
+            circleListController.titleString = "圈子列表"
             self.navigationController?.pushViewController(circleListController, animated: true)
         default:
             break
@@ -313,7 +316,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         footerView.tag = 100 + section
         footerView.addTarget(self, action: #selector(footerViewClick(footerBtn:)), for: .touchUpInside)
         
-        let img = UIImageView(frame: CGRect(x: 8, y: 5, width: 25, height: 25))
+        let img = UIImageView(frame: CGRect(x: 8, y: 8, width: 25, height: 19))
         img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModelArray[section].community_photo), placeholderImage: nil)
         img.contentMode = .scaleAspectFit
         img.clipsToBounds = true

@@ -41,7 +41,9 @@ class NSCircleDetailTableViewCell: UITableViewCell {
     let timeLab = UILabel()
     let levelLab = UILabel()
     
-    // 帖子信息
+    let lineView = UIView()
+    
+    // 贴子信息
     let titleLab = UILabel()
     let contantLab = UILabel()
     let titleImg = UIImageView()
@@ -71,6 +73,8 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         self.addSubview(positionLab)
         self.addSubview(timeLab)
         self.addSubview(levelLab)
+        
+//        self.addSubview(lineView)
 
         self.addSubview(titleLab)
         self.addSubview(contantLab)
@@ -115,6 +119,13 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         levelLab.font = UIFont.systemFont(ofSize: 10)
         levelLab.textColor = COLOR
         
+        lineView.frame = CGRect(
+            x: 0,
+            y: 54,
+            width: WIDTH,
+            height: 1/UIScreen.main.scale)
+        lineView.backgroundColor = UIColor.lightGray
+        
         titleLab.font = UIFont.systemFont(ofSize: titleSize)
         titleLab.textColor = UIColor.black
         titleLab.numberOfLines = 0
@@ -131,7 +142,7 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         comBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
         comBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
         
-        addressBtn.setImage(UIImage(named: "发帖位置"), for: UIControlState())
+        addressBtn.setImage(UIImage(named: "发贴位置"), for: UIControlState())
         addressBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
         addressBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
         
@@ -195,15 +206,20 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         imgBtn.setImage(#imageLiteral(resourceName: "img_head_nor"), for: UIControlState())
         imgBtn.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModel.user_photo), for: UIControlState())
         
-        nameLab.text = "用户名"
-        nameLab.frame = CGRect(x: imgBtn.frame.maxX+8, y: 10, width: calculateWidth("用户名", size: 12, height: 17), height: 17)
+        nameLab.text = forumModel.user_name
+        nameLab.frame = CGRect(x: imgBtn.frame.maxX+8, y: 10, width: calculateWidth(forumModel.user_name, size: 12, height: 17), height: 17)
 //        nameLab.sizeToFit()
 //        nameLab.frame.origin = CGPoint(x: imgBtn.frame.maxX+8, y: 10)
         
-        positionLab.text = "认证类型"
-        positionLab.frame = CGRect(x: nameLab.frame.maxX+8, y: 0, width: calculateWidth("认证类型", size: 8, height: 12)+12, height: 12)
+        positionLab.text = forumModel.auth_type
+        positionLab.frame = CGRect(x: nameLab.frame.maxX+8, y: 0, width: calculateWidth(forumModel.auth_type, size: 8, height: 12)+12, height: 12)
         positionLab.center.y = nameLab.center.y
         positionLab.layer.cornerRadius = 6
+        if forumModel.auth_type == "" {
+            positionLab.isHidden = true
+        }else{
+            positionLab.isHidden = false
+        }
         
         timeLab.text = updateTime(forumModel.create_time)
         timeLab.sizeToFit()
@@ -236,7 +252,7 @@ class NSCircleDetailTableViewCell: UITableViewCell {
             likeBtn.setTitle(forumModel.like, for: UIControlState())
             comBtn.setTitle(forumModel.hits, for: UIControlState())
             // TODO:
-            addressBtn.setTitle("发帖地点", for: UIControlState())
+            addressBtn.setTitle("发贴地点", for: UIControlState())
 
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: contantLab.frame.maxY+8)
@@ -346,7 +362,7 @@ class NSCircleDetailTableViewCell: UITableViewCell {
             likeBtn.setTitle(forumModel.like, for: UIControlState())
             comBtn.setTitle(forumModel.comments_count, for: UIControlState())
             // TODO:
-            addressBtn.setTitle("发帖地点", for: UIControlState())
+            addressBtn.setTitle("发贴地点", for: UIControlState())
             
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: titSubImg.frame.maxY+8)

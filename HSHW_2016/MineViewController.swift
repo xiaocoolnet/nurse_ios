@@ -16,7 +16,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     let numNameArr:[String] = ["粉丝","关注","护士币"]
     let userNameLabel = UILabel()
     let levelBtn = UIButton()
-    //    let titLabArr:[String] = ["我的帖子","我的消息","我的收藏"]
+    //    let titLabArr:[String] = ["我的贴子","我的消息","我的收藏"]
     let titLabArr:[String] = ["我的消息","我的收藏"]
     let titImgArr:[String] = ["ic_liuyan.png","ic_message.png","ic_fangkuai.png"]
     let titImage = UIButton(type:.custom)
@@ -583,7 +583,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             //            if indexPath.row == 0 {
             //                let next = MinePostViewController()
             //                self.navigationController?.pushViewController(next, animated: true)
-            //                next.title = "我的帖子"
+            //                next.title = "我的贴子"
             //            }
             if indexPath.row == 0 {
                 let next = MineMessageViewController()
