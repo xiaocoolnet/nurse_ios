@@ -640,6 +640,13 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         print("点击cell")
         
         if indexPath.section == 1 && self.forumCommentArray.count > 0 {
+            
+            if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+                
+            }else{
+                return
+            }
+            
             self.send_bottom_Btn.tag = NSString(string: self.forumCommentArray[indexPath.row].cid).integerValue
             self.send_bottom_Btn.isSelected = true
 
@@ -682,6 +689,12 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     func commentLikeBtnClick(_ likeBtn:UIButton) {
         print("2")
         
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
+        
         if likeBtn.isSelected {
             CircleNetUtil.ResetLike(userid: QCLoginUserInfo.currentInfo.userid, id: self.forumCommentArray[likeBtn.tag-100].cid, type: "3", handle: { (success, response) in
                 if success {
@@ -713,6 +726,13 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     
     // MARK: - 评论删除
     func commentDelBtnClick(_ delBtn:UIButton) {
+        
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
+        
         CircleNetUtil.DelForumComments(id: self.forumCommentArray[delBtn.tag-200].cid, type: "2", userid: QCLoginUserInfo.currentInfo.userid) { (success, response) in
             if success {
                 self.forumCommentArray.remove(at: delBtn.tag-200)
@@ -729,28 +749,26 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     
     // MARK: - 评论举报
     func commentReportBtnClick(_ reportBtn:UIButton) {
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud.removeFromSuperViewOnHide = true
-        hud.mode = .text
-        hud.label.text = "暂不可用"
-        hud.hide(animated: true, afterDelay: 1)
-//        CircleNetUtil.DelForumComments(id: self.forumCommentArray[reportBtn.tag-300].cid, type: "2", userid: QCLoginUserInfo.currentInfo.userid) { (success, response) in
-//            if success {
-//                show
-//                self.rootTableView.reloadData()
-//            }else{
-//                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-//                hud.removeFromSuperViewOnHide = true
-//                hud.mode = .text
-//                hud.label.text = "删除失败"
-//                hud.hide(animated: true, afterDelay: 1)
-//            }
-//        }
-    }
+
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
+        
+        reportType = "2"
+        showReportAlert(with: self.forumCommentArray[reportBtn.tag-300].cid)
+     }
     
     // MARK: - 收藏、点赞、打赏 按钮点击事件
     func collectBtnClick(_ collectBtn:UIButton) {
         print("1")
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
+        
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.removeFromSuperViewOnHide = true
         hud.mode = .text
@@ -759,6 +777,12 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     }
     func likeBtnClick(_ likeBtn:UIButton) {
         print("2")
+        
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
         
         if likeBtn.isSelected {
             CircleNetUtil.ResetLike(userid: QCLoginUserInfo.currentInfo.userid, id: forumModel.tid, type: "2", handle: { (success, response) in
@@ -793,6 +817,12 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     
     func rewardBtnClick(_ rewardBtn:UIButton) {
         print("3")
+        
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
         
         self.showAlert()
     }
@@ -936,6 +966,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     }
     
     // MARK: 确认举报
+    var reportType = "1"
     func sureReportBtnClick(_ rewardBtn:UIButton) {
         
         for subView in (rewardBtn.superview?.subviews ?? [UIView]())! {
@@ -944,7 +975,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                 if button.isSelected {
                     
                     print(button.tag,getReportArray()[button.tag-1000])
-                    CircleNetUtil.addReport(userid: QCLoginUserInfo.currentInfo.userid, t_id: String(rewardBtn.tag), score: getReportArray()[button.tag-1000], handle: { (success, response) in
+                    CircleNetUtil.addReport(userid: QCLoginUserInfo.currentInfo.userid, t_id: String(rewardBtn.tag), score: getReportArray()[button.tag-1000], type:reportType, handle: { (success, response) in
                         
                         if success {
                             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
@@ -1177,6 +1208,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             })
         }else if action.currentTitle == "举报" {
             alertCancel(action)
+            self.reportType = "1"
             self.showReportAlert(with: String(action.tag/100))
         }else if action.currentTitle == "删除" {
             alertCancel(action)

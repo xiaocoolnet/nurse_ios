@@ -32,6 +32,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
     
     var followFansNum = FollowFansNumDataModel()
 
+    var followFlag = "0"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,7 +47,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
     func loadData() {
         
         var flag = 0
-        let total = 5
+        let total = 6
         
         // 获取个人信息
         helper.getUserInfo(userid) { (success, response) in
@@ -116,6 +117,20 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
         CircleNetUtil.getFollowFans_num(userid: userid) { (success, response) in
             if success {
                 self.followFansNum = response as! FollowFansNumDataModel
+                self.setTableHeaderView()
+                self.rootTableView.reloadData()
+            }
+            flag += 1
+            
+            if flag == total {
+                self.rootTableView.mj_header.endRefreshing()
+            }
+        }
+        
+        // 判断是否已关注
+        CircleNetUtil.judgeFollowFans(follow_id: userid, fans_id: QCLoginUserInfo.currentInfo.userid) { (success, response) in
+            if success {
+                self.followFlag =  response as! String
                 self.setTableHeaderView()
                 self.rootTableView.reloadData()
             }
@@ -251,15 +266,11 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             focusBtn.layer.borderColor = UIColor.white.cgColor
             focusBtn.layer.cornerRadius = 25
             focusBtn.setTitleColor(UIColor.white, for: UIControlState())
-            focusBtn.setTitle("关注Ta", for: UIControlState())
+            focusBtn.setTitle("关注Ta", for: .normal)
             focusBtn.setTitle("已关注", for: .selected)
-            var flag = true
-            
-            //                if obj.id == userid {
-            //                    focusBtn.isSelected = true
-            //                    flag = false
-            //                }
-            if flag {
+            if followFlag == "1" {
+                focusBtn.isSelected = true
+            }else{
                 focusBtn.isSelected = false
             }
             focusBtn.addTarget(self, action: #selector(followBtnClick(_:)), for: .touchUpInside)
@@ -386,23 +397,46 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
     
     // MARK: - 关注按钮 点击事件
     func followBtnClick(_ followBtn:UIButton) {
+        
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
+        
+        if userid == QCLoginUserInfo.currentInfo.userid {
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = .text
+            hud.label.text = "不能关注自己哦~"
+            hud.hide(animated: true, afterDelay: 1)
+            return
+        }
+        
         if followBtn.isSelected {
             
             let alert = UIAlertView.init(title: "取消关注？", message: "确定要取消关注 \((self.userInfo?.name)!) 吗？", delegate: self, cancelButtonTitle: "不再关注", otherButtonTitles: "点错了")
             alert.tag = 4000
             alert.show()
         }else{
-            helper.addFavorite(QCLoginUserInfo.currentInfo.userid, refid: (userInfo?.userid)!, type: "6", title: "", description: "") { (success, response) in
+            CircleNetUtil.addfollow_fans(follow_id: userid, fans_id: QCLoginUserInfo.currentInfo.userid, handle: { (success, response) in
                 if success {
                     DispatchQueue.main.async(execute: {
                         
                         let alert = UIAlertView.init(title: "关注成功", message: "成功关注 \((self.userInfo?.name)!)", delegate: nil, cancelButtonTitle: "确定")
                         alert.show()
-                        followBtn.isSelected = true
-                        
+                        self.followFlag = "1"
+                        self.followFansNum.fans_count = String(NSString(string: self.followFansNum.fans_count).integerValue+1)
+                        self.setTableHeaderView()
                     })
+                }else{
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud.removeFromSuperViewOnHide = true
+                    hud.mode = .text
+                    hud.label.text = "关注失败"
+                    hud.hide(animated: true, afterDelay: 1)
                 }
-            }
+            })
         }
     }
     
@@ -412,15 +446,25 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             
             if buttonIndex == 0 {
                 
-                helper.cancelFavorite((userInfo?.userid)!, refid: (userInfo?.object_id)!, type: "6", handle: { (success, response) in
-                    
-                    DispatchQueue.main.async(execute: {
-                        //                        print("--===   ",success)
-                        let alert = UIAlertView.init(title: "已成功取消关注", message: "已成功取消关注 \((self.userInfo?.name)!)", delegate: nil, cancelButtonTitle: "确定")
-                        alert.show()
-                        self.focusBtn.isSelected = false
-                    })
+                CircleNetUtil.delFollow_fans(follow_id: userid, fans_id: QCLoginUserInfo.currentInfo.userid, handle: { (success, response) in
+                    if success {
+                        DispatchQueue.main.async(execute: {
+                            //                        print("--===   ",success)
+                            let alert = UIAlertView.init(title: "已成功取消关注", message: "已成功取消关注 \((self.userInfo?.name)!)", delegate: nil, cancelButtonTitle: "确定")
+                            alert.show()
+                            self.followFlag = "0"
+                            self.followFansNum.fans_count = String(NSString(string: self.followFansNum.fans_count).integerValue-1)
+                            self.setTableHeaderView()
+                        })
+                    }else{
+                        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                        hud.removeFromSuperViewOnHide = true
+                        hud.mode = .text
+                        hud.label.text = "取消关注失败"
+                        hud.hide(animated: true, afterDelay: 1)
+                    }
                 })
+                
             }
             print("点击了 \(buttonIndex)")
         }
@@ -743,6 +787,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
     }
     
     // MARK: - 确认举报
+    var reportType = "1"
     func sureReportBtnClick(_ rewardBtn:UIButton) {
         
         for subView in (rewardBtn.superview?.subviews ?? [UIView]())! {
@@ -751,7 +796,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                 if button.isSelected {
                     
                     print(button.tag,getReportArray()[button.tag-1000])
-                    CircleNetUtil.addReport(userid: QCLoginUserInfo.currentInfo.userid, t_id: String(rewardBtn.tag), score: getReportArray()[button.tag-1000], handle: { (success, response) in
+                    CircleNetUtil.addReport(userid: QCLoginUserInfo.currentInfo.userid, t_id: String(rewardBtn.tag), score: getReportArray()[button.tag-1000], type: reportType, handle: { (success, response) in
                         
                         self.alertCancel(rewardBtn)
                     })
@@ -954,6 +999,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             })
         }else if action.currentTitle == "举报" {
             alertCancel(action)
+            reportType = "1"
             self.showReportAlert(with: String(action.tag/100))
         }else if action.currentTitle == "删除" {
             alertCancel(action)

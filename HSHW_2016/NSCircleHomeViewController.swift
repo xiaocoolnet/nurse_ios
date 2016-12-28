@@ -239,6 +239,11 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: - 加入按钮点击事件
     func joinBtnClick(_ joinBtn:UIButton) {
         
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
         
         if isJoin {
             
@@ -351,12 +356,23 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
             forumListController.isBest = "1"
             self.navigationController?.pushViewController(forumListController, animated: true)
         case 2:
+            if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+                
+            }else{
+                return
+            }
+            // 申请圈主
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
             hud.removeFromSuperViewOnHide = true
             hud.mode = .text
             hud.label.text = "敬请期待"
             hud.hide(animated: true, afterDelay: 1.5)
         case 3:
+            if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+                
+            }else{
+                return
+            }
             let alert = UIAlertController(title: "取消关注?", message: "确定取消关注 \(communityModel.community_name)", preferredStyle: .alert)
             
             let sureAction = UIAlertAction(title: "确定", style: .default, handler: { (action) in

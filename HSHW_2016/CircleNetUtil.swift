@@ -336,15 +336,16 @@ class CircleNetUtil: NSObject {
     
     // MARK: - 添加举报
     //接口地址：a=addReport
-    //入参：userid,t_id(贴子id),score
+    //入参：userid,t_id(帖子id或评论id),score,type(1帖子，2评论)
     //出参：userid,t_id,score,create_time
-    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=addReport&userid=603&t_id=1&score=10
-    class func addReport(userid:String, t_id:String, score:String, handle:@escaping ResponseClouse) {
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=addReport&userid=603&t_id=1&score=10&type=1
+    class func addReport(userid:String, t_id:String, score:String, type:String, handle:@escaping ResponseClouse) {
         let url = PARK_URL_Header+"addReport"
         let param = [
             "userid":userid,
             "t_id":t_id,
-            "score":score
+            "score":score,
+            "type":type
         ]
         
         NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
@@ -792,11 +793,89 @@ class CircleNetUtil: NSObject {
         }
     }
  
-//    接口名称添加评论
-//    接口地址：a=SetComment
-//    入参(post)：userid,id，content,type:,1、新闻2、圈子,3评论,photo
-//    出参：无
-//    Demo:http://app.chinanurse.cn/index.php?g=apps&m=index&a=SetComment&userid=600&id=4&content=你好&type=2&photo=9.jpg
+    // MARK: - 添加 圈子 关注粉丝
+    //接口地址：a=addfollow_fans
+    //入参：follow_id(被关注人id,别人的userid),fans_id(关注人id,我的userid)
+    //出参：follow_userid,fans_userid,create_time,status
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=addfollow_fans&follow_id=603&fans_id=597
+    class func addfollow_fans(follow_id:String, fans_id:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"addfollow_fans"
+        let param = [
+            "follow_id":follow_id,
+            "fans_id":fans_id
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<Follow_fansModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, nil)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 删除 圈子 关注
+    //接口地址：a=delFollow_fans
+    //入参：follow_id(被关注人id,别人的userid),follow_id(关注人id,我的userid)
+    //出参：success
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=delFollow_fans&follow_id=603&follow_id=597
+    class func delFollow_fans(follow_id:String, fans_id:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"delFollow_fans"
+        let param = [
+            "follow_id":follow_id,
+            "fans_id":fans_id
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<Follow_fansModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, nil)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
+
+    // MARK: - 判断是否添加关注
+    //接口地址：a=judgeFollowFans
+    //入参：follow_id(被关注人id),fans_id(关注人id)
+    //出参：1:已关注，0:未关注
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=judgeFollowFans&fans_id=603&follow_id=597
+    class func judgeFollowFans(follow_id:String, fans_id:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"judgeFollowFans"
+        let param = [
+            "follow_id":follow_id,
+            "fans_id":fans_id
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
 
 
 }

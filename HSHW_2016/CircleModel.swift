@@ -382,6 +382,21 @@ class ForumChild_commentsModel: HandyJSON {
     required init() {}
 }
 
+// 添加关注
+class Follow_fansModel: HandyJSON {
+    var status = ""
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+
+
 // MARK: - 下边的没用
 
 class ForumModel: HandyJSON {

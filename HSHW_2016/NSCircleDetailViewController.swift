@@ -146,7 +146,23 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     func editBtnClick() {
         print("悬浮按钮   点击")
         
-        self.navigationController?.pushViewController(NSCirclePostForumViewController(), animated: true)
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
+        
+        if isJoin {
+            
+            self.navigationController?.pushViewController(NSCirclePostForumViewController(), animated: true)
+        }else{
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = .text
+            hud.label.text = "请先加入圈子"
+            hud.hide(animated: true, afterDelay: 1)
+        }
+        
     }
     
     // MARK: - 设置头视图
@@ -223,6 +239,11 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     // MARK: - 加入按钮点击事件
     func joinBtnClick(_ joinBtn:UIButton) {
         
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
         
         if isJoin {
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
@@ -255,6 +276,12 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     fileprivate var currentForumModel = ForumListDataModel()
     func moreBtnClick(_ moreBtn:UIButton) {
         print(moreBtn.tag)
+        
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
         
         currentForumModel = self.forumModelArray[moreBtn.tag-100]
         
@@ -543,6 +570,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     // MARK: - 确认举报
+    var reportType = "1"
     func sureReportBtnClick(_ rewardBtn:UIButton) {
         
         for subView in (rewardBtn.superview?.subviews ?? [UIView]())! {
@@ -551,7 +579,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
                 if button.isSelected {
                     
                     print(button.tag,getReportArray()[button.tag-1000])
-                    CircleNetUtil.addReport(userid: QCLoginUserInfo.currentInfo.userid, t_id: String(rewardBtn.tag), score: getReportArray()[button.tag-1000], handle: { (success, response) in
+                    CircleNetUtil.addReport(userid: QCLoginUserInfo.currentInfo.userid, t_id: String(rewardBtn.tag), score: getReportArray()[button.tag-1000], type: reportType, handle: { (success, response) in
                         
                         self.alertCancel(rewardBtn)
                     })
@@ -767,6 +795,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
             })
         }else if action.currentTitle == "举报" {
             alertCancel(action)
+            reportType = "1"
             self.showReportAlert(with: String(action.tag/100))
         }else if action.currentTitle == "删除" {
             alertCancel(action)
