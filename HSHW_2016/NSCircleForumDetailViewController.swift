@@ -17,11 +17,11 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
 //    var forumBestOrTopModelArray = [ForumModel]()
     var forumDataModel = ForumListDataModel()
     var forumModel = ForumInfoDataModel()
+    
+//    var forumCommentArray = [ForumCommentDataModel]()
 
-    var forumModel_old = ForumModel()
-    
-    var forumCommentArray = [ForumCommentDataModel]()
-    
+    var forumCommentArray = [ForumCommentsDataModel]()
+
     var isMaster = false
     
     var imageHeigthArray = [CGFloat]()
@@ -71,79 +71,13 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                 }
             }
         }
-//        let photo1 = photoModel()
-//        photo1.url = "20161202/5840e94624cb0.jpg"
-//        let photo2 = photoModel()
-//        photo2.url = "20161130/583eb4efc6dad.jpg"
-//        let photo3 = photoModel()
-//        photo3.url = "20161129/583ce3b933d98.jpg"
-//        
-//        
-//        forumModel_old.title = "请问各位同行，职场新手如何‘谈薪’才合适？"
-//        forumModel_old.content = "　　儿科学属临床医学的二级学科，研究对象是自胎儿至青春期的儿童。它是一门研究小儿生长发育规律、提高小儿身心健康水平和疾病防治质量的医学科学。\n    1、学科研究范围：儿科学研究从胎儿到青春期儿童有关促进生理及心理健康成长和疾病的防治。目前有儿童保健、新生儿学、呼吸、心血管、血液、肾脏、神经、内分泌与代谢、免疫感染与消化、急救以及小儿外科等专业。每个专业学科又和基础医学某些学科有密切联系，如生理、生化、病理、遗传以及分子生物学等。\n    2、课程设置：基础理论课：生理学，病理学，生物化学，分子生物学，免疫学，医学遗传学，医学统计学，临床流行病学，电子计算机应用以及与研究课题有关的基础医学课程。\n    专业课：儿科学与研究课题有关的内科各专业课程。\n儿科学主要相关学科：内科学、外科学，神经病学，妇产科学，传染病学等。"
-//        forumModel_old.like = "1136"
-//        forumModel_old.hits = "151"
-//        forumModel_old.istop = "1"
-//        forumModel_old.isbest = "1"
-//        forumModel_old.isreward = "1"
-//        
-//        forumModel_old.photo = [photo1,photo2,photo3]
-//        
-//        let comment1 = ForumCommentDataModel()
-//        comment1.userid = "639"
-//        comment1.content = "谢谢您"
-//        comment1.major = "护士"
-//        comment1.cid = ""
-//        
-//        let childComment1 = ForumChildCommentDataModel()
-//        childComment1.userid = "617"
-//        childComment1.content = "自作自受，和谁也不能和他最近的人啊。还有就是他弟弟也不怎么样。"
-//        childComment1.add_time = ""
-//        childComment1.major = ""
-//        childComment1.userlevel = ""
-//        childComment1.username = "树友322j"
-//        childComment1.photo = ""
-//        childComment1.type = ""
-//        childComment1.pid = ""
-//        childComment1.cid = ""
-//        comment1.child_comments = [childComment1]
-//        
-//        comment1.userlevel = "5"
-//        comment1.username = "小丫头妈咪宝贝"
-//        comment1.photo = "avatar20161210111815639.png"
-//        comment1.refid = ""
-//        comment1.type = ""
-//        comment1.add_time = "1471762340"
-//        
-//        let comment2 = ForumCommentDataModel()
-//        comment2.userid = "617"
-//        comment2.content = "中国护士网圈子功能上线，欢迎大家测试使用~"
-//        comment2.major = "学生"
-//        comment2.cid = ""
-//        
-////        let childComment1 = ForumChildCommentDataModel()
-////        childComment1.userid = "617"
-////        childComment1.content = "自作自受，和谁也不能和他最近的人啊。还有就是他弟弟也不怎么样。"
-////        childComment1.add_time = ""
-////        childComment1.major = ""
-////        childComment1.userlevel = ""
-////        childComment1.username = "树友322j"
-////        childComment1.photo = ""
-////        childComment1.type = ""
-////        childComment1.pid = ""
-////        childComment1.cid = ""
-////        comment2.child_comments = [childComment1]
-//        
-//        comment2.userlevel = "6"
-//        comment2.username = "小丫头妈咪宝贝6小丫头妈咪宝贝"
-//        comment2.photo = "avatar20161210111815639.png"
-//        comment2.refid = ""
-//        comment2.type = ""
-//        comment2.add_time = "1471865340"
-//        
-//        self.forumCommentArray = [comment1,comment2]
-//
-//        self.rootTableView.reloadData()
+        
+        CircleNetUtil.getForumComments(userid: QCLoginUserInfo.currentInfo.userid, refid: self.forumDataModel.id) { (success, response) in
+            if success {
+                self.forumCommentArray = response as! [ForumCommentsDataModel]
+                self.rootTableView.reloadData()
+            }
+        }
     }
     
     // MARK: - 设置子视图
@@ -240,6 +174,9 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     let replyTextField = UIPlaceHolderTextView()
     var keyboardShowState = false
     
+    var commentType = ""
+    var commentId = ""
+    
     // MARK: 设置回复视图
     func setReplyView() {
         // 回复 视图
@@ -328,13 +265,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                 }
             }
             
-            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud.removeFromSuperViewOnHide = true
-            hud.mode = .text
-            hud.label.text = "正在开发"
-            hud.hide(animated: true, afterDelay: 1)
-            
-            return false
+            return true
         }else{
             return false
         }
@@ -342,7 +273,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     
     func textViewDidEndEditing(_ textView: UITextView) {
         self.send_bottom_Btn.isSelected = false
-//        self.send_bottom_Btn.tag = NSString(string: ("111")).integerValue
+        self.send_bottom_Btn.tag = NSString(string: self.forumModel.tid).integerValue
         self.replyTextField.placeholder = "回复"
     }
     
@@ -365,81 +296,38 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         
         
         if replyTextField.text != "" && trimLineString(replyTextField.text) != ""{
+                        
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.label.text = "正在发表评论"
+            hud.margin = 10.0
+            hud.removeFromSuperViewOnHide = true
             
-            
-            
-//            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-//            hud.label.text = "正在发表评论"
-//            hud.margin = 10.0
-//            hud.removeFromSuperViewOnHide = true
-//            
-//            HSNurseStationHelper().setComment(
-//                String(self.send_bottom_Btn.tag),
-//                content: (replyTextField.text)!,
-//                type: self.send_bottom_Btn.selected ? "3":"1",
-//                photo: "",
-//                handle: { (success, response) in
-//                    // print("添加评论",success,response)
-//                    let result = response as! addScore_ReadingInformationDataModel
-//                    if success {
-//                        
-//                        let url = PARK_URL_Header+"getRefComments"
-//                        let param = [
-//                            "refid": ""
-//                        ];
-//                        
-//                        
-//                        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
-//                            
-//                            if(error != nil){
-//                                
-//                                hud.mode = MBProgressHUDMode.Text;
-//                                hud.label.text = "评论失败"
-//                                
-//                                hud.hide(animated: true, afterDelay: 1)
-//                            }else{
-//                                let status = commentModel(JSONDecoder(json!))
-//                                
-//                                if(status.status == "error"){
-//                                    
-//                                    hud.mode = MBProgressHUDMode.Text;
-//                                    hud.label.text = "评论失败"
-//                                    
-//                                    hud.hide(animated: true, afterDelay: 1)
-//                                }
-//                                if(status.status == "success"){
-//                                    
-//                                    hud.mode = MBProgressHUDMode.Text;
-//                                    hud.label.text = "评论成功"
-//                                    hud.hide(animated: true, afterDelay: 1)
-//                                    
-//                                    self.replyTextField.placeholder = "写评论..."
-////                                    self.send_bottom_Btn.tag = NSString(string: (self.newsInfo?.object_id)!).integerValue
-//                                    self.send_bottom_Btn.selected = false
-//                                    
-////                                    self.commentArray = status.data
-//                                    self.rootTableView.reloadData()
-//                                    
-////                                    if ((result.event) != "") {
-////                                        NursePublicAction.showScoreTips(self.view, nameString: (result.event), score: (result.score))
-////                                    }
-//                                    
-//                                    self.rootTableView.contentOffset.y = self.rootTableView.contentSize.height-self.rootTableView.frame.size.height
-//                                    
-//                                }
-//                            }
-//                        }
-//                        
-//                        self.replyTextField.text = nil
-//                        
-//                    }else{
-//                        dispatch_async(dispatch_get_main_queue(), {
-//                            hud.mode = MBProgressHUDMode.Text;
-//                            hud.label.text = "评论失败"
-//                            hud.hide(animated: true, afterDelay: 1)
-//                        })
-//                    }
-//            })
+            CircleNetUtil.SetComment(userid: QCLoginUserInfo.currentInfo.userid, id: String(self.send_bottom_Btn.tag), content: replyTextField.text, type: self.send_bottom_Btn.isSelected ? "3":"2", photo: "", handle: { (success, response) in
+                if success {
+                    
+                    self.replyTextField.text = nil
+                    hud.mode = .text
+                    hud.label.text = "评论成功"
+                    
+                    CircleNetUtil.getForumComments(userid: QCLoginUserInfo.currentInfo.userid, refid: String(self.send_bottom_Btn.tag), handle: { (success, response) in
+                        if success {
+                            
+                            self.forumCommentArray = response as! [ForumCommentsDataModel]
+                            
+                            self.rootTableView.reloadData()
+                            hud.hide(animated: true, afterDelay: 1)
+                        }else{
+                            hud.mode = .text
+                            hud.label.text = "获取评论失败"
+                            hud.hide(animated: true, afterDelay: 1)
+                        }
+                    })
+                }else{
+                    hud.mode = .text
+                    hud.label.text = "评论失败"
+                    hud.hide(animated: true, afterDelay: 1)
+                }
+            })
             replyTextField.resignFirstResponder()
         }else{
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
@@ -569,9 +457,28 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             
         }else{
             cell.textLabel?.text = nil
+            cell.dateImg.isHidden = false
+            
+            cell.likeImg.isHidden = false
+            cell.likeBtn.isHidden = false
+            
+            cell.deleteBtn.isHidden = false
+            
+            cell.replyBtn.isHidden = false
+            
+            cell.reportBtn.isHidden = false
+            
             cell.floorLab.text = "\(self.forumCommentArray.count-indexPath.row)楼"
             cell.commentModel = self.forumCommentArray[indexPath.row]
-            cell.reportBtn.addTarget(self, action: #selector(reportBtnClick(_:)), for: .touchUpInside)
+            cell.likeBtn.sizeToFit()
+            cell.likeBtn.tag = 100+indexPath.row
+            cell.likeBtn.isSelected = self.forumCommentArray[indexPath.row].add_like == "1" ? true:false
+            cell.likeBtn.addTarget(self, action: #selector(commentLikeBtnClick(_:)), for: .touchUpInside)
+            cell.deleteBtn.tag = 200+indexPath.row
+            cell.deleteBtn.addTarget(self, action: #selector(commentDelBtnClick(_:)), for: .touchUpInside)
+            cell.reportBtn.tag = 300+indexPath.row
+            cell.reportBtn.addTarget(self, action: #selector(commentReportBtnClick(_:)), for: .touchUpInside)
+
         }
         return cell
     }
@@ -634,7 +541,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             collectBtn.tag = 100
             collectBtn.layer.cornerRadius = 15
 //            collectBtn.layer.backgroundColor = UIColor(red: 244/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1).CGColor
-            collectBtn.setImage(UIImage(named: "收藏（默认）"), for: UIControlState())
+            collectBtn.setImage(UIImage(named: "收藏（默认）"), for: .normal)
             collectBtn.setImage(UIImage(named: "收藏"), for: .selected)
             collectBtn.addTarget(self, action: #selector(collectBtnClick(_:)), for: .touchUpInside)
             contentView.addSubview(collectBtn)
@@ -658,7 +565,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             likeBtn.layer.cornerRadius = 15
 //            likeBtn.layer.backgroundColor = UIColor(red: 244/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1).CGColor
             likeBtn.setImage(UIImage(named: "点赞（默认）"), for: .normal)
-            likeBtn.setImage(UIImage(named: "点赞"), for: UIControlState())
+            likeBtn.setImage(UIImage(named: "点赞"), for: .selected)
             likeBtn.addTarget(self, action: #selector(likeBtnClick(_:)), for: .touchUpInside)
             contentView.addSubview(likeBtn)
             if forumModel.add_like == "1" {
@@ -670,7 +577,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             let likeNumLab = UILabel(frame: CGRect(x: likeBtn.frame.maxX+8, y: 0, width: 0, height: 0))
             likeNumLab.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
             likeNumLab.font = UIFont.systemFont(ofSize: 14)
-            likeNumLab.text = forumModel.like
+            likeNumLab.text = forumModel.like_num
             likeNumLab.sizeToFit()
             likeNumLab.center.y = likeBtn.center.y
             contentView.addSubview(likeNumLab)
@@ -679,7 +586,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             rewardBtn.tag = 102
             rewardBtn.layer.cornerRadius = 15
 //            rewardBtn.layer.backgroundColor = UIColor(red: 244/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1).CGColor
-            rewardBtn.setImage(UIImage(named: "打赏（默认）"), for: UIControlState())
+            rewardBtn.setImage(UIImage(named: "打赏（默认）"), for: .normal)
             rewardBtn.setImage(UIImage(named: "打赏"), for: .selected)
             rewardBtn.addTarget(self, action: #selector(rewardBtnClick(_:)), for: .touchUpInside)
             contentView.addSubview(rewardBtn)
@@ -733,18 +640,20 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         print("点击cell")
         
         if indexPath.section == 1 && self.forumCommentArray.count > 0 {
-            
+            self.send_bottom_Btn.tag = NSString(string: self.forumCommentArray[indexPath.row].cid).integerValue
+            self.send_bottom_Btn.isSelected = true
+
             replyTextField.placeholder = "回复\(self.forumCommentArray[indexPath.row].username)"
             replyTextField.becomeFirstResponder()
         }
     }
     
-    // MARK: - 举报 按钮点击事件
-    func reportBtnClick(_ reportBtn:UIButton) {
-        print("举报 按钮点击事件",reportBtn.tag)
-        
-        self.showReportAlert(with: self.forumModel.tid)
-    }
+//    // MARK: - 举报 按钮点击事件
+//    func reportBtnClick(_ reportBtn:UIButton) {
+//        print("举报 按钮点击事件",reportBtn.tag)
+//        
+//        self.showReportAlert(with: self.forumModel.tid)
+//    }
     
     // MARK: - moreBtnClick
     func moreBtnClick(_ moreBtn:UIButton) {
@@ -767,23 +676,119 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         self.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray, forumId: self.forumModel.tid)
 
         
-        //        let alert =
-//        let labelTextArray = ["加精","置顶","删除","取消"]
-//        let labelTextColorArray = [COLOR,COLOR,UIColor.blackColor(),UIColor.lightGrayColor()]
-//
-//        let labelTextArray = ["举报","取消"]
-//        let labelTextColorArray = [UIColor.black,UIColor.lightGray]
-//
-//        NSCirclePublicAction.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray)
+    }
+    
+    // MARK: - 评论点赞
+    func commentLikeBtnClick(_ likeBtn:UIButton) {
+        print("2")
         
+        if likeBtn.isSelected {
+            CircleNetUtil.ResetLike(userid: QCLoginUserInfo.currentInfo.userid, id: self.forumCommentArray[likeBtn.tag-100].cid, type: "3", handle: { (success, response) in
+                if success {
+                    self.forumCommentArray[likeBtn.tag-100].add_like = "0"
+                    self.rootTableView.reloadData()
+                }else{
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud.removeFromSuperViewOnHide = true
+                    hud.mode = .text
+                    hud.label.text = "取消点赞失败"
+                    hud.hide(animated: true, afterDelay: 1)
+                }
+            })
+        }else{
+            CircleNetUtil.SetLike(userid: QCLoginUserInfo.currentInfo.userid, id: self.forumCommentArray[likeBtn.tag-100].cid, type: "3") { (success, response) in
+                if success {
+                    self.forumCommentArray[likeBtn.tag-100].add_like = "1"
+                    self.rootTableView.reloadData()
+                }else{
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud.removeFromSuperViewOnHide = true
+                    hud.mode = .text
+                    hud.label.text = "点赞失败"
+                    hud.hide(animated: true, afterDelay: 1)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 评论删除
+    func commentDelBtnClick(_ delBtn:UIButton) {
+        CircleNetUtil.DelForumComments(id: self.forumCommentArray[delBtn.tag-200].cid, type: "2", userid: QCLoginUserInfo.currentInfo.userid) { (success, response) in
+            if success {
+                self.forumCommentArray.remove(at: delBtn.tag-200)
+                self.rootTableView.reloadData()
+            }else{
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud.removeFromSuperViewOnHide = true
+                hud.mode = .text
+                hud.label.text = "删除失败"
+                hud.hide(animated: true, afterDelay: 1)
+            }
+        }
+    }
+    
+    // MARK: - 评论举报
+    func commentReportBtnClick(_ reportBtn:UIButton) {
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.removeFromSuperViewOnHide = true
+        hud.mode = .text
+        hud.label.text = "暂不可用"
+        hud.hide(animated: true, afterDelay: 1)
+//        CircleNetUtil.DelForumComments(id: self.forumCommentArray[reportBtn.tag-300].cid, type: "2", userid: QCLoginUserInfo.currentInfo.userid) { (success, response) in
+//            if success {
+//                show
+//                self.rootTableView.reloadData()
+//            }else{
+//                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//                hud.removeFromSuperViewOnHide = true
+//                hud.mode = .text
+//                hud.label.text = "删除失败"
+//                hud.hide(animated: true, afterDelay: 1)
+//            }
+//        }
     }
     
     // MARK: - 收藏、点赞、打赏 按钮点击事件
     func collectBtnClick(_ collectBtn:UIButton) {
         print("1")
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.removeFromSuperViewOnHide = true
+        hud.mode = .text
+        hud.label.text = "未完成"
+        hud.hide(animated: true, afterDelay: 1)
     }
     func likeBtnClick(_ likeBtn:UIButton) {
         print("2")
+        
+        if likeBtn.isSelected {
+            CircleNetUtil.ResetLike(userid: QCLoginUserInfo.currentInfo.userid, id: forumModel.tid, type: "2", handle: { (success, response) in
+                if success {
+                    self.forumModel.like_num = String(NSString(string: self.forumModel.like_num).integerValue-1)
+                    self.forumModel.add_like = "0"
+                    self.rootTableView.reloadData()
+                }else{
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud.removeFromSuperViewOnHide = true
+                    hud.mode = .text
+                    hud.label.text = "取消点赞失败"
+                    hud.hide(animated: true, afterDelay: 1)
+                }
+            })
+        }else{
+            CircleNetUtil.SetLike(userid: QCLoginUserInfo.currentInfo.userid, id: forumModel.tid, type: "2") { (success, response) in
+                if success {
+                    self.forumModel.like_num = String(NSString(string: self.forumModel.like_num).integerValue+1)
+                    self.forumModel.add_like = "1"
+                    self.rootTableView.reloadData()
+                }else{
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud.removeFromSuperViewOnHide = true
+                    hud.mode = .text
+                    hud.label.text = "点赞失败"
+                    hud.hide(animated: true, afterDelay: 1)
+                }
+            }
+        }
     }
     
     func rewardBtnClick(_ rewardBtn:UIButton) {
@@ -1067,6 +1072,8 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                     
                     CircleNetUtil.addReward(to_userid: forumModel.userid, from_userid: QCLoginUserInfo.currentInfo.userid, t_id: forumModel.tid, score: getRewardArray()[button.tag-1000], handle: { (success, response) in
                         if success {
+                            self.forumModel.isreward = "1"
+                            self.rootTableView.reloadData()
                             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
                             hud.removeFromSuperViewOnHide = true
                             hud.mode = .text
@@ -1134,7 +1141,41 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     func alertActionClick(_ action:UIButton) {
         print(action.tag)
         
-        if action.currentTitle == "举报" {
+        if action.currentTitle == "置顶" {
+            alertCancel(action)
+            if forumModel.istop == "1" {
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud.removeFromSuperViewOnHide = true
+                hud.mode = .text
+                hud.label.text = "贴子已置顶"
+                hud.hide(animated: true, afterDelay: 1.5)
+                return
+            }
+            CircleNetUtil.forumSetTop(tid: String(action.tag/100), handle: { (success, response) in
+                if success {
+                    print("置顶贴子成功")
+                }else{
+                    print("置顶贴子失败")
+                }
+            })
+        }else if action.currentTitle == "加精" {
+            alertCancel(action)
+            if forumModel.isbest == "1" {
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud.removeFromSuperViewOnHide = true
+                hud.mode = .text
+                hud.label.text = "贴子已加精"
+                hud.hide(animated: true, afterDelay: 1.5)
+                return
+            }
+            CircleNetUtil.forumSetTop(tid: String(action.tag/100), handle: { (success, response) in
+                if success {
+                    print("加精贴子成功")
+                }else{
+                    print("加精贴子失败")
+                }
+            })
+        }else if action.currentTitle == "举报" {
             alertCancel(action)
             self.showReportAlert(with: String(action.tag/100))
         }else if action.currentTitle == "删除" {

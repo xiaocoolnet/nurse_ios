@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -240,13 +241,13 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         
         
         if isJoin {
-            CircleNetUtil.delJoinCommunity(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, handle: { (success, response) in
-                if success {
-                    joinBtn.isSelected = !joinBtn.isSelected
-                    joinBtn.backgroundColor = joinBtn.isSelected ? COLOR:UIColor.white
-                    self.isJoin = !self.isJoin
-                }
-            })
+            
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = .text
+            hud.label.text = "您已加入该圈子"
+            hud.hide(animated: true, afterDelay: 1.5)
+            return
         }else{
             CircleNetUtil.addCommunity(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, handle: { (success, response) in
                 if success {
@@ -334,9 +335,64 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        let forumListController = NSCircleForumListViewController()
-        forumListController.title = "加精置顶贴子列表"
-        self.navigationController?.pushViewController(forumListController, animated: true)
+        switch indexPath.row {
+        case 0:
+            let forumListController = NSCircleForumListViewController()
+            forumListController.title = "置顶贴子列表"
+            forumListController.communityId = self.communityModel.id
+            forumListController.isTop = "1"
+            forumListController.isBest = ""
+            self.navigationController?.pushViewController(forumListController, animated: true)
+        case 1:
+            let forumListController = NSCircleForumListViewController()
+            forumListController.title = "加精贴子列表"
+            forumListController.communityId = self.communityModel.id
+            forumListController.isTop = ""
+            forumListController.isBest = "1"
+            self.navigationController?.pushViewController(forumListController, animated: true)
+        case 2:
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = .text
+            hud.label.text = "敬请期待"
+            hud.hide(animated: true, afterDelay: 1.5)
+        case 3:
+            let alert = UIAlertController(title: "取消关注?", message: "确定取消关注 \(communityModel.community_name)", preferredStyle: .alert)
+            
+            let sureAction = UIAlertAction(title: "确定", style: .default, handler: { (action) in
+                CircleNetUtil.delJoinCommunity(userid: QCLoginUserInfo.currentInfo.userid, cid: self.communityModel.id, handle: { (success, response) in
+                    if success {
+                        self.isJoin = false
+                        self.setTableViewHeaderView()
+                        
+                        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                        hud.removeFromSuperViewOnHide = true
+                        hud.mode = .text
+                        hud.label.text = "取消关注圈子成功"
+                        hud.hide(animated: true, afterDelay: 1)
+                        
+                    }else{
+                        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                        hud.removeFromSuperViewOnHide = true
+                        hud.mode = .text
+                        hud.label.text = "取消关注圈子成功"
+                        hud.hide(animated: true, afterDelay: 1)
+                    }
+                })
+            })
+            
+            alert.addAction(sureAction)
+            
+            let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
+                
+            })
+            alert.addAction(cancelAction)
+            
+            self.present(alert, animated: true, completion: nil)
+        default:
+            break
+        }
+        
     }
     
     // 调整 button 图片和文字

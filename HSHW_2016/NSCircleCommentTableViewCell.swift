@@ -14,7 +14,9 @@ class NSCircleCommentTableViewCell: UITableViewCell {
     
     @IBOutlet weak var nameLab: UILabel!
     
-    var positionLab = UILabel()
+    @IBOutlet weak var positionLab: UILabel!
+    
+    @IBOutlet weak var positionLabWidth: NSLayoutConstraint!
     
     @IBOutlet weak var timeLab: UILabel!
     
@@ -62,11 +64,11 @@ class NSCircleCommentTableViewCell: UITableViewCell {
 //        self.contentView.addSubview(likeImg)
         
         likeBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
-        likeBtn.setImage(UIImage(named: "赞"), for: UIControlState())
+        likeBtn.setImage(UIImage(named: "赞"), for: .normal)
         likeBtn.setImage(UIImage(named: "已点赞"), for: .selected)
-        likeBtn.setTitleColor(UIColor(red: 178/255.0, green: 178/255.0, blue: 178/255.0, alpha: 1), for: UIControlState())
+        likeBtn.setTitleColor(UIColor(red: 178/255.0, green: 178/255.0, blue: 178/255.0, alpha: 1), for: .normal)
         likeBtn.setTitleColor(COLOR, for: .selected)
-        likeBtn.setTitle("点赞", for: UIControlState())
+        likeBtn.setTitle("点赞", for: .normal)
         likeBtn.setTitle("已点赞", for: .selected)
         self.contentView.addSubview(likeBtn)
         
@@ -89,7 +91,7 @@ class NSCircleCommentTableViewCell: UITableViewCell {
         self.contentView.addSubview(reportBtn)
     }
     
-    var commentModel:ForumCommentDataModel? {
+    var commentModel:ForumCommentsDataModel? {
         didSet {
             
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
@@ -99,12 +101,10 @@ class NSCircleCommentTableViewCell: UITableViewCell {
             }
             
             nameLab.text = commentModel?.username
+            nameLab.layoutIfNeeded()
             
             positionLab.text = commentModel?.major
-            positionLab.sizeToFit()
-            positionLab.frame.size.width = positionLab.frame.width+positionLab.frame.height
-            positionLab.frame.origin.x = calculateWidth((commentModel?.username ?? "")!, size: 12, height: 15)+64
-            positionLab.center.y = nameLab.center.y
+            positionLabWidth.constant = calculateWidth((commentModel?.major ?? "")!, size: 9, height: positionLab.frame.height)+positionLab.frame.height
             positionLab.layer.cornerRadius = positionLab.frame.height/2.0
             positionLab.layer.backgroundColor = COLOR.cgColor
 

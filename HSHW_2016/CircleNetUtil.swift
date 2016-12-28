@@ -562,5 +562,241 @@ class CircleNetUtil: NSObject {
             }
         }
     }
+    
+    // MARK: - 帖子加精
+    //接口地址：a=forumSetBest
+    //入参：tid(帖子id)
+    //出参：success
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=forumSetBest&tid=1
+    class func forumSetBest(tid:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"forumSetBest"
+        let param = [
+            "tid":tid
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 帖子置顶
+    //接口地址：a=forumSetTop
+    //入参：tid(帖子id)
+    //出参：success
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=forumSetTop&tid=1
+    class func forumSetTop(tid:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"forumSetTop"
+        let param = [
+            "tid":tid
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 点赞
+    //接口地址：a=SetLike
+    //入参：userid,id,type(新闻资讯为1，2圈子)
+    //出参：无
+    //Demo:http://app.chinanurse.cn/index.php?g=apps&m=index&a=SetLike&userid=599&id=38&type=2
+    class func SetLike(userid:String, id:String, type:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"SetLike"
+        let param = [
+            "userid":userid,
+            "id":id,
+            "type":type
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<SetLikeModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 取消赞
+    //接口地址：a=ResetLike
+    //入参：userid,id,type
+    //出参：无
+    //Demo:http://app.chinanurse.cn/index.php?g=apps&m=index&a=ResetLike&userid=599&id=38&type=2
+    class func ResetLike(userid:String, id:String, type:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"ResetLike"
+        let param = [
+            "userid":userid,
+            "id":id,
+            "type":type
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 检测是否点赞
+    //接口地址：a=CheckHadLike
+    //入参：userid,id,type(新闻资讯为1，2圈子)
+    //出参：had/no
+    //Demo:http://app.chinanurse.cn/index.php?g=apps&m=index&a=CheckHadLike&userid=614&id=31&type=2
+    class func CheckHadLike(userid:String, id:String, type:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"CheckHadLike"
+        let param = [
+            "userid":userid,
+            "id":id,
+            "type":type
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
+
+    // MARK: - 添加评论
+    //接口地址：a=SetComment
+    //入参(post)：userid,id，content,type:,1、新闻2、圈子,3评论,photo
+    //出参：无
+    //Demo:http://app.chinanurse.cn/index.php?g=apps&m=index&a=SetComment&userid=600&id=4&content=你好&type=2&photo=9.jpg
+    class func SetComment(userid:String, id:String, content:String, type:String, photo:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"SetComment"
+        let param = [
+            "userid":userid,
+            "id":id,
+            "content":content,
+            "type":type,
+            "photo":photo
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<SetLikeModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 获取圈子评论
+    //接口地址：a=getForumComments
+    //入参：userid，refid(圈子id，或父评论id)
+    //出参：refid,userid,username,content,photo,add_time,type(评论类型：1新闻，2圈子，3评论),userlevel,major,cid(评论id),auth_type(用户类型名称)
+    //Demo:http://app.chinanurse.cn/index.php?g=apps&m=index&a=getForumComments&refid=305&userid=603
+    class func getForumComments(userid:String, refid:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"getForumComments"
+        let param = [
+            "userid":userid,
+            "refid":refid
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<ForumCommentsModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 删除帖子评论以及子评论
+    //接口地址：a=DelForumComments
+    //入参：id(评论id),type(评论类型：2圈子，3评论),userid
+    //出参：success
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=DelForumComments&id=70&userid=603&type=3
+    class func DelForumComments(id:String, type:String, userid:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"DelForumComments"
+        let param = [
+            "id":id,
+            "type":type,
+            "userid":userid
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
+ 
+//    接口名称添加评论
+//    接口地址：a=SetComment
+//    入参(post)：userid,id，content,type:,1、新闻2、圈子,3评论,photo
+//    出参：无
+//    Demo:http://app.chinanurse.cn/index.php?g=apps&m=index&a=SetComment&userid=600&id=4&content=你好&type=2&photo=9.jpg
+
 
 }

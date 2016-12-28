@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate {
     
@@ -19,7 +20,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
     var noteLab:UILabel = UILabel()//简介
     var focusBtn:UIButton = UIButton()//关注按钮
     
-    var userid:String = "7389"
+    var userid:String = ""
     
     var helper = HSMineHelper()
     
@@ -538,7 +539,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         
-        if forumModelArray.count == 0 {
+        if forumModelArray.count != 0 {
             
             let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 35))
             footerView.tag = 100 + section
@@ -917,7 +918,41 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
     func alertActionClick(_ action:UIButton) {
         print(action.tag)
         
-        if action.currentTitle == "举报" {
+        if action.currentTitle == "置顶" {
+            alertCancel(action)
+            if currentForumModel.istop == "1" {
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud.removeFromSuperViewOnHide = true
+                hud.mode = .text
+                hud.label.text = "贴子已置顶"
+                hud.hide(animated: true, afterDelay: 1.5)
+                return
+            }
+            CircleNetUtil.forumSetTop(tid: String(action.tag/100), handle: { (success, response) in
+                if success {
+                    print("置顶贴子成功")
+                }else{
+                    print("置顶贴子失败")
+                }
+            })
+        }else if action.currentTitle == "加精" {
+            alertCancel(action)
+            if currentForumModel.isbest == "1" {
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud.removeFromSuperViewOnHide = true
+                hud.mode = .text
+                hud.label.text = "贴子已加精"
+                hud.hide(animated: true, afterDelay: 1.5)
+                return
+            }
+            CircleNetUtil.forumSetTop(tid: String(action.tag/100), handle: { (success, response) in
+                if success {
+                    print("加精贴子成功")
+                }else{
+                    print("加精贴子失败")
+                }
+            })
+        }else if action.currentTitle == "举报" {
             alertCancel(action)
             self.showReportAlert(with: String(action.tag/100))
         }else if action.currentTitle == "删除" {

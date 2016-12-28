@@ -118,57 +118,57 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
     fileprivate let titleSize:CGFloat = 14
     fileprivate let contentSize:CGFloat = 12
     
-    func setCell(with forum:ForumListDataModel) {
+    func setCell(with forumModel:ForumListDataModel) {
         
         
         
         var conNumStr = "0"
-        if Int(forum.hits) > 99999 {
+        if Int(forumModel.hits) > 99999 {
             conNumStr = "10W+"
-        }else if Int(forum.hits) > 199999 {
+        }else if Int(forumModel.hits) > 199999 {
             conNumStr = "20W+"
-        }else if Int(forum.hits) > 299999 {
+        }else if Int(forumModel.hits) > 299999 {
             conNumStr = "30W+"
-        }else if Int(forum.hits) > 399999 {
+        }else if Int(forumModel.hits) > 399999 {
             conNumStr = "40W+"
-        }else if Int(forum.hits) > 499999 {
+        }else if Int(forumModel.hits) > 499999 {
             conNumStr = "50W+"
-        }else if Int(forum.hits) > 599999 {
+        }else if Int(forumModel.hits) > 599999 {
             conNumStr = "60W+"
-        }else if Int(forum.hits) > 799999 {
+        }else if Int(forumModel.hits) > 799999 {
             conNumStr = "80W+"
-        }else if Int(forum.hits) > 899999 {
+        }else if Int(forumModel.hits) > 899999 {
             conNumStr = "90W+"
-        }else if Int(forum.hits) > 999999 {
+        }else if Int(forumModel.hits) > 999999 {
             conNumStr = "100W+"
-        }else if Int(forum.hits) > 9999999 {
+        }else if Int(forumModel.hits) > 9999999 {
             conNumStr = "1000W+"
         }else{
-            conNumStr = forum.hits
+            conNumStr = forumModel.hits
         }
         
         
         
-        if forum.photo.count == 0 {
+        if forumModel.photo.count == 0 {
             
             titleImg.isHidden = true
             titSubImg.isHidden = true
             
-            let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
+            let height = calculateHeight((forumModel.title), size: titleSize, width: WIDTH-16)
             self.titleLab.frame = CGRect(x: 8, y: 8, width: WIDTH-16, height: height)
             
-            self.titleLab.text = forum.title
+            self.titleLab.text = forumModel.title
             
-            var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
+            var contentHeight = calculateHeight((forumModel.content), size: contentSize, width: WIDTH-16)
             if contentHeight >= UIFont.systemFont(ofSize: contentSize).lineHeight*3 {
                 contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             self.contantLab.frame = CGRect(x: 8, y: 8+height+8, width: WIDTH-16, height: contentHeight)
             
-            self.contantLab.text = forum.content
+            self.contantLab.text = forumModel.content
             
-            likeBtn.setTitle(forum.like, for: UIControlState())
-            comBtn.setTitle(forum.hits, for: UIControlState())
+            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+            comBtn.setTitle(forumModel.hits, for: UIControlState())
             
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: contantLab.frame.maxY+8)
@@ -176,20 +176,20 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             comBtn.sizeToFit()
             comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: contantLab.frame.maxY+8)
             
-        }else if forum.photo.count < 3 {
+        }else if forumModel.photo.count < 3 {
             
-            let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16-110-8)
+            let height = calculateHeight((forumModel.title), size: titleSize, width: WIDTH-16-110-8)
             self.titleLab.frame = CGRect(x: 8, y: 8, width: WIDTH-16-110-8, height: height)
             
-            self.titleLab.text = forum.title
+            self.titleLab.text = forumModel.title
             
-            var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16-110-8)
+            var contentHeight = calculateHeight((forumModel.content), size: contentSize, width: WIDTH-16-110-8)
             if contentHeight >= UIFont.systemFont(ofSize: contentSize).lineHeight*3 {
                 contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             self.contantLab.frame = CGRect(x: 8, y: 8+height+8, width: WIDTH-16-110-8, height: contentHeight)
             
-            self.contantLab.text = forum.content
+            self.contantLab.text = forumModel.content
             
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
                 
@@ -200,7 +200,7 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
                 titSubImg.isHidden = true
             }else{
 
-                let photoUrl:String = SHOW_IMAGE_HEADER+forum.photo.first!
+                let photoUrl:String = SHOW_IMAGE_HEADER+forumModel.photo.first!
                 
                 titleImg.frame = CGRect(x: WIDTH-110-8, y: 10, width: 110, height: 80)
                 self.titleImg.sd_setImage(with: URL(string:photoUrl), placeholderImage: UIImage(named: "defaultImage.png"))
@@ -215,8 +215,8 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
                 titleImg.frame.origin.y = (contantLab.frame.maxY+8+8+8-80)/2.0
             }
             
-            likeBtn.setTitle(forum.like, for: UIControlState())
-            comBtn.setTitle(forum.hits, for: UIControlState())
+            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+            comBtn.setTitle(forumModel.hits, for: UIControlState())
             
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: max(8+80-likeBtn.frame.height, contantLab.frame.maxY+8))
@@ -225,18 +225,18 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: max(8+80-likeBtn.frame.height, contantLab.frame.maxY+8))
         }else{
             
-            let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
+            let height = calculateHeight((forumModel.title), size: titleSize, width: WIDTH-16)
             self.titleLab.frame = CGRect(x: 8, y: 8, width: WIDTH-16, height: height)
             
-            self.titleLab.text = forum.title
+            self.titleLab.text = forumModel.title
             
-            var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
+            var contentHeight = calculateHeight((forumModel.content), size: contentSize, width: WIDTH-16)
             if contentHeight >= UIFont.systemFont(ofSize: contentSize).lineHeight*3 {
                 contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             self.contantLab.frame = CGRect(x: 8, y: 8+height+8, width: WIDTH-16, height: contentHeight)
             
-            self.contantLab.text = forum.content
+            self.contantLab.text = forumModel.content
             
             titSubImg.frame = CGRect(x: 8, y: contantLab.frame.maxY+8, width: WIDTH-16, height: (WIDTH-16-margin*2)/3.0*2/3.0)
             
@@ -247,21 +247,21 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
                 titSubImg_3.image = UIImage(named: "defaultImage.png")
             }else {
                 
-                let photoUrl_1:String = SHOW_IMAGE_HEADER+forum.photo[0]
+                let photoUrl_1:String = SHOW_IMAGE_HEADER+forumModel.photo[0]
                 titSubImg_1.sd_setImage(with: URL(string:photoUrl_1), placeholderImage: UIImage(named: "defaultImage.png"))
                 
-                let photoUrl_2:String = SHOW_IMAGE_HEADER+forum.photo[1]
+                let photoUrl_2:String = SHOW_IMAGE_HEADER+forumModel.photo[1]
                 titSubImg_2.sd_setImage(with: URL(string:photoUrl_2), placeholderImage: UIImage(named: "defaultImage.png"))
                 
-                let photoUrl_3:String = SHOW_IMAGE_HEADER+forum.photo[2]
+                let photoUrl_3:String = SHOW_IMAGE_HEADER+forumModel.photo[2]
                 titSubImg_3.sd_setImage(with: URL(string:photoUrl_3), placeholderImage: UIImage(named: "defaultImage.png"))
             }
             
             titleImg.isHidden = true
             titSubImg.isHidden = false
             
-            likeBtn.setTitle(forum.like, for: UIControlState())
-            comBtn.setTitle(forum.hits, for: UIControlState())
+            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+            comBtn.setTitle(forumModel.hits, for: UIControlState())
             
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: titSubImg.frame.maxY+8)

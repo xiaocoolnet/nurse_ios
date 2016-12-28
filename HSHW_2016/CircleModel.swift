@@ -103,7 +103,7 @@ class ForumListDataModel: HandyJSON {
     var review_time = ""// 回复时间
     var photo = [String]()// 贴子图片
     var hits = ""// 点击数
-    var like = ""// 点赞数
+    var like_num = ""// 点赞数
     var istop = ""// 是否置顶
     var isbest = ""// 是否精华
     var isreward = ""// 是否打赏
@@ -201,7 +201,7 @@ class ForumInfoDataModel: HandyJSON {
     var review_time = ""
     var photo = [String]()
     var hits = ""
-    var like = ""
+    var like_num = ""
     var istop = ""
     var isbest = ""
     var isreward = ""
@@ -312,39 +312,77 @@ class RewardDataModel: HandyJSON {
     required init() {}
 }
 
-
-
-// MARK: - 下边的没用
-
-class CommunityModel: HandyJSON {
-    
-    var community_id = ""
-    
-    var community_name = ""
-    
-    var photo = ""
-    
-    var description = ""
-    
-    var best = ""
-
-    var create_time = ""
+// 设置点赞
+class SetLikeModel: HandyJSON {
+    var status = ""
+    var data = [SetLikeDataModel]()
+    var errorData = ""
     
     required init() {}
     
-    func mapping(_ mapper: HelpingMapper) {
-        // 指定 JSON中的`cat_id`字段映射到Model中的`id`字段
-        mapper.specify(property: &community_id, name: "id")
-        //        mapper.specify(property: &forum_id, name: "id")
-        
-        //        // 指定JSON中的`parent`字段解析为Model中的`parent`字段
-        //        // 因为(String, String)?是一个元组，既不是基本类型，也不服从`HandyJSON`协议，所以需要自己实现解析过程
-        //        mapper.specify(property: &parent, converter: { (rawString) -> (String, String) in
-        //            let parentNames = rawString.characters.split{$0 == "/"}.map(String.init)
-        //            return (parentNames[0], parentNames[1])
-        //        })
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
     }
 }
+class SetLikeDataModel: HandyJSON {
+    var score = ""
+    var event = ""
+    var create_time = ""
+    var userid = ""
+    
+    required init() {}
+}
+
+// 贴子评论
+class ForumCommentsModel: HandyJSON {
+    var status = ""
+    var data = [ForumCommentsDataModel]()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+class ForumCommentsDataModel: HandyJSON {
+    var refid = ""
+    var userid = ""
+    var username = ""
+    var content = ""
+    var photo = ""
+    var add_time = ""
+    var type = ""
+    var userlevel = ""
+    var major = ""
+    var cid = ""
+    var auth_type = ""
+    var comments_likes = ""
+    var add_like = ""
+    var child_comments = [ForumChild_commentsModel]()
+    
+    required init() {}
+}
+class ForumChild_commentsModel: HandyJSON {
+    var pid = ""
+    var userid = ""
+    var username = ""
+    var content = ""
+    var photo = ""
+    var add_time = ""
+    var type = ""
+    var userlevel = ""
+    var major = ""
+    var cid = ""
+    
+    required init() {}
+}
+
+// MARK: - 下边的没用
 
 class ForumModel: HandyJSON {
     

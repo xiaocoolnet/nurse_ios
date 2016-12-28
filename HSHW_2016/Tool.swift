@@ -19,6 +19,7 @@ let RGREY = UIColor(red: 242/255.0, green: 242/255.0, blue: 242/255.0, alpha: 1.
 let slideImageListMaxNum = 5
 //let DomainName = "https://app.chinanurse.cn/"
 let DomainName = "http://nurse.xiaocool.net/"
+//let DomainName = "http://a.chinanurse.cn/"
 //let PARK_URL_Header = "http://app.chinanurse.cn/index.php?g=apps&m=index&a="
 let PARK_URL_Header = "\(DomainName)index.php?g=apps&m=index&a="
 let NewsInfo_Header = "\(DomainName)index.php?g=portal&m=article&a=index&id="
@@ -43,6 +44,7 @@ let kAppKey = "3139633252"
 // TODO:
 //let kRedirectURI = "http://app.chinanurse.cn"
 let kRedirectURI = "http://nurse.xiaocool.net"
+//let kRedirectURI = "http://a.chinanurse.cn"
 
 let APP_SHARE_URL = "https://www.pgyer.com/kUyM"
 let APP_SHARE_NAME = "中国护士网"

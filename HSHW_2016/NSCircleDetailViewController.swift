@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -224,13 +225,12 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
         
         
         if isJoin {
-            CircleNetUtil.delJoinCommunity(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, handle: { (success, response) in
-                if success {
-                    joinBtn.isSelected = !joinBtn.isSelected
-                    joinBtn.backgroundColor = joinBtn.isSelected ? COLOR:UIColor.white
-                    self.isJoin = !self.isJoin
-                }
-            })
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = .text
+            hud.label.text = "您已加入该圈子"
+            hud.hide(animated: true, afterDelay: 1.5)
+            return
         }else{
             CircleNetUtil.addCommunity(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, handle: { (success, response) in
                 if success {
@@ -718,7 +718,54 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     func alertActionClick(_ action:UIButton) {
         print(action.tag)
         
-        if action.currentTitle == "举报" {
+        if action.currentTitle == "置顶" {
+            alertCancel(action)
+            
+            if currentForumModel.istop == "1" {
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud.removeFromSuperViewOnHide = true
+                hud.mode = .text
+                hud.label.text = "贴子已置顶"
+                hud.hide(animated: true, afterDelay: 1.5)
+                return
+            }
+            CircleNetUtil.forumSetTop(tid: String(action.tag/100), handle: { (success, response) in
+                if success {
+                    print("置顶贴子成功")
+                    if self.communityId != "" {
+                        self.getCommunityInfo()
+                    }else{
+                        self.setTableViewHeaderView()
+                        self.loadData()
+                    }
+                }else{
+                    print("置顶贴子失败")
+                }
+            })
+        }else if action.currentTitle == "加精" {
+            alertCancel(action)
+            if currentForumModel.isbest == "1" {
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud.removeFromSuperViewOnHide = true
+                hud.mode = .text
+                hud.label.text = "贴子已加精"
+                hud.hide(animated: true, afterDelay: 1.5)
+                return
+            }
+            CircleNetUtil.forumSetTop(tid: String(action.tag/100), handle: { (success, response) in
+                if success {
+                    print("加精贴子成功")
+                    if self.communityId != "" {
+                        self.getCommunityInfo()
+                    }else{
+                        self.setTableViewHeaderView()
+                        self.loadData()
+                    }
+                }else{
+                    print("加精贴子失败")
+                }
+            })
+        }else if action.currentTitle == "举报" {
             alertCancel(action)
             self.showReportAlert(with: String(action.tag/100))
         }else if action.currentTitle == "删除" {

@@ -40,7 +40,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     
     func loadData() {
         
-        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "1") { (success, response) in
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "") { (success, response) in
             if success {
                 self.forumModelArray = response as! [ForumListDataModel]
                 self.rootTableView.reloadData()
@@ -48,7 +48,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             self.rootTableView.mj_header.endRefreshing()
         }
         
-        CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: "", best: "", hot: "1", pager: "1") { (success, response) in
+        CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: "", best: "", hot: "1", pager: "") { (success, response) in
             if success {
                 self.communityModelArray = response as! [CommunityListDataModel]
                 self.setTableViewHeaderView()

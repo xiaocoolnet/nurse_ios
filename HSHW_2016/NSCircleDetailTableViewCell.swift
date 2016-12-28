@@ -203,8 +203,7 @@ class NSCircleDetailTableViewCell: UITableViewCell {
             conNumStr = forumModel.hits
         }
         
-        imgBtn.setImage(#imageLiteral(resourceName: "img_head_nor"), for: UIControlState())
-        imgBtn.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModel.user_photo), for: UIControlState())
+        imgBtn.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModel.user_photo), for: UIControlState(), placeholderImage: #imageLiteral(resourceName: "img_head_nor"))
         
         nameLab.text = forumModel.user_name
         nameLab.frame = CGRect(x: imgBtn.frame.maxX+8, y: 10, width: calculateWidth(forumModel.user_name, size: 12, height: 17), height: 17)
@@ -249,7 +248,7 @@ class NSCircleDetailTableViewCell: UITableViewCell {
             
             self.contantLab.text = forumModel.content
             
-            likeBtn.setTitle(forumModel.like, for: UIControlState())
+            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
             comBtn.setTitle(forumModel.hits, for: UIControlState())
             // TODO:
             addressBtn.setTitle("发贴地点", for: UIControlState())
@@ -308,7 +307,7 @@ class NSCircleDetailTableViewCell: UITableViewCell {
                 titleImg.frame.origin.y = forumMinY
             }
             
-            likeBtn.setTitle(forumModel.like, for: UIControlState())
+            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
             comBtn.setTitle(forumModel.hits, for: UIControlState())
             // TODO:
             addressBtn.setTitle(QCLoginUserInfo.currentInfo.address, for: UIControlState())
@@ -359,7 +358,7 @@ class NSCircleDetailTableViewCell: UITableViewCell {
             titleImg.isHidden = true
             titSubImg.isHidden = false
             
-            likeBtn.setTitle(forumModel.like, for: UIControlState())
+            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
             comBtn.setTitle(forumModel.comments_count, for: UIControlState())
             // TODO:
             addressBtn.setTitle("发贴地点", for: UIControlState())
