@@ -9,7 +9,7 @@
 import UIKit
 import MBProgressHUD
 
-class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ChooseCircleDelegate {
+class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ChooseCircleDelegate, CircleImagePreviewDelegate {
 
     var couldSelectedCircle = false
     
@@ -90,28 +90,35 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
         self.view.addSubview(toolBgView)
         
         var imageX:CGFloat = 8
+        var imageY:CGFloat = 10
         
-        for image in imageArray {
+        for (i,image) in imageArray.enumerated() {
             // 图片
-            let imageBtn = UIButton(frame: CGRect(x: imageX, y: 10, width: 76, height: 60))
-            imageBtn.addTarget(self, action: #selector(imageBtnClick), for: .touchUpInside)
+            let imageBtn = UIButton(frame: CGRect(x: imageX, y: imageY, width: 76, height: 60))
+            imageBtn.tag = 100+i
+            imageBtn.addTarget(self, action: #selector(imageBtnClick(imageBtn:)), for: .touchUpInside)
             imageBtn.setImage(image, for: .normal)
             toolBgView.addSubview(imageBtn)
             
             imageX = imageBtn.frame.maxX+8
+            
+            if WIDTH-imageBtn.frame.maxX-10-76-10 < 0 {
+                imageY = imageY+60+8
+                imageX = 8
+            }
         }
         
-        if imageArray.count < 3 {
+        if imageArray.count < 9 {
             
             // 图片
-            let imageBtn = UIButton(frame: CGRect(x: imageX, y: 10, width: 76, height: 60))
+            let imageBtn = UIButton(frame: CGRect(x: imageX, y: imageY, width: 76, height: 60))
             imageBtn.setImage(UIImage(named: "插入图片"), for: UIControlState())
-            imageBtn.addTarget(self, action: #selector(imageBtnClick), for: .touchUpInside)
+            imageBtn.addTarget(self, action: #selector(insertImageBtnClick), for: .touchUpInside)
             toolBgView.addSubview(imageBtn)
         }
         
         // line3
-        let line3 = UIView(frame: CGRect(x: 0, y: 70+10, width: WIDTH, height: 1/UIScreen.main.scale))
+        let line3 = UIView(frame: CGRect(x: 0, y: imageY+60+10, width: WIDTH, height: 1/UIScreen.main.scale))
         line3.backgroundColor = UIColor.lightGray
         toolBgView.addSubview(line3)
         
@@ -197,9 +204,24 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
     }
     // MARK: -
     
+    // MARK: - 点击图片按钮
+    func imageBtnClick(imageBtn:UIButton) {
+        
+        self.titleTextField.resignFirstResponder()
+        self.contentTextView.resignFirstResponder()
+        
+        let circleImagePreviewController = NSCircleImagePreviewViewController()
+        circleImagePreviewController.delegate = self
+        circleImagePreviewController.imageArray = imageArray
+        circleImagePreviewController.currentImageIndex = imageBtn.tag-100
+        self.navigationController?.pushViewController(circleImagePreviewController, animated: true)
+    }
     // MARK: - 点击插入图片按钮
-    func imageBtnClick() {
+    func insertImageBtnClick() {
         print("点击插入图片按钮")
+        
+        self.titleTextField.resignFirstResponder()
+        self.contentTextView.resignFirstResponder()
         
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         self.present(alert, animated: true, completion: nil)
@@ -403,6 +425,12 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
     // MARK: - 点击发贴位置按钮
     func addressBtnClick() {
         print("点击发贴位置按钮")
+    }
+    
+    // MARK: - CircleImagePreviewDelegate
+    func imageArrayChanged(imageArray: [UIImage]) {
+        self.imageArray = imageArray
+        self.setToolView()
     }
 
     override func didReceiveMemoryWarning() {

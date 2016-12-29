@@ -30,3 +30,5 @@
 #import "BaiduMobStat.h"
 
 #import "ImageBtn.h"
+
+#import "SDPhotoBrowser.h"

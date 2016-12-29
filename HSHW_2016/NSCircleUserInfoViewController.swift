@@ -217,7 +217,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             bgImageView.addSubview(nameLabel)
             
             // 性别
-            let sexImg = UIImageView(frame: CGRect(x: nameLabel.frame.maxX+2, y: 0, width: 0, height: 0))
+            let sexImg = UIImageView(frame: CGRect(x: nameLabel.frame.maxX+5, y: 0, width: 0, height: 0))
 
             if userInfo?.sex == "0" {
                 sexImg.image = UIImage(named: "性别女")
@@ -231,7 +231,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             bgImageView.addSubview(sexImg)
 
             // 等级
-            let leavel = UIButton.init(frame: CGRect(x: sexImg.frame.maxX+2, y: nameLabel.frame.minY, width: 18, height: 20))
+            let leavel = UIButton.init(frame: CGRect(x: sexImg.frame.maxX+5, y: nameLabel.frame.minY, width: 18, height: 20))
             leavel.setBackgroundImage(UIImage.init(named: "ic_shield_yellow.png"), for: UIControlState())
             leavel.titleLabel?.font = UIFont.systemFont(ofSize: 9)
             leavel.setTitleColor(UIColor.yellow, for: UIControlState())
@@ -239,7 +239,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             bgImageView.addSubview(leavel)
             
             // 认证类型
-            let authType = UILabel(frame: CGRect(x: leavel.frame.maxX+2, y: nameLabel.frame.minY, width: calculateWidth(authTypeStr, size: 8, height: nameLabel.frame.height)+UIFont.systemFont(ofSize: 8).lineHeight, height: UIFont.systemFont(ofSize: 8).lineHeight))
+            let authType = UILabel(frame: CGRect(x: leavel.frame.maxX+5, y: nameLabel.frame.minY, width: calculateWidth(authTypeStr, size: 8, height: nameLabel.frame.height)+UIFont.systemFont(ofSize: 8).lineHeight, height: UIFont.systemFont(ofSize: 8).lineHeight))
             authType.layer.cornerRadius = UIFont.systemFont(ofSize: 8).lineHeight/2.0
             authType.layer.backgroundColor = COLOR.cgColor
             authType.font = UIFont.systemFont(ofSize: 8)
@@ -262,9 +262,12 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             
             // 关注按钮
             focusBtn = UIButton.init(frame: CGRect(x: WIDTH/4.0, y: noteLab.frame.maxY+20, width: WIDTH/2.0, height: 50))
-            focusBtn.layer.borderWidth = 1
-            focusBtn.layer.borderColor = UIColor.white.cgColor
+//            focusBtn.layer.borderWidth = 1
+//            focusBtn.layer.borderColor = UIColor.white.cgColor
             focusBtn.layer.cornerRadius = 25
+            focusBtn.layer.backgroundColor = UIColor(white: 0.25, alpha: 0.25).cgColor
+            focusBtn.setImage(UIImage(named: "关注"), for: .normal)
+            focusBtn.setImage(UIImage(named: "已加入"), for: .selected)
             focusBtn.setTitleColor(UIColor.white, for: UIControlState())
             focusBtn.setTitle("关注Ta", for: .normal)
             focusBtn.setTitle("已关注", for: .selected)
@@ -290,7 +293,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                 let recommendLab = UILabel(frame: CGRect(x: 8, y: 0, width: WIDTH-16, height: 35))
                 recommendLab.backgroundColor = UIColor.white
                 recommendLab.textAlignment = .left
-                recommendLab.font = UIFont.systemFont(ofSize: 14)
+                recommendLab.font = UIFont.systemFont(ofSize: 16)
                 recommendLab.textColor = UIColor.lightGray
                 recommendLab.text = "他加入的圈子"
                 recommendBgView.addSubview(recommendLab)
@@ -351,7 +354,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                 label.text = "他/她的贴子"
                 tagBgView.addSubview(label)
                 
-                let lineView = UIView.init(frame: CGRect(x: 20, y: label.frame.maxY, width: label.frame.width, height: 1/UIScreen.main.scale))
+                let lineView = UIView.init(frame: CGRect(x: 10, y: label.frame.maxY, width: label.frame.width, height: 1/UIScreen.main.scale))
                 lineView.backgroundColor = UIColor.lightGray
                 tagBgView.addSubview(lineView)
                 
@@ -370,7 +373,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                 label.text = "他/她的贴子"
                 tagBgView.addSubview(label)
                 
-                let lineView = UIView.init(frame: CGRect(x: 20, y: label.frame.maxY, width: label.frame.width, height: 1/UIScreen.main.scale))
+                let lineView = UIView.init(frame: CGRect(x: 10, y: label.frame.maxY, width: label.frame.width, height: 1/UIScreen.main.scale))
                 lineView.backgroundColor = UIColor.lightGray
                 tagBgView.addSubview(lineView)
                 
@@ -527,8 +530,8 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
     }
     
     // MARK: uitableview delegate
-    fileprivate let titleSize:CGFloat = 14
-    fileprivate let contentSize:CGFloat = 12
+    fileprivate let titleSize:CGFloat = 16
+    fileprivate let contentSize:CGFloat = 14
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -544,7 +547,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                 contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
-            return 55+8+height+8+contentHeight+8+8+8// 个人信息高+上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
+            return 55+8+height+8+contentHeight+8+8+8+5// 个人信息高+上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
         }else if forum.photo.count < 3 {
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16-110-8)
             
@@ -558,7 +561,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             let cellHeight2 = 8+height+8+contentHeight+8+8+8// 上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
             
             
-            return max(cellHeight1, cellHeight2)+55
+            return max(cellHeight1, cellHeight2)+55+5
         }else{
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
             
@@ -570,7 +573,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             
             let imgHeight = (WIDTH-16-15*2)/3.0*2/3.0
             
-            return 55+8+height+8+contentHeight+8+imgHeight+8+8+8// 个人信息高+上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
+            return 55+8+height+8+contentHeight+8+imgHeight+8+8+8+5// 个人信息高+上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
         }
     }
     
@@ -585,12 +588,12 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
         
         if forumModelArray.count != 0 {
             
-            let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 35))
+            let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 40))
             footerView.tag = 100 + section
             footerView.addTarget(self, action: #selector(footerViewClick(footerBtn:)), for: .touchUpInside)
             footerView.backgroundColor = UIColor.white
             
-            let img = UIImageView(frame: CGRect(x: 8, y: 8, width: 25, height: 19))
+            let img = UIImageView(frame: CGRect(x: 8, y: 8, width: 25, height: 24))
             img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModelArray[section].community_photo), placeholderImage: nil)
             img.contentMode = .scaleAspectFit
             img.clipsToBounds = true
@@ -601,10 +604,10 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             nameBtn.setTitleColor(COLOR, for: UIControlState())
             nameBtn.setTitle(forumModelArray[section].community_name, for: UIControlState())
             nameBtn.sizeToFit()
-            nameBtn.frame.origin = CGPoint(x: img.frame.maxX+5, y: (35-nameBtn.frame.height)/2.0)
+            nameBtn.frame.origin = CGPoint(x: img.frame.maxX+5, y: (40-nameBtn.frame.height)/2.0)
             footerView.addSubview(nameBtn)
             
-            let comeinLab = UILabel(frame: CGRect(x: nameBtn.frame.maxX, y: 0, width: WIDTH-nameBtn.frame.maxX-8, height: 35))
+            let comeinLab = UILabel(frame: CGRect(x: nameBtn.frame.maxX, y: 0, width: WIDTH-nameBtn.frame.maxX-8, height: 40))
             comeinLab.textAlignment = .right
             comeinLab.font = UIFont.systemFont(ofSize: 12)
             comeinLab.textColor = COLOR
@@ -634,7 +637,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
         if forumModelArray.count == 0 {
             return 200
         }else{
-            return 35
+            return 40
         }
     }
     

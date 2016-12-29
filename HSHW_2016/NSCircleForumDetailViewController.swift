@@ -10,7 +10,7 @@ import UIKit
 import MBProgressHUD
 import SDWebImage
 
-class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate {
+class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextViewDelegate, SDPhotoBrowserDelegate {
     
     let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
@@ -363,7 +363,8 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         if section == 0 {
-            return 2+forumModel.photo.count
+            return forumModel.photo.count>0 ? 3:2
+//            return 2+forumModel.photo.count
         }else if section == 1 {
             if self.forumCommentArray.count == 0 {
                 return 1
@@ -406,22 +407,51 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                 
             default:
                 
-                let imgView = UIImageView()
-                imgView.tag = 100
-                imgView.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModel.photo[indexPath.row-2]), completed: { (image, error, type, url) in
-                    imgView.frame = CGRect(x: 8, y: 8, width: WIDTH-16, height: (WIDTH-16)*(image?.size.height ?? 0)!/(image?.size.width ?? 1)!)
-                    self.imageHeigthArray[indexPath.row-2] = (WIDTH-16)*(image?.size.height ?? 0)!/(image?.size.width ?? 1)!
+                let imgWidth = (WIDTH-10*4)/3.0
+                
+                let imgBgView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 10+(imgWidth+10)*CGFloat((forumModel.photo.count/3))))
+                imgBgView.tag = 100
+                
+                let imgX:CGFloat = 10
+                let imgY:CGFloat = 10
+                for (i,photo) in forumModel.photo.enumerated() {
                     
-                    self.flag += 1
-                    
-                    if self.flag == self.imageHeigthArray.count {
-                        self.rootTableView.reloadData()
-                    }
-                    
-
-                })
+                    let imgView = UIButton(frame: CGRect(x: imgX*CGFloat(i%3+1)+imgWidth*CGFloat(i%3), y: imgY*CGFloat(i/3+1)+imgWidth*CGFloat(i/3), width: imgWidth, height: imgWidth))
+                    imgView.tag = 100+i
+                    imgView.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+photo), for: UIControlState(), placeholderImage: nil)
+                    imgView.addTarget(self, action: #selector(imgBtnClick(imgBtn:)), for: .touchUpInside)
+//                    imgView.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+photo), completed: { (image, error, type, url) in
+////                        imgView.frame = CGRect(x: 8, y: 8, width: WIDTH-16, height: (WIDTH-16)*(image?.size.height ?? 0)!/(image?.size.width ?? 1)!)
+////                        self.imageHeigthArray[indexPath.row-2] = (WIDTH-16)*(image?.size.height ?? 0)!/(image?.size.width ?? 1)!
+////                        
+////                        self.flag += 1
+////                        
+////                        if self.flag == self.imageHeigthArray.count {
+////                            self.rootTableView.reloadData()
+////                        }
+//                        
+//                        
+//                    })
+                    imgBgView.addSubview(imgView)
+                }
+                
+                cell?.contentView.addSubview(imgBgView)
+//                let imgView = UIImageView()
+//                imgView.tag = 100
+//                imgView.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModel.photo[indexPath.row-2]), completed: { (image, error, type, url) in
+//                    imgView.frame = CGRect(x: 8, y: 8, width: WIDTH-16, height: (WIDTH-16)*(image?.size.height ?? 0)!/(image?.size.width ?? 1)!)
+//                    self.imageHeigthArray[indexPath.row-2] = (WIDTH-16)*(image?.size.height ?? 0)!/(image?.size.width ?? 1)!
+//                    
+//                    self.flag += 1
+//                    
+//                    if self.flag == self.imageHeigthArray.count {
+//                        self.rootTableView.reloadData()
+//                    }
+//                    
+//
+//                })
                 //                imageView.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModel.photo[indexPath.row-2]), placeholderImage: nil)
-                cell?.contentView.addSubview(imgView)
+//                cell?.contentView.addSubview(imgView)
                 break
             }
             
@@ -489,13 +519,16 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         if indexPath.section == 0 {
             switch indexPath.row {
             case 0:
-                return calculateHeight(forumModel.title, size: 18, width: WIDTH-48)+20
+                return calculateHeight(forumModel.title, size: 20, width: WIDTH-48)+20
             case 1:
-                return calculateHeight(forumModel.content, size: 14, width: WIDTH-48)+20
+                return calculateHeight(forumModel.content, size: 16, width: WIDTH-48)+20
             default:
                 print("-=-=-=-=-=-=-=-=-=-",imageHeigthArray[indexPath.row-2])
 
-                return imageHeigthArray[indexPath.row-2]+16
+                let imgWidth = (WIDTH-10*4)/3.0
+
+                return 10+(imgWidth+10)*CGFloat((forumModel.photo.count/3))
+//                return imageHeigthArray[indexPath.row-2]+16
                 
             }
         }
@@ -825,6 +858,31 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         }
         
         self.showAlert()
+    }
+    
+    // MARK: - 图片按钮点击事件
+    func imgBtnClick(imgBtn:UIButton) {
+        
+        let photoBrowser = SDPhotoBrowser()
+        photoBrowser.delegate = self
+        photoBrowser.currentImageIndex = imgBtn.tag-100
+        photoBrowser.imageCount = forumModel.photo.count
+        photoBrowser.sourceImagesContainerView = imgBtn.superview!
+        photoBrowser.show()
+        
+//        SDPhotoBrowser *photoBrowser = [SDPhotoBrowser new];
+//        photoBrowser.delegate = self;
+//        photoBrowser.currentImageIndex = indexPath.item;
+//        photoBrowser.imageCount = self.modelsArray.count;
+//        photoBrowser.sourceImagesContainerView = self.collectionView;
+//        
+//        [photoBrowser show];
+        
+//        let circleImagePreviewController = NSCircleForumImagePreviewViewController()
+////        circleImagePreviewController.delegate = self
+//        circleImagePreviewController.imageArray = forumModel.photo
+//        circleImagePreviewController.currentImageIndex = imgBtn.tag-100
+//        self.navigationController?.pushViewController(circleImagePreviewController, animated: true)
     }
     
     // MARK: - 数据
@@ -1233,6 +1291,20 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         }else{
             alertCancel(action.superview!)
         }
+    }
+    
+    func photoBrowser(_ browser: SDPhotoBrowser!, highQualityImageURLFor index: Int) -> URL! {
+        return URL(string: SHOW_IMAGE_HEADER+forumModel.photo[index])
+    }
+    func photoBrowser(_ browser: SDPhotoBrowser!, placeholderImageFor index: Int) -> UIImage! {
+        
+//        UIImage *cachedImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:strUrl]
+        let cachedImage = SDImageCache.shared().imageFromDiskCache(forKey: SHOW_IMAGE_HEADER+forumModel.photo[index])
+        
+        if cachedImage == nil {
+            return UIImage()
+        }
+        return cachedImage
     }
     
     override func didReceiveMemoryWarning() {

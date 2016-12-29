@@ -16,6 +16,8 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     var best = ""// best(选精1,不0)
     var hot = ""// hot(热门1,不0)
     
+    var showDropDown = false
+    
     let circleBtn = ImageBtn()
     let sortBtn = ImageBtn()
     
@@ -35,6 +37,12 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         self.setSubview()
         
 //        loadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -85,7 +93,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         line1.backgroundColor = COLOR
         self.view.addSubview(line1)
         
-        rootTableView.frame = CGRect(x: 0, y: 45, width: WIDTH, height: HEIGHT-65-49-45)
+        rootTableView.frame = CGRect(x: 0, y: showDropDown ? 45:1, width: WIDTH, height: showDropDown ? HEIGHT-65-49-44:HEIGHT-65-49)
         rootTableView.backgroundColor = UIColor.white
         
         rootTableView.rowHeight = 76
@@ -103,7 +111,9 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         
         self.view.addSubview(rootTableView)
         
-        self.setDropDown()
+        if showDropDown {
+            self.setDropDown()
+        }
     }
     
     // MARK: - 设置下拉列表

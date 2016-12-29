@@ -104,6 +104,7 @@ class NSCircleCommentTableViewCell: UITableViewCell {
             nameLab.layoutIfNeeded()
             
             positionLab.text = commentModel?.major
+            positionLab.sizeToFit()
             positionLabWidth.constant = calculateWidth((commentModel?.major ?? "")!, size: 9, height: positionLab.frame.height)+positionLab.frame.height
             positionLab.layer.cornerRadius = positionLab.frame.height/2.0
             positionLab.layer.backgroundColor = COLOR.cgColor

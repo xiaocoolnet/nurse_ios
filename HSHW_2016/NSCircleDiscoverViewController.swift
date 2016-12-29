@@ -15,6 +15,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     
     var forumModelArray = [ForumListDataModel]()
     var communityModelArray = [CommunityListDataModel]()
+    var joinCommunityModelArray = [PublishCommunityDataModel]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,20 +100,34 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             return
         }
         
-        // 获取我关注的圈子
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.removeFromSuperViewOnHide = true
         
-        if true {
+        // 获取我关注的圈子
+        CircleNetUtil.getPublishCommunity(userid: QCLoginUserInfo.currentInfo.userid, parentid: "281") { (success, response) in
             
-            let circlePostForumController = NSCirclePostForumViewController()
-            circlePostForumController.hidesBottomBarWhenPushed = true
-            circlePostForumController.couldSelectedCircle = true
-            self.navigationController?.pushViewController(circlePostForumController, animated: true)
-        }else{
-            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud.removeFromSuperViewOnHide = true
-            hud.mode = .text
-            hud.label.text = "请先加入圈子"
-            hud.hide(animated: true, afterDelay: 1)
+            if success {
+                
+                self.joinCommunityModelArray = response as! [PublishCommunityDataModel]
+                
+                if self.joinCommunityModelArray.count == 0 {
+                    hud.mode = .text
+                    hud.label.text = "请先加入圈子"
+                    hud.hide(animated: true, afterDelay: 1)
+                }else{
+                    hud.hide(animated: true)
+                    
+                    let circlePostForumController = NSCirclePostForumViewController()
+                    circlePostForumController.hidesBottomBarWhenPushed = true
+                    circlePostForumController.couldSelectedCircle = true
+                    self.navigationController?.pushViewController(circlePostForumController, animated: true)
+                }
+            }else{
+                hud.mode = .text
+                hud.label.text = "请稍后再试"
+                hud.hide(animated: true, afterDelay: 1)
+            }
+            
         }
         
     }
@@ -301,6 +316,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             circleListController.hidesBottomBarWhenPushed = true
             circleListController.titleString = "精选圈子"
             circleListController.best = "1"
+            circleListController.showDropDown = false
             self.navigationController?.pushViewController(circleListController, animated: true)
         case 101:
             print("热门圈子")
@@ -308,12 +324,14 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             circleListController.hidesBottomBarWhenPushed = true
             circleListController.titleString = "热门圈子"
             circleListController.hot = "1"
+            circleListController.showDropDown = false
             self.navigationController?.pushViewController(circleListController, animated: true)
         case 102:
             print("全部圈子")
             let circleListController = NSCircleListViewController()
             circleListController.hidesBottomBarWhenPushed = true
             circleListController.titleString = "圈子列表"
+            circleListController.showDropDown = true
             self.navigationController?.pushViewController(circleListController, animated: true)
         default:
             break
@@ -423,10 +441,10 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         nameBtn.setTitleColor(COLOR, for: UIControlState())
         nameBtn.setTitle(forumModelArray[section].community_name, for: UIControlState())
         nameBtn.sizeToFit()
-        nameBtn.frame.origin = CGPoint(x: img.frame.maxX+5, y: (35-nameBtn.frame.height)/2.0)
+        nameBtn.frame.origin = CGPoint(x: img.frame.maxX+5, y: (40-nameBtn.frame.height)/2.0)
         footerView.addSubview(nameBtn)
         
-        let comeinLab = UILabel(frame: CGRect(x: nameBtn.frame.maxX, y: 0, width: WIDTH-nameBtn.frame.maxX-8, height: 35))
+        let comeinLab = UILabel(frame: CGRect(x: nameBtn.frame.maxX, y: 0, width: WIDTH-nameBtn.frame.maxX-8, height: 40))
         comeinLab.textAlignment = .right
         comeinLab.font = UIFont.systemFont(ofSize: 12)
         comeinLab.textColor = COLOR
