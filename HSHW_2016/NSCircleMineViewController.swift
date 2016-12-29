@@ -193,7 +193,7 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return 44
+        return 50
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

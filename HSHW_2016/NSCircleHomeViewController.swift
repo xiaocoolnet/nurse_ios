@@ -118,7 +118,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         tableHeaderView.addSubview(countLab)
         
         let joinBtn = UIButton(frame: CGRect(x: WIDTH-88, y: tableHeaderView.frame.height/2.0-15, width: 80, height: 30))
-        joinBtn.layer.cornerRadius = 6
+        joinBtn.layer.cornerRadius = 4
         joinBtn.layer.borderColor = COLOR.cgColor
         joinBtn.layer.borderWidth = 1
         joinBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)

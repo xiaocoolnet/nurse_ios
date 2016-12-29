@@ -47,7 +47,7 @@ class NSCircleHomeTableViewCell: UITableViewCell {
         
         iconImg.contentMode = .scaleAspectFit
         iconImg.clipsToBounds = true
-        iconImg.frame = CGRect(x: 8, y: 11, width: 22, height: 22)
+        iconImg.frame = CGRect(x: 8, y: 14, width: 22, height: 22)
         
         titleLab.font = UIFont.systemFont(ofSize: 18)
         titleLab.textColor = UIColor.black
@@ -78,13 +78,13 @@ class NSCircleHomeTableViewCell: UITableViewCell {
         
         if noteStr == nil {
             self.noteLab.isHidden = true
-            titleLab.frame = CGRect(x: 38, y: 0, width: WIDTH-38-38, height: 44)
+            titleLab.frame = CGRect(x: 38, y: 0, width: WIDTH-38-38, height: 50)
         }else{
             self.noteLab.isHidden = false
             self.noteLab.text = noteStr
             self.titleLab.sizeToFit()
-            titleLab.frame = CGRect(x: 38, y: 0, width: self.titleLab.frame.width, height: 44)
-            self.noteLab.frame = CGRect(x: self.titleLab.frame.maxX, y: 0, width: WIDTH-self.titleLab.frame.maxX-38, height: 44)
+            titleLab.frame = CGRect(x: 38, y: 0, width: self.titleLab.frame.width, height: 50)
+            self.noteLab.frame = CGRect(x: self.titleLab.frame.maxX, y: 0, width: WIDTH-self.titleLab.frame.maxX-38, height: 50)
         }
         
     }

@@ -154,7 +154,14 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
         
         if isJoin {
             
-            self.navigationController?.pushViewController(NSCirclePostForumViewController(), animated: true)
+            let circlePostForumController = NSCirclePostForumViewController()
+            circlePostForumController.hidesBottomBarWhenPushed = true
+            circlePostForumController.couldSelectedCircle = false
+            let circle = PublishCommunityDataCommunityModel()
+            circle.community_name = communityModel.community_name
+            circle.id = communityModel.id
+            circlePostForumController.selectedCircle = circle
+            self.navigationController?.pushViewController(circlePostForumController, animated: true)
         }else{
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
             hud.removeFromSuperViewOnHide = true
@@ -208,7 +215,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
         tableHeaderView.addSubview(countLab)
         
         let joinBtn = UIButton(frame: CGRect(x: WIDTH-88, y: tableHeaderView.frame.height/2.0-15, width: 80, height: 30))
-        joinBtn.layer.cornerRadius = 6
+        joinBtn.layer.cornerRadius = 4
         joinBtn.layer.borderColor = COLOR.cgColor
         joinBtn.layer.borderWidth = 1
         joinBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
@@ -350,8 +357,8 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     // MARK: - UITableViewDelegate
-    fileprivate let titleSize:CGFloat = 14
-    fileprivate let contentSize:CGFloat = 12
+    fileprivate let titleSize:CGFloat = 16
+    fileprivate let contentSize:CGFloat = 14
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -371,7 +378,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
                 contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
-            return 55+8+height+8+contentHeight+8+8+8// 个人信息高+上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
+            return 55+8+height+8+contentHeight+8+8+8+5// 个人信息高+上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
         }else if forum.photo.count < 3 {
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16-110-8)
             
@@ -385,7 +392,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
             let cellHeight2 = 8+height+8+contentHeight+8+8+8// 上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
             
             
-            return max(cellHeight1, cellHeight2)+55
+            return max(cellHeight1, cellHeight2)+55+5
         }else{
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
             
@@ -397,7 +404,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
             
             let imgHeight = (WIDTH-16-15*2)/3.0*2/3.0
             
-            return 55+8+height+8+contentHeight+8+imgHeight+8+8+8// 个人信息高+上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
+            return 55+8+height+8+contentHeight+8+imgHeight+8+8+8+5// 个人信息高+上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
         }
     }
     

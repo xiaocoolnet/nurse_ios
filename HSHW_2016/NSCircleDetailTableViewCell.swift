@@ -48,7 +48,9 @@ class NSCircleDetailTableViewCell: UITableViewCell {
     let contantLab = UILabel()
     let titleImg = UIImageView()
     let likeBtn = UIButton()
+    let likeLab = UILabel()
     let comBtn = UIButton()
+    let comLab = UILabel()
     let addressBtn = UIButton()
     let moreBtn = UIButton()
     let titSubImg = UIImageView()
@@ -81,9 +83,11 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         self.addSubview(titleImg)
         self.addSubview(titSubImg)
         self.addSubview(likeBtn)
+        self.addSubview(likeLab)
         self.addSubview(comBtn)
+        self.addSubview(comLab)
         self.addSubview(addressBtn)
-        self.addSubview(moreBtn)
+//        self.addSubview(moreBtn)
         
         self.setSubViews()
     }
@@ -135,12 +139,18 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         contantLab.numberOfLines = 2
         
         likeBtn.setImage(UIImage(named: "赞"), for: UIControlState())
-        likeBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
-        likeBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
+        //        likeBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        //        likeBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
+        
+        likeLab.font = UIFont.systemFont(ofSize: 10)
+        likeLab.textColor = UIColor.lightGray
         
         comBtn.setImage(UIImage(named: "评论"), for: UIControlState())
-        comBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
-        comBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
+        //        comBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        //        comBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
+        
+        comLab.font = UIFont.systemFont(ofSize: 10)
+        comLab.textColor = UIColor.lightGray
         
         addressBtn.setImage(UIImage(named: "发贴位置"), for: UIControlState())
         addressBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
@@ -171,8 +181,8 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         titSubImg.addSubview(titSubImg_3)
     }
     
-    fileprivate let titleSize:CGFloat = 14
-    fileprivate let contentSize:CGFloat = 12
+    fileprivate let titleSize:CGFloat = 16
+    fileprivate let contentSize:CGFloat = 14
     
     func setCellWith(_ forumModel:ForumListDataModel) {
         
@@ -248,19 +258,37 @@ class NSCircleDetailTableViewCell: UITableViewCell {
             
             self.contantLab.text = forumModel.content
             
-            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
-            comBtn.setTitle(forumModel.hits, for: UIControlState())
+            likeLab.text = forumModel.like_num
+            comLab.text = forumModel.hits
+            //            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+            //            comBtn.setTitle(forumModel.hits, for: UIControlState())
+            
+            likeBtn.sizeToFit()
+            likeBtn.frame.origin = CGPoint(x: 8, y: contantLab.frame.maxY+10)
+            likeLab.sizeToFit()
+            likeLab.frame.origin.x = likeBtn.frame.maxX+5
+            likeLab.center.y = likeBtn.center.y
+            
+            comBtn.sizeToFit()
+            comBtn.frame.origin = CGPoint(x: likeLab.frame.maxX+10, y: contantLab.frame.maxY+10)
+            comLab.sizeToFit()
+            comLab.frame.origin.x = comBtn.frame.maxX+5
+            comLab.center.y = likeBtn.center.y
+
+            
+//            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+//            comBtn.setTitle(forumModel.hits, for: UIControlState())
             // TODO:
             addressBtn.setTitle("发贴地点", for: UIControlState())
 
-            likeBtn.sizeToFit()
-            likeBtn.frame.origin = CGPoint(x: 8, y: contantLab.frame.maxY+8)
-            
-            comBtn.sizeToFit()
-            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: contantLab.frame.maxY+8)
+//            likeBtn.sizeToFit()
+//            likeBtn.frame.origin = CGPoint(x: 8, y: contantLab.frame.maxY+8)
+//            
+//            comBtn.sizeToFit()
+//            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: contantLab.frame.maxY+8)
             
             addressBtn.sizeToFit()
-            addressBtn.frame.origin = CGPoint(x: comBtn.frame.maxX+10, y: contantLab.frame.maxY+8)
+            addressBtn.frame.origin = CGPoint(x: comBtn.frame.maxX+10, y: contantLab.frame.maxY+10)
             
         }else if forumModel.photo.count < 3 {
             
@@ -307,16 +335,33 @@ class NSCircleDetailTableViewCell: UITableViewCell {
                 titleImg.frame.origin.y = forumMinY
             }
             
-            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
-            comBtn.setTitle(forumModel.hits, for: UIControlState())
-            // TODO:
-            addressBtn.setTitle(QCLoginUserInfo.currentInfo.address, for: UIControlState())
+            likeLab.text = forumModel.like_num
+            comLab.text = forumModel.hits
+            //            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+            //            comBtn.setTitle(forumModel.hits, for: UIControlState())
             
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: max(titleImg.frame.maxY+8, contantLab.frame.maxY+8))
+            likeLab.sizeToFit()
+            likeLab.frame.origin.x = likeBtn.frame.maxX+5
+            likeLab.center.y = likeBtn.center.y
             
             comBtn.sizeToFit()
-            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: max(titleImg.frame.maxY+8, contantLab.frame.maxY+8))
+            comBtn.frame.origin = CGPoint(x: likeLab.frame.maxX+10, y: max(titleImg.frame.maxY+8, contantLab.frame.maxY+8))
+            comLab.sizeToFit()
+            comLab.frame.origin.x = comBtn.frame.maxX+5
+            comLab.center.y = likeBtn.center.y
+            
+//            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+//            comBtn.setTitle(forumModel.hits, for: UIControlState())
+            // TODO:
+            addressBtn.setTitle(QCLoginUserInfo.currentInfo.address, for: UIControlState())
+            
+//            likeBtn.sizeToFit()
+//            likeBtn.frame.origin = CGPoint(x: 8, y: max(titleImg.frame.maxY+8, contantLab.frame.maxY+8))
+//            
+//            comBtn.sizeToFit()
+//            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: max(titleImg.frame.maxY+8, contantLab.frame.maxY+8))
             
             addressBtn.sizeToFit()
             addressBtn.frame.origin = CGPoint(x: comBtn.frame.maxX+10, y: max(titleImg.frame.maxY+8, contantLab.frame.maxY+8))
@@ -358,19 +403,36 @@ class NSCircleDetailTableViewCell: UITableViewCell {
             titleImg.isHidden = true
             titSubImg.isHidden = false
             
-            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
-            comBtn.setTitle(forumModel.comments_count, for: UIControlState())
+            likeLab.text = forumModel.like_num
+            comLab.text = forumModel.hits
+            //            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+            //            comBtn.setTitle(forumModel.hits, for: UIControlState())
+            
+            likeBtn.sizeToFit()
+            likeBtn.frame.origin = CGPoint(x: 8, y: titSubImg.frame.maxY+10)
+            likeLab.sizeToFit()
+            likeLab.frame.origin.x = likeBtn.frame.maxX+5
+            likeLab.center.y = likeBtn.center.y
+            
+            comBtn.sizeToFit()
+            comBtn.frame.origin = CGPoint(x: likeLab.frame.maxX+10, y: titSubImg.frame.maxY+10)
+            comLab.sizeToFit()
+            comLab.frame.origin.x = comBtn.frame.maxX+5
+            comLab.center.y = likeBtn.center.y
+            
+//            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+//            comBtn.setTitle(forumModel.comments_count, for: UIControlState())
             // TODO:
             addressBtn.setTitle("发贴地点", for: UIControlState())
             
-            likeBtn.sizeToFit()
-            likeBtn.frame.origin = CGPoint(x: 8, y: titSubImg.frame.maxY+8)
-            
-            comBtn.sizeToFit()
-            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: titSubImg.frame.maxY+8)
+//            likeBtn.sizeToFit()
+//            likeBtn.frame.origin = CGPoint(x: 8, y: titSubImg.frame.maxY+8)
+//            
+//            comBtn.sizeToFit()
+//            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: titSubImg.frame.maxY+8)
             
             addressBtn.sizeToFit()
-            addressBtn.frame.origin = CGPoint(x: comBtn.frame.maxX+10, y: titSubImg.frame.maxY+8)
+            addressBtn.frame.origin = CGPoint(x: comBtn.frame.maxX+10, y: titSubImg.frame.maxY+10)
 
         }
         

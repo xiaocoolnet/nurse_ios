@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MBProgressHUD
 
-class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate {
 
     let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
@@ -48,7 +49,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             self.rootTableView.mj_header.endRefreshing()
         }
         
-        CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: "", best: "", hot: "1", pager: "") { (success, response) in
+        CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: "", best: "", hot: "1", pager: "1") { (success, response) in
             if success {
                 self.communityModelArray = response as! [CommunityListDataModel]
                 self.setTableViewHeaderView()
@@ -81,6 +82,39 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         self.view.addSubview(rootTableView)
         
         self.setTableViewHeaderView()
+        
+        let editBtn = UIButton(frame: CGRect(x: WIDTH-50-10, y: HEIGHT-50-64-65-49, width: 50, height: 50))
+        editBtn.setImage(UIImage(named: "悬浮按钮"), for: UIControlState())
+        editBtn.addTarget(self, action: #selector(editBtnClick), for: .touchUpInside)
+        self.view.addSubview(editBtn)
+    }
+    
+    // MARK: - 悬浮按钮点击事件
+    func editBtnClick() {
+        print("悬浮按钮   点击")
+        
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
+        
+        // 获取我关注的圈子
+        
+        if true {
+            
+            let circlePostForumController = NSCirclePostForumViewController()
+            circlePostForumController.hidesBottomBarWhenPushed = true
+            circlePostForumController.couldSelectedCircle = true
+            self.navigationController?.pushViewController(circlePostForumController, animated: true)
+        }else{
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = .text
+            hud.label.text = "请先加入圈子"
+            hud.hide(animated: true, afterDelay: 1)
+        }
+        
     }
     
     // MARK: - 设置头视图
@@ -100,6 +134,31 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             messageBtn.setAttributedTitle(titleAttrStr, for: UIControlState())
             tableHeaderView.addSubview(messageBtn)
             messageBtnMaxY = messageBtn.frame.maxY
+        }
+        
+        // 搜索
+        if true {
+            
+            let search = UISearchBar(frame: CGRect(x: 8, y: 10, width: WIDTH-16, height: 35))
+            search.barTintColor = UIColor.white
+            search.searchBarStyle = .minimal
+            //        search.layer.cornerRadius = 6
+            //        search.layer.borderWidth = 1/UIScreen.mainScreen().scale
+            //        search.layer.borderColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
+            search.placeholder = "大家都在搜：护士那些事"
+            search.delegate = self
+            tableHeaderView.addSubview(search)
+            
+//            let messageCount = "2"
+//            let messageBtn = UIButton(frame: CGRect(x: 8, y: 10, width: WIDTH-16, height: 35))
+//            messageBtn.backgroundColor = UIColor(white: 0.95, alpha: 1)
+//            
+//            messageBtn.setImage(UIImage(named: "新消息"), for: UIControlState())
+//            let titleAttrStr = NSMutableAttributedString(string: "您有 \(messageCount) 条新消息", attributes: [NSForegroundColorAttributeName:UIColor.gray,NSFontAttributeName:UIFont.systemFont(ofSize: 15)])
+//            titleAttrStr.addAttributes([NSForegroundColorAttributeName:COLOR], range: NSMakeRange(3, NSString(string: messageCount).length))
+//            messageBtn.setAttributedTitle(titleAttrStr, for: UIControlState())
+//            tableHeaderView.addSubview(messageBtn)
+            messageBtnMaxY = search.frame.maxY
         }
         
         // "精选圈子","热门圈子","全部圈子"
@@ -196,6 +255,43 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         rootTableView.tableHeaderView = tableHeaderView
     }
     
+    // MARK: - UISearchBarDelegate
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.removeFromSuperViewOnHide = true
+        hud.mode = .text
+        hud.label.text = "敬请期待"
+        hud.hide(animated: true, afterDelay: 1.5)
+        return false
+        
+        searchBar.showsCancelButton = true
+        return true
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        if (searchBar.text?.characters.count ?? 0)! < 5 {
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = .text
+            hud.label.text = "输入字数过少"
+            hud.hide(animated: true, afterDelay: 1)
+            return
+        }
+        
+        
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+        searchBar.showsCancelButton = false
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+        searchBar.showsCancelButton = false
+    }
+
+    
     // btn1 点击事件
     func btn1Click(_ btn1:UIButton) {
         switch btn1.tag {
@@ -256,8 +352,8 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     }
     
     // MARK: - UITableViewDelegate
-    fileprivate let titleSize:CGFloat = 14
-    fileprivate let contentSize:CGFloat = 12
+    fileprivate let titleSize:CGFloat = 16
+    fileprivate let contentSize:CGFloat = 14
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -308,15 +404,15 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 35
+        return 40
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 35))
+        let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 40))
         footerView.tag = 100 + section
         footerView.addTarget(self, action: #selector(footerViewClick(footerBtn:)), for: .touchUpInside)
         
-        let img = UIImageView(frame: CGRect(x: 8, y: 8, width: 25, height: 19))
+        let img = UIImageView(frame: CGRect(x: 8, y: 8, width: 25, height: 24))
         img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModelArray[section].community_photo), placeholderImage: nil)
         img.contentMode = .scaleAspectFit
         img.clipsToBounds = true

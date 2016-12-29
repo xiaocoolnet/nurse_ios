@@ -393,13 +393,13 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             
             switch indexPath.row {
             case 0:
-                cell?.textLabel?.font = UIFont.systemFont(ofSize: 18)
+                cell?.textLabel?.font = UIFont.systemFont(ofSize: 20)
                 cell?.textLabel?.textColor = UIColor.black
                 cell?.textLabel?.textAlignment = .center
                 cell?.textLabel?.text = forumModel.title
                 
             case 1:
-                cell?.textLabel?.font = UIFont.systemFont(ofSize: 14)
+                cell?.textLabel?.font = UIFont.systemFont(ofSize: 16)
                 cell?.textLabel?.textColor = UIColor(red: 51/255.0, green: 51/255.0, blue: 51/255.0, alpha: 1)
                 cell?.textLabel?.textAlignment = .left
                 cell?.textLabel?.text = forumModel.content
@@ -505,7 +505,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             
             let height = calculateHeight((self.forumCommentArray[indexPath.row].content), size: 14, width: WIDTH-10-16)
             
-            var child_commentBtnY = height+8+40+8+8
+            var child_commentBtnY = 5+height+8+40+8+8
             for child_comment in (self.forumCommentArray[indexPath.row].child_comments) {
                 
                 let child_commentBtnHeight = child_comment.content.boundingRect(
@@ -518,7 +518,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                 
             }
             
-            return child_commentBtnY+8+7+8+1
+            return child_commentBtnY+8+7+8+5+1
         }
     }
     
@@ -560,7 +560,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             collectNumLab.center.y = collectBtn.center.y
             contentView.addSubview(collectNumLab)
             
-            let likeBtn = UIButton(frame: CGRect(x: collectNumLab.frame.maxX+20, y: 8, width: 30, height: 30))
+            let likeBtn = UIButton(frame: CGRect(x: collectNumLab.frame.maxX+25, y: 8, width: 30, height: 30))
             likeBtn.tag = 101
             likeBtn.layer.cornerRadius = 15
 //            likeBtn.layer.backgroundColor = UIColor(red: 244/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1).CGColor
@@ -582,7 +582,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             likeNumLab.center.y = likeBtn.center.y
             contentView.addSubview(likeNumLab)
             
-            let rewardBtn = UIButton(frame: CGRect(x: likeNumLab.frame.maxX+20, y: 8, width: 30, height: 30))
+            let rewardBtn = UIButton(frame: CGRect(x: likeNumLab.frame.maxX+25, y: 8, width: 30, height: 30))
             rewardBtn.tag = 102
             rewardBtn.layer.cornerRadius = 15
 //            rewardBtn.layer.backgroundColor = UIColor(red: 244/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1).CGColor

@@ -199,7 +199,7 @@ class NSCircleCommentTableViewCell: UITableViewCell {
             
             let lineView = UIView(frame: CGRect(
                 x: 0,
-                y: child_commentBtnY+8+7+8,
+                y: child_commentBtnY+8+7+8+5,
                 width: WIDTH,
                 height: 1/UIScreen.main.scale))
             lineView.tag = 1000

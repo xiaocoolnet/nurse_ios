@@ -52,7 +52,7 @@ class NSCircleListTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        joinBtn.layer.cornerRadius = 6
+        joinBtn.layer.cornerRadius = 4
         joinBtn.layer.borderWidth = 1
         joinBtn.layer.borderColor = COLOR.cgColor
         

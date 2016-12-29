@@ -40,16 +40,16 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="儿科是全面研究小儿时期身心发育保健以及疾病防治的综合医学科学..." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ItS-hS-bbc">
-                        <rect key="frame" x="96" y="37" width="214" height="24"/>
+                        <rect key="frame" x="96" y="37" width="194" height="24"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
                         <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L1o-oZ-1n6">
-                        <rect key="frame" x="318" y="25" width="60" height="25"/>
+                        <rect key="frame" x="298" y="23" width="80" height="30"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="60" id="HUt-dB-JHX"/>
-                            <constraint firstAttribute="height" constant="25" id="nc5-Xc-LHp"/>
+                            <constraint firstAttribute="width" constant="80" id="HUt-dB-JHX"/>
+                            <constraint firstAttribute="height" constant="30" id="nc5-Xc-LHp"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <state key="normal" title="加入" image="加入">

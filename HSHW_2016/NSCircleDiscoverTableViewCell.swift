@@ -40,7 +40,9 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
     let contantLab = UILabel()
     let titleImg = UIImageView()
     let likeBtn = UIButton()
+    let likeLab = UILabel()
     let comBtn = UIButton()
+    let comLab = UILabel()
     let titSubImg = UIImageView()
     let titSubImg_1 = UIImageView()
     let titSubImg_2 = UIImageView()
@@ -63,7 +65,9 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
         self.addSubview(titleImg)
         self.addSubview(titSubImg)
         self.addSubview(likeBtn)
+        self.addSubview(likeLab)
         self.addSubview(comBtn)
+        self.addSubview(comLab)
         
         self.setSubViews()
     }
@@ -89,12 +93,18 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
         contantLab.numberOfLines = 2
         
         likeBtn.setImage(UIImage(named: "赞"), for: UIControlState())
-        likeBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
-        likeBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
+//        likeBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+//        likeBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
+        
+        likeLab.font = UIFont.systemFont(ofSize: 10)
+        likeLab.textColor = UIColor.lightGray
         
         comBtn.setImage(UIImage(named: "评论"), for: UIControlState())
-        comBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
-        comBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
+//        comBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+//        comBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
+        
+        comLab.font = UIFont.systemFont(ofSize: 10)
+        comLab.textColor = UIColor.lightGray
         
         titleImg.contentMode = .scaleAspectFill
         titleImg.clipsToBounds = true
@@ -115,8 +125,8 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
         titSubImg.addSubview(titSubImg_3)
     }
     
-    fileprivate let titleSize:CGFloat = 14
-    fileprivate let contentSize:CGFloat = 12
+    fileprivate let titleSize:CGFloat = 16
+    fileprivate let contentSize:CGFloat = 14
     
     func setCell(with forumModel:ForumListDataModel) {
         
@@ -167,14 +177,22 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             
             self.contantLab.text = forumModel.content
             
-            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
-            comBtn.setTitle(forumModel.hits, for: UIControlState())
+            likeLab.text = forumModel.like_num
+            comLab.text = forumModel.hits
+//            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+//            comBtn.setTitle(forumModel.hits, for: UIControlState())
             
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: contantLab.frame.maxY+8)
+            likeLab.sizeToFit()
+            likeLab.frame.origin.x = likeBtn.frame.maxX+5
+            likeLab.center.y = likeBtn.center.y
             
             comBtn.sizeToFit()
-            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: contantLab.frame.maxY+8)
+            comBtn.frame.origin = CGPoint(x: likeLab.frame.maxX+10, y: contantLab.frame.maxY+8)
+            comLab.sizeToFit()
+            comLab.frame.origin.x = comBtn.frame.maxX+5
+            comLab.center.y = likeBtn.center.y
             
         }else if forumModel.photo.count < 3 {
             
@@ -215,14 +233,31 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
                 titleImg.frame.origin.y = (contantLab.frame.maxY+8+8+8-80)/2.0
             }
             
-            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
-            comBtn.setTitle(forumModel.hits, for: UIControlState())
+            likeLab.text = forumModel.like_num
+            comLab.text = forumModel.hits
+            //            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+            //            comBtn.setTitle(forumModel.hits, for: UIControlState())
             
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: max(8+80-likeBtn.frame.height, contantLab.frame.maxY+8))
+            likeLab.sizeToFit()
+            likeLab.frame.origin.x = likeBtn.frame.maxX+5
+            likeLab.center.y = likeBtn.center.y
             
             comBtn.sizeToFit()
-            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: max(8+80-likeBtn.frame.height, contantLab.frame.maxY+8))
+            comBtn.frame.origin = CGPoint(x: likeLab.frame.maxX+10, y: max(8+80-likeBtn.frame.height, contantLab.frame.maxY+8))
+            comLab.sizeToFit()
+            comLab.frame.origin.x = comBtn.frame.maxX+5
+            comLab.center.y = likeBtn.center.y
+            
+//            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+//            comBtn.setTitle(forumModel.hits, for: UIControlState())
+            
+//            likeBtn.sizeToFit()
+//            likeBtn.frame.origin = CGPoint(x: 8, y: max(8+80-likeBtn.frame.height, contantLab.frame.maxY+8))
+            
+//            comBtn.sizeToFit()
+//            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: max(8+80-likeBtn.frame.height, contantLab.frame.maxY+8))
         }else{
             
             let height = calculateHeight((forumModel.title), size: titleSize, width: WIDTH-16)
@@ -260,14 +295,32 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             titleImg.isHidden = true
             titSubImg.isHidden = false
             
-            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
-            comBtn.setTitle(forumModel.hits, for: UIControlState())
+            
+            likeLab.text = forumModel.like_num
+            comLab.text = forumModel.hits
+            //            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+            //            comBtn.setTitle(forumModel.hits, for: UIControlState())
             
             likeBtn.sizeToFit()
             likeBtn.frame.origin = CGPoint(x: 8, y: titSubImg.frame.maxY+8)
+            likeLab.sizeToFit()
+            likeLab.frame.origin.x = likeBtn.frame.maxX+5
+            likeLab.center.y = likeBtn.center.y
             
             comBtn.sizeToFit()
-            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: titSubImg.frame.maxY+8)
+            comBtn.frame.origin = CGPoint(x: likeLab.frame.maxX+10, y: titSubImg.frame.maxY+8)
+            comLab.sizeToFit()
+            comLab.frame.origin.x = comBtn.frame.maxX+5
+            comLab.center.y = likeBtn.center.y
+            
+//            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
+//            comBtn.setTitle(forumModel.hits, for: UIControlState())
+//            
+//            likeBtn.sizeToFit()
+//            likeBtn.frame.origin = CGPoint(x: 8, y: titSubImg.frame.maxY+8)
+//            
+//            comBtn.sizeToFit()
+//            comBtn.frame.origin = CGPoint(x: likeBtn.frame.maxX+10, y: titSubImg.frame.maxY+8)
         }
         
         

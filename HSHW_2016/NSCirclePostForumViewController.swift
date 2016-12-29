@@ -11,6 +11,8 @@ import MBProgressHUD
 
 class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ChooseCircleDelegate {
 
+    var couldSelectedCircle = false
+    
     // 选择图片、圈子、位置等 底图
     let toolBgView = UIView()
     // 标题
@@ -385,9 +387,11 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
     func chooseCircleBtnClick() {
         print("点击选择圈子按钮")
         
-        let chooseCircleController = NSCirclePostChooseCircleViewController()
-        chooseCircleController.delegate = self
-        self.navigationController?.pushViewController(chooseCircleController, animated: true)
+        if couldSelectedCircle {
+            let chooseCircleController = NSCirclePostChooseCircleViewController()
+            chooseCircleController.delegate = self
+            self.navigationController?.pushViewController(chooseCircleController, animated: true)
+        }
     }
     
     func chooseCircle(circle: PublishCommunityDataCommunityModel) {
