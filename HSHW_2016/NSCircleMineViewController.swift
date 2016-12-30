@@ -13,7 +13,7 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
     
     let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
-    var cellNameArray1 = ["我的贴子","认证","管理圈子"]
+    var cellNameArray1 = ["我的贴子","认证"]
     var cellImageNameArray1 = ["我的贴子","认证","管理圈子"]
 
     var cellNameArray2 = ["儿科","内科","护士交友"]
@@ -64,17 +64,23 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
             }
         }
         
-//        CircleNetUtil.judge_apply_community(userid: QCLoginUserInfo.currentInfo.userid, cid: "") { (success, response) in
-//            if success {
-//                if (response as! String) == "yes" {
-//                    self.cellNameArray1 = ["我的贴子","认证","管理圈子"]
-//                }else{
-//                    self.cellNameArray1 = ["我的贴子","认证"]
-//                }
-//                self.rootTableView.reloadData()
-//            }
-//
-//        }
+        if QCLoginUserInfo.currentInfo.isCircleManager == "1" {
+            self.cellNameArray1 = ["我的贴子","认证","管理圈子"]
+            self.rootTableView.reloadData()
+        }else{
+            
+            CircleNetUtil.judge_apply_community(userid: QCLoginUserInfo.currentInfo.userid, cid: "") { (success, response) in
+                if success {
+                    if (response as! String) == "yes" {
+                        self.cellNameArray1 = ["我的贴子","认证","管理圈子"]
+                    }else{
+                        self.cellNameArray1 = ["我的贴子","认证"]
+                    }
+                    self.rootTableView.reloadData()
+                }
+                
+            }
+        }
     }
     
     // MARK: - 设置子视图

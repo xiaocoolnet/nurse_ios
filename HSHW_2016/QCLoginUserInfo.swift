@@ -34,6 +34,7 @@ class QCLoginUserInfo {
     var education = ""
     var score = ""
     var all_information = ""
+    var isCircleManager = ""
     
     
     static let currentInfo = QCLoginUserInfo()

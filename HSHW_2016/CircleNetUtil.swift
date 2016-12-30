@@ -938,5 +938,32 @@ class CircleNetUtil: NSObject {
             }
         }
     }
+    
+    // MARK: - 判断是否是圈子管理员
+    //接口地址：a=judge_community_admin
+    //入参：userid
+    //出参：1是，0不是
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=judge_community_admin&userid=603
+    class func judge_community_admin(userid:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"judge_community_admin"
+        let param = [
+            "userid":userid
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
 
 }

@@ -36,6 +36,8 @@ class LoginModel: NSObject {
             }else{
                 let result = LoginUserInfoModel(JSONDecoder(json!))
                 
+//                let responseStr = result.status == "success" ? nil : result.errorData
+
                 //  进行数据解析
                 if result.status == "success"{
                     //  进行赋值
@@ -43,9 +45,19 @@ class LoginModel: NSObject {
                     QCLoginUserInfo.currentInfo.userid = (result.data?.user_id)!
                     QCLoginUserInfo.currentInfo.devicestate = (result.data?.user_devicestate)!
                     QCLoginUserInfo.currentInfo.usertype = (result.data?.user_usertype)!
+                    
+                    CircleNetUtil.judge_community_admin(userid: QCLoginUserInfo.currentInfo.userid, handle: { (success, response) in
+                        if success {
+                            QCLoginUserInfo.currentInfo.isCircleManager = response as! String
+                            handle(true, nil)
+                        }else{
+                            handle(false, "登录失败" as AnyObject?)
+                        }
+                    })
+                }else{
+                    handle(false, result.errorData as AnyObject?)
                 }
-                let responseStr = result.status == "success" ? nil : result.errorData
-                handle(result.status == "success",responseStr as AnyObject?)
+//                handle(result.status == "success",responseStr as AnyObject?)
             }
         }
 //        requestManager?.GET(PARK_URL_Header, parameters: paramDic, success: { (NSURLSessionDataTask, AnyObject) in
