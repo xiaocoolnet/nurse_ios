@@ -407,8 +407,8 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                 
             default:
                 let imgWidth = (WIDTH-10*4)/3.0
-                
-                let imgBgView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 10+(imgWidth+10)*CGFloat((forumModel.photo.count/3))))
+                let imgBgViewHeight = forumModel.photo.count%3 == 0 ? 10+(imgWidth+10)*CGFloat((forumModel.photo.count/3)):10+(imgWidth+10)*CGFloat((forumModel.photo.count/3)+1)
+                let imgBgView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: imgBgViewHeight))
                 imgBgView.tag = 100
                 
                 let imgX:CGFloat = 10
@@ -487,6 +487,14 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             
             cell.floorLab.text = "\(self.forumCommentArray.count-indexPath.row)楼"
             cell.commentModel = self.forumCommentArray[indexPath.row]
+            
+            
+            if isMaster || QCLoginUserInfo.currentInfo.isCircleManager == "1" {
+                cell.deleteBtn.isHidden = false
+            }else{
+                cell.deleteBtn.isHidden = true
+            }
+            
             cell.likeBtn.sizeToFit()
             cell.likeBtn.tag = 100+indexPath.row
             cell.likeBtn.isSelected = self.forumCommentArray[indexPath.row].add_like == "1" ? true:false
@@ -514,7 +522,8 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
 
                 let imgWidth = (WIDTH-10*4)/3.0
 
-                return 10+(imgWidth+10)*CGFloat((forumModel.photo.count/3))
+                return forumModel.photo.count%3 == 0 ? 10+(imgWidth+10)*CGFloat((forumModel.photo.count/3)):10+(imgWidth+10)*CGFloat((forumModel.photo.count/3)+1)
+//                return 10+(imgWidth+10)*CGFloat((forumModel.photo.count/3))
 //                return imageHeigthArray[indexPath.row-2]+16
                 
             }

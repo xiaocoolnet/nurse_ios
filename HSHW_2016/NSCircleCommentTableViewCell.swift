@@ -196,7 +196,8 @@ class NSCircleCommentTableViewCell: UITableViewCell {
             deleteBtn.frame.origin.x = replyBtn.frame.origin.x-10-deleteBtn.frame.width
             deleteBtn.center.y = dateImg.center.y
             
-            deleteBtn.isHidden = commentModel?.userid == QCLoginUserInfo.currentInfo.userid ? false:true
+
+//            deleteBtn.isHidden = commentModel?.userid == QCLoginUserInfo.currentInfo.userid ? false:true
             
             let lineView = UIView(frame: CGRect(
                 x: 0,
