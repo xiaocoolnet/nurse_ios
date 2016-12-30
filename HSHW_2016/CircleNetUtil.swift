@@ -879,5 +879,64 @@ class CircleNetUtil: NSObject {
         }
     }
 
+    // MARK: - 收藏
+    //接口地址：a=addfavorite
+    //入参：userid,refid,type:1、新闻、2考试,3其他收藏(学习中的新闻),4论坛帖子,5招聘,6用户,title,description
+    //出参：favoriteid
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=addfavorite&userid=578&refid=12&type=1&title=一篇不错的文章或者考试题&description=非常棒的哦
+    class func addfavorite(userid:String, refid:String, type:String, title:String, description:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"addfavorite"
+        let param = [
+            "userid":userid,
+            "refid":refid,
+            "type":type,
+            "title":title,
+            "description":description
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 取消收藏
+    //接口地址：a=cancelfavorite
+    //入参：userid,refid,type:1、新闻、2考试,4论坛帖子,5招聘,6用户
+    //出参：favoriteid
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=cancelfavorite&userid=578&refid=12&type=1
+    class func cancelfavorite(userid:String, refid:String, type:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"cancelfavorite"
+        let param = [
+            "userid":userid,
+            "refid":refid,
+            "type":type
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
 
 }

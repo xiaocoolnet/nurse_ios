@@ -791,9 +791,38 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.removeFromSuperViewOnHide = true
-        hud.mode = .text
-        hud.label.text = "未完成"
-        hud.hide(animated: true, afterDelay: 1)
+        
+        if self.forumModel.favorites_add == "1" {
+            CircleNetUtil.cancelfavorite(userid: QCLoginUserInfo.currentInfo.userid, refid: forumDataModel.id, type: "4", handle: { (success, response) in
+                if success {
+                    hud.hide(animated: true)
+                    
+                    self.forumModel.favorites_add = "0"
+                    self.forumModel.favorites = String(NSString(string: self.forumModel.favorites).integerValue-1)
+                    self.rootTableView.reloadData()
+                }else{
+                    hud.mode = .text
+                    hud.label.text = "取消收藏失败"
+                    hud.hide(animated: true, afterDelay: 1)
+                }
+            })
+        }else{
+            
+            CircleNetUtil.addfavorite(userid: QCLoginUserInfo.currentInfo.userid, refid: forumDataModel.id, type: "4", title: forumModel.title, description: forumModel.content) { (success, response) in
+                if success {
+                    hud.hide(animated: true)
+                    
+                    self.forumModel.favorites_add = "1"
+                    self.forumModel.favorites = String(NSString(string: self.forumModel.favorites).integerValue+1)
+                    self.rootTableView.reloadData()
+                }else{
+                    hud.mode = .text
+                    hud.label.text = "收藏失败"
+                    hud.hide(animated: true, afterDelay: 1)
+                }
+            }
+        }
+        
     }
     func likeBtnClick(_ likeBtn:UIButton) {
         print("2")
