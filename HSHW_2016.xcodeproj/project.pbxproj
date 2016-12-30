@@ -181,6 +181,7 @@
 		1FCCA9681DCC7866001112AC /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA9671DCC7866001112AC /* libz.1.2.5.tbd */; };
 		1FCCA96A1DCC787C001112AC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA9691DCC787C001112AC /* CoreLocation.framework */; };
 		1FCCA96C1DCC78E3001112AC /* libBaiduMobStat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */; };
+		1FD2B6141E16215A003A7DCF /* NSCircleAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2B6131E16215A003A7DCF /* NSCircleAuthViewController.swift */; };
 		1FD464981DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD464971DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift */; };
 		1FE240761E15062C00FE3894 /* NSCircleSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE240751E15062C00FE3894 /* NSCircleSearchResultViewController.swift */; };
 		1FE3A6341D5AFC2D0039D94D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */; };
@@ -507,6 +508,7 @@
 		1FCCA9671DCC7866001112AC /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		1FCCA9691DCC787C001112AC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBaiduMobStat.a; path = ../../../../Downloads/BaiduMTJ_iOS_App_Crash_V4.3.0/ios_api/libBaiduMobStat.a; sourceTree = "<group>"; };
+		1FD2B6131E16215A003A7DCF /* NSCircleAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleAuthViewController.swift; sourceTree = "<group>"; };
 		1FD464971DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailTopTableViewCell.swift; sourceTree = "<group>"; };
 		1FE240751E15062C00FE3894 /* NSCircleSearchResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleSearchResultViewController.swift; sourceTree = "<group>"; };
 		1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -1370,6 +1372,7 @@
 				1F879FA11E026513001385CE /* NSCircleMyForumHomeViewController.swift */,
 				1F879FA51E0265AC001385CE /* NSCircleMyForumViewController.swift */,
 				1F879FA71E0265C1001385CE /* NSCircleMyCommentViewController.swift */,
+				1FD2B6131E16215A003A7DCF /* NSCircleAuthViewController.swift */,
 			);
 			name = "我的";
 			sourceTree = "<group>";
@@ -1843,6 +1846,7 @@
 				F6B4083F1D1D31EB00BDFDBE /* HSJobListModel.swift in Sources */,
 				1FCCA9621DCC64FA001112AC /* ExamBibleSubCateViewController.swift in Sources */,
 				F63B3A6F1D2F953600C5B2CF /* HSStateEditResumeController.swift in Sources */,
+				1FD2B6141E16215A003A7DCF /* NSCircleAuthViewController.swift in Sources */,
 				F6342C6B1D391CBE00800D8E /* FansTableViewCell.swift in Sources */,
 				1F2679E41E03FD4700FF2D25 /* NSCircleHomeViewController.swift in Sources */,
 				F64C9AC81D3B9C3F0041E360 /* MineChildView.swift in Sources */,

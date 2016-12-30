@@ -37,6 +37,7 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
         BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 我的")
     }
     
+    // MARK: - 加载数据
     func loadData() {
         
         CircleNetUtil.getMyForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "1") { (success, response) in
@@ -54,6 +55,7 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
         }
     }
     
+    // MARK: - 加载数据（上拉加载）
     var pager = 1
     func loadData_pullUp() {
         

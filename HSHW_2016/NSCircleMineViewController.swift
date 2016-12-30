@@ -343,6 +343,11 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
         case (0,0):
             self.navigationController?.pushViewController(NSCircleMyForumHomeViewController(), animated: true)
         case (0,1):
+            
+//            let circleAuthController = NSCircleAuthViewController()
+//            circleAuthController.hidesBottomBarWhenPushed = true
+//            self.navigationController?.pushViewController(circleAuthController, animated: true)
+
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
             hud.removeFromSuperViewOnHide = true
             hud.mode = .text

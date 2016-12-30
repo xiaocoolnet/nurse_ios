@@ -17,9 +17,11 @@
     self = [super initWithFrame:frame];
     if (self) {
 
+        _lb_title_fontSize = 17;
+        
         lb_title = [[UILabel alloc] initWithFrame:CGRectZero];
         lb_title.numberOfLines = 0;
-        lb_title.font = [UIFont systemFontOfSize:14.f];
+        lb_title.font = [UIFont systemFontOfSize:_lb_title_fontSize];
         lb_title.backgroundColor = [UIColor clearColor];
         lb_title.text = title;
         CGSize size = [lb_title.text sizeWithAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:14.f]}];
@@ -42,10 +44,11 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _lb_title_fontSize = 17;
         
         lb_title = [[UILabel alloc] initWithFrame:CGRectZero];
 //        lb_title.numberOfLines = 0;
-        lb_title.font = [UIFont systemFontOfSize:17.f];
+        lb_title.font = [UIFont systemFontOfSize:_lb_title_fontSize];
         lb_title.adjustsFontSizeToFitWidth = true;
         lb_title.backgroundColor = [UIColor clearColor];
         [self addSubview:lb_title];
@@ -61,7 +64,7 @@
 -(void)resetdata:(NSString *)title :(UIImage *)Image
 {
     lb_title.text = title;
-    CGSize size = [lb_title.text sizeWithAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:17.f]}];
+    CGSize size = [lb_title.text sizeWithAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:_lb_title_fontSize]}];
     //假设lb_title与图片、按钮边缘间隔都是10,图片大小50*50
     CGFloat margin = 5;
     CGFloat imgWidth = Image.size.width;
@@ -78,7 +81,7 @@
 -(void)resetdataRight:(NSString *)title :(UIImage *)Image
 {
     lb_title.text = title;
-    CGSize size = [lb_title.text sizeWithAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:17.f]}];
+    CGSize size = [lb_title.text sizeWithAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:_lb_title_fontSize]}];
     //假设lb_title与图片、按钮边缘间隔都是10,图片大小50*50
     CGFloat margin = 5;
     CGFloat imgWidth = Image.size.width;
@@ -94,7 +97,7 @@
 -(void)resetdataCenter:(NSString *)title :(UIImage *)Image
 {
     lb_title.text = title;
-    CGSize size = [lb_title.text sizeWithAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:17.f]}];
+    CGSize size = [lb_title.text sizeWithAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:_lb_title_fontSize]}];
     //假设lb_title与图片、按钮边缘间隔都是10,图片大小50*50
     CGFloat margin = 5;
     CGFloat imgWidth = Image.size.width;

@@ -32,3 +32,5 @@
 #import "ImageBtn.h"
 
 #import "SDPhotoBrowser.h"
+
+#import "TPKeyboardAvoidingScrollView.h"

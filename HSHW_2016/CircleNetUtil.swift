@@ -482,6 +482,37 @@ class CircleNetUtil: NSObject {
         }
     }
     
+    // MARK: - 发布个人认证
+    //接口地址：a=authentication_person
+    //入参：userid,auth_type(认证类型 关联字典),auth_company(认证单位),auth_department(工作科室),photo(证件照)
+    //出参：成功 ok
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=authentication_person&userid=603
+    class func authentication_person(userid:String, auth_type:String, auth_company:String, auth_department:String, photo:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"authentication_person"
+        let param = [
+            "userid":userid,
+            "auth_type":auth_type,
+            "auth_company":auth_company,
+            "auth_department":auth_department,
+            "photo":photo
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
+    
     // MARK: - 获取个人认证状态
     //接口地址：a=getPersonAuth
     //入参：userid

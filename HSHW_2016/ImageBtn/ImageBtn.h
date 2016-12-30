@@ -12,6 +12,7 @@
 @property(nonatomic, retain)UIImageView *image;
 @property(nonatomic, retain)UILabel *lb_title;
 @property(nonatomic, retain) UIColor * lb_titleColor;
+@property(nonatomic, assign) CGFloat lb_title_fontSize;
 
 - (id)initWithFrame:(CGRect)frame :(NSString *)title :(UIImage *)Image;
 - (id)initWithFrame:(CGRect)frame;
