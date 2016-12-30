@@ -40,14 +40,25 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 发现")
     }
     
+    // MARK: - 加载数据
     func loadData() {
         
-        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "") { (success, response) in
+        var flag = 0
+        let total = 2
+        
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "1") { (success, response) in
             if success {
+                self.pager = 2
+                self.rootTableView.mj_footer.resetNoMoreData()
+                
                 self.forumModelArray = response as! [ForumListDataModel]
                 self.rootTableView.reloadData()
             }
-            self.rootTableView.mj_header.endRefreshing()
+            
+            flag += 1
+            if flag == total {
+                self.rootTableView.mj_header.endRefreshing()
+            }
         }
         
         CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: "", best: "", hot: "1", pager: "1", sort: "0") { (success, response) in
@@ -55,8 +66,42 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
                 self.communityModelArray = response as! [CommunityListDataModel]
                 self.setTableViewHeaderView()
             }
+            
+            flag += 1
+            if flag == total {
+                self.rootTableView.mj_header.endRefreshing()
+            }
         }
        
+    }
+    
+    // MARK: - 加载数据（上拉加载）
+    var pager = 1
+    func loadData_pullUp() {
+        
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: String(pager)) { (success, response) in
+            if success {
+                self.pager += 1
+                
+                let forumModelArray = response as! [ForumListDataModel]
+
+                if forumModelArray.count == 0 {
+                    self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
+                }else{
+                    
+                    self.rootTableView.mj_footer.endRefreshing()
+                    for forumListData in forumModelArray {
+                        self.forumModelArray.append(forumListData)
+                    }
+                    self.rootTableView.reloadData()
+                    
+                }
+            }else{
+                
+                self.rootTableView.mj_footer.endRefreshing()
+            }
+        }
+        
     }
     
     // MARK: - 设置子视图
@@ -78,7 +123,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         rootTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         rootTableView.mj_header.beginRefreshing()
         
-//        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
+        rootTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
         
         self.view.addSubview(rootTableView)
         

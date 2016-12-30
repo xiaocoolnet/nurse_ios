@@ -43,10 +43,14 @@ class NSCircleForumListViewController: UIViewController, UITableViewDataSource, 
         BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 \((self.title ?? "加精置顶贴子列表"))")
     }
     
+    // MARK: - 加载数据
     func loadData() {
-        
-        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: communityId, isbest: isBest, istop: isTop, pager: "") { (success, response) in
+                
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: communityId, isbest: isBest, istop: isTop, pager: "1") { (success, response) in
             if success {
+                self.pager = 2
+                self.rootTableView.mj_footer.resetNoMoreData()
+                
                 self.forumModelArray = response as![ForumListDataModel]
                 self.rootTableView.reloadData()
 
@@ -54,6 +58,35 @@ class NSCircleForumListViewController: UIViewController, UITableViewDataSource, 
             
             if self.rootTableView.mj_header.isRefreshing() {
                 self.rootTableView.mj_header.endRefreshing()
+            }
+        }
+        
+    }
+    
+    // MARK: - 加载数据（上拉加载）
+    var pager = 1
+    func loadData_pullUp() {
+        
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: communityId, isbest: isBest, istop: isTop, pager: String(pager)) { (success, response) in
+            if success {
+                self.pager += 1
+                
+                let forumModelArray = response as! [ForumListDataModel]
+                
+                if forumModelArray.count == 0 {
+                    self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
+                }else{
+                    
+                    self.rootTableView.mj_footer.endRefreshing()
+                    for forumListData in forumModelArray {
+                        self.forumModelArray.append(forumListData)
+                    }
+                    self.rootTableView.reloadData()
+                    
+                }
+            }else{
+                
+                self.rootTableView.mj_footer.endRefreshing()
             }
         }
         
@@ -78,7 +111,7 @@ class NSCircleForumListViewController: UIViewController, UITableViewDataSource, 
         rootTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         rootTableView.mj_header.beginRefreshing()
         
-        //        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
+        rootTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
         
         self.view.addSubview(rootTableView)
         

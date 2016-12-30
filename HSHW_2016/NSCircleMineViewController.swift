@@ -53,20 +53,38 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - 加载数据
     func loadData() {
-        CircleNetUtil.getMyCommunityList(userid: QCLoginUserInfo.currentInfo.userid, pager: "") { (success, response) in
+        
+        var flag = 0
+        let total = 2
+        
+        CircleNetUtil.getMyCommunityList(userid: QCLoginUserInfo.currentInfo.userid, pager: "1") { (success, response) in
             if success {
+                self.pager = 2
+                self.rootTableView.mj_footer.resetNoMoreData()
+                
                 self.communityList = response as! [CommunityListDataModel]
                 self.rootTableView.reloadData()
             }
             
-            if self.rootTableView.mj_header.isRefreshing() {
-                self.rootTableView.mj_header.endRefreshing()
+            flag += 1
+            if flag == total {
+                
+                if self.rootTableView.mj_header.isRefreshing() {
+                    self.rootTableView.mj_header.endRefreshing()
+                }
             }
         }
         
         if QCLoginUserInfo.currentInfo.isCircleManager == "1" {
             self.cellNameArray1 = ["我的贴子","认证","管理圈子"]
             self.rootTableView.reloadData()
+            flag += 1
+            if flag == total {
+                
+                if self.rootTableView.mj_header.isRefreshing() {
+                    self.rootTableView.mj_header.endRefreshing()
+                }
+            }
         }else{
             
             CircleNetUtil.judge_apply_community(userid: QCLoginUserInfo.currentInfo.userid, cid: "") { (success, response) in
@@ -78,9 +96,46 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
                     }
                     self.rootTableView.reloadData()
                 }
+                flag += 1
+                if flag == total {
+                    
+                    if self.rootTableView.mj_header.isRefreshing() {
+                        self.rootTableView.mj_header.endRefreshing()
+                    }
+                }
+            }
+            
+        }
+    }
+    
+    // MARK: - 加载数据（上拉加载）
+    var pager = 1
+    func loadData_pullUp() {
+        
+        CircleNetUtil.getMyCommunityList(userid: QCLoginUserInfo.currentInfo.userid, pager: String(pager)) { (success, response) in
+            if success {
+                self.pager += 1
                 
+                let forumModelArray = response as! [CommunityListDataModel]
+
+                
+                if forumModelArray.count == 0 {
+                    self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
+                }else{
+                    
+                    self.rootTableView.mj_footer.endRefreshing()
+                    for forumListData in forumModelArray {
+                        self.communityList.append(forumListData)
+                    }
+                    self.rootTableView.reloadData()
+                    
+                }
+            }else{
+                
+                self.rootTableView.mj_footer.endRefreshing()
             }
         }
+        
     }
     
     // MARK: - 设置子视图
@@ -102,7 +157,7 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
         rootTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         rootTableView.mj_header.beginRefreshing()
         
-        //        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
+        rootTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
         
         self.view.addSubview(rootTableView)
         

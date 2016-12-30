@@ -100,8 +100,11 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
         }
         
         // 获取发布的贴子
-        CircleNetUtil.getMyForumList(userid: userid, cid: "", isbest: "", istop: "", pager: "") { (success, response) in
+        CircleNetUtil.getMyForumList(userid: userid, cid: "", isbest: "", istop: "", pager: "1") { (success, response) in
             if success {
+                self.pager = 2
+                self.rootTableView.mj_footer.resetNoMoreData()
+                
                 self.forumModelArray = response as! [ForumListDataModel]
                 self.rootTableView.reloadData()
             }
@@ -143,12 +146,41 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
         
     }
     
+    // MARK: - 加载数据（上拉加载）
+    var pager = 1
+    func loadData_pullUp() {
+        
+        CircleNetUtil.getMyForumList(userid: userid, cid: "", isbest: "", istop: "", pager: String(pager)) { (success, response) in
+            if success {
+                self.pager += 1
+                
+                let forumModelArray = response as! [ForumListDataModel]
+                
+                if forumModelArray.count == 0 {
+                    self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
+                }else{
+                    
+                    self.rootTableView.mj_footer.endRefreshing()
+                    for forumListData in forumModelArray {
+                        self.forumModelArray.append(forumListData)
+                    }
+                    self.rootTableView.reloadData()
+                    
+                }
+            }else{
+                
+                self.rootTableView.mj_footer.endRefreshing()
+            }
+        }
+        
+    }
+    
     // MARK: - 设置子视图
     func setSubviews() {
         
-        let shareBtn:UIButton = UIButton.init(frame: CGRect(x: 0, y: 7, width: 30, height: 30))
-        shareBtn.setImage(UIImage.init(named: "ic_fenxiang"), for: UIControlState())
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: shareBtn)
+//        let shareBtn:UIButton = UIButton.init(frame: CGRect(x: 0, y: 7, width: 30, height: 30))
+//        shareBtn.setImage(UIImage.init(named: "ic_fenxiang"), for: UIControlState())
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: shareBtn)
         
         // 主 tableView
         rootTableView = UITableView.init(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT-64), style: .grouped)
@@ -162,6 +194,8 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
         
         rootTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData))
         rootTableView.mj_header.beginRefreshing()
+        
+        rootTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
 
     }
     

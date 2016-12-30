@@ -49,6 +49,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 详情")
     }
     
+    // MARK: - 加载数据
     func loadData() {
         
         CircleNetUtil.getForumInfo(userid: QCLoginUserInfo.currentInfo.userid, tid: forumDataModel.id) { (success, response) in
@@ -79,6 +80,35 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             }
         }
     }
+    
+    // MARK: - 加载数据（上拉加载）
+//    var pager = 1
+//    func loadData_pullUp() {
+//        
+//        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: String(pager)) { (success, response) in
+//            if success {
+//                self.pager += 1
+//                
+//                let forumModelArray = response as! [ForumListDataModel]
+//                
+//                if forumModelArray.count == 0 {
+//                    self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
+//                }else{
+//                    
+//                    self.rootTableView.mj_footer.endRefreshing()
+//                    for forumListData in forumModelArray {
+//                        self.forumModelArray.append(forumListData)
+//                    }
+//                    self.rootTableView.reloadData()
+//                    
+//                }
+//            }else{
+//                
+//                self.rootTableView.mj_footer.endRefreshing()
+//            }
+//        }
+//        
+//    }
     
     // MARK: - 设置子视图
     func setSubview() {

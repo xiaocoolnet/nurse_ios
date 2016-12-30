@@ -61,6 +61,9 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     // MARK: - 加载数据
     func loadData() {
         
+        var flag = 0
+        let total = 2
+        
         CircleNetUtil.getChannellist(parentid: "281") { (success, response) in
             if success {
                 self.communityCateDataArray = response as! [CommunityCateDataModel]
@@ -70,19 +73,71 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
                 for communityCateData in self.communityCateDataArray {
                     self.circleArray[0].append(communityCateData.name)
                 }                
+            }else{
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud.removeFromSuperViewOnHide = true
+                hud.mode = .text
+                hud.label.text = "获取圈子分类失败"
+                hud.hide(animated: true, afterDelay: 1)
+            }
+            
+            flag += 1
+            if flag == total {
+                self.rootTableView.mj_header.endRefreshing()
             }
         }
         
         CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: term_id, best: best, hot: hot, pager: "1", sort: sort) { (success, response) in
             if success {
+                self.pager = 2
+                self.rootTableView.mj_footer.resetNoMoreData()
+                
                 self.communityModelArray = response as! [CommunityListDataModel]
                 self.rootTableView.reloadData()
             }else{
-                print("获取圈子列表失败")
+                
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud.removeFromSuperViewOnHide = true
+                hud.mode = .text
+                hud.label.text = "获取圈子列表失败"
+                hud.hide(animated: true, afterDelay: 1)
             }
             
-            self.rootTableView.mj_header.endRefreshing()
+            flag += 1
+            if flag == total {
+                self.rootTableView.mj_header.endRefreshing()
+            }
         }
+    }
+    
+    // MARK: - 加载数据（上拉加载）
+    var pager = 1
+    func loadData_pullUp() {
+        
+        
+        CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: term_id, best: best, hot: hot, pager: "1", sort: sort) { (success, response) in
+            if success {
+                self.pager += 1
+
+                let communityModelArray = response as! [CommunityListDataModel]
+                
+                if communityModelArray.count == 0 {
+                    self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
+                }else{
+                    
+                    self.rootTableView.mj_footer.endRefreshing()
+                    for forumListData in communityModelArray {
+                        self.communityModelArray.append(forumListData)
+                    }
+                    self.rootTableView.reloadData()
+                    
+                }
+            }else{
+                
+                self.rootTableView.mj_footer.endRefreshing()
+            }
+        }
+        
     }
     
     // MARK: - 设置子视图
@@ -105,10 +160,9 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         rootTableView.register(UINib(nibName: "NSCircleListTableViewCell", bundle: nil), forCellReuseIdentifier: "circleListCell")
         
         rootTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData))
-        //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
         rootTableView.mj_header.beginRefreshing()
-        
-        //        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
+
+        rootTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
         
         self.view.addSubview(rootTableView)
         

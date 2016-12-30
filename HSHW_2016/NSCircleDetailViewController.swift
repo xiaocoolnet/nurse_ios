@@ -13,8 +13,8 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     
     var communityModel = CommunityListDataModel() {
         didSet {
-            self.setTableViewHeaderView()
-            self.loadData()
+//            self.setTableViewHeaderView()
+//            self.loadData()
         }
     }
     
@@ -46,12 +46,12 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if self.communityId != "" {
-            self.getCommunityInfo()
-        }else{
-            self.setTableViewHeaderView()
+//        if self.communityId != "" {
+//            self.getCommunityInfo()
+//        }else{
+//            self.setTableViewHeaderView()
             self.loadData()
-        }
+//        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -74,40 +74,109 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
             }
         }
     }
+    
+    // MARK: - 加载数据
     func loadData() {
         
-        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, isbest: "", istop: "", pager: "1") { (success, response) in
-            if success {
-                self.forumModelArray = response as! [ForumListDataModel]
-                self.rootTableView.reloadData()
+        if self.communityId != "" {
+            CircleNetUtil.getCommunityInfo(userid: QCLoginUserInfo.currentInfo.userid, cid: communityId) { (success, response) in
+                if success {
+                    self.communityId = ""
+                    self.communityModel = response as! CommunityListDataModel
+                    self.loadData()
+                }
             }
-        }
-        
-        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, isbest: "", istop: "1", pager: "1") { (success, response) in
-            if success {
-                self.forumBestOrTopModelArray = response as! [ForumListDataModel]
-                self.rootTableView.reloadData()
+        }else{
+            self.setTableViewHeaderView()
+
+            var flag = 0
+            let total = 4
+            
+            CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, isbest: "", istop: "", pager: "1") { (success, response) in
+                if success {
+                    self.pager = 2
+                    self.rootTableView.mj_footer.resetNoMoreData()
+                    
+                    self.forumModelArray = response as! [ForumListDataModel]
+                    self.rootTableView.reloadData()
+                }
+                
+                flag += 1
+                if flag == total {
+                    self.rootTableView.mj_header.endRefreshing()
+                }
             }
-        }
-        
-        CircleNetUtil.judge_apply_community(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id) { (success, response) in
-            if success {
-                if (response as! String) == "yes" {
-                    self.isMaster = true
+            
+            CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, isbest: "", istop: "1", pager: "") { (success, response) in
+                if success {
+                    self.forumBestOrTopModelArray = response as! [ForumListDataModel]
+                    self.rootTableView.reloadData()
+                }
+                flag += 1
+                if flag == total {
+                    self.rootTableView.mj_header.endRefreshing()
+                }
+            }
+            
+            CircleNetUtil.judge_apply_community(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id) { (success, response) in
+                if success {
+                    if (response as! String) == "yes" {
+                        self.isMaster = true
+                    }else{
+                        self.isMaster = false
+                    }
+                }
+                
+                flag += 1
+                if flag == total {
+                    self.rootTableView.mj_header.endRefreshing()
+                }
+            }
+            
+            CircleNetUtil.judge_Community(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id) { (success, response) in
+                if success {
+                    self.isJoin = true
                 }else{
-                    self.isMaster = false
+                    self.isJoin = false
+                }
+                self.setTableViewHeaderView()
+                
+                flag += 1
+                if flag == total {
+                    self.rootTableView.mj_header.endRefreshing()
                 }
             }
         }
-      
-        CircleNetUtil.judge_Community(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id) { (success, response) in
+        
+    }
+    
+    // MARK: - 加载数据（上拉加载）
+    var pager = 1
+    func loadData_pullUp() {
+    
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, isbest: "", istop: "", pager: String(pager)) { (success, response) in
             if success {
-                self.isJoin = true
+                self.pager += 1
+                
+                let forumModelArray = response as! [ForumListDataModel]
+                
+                if forumModelArray.count == 0 {
+                    self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
+                }else{
+                    
+                    self.rootTableView.mj_footer.endRefreshing()
+                    for forumListData in forumModelArray {
+                        self.forumModelArray.append(forumListData)
+                    }
+                    self.rootTableView.reloadData()
+                    
+                }
             }else{
-                self.isJoin = false
+                
+                self.rootTableView.mj_footer.endRefreshing()
             }
-            self.setTableViewHeaderView()
         }
+        
     }
     
     // MARK: - 设置子视图
@@ -129,10 +198,10 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
         rootTableView.register(NSCircleDetailTableViewCell.self, forCellReuseIdentifier: "circleDetailCell")
         rootTableView.register(NSCircleDetailTopTableViewCell.self, forCellReuseIdentifier: "circleDetailTopCell")
 
-        //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
-        //        rootTableView.mj_header.beginRefreshing()
+        rootTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
+        rootTableView.mj_header.beginRefreshing()
         
-        //        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
+        rootTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
         
         self.view.addSubview(rootTableView)
         
