@@ -406,7 +406,6 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                 cell?.textLabel?.text = forumModel.content
                 
             default:
-                
                 let imgWidth = (WIDTH-10*4)/3.0
                 
                 let imgBgView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 10+(imgWidth+10)*CGFloat((forumModel.photo.count/3))))
@@ -420,18 +419,6 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                     imgView.tag = 100+i
                     imgView.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+photo), for: UIControlState(), placeholderImage: nil)
                     imgView.addTarget(self, action: #selector(imgBtnClick(imgBtn:)), for: .touchUpInside)
-//                    imgView.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+photo), completed: { (image, error, type, url) in
-////                        imgView.frame = CGRect(x: 8, y: 8, width: WIDTH-16, height: (WIDTH-16)*(image?.size.height ?? 0)!/(image?.size.width ?? 1)!)
-////                        self.imageHeigthArray[indexPath.row-2] = (WIDTH-16)*(image?.size.height ?? 0)!/(image?.size.width ?? 1)!
-////                        
-////                        self.flag += 1
-////                        
-////                        if self.flag == self.imageHeigthArray.count {
-////                            self.rootTableView.reloadData()
-////                        }
-//                        
-//                        
-//                    })
                     imgBgView.addSubview(imgView)
                 }
                 
@@ -450,7 +437,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
 //                    
 //
 //                })
-                //                imageView.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModel.photo[indexPath.row-2]), placeholderImage: nil)
+////                                imageView.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModel.photo[indexPath.row-2]), placeholderImage: nil)
 //                cell?.contentView.addSubview(imgView)
                 break
             }

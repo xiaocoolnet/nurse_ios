@@ -15,6 +15,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     var term_id = ""// 父类的分类id,全部则传0
     var best = ""// best(选精1,不0)
     var hot = ""// hot(热门1,不0)
+    var sort = ""
     
     var showDropDown = false
     
@@ -26,7 +27,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
 
     var communityModelArray = [CommunityListDataModel]()
     
-    var circleArray = [["全部圈子"],["智能排序","排序1","排序2","排序3"]]
+    var circleArray = [["全部圈子"],["智能排序","关注人数","发帖总量"]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +73,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
             }
         }
         
-        CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: term_id, best: best, hot: hot, pager: "1") { (success, response) in
+        CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: term_id, best: best, hot: hot, pager: "1", sort: sort) { (success, response) in
             if success {
                 self.communityModelArray = response as! [CommunityListDataModel]
                 self.rootTableView.reloadData()
@@ -156,14 +157,14 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
             return
         }
         
-        if dropDownBtn == sortBtn {
-            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud.removeFromSuperViewOnHide = true
-            hud.mode = .text
-            hud.label.text = "功能尚未实现"
-            hud.hide(animated: true, afterDelay: 1.5)
-            return
-        }
+//        if dropDownBtn == sortBtn {
+//            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//            hud.removeFromSuperViewOnHide = true
+//            hud.mode = .text
+//            hud.label.text = "功能尚未实现"
+//            hud.hide(animated: true, afterDelay: 1.5)
+//            return
+//        }
         
         dropDownBtn.lb_titleColor = COLOR
         dropDownBtn.resetdataCenter(dropDownBtn.lb_title.text, UIImage(named: "下拉（点击）"))
@@ -248,6 +249,10 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
             
             sortBtn.resetdataCenter(dropBtn.currentTitle, UIImage(named: "下拉"))
             sortBtn.lb_titleColor = UIColor(red: 128/255.0, green: 128/255.0, blue: 128/255.0, alpha: 1.0)
+            self.sort = String(dropBtn.tag-200)
+            
+            self.rootTableView.mj_header.beginRefreshing()
+
         }
         dropBtn.superview?.superview?.removeFromSuperview()
 

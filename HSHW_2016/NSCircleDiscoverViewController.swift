@@ -50,7 +50,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             self.rootTableView.mj_header.endRefreshing()
         }
         
-        CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: "", best: "", hot: "1", pager: "1") { (success, response) in
+        CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: "", best: "", hot: "1", pager: "1", sort: "0") { (success, response) in
             if success {
                 self.communityModelArray = response as! [CommunityListDataModel]
                 self.setTableViewHeaderView()
@@ -272,12 +272,6 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     
     // MARK: - UISearchBarDelegate
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud.removeFromSuperViewOnHide = true
-        hud.mode = .text
-        hud.label.text = "敬请期待"
-        hud.hide(animated: true, afterDelay: 1.5)
-        return false
         
         searchBar.showsCancelButton = true
         return true
@@ -285,19 +279,42 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.removeFromSuperViewOnHide = true
+        
         if (searchBar.text?.characters.count ?? 0)! < 5 {
-            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud.removeFromSuperViewOnHide = true
+
             hud.mode = .text
             hud.label.text = "输入字数过少"
             hud.hide(animated: true, afterDelay: 1)
             return
         }
         
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "", title: searchBar.text!) { (success, response) in
+            if success {
+                
+                hud.hide(animated: true)
+                
+                searchBar.text = ""
+                searchBar.resignFirstResponder()
+                searchBar.showsCancelButton = false
+                
+                let forumList = response as! [ForumListDataModel]
+                
+                let circleSearchResultController = NSCircleSearchResultViewController()
+                circleSearchResultController.hidesBottomBarWhenPushed = true
+                circleSearchResultController.forumModelArray = forumList
+                circleSearchResultController.title = "搜索结果"
+                self.navigationController?.pushViewController(circleSearchResultController, animated: true)
+            }else{
+                hud.mode = .text
+                hud.label.text = "搜索失败"
+                hud.hide(animated: true, afterDelay: 1)
+            }
+            
+        }
         
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
-        searchBar.showsCancelButton = false
+        
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -317,6 +334,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             circleListController.titleString = "精选圈子"
             circleListController.best = "1"
             circleListController.showDropDown = false
+            circleListController.sort = ""
             self.navigationController?.pushViewController(circleListController, animated: true)
         case 101:
             print("热门圈子")
@@ -324,6 +342,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             circleListController.hidesBottomBarWhenPushed = true
             circleListController.titleString = "热门圈子"
             circleListController.hot = "1"
+            circleListController.sort = "0"
             circleListController.showDropDown = false
             self.navigationController?.pushViewController(circleListController, animated: true)
         case 102:
@@ -332,6 +351,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             circleListController.hidesBottomBarWhenPushed = true
             circleListController.titleString = "圈子列表"
             circleListController.showDropDown = true
+            circleListController.sort = "0"
             self.navigationController?.pushViewController(circleListController, animated: true)
         default:
             break

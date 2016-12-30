@@ -182,6 +182,7 @@
 		1FCCA96A1DCC787C001112AC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA9691DCC787C001112AC /* CoreLocation.framework */; };
 		1FCCA96C1DCC78E3001112AC /* libBaiduMobStat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */; };
 		1FD464981DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD464971DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift */; };
+		1FE240761E15062C00FE3894 /* NSCircleSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE240751E15062C00FE3894 /* NSCircleSearchResultViewController.swift */; };
 		1FE3A6341D5AFC2D0039D94D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */; };
 		1FE3A6361D5AFC370039D94D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */; };
 		1FE3A6381D5AFC430039D94D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE3A6371D5AFC430039D94D /* Security.framework */; };
@@ -507,6 +508,7 @@
 		1FCCA9691DCC787C001112AC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBaiduMobStat.a; path = ../../../../Downloads/BaiduMTJ_iOS_App_Crash_V4.3.0/ios_api/libBaiduMobStat.a; sourceTree = "<group>"; };
 		1FD464971DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailTopTableViewCell.swift; sourceTree = "<group>"; };
+		1FE240751E15062C00FE3894 /* NSCircleSearchResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleSearchResultViewController.swift; sourceTree = "<group>"; };
 		1FE3A6331D5AFC2D0039D94D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1FE3A6351D5AFC370039D94D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1FE3A6371D5AFC430039D94D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
@@ -1356,6 +1358,7 @@
 				1F1524141E10B32C000CCCF9 /* NSCircleUserInfoViewController.swift */,
 				1F156A821E14DCD000815BB5 /* NSCircleImagePreviewViewController.swift */,
 				1F156A841E14EDC500815BB5 /* NSCircleForumImagePreviewViewController.swift */,
+				1FE240751E15062C00FE3894 /* NSCircleSearchResultViewController.swift */,
 			);
 			name = "发现";
 			sourceTree = "<group>";
@@ -1824,6 +1827,7 @@
 				1F8558E81DFB8CFD00C885EA /* NurseUtil.swift in Sources */,
 				1F879FA81E0265C1001385CE /* NSCircleMyCommentViewController.swift in Sources */,
 				1FFD9EE81D51EBD700951098 /* DropDownCell.swift in Sources */,
+				1FE240761E15062C00FE3894 /* NSCircleSearchResultViewController.swift in Sources */,
 				1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */,
 				1FFD49C51D63068900AB1460 /* TPKeyboardAvoidingTableView.m in Sources */,
 				185408771CE6C8A600DFBA7C /* GoABroadViewController.swift in Sources */,

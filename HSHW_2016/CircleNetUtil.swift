@@ -42,17 +42,18 @@ class CircleNetUtil: NSObject {
 
     // MARK: - 获取圈子列表
     //接口地址：a=getCommunityList
-    //入参：userid,term_id(父类的分类id,全部则传0),best(选精1,不0),hot(热门1,不0),pager 分页
-    //出参：id,community_name 圈子名称,photo圈子头像,description圈子介绍,best(是否精选),create_time 创建时间,hot 是否热门,term_id 圈子类型id,term_name圈子类型名称,f_count 贴子数量,person_num 人数,join(是否加入该圈子 1已加入，0未加入)
+    //入参：userid,term_id(父类的分类id,全部则传0),best(选精1,不0),hot(热门1,不0),pager 分页,sort(不传或传0：智能排序，传1：圈子关注度，传2：圈子帖子量)
+    //出参：id,community_name 圈子名称,photo圈子头像,description圈子介绍,best(是否精选),create_time 创建时间,hot 是否热门,term_id 圈子类型id,term_name圈子类型名称,f_count 帖子数量,person_num 人数,join(是否加入该圈子 1已加入，0未加入)
     //Demo:http:/nurse.xiaocool.net/index.php?g=apps&m=index&a=getCommunityList
-    class func getCommunityList(userid:String, term_id:String, best:String, hot:String, pager:String, handle:@escaping ResponseClouse) {
+    class func getCommunityList(userid:String, term_id:String, best:String, hot:String, pager:String, sort:String, handle:@escaping ResponseClouse) {
         let url = PARK_URL_Header+"getCommunityList"
         let param = [
             "userid":userid,
             "term_id":term_id,
             "best":best,
             "hot":hot,
-            "pager":pager
+            "pager":pager,
+            "sort":sort
         ]
         
         NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
@@ -71,19 +72,20 @@ class CircleNetUtil: NSObject {
         }
     }
     
-    // MARK: - 获取贴子列表
+    // MARK: - 获取帖子列表
     //接口地址：a=getForumList
-    //入参：cid(圈子的id),userid,isbest(选精1,不0),istop(置顶1,不0),pager 分页
-    //出参：id(贴子id),community_id(圈子的id),userid,title标题,create_time,content内容,description介绍,review_time(回复时间),photo贴子图片,hits点击数,like点赞数,istop是否置顶,isbest是否精华,isreward是否打赏,user_photo(用户头像),level(用户的等级),comments_count评论数量,add_like判断我是否点赞,term_id(对应的圈子的分类id),term_name(对应的圈子的分类名称),c_master(发贴人是否是圈主:1是,0不)
+    //入参：cid(圈子的id),userid,isbest(选精1,不0),istop(置顶1,不0),pager 分页,title 搜索标题
+    //出参：id(帖子id),community_id(圈子的id),userid,title标题,create_time,content内容,description介绍,review_time(回复时间),photo帖子图片,hits点击数,like_num 点赞数,istop是否置顶,isbest是否精华,isreward是否打赏,user_photo(用户头像),level(用户的等级),comments_count评论数量,add_like判断我是否点赞,community_name(圈子名称),community_photo(圈子照片),c_master(发帖人是否是圈主:1是,0不),user_name,auth_type(认证类型)
     //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getForumList&cid=1
-    class func getForumList(userid:String, cid:String, isbest:String, istop:String, pager:String, handle:@escaping ResponseClouse) {
+    class func getForumList(userid:String, cid:String, isbest:String, istop:String, pager:String, title:String="", handle:@escaping ResponseClouse) {
         let url = PARK_URL_Header+"getForumList"
         let param = [
             "userid":userid,
             "cid":cid,
             "isbest":isbest,
             "istop":istop,
-            "pager":pager
+            "pager":pager,
+            "title":title
         ]
         
         NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in

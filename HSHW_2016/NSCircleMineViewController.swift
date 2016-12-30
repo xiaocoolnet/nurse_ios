@@ -63,6 +63,18 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
                 self.rootTableView.mj_header.endRefreshing()
             }
         }
+        
+//        CircleNetUtil.judge_apply_community(userid: QCLoginUserInfo.currentInfo.userid, cid: "") { (success, response) in
+//            if success {
+//                if (response as! String) == "yes" {
+//                    self.cellNameArray1 = ["我的贴子","认证","管理圈子"]
+//                }else{
+//                    self.cellNameArray1 = ["我的贴子","认证"]
+//                }
+//                self.rootTableView.reloadData()
+//            }
+//
+//        }
     }
     
     // MARK: - 设置子视图
@@ -122,21 +134,49 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - UISearchBarDelegate
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud.removeFromSuperViewOnHide = true
-        hud.mode = .text
-        hud.label.text = "敬请期待"
-        hud.hide(animated: true, afterDelay: 1.5)
-        return false
         
         searchBar.showsCancelButton = true
         return true
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.text = ""
-        searchBar.resignFirstResponder()
-        searchBar.showsCancelButton = false
+        
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.removeFromSuperViewOnHide = true
+        
+        if (searchBar.text?.characters.count ?? 0)! < 5 {
+            
+            hud.mode = .text
+            hud.label.text = "输入字数过少"
+            hud.hide(animated: true, afterDelay: 1)
+            return
+        }
+        
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "", title: searchBar.text!) { (success, response) in
+            if success {
+                
+                hud.hide(animated: true)
+                
+                searchBar.text = ""
+                searchBar.resignFirstResponder()
+                searchBar.showsCancelButton = false
+                
+                let forumList = response as! [ForumListDataModel]
+                
+                let circleSearchResultController = NSCircleSearchResultViewController()
+                circleSearchResultController.hidesBottomBarWhenPushed = true
+                circleSearchResultController.forumModelArray = forumList
+                circleSearchResultController.title = "搜索结果"
+                self.navigationController?.pushViewController(circleSearchResultController, animated: true)
+            }else{
+                hud.mode = .text
+                hud.label.text = "搜索失败"
+                hud.hide(animated: true, afterDelay: 1)
+            }
+            
+        }
+        
+        
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -153,7 +193,7 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if section == 0 {
-            return 3
+            return cellNameArray1.count
         }else{
             return self.communityList.count
         }
