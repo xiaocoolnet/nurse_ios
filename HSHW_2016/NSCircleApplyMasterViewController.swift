@@ -55,7 +55,7 @@ class NSCircleApplyMasterViewController: UIViewController, UIImagePickerControll
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = UIColor.white
         
-        self.title = "认证"
+        self.title = "申请圈主"
         
         let line = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
@@ -365,6 +365,12 @@ class NSCircleApplyMasterViewController: UIViewController, UIImagePickerControll
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.removeFromSuperViewOnHide = true
+        
+        
+        hud.mode = .text
+        hud.label.text = "尚未完成"
+        hud.hide(animated: true, afterDelay: 1)
+        return
         
         if (self.circleNameInput.text?.isEmpty)! {
             hud.mode = .text
