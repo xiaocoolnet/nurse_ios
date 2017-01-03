@@ -12,7 +12,7 @@ import MBProgressHUD
 class NSCircleAuthViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     
-    let eduDropDown = DropDown()
+    let authTypeDropDown = DropDown()
     
     let placeInput = UITextField()
     
@@ -75,16 +75,16 @@ class NSCircleAuthViewController: UIViewController, UIImagePickerControllerDeleg
         inputBgView.addSubview(typeBtn!)
         
         // 学历
-        eduDropDown.anchorView = typeBtn
+        authTypeDropDown.anchorView = typeBtn
         
-        eduDropDown.bottomOffset = CGPoint(x: 0, y: (typeBtn?.bounds.height ?? 0)!)
-        eduDropDown.width = 200
-        eduDropDown.direction = .bottom
+        authTypeDropDown.bottomOffset = CGPoint(x: 0, y: (typeBtn?.bounds.height ?? 0)!)
+        authTypeDropDown.width = 200
+        authTypeDropDown.direction = .bottom
         
-        eduDropDown.dataSource = ["在校生","毕业生","护士","护师","主管护师","护士长","主任"]
+        authTypeDropDown.dataSource = ["在校生","毕业生","护士","护师","主管护师","护士长","主任"]
         
         // 下拉列表选中后的回调方法
-        eduDropDown.selectionAction = {(index, item) in
+        authTypeDropDown.selectionAction = {(index, item) in
             
             typeBtn?.lb_titleColor = UIColor.black
             typeBtn?.resetdata(item, UIImage(named: "认证类型下拉"))
@@ -267,7 +267,7 @@ class NSCircleAuthViewController: UIViewController, UIImagePickerControllerDeleg
     
     // MARK: - typeBtn Click
     func typeBtnClick() {
-        _ = eduDropDown.show()
+        _ = authTypeDropDown.show()
     }
     
     // MARK: - applyBtn Click

@@ -132,6 +132,42 @@ class CircleNetUtil: NSObject {
         }
     }
     
+    // MARK: - 申请圈主
+    //接口地址：a=apply_community
+    //入参：c_name(圈子名称),userid,real_name(真实姓名),real_code(身份证号),real_address(联系地址),real_tel(手机号),real_qq(qq),real_content(申请感言),real_photo(个人日志生活照),real_photo_2(手持身份证照片)
+    //出参：无
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=apply_community&userid=603&c_name=ddd
+    class func apply_community(c_name:String, userid:String, real_name:String, real_code:String, real_address:String, real_tel:String, real_qq:String, real_content:String, real_photo:String, real_photo_2:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"apply_community"
+        let param = [
+            "c_name":c_name,
+            "userid":userid,
+            "real_name":real_name,
+            "real_code":real_code,
+            "real_address":real_address,
+            "real_tel":real_tel,
+            "real_qq":real_qq,
+            "real_content":real_content,
+            "real_photo":real_photo,
+            "real_photo_2":real_photo_2
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, nil)
+                }
+            }
+        }
+    }
+    
     // MARK: - 判断是否为圈主
     //接口地址：a=judge_apply_community
     //入参：userid,cid(圈子id)

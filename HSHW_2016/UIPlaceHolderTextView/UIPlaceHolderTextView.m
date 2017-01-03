@@ -92,6 +92,7 @@ CGFloat const UI_PLACEHOLDER_TEXT_CHANGED_ANIMATION_DURATION = 0.25;
             _placeHolderLabel.textColor = self.placeholderColor;
             _placeHolderLabel.alpha = 0;
             _placeHolderLabel.tag = 999;
+            _placeHolderLabel.numberOfLines = 0;
             [self addSubview:_placeHolderLabel];
         }
         _placeHolderLabel.text = self.placeholder;

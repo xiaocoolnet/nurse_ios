@@ -362,11 +362,16 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
                 return
             }
             // 申请圈主
-            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-            hud.removeFromSuperViewOnHide = true
-            hud.mode = .text
-            hud.label.text = "敬请期待"
-            hud.hide(animated: true, afterDelay: 1.5)
+            
+            let circleApplyMasterController = NSCircleApplyMasterViewController()
+            circleApplyMasterController.hidesBottomBarWhenPushed = true
+            self.navigationController?.pushViewController(circleApplyMasterController, animated: true)
+            
+//            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//            hud.removeFromSuperViewOnHide = true
+//            hud.mode = .text
+//            hud.label.text = "敬请期待"
+//            hud.hide(animated: true, afterDelay: 1.5)
         case 3:
             if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
                 
