@@ -228,7 +228,7 @@ class NSCircleDetailTableViewCell: UITableViewCell {
             positionLab.isHidden = true
         }else{
             positionLab.isHidden = false
-            positionLab.backgroundColor = NSCirclePublicAction.getAuthColor(with: forumModel.auth_type)
+            positionLab.layer.backgroundColor = NSCirclePublicAction.getAuthColor(with: forumModel.auth_type).cgColor
         }
         
         timeLab.text = updateTime(forumModel.create_time)

@@ -176,7 +176,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             positionLab.removeFromSuperview()
         }else{
             positionLab.text = forumDataModel.auth_type
-            positionLab.backgroundColor = NSCirclePublicAction.getAuthColor(with: forumDataModel.auth_type)
+            positionLab.layer.backgroundColor = NSCirclePublicAction.getAuthColor(with: forumDataModel.auth_type).cgColor
             tableHeaderView.addSubview(positionLab)
         }
 
