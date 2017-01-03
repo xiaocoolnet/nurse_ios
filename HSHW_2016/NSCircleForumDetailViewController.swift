@@ -172,10 +172,11 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         positionLab.textAlignment = .center
         positionLab.center.y = nameLab.center.y
         positionLab.layer.cornerRadius = 6
-        positionLab.text = forumDataModel.auth_type
         if forumDataModel.auth_type == "" {
             positionLab.removeFromSuperview()
         }else{
+            positionLab.text = forumDataModel.auth_type
+            positionLab.backgroundColor = NSCirclePublicAction.getAuthColor(with: forumDataModel.auth_type)
             tableHeaderView.addSubview(positionLab)
         }
 

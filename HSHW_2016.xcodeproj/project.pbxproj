@@ -181,6 +181,7 @@
 		1FCCA9681DCC7866001112AC /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA9671DCC7866001112AC /* libz.1.2.5.tbd */; };
 		1FCCA96A1DCC787C001112AC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA9691DCC787C001112AC /* CoreLocation.framework */; };
 		1FCCA96C1DCC78E3001112AC /* libBaiduMobStat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */; };
+		1FCDBD141E1B490A007814A1 /* NSCircleApplyMasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCDBD131E1B490A007814A1 /* NSCircleApplyMasterViewController.swift */; };
 		1FD2B6141E16215A003A7DCF /* NSCircleAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD2B6131E16215A003A7DCF /* NSCircleAuthViewController.swift */; };
 		1FD464981DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD464971DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift */; };
 		1FE240761E15062C00FE3894 /* NSCircleSearchResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE240751E15062C00FE3894 /* NSCircleSearchResultViewController.swift */; };
@@ -508,6 +509,7 @@
 		1FCCA9671DCC7866001112AC /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
 		1FCCA9691DCC787C001112AC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libBaiduMobStat.a; path = ../../../../Downloads/BaiduMTJ_iOS_App_Crash_V4.3.0/ios_api/libBaiduMobStat.a; sourceTree = "<group>"; };
+		1FCDBD131E1B490A007814A1 /* NSCircleApplyMasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleApplyMasterViewController.swift; sourceTree = "<group>"; };
 		1FD2B6131E16215A003A7DCF /* NSCircleAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleAuthViewController.swift; sourceTree = "<group>"; };
 		1FD464971DF932680029BFEA /* NSCircleDetailTopTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailTopTableViewCell.swift; sourceTree = "<group>"; };
 		1FE240751E15062C00FE3894 /* NSCircleSearchResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleSearchResultViewController.swift; sourceTree = "<group>"; };
@@ -1361,6 +1363,7 @@
 				1F156A821E14DCD000815BB5 /* NSCircleImagePreviewViewController.swift */,
 				1F156A841E14EDC500815BB5 /* NSCircleForumImagePreviewViewController.swift */,
 				1FE240751E15062C00FE3894 /* NSCircleSearchResultViewController.swift */,
+				1FCDBD131E1B490A007814A1 /* NSCircleApplyMasterViewController.swift */,
 			);
 			name = "发现";
 			sourceTree = "<group>";
@@ -1764,6 +1767,7 @@
 				0B6FED4E1D3373FD00A4488E /* DataPickerView.swift in Sources */,
 				1FFD49C41D63068900AB1460 /* TPKeyboardAvoidingScrollView.m in Sources */,
 				1FCCA9561DCC18CA001112AC /* FiftyThousandExamViewController.swift in Sources */,
+				1FCDBD141E1B490A007814A1 /* NSCircleApplyMasterViewController.swift in Sources */,
 				0DBF54741D406D1900B4B5FB /* GNewsCateDetailViewController.swift in Sources */,
 				1F156A851E14EDC500815BB5 /* NSCircleForumImagePreviewViewController.swift in Sources */,
 				181E0D311CEBFF8800E34A7F /* MinePostTableViewCell.swift in Sources */,

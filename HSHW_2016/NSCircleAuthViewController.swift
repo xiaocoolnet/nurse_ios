@@ -198,6 +198,7 @@ class NSCircleAuthViewController: UIViewController, UIImagePickerControllerDeleg
         applyBtn.setImage(UIImage(named: "发布"), for: UIControlState())
         applyBtn.setTitleColor(COLOR, for: UIControlState())
         applyBtn.setTitle("提交申请", for: UIControlState())
+        applyBtn.addTarget(self, action: #selector(applyBtnClick), for: .touchUpInside)
         rootScrollView.addSubview(applyBtn)
         
         rootScrollView.contentSize.height = applyBtn.frame.maxY+20
@@ -313,9 +314,17 @@ class NSCircleAuthViewController: UIViewController, UIImagePickerControllerDeleg
                                         hud.hide(animated: true, afterDelay: 1)
                                     }else{
                                         hud.mode = .text
-                                        hud.label.text = "认证资料上传失败"
+                                        hud.label.text = "您已提交过认证"
                                         hud.hide(animated: true, afterDelay: 1)
                                     }
+                                    
+                                    let time: TimeInterval = 1.0
+                                    let delay = DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                                    
+                                    DispatchQueue.main.asyncAfter(deadline: delay) {
+                                        _ = self.navigationController?.popViewController(animated: true)
+                                    }
+
                                 }else{
                                     hud.mode = .text
                                     hud.label.text = "认证资料上传失败"

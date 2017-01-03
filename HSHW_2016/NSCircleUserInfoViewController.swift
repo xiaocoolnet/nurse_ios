@@ -277,12 +277,16 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             authType.layer.cornerRadius = UIFont.systemFont(ofSize: 8).lineHeight/2.0
             authType.layer.backgroundColor = COLOR.cgColor
             authType.font = UIFont.systemFont(ofSize: 8)
+            authType.textAlignment = .center
             authType.textColor = UIColor.white
-            authType.text = authTypeStr
             authType.center.y = nameLabel.center.y
             if authTypeStr == "" {
                 authType.removeFromSuperview()
             }else{
+                authType.text = authTypeStr
+                authType.layer.backgroundColor = NSCirclePublicAction.getAuthColor(with: authTypeStr).cgColor
+
+//                authType.backgroundColor = NSCirclePublicAction.getAuthColor(with: authTypeStr)
                 bgImageView.addSubview(authType)
             }
             
