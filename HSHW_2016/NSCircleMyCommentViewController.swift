@@ -40,7 +40,7 @@ class NSCircleMyCommentViewController: UIViewController, UITableViewDataSource, 
     // MARK: - 加载数据
     func loadData() {
         
-        CircleNetUtil.getMyForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "1") { (success, response) in
+        CircleNetUtil.getMyJudgeCommunity(userid: QCLoginUserInfo.currentInfo.userid, pager: "1") { (success, response) in
             if success {
                 self.pager = 2
                 self.rootTableView.mj_footer.resetNoMoreData()
@@ -59,7 +59,7 @@ class NSCircleMyCommentViewController: UIViewController, UITableViewDataSource, 
     var pager = 1
     func loadData_pullUp() {
         
-        CircleNetUtil.getMyForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: String(pager)) { (success, response) in
+        CircleNetUtil.getMyJudgeCommunity(userid: QCLoginUserInfo.currentInfo.userid, pager: "1") { (success, response) in
             if success {
                 self.pager += 1
                 
@@ -164,7 +164,7 @@ class NSCircleMyCommentViewController: UIViewController, UITableViewDataSource, 
                 contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
-            return 55+8+height+8+contentHeight+8+8+8// 个人信息高+上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
+            return 55+8+height+8+contentHeight+8+8+8+5// 个人信息高+上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
         }else if forum.photo.count < 3 {
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16-110-8)
             
@@ -178,7 +178,7 @@ class NSCircleMyCommentViewController: UIViewController, UITableViewDataSource, 
             let cellHeight2 = 8+height+8+contentHeight+8+8+8// 上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
             
             
-            return max(cellHeight1, cellHeight2)+55
+            return max(cellHeight1, cellHeight2)+55+5
         }else{
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
             
@@ -190,7 +190,7 @@ class NSCircleMyCommentViewController: UIViewController, UITableViewDataSource, 
             
             let imgHeight = (WIDTH-16-15*2)/3.0*2/3.0
             
-            return 55+8+height+8+contentHeight+8+imgHeight+8+8+8// 个人信息高+上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
+            return 55+8+height+8+contentHeight+8+imgHeight+8+8+8+5// 个人信息高+上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
         }
     }
     

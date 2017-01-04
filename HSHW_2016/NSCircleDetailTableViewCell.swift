@@ -152,7 +152,7 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         comLab.font = UIFont.systemFont(ofSize: 10)
         comLab.textColor = UIColor.lightGray
         
-        addressBtn.setImage(UIImage(named: "发贴位置"), for: UIControlState())
+        addressBtn.setImage(UIImage(named: "发贴位置（列表页）"), for: UIControlState())
         addressBtn.titleLabel?.font = UIFont.systemFont(ofSize: 10)
         addressBtn.setTitleColor(UIColor.lightGray, for: UIControlState())
         

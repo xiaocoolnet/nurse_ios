@@ -113,7 +113,7 @@ class NSCircleAuthViewController: UIViewController, UIImagePickerControllerDeleg
         placeInput.font = UIFont.systemFont(ofSize: 14)
         placeInput.adjustsFontSizeToFitWidth = true
         placeInput.textAlignment = .left
-        placeInput.placeholder = "没有可不填"
+        placeInput.placeholder = "请填写您的工作单位"
         inputBgView.addSubview(placeInput)
         
         let line2 = UIView(frame: CGRect(x: 0, y: placeLab.frame.maxY, width: inputBgView.frame.width, height: 1/UIScreen.main.scale))
@@ -136,7 +136,7 @@ class NSCircleAuthViewController: UIViewController, UIImagePickerControllerDeleg
         officeInput.font = UIFont.systemFont(ofSize: 14)
         officeInput.adjustsFontSizeToFitWidth = true
         officeInput.textAlignment = .left
-        officeInput.placeholder = "没有可不填"
+        officeInput.placeholder = "请填写您的工作科室"
         inputBgView.addSubview(officeInput)
         
         inputBgView.frame.size.height = officeLab.frame.maxY
@@ -182,7 +182,7 @@ class NSCircleAuthViewController: UIViewController, UIImagePickerControllerDeleg
         line4.backgroundColor = UIColor.gray
         rootScrollView.addSubview(line4)
         
-        let instructionStr = "1、认证类型直接关系到你的认证等级，以及显示的样式哦；认证类型包含：在校生、毕业生、护士、护师、主管护师、护士长、主任；\n2、如果您在职，请填写工作单位和工作科室，如果是学生可不填；\n3、上传证件：\n\t1）、在校生，请上传学生证；\n\t2）、毕业生，请上传毕业证；\n\t3）、护士，请上传护士证；\n\t4）、护师，请上传护师证；\n\t5）、主管护师，请上传主管护师证；\n\t6）、护士长，请上传护士长证；\n\t7）、主任，请上传主任证；\n4、如果认证类型选择了在校生，则请上传 在校生 对应的证件即可；如上传证件和认证类型不相符，则审核不通过。"
+        let instructionStr = "1、认证类型直接关系到你的认证等级，以及显示的样式哦；认证类型包含：在校生、应届生、护士、护师、主管护师、护士长、主任；\n2、如果您在职，请填写工作单位和工作科室，如果是学生可不填；\n3、上传证件：\n\t1）、在校生，请上传学生证；\n\t2）、应届生，请上传毕业证；\n\t3）、护士，请上传护士证；\n\t4）、护师，请上传护师证；\n\t5）、主管护师，请上传主管护师证；\n\t6）、护士长，请上传护士长工作证；\n\t7）、主任，请上传主任工作证；\n4、如果认证类型选择了在校生，则请上传 在校生 对应的证件即可；如上传证件和认证类型不相符，则审核不通过。"
         let instructionLab = UILabel(frame: CGRect(x: 15, y: line4.frame.maxY+10, width: WIDTH-30, height: calculateHeight(instructionStr, size: 14, width: WIDTH-30)+10))
         instructionLab.numberOfLines = 0
         instructionLab.font = UIFont.systemFont(ofSize: 14)

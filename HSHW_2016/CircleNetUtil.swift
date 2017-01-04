@@ -1088,4 +1088,31 @@ class CircleNetUtil: NSObject {
         }
     }
 
+    // MARK: - 获取我评价的帖子
+    //接口地址：a=getMyJudgeCommunity
+    //入参：userid,pager
+    //出参：list
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getMyJudgeCommunity&userid=603
+    class func getMyJudgeCommunity(userid:String, pager:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"getMyJudgeCommunity"
+        let param = [
+            "userid":userid,
+            "pager":pager
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<ForumListModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
 }

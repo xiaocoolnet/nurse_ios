@@ -221,14 +221,14 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             messageBtnMaxY = search.frame.maxY
         }
         
-        // "精选圈子","热门圈子","全部圈子"
+        // "精选圈子","品管圈","全部圈子"
         let btn1Width = (WIDTH-32)/3.0
         let btn1Height = btn1Width*0.65
         let btn1ColorArray = [
             UIColor(red: 34/255.0, green: 156/255.0, blue: 77/255.0, alpha: 1),
             UIColor(red: 80/255.0, green: 135/255.0, blue: 201/255.0, alpha: 1),
             UIColor(red: 164/255.0, green: 93/255.0, blue: 227/255.0, alpha: 1)]
-        let btn1NameArray = ["精选圈子","热门圈子","全部圈子"]
+        let btn1NameArray = ["精选圈子","品管圈","全部圈子"]
         for i in 0 ..< 3 {
             let btn1 = UIButton(frame: CGRect(x: 8+(btn1Width+8)*CGFloat(i), y: messageBtnMaxY+10, width: btn1Width, height: btn1Height))
             btn1.tag = 100+i
@@ -273,8 +273,8 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             btn2.addSubview(img)
             
             let nameLab = UILabel(frame: CGRect(x: 0, y: img.frame.maxY, width: btn2Width, height: WIDTH/375*22))
-            nameLab.textAlignment = .left
-            nameLab.font = UIFont.systemFont(ofSize: 14)
+            nameLab.textAlignment = .center
+            nameLab.font = UIFont.systemFont(ofSize: 16)
             nameLab.textColor = COLOR
             nameLab.text = communityModel.community_name
             nameLab.adjustsFontSizeToFitWidth = true
@@ -377,9 +377,8 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             print("热门圈子")
             let circleListController = NSCircleListViewController()
             circleListController.hidesBottomBarWhenPushed = true
-            circleListController.titleString = "热门圈子"
-            circleListController.hot = "1"
-            circleListController.sort = "0"
+            circleListController.titleString = "品管圈"
+            circleListController.hot = "0"
             circleListController.showDropDown = false
             self.navigationController?.pushViewController(circleListController, animated: true)
         case 102:

@@ -366,12 +366,6 @@ class NSCircleApplyMasterViewController: UIViewController, UIImagePickerControll
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.removeFromSuperViewOnHide = true
         
-        
-        hud.mode = .text
-        hud.label.text = "尚未完成"
-        hud.hide(animated: true, afterDelay: 1)
-        return
-        
         if (self.circleNameInput.text?.isEmpty)! {
             hud.mode = .text
             hud.label.text = "请填写圈子名称"

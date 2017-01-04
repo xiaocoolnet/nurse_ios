@@ -61,6 +61,8 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                     self.imageHeigthArray.append(0)
                 }
                 
+                self.send_bottom_Btn.tag = NSString(string: self.forumModel.tid).integerValue
+                
                 self.rootTableView.reloadData()
             }
         }
@@ -112,9 +114,254 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
 //        
 //    }
     
+    // MARK:- 分享视图
+    func shareForumBtnClick() {
+        let imageArray = ["ic_share_friendzone","ic_share_wechat","ic_share_qq","ic_share_qzone","ic_share_weibo"]
+        let imageNameArray = ["微信朋友圈","微信好友","QQ好友","QQ空间","新浪微博"]
+        
+        let bgView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT))
+        bgView.backgroundColor = UIColor(white: 0.5, alpha: 0.3)
+        bgView.tag = 101
+        bgView.addTarget(self, action: #selector(shareViewHide(_:)), for: .touchUpInside)
+        UIApplication.shared.keyWindow!.addSubview(bgView)
+        
+        let bottomView = UIView(frame: CGRect(x: 0, y: bgView.frame.maxY, width: WIDTH, height: HEIGHT*0.4))
+        bottomView.backgroundColor = UIColor(red: 240/255.0, green: 240/255.0, blue: 240/255.0, alpha: 1)
+        bgView.addSubview(bottomView)
+        
+        let shareBtnWidth:CGFloat = WIDTH/7.0
+        //        let maxMargin:CGFloat = shareBtnWidth/3.0
+        let shareBtnCount:Int = 5 // 每行的按钮数
+        let margin = shareBtnWidth/3.0
+        
+        let labelHeight = margin/2.0
+        
+        var labelMaxY:CGFloat = 0
+        
+        for i in 0...4 {
+            
+            let shareBtn_1 = UIButton(frame: CGRect(x: margin*(CGFloat(i%shareBtnCount)+1)+shareBtnWidth*CGFloat(i%shareBtnCount), y: margin*(CGFloat(i/shareBtnCount)+1)+(shareBtnWidth+margin+labelHeight)*CGFloat(i/shareBtnCount), width: shareBtnWidth, height: shareBtnWidth))
+            shareBtn_1.layer.cornerRadius = shareBtnWidth/2.0
+            shareBtn_1.backgroundColor = UIColor.white
+            shareBtn_1.setImage(UIImage(named: imageArray[i]), for: UIControlState())
+            shareBtn_1.tag = 1000+i
+            shareBtn_1.addTarget(self, action: #selector(shareBtnClick(_:)), for: .touchUpInside)
+            bottomView.addSubview(shareBtn_1)
+            // print(shareBtn_1.frame)
+            
+            let shareLab_1 = UILabel(frame: CGRect(x: shareBtn_1.frame.minX-margin/2.0, y: shareBtn_1.frame.maxY+margin/2.0, width: shareBtnWidth+margin, height: labelHeight))
+            shareLab_1.textColor = UIColor.gray
+            shareLab_1.font = UIFont.systemFont(ofSize: 12)
+            shareLab_1.textAlignment = .center
+            shareLab_1.text = imageNameArray[i]
+            bottomView.addSubview(shareLab_1)
+            
+            labelMaxY = shareLab_1.frame.maxY
+        }
+        
+        let line = UIView(frame: CGRect(x: 0, y: labelMaxY+margin, width: WIDTH, height: 1))
+        line.backgroundColor = UIColor.lightGray
+        bottomView.addSubview(line)
+        
+        let cancelBtnHeight = shareBtnWidth*0.8
+        
+        let cancelBtn = UIButton(frame: CGRect(x: 0, y: line.frame.maxY, width: WIDTH, height: cancelBtnHeight))
+        cancelBtn.backgroundColor = UIColor(red: 248/255.0, green: 248/255.0, blue: 248/255.0, alpha: 1)
+        cancelBtn.setTitleColor(UIColor.black, for: UIControlState())
+        cancelBtn.setTitle("取消", for: UIControlState())
+        cancelBtn.tag = 102
+        cancelBtn.addTarget(self, action: #selector(shareViewHide(_:)), for: .touchUpInside)
+        bottomView.addSubview(cancelBtn)
+        
+        bottomView.frame.size.height = cancelBtn.frame.maxY
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            bottomView.frame.origin.y = HEIGHT - cancelBtn.frame.maxY
+        })
+    }
+    
+    // 分享视图取消事件
+    func shareViewHide(_ shareView:UIButton) {
+        if shareView.tag == 102 {
+            shareView.superview!.superview!.removeFromSuperview()
+        }else{
+            shareView.removeFromSuperview()
+        }
+    }
+    
+    // 分享视图分享按钮点击事件
+    func shareBtnClick(_ shareBtn:UIButton) {
+        shareBtn.superview!.superview!.removeFromSuperview()
+        
+        let btn = UIButton()
+        
+        switch shareBtn.tag {
+        case 1000://朋友圈
+            btn.tag = 0
+        case 1001://微信好友
+            btn.tag = 1
+        case 1002://QQ好友
+            btn.tag = 3
+        case 1003://QQ空间
+            btn.tag = 4
+        case 1004://新浪微博
+            btn.tag = 2
+            
+        default:
+            return
+        }
+        self.shareTheNews(btn)
+    }
+    
+    // MARK:-
+    
+    var shareNewsUrl = ""
+    
+    func shareTheNews(_ btn:UIButton) {
+        
+        self.shareNewsUrl = "http://nurse.xiaocool.net/index.php?g=HomePage&m=CommunityShare&a=index&tid=\(forumDataModel.id)&type=1&userid=\(QCLoginUserInfo.currentInfo.userid)"
+        self.shareNews(btn)
+    }
+    
+    func shareNews(_ btn:UIButton) {
+        
+        if btn.tag == 0 || btn.tag == 1 {
+            
+            let message = WXMediaMessage()
+            message.title = forumDataModel.title
+            message.description = forumDataModel.content
+            
+            if forumDataModel.photo.count == 0 {
+                let thumbImage = UIImage(named: "appLogo")
+                message.setThumbImage(thumbImage)
+                
+            }else{
+                
+                let str = SHOW_IMAGE_HEADER+(forumDataModel.photo.first)!
+                let url = URL(string: str)
+                let data = try? Data(contentsOf: url!)
+                let thumbImage = UIImage(data: data!)
+                
+                if (thumbImage != nil) {
+                    
+                    let data2 = thumbImage!.compressImage(thumbImage!, maxLength: 32700)
+                    message.setThumbImage(UIImage(data: data2!))
+                }else{
+                    let thumbImage = UIImage(named: "appLogo")
+                    message.setThumbImage(thumbImage)
+                }
+            }
+            
+            let webPageObject = WXWebpageObject()
+            webPageObject.webpageUrl = shareNewsUrl
+            message.mediaObject = webPageObject
+            
+            let req = SendMessageToWXReq()
+            req.bText = false
+            req.message = message
+            
+            switch btn.tag {
+            case 0:
+                req.scene = Int32(WXSceneTimeline.rawValue)
+            case 1:
+                req.scene = Int32(WXSceneSession.rawValue)
+            default:
+                break
+            }
+            
+            
+            WXApi.send(req)
+        }else if btn.tag == 2 {
+            let authRequest:WBAuthorizeRequest = WBAuthorizeRequest.request() as! WBAuthorizeRequest
+            authRequest.redirectURI = kRedirectURI
+            authRequest.scope = "all"
+            
+            let message = WBMessageObject.message() as! WBMessageObject
+            if WeiboSDK.isCanShareInWeiboAPP() {
+                message.text = forumDataModel.title
+            }else{
+                message.text = "\(forumDataModel.title) \(shareNewsUrl) 想看更多内容，马上下载【中国护士网】http://t.cn/RczKRS3 (分享自@中国护士网)"
+            }
+            let webpage:WBWebpageObject = WBWebpageObject.object() as! WBWebpageObject
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyyMMddHHmmss"
+            let dateStr = dateFormatter.string(from: Date())
+            webpage.objectID = "chinanurse\(kAppKey)\(dateStr)"
+            webpage.title = forumDataModel.title
+            webpage.description = forumDataModel.content
+            if forumDataModel.photo.count == 0 {
+                let thumbImage = UIImage(named: "appLogo")
+                let data = UIImageJPEGRepresentation(thumbImage!, 0.5)!
+                webpage.thumbnailData = data
+            }else{
+                
+                let str = SHOW_IMAGE_HEADER+(forumDataModel.photo.first)!
+                let url = URL(string: str)
+                let data = try? Data(contentsOf: url!)
+                if data == nil {
+                    let thumbImage = UIImage(named: "appLogo")
+                    let data = UIImageJPEGRepresentation(thumbImage!, 0.5)!
+                    webpage.thumbnailData = data
+                    
+                }else{
+                    
+                    let thumbImage = UIImage(data: data!)
+                    
+                    let data2 = thumbImage!.compressImage(thumbImage!, maxLength: 32700)
+                    
+                    webpage.thumbnailData = data2
+                }
+            }
+            
+            webpage.webpageUrl = shareNewsUrl
+            message.mediaObject = webpage
+            
+            let request = WBSendMessageToWeiboRequest.request(withMessage: message, authInfo: authRequest, access_token: AppDelegate().wbtoken) as! WBSendMessageToWeiboRequest
+            request.userInfo = ["ShareMessageFrom":"NewsContantViewController"]
+            
+            WeiboSDK.send(request)
+        }else{
+            
+            let newsUrl = URL(string: shareNewsUrl)
+            let title = forumDataModel.title
+            let description = forumDataModel.content
+            
+            var previewImageData = Data()
+            if forumDataModel.photo.count == 0 {
+                let thumbImage = UIImage(named: "appLogo")
+                previewImageData = UIImageJPEGRepresentation(thumbImage!, 0.5)!
+            }else{
+                
+                let str = SHOW_IMAGE_HEADER+(forumDataModel.photo.first)!
+                let url = URL(string: str)
+                let data = try? Data(contentsOf: url!)
+                let thumbImage = UIImage(data: data!)
+                
+                previewImageData = thumbImage!.compressImage(thumbImage!, maxLength: 32700)!
+            }
+            
+            let newsObj = QQApiNewsObject(url: newsUrl, title: title, description: description, previewImageData: previewImageData, targetContentType: QQApiURLTargetTypeNews)
+            let req = SendMessageToQQReq(content: newsObj)
+            
+            if btn.tag == 3 {
+                QQApiInterface.send(req)
+            }else if btn.tag == 4 {
+                QQApiInterface.sendReq(toQZone: req)
+            }
+        }
+        
+        //        // print(btn.tag)
+        
+    }
+    
     // MARK: - 设置子视图
     func setSubview() {
         
+        let shareBtn:UIButton = UIButton.init(frame: CGRect(x: 0, y: 7, width: 30, height: 30))
+        shareBtn.setImage(UIImage.init(named: "ic_fenxiang"), for: UIControlState())
+        shareBtn.addTarget(self, action: #selector(shareForumBtnClick), for: .touchUpInside)
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: shareBtn)
+
         self.title = "贴子详情"
         
         let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
@@ -450,6 +697,8 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                     
                     let imgView = UIButton(frame: CGRect(x: imgX*CGFloat(i%3+1)+imgWidth*CGFloat(i%3), y: imgY*CGFloat(i/3+1)+imgWidth*CGFloat(i/3), width: imgWidth, height: imgWidth))
                     imgView.tag = 100+i
+                    imgView.imageView?.contentMode = .scaleAspectFill
+                    imgView.imageView?.clipsToBounds = true
                     imgView.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+photo), for: UIControlState(), placeholderImage: nil)
                     imgView.addTarget(self, action: #selector(imgBtnClick(imgBtn:)), for: .touchUpInside)
                     imgBgView.addSubview(imgView)

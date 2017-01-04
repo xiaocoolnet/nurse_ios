@@ -362,16 +362,29 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
                 return
             }
             // 申请圈主
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
             
-            let circleApplyMasterController = NSCircleApplyMasterViewController()
-            circleApplyMasterController.hidesBottomBarWhenPushed = true
-            self.navigationController?.pushViewController(circleApplyMasterController, animated: true)
-            
-//            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-//            hud.removeFromSuperViewOnHide = true
-//            hud.mode = .text
-//            hud.label.text = "敬请期待"
-//            hud.hide(animated: true, afterDelay: 1.5)
+            CircleNetUtil.judge_apply_community(userid: QCLoginUserInfo.currentInfo.userid, cid: "", handle: { (success, response) in
+                if success {
+                    let isMaster = response as! String
+                    if isMaster == "yes" {
+                        hud.mode = .text
+                        hud.label.text = "您已经是圈主了"
+                        hud.hide(animated: true, afterDelay: 1)
+                    }else{
+                        hud.hide(animated: true)
+                        let circleApplyMasterController = NSCircleApplyMasterViewController()
+                        circleApplyMasterController.hidesBottomBarWhenPushed = true
+                        self.navigationController?.pushViewController(circleApplyMasterController, animated: true)
+                    }
+                }else{
+                    hud.mode = .text
+                    hud.label.text = "请稍后再试"
+                    hud.hide(animated: true, afterDelay: 1)
+                }
+            })
+
         case 3:
             if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
                 

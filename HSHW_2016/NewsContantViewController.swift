@@ -336,7 +336,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         let nowStr = str.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         return nowStr
     }
-    // 发表评论
+    // MARK: - 发表评论
     func sendComment() {
         
         

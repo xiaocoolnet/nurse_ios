@@ -373,13 +373,13 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
                 let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
                 hud.removeFromSuperViewOnHide = true
                 hud.mode = .text
-                hud.label.text = "您已认证"
+                hud.label.text = "您已认证成功"
                 hud.hide(animated: true, afterDelay: 1.5)
             case "2":// 认证中
                 let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
                 hud.removeFromSuperViewOnHide = true
                 hud.mode = .text
-                hud.label.text = "认证信息正在审核"
+                hud.label.text = "正在审核中"
                 hud.hide(animated: true, afterDelay: 1.5)
             default:
                 let circleAuthController = NSCircleAuthViewController()
