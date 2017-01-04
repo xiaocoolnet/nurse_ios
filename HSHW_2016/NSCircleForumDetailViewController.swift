@@ -25,6 +25,8 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     var isMaster = false
     
     var imageHeigthArray = [CGFloat]()
+    
+    var myScore = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -913,7 +915,22 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             return
         }
         
-        self.showAlert()
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.removeFromSuperViewOnHide = true
+        
+        CircleNetUtil.getNurse_score(userid: QCLoginUserInfo.currentInfo.userid) { (success, response) in
+            if success {
+                hud.hide(animated: true)
+                self.myScore = response as! String
+                self.showAlert()
+            }else{
+                hud.mode = .text
+                hud.label.text = "获取护士币失败"
+                hud.hide(animated: true, afterDelay: 1)
+            }
+        }
+        
+        
     }
     
     // MARK: - 图片按钮点击事件
@@ -1138,7 +1155,12 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         noteLab.font = UIFont.systemFont(ofSize: 12)
         noteLab.textAlignment = .center
         noteLab.textColor = UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1)
-        noteLab.text = "可用护士币：未完成"
+
+        let descripStr = "可用护士币：\(myScore)"
+        let attrStr = NSMutableAttributedString(string: descripStr)
+        attrStr.addAttributes([NSForegroundColorAttributeName:COLOR], range: NSMakeRange(6, myScore.characters.count))
+        noteLab.attributedText = attrStr
+
         alert.addSubview(noteLab)
         
         let buttonWidth:CGFloat = 50

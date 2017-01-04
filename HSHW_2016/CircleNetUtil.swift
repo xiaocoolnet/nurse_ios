@@ -1060,5 +1060,32 @@ class CircleNetUtil: NSObject {
             }
         }
     }
+    
+    // MARK: - 获取护士币
+    //接口地址：a=getNurse_score
+    //入参：userid
+    //出参：score
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getNurse_score&userid=603
+    class func getNurse_score(userid:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"getNurse_score"
+        let param = [
+            "userid":userid
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
 
 }
