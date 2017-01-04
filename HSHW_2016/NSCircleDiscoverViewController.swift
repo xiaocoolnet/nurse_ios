@@ -452,7 +452,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
                 contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
-            return 8+height+8+contentHeight+8+8+8// 上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
+            return 8+height+8+contentHeight+8+8+8+5// 上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
         }else if forum.photo.count < 3 {
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16-110-8)
             
@@ -466,7 +466,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             let cellHeight2 = 8+height+8+contentHeight+8+8+8// 上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
             
             
-            return max(cellHeight1, cellHeight2)
+            return max(cellHeight1, cellHeight2)+5
         }else{
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
             
@@ -478,7 +478,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             
             let imgHeight = (WIDTH-16-15*2)/3.0*2/3.0
             
-            return 8+height+8+contentHeight+8+imgHeight+8+8+8// 上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
+            return 8+height+8+contentHeight+8+imgHeight+8+8+8+5// 上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
         }
     }
     
