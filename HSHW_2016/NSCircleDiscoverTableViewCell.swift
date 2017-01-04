@@ -132,31 +132,21 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
         
         
         
-        var conNumStr = "0"
-        if Int(forumModel.hits) > 99999 {
-            conNumStr = "10W+"
-        }else if Int(forumModel.hits) > 199999 {
-            conNumStr = "20W+"
-        }else if Int(forumModel.hits) > 299999 {
-            conNumStr = "30W+"
-        }else if Int(forumModel.hits) > 399999 {
-            conNumStr = "40W+"
-        }else if Int(forumModel.hits) > 499999 {
-            conNumStr = "50W+"
-        }else if Int(forumModel.hits) > 599999 {
-            conNumStr = "60W+"
-        }else if Int(forumModel.hits) > 799999 {
-            conNumStr = "80W+"
-        }else if Int(forumModel.hits) > 899999 {
-            conNumStr = "90W+"
-        }else if Int(forumModel.hits) > 999999 {
-            conNumStr = "100W+"
-        }else if Int(forumModel.hits) > 9999999 {
-            conNumStr = "1000W+"
+        var comNumStr = forumModel.comments_count
+        
+        if NSString(string: forumModel.comments_count).integerValue > 10000 {
+            comNumStr = String(NSString(string: forumModel.comments_count).integerValue/10000)+"W+"
         }else{
-            conNumStr = forumModel.hits
+            comNumStr = forumModel.comments_count
         }
         
+        var likeNumStr = forumModel.like_num
+        
+        if NSString(string: forumModel.like_num).integerValue > 10000 {
+            likeNumStr = String(NSString(string: forumModel.like_num).integerValue/10000)+"W+"
+        }else{
+            likeNumStr = forumModel.like_num
+        }
         
         
         if forumModel.photo.count == 0 {
@@ -177,8 +167,8 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             
             self.contantLab.text = forumModel.content
             
-            likeLab.text = forumModel.like_num
-            comLab.text = forumModel.hits
+            likeLab.text = likeNumStr
+            comLab.text = comNumStr
 //            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
 //            comBtn.setTitle(forumModel.hits, for: UIControlState())
             
@@ -233,8 +223,8 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
                 titleImg.frame.origin.y = (contantLab.frame.maxY+8+8+8-80)/2.0
             }
             
-            likeLab.text = forumModel.like_num
-            comLab.text = forumModel.hits
+            likeLab.text = likeNumStr
+            comLab.text = comNumStr
             //            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
             //            comBtn.setTitle(forumModel.hits, for: UIControlState())
             
@@ -296,8 +286,8 @@ class NSCircleDiscoverTableViewCell: UITableViewCell {
             titSubImg.isHidden = false
             
             
-            likeLab.text = forumModel.like_num
-            comLab.text = forumModel.hits
+            likeLab.text = likeNumStr
+            comLab.text = comNumStr
             //            likeBtn.setTitle(forumModel.like_num, for: UIControlState())
             //            comBtn.setTitle(forumModel.hits, for: UIControlState())
             
