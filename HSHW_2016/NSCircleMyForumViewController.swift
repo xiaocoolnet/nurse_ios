@@ -28,13 +28,13 @@ class NSCircleMyForumViewController: UIViewController, UITableViewDataSource, UI
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        BaiduMobStat.default().pageviewStart(withName: "护士站 圈子 我的")
+        BaiduMobStat.default().pageviewStart(withName: "护士站 圈子 我的贴子 贴子")
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
-        BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 我的")
+        BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子 我的贴子 贴子")
     }
     
     // MARK: - 加载数据
