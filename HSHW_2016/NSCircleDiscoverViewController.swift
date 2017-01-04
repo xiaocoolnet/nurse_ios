@@ -326,15 +326,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.removeFromSuperViewOnHide = true
-        
-        if (searchBar.text?.characters.count ?? 0)! < 5 {
-
-            hud.mode = .text
-            hud.label.text = "输入字数过少"
-            hud.hide(animated: true, afterDelay: 1)
-            return
-        }
-        
+                
         CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "", title: searchBar.text!) { (success, response) in
             if success {
                 

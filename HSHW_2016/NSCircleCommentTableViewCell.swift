@@ -187,14 +187,28 @@ class NSCircleCommentTableViewCell: UITableViewCell {
             likeBtn.frame.origin.x = dateLab.frame.maxX+10
             likeBtn.center.y = dateImg.center.y
             
-            reportBtn.frame.origin.x = WIDTH-8-8-reportBtn.frame.width
-            reportBtn.center.y = dateImg.center.y
-            
-            replyBtn.frame.origin.x = reportBtn.frame.origin.x-10-replyBtn.frame.width
-            replyBtn.center.y = dateImg.center.y
-            
-            deleteBtn.frame.origin.x = replyBtn.frame.origin.x-10-deleteBtn.frame.width
-            deleteBtn.center.y = dateImg.center.y
+            if commentModel?.userid == QCLoginUserInfo.currentInfo.userid {
+                
+                reportBtn.isHidden = true
+                
+                replyBtn.frame.origin.x = WIDTH-8-8-reportBtn.frame.width
+                replyBtn.center.y = dateImg.center.y
+                
+                deleteBtn.frame.origin.x = replyBtn.frame.origin.x-10-deleteBtn.frame.width
+                deleteBtn.center.y = dateImg.center.y
+
+            }else{
+                reportBtn.isHidden = false
+
+                reportBtn.frame.origin.x = WIDTH-8-8-reportBtn.frame.width
+                reportBtn.center.y = dateImg.center.y
+                
+                replyBtn.frame.origin.x = reportBtn.frame.origin.x-10-replyBtn.frame.width
+                replyBtn.center.y = dateImg.center.y
+                
+                deleteBtn.frame.origin.x = replyBtn.frame.origin.x-10-deleteBtn.frame.width
+                deleteBtn.center.y = dateImg.center.y
+            }
             
 
 //            deleteBtn.isHidden = commentModel?.userid == QCLoginUserInfo.currentInfo.userid ? false:true

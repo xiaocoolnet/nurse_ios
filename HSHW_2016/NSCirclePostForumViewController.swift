@@ -289,9 +289,16 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
         hud.removeFromSuperViewOnHide = true
         hud.margin = 10
         
+        
         if titleTextField.text.isEmpty {
             hud.mode = .text
             hud.label.text = "请输入标题"
+            hud.hide(animated: true, afterDelay: 1)
+            return
+        }else if (titleTextField.text?.characters.count ?? 0)! < 5 {
+            
+            hud.mode = .text
+            hud.label.text = "标题至少5个字"
             hud.hide(animated: true, afterDelay: 1)
             return
         }
