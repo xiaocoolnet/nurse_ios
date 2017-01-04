@@ -320,6 +320,8 @@ class PostVacancies: UIView,UITextViewDelegate,UITextFieldDelegate{
         //        setDropDownMenu()
         
         if (UIApplication.shared.keyWindow != nil) {
+//            let tabBar = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "MainView") as! UITabBarController
+
             
             let tabBar = UIApplication.shared.keyWindow?.rootViewController as! UITabBarController
             selfNav = tabBar.selectedViewController as? UINavigationController

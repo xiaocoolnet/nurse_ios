@@ -396,6 +396,28 @@ class Follow_fansModel: HandyJSON {
     }
 }
 
+// 首页图片
+class HomePageModel: HandyJSON {
+    var status = ""
+    var data = HomePageDataModel()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        mapper.exclude(property: &errorData)
+    }
+}
+class HomePageDataModel: HandyJSON {
+    var id = ""
+    var photo = ""
+    var create_time = ""
+    var title = ""
+    var description = ""
+    
+    required init() {}
+}
+
 
 // MARK: - 下边的没用
 

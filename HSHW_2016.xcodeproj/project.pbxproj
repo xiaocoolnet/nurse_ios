@@ -158,6 +158,7 @@
 		1F3912681E00E5CA00A26FDE /* NSCircleCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3912661E00E5CA00A26FDE /* NSCircleCommentTableViewCell.swift */; };
 		1F3912691E00E5CA00A26FDE /* NSCircleCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F3912671E00E5CA00A26FDE /* NSCircleCommentTableViewCell.xib */; };
 		1F39126B1E0147CC00A26FDE /* NSCirclePublicAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F39126A1E0147CC00A26FDE /* NSCirclePublicAction.swift */; };
+		1F3D43F91E1C7CD900E125BF /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3D43F81E1C7CD900E125BF /* LaunchViewController.swift */; };
 		1F402CBA1E0A245B00667853 /* CircleNetUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F402CB91E0A245B00667853 /* CircleNetUtil.swift */; };
 		1F4A3AC41D1B6F6B00EE91F1 /* EveryDayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */; };
 		1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */; };
@@ -484,6 +485,7 @@
 		1F3912661E00E5CA00A26FDE /* NSCircleCommentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleCommentTableViewCell.swift; sourceTree = "<group>"; };
 		1F3912671E00E5CA00A26FDE /* NSCircleCommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSCircleCommentTableViewCell.xib; sourceTree = "<group>"; };
 		1F39126A1E0147CC00A26FDE /* NSCirclePublicAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCirclePublicAction.swift; sourceTree = "<group>"; };
+		1F3D43F81E1C7CD900E125BF /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		1F402CB91E0A245B00667853 /* CircleNetUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleNetUtil.swift; sourceTree = "<group>"; };
 		1F4A3AC31D1B6F6B00EE91F1 /* EveryDayModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EveryDayModel.swift; sourceTree = "<group>"; };
 		1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaliyExamModel.swift; sourceTree = "<group>"; };
@@ -889,6 +891,7 @@
 				183B85011CE5BFDC00709235 /* Info.plist */,
 				183B866B1CE5CF7900709235 /* Tool */,
 				1F0B4BB11E05327300D696B1 /* NursePublicAction.swift */,
+				1F3D43F81E1C7CD900E125BF /* LaunchViewController.swift */,
 			);
 			path = HSHW_2016;
 			sourceTree = "<group>";
@@ -1880,6 +1883,7 @@
 				185408811CE7005A00DFBA7C /* TouTiaoViewController.swift in Sources */,
 				F6342C681D38DD2800800D8E /* HSArticleCollectCell.swift in Sources */,
 				18A6BAC51CE5F9A700B6B1FD /* MineViewController.swift in Sources */,
+				1F3D43F91E1C7CD900E125BF /* LaunchViewController.swift in Sources */,
 				1F0D06B51DDAFAAF00A00CB5 /* GOnlineViewController.swift in Sources */,
 				0B7392871D40C5AC00F785AF /* OnLineViewController.swift in Sources */,
 				0DB467B91D4C8600009AE2AD /* MJRefreshConst.m in Sources */,

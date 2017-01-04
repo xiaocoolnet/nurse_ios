@@ -1032,5 +1032,33 @@ class CircleNetUtil: NSObject {
             }
         }
     }
+    
+    // MARK: - 首页图片
+    //接口地址：a=getHomePage
+    //入参：userid
+    //出参：id,photo,create_time,title,description
+    //展示方式：http://nurse.xiaocool.net/uploads/microblog/20170103/586b72532acca.png
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getHomePage&userid=603
+    class func getHomePage(userid:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"getHomePage"
+        let param = [
+            "userid":userid
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<HomePageModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
 
 }

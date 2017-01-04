@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4Aq-fV-Pt5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="4Aq-fV-Pt5">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -30,23 +34,55 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                     <navigationItem key="navigationItem" title="登录界面" id="a8G-QL-vcc"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="294" y="228"/>
+            <point key="canvasLocation" x="212" y="185"/>
+        </scene>
+        <!--Launch View Controller-->
+        <scene sceneID="Fds-Ac-ZD3">
+            <objects>
+                <viewController id="CQb-8p-Gpi" customClass="LaunchViewController" customModule="HSHW_2016" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="msZ-EM-seq"/>
+                        <viewControllerLayoutGuide type="bottom" id="kNk-f8-kDd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="wME-TA-BuR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UcN-b8-Gmb">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="UcN-b8-Gmb" firstAttribute="top" secondItem="wME-TA-BuR" secondAttribute="top" id="HcX-oC-KTt"/>
+                            <constraint firstAttribute="trailing" secondItem="UcN-b8-Gmb" secondAttribute="trailing" id="aUO-JJ-ACt"/>
+                            <constraint firstItem="kNk-f8-kDd" firstAttribute="top" secondItem="UcN-b8-Gmb" secondAttribute="bottom" id="mfu-e7-yaO"/>
+                            <constraint firstItem="UcN-b8-Gmb" firstAttribute="leading" secondItem="wME-TA-BuR" secondAttribute="leading" id="xaG-AC-qfT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="launchImageView" destination="UcN-b8-Gmb" id="gTr-4N-cuM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dme-JO-ErZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1684" y="185"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="iLR-bq-NIl">
             <objects>
-                <tabBarController storyboardIdentifier="MainView" id="4Aq-fV-Pt5" customClass="HSTabBarController" customModule="HSHW_2016" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="MainView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4Aq-fV-Pt5" customClass="HSTabBarController" customModule="HSHW_2016" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Ai8-eR-rul">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="q9F-Sx-KGV" kind="relationship" relationship="viewControllers" id="Xgw-sQ-9sj"/>
@@ -154,9 +190,9 @@
                         <viewControllerLayoutGuide type="bottom" id="yz8-BP-QcX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="HPG-5v-Hwl">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="新闻" id="Ibp-ho-95X"/>
                 </viewController>
@@ -173,7 +209,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Fce-pj-v3L"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="1B5-Z0-8qd">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                     <navigationItem key="navigationItem" title="学习" id="cg8-o0-BGH"/>
@@ -191,9 +227,9 @@
                         <viewControllerLayoutGuide type="bottom" id="Gxu-a0-QoL"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="bbv-9V-iu5">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="出国" id="odH-IM-1hG"/>
                 </viewController>
@@ -210,9 +246,9 @@
                         <viewControllerLayoutGuide type="bottom" id="IHJ-dl-bDA"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="sxs-Pf-7CP">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="招聘" id="rBT-PV-ktG"/>
                 </viewController>
@@ -229,7 +265,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Dyp-AY-WC1"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="DPE-c5-2iw">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     </view>
                     <navigationItem key="navigationItem" id="kMs-xI-pGT"/>

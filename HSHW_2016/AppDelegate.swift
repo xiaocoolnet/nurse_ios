@@ -99,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
 //            }
 //        }
         
-        Thread.sleep(forTimeInterval: 1.0)
+//        Thread.sleep(forTimeInterval: 1.0)
         UITabBar.appearance().tintColor = COLOR
         UITabBar.appearance().backgroundColor = UIColor.white
         UINavigationBar.appearance().barTintColor = UIColor.white
@@ -112,6 +112,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
             ]
         }
         UIBarButtonItem.appearance().setBackButtonTitlePositionAdjustment(UIOffsetMake(0, -60), for: UIBarMetrics.default)
+        
+//        self.window?.rootViewController = LaunchViewController()
         
         return true
     }
