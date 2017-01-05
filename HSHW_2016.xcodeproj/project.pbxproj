@@ -126,6 +126,7 @@
 		1F156A8E1E14F5AE00815BB5 /* SDBrowserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F156A881E14F5AE00815BB5 /* SDBrowserImageView.m */; };
 		1F156A8F1E14F5AE00815BB5 /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F156A8A1E14F5AE00815BB5 /* SDPhotoBrowser.m */; };
 		1F156A901E14F5AE00815BB5 /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F156A8D1E14F5AE00815BB5 /* SDWaitingView.m */; };
+		1F1787EB1E1DF97A005E73CD /* NSCircleAttentionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1787EA1E1DF97A005E73CD /* NSCircleAttentionViewController.swift */; };
 		1F1A33951D548D7A00F7C20A /* editResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */; };
 		1F1A33961D548D7A00F7C20A /* editResumeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */; };
 		1F1A33981D54952600F7C20A /* PostVacanciewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */; };
@@ -450,6 +451,7 @@
 		1F156A8B1E14F5AE00815BB5 /* SDPhotoBrowserConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDPhotoBrowserConfig.h; sourceTree = "<group>"; };
 		1F156A8C1E14F5AE00815BB5 /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
 		1F156A8D1E14F5AE00815BB5 /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
+		1F1787EA1E1DF97A005E73CD /* NSCircleAttentionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleAttentionViewController.swift; sourceTree = "<group>"; };
 		1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editResumeViewController.swift; sourceTree = "<group>"; };
 		1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = editResumeViewController.xib; sourceTree = "<group>"; };
 		1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVacanciewViewController.swift; sourceTree = "<group>"; };
@@ -1286,6 +1288,14 @@
 			path = SDPhotoBrowser;
 			sourceTree = "<group>";
 		};
+		1F1787E91E1DF7CD005E73CD /* 关注 */ = {
+			isa = PBXGroup;
+			children = (
+				1F1787EA1E1DF97A005E73CD /* NSCircleAttentionViewController.swift */,
+			);
+			name = "关注";
+			sourceTree = "<group>";
+		};
 		1F1C1B251DF64B5F0051F638 /* Circle(圈子) */ = {
 			isa = PBXGroup;
 			children = (
@@ -1299,6 +1309,7 @@
 		1F1C1B261DF64B6A0051F638 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1F1787E91E1DF7CD005E73CD /* 关注 */,
 				1F1C1B281DF64C550051F638 /* HSNSCircleHomeViewController.swift */,
 				1F39126A1E0147CC00A26FDE /* NSCirclePublicAction.swift */,
 				1F879FA31E026544001385CE /* 发现 */,
@@ -1922,6 +1933,7 @@
 				183B86701CE5CF9500709235 /* Httpresult.swift in Sources */,
 				1854087F1CE6F15500DFBA7C /* Tool.swift in Sources */,
 				1F2853611DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift in Sources */,
+				1F1787EB1E1DF97A005E73CD /* NSCircleAttentionViewController.swift in Sources */,
 				0DB467BC1D4C8600009AE2AD /* UIScrollView+MJRefresh.m in Sources */,
 				0DB467B61D4C8600009AE2AD /* MJRefreshNormalHeader.m in Sources */,
 				18C240601CEEB6340059BF48 /* TalentViewController.swift in Sources */,

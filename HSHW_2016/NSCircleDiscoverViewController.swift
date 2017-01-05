@@ -25,7 +25,6 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
 //        self.view.backgroundColor = UIColor.cyanColor()
         self.setSubview()
         
-        loadData()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -374,11 +373,12 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             circleListController.sort = ""
             self.navigationController?.pushViewController(circleListController, animated: true)
         case 101:
-            print("热门圈子")
+            print("品管圈")
             let circleListController = NSCircleListViewController()
             circleListController.hidesBottomBarWhenPushed = true
             circleListController.titleString = "品管圈"
             circleListController.hot = "0"
+            circleListController.term_id = "286"
             circleListController.showDropDown = false
             self.navigationController?.pushViewController(circleListController, animated: true)
         case 102:

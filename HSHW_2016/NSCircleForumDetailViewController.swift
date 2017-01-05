@@ -219,7 +219,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     
     func shareTheNews(_ btn:UIButton) {
         
-        self.shareNewsUrl = "http://nurse.xiaocool.net/index.php?g=HomePage&m=CommunityShare&a=index&tid=\(forumDataModel.id)&type=1&userid=\(QCLoginUserInfo.currentInfo.userid)"
+        self.shareNewsUrl = DomainName+"index.php?g=HomePage&m=CommunityShare&a=index&tid=\(forumDataModel.id)&type=1&userid=\(QCLoginUserInfo.currentInfo.userid)"
         self.shareNews(btn)
     }
     

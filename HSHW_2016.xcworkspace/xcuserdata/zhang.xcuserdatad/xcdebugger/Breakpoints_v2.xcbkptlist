@@ -251,6 +251,38 @@
             endingLineNumber = "584"
             landmarkName = "sendComment()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.NSCircleForumDetailViewController.sendComment () -&gt; ()"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/%E9%A1%B9%E7%9B%AE/nurse_ios/HSHW_2016/NSCircleForumDetailViewController.swift"
+                  timestampString = "505290541.694861"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "585"
+                  endingLineNumber = "585"
+                  offsetFromSymbolStart = "1637">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.NSCircleForumDetailViewController.(sendComment () -&gt; ()).(closure #1)"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/%E9%A1%B9%E7%9B%AE/nurse_ios/HSHW_2016/NSCircleForumDetailViewController.swift"
+                  timestampString = "505290541.696778"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "586"
+                  endingLineNumber = "586"
+                  offsetFromSymbolStart = "37">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -267,6 +299,38 @@
             endingLineNumber = "592"
             landmarkName = "sendComment()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.NSCircleForumDetailViewController.(sendComment () -&gt; ()).(closure #1)"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/%E9%A1%B9%E7%9B%AE/nurse_ios/HSHW_2016/NSCircleForumDetailViewController.swift"
+                  timestampString = "505290541.700558"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "592"
+                  endingLineNumber = "592"
+                  offsetFromSymbolStart = "554">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "HSHW_2016.NSCircleForumDetailViewController.(sendComment () -&gt; ()).(closure #1).(closure #1)"
+                  moduleName = "HSHW_2016"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/%E9%A1%B9%E7%9B%AE/nurse_ios/HSHW_2016/NSCircleForumDetailViewController.swift"
+                  timestampString = "505290541.702338"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "593"
+                  endingLineNumber = "593"
+                  offsetFromSymbolStart = "37">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

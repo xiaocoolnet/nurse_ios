@@ -11,6 +11,7 @@ import PagingMenuController
 
 class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelegate {
     let discoverController = NSCircleDiscoverViewController()
+    let attentionController = NSCircleAttentionViewController()
     let mineController = NSCircleMineViewController()
     
 //    var pagingMenuController:PagingMenuController?
@@ -37,6 +38,7 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         discoverController.title = "发现"
+        attentionController.title = "关注"
         mineController.title = "我的"
 //        let viewControllers = [discoverController,mineController]
 //        let options = PagingMenuOptions()
@@ -113,18 +115,22 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
         struct PagingMenuOptions: PagingMenuControllerCustomizable {
 
             var viewControllers = [UIViewController]()
-            var itemTextArray = [String]()
 
             var scrollEnabled: Bool {
                 return false
             }
             var componentType: ComponentType {
+                var itemTextArray = [String]()
                 
+                for controller in viewControllers {
+                    itemTextArray.append((controller.title ?? "")!)
+                }
+
                 return .all(menuOptions: MenuOptions.init(textArray: itemTextArray), pagingControllers: viewControllers)
             }
         }
         
-        let options = PagingMenuOptions.init(viewControllers: [discoverController,mineController], itemTextArray: ["发现","我的"])
+        let options = PagingMenuOptions.init(viewControllers: [discoverController,attentionController,mineController])
         let pagingMenuController = PagingMenuController(options: options)
         pagingMenuController.view.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-45)
         
