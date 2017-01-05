@@ -945,10 +945,20 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.textLabel?.text = nil
                 cell.floorLab.text = "\(self.commentArray.count-indexPath.row)楼"
                 cell.commentModel = self.commentArray[indexPath.row]
+                cell.headerBtn.tag = 200+indexPath.row
+                cell.headerBtn.addTarget(self, action: #selector(userInfoBtnClick(userInfoBtn:)), for: .touchUpInside)
             }
             return cell
         }
         
+    }
+    
+    // MARK: - 用户主页按钮点击事件
+    func userInfoBtnClick(userInfoBtn:UIButton) {
+        
+        let circleUserInfoController = NSCircleUserInfoViewController()
+        circleUserInfoController.userid = commentArray[userInfoBtn.tag-200].userid
+        self.navigationController?.pushViewController(circleUserInfoController, animated: true)
     }
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool {

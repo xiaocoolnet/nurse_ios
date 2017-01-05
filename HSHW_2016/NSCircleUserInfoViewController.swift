@@ -177,6 +177,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
     
     // MARK: - 设置子视图
     func setSubviews() {
+        self.automaticallyAdjustsScrollViewInsets = false
         
 //        let shareBtn:UIButton = UIButton.init(frame: CGRect(x: 0, y: 7, width: 30, height: 30))
 //        shareBtn.setImage(UIImage.init(named: "ic_fenxiang"), for: UIControlState())

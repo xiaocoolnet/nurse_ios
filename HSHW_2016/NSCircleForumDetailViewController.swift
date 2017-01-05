@@ -770,6 +770,8 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             cell.floorLab.text = "\(self.forumCommentArray.count-indexPath.row)楼"
             cell.commentModel = self.forumCommentArray[indexPath.row]
             
+            cell.headerBtn.tag = 200+indexPath.row
+            cell.headerBtn.addTarget(self, action: #selector(userInfoBtnClick(userInfoBtn:)), for: .touchUpInside)
             
             if isMaster || QCLoginUserInfo.currentInfo.isCircleManager == "1" {
                 cell.deleteBtn.isHidden = false
@@ -994,6 +996,14 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         self.showSheet(with: labelTextArray, buttonTitleColorArray: labelTextColorArray, forumId: self.forumModel.tid)
 
         
+    }
+    
+    // MARK: - 用户主页按钮点击事件
+    func userInfoBtnClick(userInfoBtn:UIButton) {
+        
+        let circleUserInfoController = NSCircleUserInfoViewController()
+        circleUserInfoController.userid = forumCommentArray[userInfoBtn.tag-200].userid
+        self.navigationController?.pushViewController(circleUserInfoController, animated: true)
     }
     
     // MARK: - 评论点赞
