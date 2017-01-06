@@ -132,6 +132,7 @@
 		1F182F7A1E1F9250008160AD /* NSCircleNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F182F791E1F9250008160AD /* NSCircleNewsViewController.swift */; };
 		1F182F7F1E1F9D4B008160AD /* NSCircleNewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F182F7D1E1F9D4B008160AD /* NSCircleNewsTableViewCell.swift */; };
 		1F182F801E1F9D4B008160AD /* NSCircleNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F182F7E1E1F9D4B008160AD /* NSCircleNewsTableViewCell.xib */; };
+		1F182F821E1FA57E008160AD /* NSCircleAttentionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F182F811E1FA57E008160AD /* NSCircleAttentionTableViewCell.swift */; };
 		1F1A33951D548D7A00F7C20A /* editResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */; };
 		1F1A33961D548D7A00F7C20A /* editResumeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */; };
 		1F1A33981D54952600F7C20A /* PostVacanciewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */; };
@@ -462,6 +463,7 @@
 		1F182F791E1F9250008160AD /* NSCircleNewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleNewsViewController.swift; sourceTree = "<group>"; };
 		1F182F7D1E1F9D4B008160AD /* NSCircleNewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleNewsTableViewCell.swift; sourceTree = "<group>"; };
 		1F182F7E1E1F9D4B008160AD /* NSCircleNewsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSCircleNewsTableViewCell.xib; sourceTree = "<group>"; };
+		1F182F811E1FA57E008160AD /* NSCircleAttentionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleAttentionTableViewCell.swift; sourceTree = "<group>"; };
 		1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editResumeViewController.swift; sourceTree = "<group>"; };
 		1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = editResumeViewController.xib; sourceTree = "<group>"; };
 		1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVacanciewViewController.swift; sourceTree = "<group>"; };
@@ -1343,6 +1345,7 @@
 		1F1C1B2E1DF686B20051F638 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1F182F811E1FA57E008160AD /* NSCircleAttentionTableViewCell.swift */,
 				1F1C1B2F1DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift */,
 				1F1C1B3A1DF6B0930051F638 /* NSCircleListTableViewCell.swift */,
 				1F1C1B3B1DF6B0930051F638 /* NSCircleListTableViewCell.xib */,
@@ -1772,6 +1775,7 @@
 				0DB467AC1D4C8600009AE2AD /* MJRefreshComponent.m in Sources */,
 				1F0FDFF01D697C24005DDB80 /* RankTableViewCell.swift in Sources */,
 				F605F0C11D2266B100769299 /* HSFindPersonDetailView.swift in Sources */,
+				1F182F821E1FA57E008160AD /* NSCircleAttentionTableViewCell.swift in Sources */,
 				183B86711CE5CF9500709235 /* JSONJoy.swift in Sources */,
 				180482EF1CEDF54200BF716C /* RecruitTableViewCell.swift in Sources */,
 				181E0D251CEBF83200E34A7F /* FansViewController.swift in Sources */,

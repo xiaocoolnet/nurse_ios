@@ -107,7 +107,7 @@ class NSCircleAttentionViewController: UIViewController, UITableViewDataSource, 
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
-        rootTableView.register(NSCircleDiscoverTableViewCell.self, forCellReuseIdentifier: "circleDiscoverCell")
+        rootTableView.register(NSCircleAttentionTableViewCell.self, forCellReuseIdentifier: "circleAttentionCell")
         
         rootTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         rootTableView.mj_header.beginRefreshing()
@@ -174,7 +174,7 @@ class NSCircleAttentionViewController: UIViewController, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "circleDiscoverCell", for: indexPath) as! NSCircleDiscoverTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "circleAttentionCell", for: indexPath) as! NSCircleAttentionTableViewCell
         
         cell.selectionStyle = .none
         

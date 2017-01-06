@@ -1,5 +1,5 @@
 //
-//  NSCircleDiscoverTableViewCell.swift
+//  NSCircleAttentionTableViewCell.swift
 //  HSHW_2016
 //
 //  Created by 高扬 on 2016/12/6.
@@ -32,8 +32,9 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class NSCircleDiscoverTableViewCell: UITableViewCell {
+class NSCircleAttentionTableViewCell: UITableViewCell {
     
+    var type = 1 // 1 有分类 2 没分类
     
     let titleLab = UILabel()
     let contantLab = UILabel()

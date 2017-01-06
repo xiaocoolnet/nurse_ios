@@ -63,8 +63,12 @@ class NSCircleNewsViewController: UIViewController, UITableViewDataSource, UITab
 //        self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1)
         
+        let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
+        line.backgroundColor = COLOR
+        self.view.addSubview(line)
+        
         // tableView
-        rootTableView.frame = CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT-20-44)
+        rootTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-20-44)
         rootTableView.backgroundColor = UIColor(red: 245/255.0, green: 245/255.0, blue: 245/255.0, alpha: 1)
         rootTableView.register(UINib.init(nibName: "NSCircleNewsTableViewCell", bundle: nil), forCellReuseIdentifier: "circleNewsCell")
         rootTableView.dataSource = self

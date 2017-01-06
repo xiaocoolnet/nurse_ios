@@ -117,7 +117,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
-        rootTableView.register(NSCircleDiscoverTableViewCell.self, forCellReuseIdentifier: "circleDiscoverCell")
+        rootTableView.register(NSCircleDetailTableViewCell.self, forCellReuseIdentifier: "circleDiscoverCell")
 
         rootTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         rootTableView.mj_header.beginRefreshing()
@@ -416,13 +416,24 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "circleDiscoverCell", for: indexPath) as! NSCircleDiscoverTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "circleDiscoverCell", for: indexPath) as! NSCircleDetailTableViewCell
 
         cell.selectionStyle = .none
         
-        cell.setCell(with: forumModelArray[indexPath.section])
+        cell.setCellWith(forumModelArray[indexPath.section])
+//        cell.setCell(with: forumModelArray[indexPath.section])
+        cell.imgBtn.tag = 200+indexPath.section
+        cell.imgBtn.addTarget(self, action: #selector(userInfoBtnClick(userInfoBtn:)), for: .touchUpInside)
         
         return cell
+    }
+    
+    // MARK: - 用户主页按钮点击事件
+    func userInfoBtnClick(userInfoBtn:UIButton) {
+        
+        let circleUserInfoController = NSCircleUserInfoViewController()
+        circleUserInfoController.userid = forumModelArray[userInfoBtn.tag-200].userid
+        self.navigationController?.pushViewController(circleUserInfoController, animated: true)
     }
     
     // MARK: - UITableViewDelegate
@@ -431,19 +442,20 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        let forum = forumModelArray[indexPath.section]
+        
+        let forum = forumModelArray[indexPath.row]
         
         if forum.photo.count == 0 {
             
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
-
+            
             
             var contentHeight = calculateHeight((forum.content), size: contentSize, width: WIDTH-16)
             if contentHeight >= UIFont.systemFont(ofSize: contentSize).lineHeight*3 {
                 contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
-            return 8+height+8+contentHeight+8+8+8+5// 上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
+            return 55+8+height+8+contentHeight+8+8+8+5// 个人信息高+上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
         }else if forum.photo.count < 3 {
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16-110-8)
             
@@ -453,11 +465,11 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
                 contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
-            let cellHeight1:CGFloat = 8+80+8// 上边距+图片高+下边距
+            let cellHeight1:CGFloat = 80+8+8+8// 上边距+图片高+下边距
             let cellHeight2 = 8+height+8+contentHeight+8+8+8// 上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
             
             
-            return max(cellHeight1, cellHeight2)+5
+            return max(cellHeight1, cellHeight2)+55+5
         }else{
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
             
@@ -469,7 +481,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             
             let imgHeight = (WIDTH-16-15*2)/3.0*2/3.0
             
-            return 8+height+8+contentHeight+8+imgHeight+8+8+8+5// 上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
+            return 55+8+height+8+contentHeight+8+imgHeight+8+8+8+5// 个人信息高+上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
         }
     }
     
