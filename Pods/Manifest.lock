@@ -14,6 +14,7 @@ PODS:
   - AFNetworking/Serialization (3.1.0)
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
+  - BaiduMapKit (3.2)
   - BmobSDK (1.7.2)
   - HandyJSON (1.4.0)
   - ImageSlideshow (1.0.0):
@@ -30,6 +31,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 3.1.0)
+  - BaiduMapKit
   - BmobSDK
   - HandyJSON (~> 1.4.0)
   - ImageSlideshow (~> 1.0.0)
@@ -51,6 +53,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
+  BaiduMapKit: c23aee47be89b2b939a92acfd06627114e897662
   BmobSDK: e188cb31d6a8417ab668aee821da227d7512b865
   HandyJSON: 8aa98b0ece8c5f7a9042bccd33b0254448704bcb
   ImageSlideshow: 2787e10e202b79ecf5348a205c539fcc5bb8e62b
@@ -61,6 +64,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 38a8ea2006779c0fc4c310cb2ee8195327740faf
   WeiboSDK: bceab625ec59b7039ba721cc4ba9f5868804f63e
 
-PODFILE CHECKSUM: 834badf91afb0d754e60600b80bd1535b97853dc
+PODFILE CHECKSUM: 9565b56f6254ae98e8f32c775c15f102cd360438
 
 COCOAPODS: 1.0.1

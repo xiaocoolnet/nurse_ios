@@ -116,6 +116,7 @@ class ForumListDataModel: HandyJSON {
     var community_photo = ""// 圈子照片
     var c_master = ""// 发贴人是否是圈主:1是,0不
     var auth_type = ""// 认证类型
+    var address = ""// 发贴位置
 
     required init() {}
 }
@@ -417,6 +418,33 @@ class HomePageDataModel: HandyJSON {
     
     required init() {}
 }
+
+// 粉丝列表
+class FansFollowListModel: HandyJSON {
+    var status = ""
+    var data = [FansFollowListDataModel]()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+class FansFollowListDataModel: HandyJSON {
+    var fid = ""// 关注人id、被关注人id
+    var ffs_time = ""// 关注时间
+    var name = ""
+    var sex = ""
+    var photo = ""
+    var score = ""
+    var level = ""
+    
+    required init() {}
+}
+
 
 
 // MARK: - 下边的没用

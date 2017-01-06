@@ -9,7 +9,9 @@
 import UIKit
 import MBProgressHUD
 
-class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ChooseCircleDelegate, CircleImagePreviewDelegate {
+import CoreLocation
+
+class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ChooseCircleDelegate, CircleImagePreviewDelegate, CLLocationManagerDelegate, BMKGeoCodeSearchDelegate {
 
     var couldSelectedCircle = false
     
@@ -24,12 +26,98 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
     var imageArray = [UIImage]()
     
     var selectedCircle:PublishCommunityDataCommunityModel?
-        
+    
+    var locationManager:CLLocationManager!
+    
+    let addresssLab = UILabel()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         setSubviews()
+        
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        
+        findMe()
+        
+    }
+    
+    func findMe() {
+        
+        /** 由于IOS8中定位的授权机制改变 需要进行手动授权
+         * 获取授权认证，两个方法：
+         * [self.locationManager requestWhenInUseAuthorization];
+         * [self.locationManager requestAlwaysAuthorization];
+         */
+        if self.locationManager.responds(to: #selector(self.locationManager.requestAlwaysAuthorization)) {
+            self.locationManager.requestAlwaysAuthorization()
+        }
+
+        //开始定位，不断调用其代理方法
+        self.locationManager.startUpdatingLocation()
+        print("start gps")
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        // 1.获取用户位置的对象
+        let location = locations.last
+        let coordinate = location?.coordinate
+        print("纬度: \(coordinate?.latitude) 经度: \(coordinate?.longitude)");
+        
+        let searcher = BMKGeoCodeSearch()
+        searcher.delegate = self
+        let reverseGeoCodeSearchOption = BMKReverseGeoCodeOption()
+        reverseGeoCodeSearchOption.reverseGeoPoint = coordinate!
+        
+        let flag = searcher.reverseGeoCode(reverseGeoCodeSearchOption)
+        if flag {
+            print("反geo检索发送成功")
+        }else{
+            print("反geo检索发送失败")
+        }
+        
+        
+        // 2.停止定位
+        manager.stopUpdatingLocation()
+    }
+    
+    // MARK: - 实现Deleage处理回调结果
+    //接收反向地理编码结果
+    func onGetReverseGeoCodeResult(_ searcher: BMKGeoCodeSearch!, result: BMKReverseGeoCodeResult!, errorCode error: BMKSearchErrorCode) {
+        if error == BMK_SEARCH_NO_ERROR {
+            print(result.address)
+            if result.addressDetail.province == nil || result.addressDetail.province == "" {
+                addresssLab.text = result.addressDetail.city+"-"+result.addressDetail.city
+            }else{
+                addresssLab.text = result.addressDetail.province+"-"+result.addressDetail.city
+            }
+
+        }else{
+            print("抱歉，未找到结果")
+            
+            addresssLab.text = "定位失败，点击重试"
+
+        }
+    }
+
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
+        
+        addresssLab.text = "定位失败，点击重试"
+
+//        if error.code == kCLErrorDenied {
+//            // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
+//        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
     }
     
     // MARK: - 设置子视图
@@ -153,8 +241,8 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
         addressImg.image = UIImage(named: "所在位置")
         addressBtn.addSubview(addressImg)
         
-        let addresssLab = UILabel(frame: CGRect(x: addressImg.frame.maxX+8, y: 0, width: WIDTH-(addressImg.frame.maxX+8)-38, height: 40))
-        addresssLab.text = "所在位置（尚未完成）"
+        addresssLab.frame = CGRect(x: addressImg.frame.maxX+8, y: 0, width: WIDTH-(addressImg.frame.maxX+8)-38, height: 40)
+        addresssLab.text = "正在获取位置..."
         addressBtn.addSubview(addresssLab)
         
         // line5
@@ -317,6 +405,13 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
             return
         }
         
+        if addresssLab.text == "正在获取位置..." || addresssLab.text == "定位失败，点击重试" || addresssLab.text == "" || addresssLab.text == nil {
+            hud.mode = .text
+            hud.label.text = "请获取位置"
+            hud.hide(animated: true, afterDelay: 1)
+            return
+        }
+        
         if imageArray.count > 0 {
             hud.label.text = "正在上传图片"
             
@@ -391,7 +486,7 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
         
         hud.label.text = "正在发布贴子"
         
-        CircleNetUtil.PublishForum(userid: QCLoginUserInfo.currentInfo.userid, cid: (selectedCircle?.id ?? "")!, title: titleTextField.text, content: contentTextView.text, description: contentTextView.text, photo: photoStr) { (success, response) in
+        CircleNetUtil.PublishForum(userid: QCLoginUserInfo.currentInfo.userid, cid: (selectedCircle?.id ?? "")!, title: titleTextField.text, content: contentTextView.text, description: contentTextView.text, photo: photoStr, address: addresssLab.text!) { (success, response) in
             if success {
                 hud.mode = .text
                 hud.label.text = "贴子发布成功"
@@ -409,7 +504,6 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
                 hud.hide(animated: true, afterDelay: 1)
             }
         }
-
     }
     
     // MARK: - 点击选择圈子按钮
@@ -432,6 +526,17 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
     // MARK: - 点击发贴位置按钮
     func addressBtnClick() {
         print("点击发贴位置按钮")
+        
+        addresssLab.text = "正在获取位置..."
+        
+        findMe()
+
+//        //初始化BMKLocationService
+//        let locService = BMKLocationService()
+//        locService.delegate = self
+//        //启动LocationService
+//        locService.startUserLocationService()
+        
     }
     
     // MARK: - CircleImagePreviewDelegate

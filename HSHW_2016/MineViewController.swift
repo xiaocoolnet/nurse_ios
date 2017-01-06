@@ -37,7 +37,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     var recuit_user_Array = [InvitedInfo]()
     var recuit_company_Array = [MineJobInfo]()
 
-    
+    var followFansNum = FollowFansNumDataModel()
+
     //    var dateSource = data()
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,6 +65,13 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         
         myTableView.reloadData()
+        
+        CircleNetUtil.getFollowFans_num(userid: QCLoginUserInfo.currentInfo.userid) { (success, response) in
+            if success {
+                self.followFansNum = response as! FollowFansNumDataModel
+                self.myTableView.reloadData()
+            }
+        }
         
         // 设置我的消息提醒数
         let url = PARK_URL_Header+"getsystemmessage_new"
@@ -206,8 +214,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     }
                     self.userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
                     self.levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, for: UIControlState())
-                    self.fansCountBtn.setTitle(QCLoginUserInfo.currentInfo.fansCount, for: UIControlState())
-                    self.attentionBtn.setTitle(QCLoginUserInfo.currentInfo.attentionCount, for: UIControlState())
+//                    self.fansCountBtn.setTitle(self.followFansNum.fans_count, for: UIControlState())
+//                    self.attentionBtn.setTitle(self.followFansNum.follows_count, for: UIControlState())
                     self.nurseCoins.setTitle(QCLoginUserInfo.currentInfo.money, for: UIControlState())
                     self.myTableView.reloadData()
                     //                self.hud!.hide(animated: true)
@@ -223,6 +231,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 })
             }
         }
+        
     }
     
     // MARK: 获取签到状态
@@ -459,9 +468,9 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             
             for i in 0...2 {
                 if i == 0 {
-                    fansCountBtn.setTitle(QCLoginUserInfo.currentInfo.fansCount, for: UIControlState())
+                    fansCountBtn.setTitle(followFansNum.fans_count, for: UIControlState())
                 }else if i == 1 {
-                    attentionBtn.setTitle(QCLoginUserInfo.currentInfo.attentionCount, for: UIControlState())
+                    attentionBtn.setTitle(followFansNum.follows_count, for: UIControlState())
                 }else {
                     nurseCoins.setTitle(QCLoginUserInfo.currentInfo.score, for: UIControlState())
                 }

@@ -260,7 +260,7 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/%E9%A1%B9%E7%9B%AE/nurse_ios/HSHW_2016/NSCircleForumDetailViewController.swift"
-                  timestampString = "505293183.627173"
+                  timestampString = "505384954.341262"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "585"
@@ -275,7 +275,7 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/%E9%A1%B9%E7%9B%AE/nurse_ios/HSHW_2016/NSCircleForumDetailViewController.swift"
-                  timestampString = "505293183.629061"
+                  timestampString = "505384954.343111"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "586"
@@ -308,7 +308,7 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/%E9%A1%B9%E7%9B%AE/nurse_ios/HSHW_2016/NSCircleForumDetailViewController.swift"
-                  timestampString = "505293183.632652"
+                  timestampString = "505384954.347188"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "592"
@@ -323,7 +323,7 @@
                   moduleName = "HSHW_2016"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/zhang/Desktop/%E6%8A%A4%E5%A3%AB%E7%BD%91/%E9%A1%B9%E7%9B%AE/nurse_ios/HSHW_2016/NSCircleForumDetailViewController.swift"
-                  timestampString = "505293183.634512"
+                  timestampString = "505384954.349916"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "593"
@@ -346,6 +346,22 @@
             startingLineNumber = "554"
             endingLineNumber = "554"
             landmarkName = "textViewDidEndEditing(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HSHW_2016/NSCirclePostForumViewController.swift"
+            timestampString = "505384336.027536"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "490"
+            endingLineNumber = "490"
+            landmarkName = "publishForum(photoStr:andHud:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

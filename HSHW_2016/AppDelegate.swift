@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
     var wbtoken: String?
     var wbCurrentUserID: String?
     var wbRefreshToken: String?
+    
+    var mapManger:BMKMapManager?
 
     // 启动百度移动统计
     func startBaiduMobileStat() {
@@ -72,6 +74,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate, WeiboSDKDe
         WeiboSDK.registerApp(kAppKey)
         
         let _ = TencentOAuth(appId: "1105552541", andDelegate: nil)
+        
+        
+        mapManger = BMKMapManager()
+        // 如果要关注网络及授权验证事件，请设定     generalDelegate参数
+        let ret:Bool = mapManger!.start("qkbhS4bi9XYrMyDMlds9AI1ujn21AhdC", generalDelegate: nil)
+        if (!ret) {
+            print("manager start failed!")
+        }
         
 //        ShareSDK.registerApp("13be4c6c247e0", activePlatforms:
 //            

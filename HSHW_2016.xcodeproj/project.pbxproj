@@ -127,6 +127,8 @@
 		1F156A8F1E14F5AE00815BB5 /* SDPhotoBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F156A8A1E14F5AE00815BB5 /* SDPhotoBrowser.m */; };
 		1F156A901E14F5AE00815BB5 /* SDWaitingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F156A8D1E14F5AE00815BB5 /* SDWaitingView.m */; };
 		1F1787EB1E1DF97A005E73CD /* NSCircleAttentionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1787EA1E1DF97A005E73CD /* NSCircleAttentionViewController.swift */; };
+		1F182F771E1F32B2008160AD /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F182F751E1F32B2008160AD /* libcrypto.a */; };
+		1F182F781E1F32B2008160AD /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F182F761E1F32B2008160AD /* libssl.a */; };
 		1F1A33951D548D7A00F7C20A /* editResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */; };
 		1F1A33961D548D7A00F7C20A /* editResumeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */; };
 		1F1A33981D54952600F7C20A /* PostVacanciewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */; };
@@ -452,6 +454,8 @@
 		1F156A8C1E14F5AE00815BB5 /* SDWaitingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWaitingView.h; sourceTree = "<group>"; };
 		1F156A8D1E14F5AE00815BB5 /* SDWaitingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWaitingView.m; sourceTree = "<group>"; };
 		1F1787EA1E1DF97A005E73CD /* NSCircleAttentionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleAttentionViewController.swift; sourceTree = "<group>"; };
+		1F182F751E1F32B2008160AD /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = Pods/BaiduMapKit/BaiduMapKit/thirdlibs/libcrypto.a; sourceTree = "<group>"; };
+		1F182F761E1F32B2008160AD /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = Pods/BaiduMapKit/BaiduMapKit/thirdlibs/libssl.a; sourceTree = "<group>"; };
 		1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editResumeViewController.swift; sourceTree = "<group>"; };
 		1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = editResumeViewController.xib; sourceTree = "<group>"; };
 		1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVacanciewViewController.swift; sourceTree = "<group>"; };
@@ -626,6 +630,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F182F771E1F32B2008160AD /* libcrypto.a in Frameworks */,
+				1F182F781E1F32B2008160AD /* libssl.a in Frameworks */,
 				1F0433CC1DDBEA7800C0FC3F /* libWeiboSDK.a in Frameworks */,
 				1FCCA96C1DCC78E3001112AC /* libBaiduMobStat.a in Frameworks */,
 				1FE3A6401D5AFC720039D94D /* Foundation.framework in Frameworks */,
@@ -1490,6 +1496,8 @@
 		F1AF83881B75F01938A9D1A2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F182F751E1F32B2008160AD /* libcrypto.a */,
+				1F182F761E1F32B2008160AD /* libssl.a */,
 				1F0433CB1DDBEA7800C0FC3F /* libWeiboSDK.a */,
 				1FCCA96B1DCC78E3001112AC /* libBaiduMobStat.a */,
 				1FCCA9691DCC787C001112AC /* CoreLocation.framework */,
@@ -2046,6 +2054,7 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2097,6 +2106,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -2140,6 +2150,7 @@
 					"$(PROJECT_DIR)/HSHW_2016/ios_api",
 					"$(PROJECT_DIR)/HSHW_2016/libReuseView",
 					"$(PROJECT_DIR)/HSHW_2016",
+					"$(PROJECT_DIR)/Pods/BaiduMapKit/BaiduMapKit/thirdlibs",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
@@ -2190,6 +2201,7 @@
 					"$(PROJECT_DIR)/HSHW_2016/ios_api",
 					"$(PROJECT_DIR)/HSHW_2016/libReuseView",
 					"$(PROJECT_DIR)/HSHW_2016",
+					"$(PROJECT_DIR)/Pods/BaiduMapKit/BaiduMapKit/thirdlibs",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (

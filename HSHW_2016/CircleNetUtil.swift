@@ -312,12 +312,12 @@ class CircleNetUtil: NSObject {
         }
     }
     
-    // MARK: - 发布贴子
+    // MARK: - 发布帖子
     //接口地址：a=PublishForum
-    //入参：userid,cid,title,content,description,photo
+    //入参：userid,cid,title,content,description,photo,address
     //出参：data
     //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=PublishForum&userid=603&cid=1
-    class func PublishForum(userid:String, cid:String, title:String, content:String, description:String, photo:String, handle:@escaping ResponseClouse) {
+    class func PublishForum(userid:String, cid:String, title:String, content:String, description:String, photo:String, address:String, handle:@escaping ResponseClouse) {
         let url = PARK_URL_Header+"PublishForum"
         let param = [
             "userid":userid,
@@ -325,7 +325,8 @@ class CircleNetUtil: NSObject {
             "title":title,
             "content":content,
             "description":description,
-            "photo":photo
+            "photo":photo,
+            "address":address
         ]
         
         NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
@@ -1115,4 +1116,68 @@ class CircleNetUtil: NSObject {
             }
         }
     }
+    
+    // MARK: - 获取圈子粉丝列表（谁关注了我，我是被关注人） type 1 关注 2 粉丝
+    //接口地址：a=getFansList
+    //入参：userid被关注人id
+    //出参：fid(关注人id),ffs_time(关注时间),name,sex,photo,score,level
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getFansList&userid=603
+    class func getFansFollowList(userid:String, type:String, handle:@escaping ResponseClouse) {
+        
+        var url = ""
+
+        if type == "1" {
+            url = PARK_URL_Header+"getFollowList"
+        }else{
+            url = PARK_URL_Header+"getFansList"
+        }
+
+        let param = [
+            "userid":userid
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<FansFollowListModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 获取我加入的圈子中的帖子列表 以及 我关注的人发的帖子
+    //接口地址：a=getFollowForumList
+    //入参：userid,pager
+    //出参：list
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getFollowForumList&userid=603
+    class func getFollowForumList(userid:String, pager:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"getFollowForumList"
+        let param = [
+            "userid":userid,
+            "pager":pager
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<ForumListModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
+
 }

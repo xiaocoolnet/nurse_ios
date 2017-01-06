@@ -142,21 +142,31 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }) 
     }
     
-    fileprivate var fansListArray:Array<HSFansAndFollowModel> = []
-    fileprivate var focusListArray:Array<HSFansAndFollowModel> = []
-    
+    fileprivate var fansListArray:Array<FansFollowListDataModel> = []
+    fileprivate var focusListArray:Array<FansFollowListDataModel> = []
+
     // 加载数据
     func loadData() {
         
-        helper.getFansOrFollowList(1) { (success, response) in
-            self.fansListArray = response as! Array<HSFansAndFollowModel>
+        CircleNetUtil.getFansFollowList(userid: QCLoginUserInfo.currentInfo.userid, type: "2") { (success, response) in
+            self.fansListArray = response as! Array<FansFollowListDataModel>
             self.fansTableView.reloadData()
         }
         
-        helper.getFansOrFollowList(2) { (success, response) in
-            self.focusListArray = response as! Array<HSFansAndFollowModel>
-            self.focusTableView.reloadData()
+        CircleNetUtil.getFansFollowList(userid: QCLoginUserInfo.currentInfo.userid, type: "1") { (success, response) in
+            self.focusListArray = response as! Array<FansFollowListDataModel>
+            self.fansTableView.reloadData()
         }
+        
+//        helper.getFansOrFollowList(1) { (success, response) in
+//            self.fansListArray = response as! Array<HSFansAndFollowModel>
+//            self.fansTableView.reloadData()
+//        }
+//        
+//        helper.getFansOrFollowList(2) { (success, response) in
+//            self.focusListArray = response as! Array<HSFansAndFollowModel>
+//            self.focusTableView.reloadData()
+//        }
         
     }
     
@@ -188,9 +198,9 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         
         let userPageVC = NSCircleUserInfoViewController()
         if tableView.tag == 410 {
-            userPageVC.userid = fansListArray[indexPath.row].object_id
+            userPageVC.userid = fansListArray[indexPath.row].fid
         }else if tableView.tag == 411{
-            userPageVC.userid = focusListArray[indexPath.row].id
+            userPageVC.userid = focusListArray[indexPath.row].fid
         }
 //        userPageVC.focusArray = focusListArray
         

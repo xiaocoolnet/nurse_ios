@@ -43,7 +43,7 @@ class FansTableViewCell: UITableViewCell {
         
     }
     
-    var fansModel:HSFansAndFollowModel?{
+    var fansModel:FansFollowListDataModel?{
         didSet {
             
 //            self.titImg.sd_setImageWithURL(NSURL(string: SHOW_IMAGE_HEADER+fansModel!.photo))
@@ -60,7 +60,7 @@ class FansTableViewCell: UITableViewCell {
         }
     }
     
-    var followModel:HSFansAndFollowModel?{
+    var followModel:FansFollowListDataModel?{
         didSet {
 //            HSMineHelper().getUserInfo((followModel?.userid)!) { (success, response) in
             
@@ -71,7 +71,7 @@ class FansTableViewCell: UITableViewCell {
         
     }
     
-    fileprivate func setUI(_ model:HSFansAndFollowModel) {
+    fileprivate func setUI(_ model:FansFollowListDataModel) {
         DispatchQueue.main.async(execute: {
             
             // TODO: 数据问题 理应删掉model.photo == "21.jpg"
