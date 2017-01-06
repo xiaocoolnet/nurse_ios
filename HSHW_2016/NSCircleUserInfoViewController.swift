@@ -466,7 +466,6 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                     DispatchQueue.main.async(execute: {
                         
                         let alert = UIAlertView.init(title: "关注成功", message: "成功关注 \((self.userInfo?.name)!)", delegate: nil, cancelButtonTitle: "确定")
-                        alert.show()
                         self.followFlag = "1"
                         self.followFansNum.fans_count = String(NSString(string: self.followFansNum.fans_count).integerValue+1)
                         self.setTableHeaderView()
@@ -475,6 +474,8 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                         
                         if result.event != "" {
                             NursePublicAction.showScoreTips(self.view, nameString: result.event, score: result.score)
+                        }else{
+                            alert.show()
                         }
 
                     })

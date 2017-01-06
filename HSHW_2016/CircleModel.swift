@@ -316,7 +316,7 @@ class RewardDataModel: HandyJSON {
 // 设置点赞
 class SetLikeModel: HandyJSON {
     var status = ""
-    var data = [SetLikeDataModel]()
+    var data = SetLikeDataModel()
     var errorData = ""
     
     required init() {}

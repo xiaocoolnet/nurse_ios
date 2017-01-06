@@ -335,11 +335,11 @@ class CircleNetUtil: NSObject {
                 handle(false, error?.localizedDescription)
             }else{
                 
-                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                let result = JSONDeserializer<SetLikeModel>.deserializeFrom(dict: json as! NSDictionary?)!
                 if(result.status == "success"){
                     handle(true, result.data)
                 }else if(result.status == "error"){
-                    handle(false, result.data)
+                    handle(false, result.errorData)
                 }
             }
         }
@@ -882,7 +882,7 @@ class CircleNetUtil: NSObject {
             }else{
                 
                 let result = JSONDeserializer<Follow_fansModel>.deserializeFrom(dict: json as! NSDictionary?)!
-                if(result.status == "success" && result.errorData != ""){
+                if(result.status == "success" && result.errorData == ""){
                     handle(true, result.data)
                 }else{
                     handle(false, result.errorData)

@@ -589,6 +589,13 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                     hud.mode = .text
                     hud.label.text = "评论成功"
                     
+                    let result = response as! SetLikeDataModel
+                    
+                    if result.event != "" {
+                        NursePublicAction.showScoreTips(self.view, nameString: result.event, score: result.score)
+                        
+                    }
+                    
                     CircleNetUtil.getForumComments(userid: QCLoginUserInfo.currentInfo.userid, refid: String(self.send_bottom_Btn.tag), handle: { (success, response) in
                         if success {
                             
@@ -1019,6 +1026,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         if likeBtn.isSelected {
             CircleNetUtil.ResetLike(userid: QCLoginUserInfo.currentInfo.userid, id: self.forumCommentArray[likeBtn.tag-100].cid, type: "3", handle: { (success, response) in
                 if success {
+                    
                     self.forumCommentArray[likeBtn.tag-100].add_like = "0"
                     self.rootTableView.reloadData()
                 }else{
@@ -1032,6 +1040,14 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         }else{
             CircleNetUtil.SetLike(userid: QCLoginUserInfo.currentInfo.userid, id: self.forumCommentArray[likeBtn.tag-100].cid, type: "3") { (success, response) in
                 if success {
+                    
+                    let result = response as! SetLikeDataModel
+                    
+                    if result.event != "" {
+                        NursePublicAction.showScoreTips(self.view, nameString: result.event, score: result.score)
+                        
+                    }
+                    
                     self.forumCommentArray[likeBtn.tag-100].add_like = "1"
                     self.rootTableView.reloadData()
                 }else{
@@ -1137,6 +1153,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         if likeBtn.isSelected {
             CircleNetUtil.ResetLike(userid: QCLoginUserInfo.currentInfo.userid, id: forumModel.tid, type: "2", handle: { (success, response) in
                 if success {
+                    
                     self.forumModel.like_num = String(NSString(string: self.forumModel.like_num).integerValue-1)
                     self.forumModel.add_like = "0"
                     self.rootTableView.reloadData()
@@ -1151,6 +1168,14 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         }else{
             CircleNetUtil.SetLike(userid: QCLoginUserInfo.currentInfo.userid, id: forumModel.tid, type: "2") { (success, response) in
                 if success {
+                    
+                    let result = response as! SetLikeDataModel
+                    
+                    if result.event != "" {
+                        NursePublicAction.showScoreTips(self.view, nameString: result.event, score: result.score)
+                        
+                    }
+                    
                     self.forumModel.like_num = String(NSString(string: self.forumModel.like_num).integerValue+1)
                     self.forumModel.add_like = "1"
                     self.rootTableView.reloadData()

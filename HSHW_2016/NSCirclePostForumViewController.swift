@@ -492,7 +492,15 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
                 hud.label.text = "贴子发布成功"
                 hud.hide(animated: true, afterDelay: 1)
                 
-                let time: TimeInterval = 1.0
+                var time: TimeInterval = 1.0
+
+                let result = response as! SetLikeDataModel
+                if result.event != "" {
+                    NursePublicAction.showScoreTips(self.view, nameString: result.event, score: result.score)
+                    
+                    time += 3
+                }
+                
                 let delay = DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 
                 DispatchQueue.main.asyncAfter(deadline: delay) {

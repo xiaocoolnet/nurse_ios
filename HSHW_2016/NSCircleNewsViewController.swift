@@ -40,16 +40,57 @@ class NSCircleNewsViewController: UIViewController, UITableViewDataSource, UITab
 //        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_返回_white"), style: .done, target: self, action: #selector(popViewcontroller))
     }
     
+    // MARK: - 加载数据
     func loadData() {
-        CircleNetUtil.getMyMessageList(userid: QCLoginUserInfo.currentInfo.userid, pager: "") { (success, response) in
+        
+        CircleNetUtil.getMyMessageList(userid: QCLoginUserInfo.currentInfo.userid, pager: "1") { (success, response) in
             
             if success {
+                self.pager = 2
+                self.rootTableView.mj_footer.resetNoMoreData()
+                
                 self.newsListDataArray = response as! [NewsListDataModel]
                 self.rootTableView.reloadData()
             }else{
                 
             }
+            
+            if self.rootTableView.mj_header.isRefreshing() {
+                self.rootTableView.mj_header.endRefreshing()
+            }
         }
+    }
+    
+    // MARK: - 加载数据（上拉加载）
+    var pager = 1
+    func loadData_pullUp() {
+        
+        CircleNetUtil.getMyMessageList(userid: QCLoginUserInfo.currentInfo.userid, pager: "") { (success, response) in
+            
+            if success {
+                self.pager += 1
+
+                let newsListDataArray = response as! [NewsListDataModel]
+                
+                if newsListDataArray.count == 0 {
+                    self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
+                }else{
+                    
+                    self.rootTableView.mj_footer.endRefreshing()
+                    for forumListData in newsListDataArray {
+                        self.newsListDataArray.append(forumListData)
+                    }
+                    self.rootTableView.reloadData()
+                    
+                }
+                
+            }else{
+                
+                self.rootTableView.mj_footer.endRefreshing()
+
+            }
+        }
+        
     }
     
     // MARK: popViewcontroller
@@ -74,6 +115,11 @@ class NSCircleNewsViewController: UIViewController, UITableViewDataSource, UITab
         rootTableView.dataSource = self
         rootTableView.delegate = self
         self.view.addSubview(rootTableView)
+        
+        rootTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData))
+        rootTableView.mj_header.beginRefreshing()
+        
+        rootTableView.mj_footer = MJRefreshBackNormalFooter.init(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
     }
     
     // MARK: UITableView DataSource
@@ -89,9 +135,20 @@ class NSCircleNewsViewController: UIViewController, UITableViewDataSource, UITab
         cell.selectionStyle = .none
         
         cell.newsListDataModel = self.newsListDataArray[indexPath.row]
+        cell.headerBtn.tag = 100 + indexPath.row
+        cell.headerBtn.addTarget(self, action: #selector(userInfoBtnClick(userInfoBtn:)), for: .touchUpInside)
         
         return cell
     }
+    
+    // MARK: - 用户主页按钮点击事件
+    func userInfoBtnClick(userInfoBtn:UIButton) {
+        
+        let circleUserInfoController = NSCircleUserInfoViewController()
+        circleUserInfoController.userid = newsListDataArray[userInfoBtn.tag-100].from_userid
+        self.navigationController?.pushViewController(circleUserInfoController, animated: true)
+    }
+
     
     // MARK: UITableView Delegate
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

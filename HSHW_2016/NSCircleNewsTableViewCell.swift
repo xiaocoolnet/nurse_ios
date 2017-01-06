@@ -10,7 +10,7 @@ import UIKit
 
 class NSCircleNewsTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var headerImage: UIImageView!
+    @IBOutlet weak var headerBtn: UIButton!
     
     @IBOutlet weak var contentLab: UILabel!
     
@@ -23,17 +23,25 @@ class NSCircleNewsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+//        self.headerBtn.layer.cornerRadius = 25
+//        self.headerBtn.layer.masksToBounds = true
+        
     }
     
     var newsListDataModel:NewsListDataModel! {
         didSet {
             
-            self.headerImage.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+newsListDataModel.fu_photo), placeholderImage: nil)
+            self.headerBtn.sd_setImage(with: URL.init(string: SHOW_IMAGE_HEADER+newsListDataModel.fu_photo), for: UIControlState(), placeholderImage: UIImage.init(named: "img_head_nor"))
+
+
+//            self.headerBtn.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+newsListDataModel.fu_photo), for: UIControlState.normal, placeholderImage: nil)
             self.contentLab.text = newsListDataModel.centent
             self.userNameLab.text = newsListDataModel.fu_name
             self.forumNameLab.text = newsListDataModel.forum_title
             
-            self.timeLab.text = timeStampToString(newsListDataModel.create_time)
+            self.timeLab.text = updateTime(newsListDataModel.create_time)
+            
         }
     }
     
