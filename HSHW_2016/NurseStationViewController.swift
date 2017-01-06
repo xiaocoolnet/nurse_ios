@@ -34,6 +34,10 @@ class NurseStationViewController: UIViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
     
+    func newsBtnClick() {
+        self.navigationController?.pushViewController(NSCircleNewsViewController(), animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -41,6 +45,10 @@ class NurseStationViewController: UIViewController {
         let line = UILabel(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 1))
         line.backgroundColor = COLOR
         self.view.addSubview(line)
+        
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "新消息"), style: .done, target: self, action: #selector(newsBtnClick))
+
         
         circleController.view.frame = self.view.frame
         RecVC.view.frame = self.view.frame

@@ -28,11 +28,11 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
         BaiduMobStat.default().pageviewEnd(withName: "护士站 圈子")
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
+        
     }
     
     override func viewDidLoad() {

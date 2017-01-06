@@ -129,6 +129,9 @@
 		1F1787EB1E1DF97A005E73CD /* NSCircleAttentionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1787EA1E1DF97A005E73CD /* NSCircleAttentionViewController.swift */; };
 		1F182F771E1F32B2008160AD /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F182F751E1F32B2008160AD /* libcrypto.a */; };
 		1F182F781E1F32B2008160AD /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F182F761E1F32B2008160AD /* libssl.a */; };
+		1F182F7A1E1F9250008160AD /* NSCircleNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F182F791E1F9250008160AD /* NSCircleNewsViewController.swift */; };
+		1F182F7F1E1F9D4B008160AD /* NSCircleNewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F182F7D1E1F9D4B008160AD /* NSCircleNewsTableViewCell.swift */; };
+		1F182F801E1F9D4B008160AD /* NSCircleNewsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F182F7E1E1F9D4B008160AD /* NSCircleNewsTableViewCell.xib */; };
 		1F1A33951D548D7A00F7C20A /* editResumeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */; };
 		1F1A33961D548D7A00F7C20A /* editResumeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */; };
 		1F1A33981D54952600F7C20A /* PostVacanciewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */; };
@@ -456,6 +459,9 @@
 		1F1787EA1E1DF97A005E73CD /* NSCircleAttentionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleAttentionViewController.swift; sourceTree = "<group>"; };
 		1F182F751E1F32B2008160AD /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrypto.a; path = Pods/BaiduMapKit/BaiduMapKit/thirdlibs/libcrypto.a; sourceTree = "<group>"; };
 		1F182F761E1F32B2008160AD /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libssl.a; path = Pods/BaiduMapKit/BaiduMapKit/thirdlibs/libssl.a; sourceTree = "<group>"; };
+		1F182F791E1F9250008160AD /* NSCircleNewsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleNewsViewController.swift; sourceTree = "<group>"; };
+		1F182F7D1E1F9D4B008160AD /* NSCircleNewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleNewsTableViewCell.swift; sourceTree = "<group>"; };
+		1F182F7E1E1F9D4B008160AD /* NSCircleNewsTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NSCircleNewsTableViewCell.xib; sourceTree = "<group>"; };
 		1F1A33931D548D7A00F7C20A /* editResumeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = editResumeViewController.swift; sourceTree = "<group>"; };
 		1F1A33941D548D7A00F7C20A /* editResumeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = editResumeViewController.xib; sourceTree = "<group>"; };
 		1F1A33971D54952600F7C20A /* PostVacanciewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostVacanciewViewController.swift; sourceTree = "<group>"; };
@@ -1346,6 +1352,8 @@
 				1F3912661E00E5CA00A26FDE /* NSCircleCommentTableViewCell.swift */,
 				1F3912671E00E5CA00A26FDE /* NSCircleCommentTableViewCell.xib */,
 				1F879FAB1E026F3B001385CE /* NSCircleForumListTableViewCell.swift */,
+				1F182F7D1E1F9D4B008160AD /* NSCircleNewsTableViewCell.swift */,
+				1F182F7E1E1F9D4B008160AD /* NSCircleNewsTableViewCell.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -1384,6 +1392,7 @@
 				1F156A841E14EDC500815BB5 /* NSCircleForumImagePreviewViewController.swift */,
 				1FE240751E15062C00FE3894 /* NSCircleSearchResultViewController.swift */,
 				1FCDBD131E1B490A007814A1 /* NSCircleApplyMasterViewController.swift */,
+				1F182F791E1F9250008160AD /* NSCircleNewsViewController.swift */,
 			);
 			name = "发现";
 			sourceTree = "<group>";
@@ -1657,6 +1666,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				183B85001CE5BFDC00709235 /* LaunchScreen.storyboard in Resources */,
+				1F182F801E1F9D4B008160AD /* NSCircleNewsTableViewCell.xib in Resources */,
 				F6338B961D29105B00EE5CA2 /* HSStateCommentCell.xib in Resources */,
 				0DB467B81D4C8600009AE2AD /* MJRefresh.bundle in Resources */,
 				F632EF131D192F530038AF9D /* HSWorkPlaceController.xib in Resources */,
@@ -1889,6 +1899,7 @@
 				F64C9ACA1D3B9C7E0041E360 /* MineJobTableViewCell.swift in Sources */,
 				18C0BF971CEB63FB003E2886 /* QuestionBankViewController.swift in Sources */,
 				0B9C64091D420957008B7F6C /* GMyErrorViewController.swift in Sources */,
+				1F182F7F1E1F9D4B008160AD /* NSCircleNewsTableViewCell.swift in Sources */,
 				1F1C1B301DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift in Sources */,
 				0DE829D91D3B25250047FB23 /* GMyExaminationViewController.swift in Sources */,
 				18A5148C1CED550800A30AA5 /* RecruitmentViewController.swift in Sources */,
@@ -1913,6 +1924,7 @@
 				1F2679E71E03FD4700FF2D25 /* NSCirclePostForumViewController.swift in Sources */,
 				1F2679E61E03FD4700FF2D25 /* NSCirclePostChooseCircleViewController.swift in Sources */,
 				1FFD9EE11D51EBD700951098 /* DPDConstants.swift in Sources */,
+				1F182F7A1E1F9250008160AD /* NSCircleNewsViewController.swift in Sources */,
 				0DB467B51D4C8600009AE2AD /* MJRefreshGifHeader.m in Sources */,
 				1F1C64F81DFE49630082F00F /* NSCircleHomeTableViewCell.swift in Sources */,
 				0BAF21BC1D1134790065146B /* LoginUserInfoModel.swift in Sources */,

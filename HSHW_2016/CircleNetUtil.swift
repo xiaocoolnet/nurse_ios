@@ -882,9 +882,9 @@ class CircleNetUtil: NSObject {
             }else{
                 
                 let result = JSONDeserializer<Follow_fansModel>.deserializeFrom(dict: json as! NSDictionary?)!
-                if(result.status == "success"){
-                    handle(true, nil)
-                }else if(result.status == "error"){
+                if(result.status == "success" && result.errorData != ""){
+                    handle(true, result.data)
+                }else{
                     handle(false, result.errorData)
                 }
             }
@@ -1171,6 +1171,34 @@ class CircleNetUtil: NSObject {
             }else{
                 
                 let result = JSONDeserializer<ForumListModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.errorData)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 获取我的消息（被加精置顶、被评论、被打赏等消息）
+    //接口地址：a=getMyMessageList
+    //入参：userid,pager
+    //出参：list
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getMyMessageList&userid=603
+    class func getMyMessageList(userid:String, pager:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"getMyMessageList"
+        let param = [
+            "userid":userid,
+            "pager":pager
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<NewsListModel>.deserializeFrom(dict: json as! NSDictionary?)!
                 if(result.status == "success"){
                     handle(true, result.data)
                 }else if(result.status == "error"){

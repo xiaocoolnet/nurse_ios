@@ -470,6 +470,13 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                         self.followFlag = "1"
                         self.followFansNum.fans_count = String(NSString(string: self.followFansNum.fans_count).integerValue+1)
                         self.setTableHeaderView()
+                        
+                        let result = response as! Follow_fansDataModel
+                        
+                        if result.event != "" {
+                            NursePublicAction.showScoreTips(self.view, nameString: result.event, score: result.score)
+                        }
+
                     })
                 }else{
                     let hud = MBProgressHUD.showAdded(to: self.view, animated: true)

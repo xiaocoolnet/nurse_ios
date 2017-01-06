@@ -387,6 +387,7 @@ class ForumChild_commentsModel: HandyJSON {
 class Follow_fansModel: HandyJSON {
     var status = ""
     var errorData = ""
+    var data = Follow_fansDataModel()
     
     required init() {}
     
@@ -394,7 +395,17 @@ class Follow_fansModel: HandyJSON {
         if status != "success" {
             mapper.specify(property: &errorData, name: "data")
         }
+        mapper.exclude(property: &errorData)
     }
+}
+class Follow_fansDataModel: HandyJSON {
+    var follow_userid = ""
+    var fans_userid = ""
+    var status = ""
+    var score = ""
+    var event = ""
+    
+    required init() {}
 }
 
 // 首页图片
@@ -445,6 +456,36 @@ class FansFollowListDataModel: HandyJSON {
     required init() {}
 }
 
+// 消息列表
+class NewsListModel: HandyJSON {
+    var status = ""
+    var data = [NewsListDataModel]()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+class NewsListDataModel: HandyJSON {
+    var id = ""// 消息id
+    var from_userid = ""// 用户id
+    var centent = ""
+    var type = ""//
+    var tid = ""
+    var create_time = ""//
+    var fu_name = ""//
+    var fu_level = ""//
+    var fu_photo = ""//
+    var fu_community_admin = ""//
+    var fu_sex = ""//
+    var forum_title = ""//
+    
+    required init() {}
+}
 
 
 // MARK: - 下边的没用
