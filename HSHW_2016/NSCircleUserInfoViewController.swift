@@ -259,8 +259,8 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                 sexImg.frame.size = (UIImage(named: "性别女")?.size ?? CGSize())!
                 sexImg.center.y = nameLabel.center.y
             }else if userInfo?.sex == "1"{
-                sexImg.image = UIImage(named: "性别女")
-                sexImg.frame.size = (UIImage(named: "性别女")?.size ?? CGSize())!
+                sexImg.image = UIImage(named: "性别男")
+                sexImg.frame.size = (UIImage(named: "性别男")?.size ?? CGSize())!
                 sexImg.center.y = nameLabel.center.y
             }
             bgImageView.addSubview(sexImg)

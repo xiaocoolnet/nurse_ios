@@ -59,7 +59,7 @@ class HSFansAndFollowModel: JSONJoy {
     var phone:String
     var password:String
     var birthday:String
-    var sex:String
+    var sex:String // 0=>女 1=>男
     var email:String
     var qq:String
     var weixin:String
