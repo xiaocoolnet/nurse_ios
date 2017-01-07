@@ -59,10 +59,10 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         self.navigationController?.navigationBar.isHidden = true
         self.tabBarController?.tabBar.isHidden = false
         
-        // MARK:要求登录
-        if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: true) {
-            return
-        }
+//        // MARK:要求登录
+//        if !requiredLogin(self.navigationController!, previousViewController: self, hiddenNavigationBar: true) {
+//            return
+//        }
         
         myTableView.reloadData()
         
@@ -569,7 +569,11 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 let signOutBtn = UIButton(type:.custom)
                 signOutBtn.frame = CGRect(x: WIDTH/2-100, y: 10, width: 200, height: 40)
-                signOutBtn.setTitle("退出登录", for: UIControlState())
+                if LOGIN_STATE {
+                    signOutBtn.setTitle("退出登录", for: UIControlState())
+                }else{
+                    signOutBtn.setTitle("点击登录", for: UIControlState())
+                }
                 signOutBtn.setTitleColor(COLOR, for: UIControlState())
                 signOutBtn.layer.cornerRadius = 20
                 signOutBtn.layer.borderColor = COLOR.cgColor
@@ -585,10 +589,24 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // print(indexPath.row)
         if indexPath.section == 1 {
+            
+            if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+                
+            }else{
+                return
+            }
+            
             let next = MineStudyViewController()
             self.navigationController?.pushViewController(next, animated: true)
             next.title = "我的学习"
         }else if indexPath.section == 2 {
+            
+            if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+                
+            }else{
+                return
+            }
+            
             //            if indexPath.row == 0 {
             //                let next = MinePostViewController()
             //                self.navigationController?.pushViewController(next, animated: true)
@@ -605,6 +623,13 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 next.title = "我的收藏"
             }
         }else if indexPath.section == 3 {
+            
+            if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+                
+            }else{
+                return
+            }
+            
             if QCLoginUserInfo.currentInfo.usertype == "1" {
                 
                 recruit_user_updateNum = 0
@@ -627,6 +652,11 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             clearDisk()
         }else if indexPath.section == 6 {
             
+            if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+                
+            }else{
+                return
+            }
             self.navigationController?.pushViewController(MiFeedbackListViewController(), animated: true)
 
         }
@@ -774,11 +804,25 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     // MARK: 点击头像
     func changeTitImage() {
         // print("头像")
+        
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
+        
         setUpData()
     }
     // MARK: 个人资料编辑
     func setUpData() {
         // print("设置")
+        
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
+        
         let next = SetDataViewController()
         self.navigationController?.pushViewController(next, animated: true)
     }
@@ -786,6 +830,13 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     // MARK: 粉丝与关注
     func fineAndContact(_ btn:UIButton) {
         // print("粉丝与管理")
+        
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
+        
         if btn.tag == 1 {
             let next = FansViewController()
             next.userType = 0
@@ -809,6 +860,13 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     // MARK: 点击签到
     func signInToday() {
         // print("点击签到")
+        
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
+        
         if isLike == false {
             self.timeNow()
             
@@ -881,6 +939,12 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     // MARK: 点击退出
     func signout(){
         // print("退出")
+        
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
         
         let alert = UIAlertController(title: "确认退出", message: "您确定要退出登录吗？", preferredStyle: .alert)
         self.present(alert, animated: true, completion: nil)
