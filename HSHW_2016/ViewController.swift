@@ -471,7 +471,7 @@ class ViewController: UIViewController,UITextFieldDelegate,ForgetPasswordDelegat
     func validationEmailFormat(_ string:String) -> Bool {
         
 //        let mobileRegex = "^((13[0-9])|(147)|(170)|(15[^4,\\D])|(18[0-9]))\\d{8}$"
-        let mobileRegex = "(^(13[0-9]|15[0-9]|18[0-9]|17[0-9]|147)\\d{8}$)"
+        let mobileRegex = "(^(13[0-9]|15[0-9]|18[0-9]|17[0-9]|147|145|149)\\d{8}$)"
 
         let mobileTest:NSPredicate = NSPredicate(format: "SELF MATCHES %@",mobileRegex)
         return mobileTest.evaluate(with: string)

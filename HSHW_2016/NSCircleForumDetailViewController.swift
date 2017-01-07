@@ -986,6 +986,12 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     func moreBtnClick(_ moreBtn:UIButton) {
         print(moreBtn.tag)
         
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
+        
         var labelTextArray = [String]()
         var labelTextColorArray = [UIColor]()
         

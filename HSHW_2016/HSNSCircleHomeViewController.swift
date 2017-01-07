@@ -15,7 +15,8 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
     let mineController = NSCircleMineViewController()
     
 //    var pagingMenuController:PagingMenuController?
-    
+    var pagingMenuController:PagingMenuController!
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -32,6 +33,13 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
+        
+        if !LOGIN_STATE {
+            
+            pagingMenuController.move(toPage: 0)
+
+        }
+
         
     }
     
@@ -114,6 +122,7 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
         
         struct PagingMenuOptions: PagingMenuControllerCustomizable {
 
+            
             var viewControllers = [UIViewController]()
 
             var scrollEnabled: Bool {
@@ -131,12 +140,31 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
         }
         
         let options = PagingMenuOptions.init(viewControllers: [discoverController,attentionController,mineController])
-        let pagingMenuController = PagingMenuController(options: options)
+        pagingMenuController = PagingMenuController(options: options)
         pagingMenuController.view.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-45)
+        pagingMenuController.delegate = self
         
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)
         pagingMenuController.didMove(toParentViewController: self)
+    }
+    
+    func willMove(toMenuController menuController: UIViewController, fromMenu previousMenuController: UIViewController) -> Bool {
+        
+        if menuController == attentionController {
+            if requiredLogin(self.navigationController, previousViewController: previousMenuController, hiddenNavigationBar: false) {
+                
+            }else{
+                return false
+            }
+        }else if menuController == mineController {
+            if requiredLogin(self.navigationController, previousViewController: previousMenuController, hiddenNavigationBar: false) {
+                
+            }else{
+                return false
+            }
+        }
+        return true
     }
     
 }

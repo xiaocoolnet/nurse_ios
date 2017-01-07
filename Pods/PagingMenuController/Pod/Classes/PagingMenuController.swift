@@ -9,6 +9,8 @@
 import UIKit
 
 public protocol PagingMenuControllerDelegate: class {
+    func willMove(toMenuController menuController: UIViewController, fromMenu previousMenuController: UIViewController) -> Bool
+
     func willMove(toMenu menuController: UIViewController, fromMenu previousMenuController: UIViewController)
     func didMove(toMenu menuController: UIViewController, fromMenu previousMenuController: UIViewController)
     func willMove(toMenuItem menuItemView: MenuItemView, fromMenuItem previousMenuItemView: MenuItemView)
@@ -16,6 +18,8 @@ public protocol PagingMenuControllerDelegate: class {
 }
 
 public extension PagingMenuControllerDelegate {
+    func willMove(toMenuController menuController: UIViewController, fromMenu previousMenuController: UIViewController) -> Bool { return true }
+
     func willMove(toMenu menuController: UIViewController, fromMenu previousMenuController: UIViewController) {}
     func didMove(toMenu menuController: UIViewController, fromMenu previousMenuController: UIViewController) {}
     func willMove(toMenuItem menuItemView: MenuItemView, fromMenuItem previousMenuItemView: MenuItemView) {}
@@ -166,6 +170,11 @@ open class PagingMenuController: UIViewController, PagingValidator {
         
         let nextPage = page % pagingViewController.controllers.count
         let nextPagingViewController = pagingViewController.controllers[nextPage]
+        
+        if !(delegate?.willMove(toMenuController: nextPagingViewController, fromMenu: previousPagingViewController))! {
+            return
+        }
+        
         delegate?.willMove(toMenu: nextPagingViewController, fromMenu: previousPagingViewController)
         menuView?.move(toPage: page)
         

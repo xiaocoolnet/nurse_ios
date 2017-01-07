@@ -65,7 +65,7 @@ class NSCircleNewsViewController: UIViewController, UITableViewDataSource, UITab
     var pager = 1
     func loadData_pullUp() {
         
-        CircleNetUtil.getMyMessageList(userid: QCLoginUserInfo.currentInfo.userid, pager: "") { (success, response) in
+        CircleNetUtil.getMyMessageList(userid: QCLoginUserInfo.currentInfo.userid, pager: String(pager)) { (success, response) in
             
             if success {
                 self.pager += 1

@@ -314,6 +314,13 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     
     // MARK: - 加入按钮点击事件
     func joinBtnClick(joinBtn:UIButton) {
+        
+        if requiredLogin(self.navigationController, previousViewController: self, hiddenNavigationBar: false) {
+            
+        }else{
+            return
+        }
+        
         if joinBtn.isSelected {
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
             hud.removeFromSuperViewOnHide = true
