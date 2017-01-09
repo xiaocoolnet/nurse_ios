@@ -32,6 +32,30 @@ class NurseStationViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
         self.tabBarController?.tabBar.isHidden = false
+        
+        CircleNetUtil.getMyMessageList(userid: QCLoginUserInfo.currentInfo.userid, pager: "1") { (success, response) in
+            
+            if success {
+                
+                let newsListDataArray = response as! [NewsListDataModel]
+                
+                if UserDefaults.standard.value(forKey: newsUpdateTime) == nil {
+                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "新消息_nav"), style: .done, target: self, action: #selector(self.newsBtnClick))
+                }else{
+
+                    if UserDefaults.standard.value(forKey: newsUpdateTime) as! String != newsListDataArray.first?.create_time {
+                        
+                        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "新消息_nav_new"), style: .done, target: self, action: #selector(self.newsBtnClick))
+                        
+                    }else{
+                        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "新消息_nav"), style: .done, target: self, action: #selector(self.newsBtnClick))
+                        
+                    }
+                }
+
+            }
+        }
+
     }
     
     func newsBtnClick() {
@@ -47,7 +71,7 @@ class NurseStationViewController: UIViewController {
         self.view.addSubview(line)
         
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "新消息"), style: .done, target: self, action: #selector(newsBtnClick))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "新消息_nav"), style: .done, target: self, action: #selector(newsBtnClick))
 
         
         circleController.view.frame = self.view.frame

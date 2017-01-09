@@ -45,7 +45,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         var flag = 0
         let total = 2
         
-        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "1") { (success, response) in
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "1", recommend: "1") { (success, response) in
             if success {
                 self.pager = 2
                 self.rootTableView.mj_footer.resetNoMoreData()
@@ -78,7 +78,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     var pager = 1
     func loadData_pullUp() {
         
-        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: String(pager)) { (success, response) in
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: String(pager), recommend: "1") { (success, response) in
             if success {
                 self.pager += 1
                 

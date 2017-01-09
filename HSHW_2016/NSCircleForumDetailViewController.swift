@@ -1017,7 +1017,10 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         var labelTextArray = [String]()
         var labelTextColorArray = [UIColor]()
         
-        if isMaster {
+        if QCLoginUserInfo.currentInfo.isCircleManager == "1" {
+            labelTextArray = ["推荐","加精","置顶","删除","取消"]
+            labelTextColorArray = [COLOR,COLOR,COLOR,UIColor.black,UIColor.lightGray]
+        }else if isMaster {
             labelTextArray = ["加精","置顶","删除","取消"]
             labelTextColorArray = [COLOR,COLOR,UIColor.black,UIColor.lightGray]
         }else if QCLoginUserInfo.currentInfo.userid == forumDataModel.userid {
@@ -1620,20 +1623,57 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     func alertActionClick(_ action:UIButton) {
         print(action.tag)
         
-        if action.currentTitle == "置顶" {
+        if action.currentTitle == "推荐" {
+            alertCancel(action)
+            if forumModel.recommend == "1" {
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud.removeFromSuperViewOnHide = true
+                hud.mode = .text
+                hud.label.text = "贴子已推荐"
+                hud.hide(animated: true, afterDelay: 1)
+                return
+            }
+            CircleNetUtil.forumSetRecommend(tid: String(action.tag/100), handle: { (success, response) in
+                if success {
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud.removeFromSuperViewOnHide = true
+                    hud.mode = .text
+                    hud.label.text = "推荐贴子成功"
+                    hud.hide(animated: true, afterDelay: 1)
+                    print("推荐贴子成功")
+                }else{
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud.removeFromSuperViewOnHide = true
+                    hud.mode = .text
+                    hud.label.text = "推荐贴子失败"
+                    hud.hide(animated: true, afterDelay: 1)
+                    print("推荐贴子失败")
+                }
+            })
+        }else if action.currentTitle == "置顶" {
             alertCancel(action)
             if forumModel.istop == "1" {
                 let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
                 hud.removeFromSuperViewOnHide = true
                 hud.mode = .text
                 hud.label.text = "贴子已置顶"
-                hud.hide(animated: true, afterDelay: 1.5)
+                hud.hide(animated: true, afterDelay: 1)
                 return
             }
             CircleNetUtil.forumSetTop(tid: String(action.tag/100), handle: { (success, response) in
                 if success {
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud.removeFromSuperViewOnHide = true
+                    hud.mode = .text
+                    hud.label.text = "置顶贴子成功"
+                    hud.hide(animated: true, afterDelay: 1)
                     print("置顶贴子成功")
                 }else{
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud.removeFromSuperViewOnHide = true
+                    hud.mode = .text
+                    hud.label.text = "置顶贴子失败"
+                    hud.hide(animated: true, afterDelay: 1)
                     print("置顶贴子失败")
                 }
             })
@@ -1644,13 +1684,23 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                 hud.removeFromSuperViewOnHide = true
                 hud.mode = .text
                 hud.label.text = "贴子已加精"
-                hud.hide(animated: true, afterDelay: 1.5)
+                hud.hide(animated: true, afterDelay: 1)
                 return
             }
             CircleNetUtil.forumSetTop(tid: String(action.tag/100), handle: { (success, response) in
                 if success {
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud.removeFromSuperViewOnHide = true
+                    hud.mode = .text
+                    hud.label.text = "加精贴子成功"
+                    hud.hide(animated: true, afterDelay: 1)
                     print("加精贴子成功")
                 }else{
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud.removeFromSuperViewOnHide = true
+                    hud.mode = .text
+                    hud.label.text = "加精贴子失败"
+                    hud.hide(animated: true, afterDelay: 1)
                     print("加精贴子失败")
                 }
             })

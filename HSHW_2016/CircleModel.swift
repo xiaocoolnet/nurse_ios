@@ -205,6 +205,7 @@ class ForumInfoDataModel: HandyJSON {
     var like_num = ""
     var istop = ""
     var isbest = ""
+    var recommend = ""
     var isreward = ""
     var add_like = ""
     var favorites = ""

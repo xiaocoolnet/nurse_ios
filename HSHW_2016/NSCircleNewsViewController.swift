@@ -40,6 +40,7 @@ class NSCircleNewsViewController: UIViewController, UITableViewDataSource, UITab
 //        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "ic_返回_white"), style: .done, target: self, action: #selector(popViewcontroller))
     }
     
+    
     // MARK: - 加载数据
     func loadData() {
         
@@ -50,6 +51,7 @@ class NSCircleNewsViewController: UIViewController, UITableViewDataSource, UITab
                 self.rootTableView.mj_footer.resetNoMoreData()
                 
                 self.newsListDataArray = response as! [NewsListDataModel]
+                UserDefaults.standard.setValue((self.newsListDataArray.first?.create_time ?? newsUpdateTime)!, forKey: newsUpdateTime)
                 self.rootTableView.reloadData()
             }else{
                 

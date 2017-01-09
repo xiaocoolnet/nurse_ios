@@ -77,7 +77,7 @@ class CircleNetUtil: NSObject {
     //入参：cid(圈子的id),userid,isbest(选精1,不0),istop(置顶1,不0),pager 分页,title 搜索标题
     //出参：id(帖子id),community_id(圈子的id),userid,title标题,create_time,content内容,description介绍,review_time(回复时间),photo帖子图片,hits点击数,like_num 点赞数,istop是否置顶,isbest是否精华,isreward是否打赏,user_photo(用户头像),level(用户的等级),comments_count评论数量,add_like判断我是否点赞,community_name(圈子名称),community_photo(圈子照片),c_master(发帖人是否是圈主:1是,0不),user_name,auth_type(认证类型)
     //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getForumList&cid=1
-    class func getForumList(userid:String, cid:String, isbest:String, istop:String, pager:String, title:String="", handle:@escaping ResponseClouse) {
+    class func getForumList(userid:String, cid:String, isbest:String, istop:String, pager:String, title:String="", recommend:String="", handle:@escaping ResponseClouse) {
         let url = PARK_URL_Header+"getForumList"
         let param = [
             "userid":userid,
@@ -85,7 +85,8 @@ class CircleNetUtil: NSObject {
             "isbest":isbest,
             "istop":istop,
             "pager":pager,
-            "title":title
+            "title":title,
+            "recommend":recommend
         ]
         
         NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
@@ -687,6 +688,34 @@ class CircleNetUtil: NSObject {
             }
         }
     }
+    
+    // MARK: - 帖子推荐
+    //接口地址：a=forumSetRecommend
+    //入参：tid(帖子id)
+    //出参：success
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=forumSetTop&tid=1
+    class func forumSetRecommend(tid:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"forumSetRecommend"
+        let param = [
+            "tid":tid
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
+
     
     // MARK: - 点赞
     //接口地址：a=SetLike
