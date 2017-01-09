@@ -32,7 +32,8 @@ class NSCircleNewsTableViewCell: UITableViewCell {
     var newsListDataModel:NewsListDataModel! {
         didSet {
             
-            self.headerBtn.sd_setImage(with: URL.init(string: SHOW_IMAGE_HEADER+newsListDataModel.fu_photo), for: UIControlState(), placeholderImage: UIImage.init(named: "img_head_nor"))
+//            self.headerBtn.imageView?.sd_setImage(with: URL.init(string: SHOW_IMAGE_HEADER+newsListDataModel.fu_photo), placeholderImage: nil)
+            self.headerBtn.sd_setImage(with: URL.init(string: SHOW_IMAGE_HEADER+newsListDataModel.fu_photo), for: .normal, placeholderImage: UIImage(named: "img_head_nor"))
 
 
 //            self.headerBtn.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+newsListDataModel.fu_photo), for: UIControlState.normal, placeholderImage: nil)

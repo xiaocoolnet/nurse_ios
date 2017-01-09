@@ -1052,7 +1052,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let str = DomainName+"data/upload/"+(newsInfo?.thumbArr.first?.url)!
                 let url = URL(string: str)
                 let data = try? Data(contentsOf: url!)
-                let thumbImage = UIImage(data: data!)
+                var thumbImage = UIImage(named: "appLogo")
+                if data != nil {
+                    thumbImage = UIImage(data: data!)
+                }else{
+                    thumbImage = UIImage(named: "appLogo")
+                }
                 
                 if (thumbImage != nil) {
                     
@@ -1147,7 +1152,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 let str = DomainName+"data/upload/"+(newsInfo?.thumbArr.first?.url)!
                 let url = URL(string: str)
                 let data = try? Data(contentsOf: url!)
-                let thumbImage = UIImage(data: data!)
+                var thumbImage = UIImage(named: "appLogo")
+                if data != nil {
+                    thumbImage = UIImage(data: data!)
+                }else{
+                    thumbImage = UIImage(named: "appLogo")
+                }
                 
                 previewImageData = thumbImage!.compressImage(thumbImage!, maxLength: 32700)!
             }

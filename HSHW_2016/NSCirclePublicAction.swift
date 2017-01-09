@@ -13,7 +13,7 @@ class NSCirclePublicAction: NSObject {
     
     class func getAuthColor(with authType:String) -> UIColor {
         switch authType {
-        case "在校生","毕业生":
+        case "在校生","应届生":
             return UIColor(red: 110/255.0, green: 192/255.0, blue: 56/255.0, alpha: 1)
         case "护士","护师","主管护师":
             return UIColor(red: 128/255.0, green: 0, blue: 128/255.0, alpha: 1)

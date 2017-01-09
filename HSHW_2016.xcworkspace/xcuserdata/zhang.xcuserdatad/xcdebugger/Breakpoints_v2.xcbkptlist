@@ -244,11 +244,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/NSCirclePostForumViewController.swift"
-            timestampString = "505384336.027536"
+            timestampString = "505621480.780745"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "490"
-            endingLineNumber = "490"
+            startingLineNumber = "491"
+            endingLineNumber = "491"
             landmarkName = "publishForum(photoStr:andHud:)"
             landmarkType = "7">
          </BreakpointContent>

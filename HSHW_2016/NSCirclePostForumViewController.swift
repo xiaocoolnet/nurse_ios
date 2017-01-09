@@ -110,6 +110,7 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
         
         addresssLab.text = "定位失败，点击重试"
 
+        print("定位失败")
 //        if error.code == kCLErrorDenied {
 //            // 提示用户出错原因，可按住Option键点击 KCLErrorDenied的查看更多出错信息，可打印error.code值查找原因所在
 //        }

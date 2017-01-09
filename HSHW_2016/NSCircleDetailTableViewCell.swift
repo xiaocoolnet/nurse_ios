@@ -186,7 +186,7 @@ class NSCircleDetailTableViewCell: UITableViewCell {
         titSubImg.addSubview(titSubImg_3)
     }
     
-    fileprivate let titleSize:CGFloat = 16
+    fileprivate let titleSize:CGFloat = 17
     fileprivate let contentSize:CGFloat = 14
     
     func setCellWith(_ forumModel:ForumListDataModel) {

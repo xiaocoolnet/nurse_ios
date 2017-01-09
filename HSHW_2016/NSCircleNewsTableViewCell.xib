@@ -43,13 +43,14 @@
                         <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uBe-7Q-hHa">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uBe-7Q-hHa">
                         <rect key="frame" x="8" y="21" width="50" height="50"/>
                         <color key="backgroundColor" red="0.98823529409999999" green="0.42745098040000001" blue="0.2470588235" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="50" id="mjd-T6-Td5"/>
                             <constraint firstAttribute="width" constant="50" id="rSN-zT-UNv"/>
                         </constraints>
+                        <state key="normal" image="img_head_nor"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
                                 <integer key="value" value="25"/>
@@ -97,4 +98,7 @@
             <point key="canvasLocation" x="378" y="412.5"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="img_head_nor" width="294" height="295"/>
+    </resources>
 </document>

@@ -12,7 +12,8 @@ import MBProgressHUD
 class NSCircleApplyMasterViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // 圈子名称
-    let circleNameInput = UITextField()
+    var circleName = ""
+    let circleNameInput = UILabel()
 
     // 真实姓名
     let userNameInput = UITextField()
@@ -86,7 +87,7 @@ class NSCircleApplyMasterViewController: UIViewController, UIImagePickerControll
         circleNameInput.font = UIFont.systemFont(ofSize: 14)
         circleNameInput.adjustsFontSizeToFitWidth = true
         circleNameInput.textAlignment = .left
-        circleNameInput.placeholder = "请填写圈子名称"
+        circleNameInput.text = circleName
         inputBgView.addSubview(circleNameInput)
         
         
@@ -366,12 +367,7 @@ class NSCircleApplyMasterViewController: UIViewController, UIImagePickerControll
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.removeFromSuperViewOnHide = true
         
-        if (self.circleNameInput.text?.isEmpty)! {
-            hud.mode = .text
-            hud.label.text = "请填写圈子名称"
-            hud.hide(animated: true, afterDelay: 1)
-            return
-        }else if (self.userNameInput.text?.isEmpty)! {
+        if (self.userNameInput.text?.isEmpty)! {
             hud.mode = .text
             hud.label.text = "请输入真实姓名"
             hud.hide(animated: true, afterDelay: 1)
@@ -445,7 +441,7 @@ class NSCircleApplyMasterViewController: UIViewController, UIImagePickerControll
                                             
                                             hud.label.text = "正在上传资料"
                                             
-                                            CircleNetUtil.apply_community(c_name: self.circleNameInput.text!, userid: QCLoginUserInfo.currentInfo.userid, real_name: self.userNameInput.text!, real_code: self.idInput.text!, real_address: self.addressInput.text!, real_tel: self.telInput.text!, real_qq: self.qqInput.text!, real_content: self.testimonialsInput.text!, real_photo: imageName1, real_photo_2: imageName2, handle: { (success, response) in
+                                            CircleNetUtil.apply_community(c_name: self.circleName, userid: QCLoginUserInfo.currentInfo.userid, real_name: self.userNameInput.text!, real_code: self.idInput.text!, real_address: self.addressInput.text!, real_tel: self.telInput.text!, real_qq: self.qqInput.text!, real_content: self.testimonialsInput.text!, real_photo: imageName1, real_photo_2: imageName2, handle: { (success, response) in
                                                 if success {
                                                     let str = response as! String
                                                     if str == "success" {

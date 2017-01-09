@@ -81,7 +81,7 @@ class NSCircleAuthViewController: UIViewController, UIImagePickerControllerDeleg
         authTypeDropDown.width = 200
         authTypeDropDown.direction = .bottom
         
-        authTypeDropDown.dataSource = ["在校生","毕业生","护士","护师","主管护师","护士长","主任"]
+        authTypeDropDown.dataSource = ["在校生","应届生","护士","护师","主管护师","护士长","主任"]
         
         // 下拉列表选中后的回调方法
         authTypeDropDown.selectionAction = {(index, item) in

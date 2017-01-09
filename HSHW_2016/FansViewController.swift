@@ -33,8 +33,6 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadData()
-
         setTitleView()
 
         // 线
@@ -62,6 +60,9 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         fansTableView.dataSource = self
         myScrollView.addSubview(fansTableView)
         
+        fansTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData_fans))
+        fansTableView.mj_header.beginRefreshing()
+        
         // 我的关注列表
         focusTableView.frame = CGRect(x: WIDTH, y: 0, width: WIDTH, height: HEIGHT-115)
         focusTableView.backgroundColor = UIColor.clear
@@ -71,6 +72,8 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         focusTableView.delegate = self
         focusTableView.dataSource = self
         myScrollView.addSubview(focusTableView)
+        focusTableView.mj_header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData_follow))
+        focusTableView.mj_header.beginRefreshing()
         
         myScrollView.contentOffset = userType == 0 ? CGPoint(x: self.fansTableView.frame.minX, y: self.fansTableView.frame.minY):CGPoint(x: self.focusTableView.frame.minX, y: self.focusTableView.frame.minY)
         
@@ -146,27 +149,25 @@ class FansViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     fileprivate var focusListArray:Array<FansFollowListDataModel> = []
 
     // 加载数据
-    func loadData() {
+    func loadData_follow() {
+        
+        CircleNetUtil.getFansFollowList(userid: QCLoginUserInfo.currentInfo.userid, type: "1") { (success, response) in
+            self.focusListArray = response as! Array<FansFollowListDataModel>
+            self.focusTableView.reloadData()
+            
+            self.focusTableView.mj_header.endRefreshing()
+        }
+    }
+    
+    // 加载数据
+    func loadData_fans() {
         
         CircleNetUtil.getFansFollowList(userid: QCLoginUserInfo.currentInfo.userid, type: "2") { (success, response) in
             self.fansListArray = response as! Array<FansFollowListDataModel>
             self.fansTableView.reloadData()
+            
+            self.fansTableView.mj_header.endRefreshing()
         }
-        
-        CircleNetUtil.getFansFollowList(userid: QCLoginUserInfo.currentInfo.userid, type: "1") { (success, response) in
-            self.focusListArray = response as! Array<FansFollowListDataModel>
-            self.fansTableView.reloadData()
-        }
-        
-//        helper.getFansOrFollowList(1) { (success, response) in
-//            self.fansListArray = response as! Array<HSFansAndFollowModel>
-//            self.fansTableView.reloadData()
-//        }
-//        
-//        helper.getFansOrFollowList(2) { (success, response) in
-//            self.focusListArray = response as! Array<HSFansAndFollowModel>
-//            self.focusTableView.reloadData()
-//        }
         
     }
     

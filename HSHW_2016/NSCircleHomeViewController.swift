@@ -199,7 +199,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         let margin = (WIDTH-16)/12
         for i in 0 ..< 3 {
             let headerImg = UIImageView(frame: CGRect(x: margin+(margin*4*CGFloat(i)), y: 0, width: margin*2, height: margin*2))
-            headerImg.backgroundColor = UIColor.lightGray
+//            headerImg.backgroundColor = UIColor.lightGray
             headerImg.layer.cornerRadius = margin
             headerImg.clipsToBounds = true
             
@@ -212,9 +212,10 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
             managerBgView.addSubview(nameLab)
             
             if i < self.masterListModelArray.count {
-                headerImg.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+self.masterListModelArray[i].user_photo), placeholderImage: nil)
+                headerImg.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+self.masterListModelArray[i].user_photo), placeholderImage: #imageLiteral(resourceName: "申请圈主（默认）"))
                 nameLab.text = self.masterListModelArray[i].user_name
             }else{
+                headerImg.image = #imageLiteral(resourceName: "申请圈主（默认）")
                 nameLab.text = "还有空位哦~"
             }
         }
@@ -375,6 +376,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
                     }else{
                         hud.hide(animated: true)
                         let circleApplyMasterController = NSCircleApplyMasterViewController()
+                        circleApplyMasterController.circleName = self.communityModel.community_name
                         circleApplyMasterController.hidesBottomBarWhenPushed = true
                         self.navigationController?.pushViewController(circleApplyMasterController, animated: true)
                     }

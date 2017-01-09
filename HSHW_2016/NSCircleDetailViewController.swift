@@ -426,7 +426,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     }
     
     // MARK: - UITableViewDelegate
-    fileprivate let titleSize:CGFloat = 16
+    fileprivate let titleSize:CGFloat = 17
     fileprivate let contentSize:CGFloat = 14
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

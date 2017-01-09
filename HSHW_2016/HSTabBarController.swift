@@ -20,64 +20,51 @@ class HSTabBarController: UITabBarController,UITabBarControllerDelegate,ViewCont
         super.viewDidLoad()
         
         
-        
-        //这一步是获取LaunchScreen.storyboard里的UIViewController,UIViewController 的identifer是LaunchScreen
-        Imageview.frame = UIScreen.main.bounds
-        
-        self.Imageview.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER)!, placeholderImage: #imageLiteral(resourceName: "启动页"))
-
-        self.view.addSubview(self.Imageview)
-
-        let hud = MBProgressHUD.showAdded(to: self.Imageview, animated: true)
-        hud.removeFromSuperViewOnHide = true
-        
-        CircleNetUtil.getHomePage(userid: QCLoginUserInfo.currentInfo.userid) { (success, response) in
-            if success {
-                let data = response as! HomePageDataModel
-                self.Imageview.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+data.photo)!, placeholderImage: #imageLiteral(resourceName: "启动页"))
-                
-                DispatchQueue.main.async(execute: { 
-                    self.skipBtn.frame = CGRect(x: WIDTH-8-50, y: 20+8, width: 50, height: 25)
-                    self.skipBtn.layer.cornerRadius = 12.5
-                    self.skipBtn.layer.borderWidth = 1
-                    self.skipBtn.layer.borderColor = UIColor.white.cgColor
-                    self.skipBtn.layer.backgroundColor = UIColor.gray.cgColor
-                    self.skipBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-                    
-                    self.skipBtn.setTitle("跳过 5", for: UIControlState())
-                    
-                    self.skipBtn.addTarget(self, action: #selector(self.skipBtnClick), for: .touchUpInside)
-                    self.view.addSubview(self.skipBtn)
-                    
-                    
-                    Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.timeChanged(timer:)), userInfo: nil, repeats: true)
-                })
-                
-            }else{
-                self.Imageview.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER)!, placeholderImage: #imageLiteral(resourceName: "启动页"))
-                
-                DispatchQueue.main.async(execute: {
-                    self.Imageview.removeFromSuperview()
-                })
-            }
+        if UIApplication.shared.applicationState == .inactive{
+            //这一步是获取LaunchScreen.storyboard里的UIViewController,UIViewController 的identifer是LaunchScreen
+            Imageview.frame = UIScreen.main.bounds
             
-            hud.hide(animated: true)
-
+            self.Imageview.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER)!, placeholderImage: #imageLiteral(resourceName: "启动页"))
+            
+            self.view.addSubview(self.Imageview)
+            
+            let hud = MBProgressHUD.showAdded(to: self.Imageview, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            
+            CircleNetUtil.getHomePage(userid: QCLoginUserInfo.currentInfo.userid) { (success, response) in
+                if success {
+                    let data = response as! HomePageDataModel
+                    self.Imageview.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+data.photo)!, placeholderImage: #imageLiteral(resourceName: "启动页"))
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.skipBtn.frame = CGRect(x: WIDTH-8-50, y: 20+8, width: 50, height: 25)
+                        self.skipBtn.layer.cornerRadius = 12.5
+                        self.skipBtn.layer.borderWidth = 1
+                        self.skipBtn.layer.borderColor = UIColor.white.cgColor
+                        self.skipBtn.layer.backgroundColor = UIColor.gray.cgColor
+                        self.skipBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+                        
+                        self.skipBtn.setTitle("跳过 5", for: UIControlState())
+                        
+                        self.skipBtn.addTarget(self, action: #selector(self.skipBtnClick), for: .touchUpInside)
+                        self.view.addSubview(self.skipBtn)
+                        
+                        
+                        Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.timeChanged(timer:)), userInfo: nil, repeats: true)
+                    })
+                    
+                }else{
+                    self.Imageview.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER)!, placeholderImage: #imageLiteral(resourceName: "启动页"))
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.Imageview.removeFromSuperview()
+                    })
+                }
+                
+                hud.hide(animated: true)
+                
+            }
         }
-        
-        
-//        //这一步是获取上次网络请求下来的图片，如果存在就展示该图片，如果不存在就展示本地保存的名为test的图片
-//        do {
-//            let data = try Data(contentsOf: URL(string: "http://img3.duitang.com/uploads/item/201509/30/20150930130936_JyufE.jpeg")!)
-//            
-//            if data.count > 0 {
-//                Imageview.image = UIImage(data: data)
-//            }else{
-//                Imageview.image = #imageLiteral(resourceName: "启动页")
-//            }
-//        } catch  {
-//            Imageview.image = #imageLiteral(resourceName: "启动页")
-//        }
         
         
         
