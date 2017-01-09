@@ -811,11 +811,12 @@ class CircleNetUtil: NSObject {
     //入参：userid，refid(圈子id，或父评论id)
     //出参：refid,userid,username,content,photo,add_time,type(评论类型：1新闻，2圈子，3评论),userlevel,major,cid(评论id),auth_type(用户类型名称)
     //Demo:http://app.chinanurse.cn/index.php?g=apps&m=index&a=getForumComments&refid=305&userid=603
-    class func getForumComments(userid:String, refid:String, handle:@escaping ResponseClouse) {
+    class func getForumComments(userid:String, refid:String, pager:String, handle:@escaping ResponseClouse) {
         let url = PARK_URL_Header+"getForumComments"
         let param = [
             "userid":userid,
-            "refid":refid
+            "refid":refid,
+            "pager":pager
         ]
         
         NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
@@ -1203,6 +1204,34 @@ class CircleNetUtil: NSObject {
                     handle(true, result.data)
                 }else if(result.status == "error"){
                     handle(false, result.errorData)
+                }
+            }
+        }
+    }
+    
+    // MARK: - 获取评论数量
+    //接口地址：a=getComments_count
+    //入参：id(文章id/帖子id),type(1文章，2帖子)
+    //出参：data 评论数量
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getComments_count&userid=603
+    class func getComments_count(id:String, type:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"getComments_count"
+        let param = [
+            "id":id,
+            "type":type
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
                 }
             }
         }

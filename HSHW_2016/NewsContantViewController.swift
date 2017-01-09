@@ -26,7 +26,19 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             self.title = newsInfo?.term_name
             self.likeNum = NSString(string: (newsInfo?.likes_count ?? "0")!).integerValue
             newsInfo?.post_hits = String(Int((newsInfo?.post_hits)!)!+1)
+            self.comment_count = NSString(string: (newsInfo?.comments_count ?? "0")!).integerValue
             self.getComment()
+        }
+    }
+    
+    var comment_count = 0 {
+        didSet {
+            self.commentIcon_bottom_Lab.text = String(comment_count)
+            if self.myTableView.mj_footer != nil {
+                self.myTableView.mj_footer.resetNoMoreData()
+            }
+            self.pager = 2
+            self.myTableView.reloadData()
         }
     }
 //    var navTitle:String = "新闻内容" {
@@ -129,6 +141,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         self.view.addSubview(myTableView)
 //        myTableView.separatorColor = UIColor.clearColor()
         myTableView.separatorStyle = .none
+        
+        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(getComment_pullUp))
 
         setReplyView()
 
@@ -201,7 +215,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         replyView.addSubview(comment_bottom_Btn)
         
         // 评论角标
-        let commentIcon_bottom_Lab_Width = calculateWidth(String((self.commentArray.count)), size: 12, height: 15)+15
+        let commentIcon_bottom_Lab_Width = calculateWidth(String((self.comment_count)), size: 12, height: 15)+15
         commentIcon_bottom_Lab.frame = CGRect(x: comment_bottom_Btn.frame.width-commentIcon_bottom_Lab_Width/2.0, y: -7.5, width: commentIcon_bottom_Lab_Width, height: 15)
         commentIcon_bottom_Lab.backgroundColor = UIColor.red
         commentIcon_bottom_Lab.layer.cornerRadius = 7.5
@@ -209,7 +223,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         commentIcon_bottom_Lab.textAlignment = .center
         commentIcon_bottom_Lab.textColor = UIColor.white
         commentIcon_bottom_Lab.font = UIFont.systemFont(ofSize: 12)
-        commentIcon_bottom_Lab.text = String((self.commentArray.count))
+        commentIcon_bottom_Lab.text = String((self.comment_count))
         comment_bottom_Btn.addSubview(commentIcon_bottom_Lab)
         
         // 收藏
@@ -361,7 +375,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     
                     let url = PARK_URL_Header+"getRefComments"
                     let param = [
-                        "refid": self.newsInfo!.object_id
+                        "refid": self.newsInfo!.object_id,
+                        "pager":"1"
                     ];
                     
                     
@@ -389,12 +404,18 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                                 hud.label.text = "评论成功"
                                 hud.hide(animated: true, afterDelay: 1)
                                 
+                                CircleNetUtil.getComments_count(id: (self.newsInfo?.object_id ?? "")!, type: "1") { (success, response) in
+                                    if success {
+                                        self.comment_count = NSString(string: (response as! String)).integerValue
+                                    }
+                                }
+                                
                                 self.replyTextField.placeholder = "写评论..."
                                 self.send_bottom_Btn.tag = NSString(string: (self.newsInfo?.object_id)!).integerValue
                                 self.send_bottom_Btn.isSelected = false
                                 
                                 self.commentArray = status.data
-                                self.commentIcon_bottom_Lab.text = String((self.commentArray.count))
+                                self.commentIcon_bottom_Lab.text = String((self.comment_count))
                                 self.myTableView.reloadData()
                                 
                                 if ((result.event) != "") {
@@ -681,7 +702,8 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         // print(newsInfo?.object_id,newsInfo?.title)
         let url = PARK_URL_Header+"getRefComments"
         let param = [
-            "refid": newsInfo!.object_id
+            "refid": newsInfo!.object_id,
+            "pager":"1"
         ];
         NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
 
@@ -702,8 +724,10 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     //self.createTableView()
                     // print(status)
                     
+                    self.pager += 1
+                    
                     self.commentArray = status.data
-                    self.commentIcon_bottom_Lab.text = String((self.commentArray.count))
+//                    self.commentIcon_bottom_Lab.text = String((self.comment_count))
                     
                     self.myTableView .reloadData()
                     // print(status.data)
@@ -716,6 +740,71 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 self.mainHud.hide(animated: true)
             }
         
+        }
+    }
+    
+    // MARK:获取评论列表 - 上拉加载
+    var pager = 1
+    func getComment_pullUp() {
+        // print(newsInfo?.object_id,newsInfo?.title)
+        let url = PARK_URL_Header+"getRefComments"
+        let param = [
+            "refid": newsInfo!.object_id,
+            "pager":String(pager)
+        ];
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
+            
+            if(error != nil){
+                self.myTableView.mj_footer.endRefreshing()
+
+            }else{
+                
+                let status = commentModel(JSONDecoder(json!))
+
+                if status.status == "success" {
+                    self.pager += 1
+                    
+                    let commentArray = status.data
+                    
+                    if commentArray.count == 0 {
+                        self.myTableView.mj_footer.endRefreshingWithNoMoreData()
+                    }else{
+                        
+                        self.myTableView.mj_footer.endRefreshing()
+                        for comment in commentArray {
+                            self.commentArray.append(comment)
+                        }
+                        self.myTableView.reloadData()
+                        
+                    }
+                }else{
+                    
+                    self.myTableView.mj_footer.endRefreshingWithNoMoreData()
+                }
+                
+//                let status = commentModel(JSONDecoder(json!))
+//                
+//                if(status.status == "error") && status.errorData != ""{
+//                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//                    hud.mode = MBProgressHUDMode.text;
+//                    hud.label.text = "获取评论列表失败"
+//                    hud.detailsLabel.text = status.errorData
+//                    hud.margin = 10.0
+//                    hud.removeFromSuperViewOnHide = true
+//                    hud.hide(animated: true, afterDelay: 1)
+//                }
+//                if(status.status == "success"){
+//                    //self.createTableView()
+//                    // print(status)
+//                    
+//                    self.commentArray = status.data
+//                    self.commentIcon_bottom_Lab.text = String((self.comment_count))
+//                    
+//                    self.myTableView .reloadData()
+//                    // print(status.data)
+//                }
+            }
+            
         }
     }
     
@@ -943,7 +1032,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                 cell.headerBtn.setImage(nil, for: UIControlState())
             }else{
                 cell.textLabel?.text = nil
-                cell.floorLab.text = "\(self.commentArray.count-indexPath.row)楼"
+                cell.floorLab.text = "\(self.comment_count-indexPath.row)楼"
                 cell.commentModel = self.commentArray[indexPath.row]
                 cell.headerBtn.tag = 200+indexPath.row
                 cell.headerBtn.addTarget(self, action: #selector(userInfoBtnClick(userInfoBtn:)), for: .touchUpInside)

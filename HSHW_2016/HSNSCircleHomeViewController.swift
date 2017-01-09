@@ -107,7 +107,7 @@ class HSNSCircleHomeViewController: UIViewController, PagingMenuControllerDelega
                 return .segmentedControl
             }
             var focusMode: MenuFocusMode {
-                return .underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
+                return .underline(height: 2, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
             }
             var itemsOptions: [MenuItemViewCustomizable] {
                 

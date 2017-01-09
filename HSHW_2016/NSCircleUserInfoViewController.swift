@@ -225,7 +225,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             bgImageView.layer.addSublayer(gradientLayer)
             
             // 头像
-            headerView = UIImageView.init(frame: CGRect(x: WIDTH/3.0, y: 30, width: WIDTH/3.0, height: WIDTH/3.0))
+            headerView = UIImageView.init(frame: CGRect(x: WIDTH/2.0-50, y: 20, width: 100, height: 100))
             headerView.backgroundColor = UIColor.cyan
             let str = SHOW_IMAGE_HEADER+(userInfo?.photo)!
             
@@ -235,7 +235,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                 headerView.sd_setImage(with: URL.init(string: str), placeholderImage: UIImage.init(named: "defaultImage.png"))
             }
             //                headerView.sd_setImageWithURL(NSURL.init(string: str))
-            headerView.layer.cornerRadius = WIDTH/6.0
+            headerView.layer.cornerRadius = 50
             headerView.clipsToBounds = true
             headerView.layer.borderWidth = 3
             headerView.layer.borderColor = UIColor.white.cgColor
@@ -244,7 +244,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             bgImageView.addSubview(headerView)
             
             // 用户名
-            nameLabel = UILabel.init(frame: CGRect(x: self.view.center.x, y: headerView.frame.maxY+30, width: 100, height: 30))
+            nameLabel = UILabel.init(frame: CGRect(x: self.view.center.x, y: headerView.frame.maxY+20, width: 100, height: 30))
             nameLabel.textColor = UIColor.white
             nameLabel.text = userInfo!.name
             nameLabel.sizeToFit()
@@ -292,7 +292,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
             }
             
             // 关注 粉丝
-            noteLab = UILabel.init(frame: CGRect(x: 0, y: leavel.frame.maxY+20, width: WIDTH, height: UIFont.systemFont(ofSize: 12).lineHeight))
+            noteLab = UILabel.init(frame: CGRect(x: 0, y: leavel.frame.maxY+15, width: WIDTH, height: UIFont.systemFont(ofSize: 12).lineHeight))
             noteLab.font = UIFont.systemFont(ofSize: 12)
             noteLab.textAlignment = NSTextAlignment.center
             noteLab.textColor = UIColor.init(red: 248/255.0, green: 122/255.0, blue: 215/255.0, alpha: 1)

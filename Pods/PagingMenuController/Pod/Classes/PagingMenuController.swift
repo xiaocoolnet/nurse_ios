@@ -171,7 +171,7 @@ open class PagingMenuController: UIViewController, PagingValidator {
         let nextPage = page % pagingViewController.controllers.count
         let nextPagingViewController = pagingViewController.controllers[nextPage]
         
-        if !(delegate?.willMove(toMenuController: nextPagingViewController, fromMenu: previousPagingViewController))! {
+        if !(delegate?.willMove(toMenuController: nextPagingViewController, fromMenu: previousPagingViewController) ?? true)! {
             return
         }
         

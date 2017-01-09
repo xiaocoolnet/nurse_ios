@@ -123,6 +123,7 @@ class NewsInfo: JSONJoy{
     var message_id: String
     var likes_count:String
     var likes_add:String
+    var comments_count:String
     
 //    "favorites_count": "0",
 //    "favorites_add": "0",
@@ -153,6 +154,7 @@ class NewsInfo: JSONJoy{
 
         likes_count = decoder["likes_count"].string ?? ""
         likes_add = decoder["likes_add"].string ?? ""
+        comments_count = decoder["comments_count"].string ?? ""
 
         // print(post_excerpt)
         // print(decoder["likes"].array)

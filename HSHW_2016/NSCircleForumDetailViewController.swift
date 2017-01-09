@@ -15,7 +15,11 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
 //    var forumBestOrTopModelArray = [ForumModel]()
-    var forumDataModel = ForumListDataModel()
+    var forumDataModel = ForumListDataModel() {
+        didSet {
+            self.comment_count = NSString(string: (forumDataModel.comments_count)).integerValue
+        }
+    }
     var forumModel = ForumInfoDataModel()
     
 //    var forumCommentArray = [ForumCommentDataModel]()
@@ -27,6 +31,16 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     var imageHeigthArray = [CGFloat]()
     
     var myScore = ""
+    
+    var comment_count = 0 {
+        didSet {
+            if self.rootTableView.mj_footer != nil {
+                self.rootTableView.mj_footer.resetNoMoreData()
+            }
+            self.pager = 2
+            self.rootTableView.reloadData()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,42 +91,44 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             }
         }
         
-        CircleNetUtil.getForumComments(userid: QCLoginUserInfo.currentInfo.userid, refid: self.forumDataModel.id) { (success, response) in
+        CircleNetUtil.getForumComments(userid: QCLoginUserInfo.currentInfo.userid, refid: self.forumDataModel.id, pager: "1") { (success, response) in
             if success {
+                self.pager += 1
                 self.forumCommentArray = response as! [ForumCommentsDataModel]
                 self.rootTableView.reloadData()
             }
         }
+        
     }
     
     // MARK: - 加载数据（上拉加载）
-//    var pager = 1
-//    func loadData_pullUp() {
-//        
-//        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: String(pager)) { (success, response) in
-//            if success {
-//                self.pager += 1
-//                
-//                let forumModelArray = response as! [ForumListDataModel]
-//                
-//                if forumModelArray.count == 0 {
-//                    self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
-//                }else{
-//                    
-//                    self.rootTableView.mj_footer.endRefreshing()
-//                    for forumListData in forumModelArray {
-//                        self.forumModelArray.append(forumListData)
-//                    }
-//                    self.rootTableView.reloadData()
-//                    
-//                }
-//            }else{
-//                
-//                self.rootTableView.mj_footer.endRefreshing()
-//            }
-//        }
-//        
-//    }
+    var pager = 1
+    func loadData_pullUp() {
+        
+        CircleNetUtil.getForumComments(userid: QCLoginUserInfo.currentInfo.userid, refid: self.forumDataModel.id, pager: String(pager)) { (success, response) in
+            
+            if success {
+                self.pager += 1
+                
+                let forumCommentArray = response as! [ForumCommentsDataModel]
+                
+                if forumCommentArray.count == 0 {
+                    self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
+                }else{
+                    self.rootTableView.mj_footer.endRefreshing()
+
+                    for forumComment in forumCommentArray {
+                        self.forumCommentArray.append(forumComment)
+                    }
+                    self.rootTableView.reloadData()
+
+                }
+            }else{
+                self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
+            }
+        }
+        
+    }
     
     // MARK:- 分享视图
     func shareForumBtnClick() {
@@ -382,7 +398,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
         //        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(makeDataSource))
         //        rootTableView.mj_header.beginRefreshing()
         
-        //        myTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
+        rootTableView.mj_footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadData_pullUp))
         
         self.view.addSubview(rootTableView)
         
@@ -596,7 +612,13 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                         
                     }
                     
-                    CircleNetUtil.getForumComments(userid: QCLoginUserInfo.currentInfo.userid, refid: String(self.send_bottom_Btn.tag), handle: { (success, response) in
+                    CircleNetUtil.getComments_count(id: self.forumDataModel.id, type: "2") { (success, response) in
+                        if success {
+                            self.comment_count = NSString(string: (response as! String)).integerValue
+                        }
+                    }
+                    
+                    CircleNetUtil.getForumComments(userid: QCLoginUserInfo.currentInfo.userid, refid: String(self.send_bottom_Btn.tag), pager: "1", handle: { (success, response) in
                         if success {
                             
                             self.forumCommentArray = response as! [ForumCommentsDataModel]
@@ -774,7 +796,7 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
             
             cell.reportBtn.isHidden = false
             
-            cell.floorLab.text = "\(self.forumCommentArray.count-indexPath.row)楼"
+            cell.floorLab.text = "\(self.comment_count-indexPath.row)楼"
             cell.commentModel = self.forumCommentArray[indexPath.row]
             
             cell.headerBtn.tag = 200+indexPath.row
