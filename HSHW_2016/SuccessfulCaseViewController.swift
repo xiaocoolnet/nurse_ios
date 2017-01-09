@@ -54,7 +54,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
     
     func GetData(){
         
-        let url = PARK_URL_Header+"getNewslist"
+        let url = PARK_URL_Header+"getNewslist_new"
         
         let param = [
             "channelid":articleID == nil ? "7":articleID!,
@@ -131,7 +131,7 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
     var pager = 2
     func loadData_pullUp(){
         
-        let url = PARK_URL_Header+"getNewslist"
+        let url = PARK_URL_Header+"getNewslist_new"
         
         let param = [
             "channelid":articleID == nil ? "7":articleID!,
@@ -376,11 +376,13 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                         hud.hide(animated: true, afterDelay: 0.5)
                         // print(status.data)
                         
-                        for (i,obj) in (newsInfo.likes).enumerated() {
-                            if obj.userid == QCLoginUserInfo.currentInfo.userid {
-                                newsInfo.likes.remove(at: i)
-                            }
-                        }
+                        newsInfo.likes_count = String(NSString(string: newsInfo.likes_count).integerValue-1)
+                        newsInfo.likes_add = "0"
+//                        for (i,obj) in (newsInfo.likes).enumerated() {
+//                            if obj.userid == QCLoginUserInfo.currentInfo.userid {
+//                                newsInfo.likes.remove(at: i)
+//                            }
+//                        }
                         
                         self.dataSource.objectlist[btn.tag] = newsInfo
                         
@@ -419,9 +421,11 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
                         hud.label.text = "点赞成功"
                         hud.hide(animated: true, afterDelay: 0.5)
                         
-                        let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
-                        let model:LikeInfo = LikeInfo.init(JSONDecoder(dic as AnyObject))
-                        newsInfo.likes.append(model)
+                        newsInfo.likes_count = String(NSString(string: newsInfo.likes_count).integerValue+1)
+                        newsInfo.likes_add = "1"
+//                        let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
+//                        let model:LikeInfo = LikeInfo.init(JSONDecoder(dic as AnyObject))
+//                        newsInfo.likes.append(model)
                         self.dataSource.objectlist[btn.tag] = newsInfo
                         
                         self.myTableView.reloadData()

@@ -83,7 +83,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     }
     
     func GetDate(){
-        let url = PARK_URL_Header+"getNewslist"
+        let url = PARK_URL_Header+"getNewslist_new"
         // print(newsType)
         let param = ["channelid":String(newsType!)]
         NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
@@ -129,7 +129,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
     
     var pager = 2
     func loadData_pullUp(){
-        let url = PARK_URL_Header+"getNewslist"
+        let url = PARK_URL_Header+"getNewslist_new"
         // print(newsType)
         let param = ["channelid":String(newsType!),"pager":String(pager)]
         NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
@@ -205,7 +205,7 @@ class GNewsCateDetailViewController: UIViewController,UITableViewDelegate,UITabl
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         let next = NewsContantViewController()
         next.newsInfo = newsInfo
-        next.likeNum = newsInfo.likes.count
+        next.likeNum = NSString(string: newsInfo.likes_count).integerValue
         next.delegate = self
         // print(newsInfo.likes.count)
         self.navigationController?.pushViewController(next, animated: true)

@@ -357,7 +357,7 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     //    func GetDate(){
-    //        let url = PARK_URL_Header+"getNewslist"
+    //        let url = PARK_URL_Header+"getNewslist_new"
     //        let param = ["channelid":newsType == nil ? newsId : String(newsType!+17)]
     //
     //        Alamofire.request(.GET, url, parameters: param).response { request, response, json, error in

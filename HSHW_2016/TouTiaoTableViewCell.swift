@@ -143,7 +143,7 @@ class TouTiaoTableViewCell: UITableViewCell {
         heal.tag = Int(newsInfo.term_id)!
         self.hitsNum.text = setconNumStr(newsInfo.post_hits!)
         self.hitsNum.sizeToFit()
-        self.zanNum.text = String(newsInfo.likes.count)
+        self.zanNum.text = newsInfo.likes_count
         self.zanNum.sizeToFit()
         self.colNum.text = (newsInfo.favorites_count ?? "0")!
         self.colNum.sizeToFit()
@@ -242,7 +242,7 @@ class TouTiaoTableViewCell: UITableViewCell {
         
         self.hitsNum.text = setconNumStr(newsInfo.post_hits!)
         hitsNum.sizeToFit()
-        self.zanNum.text = String(newsInfo.likes.count)
+        self.zanNum.text = newsInfo.likes_count
         self.zanNum.sizeToFit()
         self.colNum.text = (newsInfo.favorites_count ?? "0")!
         self.colNum.sizeToFit()

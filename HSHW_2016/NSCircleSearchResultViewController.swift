@@ -83,8 +83,8 @@ class NSCircleSearchResultViewController: UIViewController, UITableViewDataSourc
     }
     
     // MARK: - UITableViewDelegate
-    fileprivate let titleSize:CGFloat = 14
-    fileprivate let contentSize:CGFloat = 12
+    fileprivate let titleSize:CGFloat = 17
+    fileprivate let contentSize:CGFloat = 14
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         

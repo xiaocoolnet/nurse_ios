@@ -572,7 +572,7 @@ class AbroadViewController: UIViewController,UITableViewDelegate,UITableViewData
     
 //    func getData(){
 //        
-//        let url = PARK_URL_Header+"getNewslist"
+//        let url = PARK_URL_Header+"getNewslist_new"
 ////        let param = [
 ////            "channelid":"17"
 ////        ];

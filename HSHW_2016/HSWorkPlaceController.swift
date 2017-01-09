@@ -41,7 +41,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
     
     func loadData(){
         
-        let url = PARK_URL_Header+"getNewslist"
+        let url = PARK_URL_Header+"getNewslist_new"
         
         let param = [
             "channelid":(articleID ?? "")!,
@@ -166,7 +166,7 @@ class HSWorkPlaceController: UIViewController,UITableViewDelegate,UITableViewDat
         let next = NewsContantViewController()
         next.delegate = self
         next.newsInfo = newsInfo
-        next.likeNum = newsInfo.likes.count
+        next.likeNum = NSString(string: newsInfo.likes_count).integerValue
 //        print(newsInfo.likes.count)
         self.navigationController?.pushViewController(next, animated: true)
     }

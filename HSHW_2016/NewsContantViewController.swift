@@ -24,7 +24,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     var newsInfo :NewsInfo? {
         didSet {
             self.title = newsInfo?.term_name
-            self.likeNum = (newsInfo?.likes.count)!
+            self.likeNum = NSString(string: (newsInfo?.likes_count ?? "0")!).integerValue
             newsInfo?.post_hits = String(Int((newsInfo?.post_hits)!)!+1)
             self.getComment()
         }
@@ -1224,11 +1224,14 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
 
                         self.performSelector(onMainThread: #selector(self.upDateUI(_:)), with: [btn.tag,"0"], waitUntilDone:true)
                         
-                        for (i,obj) in (self.newsInfo?.likes)!.enumerated() {
-                            if obj.userid == QCLoginUserInfo.currentInfo.userid {
-                                self.newsInfo?.likes.remove(at: i)
-                            }
-                        }
+                        
+                        self.newsInfo?.likes_count = String(NSString(string: (self.newsInfo?.likes_count ?? "0")!).integerValue-1)
+                        self.newsInfo?.likes_add = "0"
+//                        for (i,obj) in (self.newsInfo?.likes)!.enumerated() {
+//                            if obj.userid == QCLoginUserInfo.currentInfo.userid {
+//                                self.newsInfo?.likes.remove(at: i)
+//                            }
+//                        }
                         
                     }
                 }
@@ -1269,10 +1272,12 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                             NursePublicAction.showScoreTips(self.view, nameString: (status.data?.event)!, score: (status.data?.score)!)
                         }
 
+                        self.newsInfo?.likes_count = String(NSString(string: (self.newsInfo?.likes_count ?? "0")!).integerValue+1)
+                        self.newsInfo?.likes_add = "1"
 
-                        let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
-                        let model:LikeInfo = LikeInfo.init(JSONDecoder(dic as AnyObject))
-                        self.newsInfo?.likes.append(model)
+//                        let dic = ["userid":QCLoginUserInfo.currentInfo.userid]
+//                        let model:LikeInfo = LikeInfo.init(JSONDecoder(dic as AnyObject))
+//                        self.newsInfo?.likes.append(model)
                         
                     }
                 }

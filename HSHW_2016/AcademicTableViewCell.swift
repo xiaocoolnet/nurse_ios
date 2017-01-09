@@ -147,11 +147,14 @@ class AcademicTableViewCell: UITableViewCell {
             if newsInfo?.favorites_add == "1" {
                 comBtn.isSelected = true
             }
-            for obj in newsInfo!.likes {
-                if obj.userid == QCLoginUserInfo.currentInfo.userid {
-                    aca_zan.isSelected = true
-                }
+            if newsInfo?.likes_add == "1" {
+                aca_zan.isSelected = true
             }
+//            for obj in newsInfo!.likes {
+//                if obj.userid == QCLoginUserInfo.currentInfo.userid {
+//                    aca_zan.isSelected = true
+//                }
+//            }
             
 //            for obj in newsInfo!.favorites {
 //                if obj.userid == QCLoginUserInfo.currentInfo.userid {
@@ -162,7 +165,7 @@ class AcademicTableViewCell: UITableViewCell {
             
 //            print("\(hashValue)")
 //            self.likeNum = newsInfo.likes.count
-            zanNum.text =  String(newsInfo!.likes.count)
+            zanNum.text =  newsInfo?.likes_count
             conNum.text = (newsInfo!.favorites_count ?? "")!
             
             timeBtn.center.y = timeLab.center.y
@@ -205,11 +208,14 @@ class AcademicTableViewCell: UITableViewCell {
             //                aca_zan.selected = true
             //            }
             
-            for obj in academicNewsInfo!.likes {
-                if obj.userid == QCLoginUserInfo.currentInfo.userid {
-                    aca_zan.isSelected = true
-                }
+            if academicNewsInfo?.likes_add == "1" {
+                aca_zan.isSelected = true
             }
+//            for obj in academicNewsInfo!.likes {
+//                if obj.userid == QCLoginUserInfo.currentInfo.userid {
+//                    aca_zan.isSelected = true
+//                }
+//            }
             
 //            for obj in academicNewsInfo!.favorites {
 //                if obj.userid == QCLoginUserInfo.currentInfo.userid {
@@ -222,7 +228,7 @@ class AcademicTableViewCell: UITableViewCell {
             
             //            print("\(hashValue)")
             //            self.likeNum = academicNewsInfo.likes.count
-            zanNum.text =  String(academicNewsInfo!.likes.count)
+            zanNum.text =  academicNewsInfo?.likes_count
             conNum.text = String((academicNewsInfo!.favorites_count ?? "")!)
             
             timeBtn.center.y = timeLab.center.y

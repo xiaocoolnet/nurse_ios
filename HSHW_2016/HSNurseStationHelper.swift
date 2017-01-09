@@ -179,7 +179,7 @@ class HSNurseStationHelper: NSObject {
     
     //获取资讯文章列表
     func getArticleListWithID(_ articleid:String, pager:String = "", handle:@escaping ResponseBlock){
-        let url = PARK_URL_Header+"getNewslist"
+        let url = PARK_URL_Header+"getNewslist_new"
         let param = [
             "channelid":articleid,
             "pager":pager

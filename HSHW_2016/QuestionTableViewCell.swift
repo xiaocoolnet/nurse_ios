@@ -100,7 +100,7 @@ class QuestionTableViewCell: UITableViewCell {
             self.colBtn.frame.origin.x = colNum.frame.origin.x-5-self.colBtn.frame.size.width
             self.colBtn.center.y = self.eyeImage.center.y
             
-            self.zanNum.text = "\((newsInfo?.likes.count)!)"
+            self.zanNum.text = newsInfo?.likes_count
             self.zanNum.sizeToFit()
             self.zanNum.frame.origin.x = colBtn.frame.origin.x-10-self.zanNum.frame.size.width
             self.zanNum.center.y = self.eyeImage.center.y
@@ -108,12 +108,14 @@ class QuestionTableViewCell: UITableViewCell {
             self.likeImage.frame.origin.x = zanNum.frame.minX-5-self.likeImage.frame.size.width
             self.likeImage.center.y = self.eyeImage.center.y
             
-            
-            for obj in newsInfo!.likes {
-                if obj.userid == QCLoginUserInfo.currentInfo.userid {
-                    likeImage.isSelected = true
-                }
+            if newsInfo?.likes_add == "1" {
+                likeImage.isSelected = true
             }
+//            for obj in newsInfo!.likes {
+//                if obj.userid == QCLoginUserInfo.currentInfo.userid {
+//                    likeImage.isSelected = true
+//                }
+//            }
             
             if newsInfo?.favorites_add == "1" {
                 colBtn.isSelected = true

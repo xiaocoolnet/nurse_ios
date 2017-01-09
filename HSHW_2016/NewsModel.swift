@@ -1,4 +1,4 @@
-//
+
 //  NewsModel.swift
 //  HSHW_2016
 //
@@ -117,10 +117,12 @@ class NewsInfo: JSONJoy{
     var term_name:String
     var term_hits:String
 //    var favorites = Array<LikeInfo>()
-    var likes = Array<LikeInfo>()
-    var smeta :JSONDecoder?
-    var comments = Array<NewsCommentsModel>()
+//    var likes = Array<LikeInfo>()
+//    var smeta :JSONDecoder?
+//    var comments = Array<NewsCommentsModel>()
     var message_id: String
+    var likes_count:String
+    var likes_add:String
     
 //    "favorites_count": "0",
 //    "favorites_add": "0",
@@ -142,20 +144,23 @@ class NewsInfo: JSONJoy{
         recommended = decoder["recommended"].string ?? ""
         thumb = decoder["thumb"].string ?? ""
         term_id = decoder["term_id"].string ?? ""
-        smeta = decoder["smeta"]
+//        smeta = decoder["smeta"]
         term_name = decoder["term_name"].string ?? ""
         term_hits = decoder["term_hits"].string ?? ""
         message_id = decoder["message_id"].string ?? ""
         favorites_count = decoder["favorites_count"].string ?? ""
         favorites_add = decoder["favorites_add"].string ?? ""
 
+        likes_count = decoder["likes_count"].string ?? ""
+        likes_add = decoder["likes_add"].string ?? ""
+
         // print(post_excerpt)
         // print(decoder["likes"].array)
-        if decoder["likes"].array != nil {
-            for childs: JSONDecoder in decoder["likes"].array!{
-                self.likes.append(LikeInfo(childs))
-            }
-        }
+//        if decoder["likes"].array != nil {
+//            for childs: JSONDecoder in decoder["likes"].array!{
+//                self.likes.append(LikeInfo(childs))
+//            }
+//        }
 //        if decoder["favorites"].array != nil {
 //            for childs: JSONDecoder in decoder["favorites"].array!{
 //                self.favorites.append(LikeInfo(childs))
@@ -166,15 +171,15 @@ class NewsInfo: JSONJoy{
                 self.thumbArr.append(thumbModel(childs))
             }
         }
-        if decoder["comments"].array != nil {
-            for childs: JSONDecoder in decoder["comments"].array!{
-                self.comments.append(NewsCommentsModel(childs))
-            }
-        }
+//        if decoder["comments"].array != nil {
+//            for childs: JSONDecoder in decoder["comments"].array!{
+//                self.comments.append(NewsCommentsModel(childs))
+//            }
+//        }
     }
-    func addpend(_ list: [LikeInfo]){
-        self.likes = list + self.likes
-    }
+//    func addpend(_ list: [LikeInfo]){
+//        self.likes = list + self.likes
+//    }
    
 }
 
@@ -220,37 +225,37 @@ class thumbModel: JSONJoy {
 }
 
 
-class LikeList: JSONJoy {
-    var status:String?
-    var objectlist: [LikeInfo]
-    
-    var count: Int{
-        return self.objectlist.count
-    }
-    init(){
-        objectlist = Array<LikeInfo>()
-    }
-    required init(_ decoder: JSONDecoder) {
-        
-        objectlist = Array<LikeInfo>()
-        for childs: JSONDecoder in decoder.array!{
-            objectlist.append(LikeInfo(childs))
-        }
-    }
-    
-    func append(_ list: [LikeInfo]){
-        self.objectlist = list + self.objectlist
-    }
-}
+//class LikeList: JSONJoy {
+//    var status:String?
+//    var objectlist: [LikeInfo]
+//    
+//    var count: Int{
+//        return self.objectlist.count
+//    }
+//    init(){
+//        objectlist = Array<LikeInfo>()
+//    }
+//    required init(_ decoder: JSONDecoder) {
+//        
+//        objectlist = Array<LikeInfo>()
+//        for childs: JSONDecoder in decoder.array!{
+//            objectlist.append(LikeInfo(childs))
+//        }
+//    }
+//    
+//    func append(_ list: [LikeInfo]){
+//        self.objectlist = list + self.objectlist
+//    }
+//}
 
-class LikeInfo: JSONJoy {
-    
-    var userid :String?
-    init() {}
-    required init(_ decoder: JSONDecoder){
-        userid = decoder["userid"].string
-    }
-}
+//class LikeInfo: JSONJoy {
+//    
+//    var userid :String?
+//    init() {}
+//    required init(_ decoder: JSONDecoder){
+//        userid = decoder["userid"].string
+//    }
+//}
 
 class addScore_ReadingInformationModel: JSONJoy{
     
