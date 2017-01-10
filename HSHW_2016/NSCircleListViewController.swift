@@ -64,7 +64,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         var flag = 0
         let total = 2
         
-        CircleNetUtil.getChannellist(parentid: "281") { (success, response) in
+        CircleNetUtil.getChannellist(parentid: "295") { (success, response) in
             if success {
                 self.communityCateDataArray = response as! [CommunityCateDataModel]
                 

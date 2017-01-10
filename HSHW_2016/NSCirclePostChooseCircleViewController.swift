@@ -51,7 +51,7 @@ class NSCirclePostChooseCircleViewController: UIViewController {
     
     func loadData() {
         
-        CircleNetUtil.getPublishCommunity(userid: QCLoginUserInfo.currentInfo.userid, parentid: "281") { (success, response) in
+        CircleNetUtil.getPublishCommunity(userid: QCLoginUserInfo.currentInfo.userid, parentid: "295") { (success, response) in
             self.communityModelArray = response as! [PublishCommunityDataModel]
             self.setCircleList()
         }

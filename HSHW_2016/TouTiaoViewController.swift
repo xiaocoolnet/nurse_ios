@@ -325,13 +325,13 @@ class TouTiaoViewController: UIViewController,UITableViewDelegate,UITableViewDat
     }
     
     func createTableView() {
-        myTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: newsType == nil ? HEIGHT-114:HEIGHT-64)
+        myTableView.frame = CGRect(x: 0, y: 0, width: WIDTH, height: newsType == nil ? HEIGHT-114:HEIGHT-64)
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.register(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
         self.view.addSubview(myTableView)
         
-        let one = UIView(frame: CGRect(x: 0, y: 1, width: WIDTH, height: WIDTH*190/375))
+        let one = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: WIDTH*190/375))
         self.view.addSubview(one)
         
         timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(TouTiaoViewController.scroll), userInfo: nil, repeats: true)

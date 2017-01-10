@@ -197,6 +197,34 @@ class CircleNetUtil: NSObject {
         }
     }
     
+    // MARK: - 获取申请圈主状态
+    //接口地址：a=getA_C_Status
+    //入参：userid,cid
+    //出参：申请状态 2拒绝，1通过,0正在审核,not found未审核
+    //Demo:http://app.chinanurse.cn/index.php?g=apps&m=index&a=getA_C_Status&userid=603$cid=13
+    class func getA_C_Status(userid:String, cid:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"getA_C_Status"
+        let param = [
+            "userid":userid,
+            "cid":cid
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
+    
     // MARK: - 判断是否加入圈子
     //接口地址：a=judge_Community
     //入参：userid,cid
@@ -1248,6 +1276,33 @@ class CircleNetUtil: NSObject {
         let param = [
             "id":id,
             "type":type
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
+    
+    // MARK: - get_community_id
+    //接口地址：a=getPublishCommunity
+    //入参：userid,parentid
+    //出参：term_id(分类id),name(分类名称),community[id(圈子id),community_name(圈子名称)]
+    //Demo:http://nurse.xiaocool.net/index.php?g=apps&m=index&a=getPublishCommunity&parentid=27
+    class func get_community_id(userid:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"get_community_id"
+        let param = [
+            "userid":userid
         ]
         
         NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in

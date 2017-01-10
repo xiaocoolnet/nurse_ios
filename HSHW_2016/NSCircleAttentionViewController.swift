@@ -141,7 +141,7 @@ class NSCircleAttentionViewController: UIViewController, UITableViewDataSource, 
         hud.removeFromSuperViewOnHide = true
         
         // 获取我关注的圈子
-        CircleNetUtil.getPublishCommunity(userid: QCLoginUserInfo.currentInfo.userid, parentid: "281") { (success, response) in
+        CircleNetUtil.getPublishCommunity(userid: QCLoginUserInfo.currentInfo.userid, parentid: "295") { (success, response) in
             
             if success {
                 

@@ -10,9 +10,9 @@ import UIKit
 import PagingMenuController
 
 class MineCollectionViewController: UIViewController {
-//    var articleViewController = HSCollectionListController()
-//    var testViewController = HSCollectionListController()
-//    var ForumViewController = HSCollectionListController()
+    var articleViewController = HSCollectionListController()
+    var testViewController = HSCollectionListController()
+    var ForumViewController = HSCollectionListController()
 
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
@@ -25,13 +25,13 @@ class MineCollectionViewController: UIViewController {
         line.backgroundColor = COLOR
         self.view.addSubview(line)
         
-//        articleViewController.title = "文章"
-//        articleViewController.collectionType = 1
-//        testViewController.title = "试题"
-//        testViewController.collectionType = 2
-//        ForumViewController.title = "贴子"
-//        ForumViewController.collectionType = 3
-//        
+        articleViewController.title = "文章"
+        articleViewController.collectionType = 1
+        testViewController.title = "试题"
+        testViewController.collectionType = 2
+        ForumViewController.title = "贴子"
+        ForumViewController.collectionType = 3
+//
 //        let viewControllers = [articleViewController,testViewController]
 //        let options = PagingMenuOptions()
 //        options.menuItemMargin = 5
@@ -88,30 +88,36 @@ class MineCollectionViewController: UIViewController {
             fileprivate var focusMode: MenuFocusMode = .underline(height: 3, color: COLOR, horizontalPadding: 0, verticalPadding: 0)
             
             var itemsOptions: [MenuItemViewCustomizable] {
-                return [MenuItem1(), MenuItem2(), MenuItem3()]
+                return [MenuItem1(), MenuItem2()]
             }
         }
         
         struct PagingMenuOptions: PagingMenuControllerCustomizable {
-            fileprivate var scrollEnabled: Bool = false
+            
+            var viewControllers = [UIViewController]()
+            
+            var isScrollEnabled: Bool {
+                return false
+            }
+            
             var componentType: ComponentType {
                 
-                let articleViewController = HSCollectionListController()
-                let testViewController = HSCollectionListController()
-                let ForumViewController = HSCollectionListController()
+//                let articleViewController = HSCollectionListController()
+//                let testViewController = HSCollectionListController()
+//                let ForumViewController = HSCollectionListController()
+//                
+//                articleViewController.title = "文章"
+//                articleViewController.collectionType = 1
+//                testViewController.title = "试题"
+//                testViewController.collectionType = 2
+//                ForumViewController.title = "贴子"
+//                ForumViewController.collectionType = 3
                 
-                articleViewController.title = "文章"
-                articleViewController.collectionType = 1
-                testViewController.title = "试题"
-                testViewController.collectionType = 2
-                ForumViewController.title = "贴子"
-                ForumViewController.collectionType = 3
-                
-                return .all(menuOptions: MenuOptions(), pagingControllers: [articleViewController,testViewController])
+                return .all(menuOptions: MenuOptions(), pagingControllers: viewControllers)
             }
         }
         
-        let options = PagingMenuOptions()
+        let options = PagingMenuOptions.init(viewControllers: [articleViewController,testViewController])
         let pagingMenuController = PagingMenuController(options: options)
         pagingMenuController.view.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-1)
         

@@ -103,7 +103,7 @@ class NSCircleCommentTableViewCell: UITableViewCell {
             nameLab.text = commentModel?.username
             nameLab.layoutIfNeeded()
             
-            positionLab.text = commentModel?.major
+            positionLab.text = commentModel?.auth_type
             positionLab.sizeToFit()
             positionLabWidth.constant = calculateWidth((commentModel?.major ?? "")!, size: 9, height: positionLab.frame.height)+positionLab.frame.height
             positionLab.layer.cornerRadius = positionLab.frame.height/2.0

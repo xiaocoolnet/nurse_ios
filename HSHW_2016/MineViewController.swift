@@ -64,12 +64,22 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //            return
 //        }
         
+        if !LOGIN_STATE {
+            self.initSubviews()
+        }
+        loadData()
+
         myTableView.reloadData()
         
         CircleNetUtil.getFollowFans_num(userid: QCLoginUserInfo.currentInfo.userid) { (success, response) in
             if success {
                 self.followFansNum = response as! FollowFansNumDataModel
                 self.myTableView.reloadData()
+            }else{
+                let followFansNumData = FollowFansNumDataModel()
+                followFansNumData.fans_count = "0"
+                followFansNumData.follows_count = "0"
+                self.followFansNum = followFansNumData
             }
         }
         
@@ -171,8 +181,30 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+       self.setSubviews()
+        
+        // Do any additional setup after loading the view.
+    }
+    
+    func initSubviews() {
         self.view.backgroundColor = COLOR
 
+        myTableView.frame = CGRect(x: 0, y: -20, width: WIDTH, height: HEIGHT+20)
+        //        myTableView.bounces = false
+        myTableView.backgroundColor = RGREY
+        myTableView.delegate = self
+        myTableView.dataSource = self
+        myTableView.register(MineTableViewCell.self, forCellReuseIdentifier: "MineCell")
+        myTableView.showsVerticalScrollIndicator = false
+        myTableView.separatorStyle = .singleLine
+        
+        myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
+    }
+    
+    func setSubviews() {
+        self.view.backgroundColor = COLOR
+        
         myTableView.frame = CGRect(x: 0, y: -20, width: WIDTH, height: HEIGHT+20)
         //        myTableView.bounces = false
         myTableView.backgroundColor = RGREY
@@ -184,12 +216,21 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         myTableView.separatorStyle = .singleLine
         
         myTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
-        loadData()
-        
-        // Do any additional setup after loading the view.
     }
     
     func loadData() {
+        
+        if !LOGIN_STATE {
+            self.titImage.setBackgroundImage(UIImage.init(named: "img_head_nor"), for: .normal)
+
+            self.userNameLabel.text = "我"
+            self.levelBtn.setTitle("1", for: .normal)
+            self.nurseCoins.setTitle("0", for: .normal)
+            self.myTableView.reloadData()
+            self.signLab.text = "Error"
+            
+            return
+        }
         
         signBtn.isEnabled = false
         
@@ -208,15 +249,15 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 DispatchQueue.main.async(execute: {
 
                     if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
-                        self.titImage.setImage(UIImage.init(named: "img_head_nor"), for: UIControlState())
+                        self.titImage.setImage(UIImage.init(named: "img_head_nor"), for: .normal)
                     }else{
-                        self.titImage.sd_setBackgroundImage(with: URL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), for: UIControlState(), placeholderImage: UIImage.init(named: "img_head_nor"))
+                        self.titImage.sd_setBackgroundImage(with: URL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), for: .normal, placeholderImage: UIImage.init(named: "img_head_nor"))
                     }
                     self.userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
-                    self.levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, for: UIControlState())
-//                    self.fansCountBtn.setTitle(self.followFansNum.fans_count, for: UIControlState())
-//                    self.attentionBtn.setTitle(self.followFansNum.follows_count, for: UIControlState())
-                    self.nurseCoins.setTitle(QCLoginUserInfo.currentInfo.money, for: UIControlState())
+                    self.levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, for: .normal)
+//                    self.fansCountBtn.setTitle(self.followFansNum.fans_count, for: .normal)
+//                    self.attentionBtn.setTitle(self.followFansNum.follows_count, for: .normal)
+                    self.nurseCoins.setTitle(QCLoginUserInfo.currentInfo.money, for: .normal)
                     self.myTableView.reloadData()
                     //                self.hud!.hide(animated: true)
                     self.hud?.label.text = "正在获取签到状态"
@@ -224,6 +265,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 self.zanAddNum()
             }else{
                 DispatchQueue.main.async(execute: {
+                    
                     self.hud?.mode = .text
                     self.hud?.label.text = "获取个人信息失败"
                     self.hud?.hide(animated: true, afterDelay: 1)
@@ -370,7 +412,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 
                 let setBtn = UIButton()
                 setBtn.frame = CGRect(x: WIDTH-50,y: WIDTH*29/375, width: 50, height: WIDTH*30/375)
-                setBtn.setImage(UIImage(named: "ic_bg_set.png"), for: UIControlState())
+                setBtn.setImage(UIImage(named: "ic_bg_set.png"), for: .normal)
                 setBtn.addTarget(self, action: #selector(self.setUpData), for: .touchUpInside)
                 cell!.addSubview(setBtn)
                 
@@ -389,8 +431,8 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 userNameLabel.textColor = UIColor.white
                 cell!.addSubview(userNameLabel)
                 
-                levelBtn.setBackgroundImage(UIImage(named: "ic_shield_yellow.png"), for: UIControlState())
-                levelBtn.setTitleColor(UIColor.yellow, for: UIControlState())
+                levelBtn.setBackgroundImage(UIImage(named: "ic_shield_yellow.png"), for: .normal)
+                levelBtn.setTitleColor(UIColor.yellow, for: .normal)
                 levelBtn.titleLabel?.font = UIFont.systemFont(ofSize: 9)
                 cell!.addSubview(levelBtn)
                 
@@ -453,9 +495,9 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             // TODO:JUDGE WIFI
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
 //            if  !(NetworkReachabilityManager()?.isReachableOnEthernetOrWiFi)! && loadPictureOnlyWiFi {
-                self.titImage.setImage(UIImage.init(named: "img_head_nor"), for: UIControlState())
+                self.titImage.setImage(UIImage.init(named: "img_head_nor"), for: .normal)
             }else{
-                self.titImage.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), for: UIControlState(), placeholderImage: UIImage.init(named: "img_head_nor"))
+                self.titImage.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+QCLoginUserInfo.currentInfo.avatar), for: .normal, placeholderImage: UIImage.init(named: "img_head_nor"))
             }
             
             userNameLabel.text = QCLoginUserInfo.currentInfo.userName.isEmpty ?"我":QCLoginUserInfo.currentInfo.userName
@@ -464,15 +506,15 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             userNameLabel.frame = CGRect(x: WIDTH/2-userNameLabel.bounds.size.width/2, y: WIDTH*200/375, width: userNameLabel.bounds.size.width, height: userNameLabel.bounds.size.height)
             
             levelBtn.frame = CGRect(x: userNameLabel.bounds.size.width/2+5+WIDTH/2, y: WIDTH*200/375, width: 20, height: 19)
-            levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, for: UIControlState())
+            levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, for: .normal)
             
             for i in 0...2 {
                 if i == 0 {
-                    fansCountBtn.setTitle(followFansNum.fans_count, for: UIControlState())
+                    fansCountBtn.setTitle(followFansNum.fans_count, for: .normal)
                 }else if i == 1 {
-                    attentionBtn.setTitle(followFansNum.follows_count, for: UIControlState())
+                    attentionBtn.setTitle(followFansNum.follows_count, for: .normal)
                 }else {
-                    nurseCoins.setTitle(QCLoginUserInfo.currentInfo.score, for: UIControlState())
+                    nurseCoins.setTitle(QCLoginUserInfo.currentInfo.score, for: .normal)
                 }
                 
             }
@@ -483,12 +525,12 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             cell.selectionStyle = .none
             cell.accessoryType = .disclosureIndicator
             if indexPath.section == 1 {
-                cell.titImage.setImage(UIImage(named: "ic_maozi.png"), for: UIControlState())
+                cell.titImage.setImage(UIImage(named: "ic_maozi.png"), for: .normal)
                 cell.titLab.text = "我的学习"
                 
                 
             }else if indexPath.section == 2 {
-                cell.titImage.setImage(UIImage(named: titImgArr[indexPath.row]), for: UIControlState())
+                cell.titImage.setImage(UIImage(named: titImgArr[indexPath.row]), for: .normal)
                 cell.titLab.text = titLabArr[indexPath.row]
                 
                 if indexPath.row == 0 {
@@ -515,7 +557,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
 //                }
             }else if indexPath.section == 3 {
 
-                cell.titImage.setImage(UIImage(named: "ic_xie.png"), for: UIControlState())
+                cell.titImage.setImage(UIImage(named: "ic_xie.png"), for: .normal)
                 cell.titLab.text = "我的招聘"
                 
                 if QCLoginUserInfo.currentInfo.usertype == "1" {
@@ -550,7 +592,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 }
 
             }else if indexPath.section == 4{
-                cell.titImage.setImage(UIImage(named: "ic_singal.png"), for: UIControlState())
+                cell.titImage.setImage(UIImage(named: "ic_singal.png"), for: .normal)
                 cell.titLab.text = "仅WiFi下载图片"
                 
                 let swi = UISwitch.init(frame: CGRect(x: WIDTH-51-10, y: 29/2.0, width: 51, height: 31))
@@ -560,21 +602,21 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 cell.accessoryView = swi
                 cell.accessoryType = .none
             }else if indexPath.section == 5 {
-                cell.titImage.setImage(UIImage(named: "ic_xie.png"), for: UIControlState())
+                cell.titImage.setImage(UIImage(named: "ic_xie.png"), for: .normal)
                 cell.titLab.text = "清除缓存"
             }else if indexPath.section == 6 {
-                cell.titImage.setImage(UIImage(named: "ic_bi"), for: UIControlState())
+                cell.titImage.setImage(UIImage(named: "ic_bi"), for: .normal)
                 cell.titLab.text = "意见反馈"
             }else {
                 
                 let signOutBtn = UIButton(type:.custom)
                 signOutBtn.frame = CGRect(x: WIDTH/2-100, y: 10, width: 200, height: 40)
                 if LOGIN_STATE {
-                    signOutBtn.setTitle("退出登录", for: UIControlState())
+                    signOutBtn.setTitle("退出登录", for: .normal)
                 }else{
-                    signOutBtn.setTitle("点击登录", for: UIControlState())
+                    signOutBtn.setTitle("点击登录", for: .normal)
                 }
-                signOutBtn.setTitleColor(COLOR, for: UIControlState())
+                signOutBtn.setTitleColor(COLOR, for: .normal)
                 signOutBtn.layer.cornerRadius = 20
                 signOutBtn.layer.borderColor = COLOR.cgColor
                 signOutBtn.layer.borderWidth = 1

@@ -808,9 +808,9 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
                 cell.deleteBtn.isHidden = true
             }
             
+            cell.likeBtn.isSelected = self.forumCommentArray[indexPath.row].add_like == "1" ? true:false
             cell.likeBtn.sizeToFit()
             cell.likeBtn.tag = 100+indexPath.row
-            cell.likeBtn.isSelected = self.forumCommentArray[indexPath.row].add_like == "1" ? true:false
             cell.likeBtn.addTarget(self, action: #selector(commentLikeBtnClick(_:)), for: .touchUpInside)
             cell.deleteBtn.tag = 200+indexPath.row
             cell.deleteBtn.addTarget(self, action: #selector(commentDelBtnClick(_:)), for: .touchUpInside)

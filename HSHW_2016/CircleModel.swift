@@ -488,6 +488,27 @@ class NewsListDataModel: HandyJSON {
     required init() {}
 }
 
+// 选择发布圈子
+class get_community_idModel: HandyJSON {
+    var status = ""
+    var data = get_community_idDataModel()
+    var errorData = ""
+    
+    required init() {}
+    
+    func mapping(mapper: HelpingMapper) {
+        if status != "success" {
+            mapper.specify(property: &errorData, name: "data")
+        }
+    }
+}
+class get_community_idDataModel: HandyJSON {
+    
+    var community_id = ""
+    
+    required init() {}
+}
+
 
 // MARK: - 下边的没用
 

@@ -90,9 +90,29 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
             }
         })
         
-        if QCLoginUserInfo.currentInfo.isCircleManager == "1" {
-            self.cellNameArray1 = ["我的贴子","认证","管理圈子"]
-            self.rootTableView.reloadData()
+//        if QCLoginUserInfo.currentInfo.isCircleManager == "1" {
+//            self.cellNameArray1 = ["我的贴子","认证","管理圈子"]
+//            self.rootTableView.reloadData()
+//            flag += 1
+//            if flag == total {
+//                
+//                if self.rootTableView.mj_header.isRefreshing() {
+//                    self.rootTableView.mj_header.endRefreshing()
+//                }
+//            }
+//        }else{
+//            
+//            
+//        }
+        CircleNetUtil.judge_apply_community(userid: QCLoginUserInfo.currentInfo.userid, cid: "") { (success, response) in
+            if success {
+                if (response as! String) == "yes" {
+                    self.cellNameArray1 = ["我的贴子","认证","管理圈子"]
+                }else{
+                    self.cellNameArray1 = ["我的贴子","认证"]
+                }
+                self.rootTableView.reloadData()
+            }
             flag += 1
             if flag == total {
                 
@@ -100,26 +120,6 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
                     self.rootTableView.mj_header.endRefreshing()
                 }
             }
-        }else{
-            
-            CircleNetUtil.judge_apply_community(userid: QCLoginUserInfo.currentInfo.userid, cid: "") { (success, response) in
-                if success {
-                    if (response as! String) == "yes" {
-                        self.cellNameArray1 = ["我的贴子","认证","管理圈子"]
-                    }else{
-                        self.cellNameArray1 = ["我的贴子","认证"]
-                    }
-                    self.rootTableView.reloadData()
-                }
-                flag += 1
-                if flag == total {
-                    
-                    if self.rootTableView.mj_header.isRefreshing() {
-                        self.rootTableView.mj_header.endRefreshing()
-                    }
-                }
-            }
-            
         }
     }
     
@@ -370,17 +370,53 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
             
             switch self.personAuthData.status {
             case "1":// 通过
-                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                hud.removeFromSuperViewOnHide = true
-                hud.mode = .text
-                hud.label.text = "您已认证成功"
-                hud.hide(animated: true, afterDelay: 1.5)
+                
+                let alert = UIAlertController(title: "您已认证成功", message: "", preferredStyle: .alert)
+                
+                let reAction = UIAlertAction(title: "重新认证", style: .default, handler: { (action) in
+                    let circleAuthController = NSCircleAuthViewController()
+                    circleAuthController.hidesBottomBarWhenPushed = true
+                    self.navigationController?.pushViewController(circleAuthController, animated: true)
+                })
+                alert.addAction(reAction)
+                
+                let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
+                    let circleAuthController = NSCircleAuthViewController()
+                    circleAuthController.hidesBottomBarWhenPushed = true
+                    self.navigationController?.pushViewController(circleAuthController, animated: true)
+                })
+                alert.addAction(cancelAction)
+                
+                self.present(alert, animated: true, completion: nil)
+                
+//                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//                hud.removeFromSuperViewOnHide = true
+//                hud.mode = .text
+//                hud.label.text = "您已认证成功"
+//                hud.hide(animated: true, afterDelay: 1.5)
             case "2":// 认证中
-                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                hud.removeFromSuperViewOnHide = true
-                hud.mode = .text
-                hud.label.text = "正在审核中"
-                hud.hide(animated: true, afterDelay: 1.5)
+                
+                let alert = UIAlertController(title: "正在审核中", message: "", preferredStyle: .alert)
+                
+                let reAction = UIAlertAction(title: "重新认证", style: .default, handler: { (action) in
+                    let circleAuthController = NSCircleAuthViewController()
+                    circleAuthController.hidesBottomBarWhenPushed = true
+                    self.navigationController?.pushViewController(circleAuthController, animated: true)
+                })
+                alert.addAction(reAction)
+                
+                let cancelAction = UIAlertAction(title: "取消", style: .cancel, handler: { (action) in
+                    
+                })
+                alert.addAction(cancelAction)
+                
+                self.present(alert, animated: true, completion: nil)
+                
+//                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//                hud.removeFromSuperViewOnHide = true
+//                hud.mode = .text
+//                hud.label.text = "正在审核中"
+//                hud.hide(animated: true, afterDelay: 1.5)
             default:
                 let circleAuthController = NSCircleAuthViewController()
                 circleAuthController.hidesBottomBarWhenPushed = true
@@ -394,11 +430,27 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
 //            hud.label.text = "敬请期待"
 //            hud.hide(animated: true, afterDelay: 1.5)
         case (0,2):
+            
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
             hud.removeFromSuperViewOnHide = true
-            hud.mode = .text
-            hud.label.text = "敬请期待"
-            hud.hide(animated: true, afterDelay: 1.5)
+            
+            CircleNetUtil.get_community_id(userid: QCLoginUserInfo.currentInfo.userid, handle: { (success, response) in
+                if success {
+                    
+                    hud.hide(animated: true)
+                    
+                    let circleDetailController = NSCircleDetailViewController()
+                    circleDetailController.hidesBottomBarWhenPushed = true
+                    circleDetailController.communityId = response as! String
+                    self.navigationController?.pushViewController(circleDetailController, animated: true)
+                }else{
+                    hud.mode = .text
+                    hud.label.text = "获取管理的圈子失败"
+                    hud.hide(animated: true, afterDelay: 1)
+                }
+            })
+            
+            
         default:
             
             let circleDetailController = NSCircleDetailViewController()

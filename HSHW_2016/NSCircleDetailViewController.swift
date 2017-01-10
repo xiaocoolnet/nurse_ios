@@ -432,7 +432,7 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if indexPath.section == 0 && forumBestOrTopModelArray.count > 0 {
-            return 30
+            return 35
         }
         
         let forum = forumModelArray[indexPath.row]

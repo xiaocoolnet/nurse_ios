@@ -14,6 +14,8 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
     var forumModelArray = [ForumListDataModel]()
+    var forumRecommendModelArray = [ForumListDataModel]()
+
     var communityModelArray = [CommunityListDataModel]()
     var joinCommunityModelArray = [PublishCommunityDataModel]()
     
@@ -43,9 +45,22 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     func loadData() {
         
         var flag = 0
-        let total = 2
+        let total = 3
         
-        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "1", recommend: "1") { (success, response) in
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "", recommend: "1") { (success, response) in
+            if success {
+                
+                self.forumRecommendModelArray = response as! [ForumListDataModel]
+                self.rootTableView.reloadData()
+            }
+            
+            flag += 1
+            if flag == total {
+                self.rootTableView.mj_header.endRefreshing()
+            }
+        }
+        
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: "1") { (success, response) in
             if success {
                 self.pager = 2
                 self.rootTableView.mj_footer.resetNoMoreData()
@@ -78,7 +93,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     var pager = 1
     func loadData_pullUp() {
         
-        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: String(pager), recommend: "1") { (success, response) in
+        CircleNetUtil.getForumList(userid: QCLoginUserInfo.currentInfo.userid, cid: "", isbest: "", istop: "", pager: String(pager)) { (success, response) in
             if success {
                 self.pager += 1
                 
@@ -118,6 +133,8 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         rootTableView.dataSource = self
         
         rootTableView.register(NSCircleDetailTableViewCell.self, forCellReuseIdentifier: "circleDiscoverCell")
+        rootTableView.register(NSCircleDetailTopTableViewCell.self, forCellReuseIdentifier: "circleDiscoverTopCell")
+
 
         rootTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         rootTableView.mj_header.beginRefreshing()
@@ -148,7 +165,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         hud.removeFromSuperViewOnHide = true
         
         // 获取我关注的圈子
-        CircleNetUtil.getPublishCommunity(userid: QCLoginUserInfo.currentInfo.userid, parentid: "281") { (success, response) in
+        CircleNetUtil.getPublishCommunity(userid: QCLoginUserInfo.currentInfo.userid, parentid: "295") { (success, response) in
             
             if success {
                 
@@ -408,24 +425,78 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     
     // MARK: - UItableViewdatasource
     func numberOfSections(in tableView: UITableView) -> Int {
+        if forumRecommendModelArray.count > 0 {
+            return forumModelArray.count + 1
+        }
         return forumModelArray.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if section == 0 && forumRecommendModelArray.count > 0 {
+            return forumRecommendModelArray.count
+        }else{
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "circleDiscoverCell", for: indexPath) as! NSCircleDetailTableViewCell
-
-        cell.selectionStyle = .none
         
-        cell.setCellWith(forumModelArray[indexPath.section])
-//        cell.setCell(with: forumModelArray[indexPath.section])
-        cell.imgBtn.tag = 200+indexPath.section
-        cell.imgBtn.addTarget(self, action: #selector(userInfoBtnClick(userInfoBtn:)), for: .touchUpInside)
+        if forumRecommendModelArray.count > 0 {
+            if indexPath.section == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "circleDiscoverTopCell", for: indexPath) as! NSCircleDetailTopTableViewCell
+                
+                cell.selectionStyle = .none
+                
+                let forum = forumRecommendModelArray[indexPath.row]
+                forum.istop = "1"
+                cell.setCellWith(forum)
+                
+                return cell
+            }else{
+                let cell = tableView.dequeueReusableCell(withIdentifier: "circleDiscoverCell", for: indexPath) as! NSCircleDetailTableViewCell
+                
+                cell.selectionStyle = .none
+                
+                cell.setCellWith(forumModelArray[indexPath.section-1])
+                //        cell.setCell(with: forumModelArray[indexPath.section])
+                cell.imgBtn.tag = 200+indexPath.section
+                cell.imgBtn.addTarget(self, action: #selector(userInfoBtnClick(userInfoBtn:)), for: .touchUpInside)
+                
+                return cell
+            }
+        }else{
+            let cell = tableView.dequeueReusableCell(withIdentifier: "circleDiscoverCell", for: indexPath) as! NSCircleDetailTableViewCell
+            
+            cell.selectionStyle = .none
+            
+            cell.setCellWith(forumModelArray[indexPath.section])
+            //        cell.setCell(with: forumModelArray[indexPath.section])
+            cell.imgBtn.tag = 200+indexPath.section
+            cell.imgBtn.addTarget(self, action: #selector(userInfoBtnClick(userInfoBtn:)), for: .touchUpInside)
+            
+            return cell
+        }
         
-        return cell
+//        if indexPath.section == 0 && forumRecommendModelArray.count > 0 {
+//            let cell = tableView.dequeueReusableCell(withIdentifier: "circleDiscoverTopCell", for: indexPath) as! NSCircleDetailTopTableViewCell
+//            
+//            cell.selectionStyle = .none
+//            
+//            cell.setCellWith(forumRecommendModelArray[indexPath.row])
+//            
+//            return cell
+//        }
+//        
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "circleDiscoverCell", for: indexPath) as! NSCircleDetailTableViewCell
+//
+//        cell.selectionStyle = .none
+//        
+//        cell.setCellWith(forumModelArray[indexPath.section])
+////        cell.setCell(with: forumModelArray[indexPath.section])
+//        cell.imgBtn.tag = 200+indexPath.section
+//        cell.imgBtn.addTarget(self, action: #selector(userInfoBtnClick(userInfoBtn:)), for: .touchUpInside)
+//        
+//        return cell
     }
     
     // MARK: - 用户主页按钮点击事件
@@ -442,8 +513,18 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        
-        let forum = forumModelArray[indexPath.section]
+        var forum = ForumListDataModel()
+
+        if forumRecommendModelArray.count > 0 {
+            if indexPath.section == 0 {
+                return 35
+            }else{
+                forum = forumModelArray[indexPath.section-1]
+            }
+        }else{
+            forum = forumModelArray[indexPath.section]
+        }
+
         
         if forum.photo.count == 0 {
             
@@ -486,40 +567,67 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 20
+        
+        if forumRecommendModelArray.count > 0 {
+            return 20
+        }else{
+            return 0.01
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 40
+        
+        if forumRecommendModelArray.count > 0 {
+            if section == 0 {
+                return 0.01
+            }else{
+                return 40
+            }
+        }else{
+            return 0.01
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 40))
-        footerView.tag = 100 + section
-        footerView.addTarget(self, action: #selector(footerViewClick(footerBtn:)), for: .touchUpInside)
         
-        let img = UIImageView(frame: CGRect(x: 8, y: 8, width: 25, height: 24))
-        img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModelArray[section].community_photo), placeholderImage: nil)
-        img.contentMode = .scaleAspectFit
-        img.clipsToBounds = true
-        footerView.addSubview(img)
+        if forumRecommendModelArray.count > 0 {
+            if section == 0 {
+                return nil
+            }else{
+                let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 40))
+                footerView.tag = 100 + section - 1
+                footerView.addTarget(self, action: #selector(footerViewClick(footerBtn:)), for: .touchUpInside)
+                
+                let img = UIImageView(frame: CGRect(x: 8, y: 8, width: 25, height: 24))
+                img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModelArray[section-1].community_photo), placeholderImage: nil)
+                img.contentMode = .scaleAspectFit
+                img.clipsToBounds = true
+                footerView.addSubview(img)
+                
+                let nameBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 30))
+                nameBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+                nameBtn.setTitleColor(COLOR, for: UIControlState())
+                nameBtn.setTitle(forumModelArray[section-1].community_name, for: UIControlState())
+                nameBtn.sizeToFit()
+                nameBtn.frame.origin = CGPoint(x: img.frame.maxX+5, y: (40-nameBtn.frame.height)/2.0)
+                footerView.addSubview(nameBtn)
+                
+                let comeinLab = UILabel(frame: CGRect(x: nameBtn.frame.maxX, y: 0, width: WIDTH-nameBtn.frame.maxX-8, height: 40))
+                comeinLab.textAlignment = .right
+                comeinLab.font = UIFont.systemFont(ofSize: 12)
+                comeinLab.textColor = COLOR
+                comeinLab.text = "进入圈子"
+                footerView.addSubview(comeinLab)
+                
+                return footerView
+
+            }
+        }else{
+            return nil
+        }
         
-        let nameBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 30))
-        nameBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        nameBtn.setTitleColor(COLOR, for: UIControlState())
-        nameBtn.setTitle(forumModelArray[section].community_name, for: UIControlState())
-        nameBtn.sizeToFit()
-        nameBtn.frame.origin = CGPoint(x: img.frame.maxX+5, y: (40-nameBtn.frame.height)/2.0)
-        footerView.addSubview(nameBtn)
-        
-        let comeinLab = UILabel(frame: CGRect(x: nameBtn.frame.maxX, y: 0, width: WIDTH-nameBtn.frame.maxX-8, height: 40))
-        comeinLab.textAlignment = .right
-        comeinLab.font = UIFont.systemFont(ofSize: 12)
-        comeinLab.textColor = COLOR
-        comeinLab.text = "进入圈子"
-        footerView.addSubview(comeinLab)
-        
-        return footerView
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -533,10 +641,19 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("贴子详情")
         
-        let forumDetailController = NSCircleForumDetailViewController()
-        forumDetailController.hidesBottomBarWhenPushed = true
-        forumDetailController.forumDataModel = forumModelArray[indexPath.section]
-        self.navigationController?.pushViewController(forumDetailController, animated: true)
+        if self.forumRecommendModelArray.count > 0 && indexPath.section == 0 {
+            
+            let forumDetailController = NSCircleForumDetailViewController()
+            forumDetailController.hidesBottomBarWhenPushed = true
+            forumDetailController.forumDataModel = forumRecommendModelArray[indexPath.row]
+            self.navigationController?.pushViewController(forumDetailController, animated: true)
+        }else{
+            
+            let forumDetailController = NSCircleForumDetailViewController()
+            forumDetailController.hidesBottomBarWhenPushed = true
+            forumDetailController.forumDataModel = forumModelArray[indexPath.section-1]
+            self.navigationController?.pushViewController(forumDetailController, animated: true)
+        }
     }
     
     // footerView 点击事件
