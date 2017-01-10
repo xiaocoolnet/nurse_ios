@@ -243,7 +243,11 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
         addressBtn.addSubview(addressImg)
         
         addresssLab.frame = CGRect(x: addressImg.frame.maxX+8, y: 0, width: WIDTH-(addressImg.frame.maxX+8)-38, height: 40)
-        addresssLab.text = "正在获取位置..."
+        if addresssLab.text == nil || addresssLab.text == "" {
+            addresssLab.text = "正在获取位置..."
+        }else{
+            addresssLab.text = addresssLab.text
+        }
         addressBtn.addSubview(addresssLab)
         
         // line5
