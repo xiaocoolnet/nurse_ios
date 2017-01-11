@@ -11,7 +11,9 @@ import MBProgressHUD
 
 import CoreLocation
 
-class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ChooseCircleDelegate, CircleImagePreviewDelegate, CLLocationManagerDelegate, BMKGeoCodeSearchDelegate {
+import TZImagePickerController
+
+class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, ChooseCircleDelegate, CircleImagePreviewDelegate, CLLocationManagerDelegate, BMKGeoCodeSearchDelegate, TZImagePickerControllerDelegate {
 
     var couldSelectedCircle = false
     
@@ -316,63 +318,63 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
         self.titleTextField.resignFirstResponder()
         self.contentTextView.resignFirstResponder()
         
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        self.present(alert, animated: true, completion: nil)
+        let imagePickerVc = TZImagePickerController(maxImagesCount: 9, delegate: self)
+        imagePickerVc?.oKButtonTitleColorNormal = COLOR
+        imagePickerVc?.oKButtonTitleColorDisabled = UIColor.lightGray
+        imagePickerVc?.sortAscendingByModificationDate = false
         
-        alert.addAction(UIAlertAction(title: "拍照", style: .default, handler: {(UIAlertAction) in
-            DispatchQueue.main.async(execute: {
-                self.takePhoto()
-            })
-        }))
+        self.present(imagePickerVc!, animated: true, completion: nil)
         
-        alert.addAction(UIAlertAction(title: "从相册获取", style: .default, handler: { (UIAlertAction) in
-            DispatchQueue.main.async(execute: {
-                self.LocalPhoto()
-            })
-        }))
-        
-        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler:nil))
+//        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//        self.present(alert, animated: true, completion: nil)
+//        
+//        alert.addAction(UIAlertAction(title: "拍照", style: .default, handler: {(UIAlertAction) in
+//            DispatchQueue.main.async(execute: {
+//                self.takePhoto()
+//            })
+//        }))
+//        
+//        alert.addAction(UIAlertAction(title: "从相册获取", style: .default, handler: { (UIAlertAction) in
+//            DispatchQueue.main.async(execute: {
+//                
+//                let imagePickerVc = TZImagePickerController(maxImagesCount: 9, delegate: self)
+//                imagePickerVc?.oKButtonTitleColorNormal = COLOR
+//                imagePickerVc?.oKButtonTitleColorDisabled = UIColor.lightGray
+//                imagePickerVc?.sortAscendingByModificationDate = false
+//                
+//                self.present(imagePickerVc!, animated: true, completion: nil)
+////                imagePickerVc?.didFinishPickingPhotosHandle
+////                TZImagePickerController *imagePickerVc = [[TZImagePickerController alloc] initWithMaxImagesCount:9 delegate:self];
+////                
+////                // You can get the photos by block, the same as by delegate.
+////                // 你可以通过block或者代理，来得到用户选择的照片.
+////                [imagePickerVc setDidFinishPickingPhotosHandle:^(NSArray<UIImage *> *photos, NSArray *assets) {
+////                    
+////                    }];
+////                [self presentViewController:imagePickerVc animated:YES completion:nil];
+////                self.LocalPhoto()
+//            })
+//        }))
+//        
+//        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler:nil))
         
     }
     
-    func takePhoto(){
+    func imagePickerController(_ picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [Any]!, isSelectOriginalPhoto: Bool) {
         
-        let sourceType = UIImagePickerControllerSourceType.camera
-        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
-            let picker = UIImagePickerController()
-            picker.delegate = self
-            picker.allowsEditing = true
-            picker.sourceType = sourceType
-            self.present(picker, animated: true, completion: nil)
-        }else{
-            print("无法打开相机")
-        }
-    }
-    
-    func LocalPhoto(){
-        let picker = UIImagePickerController()
-        picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        picker.delegate = self
-        picker.allowsEditing = true
-        present(picker, animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        let type = info[UIImagePickerControllerMediaType] as! String
+//        if type != "public.image" {
+//            return
+//        }
+//        
+//        //裁剪后图片
+//        let image = info[UIImagePickerControllerEditedImage] as! UIImage
         
-        let type = info[UIImagePickerControllerMediaType] as! String
-        if type != "public.image" {
-            return
-        }
-        
-        //裁剪后图片
-        let image = info[UIImagePickerControllerEditedImage] as! UIImage
-        
-        self.imageArray.append(image)
+        self.imageArray = photos
         self.setToolView()
         
-        picker.dismiss(animated: true, completion: nil)
+//        picker.dismiss(animated: true, completion: nil)
     }
-
     
     // MARK: - 点击发布按钮
     func postBtnClick() {
