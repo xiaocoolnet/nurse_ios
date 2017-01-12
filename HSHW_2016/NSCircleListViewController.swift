@@ -149,7 +149,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
         line1.backgroundColor = COLOR
         self.view.addSubview(line1)
         
-        rootTableView.frame = CGRect(x: 0, y: showDropDown ? 45:1, width: WIDTH, height: showDropDown ? HEIGHT-65-49-44:HEIGHT-65-49)
+        rootTableView.frame = CGRect(x: 0, y: showDropDown ? 45:1, width: WIDTH, height: showDropDown ? HEIGHT-65-44:HEIGHT-65)
         rootTableView.backgroundColor = UIColor.white
         
         rootTableView.rowHeight = 76

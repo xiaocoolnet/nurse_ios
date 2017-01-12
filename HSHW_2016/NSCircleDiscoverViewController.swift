@@ -275,11 +275,8 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         var btn2Height:CGFloat = 0
 
         for (i,communityModel) in communityModelArray.enumerated() {
-            let btn2 = UIButton(frame: CGRect(x: 8+(btn2Width+8)*CGFloat(i), y: 0, width: btn2Width, height: 0))
-            btn2.tag = 200+i
+            let btn2 = UIView(frame: CGRect(x: 8+(btn2Width+8)*CGFloat(i), y: 0, width: btn2Width, height: 0))
 
-//            btn2.setImage(UIImage(named: btn2NameArray[i]), forState: .Normal)
-            btn2.addTarget(self, action: #selector(btn2Click(_:)), for: .touchUpInside)
             btn2ScrollView.addSubview(btn2)
             
             let imgBgView = UIView(frame: CGRect(x: 0, y: 0, width: btn2Width, height: WIDTH/375*72))
@@ -322,6 +319,13 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             btn2.addSubview(countLab)
             
             btn2.frame.size.height = countLab.frame.maxY
+            
+            let btn3 = UIButton(frame: CGRect(x: 0, y: 0, width: btn2.frame.size.width, height: btn2.frame.size.height))
+            btn3.tag = 200+i
+            
+            btn3.addTarget(self, action: #selector(btn2Click(_:)), for: .touchUpInside)
+            btn2.addSubview(btn3)
+            
             btn2Height = btn2.frame.size.height
             
             btn2ScrollView.frame.size.height = btn2.frame.size.height
