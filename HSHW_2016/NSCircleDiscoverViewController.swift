@@ -279,18 +279,18 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
 
             btn2ScrollView.addSubview(btn2)
             
-            let imgBgView = UIView(frame: CGRect(x: 0, y: 0, width: btn2Width, height: WIDTH/375*72))
-            imgBgView.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
-            btn2.addSubview(imgBgView)
+//            let imgBgView = UIView(frame: CGRect(x: 0, y: 0, width: btn2Width, height: WIDTH/375*72))
+//            imgBgView.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
+//            btn2.addSubview(imgBgView)
             
-            let img = UIImageView(frame: CGRect(x: WIDTH/375*35, y: WIDTH/375*21, width: WIDTH/375*30, height: WIDTH/375*30))
+            let img = UIImageView(frame: CGRect(x: 0, y: 0, width: btn2Width, height: WIDTH/375*72))
 //            img.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
             img.isUserInteractionEnabled = true
-            img.contentMode = .scaleAspectFill
+            img.contentMode = .scaleAspectFit
             img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+communityModel.photo), placeholderImage: nil)
-            imgBgView.addSubview(img)
+            btn2.addSubview(img)
             
-            let nameLab = UILabel(frame: CGRect(x: 0, y: imgBgView.frame.maxY, width: btn2Width, height: WIDTH/375*22))
+            let nameLab = UILabel(frame: CGRect(x: 0, y: img.frame.maxY, width: btn2Width, height: WIDTH/375*22))
             nameLab.textAlignment = .center
             nameLab.font = UIFont.systemFont(ofSize: 16)
             nameLab.textColor = COLOR
@@ -578,9 +578,13 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         if forumRecommendModelArray.count > 0 {
-            return 20
+            if section == 0 {
+                return 20
+            }else{
+                return 20
+            }
         }else{
-            return 0.01
+            return 20
         }
         
     }
@@ -650,19 +654,25 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("贴子详情")
         
-        if self.forumRecommendModelArray.count > 0 && indexPath.section == 0 {
-            
-            let forumDetailController = NSCircleForumDetailViewController()
-            forumDetailController.hidesBottomBarWhenPushed = true
-            forumDetailController.forumDataModel = forumRecommendModelArray[indexPath.row]
-            self.navigationController?.pushViewController(forumDetailController, animated: true)
+        if forumRecommendModelArray.count > 0 {
+            if indexPath.section == 0 {
+                let forumDetailController = NSCircleForumDetailViewController()
+                forumDetailController.hidesBottomBarWhenPushed = true
+                forumDetailController.forumDataModel = forumRecommendModelArray[indexPath.row]
+                self.navigationController?.pushViewController(forumDetailController, animated: true)
+            }else{
+                let forumDetailController = NSCircleForumDetailViewController()
+                forumDetailController.hidesBottomBarWhenPushed = true
+                forumDetailController.forumDataModel = forumModelArray[indexPath.section-1]
+                self.navigationController?.pushViewController(forumDetailController, animated: true)
+            }
         }else{
-            
             let forumDetailController = NSCircleForumDetailViewController()
             forumDetailController.hidesBottomBarWhenPushed = true
-            forumDetailController.forumDataModel = forumModelArray[indexPath.section-1]
+            forumDetailController.forumDataModel = forumModelArray[indexPath.section]
             self.navigationController?.pushViewController(forumDetailController, animated: true)
         }
+        
     }
     
     // footerView 点击事件

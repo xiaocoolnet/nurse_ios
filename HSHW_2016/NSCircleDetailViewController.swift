@@ -250,29 +250,29 @@ class NSCircleDetailViewController: UIViewController, UITableViewDataSource, UIT
         let btn2Width = WIDTH/375*80
 
         // 圈子
-        let imgBgView = UIButton(frame: CGRect(x: 8, y: 10, width: btn2Width, height: WIDTH/375*60))
-        imgBgView.addTarget(self, action: #selector(tableViewHeaderViewClick), for: .touchUpInside)
-        imgBgView.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
-        tableHeaderView.addSubview(imgBgView)
+//        let imgBgView = UIButton(frame: CGRect(x: 8, y: 10, width: btn2Width, height: WIDTH/375*60))
+//        imgBgView.addTarget(self, action: #selector(tableViewHeaderViewClick), for: .touchUpInside)
+//        imgBgView.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
+//        tableHeaderView.addSubview(imgBgView)
 
-        let img = UIImageView(frame: CGRect(x: WIDTH/375*25, y: WIDTH/375*15, width: WIDTH/375*30, height: WIDTH/375*30))
+        let img = UIImageView(frame: CGRect(x: 8, y: 10, width: btn2Width, height: WIDTH/375*60))
 //        img.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
         img.contentMode = .scaleAspectFit
         img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+communityModel.photo), placeholderImage: nil)
         img.isUserInteractionEnabled = true
-        imgBgView.addSubview(img)
+        tableHeaderView.addSubview(img)
         
         let ges = UITapGestureRecognizer(target: self, action: #selector(tableViewHeaderViewClick))
         img.addGestureRecognizer(ges)
         
-        let nameLab = UILabel(frame: CGRect(x: imgBgView.frame.maxX+8, y: imgBgView.frame.minY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
+        let nameLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: img.frame.minY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
         nameLab.textAlignment = .left
         nameLab.font = UIFont.systemFont(ofSize: 18)
         nameLab.textColor = COLOR
         nameLab.text = communityModel.community_name
         tableHeaderView.addSubview(nameLab)
         
-        let countLab = UILabel(frame: CGRect(x: imgBgView.frame.maxX+8, y: nameLab.frame.maxY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
+        let countLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: nameLab.frame.maxY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
         countLab.textAlignment = .left
         countLab.font = UIFont.systemFont(ofSize: 12)
         countLab.textColor = UIColor.lightGray

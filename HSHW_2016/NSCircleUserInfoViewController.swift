@@ -348,7 +348,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                 btn2ScrollView.showsHorizontalScrollIndicator = false
                 bgView.addSubview(btn2ScrollView)
                 
-                let btn2Width = WIDTH/375*100
+                let btn2Width = WIDTH/375*108
                 var btn2Height:CGFloat = 0
                 
                 for (i,communityModel) in communityModelArray.enumerated() {
@@ -356,16 +356,16 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                     
                     btn2ScrollView.addSubview(btn2)
                     
-                    let imgBgView = UIView(frame: CGRect(x: 0, y: 0, width: btn2Width, height: WIDTH/375*72))
-                    imgBgView.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
-                    btn2.addSubview(imgBgView)
+//                    let imgBgView = UIView(frame: CGRect(x: 0, y: 0, width: btn2Width, height: WIDTH/375*72))
+//                    imgBgView.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
+//                    btn2.addSubview(imgBgView)
                     
-                    let img = UIImageView(frame: CGRect(x: WIDTH/375*35, y: WIDTH/375*21, width: WIDTH/375*30, height: WIDTH/375*30))
+                    let img = UIImageView(frame: CGRect(x: 0, y: 0, width: btn2Width, height: WIDTH/375*72))
                     //            img.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
                     img.isUserInteractionEnabled = true
-                    img.contentMode = .scaleAspectFill
+                    img.contentMode = .scaleAspectFit
                     img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+communityModel.photo), placeholderImage: nil)
-                    imgBgView.addSubview(img)
+                    btn2.addSubview(img)
                     
 //                    let img = UIImageView(frame: CGRect(x: 0, y: 0, width: btn2Width, height: WIDTH/375*72))
 //                    img.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
@@ -373,7 +373,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
 //                    img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+communityModel.photo), placeholderImage: nil)
 //                    btn2.addSubview(img)
                     
-                    let nameLab = UILabel(frame: CGRect(x: 0, y: imgBgView.frame.maxY, width: btn2Width, height: WIDTH/375*22))
+                    let nameLab = UILabel(frame: CGRect(x: 0, y: img.frame.maxY, width: btn2Width, height: WIDTH/375*22))
                     nameLab.textAlignment = .left
                     nameLab.font = UIFont.systemFont(ofSize: 14)
                     nameLab.textColor = COLOR
