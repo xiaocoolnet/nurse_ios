@@ -84,20 +84,31 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         let btn2Width = WIDTH/375*80
         
         // 圈子
-        let img = UIImageView(frame: CGRect(x: 8, y: 10, width: btn2Width, height: WIDTH/375*60))
-        img.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
-        img.contentMode = .center
-        img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+communityModel.photo), placeholderImage: nil)
-        tableHeaderView.addSubview(img)
+        let imgBgView = UIView(frame: CGRect(x: 8, y: 10, width: btn2Width, height: WIDTH/375*60))
+        imgBgView.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
+        tableHeaderView.addSubview(imgBgView)
         
-        let nameLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: img.frame.minY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
+        let img = UIImageView(frame: CGRect(x: WIDTH/375*25, y: WIDTH/375*15, width: WIDTH/375*30, height: WIDTH/375*30))
+        //        img.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
+        img.isUserInteractionEnabled = true
+        img.contentMode = .scaleAspectFit
+        img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+communityModel.photo), placeholderImage: nil)
+        imgBgView.addSubview(img)
+        
+//        let img = UIImageView(frame: CGRect(x: 8, y: 10, width: btn2Width, height: WIDTH/375*60))
+//        img.backgroundColor = UIColor(red: 243/255.0, green: 229/255.0, blue: 240/255.0, alpha: 1)
+//        img.contentMode = .center
+//        img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+communityModel.photo), placeholderImage: nil)
+//        tableHeaderView.addSubview(img)
+        
+        let nameLab = UILabel(frame: CGRect(x: imgBgView.frame.maxX+8, y: imgBgView.frame.minY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
         nameLab.textAlignment = .left
         nameLab.font = UIFont.systemFont(ofSize: 18)
         nameLab.textColor = COLOR
         nameLab.text = communityModel.community_name
         tableHeaderView.addSubview(nameLab)
         
-        let countLab = UILabel(frame: CGRect(x: img.frame.maxX+8, y: nameLab.frame.maxY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
+        let countLab = UILabel(frame: CGRect(x: imgBgView.frame.maxX+8, y: nameLab.frame.maxY, width: WIDTH-88-btn2Width-16, height: WIDTH/375*30))
         countLab.textAlignment = .left
         countLab.font = UIFont.systemFont(ofSize: 12)
         countLab.textColor = UIColor.lightGray
@@ -143,7 +154,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
             joinBtn.isSelected = false
         }
         
-        let line = UIView(frame: CGRect(x: 0, y: img.frame.maxY+img.frame.minY, width: WIDTH, height: 2/UIScreen.main.scale))
+        let line = UIView(frame: CGRect(x: 0, y: imgBgView.frame.maxY+imgBgView.frame.minY, width: WIDTH, height: 2/UIScreen.main.scale))
         line.backgroundColor = UIColor.lightGray
         tableHeaderView.addSubview(line)
         

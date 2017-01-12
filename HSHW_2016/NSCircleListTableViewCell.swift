@@ -56,7 +56,8 @@ class NSCircleListTableViewCell: UITableViewCell {
         joinBtn.layer.borderWidth = 1
         joinBtn.layer.borderColor = COLOR.cgColor
         
-        photoImg.contentMode = .center
+        photoImg.contentMode = .scaleAspectFit
+        photoImg.isUserInteractionEnabled = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
