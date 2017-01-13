@@ -54,7 +54,7 @@ class QCLoginUserInfo {
         QCLoginUserInfo.currentInfo.qqNumber = ""
         QCLoginUserInfo.currentInfo.weixinNumber = ""
         QCLoginUserInfo.currentInfo.time = ""
-        QCLoginUserInfo.currentInfo.level = ""
+        QCLoginUserInfo.currentInfo.level = "1"
         QCLoginUserInfo.currentInfo.attentionCount = "0"
         QCLoginUserInfo.currentInfo.fansCount = "0"
         QCLoginUserInfo.currentInfo.money = "0"
