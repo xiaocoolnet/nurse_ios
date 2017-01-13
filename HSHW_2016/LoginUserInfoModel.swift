@@ -84,7 +84,7 @@ class LoginUserInfo: JSONJoy {
         user_avatar = decoder["photo"].string ?? ""
         user_time = decoder["time"].string ?? ""
         user_level = decoder["level"].string ?? "1"
-        user_score = decoder["score"].string ?? "1"
+        user_score = decoder["score"].string ?? "0"
         user_birthDay = decoder["birthday"].string ?? ""
         user_realname = decoder["realname"].string ?? ""
         user_fanscount = decoder["fanscount"].string ?? "0"

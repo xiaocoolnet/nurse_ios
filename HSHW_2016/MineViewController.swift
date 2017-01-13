@@ -80,6 +80,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 followFansNumData.fans_count = "0"
                 followFansNumData.follows_count = "0"
                 self.followFansNum = followFansNumData
+                self.myTableView.reloadData()
             }
         }
         
@@ -220,23 +221,29 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
     
     func loadData() {
         
+        if myTableView.mj_header.isRefreshing() {
+            myTableView.mj_header.endRefreshing()
+        }
+        
         if !LOGIN_STATE {
-            self.titImage.setBackgroundImage(UIImage.init(named: "img_head_nor"), for: .normal)
-
-            self.userNameLabel.text = "我"
+//            self.titImage.setBackgroundImage(UIImage.init(named: "img_head_nor"), for: .normal)
+//
+//            self.userNameLabel.text = "我"
             self.levelBtn.setTitle("1", for: .normal)
-            self.nurseCoins.setTitle("0", for: .normal)
+            self.nurseCoins.setTitle("1", for: .normal)
+            let followFansNumData = FollowFansNumDataModel()
+            followFansNumData.fans_count = "0"
+            followFansNumData.follows_count = "0"
+            self.followFansNum = followFansNumData
             self.myTableView.reloadData()
-            self.signLab.text = "Error"
+            self.signLab.text = "请登录"
             
             return
         }
         
         signBtn.isEnabled = false
         
-        if myTableView.mj_header.isRefreshing() {
-            myTableView.mj_header.endRefreshing()
-        }
+        
         
         hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud!.label.text = "正在获取个人信息"
@@ -257,7 +264,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.levelBtn.setTitle(QCLoginUserInfo.currentInfo.level, for: .normal)
 //                    self.fansCountBtn.setTitle(self.followFansNum.fans_count, for: .normal)
 //                    self.attentionBtn.setTitle(self.followFansNum.follows_count, for: .normal)
-                    self.nurseCoins.setTitle(QCLoginUserInfo.currentInfo.money, for: .normal)
+                    self.nurseCoins.setTitle(QCLoginUserInfo.currentInfo.score, for: .normal)
                     self.myTableView.reloadData()
                     //                self.hud!.hide(animated: true)
                     self.hud?.label.text = "正在获取签到状态"
@@ -269,7 +276,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.hud?.mode = .text
                     self.hud?.label.text = "获取个人信息失败"
                     self.hud?.hide(animated: true, afterDelay: 1)
-                    self.signLab.text = "Error"
+                    self.signLab.text = "请重试"
                 })
             }
         }
@@ -294,7 +301,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                     self.hud?.mode = .text
                     self.hud?.label.text = "获取签到状态失败"
                     self.hud?.hide(animated: true, afterDelay: 1)
-                    self.signLab.text = "Error"
+                    self.signLab.text = "请重试"
                 })
             }else{
                 let status = Http(JSONDecoder(json!))
@@ -609,7 +616,10 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 cell.titLab.text = "意见反馈"
             }else {
                 
+                cell.viewWithTag(12345)?.removeFromSuperview()
+                
                 let signOutBtn = UIButton(type:.custom)
+                signOutBtn.tag = 12345
                 signOutBtn.frame = CGRect(x: WIDTH/2-100, y: 10, width: 200, height: 40)
                 if LOGIN_STATE {
                     signOutBtn.setTitle("退出登录", for: .normal)
@@ -996,6 +1006,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             myTab.selectedIndex = 0
             LOGIN_STATE = false
             canLookTel = false
+            QCLoginUserInfo.currentInfo.initUserInfo()
             myInviteFriendUrl = APP_INVITEFRIEND_URL+QCLoginUserInfo.currentInfo.userid
             UserDefaults.standard.removeObject(forKey: LOGINFO_KEY)
         }

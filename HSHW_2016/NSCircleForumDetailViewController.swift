@@ -14,16 +14,14 @@ class NSCircleForumDetailViewController: UIViewController, UITableViewDataSource
     
     let rootTableView = UITableView(frame: CGRect.zero, style: .grouped)
     
-//    var forumBestOrTopModelArray = [ForumModel]()
     var forumDataModel = ForumListDataModel() {
         didSet {
+            
             self.comment_count = NSString(string: (forumDataModel.comments_count)).integerValue
         }
     }
     var forumModel = ForumInfoDataModel()
     
-//    var forumCommentArray = [ForumCommentDataModel]()
-
     var forumCommentArray = [ForumCommentsDataModel]()
 
     var isMaster = false

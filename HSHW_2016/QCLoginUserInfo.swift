@@ -21,10 +21,10 @@ class QCLoginUserInfo {
     var qqNumber = ""
     var weixinNumber = ""
     var time = ""
-    var level = ""
-    var attentionCount = ""
-    var fansCount = ""
-    var money = ""
+    var level = "1"
+    var attentionCount = "0"
+    var fansCount = "0"
+    var money = "0"
     var sex = ""
     var realName = ""
     var birthday = ""
@@ -32,7 +32,7 @@ class QCLoginUserInfo {
     var school = ""
     var major = ""
     var education = ""
-    var score = ""
+    var score = "0"
     var all_information = ""
     var isCircleManager = ""
     
@@ -40,5 +40,33 @@ class QCLoginUserInfo {
     static let currentInfo = QCLoginUserInfo()
     fileprivate init() {
         
+    }
+    
+    func initUserInfo() {
+        QCLoginUserInfo.currentInfo.phoneNumber = ""
+        QCLoginUserInfo.currentInfo.devicestate = ""
+        QCLoginUserInfo.currentInfo.usertype = ""// 1 个人 2 企业
+        QCLoginUserInfo.currentInfo.userid = ""
+        QCLoginUserInfo.currentInfo.userName = ""
+        QCLoginUserInfo.currentInfo.avatar = ""
+        QCLoginUserInfo.currentInfo.city = ""
+        QCLoginUserInfo.currentInfo.address = ""
+        QCLoginUserInfo.currentInfo.qqNumber = ""
+        QCLoginUserInfo.currentInfo.weixinNumber = ""
+        QCLoginUserInfo.currentInfo.time = ""
+        QCLoginUserInfo.currentInfo.level = ""
+        QCLoginUserInfo.currentInfo.attentionCount = "0"
+        QCLoginUserInfo.currentInfo.fansCount = "0"
+        QCLoginUserInfo.currentInfo.money = "0"
+        QCLoginUserInfo.currentInfo.sex = ""
+        QCLoginUserInfo.currentInfo.realName = ""
+        QCLoginUserInfo.currentInfo.birthday = ""
+        QCLoginUserInfo.currentInfo.email = ""
+        QCLoginUserInfo.currentInfo.school = ""
+        QCLoginUserInfo.currentInfo.major = ""
+        QCLoginUserInfo.currentInfo.education = ""
+        QCLoginUserInfo.currentInfo.score = "0"
+        QCLoginUserInfo.currentInfo.all_information = ""
+        QCLoginUserInfo.currentInfo.isCircleManager = ""
     }
 }

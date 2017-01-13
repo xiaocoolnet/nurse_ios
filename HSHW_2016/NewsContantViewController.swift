@@ -24,10 +24,34 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     var newsInfo :NewsInfo? {
         didSet {
             self.title = newsInfo?.term_name
-            self.likeNum = NSString(string: (newsInfo?.likes_count ?? "0")!).integerValue
             newsInfo?.post_hits = String(Int((newsInfo?.post_hits)!)!+1)
-            self.comment_count = NSString(string: (newsInfo?.comments_count ?? "0")!).integerValue
-            self.getComment()
+            
+            CircleNetUtil.GetLikeCount(id: (newsInfo?.object_id ?? "")!, type: "1") { (success, response) in
+                if success {
+                    self.likeNum = NSString(string: (response as! String)).integerValue
+                }
+            }
+            
+            CircleNetUtil.getComments_count(id: (self.newsInfo?.object_id ?? "")!, type: "1") { (success, response) in
+                if success {
+                    self.comment_count = NSString(string: (response as! String)).integerValue
+                    if self.comment_count > 0 {
+                        self.getComment()
+                    }else{
+                        self.mainFlag += 1
+                        if self.mainFlag == 3 {
+                            self.mainFlag = 0
+                            self.mainHud.hide(animated: true)
+                        }
+                    }
+                }else{
+                    self.mainFlag += 1
+                    if self.mainFlag == 3 {
+                        self.mainFlag = 0
+                        self.mainHud.hide(animated: true)
+                    }
+                }
+            }
         }
     }
     
@@ -41,21 +65,15 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
             self.myTableView.reloadData()
         }
     }
-//    var navTitle:String = "新闻内容" {
-//        didSet {
-////            self.title = navTitle
-//        }
-//    }
+
     var index = 0
     var delegate:changeModelDelegate?
     
     var likeNum  = 0
     var webHeight:CGFloat = 100
-//    var isLike:Bool = false
-//    var isCollect:Bool = false
-//    var dataSource = NewsList()
+
     var commentArray = [commentDataModel]()
-//    var NewsPageHelper() = NewsPageHelper()
+
     let zan = UIButton(frame: CGRect(x: WIDTH*148/375, y: WIDTH*80/375, width: WIDTH*80/375, height: WIDTH*80/375))
     var finishLoad = false
     var tagNum = 0
@@ -80,31 +98,16 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = true
         self.navigationItem.leftBarButtonItem?.title = "返回"
-        
         
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.title = "新闻内容"
-        
-//        let collectBtn = UIBarButtonItem(image: UIImage(named: "ic_shoucang"), style: .Plain, target: self, action: #selector(collectionNews))
-//
-//        self.navigationItem.rightBarButtonItems = [shareBtn,collectBtn]
-        
-//        //收藏按钮
-//        collectBtn = UIButton(frame:CGRectMake(0, 0, 18, 18))
-//        collectBtn.setImage(UIImage(named: "btn_collect_sel"), forState: .Normal)
-//        collectBtn.setImage(UIImage(named: "ic_shoucang"), forState: .Highlighted)
-//        collectBtn.setImage(UIImage(named: "ic_shoucang"), forState: .Selected)
-//        collectBtn.addTarget(self, action: #selector(collectionBtnClick), forControlEvents: .TouchUpInside)
-//        collectBtn.enabled = false
-//        let barButton1 = UIBarButtonItem(customView: collectBtn)
-//        
-       
         
         //分享按钮
         let shareBtn = UIButton(frame:CGRect(x: 0, y: 0, width: 18, height: 18))
@@ -209,8 +212,6 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
         // 评论
         comment_bottom_Btn.frame = CGRect(x: replyTextField.frame.maxX+space, y: 8, width: 30, height: 30)
         comment_bottom_Btn.setImage(UIImage(named: "ic_liuyan"), for: UIControlState())
-//        comment_bottom_Btn.setImage(UIImage(named: "ic_shoucang"), forState: .Highlighted)
-//        comment_bottom_Btn.setImage(UIImage(named: "ic_shoucang"), forState: .Selected)
         comment_bottom_Btn.addTarget(self, action: #selector(commentBtnClick), for: .touchUpInside)
         replyView.addSubview(comment_bottom_Btn)
         

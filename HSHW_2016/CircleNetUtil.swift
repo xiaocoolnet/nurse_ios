@@ -1320,5 +1320,30 @@ class CircleNetUtil: NSObject {
             }
         }
     }
+    
+    // MARK: - 获取点赞数  GetLikeCount
+    class func GetLikeCount(id:String, type:String, handle:@escaping ResponseClouse) {
+        let url = PARK_URL_Header+"GetLikeCount"
+        let param = [
+            "id":id,
+            "type":type
+        ]
+        
+        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param) { (json, error) in
+            // print(request)
+            if(error != nil){
+                handle(false, error?.localizedDescription)
+            }else{
+                
+                let result = JSONDeserializer<JudgeMasterModel>.deserializeFrom(dict: json as! NSDictionary?)!
+                if(result.status == "success"){
+                    handle(true, result.data)
+                    
+                }else if(result.status == "error"){
+                    handle(false, result.data)
+                }
+            }
+        }
+    }
 
 }
