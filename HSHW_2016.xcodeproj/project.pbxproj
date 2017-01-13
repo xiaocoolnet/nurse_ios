@@ -178,6 +178,7 @@
 		1F879FA61E0265AC001385CE /* NSCircleMyForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA51E0265AC001385CE /* NSCircleMyForumViewController.swift */; };
 		1F879FA81E0265C1001385CE /* NSCircleMyCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA71E0265C1001385CE /* NSCircleMyCommentViewController.swift */; };
 		1F879FAC1E026F3B001385CE /* NSCircleForumListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FAB1E026F3B001385CE /* NSCircleForumListTableViewCell.swift */; };
+		1FC57F311E278D0F005852AE /* NSMiCollectionForumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC57F301E278D0F005852AE /* NSMiCollectionForumViewController.swift */; };
 		1FC823D01D6C37D4005ED821 /* SuccessfulCaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */; };
 		1FC83D2A1DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */; };
 		1FCCA9561DCC18CA001112AC /* FiftyThousandExamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCCA9551DCC18CA001112AC /* FiftyThousandExamViewController.swift */; };
@@ -514,6 +515,7 @@
 		1F879FA51E0265AC001385CE /* NSCircleMyForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMyForumViewController.swift; sourceTree = "<group>"; };
 		1F879FA71E0265C1001385CE /* NSCircleMyCommentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMyCommentViewController.swift; sourceTree = "<group>"; };
 		1F879FAB1E026F3B001385CE /* NSCircleForumListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleForumListTableViewCell.swift; sourceTree = "<group>"; };
+		1FC57F301E278D0F005852AE /* NSMiCollectionForumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMiCollectionForumViewController.swift; sourceTree = "<group>"; };
 		1FC823CF1D6C37D4005ED821 /* SuccessfulCaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SuccessfulCaseViewController.swift; sourceTree = "<group>"; };
 		1FC83D291DF8F05A00E5C5C5 /* NSCircleDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleDetailTableViewCell.swift; sourceTree = "<group>"; };
 		1FCCA9551DCC18CA001112AC /* FiftyThousandExamViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiftyThousandExamViewController.swift; sourceTree = "<group>"; };
@@ -849,6 +851,7 @@
 				F6342C651D38DC3A00800D8E /* Cell */,
 				181E0D2C1CEBF8A900E34A7F /* MineCollectionViewController.swift */,
 				F6342C631D38DB4000800D8E /* HSCollectionListController.swift */,
+				1FC57F301E278D0F005852AE /* NSMiCollectionForumViewController.swift */,
 			);
 			name = Collection;
 			sourceTree = "<group>";
@@ -1973,6 +1976,7 @@
 				1F2853611DDC42EC00BC8EA6 /* MiFeedbackListViewController.swift in Sources */,
 				1F1787EB1E1DF97A005E73CD /* NSCircleAttentionViewController.swift in Sources */,
 				0DB467BC1D4C8600009AE2AD /* UIScrollView+MJRefresh.m in Sources */,
+				1FC57F311E278D0F005852AE /* NSMiCollectionForumViewController.swift in Sources */,
 				0DB467B61D4C8600009AE2AD /* MJRefreshNormalHeader.m in Sources */,
 				18C240601CEEB6340059BF48 /* TalentViewController.swift in Sources */,
 				1F1C64FC1DFE86F90082F00F /* ImageBtn.m in Sources */,

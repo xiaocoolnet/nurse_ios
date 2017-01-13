@@ -73,7 +73,7 @@ class NSCircleAttentionViewController: UIViewController, UITableViewDataSource, 
     var pager = 1
     func loadData_pullUp() {
         
-        CircleNetUtil.getFollowForumList(userid: QCLoginUserInfo.currentInfo.userid, pager: "1") { (success, response) in
+        CircleNetUtil.getFollowForumList(userid: QCLoginUserInfo.currentInfo.userid, pager: String(pager)) { (success, response) in
             if success {
                 self.pager += 1
                 
@@ -112,7 +112,7 @@ class NSCircleAttentionViewController: UIViewController, UITableViewDataSource, 
         rootTableView.delegate = self
         rootTableView.dataSource = self
         
-        rootTableView.register(NSCircleAttentionTableViewCell.self, forCellReuseIdentifier: "circleAttentionCell")
+        rootTableView.register(NSCircleForumListTableViewCell.self, forCellReuseIdentifier: "circleAttentionCell")
         
         rootTableView.mj_header = MJRefreshNormalHeader.init(refreshingTarget: self, refreshingAction: #selector(loadData))
         rootTableView.mj_header.beginRefreshing()
@@ -179,11 +179,15 @@ class NSCircleAttentionViewController: UIViewController, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "circleAttentionCell", for: indexPath) as! NSCircleAttentionTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "circleAttentionCell", for: indexPath) as! NSCircleForumListTableViewCell
         
         cell.selectionStyle = .none
         
-        cell.setCell(with: forumModelArray[indexPath.section])
+        cell.setCellWith(forumModelArray[indexPath.section])
+        
+        cell.imgBtn.tag = 200+indexPath.row
+        cell.imgBtn.addTarget(self, action: #selector(userInfoBtnClick(userInfoBtn:)), for: .touchUpInside)
+//        cell.setCell(with: forumModelArray[indexPath.section])
         
         return cell
     }
@@ -206,7 +210,7 @@ class NSCircleAttentionViewController: UIViewController, UITableViewDataSource, 
                 contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
-            return 8+height+8+contentHeight+8+8+8+5// 上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
+            return 55+8+height+8+contentHeight+8+8+8+5// 个人信息高+上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
         }else if forum.photo.count < 3 {
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16-110-8)
             
@@ -216,11 +220,11 @@ class NSCircleAttentionViewController: UIViewController, UITableViewDataSource, 
                 contentHeight = UIFont.systemFont(ofSize: contentSize).lineHeight*2
             }
             
-            let cellHeight1:CGFloat = 8+80+8// 上边距+图片高+下边距
+            let cellHeight1:CGFloat = 80+8+8+8// 上边距+图片高+下边距
             let cellHeight2 = 8+height+8+contentHeight+8+8+8// 上边距+标题高+间距+内容高+间距+点赞评论按钮高+下边距
             
             
-            return max(cellHeight1, cellHeight2)+5
+            return max(cellHeight1, cellHeight2)+55+5
         }else{
             let height = calculateHeight((forum.title), size: titleSize, width: WIDTH-16)
             
@@ -232,7 +236,7 @@ class NSCircleAttentionViewController: UIViewController, UITableViewDataSource, 
             
             let imgHeight = (WIDTH-16-15*2)/3.0*2/3.0
             
-            return 8+height+8+contentHeight+8+imgHeight+8+8+8+5// 上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
+            return 55+8+height+8+contentHeight+8+imgHeight+8+8+8+5// 个人信息高+上边距+标题高+间距+内容高+间距+图片高+间距+点赞评论按钮高+下边距
         }
     }
     
@@ -315,6 +319,14 @@ class NSCircleAttentionViewController: UIViewController, UITableViewDataSource, 
         circleDetailController.hidesBottomBarWhenPushed = true
         circleDetailController.communityId = self.forumModelArray[footerBtn.tag-100].community_id
         self.navigationController?.pushViewController(circleDetailController, animated: true)
+    }
+    
+    // MARK: - 用户主页按钮点击事件
+    func userInfoBtnClick(userInfoBtn:UIButton) {
+        
+        let circleUserInfoController = NSCircleUserInfoViewController()
+        circleUserInfoController.userid = forumModelArray[userInfoBtn.tag-200].userid
+        self.navigationController?.pushViewController(circleUserInfoController, animated: true)
     }
     
     override func didReceiveMemoryWarning() {

@@ -115,7 +115,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
     func loadData_pullUp() {
         
         
-        CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: term_id, best: best, hot: hot, pager: "1", sort: sort) { (success, response) in
+        CircleNetUtil.getCommunityList(userid: QCLoginUserInfo.currentInfo.userid, term_id: term_id, best: best, hot: hot, pager: String(pager), sort: sort) { (success, response) in
             if success {
                 self.pager += 1
 

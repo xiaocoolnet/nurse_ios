@@ -374,7 +374,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
 //                    btn2.addSubview(img)
                     
                     let nameLab = UILabel(frame: CGRect(x: 0, y: img.frame.maxY, width: btn2Width, height: WIDTH/375*22))
-                    nameLab.textAlignment = .left
+                    nameLab.textAlignment = .center
                     nameLab.font = UIFont.systemFont(ofSize: 14)
                     nameLab.textColor = COLOR
                     nameLab.text = communityModel.community_name

@@ -380,6 +380,8 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
     func postBtnClick() {
         print("点击发布按钮")
         
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+        
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.removeFromSuperViewOnHide = true
         hud.margin = 10
@@ -505,19 +507,32 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
                 if result.event != "" {
                     NursePublicAction.showScoreTips(self.view, nameString: result.event, score: result.score)
                     
-                    time += 3
+                    time += 2
                 }
                 
                 let delay = DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
                 
                 DispatchQueue.main.asyncAfter(deadline: delay) {
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
+
                     _ = self.navigationController?.popViewController(animated: true)
                 }
             }else{
                 hud.mode = .text
                 hud.label.text = "贴子发布失败"
                 hud.hide(animated: true, afterDelay: 1)
+                
+                let time: TimeInterval = 1.0
+                
+                let delay = DispatchTime.now() + Double(Int64(time * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+                
+                DispatchQueue.main.asyncAfter(deadline: delay) {
+                    self.navigationItem.rightBarButtonItem?.isEnabled = true
+                }
+
             }
+            
+
         }
     }
     

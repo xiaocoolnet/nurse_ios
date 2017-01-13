@@ -12,7 +12,7 @@ import PagingMenuController
 class MineCollectionViewController: UIViewController {
     var articleViewController = HSCollectionListController()
     var testViewController = HSCollectionListController()
-    var ForumViewController = HSCollectionListController()
+    var ForumViewController = NSMiCollectionForumViewController()
 
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
@@ -30,7 +30,7 @@ class MineCollectionViewController: UIViewController {
         testViewController.title = "试题"
         testViewController.collectionType = 2
         ForumViewController.title = "贴子"
-        ForumViewController.collectionType = 3
+//        ForumViewController. = 3
 //
 //        let viewControllers = [articleViewController,testViewController]
 //        let options = PagingMenuOptions()

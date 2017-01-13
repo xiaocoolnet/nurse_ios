@@ -29,6 +29,12 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        loadData()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
@@ -404,7 +410,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
             circleListController.hidesBottomBarWhenPushed = true
             circleListController.titleString = "品管圈"
             circleListController.hot = "0"
-            circleListController.term_id = "286"
+            circleListController.term_id = "300"
             circleListController.showDropDown = false
             self.navigationController?.pushViewController(circleListController, animated: true)
         case 102:

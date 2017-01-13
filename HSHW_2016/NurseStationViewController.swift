@@ -39,7 +39,7 @@ class NurseStationViewController: UIViewController {
                 
                 let newsListDataArray = response as! [NewsListDataModel]
                 
-                if UserDefaults.standard.value(forKey: newsUpdateTime) == nil {
+                if UserDefaults.standard.value(forKey: newsUpdateTime) == nil || newsListDataArray.count <= 0 {
                     self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "新消息_nav"), style: .done, target: self, action: #selector(self.newsBtnClick))
                 }else{
 

@@ -8,8 +8,9 @@
 
 import UIKit
 import MBProgressHUD
+import TZImagePickerController
 
-class NSCircleAuthViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class NSCircleAuthViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, TZImagePickerControllerDelegate {
 
     
     let authTypeDropDown = DropDown()
@@ -207,62 +208,77 @@ class NSCircleAuthViewController: UIViewController, UIImagePickerControllerDeleg
     
     // MARK: - cerBtn click
     func cerBtnClick() {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        self.present(alert, animated: true, completion: nil)
         
-        alert.addAction(UIAlertAction(title: "拍照", style: .default, handler: {(UIAlertAction) in
-            DispatchQueue.main.async(execute: {
-                self.takePhoto()
-            })
-        }))
+        let imagePickerVc = TZImagePickerController(maxImagesCount: 1, delegate: self)
+        imagePickerVc?.allowCrop = false
+        imagePickerVc?.sortAscendingByModificationDate = false
+        self.present(imagePickerVc!, animated: true, completion: nil)
         
-        alert.addAction(UIAlertAction(title: "从相册获取", style: .default, handler: { (UIAlertAction) in
-            DispatchQueue.main.async(execute: {
-                self.LocalPhoto()
-            })
-        }))
         
-        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler:nil))
+//        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+//        self.present(alert, animated: true, completion: nil)
+//        
+//        alert.addAction(UIAlertAction(title: "拍照", style: .default, handler: {(UIAlertAction) in
+//            DispatchQueue.main.async(execute: {
+//                self.takePhoto()
+//            })
+//        }))
+//        
+//        alert.addAction(UIAlertAction(title: "从相册获取", style: .default, handler: { (UIAlertAction) in
+//            DispatchQueue.main.async(execute: {
+//                self.LocalPhoto()
+//            })
+//        }))
+//        
+//        alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler:nil))
         
     }
     
-    func takePhoto(){
-        
-        let sourceType = UIImagePickerControllerSourceType.camera
-        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
-            let picker = UIImagePickerController()
-            picker.delegate = self
-            picker.allowsEditing = true
-            picker.sourceType = sourceType
-            self.present(picker, animated: true, completion: nil)
-        }else{
-            print("无法打开相机")
-        }
-    }
-    
-    func LocalPhoto(){
-        let picker = UIImagePickerController()
-        picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        picker.delegate = self
-        picker.allowsEditing = true
-        present(picker, animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        let type = info[UIImagePickerControllerMediaType] as! String
-        if type != "public.image" {
-            return
-        }
-        
+    func imagePickerController(_ picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [Any]!, isSelectOriginalPhoto: Bool) {
         //裁剪后图片
-        let image = info[UIImagePickerControllerEditedImage] as! UIImage
-        
+        let image = photos.first
+
         self.selectedImage = image
         cerBtn.setImage(image, for: UIControlState())
-        
-        picker.dismiss(animated: true, completion: nil)
     }
+    
+//    func takePhoto(){
+//        
+//        let sourceType = UIImagePickerControllerSourceType.camera
+//        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
+//            let picker = UIImagePickerController()
+//            picker.delegate = self
+//            picker.allowsEditing = true
+//            picker.sourceType = sourceType
+//            self.present(picker, animated: true, completion: nil)
+//        }else{
+//            print("无法打开相机")
+//        }
+//    }
+//    
+//    func LocalPhoto(){
+//        let picker = UIImagePickerController()
+//        picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+//        picker.delegate = self
+//        picker.allowsEditing = true
+//        present(picker, animated: true, completion: nil)
+//    }
+//    
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        
+//        let type = info[UIImagePickerControllerMediaType] as! String
+//        if type != "public.image" {
+//            return
+//        }
+//        
+//        //裁剪后图片
+//        let image = info[UIImagePickerControllerEditedImage] as! UIImage
+//        
+//        self.selectedImage = image
+//        cerBtn.setImage(image, for: UIControlState())
+//        
+//        picker.dismiss(animated: true, completion: nil)
+//    }
 
     
     // MARK: - typeBtn Click

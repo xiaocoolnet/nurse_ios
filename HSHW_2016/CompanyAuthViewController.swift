@@ -8,6 +8,8 @@
 
 import UIKit
 import MBProgressHUD
+import TZImagePickerController
+
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
@@ -33,7 +35,7 @@ fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, TZImagePickerControllerDelegate {
     
     @IBOutlet weak var bigScrollview: UIScrollView!
     
@@ -207,27 +209,41 @@ class CompanyAuthViewController: UIViewController, UIImagePickerControllerDelega
     
     @IBAction func uploadBtnClick(_ sender: AnyObject) {
         
-        let picker = UIImagePickerController()
-        picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-        picker.delegate = self
-        picker.allowsEditing = true
-        present(picker, animated: true, completion: nil)
+        let imagePickerVc = TZImagePickerController(maxImagesCount: 1, delegate: self)
+        imagePickerVc?.allowCrop = false
+        imagePickerVc?.sortAscendingByModificationDate = false
+        self.present(imagePickerVc!, animated: true, completion: nil)
+        
+//        let picker = UIImagePickerController()
+//        picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+//        picker.delegate = self
+//        picker.allowsEditing = true
+//        present(picker, animated: true, completion: nil)
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        let type = info[UIImagePickerControllerMediaType] as! String
-        if type != "public.image" {
-            return
-        }
-        
+    func imagePickerController(_ picker: TZImagePickerController!, didFinishPickingPhotos photos: [UIImage]!, sourceAssets assets: [Any]!, isSelectOriginalPhoto: Bool) {
         //裁剪后图片
-        selectedImage = (info[UIImagePickerControllerEditedImage] as! UIImage)
+        selectedImage = photos.first
         
         self.uploadBtn.setImage(selectedImage, for: UIControlState())
         
         picker.dismiss(animated: true, completion: nil)
     }
+    
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+//        
+//        let type = info[UIImagePickerControllerMediaType] as! String
+//        if type != "public.image" {
+//            return
+//        }
+//        
+//        //裁剪后图片
+//        selectedImage = (info[UIImagePickerControllerEditedImage] as! UIImage)
+//        
+//        self.uploadBtn.setImage(selectedImage, for: UIControlState())
+//        
+//        picker.dismiss(animated: true, completion: nil)
+//    }
     
     func delBtnClick(_ delBtn:UIButton) {
         //        self.uploadBtn.imageView?.contentMode = .ScaleAspectFit
