@@ -380,8 +380,6 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
     func postBtnClick() {
         print("点击发布按钮")
         
-        self.navigationItem.rightBarButtonItem?.isEnabled = false
-        
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.removeFromSuperViewOnHide = true
         hud.margin = 10
@@ -421,6 +419,8 @@ class NSCirclePostForumViewController: UIViewController, UITextViewDelegate, UII
             return
         }
         
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+
         if imageArray.count > 0 {
             hud.label.text = "正在上传图片"
             

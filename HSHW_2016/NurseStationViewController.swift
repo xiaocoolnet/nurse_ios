@@ -27,6 +27,9 @@ class NurseStationViewController: UIViewController {
         super.viewDidDisappear(animated)
         
         BaiduMobStat.default().pageviewEnd(withName: "护士站")
+        
+        self.navigationItem.rightBarButtonItem = nil
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -43,7 +46,7 @@ class NurseStationViewController: UIViewController {
                     self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "新消息_nav"), style: .done, target: self, action: #selector(self.newsBtnClick))
                 }else{
 
-                    if UserDefaults.standard.value(forKey: newsUpdateTime) as! String != newsListDataArray.first?.create_time {
+                    if UserDefaults.standard.value(forKey: newsUpdateTime) as? String != newsListDataArray.first?.create_time {
                         
                         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "新消息_nav_new"), style: .done, target: self, action: #selector(self.newsBtnClick))
                         

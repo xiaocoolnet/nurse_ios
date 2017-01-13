@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MBProgressHUD
+
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
@@ -159,6 +161,15 @@ class NSCirclePostChooseCircleViewController: UIViewController {
     // MARK: - 点击确定按钮
     func sureBtnClick() {
         print("点击确定按钮  选择的圈子是  \(selectedCircle.community_name)")
+        
+        if selectedCircle.community_name == "" {
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.removeFromSuperViewOnHide = true
+            hud.mode = .text
+            hud.label.text = "请选择圈子"
+            hud.hide(animated: true, afterDelay: 1)
+            return
+        }
         self.delegate?.chooseCircle(circle: selectedCircle)
         
         _ = self.navigationController?.popViewController(animated: true)

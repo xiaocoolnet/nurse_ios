@@ -225,10 +225,10 @@ class AcademicViewController: UIViewController,UITableViewDelegate,UITableViewDa
             cell.selectionStyle = .none
             let newsInfo = self.dataSource.objectlist[indexPath.row]
             cell.newsInfo = newsInfo
-            cell.aca_zan.tag = indexPath.row
-            cell.aca_zan.addTarget(self, action: #selector(click1(_:)), for: .touchUpInside)
-            cell.comBtn.tag = indexPath.row
-            cell.comBtn.addTarget(self, action: #selector(collectionBtnClick(_:)), for: .touchUpInside)
+//            cell.aca_zan.tag = indexPath.row
+//            cell.aca_zan.addTarget(self, action: #selector(click1(_:)), for: .touchUpInside)
+//            cell.comBtn.tag = indexPath.row
+//            cell.comBtn.addTarget(self, action: #selector(collectionBtnClick(_:)), for: .touchUpInside)
             
             return cell
         }else{

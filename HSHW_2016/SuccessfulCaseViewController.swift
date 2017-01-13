@@ -202,10 +202,10 @@ class SuccessfulCaseViewController: UIViewController,UITableViewDelegate,UITable
         successfulCaseCell.selectionStyle = .none
         let newsInfo = self.dataSource.objectlist[indexPath.row]
         successfulCaseCell.newsInfo = newsInfo
-        successfulCaseCell.aca_zan.tag = indexPath.row
-        successfulCaseCell.aca_zan.addTarget(self, action: #selector(click1(_:)), for: .touchUpInside)
-        successfulCaseCell.comBtn.tag = indexPath.row
-        successfulCaseCell.comBtn.addTarget(self, action: #selector(collectionBtnClick(_:)), for: .touchUpInside)
+//        successfulCaseCell.aca_zan.tag = indexPath.row
+//        successfulCaseCell.aca_zan.addTarget(self, action: #selector(click1(_:)), for: .touchUpInside)
+//        successfulCaseCell.comBtn.tag = indexPath.row
+//        successfulCaseCell.comBtn.addTarget(self, action: #selector(collectionBtnClick(_:)), for: .touchUpInside)
         
         return successfulCaseCell
     }

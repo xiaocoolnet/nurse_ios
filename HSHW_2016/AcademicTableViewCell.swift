@@ -71,8 +71,9 @@ class AcademicTableViewCell: UITableViewCell {
         conNum.textColor = UIColor.gray
         
         comBtn.frame = CGRect(x: WIDTH-100, y: (WIDTH-20)*0.5+40, width: 20, height: 20)
-        comBtn.setImage(UIImage(named: "ic_collect_nor"), for: UIControlState())
-        comBtn.setImage(UIImage(named: "ic_collect_sel"), for: .selected)
+//        comBtn.setImage(UIImage(named: "ic_collect_nor"), for: UIControlState())
+        comBtn.setImage(UIImage(named: "ic_collect_sel"), for: .normal)
+        comBtn.isEnabled = false
 //        comBtn.backgroundColor = UIColor.redColor()
         
         timeLab.frame = CGRect(x: 30, y: (WIDTH-20)*0.5+40, width: 100, height: 20)
@@ -94,8 +95,9 @@ class AcademicTableViewCell: UITableViewCell {
         zanNum.textColor = UIColor.gray
         zanNum.textAlignment = .left
         aca_zan.frame = CGRect(x: WIDTH-50, y: (WIDTH-20)*0.5+42, width: 14, height: 14)
-        aca_zan.setImage(UIImage(named:"ic_like_gray"), for: UIControlState())
-        aca_zan.setImage(UIImage(named:"ic_like_sel"), for: UIControlState.selected)
+//        aca_zan.setImage(UIImage(named:"ic_like_gray"), for: UIControlState())
+        aca_zan.setImage(UIImage(named:"ic_like_sel"), for: UIControlState.normal)
+        aca_zan.isEnabled = false
 //        aca_zan.addTarget(self, action: #selector(AcademicViewController.click1(_:)), forControlEvents: .TouchUpInside)
 //      zan.setImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
 //      zan.setBackgroundImage(UIImage(named: "ic_like_gray.png"), forState: .Normal)
