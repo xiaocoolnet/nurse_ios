@@ -33,6 +33,7 @@ var hulibu_updateNum = 0
 var recruit_user_updateNum = 0
 let RECRUIT_USER_ORIGINALCREATETIME = "RECRUIT_USER_ORIGINALNEWSCREATETIME\(QCLoginUserInfo.currentInfo.userid)"
 var unreadNum = 0
+var hasNewMessage = ""
 var newsUpdateTime = "newsUpdateTime_key"
 
 

@@ -91,9 +91,11 @@
             <connections>
                 <outlet property="contentLab" destination="C5n-T6-tRK" id="CWw-46-XTd"/>
                 <outlet property="forumNameLab" destination="r7d-Y5-E50" id="tsD-uG-aYY"/>
+                <outlet property="forumTagLab" destination="B72-kp-2gO" id="ZyP-4a-Qbw"/>
                 <outlet property="headerBtn" destination="uBe-7Q-hHa" id="oed-sY-Moj"/>
                 <outlet property="timeLab" destination="mFE-Ro-iqy" id="HM0-1Y-TWP"/>
                 <outlet property="userNameLab" destination="ixk-SV-E2d" id="X45-OX-AsL"/>
+                <outlet property="userTagLab" destination="z69-Nz-WXs" id="tD7-jT-ZgF"/>
             </connections>
             <point key="canvasLocation" x="378" y="412.5"/>
         </tableViewCell>

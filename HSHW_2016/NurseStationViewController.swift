@@ -36,24 +36,19 @@ class NurseStationViewController: UIViewController {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
         self.tabBarController?.tabBar.isHidden = false
         
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "新消息_nav"), style: .done, target: self, action: #selector(self.newsBtnClick))
+
+        
         CircleNetUtil.getMyMessageList(userid: QCLoginUserInfo.currentInfo.userid, pager: "1") { (success, response) in
             
             if success {
                 
                 let newsListDataArray = response as! [NewsListDataModel]
                 
-                if UserDefaults.standard.value(forKey: newsUpdateTime) == nil || newsListDataArray.count <= 0 {
-                    self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "新消息_nav"), style: .done, target: self, action: #selector(self.newsBtnClick))
-                }else{
-
-                    if UserDefaults.standard.value(forKey: newsUpdateTime) as? String != newsListDataArray.first?.create_time {
+                if UserDefaults.standard.value(forKey: newsUpdateTime) == nil || newsListDataArray.count > 0 && UserDefaults.standard.value(forKey: newsUpdateTime) as? String != newsListDataArray.first?.create_time {
                         
                         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "新消息_nav_new"), style: .done, target: self, action: #selector(self.newsBtnClick))
-                        
-                    }else{
-                        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "新消息_nav"), style: .done, target: self, action: #selector(self.newsBtnClick))
-                        
-                    }
+
                 }
 
             }

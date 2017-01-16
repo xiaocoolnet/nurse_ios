@@ -12,11 +12,13 @@ typealias selBlock = (_ dressArray:NSArray)->()
 
 class AdressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    struct Static {
+        static var onceToken:Int=0
+        static var instance:AdressPickerView?=nil
+    }
+    
     private static var __once: () = {
-        struct Static {
-            static var onceToken:Int=0
-            static var instance:AdressPickerView?=nil
-        }
+        
             Static.instance=AdressPickerView()
             Static.instance?.initdata()
             Static.instance?.width=UIApplication.shared.keyWindow!.bounds.size.width
@@ -39,10 +41,10 @@ class AdressPickerView: UIView, UIPickerViewDelegate, UIPickerViewDataSource {
     fileprivate var areaArray=NSArray() // 区县州
     
     class var shareInstance: AdressPickerView {
-        struct Static {
-            static var onceToken:Int=0
-            static var instance:AdressPickerView?=nil
-        }
+//        struct Static {
+//            static var onceToken:Int=0
+//            static var instance:AdressPickerView?=nil
+//        }
         _ = AdressPickerView.__once
         return Static.instance!
     }

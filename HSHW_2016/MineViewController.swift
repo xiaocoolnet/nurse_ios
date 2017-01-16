@@ -53,6 +53,13 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         BaiduMobStat.default().pageviewEnd(withName: "我的")
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
+
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.lightContent
@@ -85,34 +92,56 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
         }
         
         // 设置我的消息提醒数
-        let url = PARK_URL_Header+"getsystemmessage_new"
-        let param = ["userid":QCLoginUserInfo.currentInfo.userid]
-        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
-           
-            if(error != nil){
+//        let url = PARK_URL_Header+"getsystemmessage_new"
+//        let param = ["userid":QCLoginUserInfo.currentInfo.userid]
+//        NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
+//           
+//            if(error != nil){
+//                
+//            }else{
+//                let status = newsInfoModel(JSONDecoder(json!))
+//                
+//                if(status.status == "success"){
+//                    let tempArray = status.data
+//                    
+//                    let url_read = PARK_URL_Header+"getMessagereadlist"
+//                    let param_read = ["userid":QCLoginUserInfo.currentInfo.userid]
+//                    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url_read, Parameter: param_read as [String : AnyObject]?) { (json, error) in
+//
+//                        
+//                        if(error != nil){
+//                            
+//                        }else{
+//                            let status = ReadMessageList(JSONDecoder(json!))
+//                            
+//                            unreadNum = tempArray.count-(status.data ).count
+//                            self.myTableView.reloadData()
+//                            
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        
+        CircleNetUtil.getMyMessageList(userid: QCLoginUserInfo.currentInfo.userid, pager: "1") { (success, response) in
+            
+            if success {
+                
+                let newsListDataArray = response as! [NewsListDataModel]
+                
+                if UserDefaults.standard.value(forKey: newsUpdateTime) == nil || newsListDataArray.count > 0 && UserDefaults.standard.value(forKey: newsUpdateTime) as? String != newsListDataArray.first?.create_time {
+                    
+                    hasNewMessage = "new"
+                    self.myTableView.reloadData()
+                    
+                }else{
+                    hasNewMessage = ""
+                    self.myTableView.reloadData()
+                }
                 
             }else{
-                let status = newsInfoModel(JSONDecoder(json!))
-                
-                if(status.status == "success"){
-                    let tempArray = status.data
-                    
-                    let url_read = PARK_URL_Header+"getMessagereadlist"
-                    let param_read = ["userid":QCLoginUserInfo.currentInfo.userid]
-                    NurseUtil.net.request(RequestType.requestTypeGet, URLString: url_read, Parameter: param_read as [String : AnyObject]?) { (json, error) in
-
-                        
-                        if(error != nil){
-                            
-                        }else{
-                            let status = ReadMessageList(JSONDecoder(json!))
-                            
-                            unreadNum = tempArray.count-(status.data ).count
-                            self.myTableView.reloadData()
-                            
-                        }
-                    }
-                }
+                hasNewMessage = ""
+                self.myTableView.reloadData()
             }
         }
         
@@ -541,14 +570,27 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
                 cell.titLab.text = titLabArr[indexPath.row]
                 
                 if indexPath.row == 0 {
-                    if unreadNum > 0 {
+//                    if unreadNum > 0 {
+//                        cell.accessoryType = .none
+//                        
+//                        if unreadNum > 99 {
+//                            cell.numLab.text = "99+"
+//                        }else{
+//                            cell.numLab.text = String(unreadNum)
+//                        }
+//                        cell.numLab.adjustsFontSizeToFitWidth = true
+//                        cell.numLab.isHidden = false
+//                    }else{
+//                        cell.numLab.isHidden = true
+//                    }
+                    if hasNewMessage != "" {
                         cell.accessoryType = .none
                         
-                        if unreadNum > 99 {
-                            cell.numLab.text = "99+"
-                        }else{
-                            cell.numLab.text = String(unreadNum)
-                        }
+//                        if unreadNum > 99 {
+//                            cell.numLab.text = "99+"
+//                        }else{
+//                        }
+                        cell.numLab.text = hasNewMessage
                         cell.numLab.adjustsFontSizeToFitWidth = true
                         cell.numLab.isHidden = false
                     }else{
@@ -665,7 +707,7 @@ class MineViewController: UIViewController,UITableViewDelegate,UITableViewDataSo
             //                next.title = "我的贴子"
             //            }
             if indexPath.row == 0 {
-                let next = MineMessageViewController()
+                let next = NSCircleNewsViewController()
                 self.navigationController?.pushViewController(next, animated: true)
                 next.title = "我的消息"
             }

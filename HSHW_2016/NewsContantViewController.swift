@@ -725,7 +725,7 @@ class NewsContantViewController: UIViewController,UITableViewDelegate,UITableVie
                     //self.createTableView()
                     // print(status)
                     
-                    self.pager += 1
+                    self.pager = 2
                     
                     self.commentArray = status.data
 //                    self.commentIcon_bottom_Lab.text = String((self.comment_count))

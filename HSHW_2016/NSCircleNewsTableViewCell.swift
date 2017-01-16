@@ -14,7 +14,11 @@ class NSCircleNewsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var contentLab: UILabel!
     
+    @IBOutlet weak var userTagLab: UILabel!
+    
     @IBOutlet weak var userNameLab: UILabel!
+    
+    @IBOutlet weak var forumTagLab: UILabel!
     
     @IBOutlet weak var forumNameLab: UILabel!
     
@@ -32,14 +36,35 @@ class NSCircleNewsTableViewCell: UITableViewCell {
     var newsListDataModel:NewsListDataModel! {
         didSet {
             
-            self.headerBtn.sd_setImage(with: URL.init(string: SHOW_IMAGE_HEADER+newsListDataModel.fu_photo), for: .normal, placeholderImage: UIImage(named: "img_head_nor"))
-
-
-            self.contentLab.text = newsListDataModel.centent
-            self.userNameLab.text = newsListDataModel.fu_name
-            self.forumNameLab.text = newsListDataModel.forum_title
             
-            self.timeLab.text = updateTime(newsListDataModel.create_time)
+            if newsListDataModel.type == "4" || newsListDataModel.type == "8" {
+                
+                self.headerBtn.sd_setImage(with: URL.init(string: SHOW_IMAGE_HEADER+newsListDataModel.fu_photo), for: .normal, placeholderImage: UIImage(named: "img_head_nor"))
+                
+                self.contentLab.text = newsListDataModel.centent
+                self.userTagLab.isHidden = true
+                self.userNameLab.isHidden = true
+                self.forumTagLab.isHidden = true
+                self.forumNameLab.isHidden = true
+                
+                self.timeLab.text = updateTime(newsListDataModel.create_time)
+            }else{
+                
+                self.userTagLab.isHidden = false
+                self.userNameLab.isHidden = false
+                self.forumTagLab.isHidden = false
+                self.forumNameLab.isHidden = false
+                
+                self.headerBtn.sd_setImage(with: URL.init(string: SHOW_IMAGE_HEADER+newsListDataModel.fu_photo), for: .normal, placeholderImage: UIImage(named: "img_head_nor"))
+                
+                
+                self.contentLab.text = newsListDataModel.centent
+                self.userNameLab.text = newsListDataModel.fu_name == "" ? "管理员":newsListDataModel.fu_name
+                self.forumNameLab.text = newsListDataModel.forum_title
+                
+                self.timeLab.text = updateTime(newsListDataModel.create_time)
+
+            }
             
         }
     }
