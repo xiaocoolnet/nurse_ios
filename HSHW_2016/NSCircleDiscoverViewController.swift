@@ -604,7 +604,7 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
                 return 40
             }
         }else{
-            return 0.01
+            return 40
         }
         
     }
@@ -644,7 +644,32 @@ class NSCircleDiscoverViewController: UIViewController, UITableViewDataSource, U
 
             }
         }else{
-            return nil
+            let footerView = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 40))
+            footerView.tag = 100 + section
+            footerView.addTarget(self, action: #selector(footerViewClick(footerBtn:)), for: .touchUpInside)
+            
+            let img = UIImageView(frame: CGRect(x: 8, y: 8, width: 25, height: 24))
+            img.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+forumModelArray[section].community_photo), placeholderImage: nil)
+            img.contentMode = .scaleAspectFit
+            img.clipsToBounds = true
+            footerView.addSubview(img)
+            
+            let nameBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 0, height: 30))
+            nameBtn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+            nameBtn.setTitleColor(COLOR, for: UIControlState())
+            nameBtn.setTitle(forumModelArray[section].community_name, for: UIControlState())
+            nameBtn.sizeToFit()
+            nameBtn.frame.origin = CGPoint(x: img.frame.maxX+5, y: (40-nameBtn.frame.height)/2.0)
+            footerView.addSubview(nameBtn)
+            
+            let comeinLab = UILabel(frame: CGRect(x: nameBtn.frame.maxX, y: 0, width: WIDTH-nameBtn.frame.maxX-8, height: 40))
+            comeinLab.textAlignment = .right
+            comeinLab.font = UIFont.systemFont(ofSize: 12)
+            comeinLab.textColor = COLOR
+            comeinLab.text = "进入圈子"
+            footerView.addSubview(comeinLab)
+            
+            return footerView
         }
         
     }

@@ -4,23 +4,16 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "C553938888557CE7BD90CD16C1207672E744299D" : 0,
     "C671C7B433E6642701A282C596F5BE9A219C479E" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "80D03C33-F528-4B9B-8EDC-33D1E204B5D3",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "C553938888557CE7BD90CD16C1207672E744299D" : "NURSE_2016_ios",
     "C671C7B433E6642701A282C596F5BE9A219C479E" : "nurse_ios\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "HSHW_2016",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "HSHW_2016.xcworkspace",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
-    {
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/xiaocoolnet\/NURSE_2016_ios.git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
-      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C553938888557CE7BD90CD16C1207672E744299D"
-    },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/xiaocoolnet\/nurse_ios.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",

@@ -36,11 +36,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HSHW_2016/NewsViewController.swift"
-            timestampString = "503225625.55795"
+            timestampString = "506403361.520721"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "MenuItem"
             landmarkType = "14">
          </BreakpointContent>

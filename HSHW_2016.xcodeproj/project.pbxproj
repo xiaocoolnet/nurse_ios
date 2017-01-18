@@ -172,6 +172,7 @@
 		1F4A3AC61D1B6FAF00EE91F1 /* DaliyExamModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */; };
 		1F54B60C1DB706E400AAA5A6 /* NSRecruitmentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54B60B1DB706E300AAA5A6 /* NSRecruitmentDetailViewController.swift */; };
 		1F54B60E1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F54B60D1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift */; };
+		1F55FC611E2EF7F900360FFC /* NSNewsSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F55FC601E2EF7F900360FFC /* NSNewsSearchViewController.swift */; };
 		1F7B9FE31D21218F00A3A3CB /* ReleaseTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */; };
 		1F8558E81DFB8CFD00C885EA /* NurseUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8558E71DFB8CFD00C885EA /* NurseUtil.swift */; };
 		1F879FA21E026513001385CE /* NSCircleMyForumHomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F879FA11E026513001385CE /* NSCircleMyForumHomeViewController.swift */; };
@@ -509,6 +510,7 @@
 		1F4A3AC51D1B6FAF00EE91F1 /* DaliyExamModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DaliyExamModel.swift; sourceTree = "<group>"; };
 		1F54B60B1DB706E300AAA5A6 /* NSRecruitmentDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSRecruitmentDetailViewController.swift; sourceTree = "<group>"; };
 		1F54B60D1DB70B2B00AAA5A6 /* NSPersonalInfoDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSPersonalInfoDetailViewController.swift; sourceTree = "<group>"; };
+		1F55FC601E2EF7F900360FFC /* NSNewsSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSNewsSearchViewController.swift; sourceTree = "<group>"; };
 		1F7B9FE11D21218F00A3A3CB /* ReleaseTimeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseTimeCell.swift; sourceTree = "<group>"; };
 		1F8558E71DFB8CFD00C885EA /* NurseUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NurseUtil.swift; sourceTree = "<group>"; };
 		1F879FA11E026513001385CE /* NSCircleMyForumHomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSCircleMyForumHomeViewController.swift; sourceTree = "<group>"; };
@@ -1054,6 +1056,7 @@
 				185408881CE70D8A00DFBA7C /* AcademicViewController.swift */,
 				185408821CE7052700DFBA7C /* NewsContantViewController.swift */,
 				0DBF54731D406D1900B4B5FB /* GNewsCateDetailViewController.swift */,
+				1F55FC601E2EF7F900360FFC /* NSNewsSearchViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -1919,6 +1922,7 @@
 				185408831CE7052700DFBA7C /* NewsContantViewController.swift in Sources */,
 				F64C9ACA1D3B9C7E0041E360 /* MineJobTableViewCell.swift in Sources */,
 				18C0BF971CEB63FB003E2886 /* QuestionBankViewController.swift in Sources */,
+				1F55FC611E2EF7F900360FFC /* NSNewsSearchViewController.swift in Sources */,
 				0B9C64091D420957008B7F6C /* GMyErrorViewController.swift in Sources */,
 				1F182F7F1E1F9D4B008160AD /* NSCircleNewsTableViewCell.swift in Sources */,
 				1F1C1B301DF686DB0051F638 /* NSCircleDiscoverTableViewCell.swift in Sources */,

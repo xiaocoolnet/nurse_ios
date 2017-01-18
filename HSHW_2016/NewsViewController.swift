@@ -26,12 +26,53 @@ class NewsViewController: UIViewController {
         super.viewDidDisappear(animated)
         
         BaiduMobStat.default().pageviewEnd(withName: "新闻")
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         UIApplication.shared.statusBarStyle = UIStatusBarStyle.default
-        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = false
         self.tabBarController?.tabBar.isHidden = false
+        
+        self.navigationController?.navigationBar.barTintColor = COLOR
+
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            NSForegroundColorAttributeName:UIColor.white,
+            NSFontAttributeName : UIFont.boldSystemFont(ofSize: 20)
+        ]
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "搜索"), style: .done, target: self, action: #selector(navigationButtonClick))
+        self.navigationItem.title = "中国护士网"
+        
+        let navigationButton = UIButton(frame: CGRect(x: 0, y: 0, width: WIDTH, height: 44))
+        navigationButton.tag = 123456
+        navigationButton.addTarget(self, action: #selector(navigationButtonClick), for: .touchUpInside)
+        self.navigationController?.navigationBar.addSubview(navigationButton)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.navigationBar.viewWithTag(123456)?.removeFromSuperview()
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor.white
+        
+        self.navigationController?.navigationBar.tintColor = COLOR
+        
+        if let barFont = UIFont(name: "ChalkboardSE-Bold", size: 18){
+            self.navigationController?.navigationBar.titleTextAttributes = [
+                NSForegroundColorAttributeName:COLOR,
+                NSFontAttributeName : barFont
+            ]
+        }
+        
+    }
+    
+    func navigationButtonClick() {
+        print("1234567890-")
+        self.navigationController?.pushViewController(NSNewsSearchViewController(), animated: true)
     }
     
     override func viewDidLoad() {
@@ -127,7 +168,7 @@ class NewsViewController: UIViewController {
         
         let options = PagingMenuOptions.init(viewControllers: [oneView,twoView,threeView,fourView], itemTextArray: ["头条","护理界","健康","学术会议"])
         let pagingMenuController = PagingMenuController(options: options)
-        pagingMenuController.view.frame = CGRect(x: 0, y: 20, width: WIDTH, height: HEIGHT-64)
+        pagingMenuController.view.frame = CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT-64)
         
         addChildViewController(pagingMenuController)
         view.addSubview(pagingMenuController.view)

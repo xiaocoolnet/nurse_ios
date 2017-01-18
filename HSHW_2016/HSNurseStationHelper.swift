@@ -178,11 +178,12 @@ class HSNurseStationHelper: NSObject {
     }
     
     //获取资讯文章列表
-    func getArticleListWithID(_ articleid:String, pager:String = "", handle:@escaping ResponseBlock){
+    func getArticleListWithID(_ articleid:String?, pager:String = "", keyword:String = "", handle:@escaping ResponseBlock){
         let url = PARK_URL_Header+"getNewslist_new"
         let param = [
             "channelid":articleid,
-            "pager":pager
+            "pager":pager,
+            "keyword":keyword
         ]
         NurseUtil.net.request(RequestType.requestTypeGet, URLString: url, Parameter: param as [String : AnyObject]?) { (json, error) in
             if(error != nil){
