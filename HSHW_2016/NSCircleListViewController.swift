@@ -216,7 +216,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
 //            hud.removeFromSuperViewOnHide = true
 //            hud.mode = .text
 //            hud.label.text = "功能尚未实现"
-//            hud.hide(animated: true, afterDelay: 1.5)
+//            hud.hide(animated: true, afterDelay: 1)
 //            return
 //        }
         
@@ -326,7 +326,7 @@ class NSCircleListViewController: UIViewController, UITableViewDataSource, UITab
             hud.removeFromSuperViewOnHide = true
             hud.mode = .text
             hud.label.text = "您已加入该圈子"
-            hud.hide(animated: true, afterDelay: 1.5)
+            hud.hide(animated: true, afterDelay: 1)
             return
         }else{
             

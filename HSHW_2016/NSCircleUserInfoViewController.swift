@@ -1035,7 +1035,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                 hud.removeFromSuperViewOnHide = true
                 hud.mode = .text
                 hud.label.text = "贴子已置顶"
-                hud.hide(animated: true, afterDelay: 1.5)
+                hud.hide(animated: true, afterDelay: 1)
                 return
             }
             CircleNetUtil.forumSetTop(tid: String(action.tag/100), handle: { (success, response) in
@@ -1052,7 +1052,7 @@ class NSCircleUserInfoViewController: UIViewController,UITableViewDelegate, UITa
                 hud.removeFromSuperViewOnHide = true
                 hud.mode = .text
                 hud.label.text = "贴子已加精"
-                hud.hide(animated: true, afterDelay: 1.5)
+                hud.hide(animated: true, afterDelay: 1)
                 return
             }
             CircleNetUtil.forumSetTop(tid: String(action.tag/100), handle: { (success, response) in

@@ -393,7 +393,7 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
 //                hud.removeFromSuperViewOnHide = true
 //                hud.mode = .text
 //                hud.label.text = "您已认证成功"
-//                hud.hide(animated: true, afterDelay: 1.5)
+//                hud.hide(animated: true, afterDelay: 1)
             case "2":// 认证中
                 
                 let alert = UIAlertController(title: "正在审核中", message: "", preferredStyle: .alert)
@@ -416,7 +416,7 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
 //                hud.removeFromSuperViewOnHide = true
 //                hud.mode = .text
 //                hud.label.text = "正在审核中"
-//                hud.hide(animated: true, afterDelay: 1.5)
+//                hud.hide(animated: true, afterDelay: 1)
             default:
                 let circleAuthController = NSCircleAuthViewController()
                 circleAuthController.hidesBottomBarWhenPushed = true
@@ -428,7 +428,7 @@ class NSCircleMineViewController: UIViewController, UITableViewDataSource, UITab
 //            hud.removeFromSuperViewOnHide = true
 //            hud.mode = .text
 //            hud.label.text = "敬请期待"
-//            hud.hide(animated: true, afterDelay: 1.5)
+//            hud.hide(animated: true, afterDelay: 1)
         case (0,2):
             
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)

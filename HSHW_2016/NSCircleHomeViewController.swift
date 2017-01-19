@@ -281,7 +281,7 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
             hud.removeFromSuperViewOnHide = true
             hud.mode = .text
             hud.label.text = "您已加入该圈子"
-            hud.hide(animated: true, afterDelay: 1.5)
+            hud.hide(animated: true, afterDelay: 1)
             return
         }else{
             CircleNetUtil.addCommunity(userid: QCLoginUserInfo.currentInfo.userid, cid: communityModel.id, handle: { (success, response) in
@@ -422,6 +422,17 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
             }else{
                 return
             }
+            
+            if !isJoin {
+                
+                let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                hud.removeFromSuperViewOnHide = true
+                hud.mode = .text
+                hud.label.text = "您尚未加入该圈子"
+                hud.hide(animated: true, afterDelay: 1)
+                return
+            }
+            
             let alert = UIAlertController(title: "取消关注?", message: "确定取消关注 \(communityModel.community_name)", preferredStyle: .alert)
             
             let sureAction = UIAlertAction(title: "确定", style: .default, handler: { (action) in

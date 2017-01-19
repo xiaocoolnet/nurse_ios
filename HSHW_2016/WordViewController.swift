@@ -930,7 +930,7 @@ class WordViewController: UIViewController,UIScrollViewDelegate {
                                 hud.label.text = "点击 < 答案 > 按钮即可查看答案"
                                 hud.margin = 10.0
                                 hud.removeFromSuperViewOnHide = true
-                                hud.hide(animated: true, afterDelay: 1.5)
+                                hud.hide(animated: true, afterDelay: 1)
                             })
                         }
                         alertController.addAction(answerAction)
