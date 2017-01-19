@@ -54,7 +54,7 @@ class NSNewsSearchViewController: UIViewController, UISearchBarDelegate, UITable
         //        search.layer.cornerRadius = 6
         //        search.layer.borderWidth = 1/UIScreen.mainScreen().scale
         //        search.layer.borderColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1).CGColor
-        search.placeholder = "大家都在搜：护士那些事"
+        search.placeholder = "请输入关键字搜索"
         search.showsCancelButton = true
         
         //找到取消按钮
@@ -207,15 +207,17 @@ class NSNewsSearchViewController: UIViewController, UISearchBarDelegate, UITable
                 //                self.navigationController?.pushViewController(circleSearchResultController, animated: true)
             }else{
                 
-                if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
-                    
-                    self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
-                    
-                }else{
-                    
-                    self.rootTableView.mj_footer.endRefreshing()
+                self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
 
-                }
+//                if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
+//                    
+//                    self.rootTableView.mj_footer.endRefreshingWithNoMoreData()
+//                    
+//                }else{
+//                    
+//                    self.rootTableView.mj_footer.endRefreshing()
+//
+//                }
                 
             }
         }

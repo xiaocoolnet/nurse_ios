@@ -225,10 +225,18 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
             if i < self.masterListModelArray.count {
                 headerImg.sd_setImage(with: URL(string: SHOW_IMAGE_HEADER+self.masterListModelArray[i].user_photo), placeholderImage: #imageLiteral(resourceName: "申请圈主（默认）"))
                 nameLab.text = self.masterListModelArray[i].user_name
+                
+                let masterBtn = UIButton(frame: CGRect(x: headerImg.frame.minX, y: headerImg.frame.minY, width: max(headerImg.frame.width, nameLab.frame.width), height: nameLab.frame.maxY))
+                masterBtn.tag = 100+i
+                masterBtn.addTarget(self, action: #selector(masterHeaderBtnClick(masterHeaderBtn:)), for: .touchUpInside)
+                managerBgView.addSubview(masterBtn)
+                
             }else{
                 headerImg.image = #imageLiteral(resourceName: "申请圈主（默认）")
                 nameLab.text = "还有空位哦~"
             }
+            
+            
         }
         
         managerBgView.frame.size.height = margin*2+10+UIFont.systemFont(ofSize: 12).lineHeight
@@ -246,6 +254,16 @@ class NSCircleHomeViewController: UIViewController, UITableViewDataSource, UITab
         tableHeaderView.frame.size.height = managerBgView.frame.maxY+10
         
         rootTableView.tableHeaderView = tableHeaderView
+    }
+    
+    // MARK: - 圈主头像点击
+    func masterHeaderBtnClick(masterHeaderBtn:UIButton) {
+        
+        let userPageVC = NSCircleUserInfoViewController()
+        
+        userPageVC.userid = self.masterListModelArray[masterHeaderBtn.tag-100].userid
+        
+        self.navigationController?.pushViewController(userPageVC, animated: true)
     }
     
     // MARK: - 加入按钮点击事件

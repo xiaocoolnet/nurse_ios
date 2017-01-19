@@ -272,8 +272,8 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             self.targetCityArray = dressArray as! Array<String>
             
 //            self.addressBtn.setTitle("\(self.targetCityArray[0])-\(self.targetCityArray[1])", for: UIControlState())
-            self.addressBtn.setTitle(self.targetCityArray[1], for: .normal)
-
+//            self.addressBtn.setTitle(self.targetCityArray[1], for: .normal)
+            self.addressBtn.resetdataCenter(self.targetCityArray[1], self.addressBtn.image.image)
             
             self.myTableView.mj_header.beginRefreshing()
             
@@ -395,7 +395,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
             
             var flag = 0
             
-            HSNurseStationHelper().getJobList((self.addressBtn.currentTitle ?? "")!, salary: (self.salaryDrop.selectedItem ?? "")!, jobtype: (self.jobTypeDrop.selectedItem ?? "")!, pager: String(jobPager), handle: { (success, response) in
+            HSNurseStationHelper().getJobList((self.addressBtn.lb_title.text ?? "")!, salary: (self.salaryDrop.selectedItem ?? "")!, jobtype: (self.jobTypeDrop.selectedItem ?? "")!, pager: String(jobPager), handle: { (success, response) in
 
                 if success {
                     self.jobPager += 1
@@ -421,7 +421,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                             
                             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
                             hud.mode = MBProgressHUDMode.text;
-                            hud.label.text = "招聘列表获取失败"
+                            hud.label.text = "无结果"
                             hud.detailsLabel.text = String(describing: (response ?? ("" as AnyObject))!)
                             hud.margin = 10.0
                             hud.removeFromSuperViewOnHide = true
