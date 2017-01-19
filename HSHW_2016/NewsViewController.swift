@@ -166,7 +166,6 @@ class NewsViewController: UIViewController {
             }
         }
         
-//        let line = UIView(frame: CGRect(x: 0, y: 0, width: <#T##CGFloat#>, height: <#T##CGFloat#>)
         let options = PagingMenuOptions.init(viewControllers: [oneView,twoView,threeView,fourView], itemTextArray: ["头条","护理界","健康","学术会议"])
         let pagingMenuController = PagingMenuController(options: options)
         pagingMenuController.view.frame = CGRect(x: 0, y: 0, width: WIDTH, height: HEIGHT-49)
