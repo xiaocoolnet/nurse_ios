@@ -46,10 +46,12 @@ class GToutiaoTableViewCell: UITableViewCell {
     let contant = UILabel()
     let titImage = UIImageView()
     let heal = UIButton()
-    let conNum = UILabel()
-    let timeLab = UILabel()
-    let comBtn = UIButton()
+    let hitsBtn = UIButton()
+    let hitsNum = UILabel()
+    let commentBtn = UIButton()
+    let commentNum = UILabel()
     let timeBtn = UIButton()
+    let timeLab = UILabel()
     let titSubImg = UIImageView()
     let titSubImg_1 = UIImageView()
     let titSubImg_2 = UIImageView()
@@ -72,10 +74,12 @@ class GToutiaoTableViewCell: UITableViewCell {
             
             self.addSubview(heal)
         }
-        self.addSubview(conNum)
+        self.addSubview(hitsNum)
         self.addSubview(timeLab)
-        self.addSubview(comBtn)
+        self.addSubview(hitsBtn)
         self.addSubview(timeBtn)
+        self.addSubview(commentBtn)
+        self.addSubview(commentNum)
         self.addSubview(titLab)
         self.addSubview(titImage)
         self.addSubview(titSubImg)
@@ -114,11 +118,17 @@ class GToutiaoTableViewCell: UITableViewCell {
         heal.addTarget(self, action: #selector(categoryBtnClick(_:)), for: .touchUpInside)
         
         //        comBtn.setImage(UIImage(named: "ic_eye_purple.png"), forState: .Normal)
-        comBtn.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), for: UIControlState())
+        hitsBtn.setBackgroundImage(UIImage(named: "ic_eye_purple.png"), for: UIControlState())
         
-        conNum.font = UIFont.systemFont(ofSize: 13)
-        conNum.textAlignment = .left
-        conNum.textColor = GREY
+        hitsNum.font = UIFont.systemFont(ofSize: 13)
+        hitsNum.textAlignment = .left
+        hitsNum.textColor = GREY
+        
+        commentBtn.setBackgroundImage(UIImage(named: "ic_comment_purple"), for: UIControlState())
+
+        commentNum.font = UIFont.systemFont(ofSize: 13)
+        commentNum.textAlignment = .left
+        commentNum.textColor = GREY
         
         //        timeBtn.frame = CGRectMake(CGRectGetMaxX(conNum.frame)+5, titLab.frame.size.height+titLab.frame.origin.y+23, 11, 11)
         //        timeBtn.setImage(UIImage(named: "ic_time_purple.png"), forState: .Normal)
@@ -176,7 +186,7 @@ class GToutiaoTableViewCell: UITableViewCell {
             heal.removeFromSuperview()
         }
         
-        comBtn.frame = CGRect(x: type == 1 ? heal.frame.maxX+10:5, y: titLab.frame.size.height+titLab.frame.origin.y+25, width: 13, height: 9)
+        hitsBtn.frame = CGRect(x: type == 1 ? heal.frame.maxX+10:5, y: titLab.frame.size.height+titLab.frame.origin.y+25, width: 13, height: 9)
         
         var conNumStr = "0"
         if Int(newsInfo.post_hits!) > 99999 {
@@ -203,11 +213,16 @@ class GToutiaoTableViewCell: UITableViewCell {
             conNumStr = newsInfo.post_hits!
         }
         
-        self.conNum.text = conNumStr
-        conNum.sizeToFit()
-        conNum.frame = CGRect(x: comBtn.frame.maxX+5, y: titLab.frame.size.height+titLab.frame.origin.y+22, width: conNum.frame.width, height: 15)
+        self.hitsNum.text = conNumStr
+        hitsNum.sizeToFit()
+        hitsNum.frame = CGRect(x: hitsBtn.frame.maxX+5, y: titLab.frame.size.height+titLab.frame.origin.y+22, width: hitsNum.frame.width, height: 15)
         
-        timeBtn.frame = CGRect(x: conNum.frame.maxX+10, y: titLab.frame.size.height+titLab.frame.origin.y+24, width: 11, height: 11)
+        commentBtn.frame = CGRect(x: hitsNum.frame.maxX+10, y: titLab.frame.size.height+titLab.frame.origin.y+25, width: 11, height: 11)
+        commentNum.text = newsInfo.comments_count
+        commentNum.sizeToFit()
+        commentNum.frame = CGRect(x: commentBtn.frame.maxX+5, y: titLab.frame.size.height+titLab.frame.origin.y+22, width: commentNum.frame.width, height: 15)
+        
+        timeBtn.frame = CGRect(x: commentNum.frame.maxX+10, y: titLab.frame.size.height+titLab.frame.origin.y+24, width: 11, height: 11)
         timeLab.frame = CGRect(x: timeBtn.frame.maxX+5, y: titLab.frame.size.height+titLab.frame.origin.y+22, width: 80, height: 15)
         
         let time:Array = (newsInfo.post_modified?.components(separatedBy: " "))!
@@ -264,8 +279,10 @@ class GToutiaoTableViewCell: UITableViewCell {
             }
         }
         heal.frame.origin.y = self.frame.size.height-heal.frame.size.height-1-8
-        comBtn.frame.origin.y = self.frame.size.height-comBtn.frame.size.height-4-8
-        conNum.frame.origin.y = self.frame.size.height-conNum.frame.size.height-1-8
+        hitsBtn.frame.origin.y = self.frame.size.height-hitsBtn.frame.size.height-4-8
+        hitsNum.frame.origin.y = self.frame.size.height-hitsNum.frame.size.height-1-8
+        commentBtn.frame.origin.y = self.frame.size.height-commentBtn.frame.size.height-3-8
+        commentNum.frame.origin.y = self.frame.size.height-commentNum.frame.size.height-1-8
         timeBtn.frame.origin.y = self.frame.size.height-timeBtn.frame.size.height-3-8
         timeLab.frame.origin.y = self.frame.size.height-timeLab.frame.size.height-1-8
         
@@ -312,7 +329,7 @@ class GToutiaoTableViewCell: UITableViewCell {
             heal.removeFromSuperview()
         }
         
-        comBtn.frame = CGRect(x: type == 1 ? heal.frame.maxX+10:5, y: titSubImg.frame.maxY+15, width: 13, height: 9)
+        hitsBtn.frame = CGRect(x: type == 1 ? heal.frame.maxX+10:5, y: titSubImg.frame.maxY+15, width: 13, height: 9)
         
         var conNumStr = "0"
         if Int(newsInfo.post_hits!) > 99999 {
@@ -339,11 +356,16 @@ class GToutiaoTableViewCell: UITableViewCell {
             conNumStr = newsInfo.post_hits!
         }
         
-        self.conNum.text = conNumStr
-        conNum.sizeToFit()
-        conNum.frame = CGRect(x: comBtn.frame.maxX+5, y: titSubImg.frame.maxY+12, width: conNum.frame.width, height: 15)
+        self.hitsNum.text = conNumStr
+        hitsNum.sizeToFit()
+        hitsNum.frame = CGRect(x: hitsBtn.frame.maxX+5, y: titSubImg.frame.maxY+12, width: hitsNum.frame.width, height: 15)
         
-        timeBtn.frame = CGRect(x: conNum.frame.maxX+10, y: titSubImg.frame.maxY+14, width: 11, height: 11)
+        commentBtn.frame = CGRect(x: hitsNum.frame.maxX+10, y: titSubImg.frame.maxY+14, width: 11, height: 11)
+        commentNum.text = newsInfo.comments_count
+        commentNum.sizeToFit()
+        commentNum.frame = CGRect(x: commentBtn.frame.maxX+5, y: titSubImg.frame.maxY+12, width: commentNum.frame.width, height: 15)
+        
+        timeBtn.frame = CGRect(x: commentNum.frame.maxX+10, y: titSubImg.frame.maxY+14, width: 11, height: 11)
         timeLab.frame = CGRect(x: timeBtn.frame.maxX+5, y: titSubImg.frame.maxY+12, width: 80, height: 15)
         
         let time:Array = (newsInfo.post_modified?.components(separatedBy: " "))!

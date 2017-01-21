@@ -73,9 +73,9 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
 
         }else{
             
-//            self.setFiltrateItem_findPerson()
-            myTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-65-45-49)
-//            myTableView.frame = CGRect(x: 0, y: 38, width: WIDTH, height: HEIGHT-110-37)
+            self.setFiltrateItem_findPerson()
+//            myTableView.frame = CGRect(x: 0, y: 1, width: WIDTH, height: HEIGHT-65-45-49)
+            myTableView.frame = CGRect(x: 0, y: WIDTH*37/375+1+1/UIScreen.main.scale, width: WIDTH, height: HEIGHT-110-37)
 
 
         }
@@ -106,15 +106,20 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     func setFiltrateItem_findPerson() {
         
         // 学历
-        let eduBtn = UIButton()
-        eduBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-        eduBtn.setTitle("学历", for: UIControlState())
+        let eduBtn = ImageBtn(frame: CGRect(x: 0, y: 0, width: WIDTH/3.0, height: WIDTH*37/375))
+//        eduBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+//        eduBtn.setTitle("学历", for: UIControlState())
+        eduBtn?.lb_title_fontSize = 14
+        eduBtn?.resetdataCenter("学历", #imageLiteral(resourceName: "展开"))
+        
+        eduBtn?.lb_titleColor = COLOR
+        eduBtn?.resetdataCenter(eduBtn?.lb_title.text, #imageLiteral(resourceName: "展开-hover"))
         
         // 学历 下拉
         eduDrop.anchorView = eduBtn
         
-        eduDrop.bottomOffset = CGPoint(x: 0, y: 37)
-        eduDrop.width = WIDTH
+        eduDrop.bottomOffset = CGPoint(x: 0, y: WIDTH*37/375)
+        eduDrop.width = WIDTH/3.0
         eduDrop.direction = .bottom
         
         eduDrop.dataSource = self.eduDataSource
@@ -123,20 +128,20 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         eduDrop.selectionAction = { (index, item) in
             
             self.myTableView.mj_header.beginRefreshing()
-            eduBtn.setTitle(item, for: UIControlState())
+            eduBtn?.resetdataCenter(item, eduBtn?.image.image)
             
         }
         
         // 工作经验
-        let expBtn = UIButton()
-        expBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-        expBtn.setTitle("工作经验", for: UIControlState())
+        let expBtn = ImageBtn(frame: CGRect(x: 0, y: 0, width: WIDTH/3.0, height: WIDTH*37/375))
+        expBtn?.lb_title_fontSize = 14
+        expBtn?.resetdataCenter("工作经验", #imageLiteral(resourceName: "展开"))
         
         // 工作经验 下拉
         expDrop.anchorView = expBtn
         
-        expDrop.bottomOffset = CGPoint(x: 0, y: 37)
-        expDrop.width = WIDTH
+        expDrop.bottomOffset = CGPoint(x: 0, y: WIDTH*37/375)
+        expDrop.width = WIDTH/3.0
         expDrop.direction = .bottom
         
         expDrop.dataSource = self.expDataSource
@@ -145,20 +150,20 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         expDrop.selectionAction = { (index, item) in
             
             self.myTableView.mj_header.beginRefreshing()
-            expBtn.setTitle(item, for: UIControlState())
-            
+            expBtn?.resetdataCenter(item, expBtn?.image.image)
+
         }
         
         // 职称
-        let certificateBtn = UIButton()
-        certificateBtn.titleLabel?.adjustsFontSizeToFitWidth = true
-        certificateBtn.setTitle("职称", for: UIControlState())
+        let certificateBtn = ImageBtn(frame: CGRect(x: 0, y: 0, width: WIDTH/3.0, height: WIDTH*37/375))
+        certificateBtn?.lb_title_fontSize = 14
+        certificateBtn?.resetdataCenter("职称", #imageLiteral(resourceName: "展开"))
         
         // 职称 下拉
         certificateDrop.anchorView = certificateBtn
         
-        certificateDrop.bottomOffset = CGPoint(x: 0, y: 37)
-        certificateDrop.width = WIDTH
+        certificateDrop.bottomOffset = CGPoint(x: 0, y: WIDTH*37/375)
+        certificateDrop.width = WIDTH/3.0
         certificateDrop.direction = .bottom
         
         certificateDrop.dataSource = self.certificateDataSource
@@ -167,17 +172,21 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         certificateDrop.selectionAction = { (index, item) in
             
             self.myTableView.mj_header.beginRefreshing()
-            certificateBtn.setTitle(item, for: UIControlState())
-            
+            certificateBtn?.resetdataCenter(item, certificateBtn?.image.image)
+
         }
         
         // 选择菜单
-        let segChoose = LFLUISegmentedControl.segment(withFrame: CGRect(x: 0, y: 1, width: WIDTH, height: 37), titleArray: [eduBtn,expBtn,certificateBtn], defaultSelect: 0)
+        let segChoose = LFLUISegmentedControl.segment(withFrame: CGRect(x: 0, y: 1, width: WIDTH, height: WIDTH*37/375), titleArray: [eduBtn!,expBtn!,certificateBtn!], defaultSelect: 0)
         segChoose?.tag = 101
         segChoose?.lineColor(COLOR)
         segChoose?.titleColor(UIColor.black, selectTitleColor: COLOR, backGroundColor: UIColor.white, titleFontSize: 14)
         segChoose?.delegate = self
         self.view.addSubview(segChoose!)
+        
+        let line = UIView(frame: CGRect(x: 0, y: (segChoose?.frame.maxY ?? 0)!, width: WIDTH, height: 1/UIScreen.main.scale))
+        line.backgroundColor = UIColor.lightGray
+        self.view.addSubview(line)
     }
     
     // 工作地点
@@ -208,7 +217,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         // 薪资 下拉
         salaryDrop.anchorView = expBtn
         
-        salaryDrop.bottomOffset = CGPoint(x: 0, y: 37)
+        salaryDrop.bottomOffset = CGPoint(x: 0, y: WIDTH*37/375)
         salaryDrop.width = WIDTH
         salaryDrop.direction = .bottom
         
@@ -230,7 +239,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         // 职位 下拉
         jobTypeDrop.anchorView = jobTypeBtn
         
-        jobTypeDrop.bottomOffset = CGPoint(x: 0, y: 37)
+        jobTypeDrop.bottomOffset = CGPoint(x: 0, y: WIDTH*37/375)
         jobTypeDrop.width = WIDTH
         jobTypeDrop.direction = .bottom
         
@@ -245,7 +254,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         
         // 选择菜单
-        let segChoose = LFLUISegmentedControl.segment(withFrame: CGRect(x: 0, y: 1, width: WIDTH, height: 37), titleArray: [addressBtn,expBtn,jobTypeBtn], defaultSelect: 0)
+        let segChoose = LFLUISegmentedControl.segment(withFrame: CGRect(x: 0, y: 1, width: WIDTH, height: WIDTH*37/375), titleArray: [addressBtn,expBtn,jobTypeBtn], defaultSelect: 0)
         segChoose?.tag = 102
         segChoose?.lineColor(COLOR)
         segChoose?.titleColor(UIColor.black, selectTitleColor: COLOR, backGroundColor: UIColor.white, titleFontSize: 14)
@@ -283,27 +292,53 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     // MARK: - LFLUISegmentedControlDelegate
     func uisegumentSelectionChange(_ selection: Int, segmentTag: Int) {
         
-        addressBtn.lb_titleColor = UIColor.black
-        addressBtn.resetdataCenter(addressBtn.lb_title.text, #imageLiteral(resourceName: "展开"))
         
-        let salaryBtn = salaryDrop.anchorView as! ImageBtn
-        salaryBtn.lb_titleColor = UIColor.black
-        salaryBtn.resetdataCenter(salaryBtn.lb_title.text, #imageLiteral(resourceName: "展开"))
-        
-        let jobTypeBtn = jobTypeDrop.anchorView as! ImageBtn
-        jobTypeBtn.lb_titleColor = UIColor.black
-        jobTypeBtn.resetdataCenter(jobTypeBtn.lb_title.text, #imageLiteral(resourceName: "展开"))
         
         if segmentTag == 101 {
             
+            let eduBtn = eduDrop.anchorView as! ImageBtn
+            eduBtn.lb_titleColor = UIColor.black
+            eduBtn.resetdataCenter(eduBtn.lb_title.text, #imageLiteral(resourceName: "展开"))
+            
+            let expBtn = expDrop.anchorView as! ImageBtn
+            expBtn.lb_titleColor = UIColor.black
+            expBtn.resetdataCenter(expBtn.lb_title.text, #imageLiteral(resourceName: "展开"))
+            
+            let certificateBtn = certificateDrop.anchorView as! ImageBtn
+            certificateBtn.lb_titleColor = UIColor.black
+            certificateBtn.resetdataCenter(certificateBtn.lb_title.text, #imageLiteral(resourceName: "展开"))
+            
             if selection == 0 {
+                let eduBtn = eduDrop.anchorView as! ImageBtn
+                eduBtn.lb_titleColor = COLOR
+                eduBtn.resetdataCenter(eduBtn.lb_title.text, #imageLiteral(resourceName: "展开-hover"))
+                
                 _ = eduDrop.show()
             }else if selection == 1 {
+                let expBtn = expDrop.anchorView as! ImageBtn
+                expBtn.lb_titleColor = COLOR
+                expBtn.resetdataCenter(expBtn.lb_title.text, #imageLiteral(resourceName: "展开-hover"))
+                
                 _ = expDrop.show()
             }else if selection == 2 {
+                let certificateBtn = certificateDrop.anchorView as! ImageBtn
+                certificateBtn.lb_titleColor = COLOR
+                certificateBtn.resetdataCenter(certificateBtn.lb_title.text, #imageLiteral(resourceName: "展开-hover"))
+                
                 _ = certificateDrop.show()
             }
         }else{
+            
+            addressBtn.lb_titleColor = UIColor.black
+            addressBtn.resetdataCenter(addressBtn.lb_title.text, #imageLiteral(resourceName: "展开"))
+            
+            let salaryBtn = salaryDrop.anchorView as! ImageBtn
+            salaryBtn.lb_titleColor = UIColor.black
+            salaryBtn.resetdataCenter(salaryBtn.lb_title.text, #imageLiteral(resourceName: "展开"))
+            
+            let jobTypeBtn = jobTypeDrop.anchorView as! ImageBtn
+            jobTypeBtn.lb_titleColor = UIColor.black
+            jobTypeBtn.resetdataCenter(jobTypeBtn.lb_title.text, #imageLiteral(resourceName: "展开"))
             
             if selection == 0 {
                 addressBtn.lb_titleColor = COLOR
@@ -339,7 +374,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         pageControl.numberOfPages = self.imageArr.count
         pageControl.frame = CGRect(
             x: WIDTH-margin-pageControl.rect(forPageIndicator: 0).width*CGFloat(self.imageArr.count)-margin*CGFloat(self.imageArr.count-1),
-            y: WIDTH*190/375-25,
+            y: WIDTH*153/375-25,
             width: pageControl.rect(forPageIndicator: 0).width*CGFloat(self.imageArr.count)+margin*CGFloat(self.imageArr.count-1),
             height: 25)
         pageControl.indicatorMargin = margin
@@ -348,7 +383,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         for (i,slideImage) in self.imageArr.enumerated() {
             
             let  imageView = UIImageView()
-            imageView.frame = CGRect(x: CGFloat(i)*WIDTH, y: 0, width: WIDTH, height: WIDTH*190/375)
+            imageView.frame = CGRect(x: CGFloat(i)*WIDTH, y: 0, width: WIDTH, height: WIDTH*153/375)
             imageView.tag = i+1
             // TODO:JUDGE WIFI
             if  !NurseUtil.net.isWifi() && loadPictureOnlyWiFi {
@@ -358,12 +393,12 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
                 imageView.sd_setImage(with: URL(string: DomainName+"data/upload/"+(slideImage.thumbArr.first?.url)!), placeholderImage: UIImage.init(named: "defaultImage.png"))
             }
             
-            let bottom = UIView(frame: CGRect(x: 0, y: WIDTH*190/375-25, width: WIDTH, height: 25))
+            let bottom = UIView(frame: CGRect(x: 0, y: WIDTH*153/375-25, width: WIDTH, height: 25))
             bottom.backgroundColor = UIColor.gray
             bottom.alpha = 0.5
             imageView.addSubview(bottom)
             
-            let titLab = UILabel(frame: CGRect(x: 10, y: WIDTH*190/375-25, width: pageControl.frame.minX-10, height: 25))
+            let titLab = UILabel(frame: CGRect(x: 10, y: WIDTH*153/375-25, width: pageControl.frame.minX-10, height: 25))
             titLab.font = UIFont.systemFont(ofSize: 13)
             titLab.textColor = UIColor.white
             titLab.adjustsFontSizeToFitWidth = true
@@ -684,14 +719,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
     
     func setSlideView() {
         
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: WIDTH*190/375+37))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: WIDTH*153/375+WIDTH*37/375+1/UIScreen.main.scale))
         
-        let one = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: WIDTH*190/375))
+        let one = UIView(frame: CGRect(x: 0, y: 0, width: WIDTH, height: WIDTH*153/375))
         headerView.addSubview(one)
         
         timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(scroll), userInfo: nil, repeats: true)
         
-        scrollView.frame = CGRect(x: 0, y: 0,width: WIDTH, height: WIDTH*190/375)
+        scrollView.frame = CGRect(x: 0, y: 0,width: WIDTH, height: WIDTH*153/375)
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.isPagingEnabled = true
         scrollView.delegate = self
@@ -701,7 +736,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         scrollView.contentOffset = CGPoint(x: 0, y: 0)
         one.addSubview(scrollView)
         
-        pageControl.frame = CGRect(x: WIDTH-80, y: WIDTH*190/375-25, width: 80, height: 25)
+        pageControl.frame = CGRect(x: WIDTH-80, y: WIDTH*153/375-25, width: 80, height: 25)
         pageControl.pageIndicatorTintColor = UIColor.white
         pageControl.currentPageIndicatorTintColor = COLOR
         pageControl.numberOfPages = self.imageArr.count
@@ -711,7 +746,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         // 工作地点
 //        addressBtn.titleLabel?.adjustsFontSizeToFitWidth = true
 //        addressBtn.setTitle("北京市", for: UIControlState())
-        addressBtn.frame = CGRect(x: 0, y: 0, width: WIDTH/3.0, height: 37)
+        addressBtn.frame = CGRect(x: 0, y: 0, width: WIDTH/3.0, height: WIDTH*37/375)
         addressBtn.lb_title_fontSize = 14
         addressBtn.resetdataCenter("北京市", #imageLiteral(resourceName: "展开"))
         
@@ -719,7 +754,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         addressBtn.resetdataCenter(addressBtn.lb_title.text, #imageLiteral(resourceName: "展开-hover"))
         
         // 薪资
-        let expBtn = ImageBtn(frame: CGRect(x: 0, y: 0, width: WIDTH/3.0, height: 37))
+        let expBtn = ImageBtn(frame: CGRect(x: 0, y: 0, width: WIDTH/3.0, height: WIDTH*37/375))
 //        expBtn.titleLabel?.adjustsFontSizeToFitWidth = true
 //        expBtn.setTitle("薪资", for: UIControlState())
         expBtn?.lb_title_fontSize = 14
@@ -728,7 +763,7 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         // 薪资 下拉
         salaryDrop.anchorView = expBtn
         
-        salaryDrop.bottomOffset = CGPoint(x: 0, y: 37)
+        salaryDrop.bottomOffset = CGPoint(x: 0, y: WIDTH*37/375)
         salaryDrop.width = WIDTH/3.0
         salaryDrop.direction = .bottom
         
@@ -743,16 +778,16 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         
         // 职位
-        let jobTypeBtn = ImageBtn(frame: CGRect(x: 0, y: 0, width: WIDTH/3.0, height: 37))
+        let jobTypeBtn = ImageBtn(frame: CGRect(x: 0, y: 0, width: WIDTH/3.0, height: WIDTH*37/375))
         jobTypeBtn?.lb_title_fontSize = 14
 //        certificateBtn?.titleLabel?.adjustsFontSizeToFitWidth = true
 //        certificateBtn.setTitle("职位", for: UIControlState())
-        jobTypeBtn?.resetdataCenter("职位", jobTypeBtn?.image.image)
+        jobTypeBtn?.resetdataCenter("职位", #imageLiteral(resourceName: "展开"))
         
         // 职位 下拉
         jobTypeDrop.anchorView = jobTypeBtn
         
-        jobTypeDrop.bottomOffset = CGPoint(x: 0, y: 37)
+        jobTypeDrop.bottomOffset = CGPoint(x: 0, y: WIDTH*37/375)
         jobTypeDrop.width = WIDTH/3.0
         jobTypeDrop.direction = .bottom
         
@@ -769,14 +804,14 @@ class RecruitmentViewController: UIViewController,UITableViewDelegate,UITableVie
         }
         
         // 选择菜单
-        let segChoose = LFLUISegmentedControl.segment(withFrame: CGRect(x: 0, y: WIDTH*190/375, width: WIDTH, height: 37), titleArray: [addressBtn,expBtn!,jobTypeBtn!], defaultSelect: 0)
+        let segChoose = LFLUISegmentedControl.segment(withFrame: CGRect(x: 0, y: WIDTH*153/375, width: WIDTH, height: WIDTH*37/375), titleArray: [addressBtn,expBtn!,jobTypeBtn!], defaultSelect: 0)
         segChoose?.tag = 102
         segChoose?.lineColor(COLOR)
         segChoose?.titleColor(UIColor.black, selectTitleColor: COLOR, backGroundColor: UIColor.white, titleFontSize: 14)
         segChoose?.delegate = self
         headerView.addSubview(segChoose!)
         
-        let line = UIView(frame: CGRect(x: 0, y: 37, width: WIDTH, height: 1/UIScreen.main.scale))
+        let line = UIView(frame: CGRect(x: 0, y: (segChoose?.frame.maxY ?? 0)!, width: WIDTH, height: 1/UIScreen.main.scale))
         line.backgroundColor = UIColor.lightGray
         headerView.addSubview(line)
         

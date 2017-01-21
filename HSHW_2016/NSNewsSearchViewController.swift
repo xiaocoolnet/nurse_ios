@@ -73,6 +73,8 @@ class NSNewsSearchViewController: UIViewController, UISearchBarDelegate, UITable
         rootTableView.register(GToutiaoTableViewCell.self, forCellReuseIdentifier: "toutiao")
 
         self.view.addSubview(rootTableView)
+        
+        rootTableView.tableFooterView = UIView(frame: CGRect.zero)
     }
     
     
@@ -119,18 +121,18 @@ class NSNewsSearchViewController: UIViewController, UISearchBarDelegate, UITable
                 //                self.navigationController?.pushViewController(circleSearchResultController, animated: true)
             }else{
                 
-                if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
-                    self.newsInfoArray = []
-                    self.rootTableView.reloadData()
-                    hud.mode = .text
-                    hud.label.text = "无结果"
-                    hud.hide(animated: true, afterDelay: 1)
-                }else{
-                    
-                    hud.mode = .text
-                    hud.label.text = "搜索失败"
-                    hud.hide(animated: true, afterDelay: 1)
-                }
+//                if String(describing: (response ?? ("" as AnyObject))!) == "no data" {
+//                    self.newsInfoArray = []
+//                    self.rootTableView.reloadData()
+//                    hud.mode = .text
+//                    hud.label.text = "无结果"
+//                    hud.hide(animated: true, afterDelay: 1)
+//                }else{
+//                    
+//                }
+                hud.mode = .text
+                hud.label.text = "无相关搜索结果"
+                hud.hide(animated: true, afterDelay: 1)
                 
             }
             //                self.dataSource = response as! Array<NewsInfo>
